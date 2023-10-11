@@ -24,7 +24,7 @@ namespace HrisApp.Client.Services.AuthService
             return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
         }
 
-        public async Task<ServiceResponse<string>> Login(UserLoginDto request)
+        public async Task<ServiceResponse<string>> Login(UserMasterT request)
         {
             var result = await _http.PostAsJsonAsync("api/Auth/login", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();

@@ -1,5 +1,5 @@
 ﻿@layout AuthLayout
-@page "/"
+@page "/register"
 @inject HttpClient Http
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
@@ -19,8 +19,8 @@
             <MudTextField @bind-Value="reg.Username" Label="Username" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Username)" Class="mb-2"/>
             <MudTextField @bind-Value="reg.Email" Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Email)" Class="mb-2" />
             <div class="d-flex gap-1 mb-2" >
-                <MudTextField @bind-Value="reg.Password" Label=" Password" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
-                <MudTextField @bind-Value="reg.ConfirmPassword" Label="Confirm Password" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
+                <MudTextField @bind-Value="reg.Password" Label=" Password" For="@(() => reg.Password)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+                <MudTextField @bind-Value="reg.ConfirmPassword" Label="Confirm Password" For="@(() => reg.ConfirmPassword)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
             </div>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="HandleRegistration" Class="mb-2">Register</MudButton>
         </MudForm>

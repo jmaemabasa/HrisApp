@@ -1,5 +1,4 @@
-﻿using HrisApp.Server.Data;
-using HrisApp.Shared.Models.User;
+﻿using HrisApp.Shared.Models.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

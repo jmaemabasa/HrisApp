@@ -1,6 +1,7 @@
 global using Blazored.LocalStorage;
 global using MudBlazor.Services;
 global using MudBlazor;
+global using Microsoft.AspNetCore.WebUtilities;
 global using HrisApp.Shared.Models.User;
 global using HrisApp.Client.Services.AuthService;
 global using HrisApp.Client.Services.TokenService;

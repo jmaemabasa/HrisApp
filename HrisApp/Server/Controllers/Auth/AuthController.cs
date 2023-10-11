@@ -40,7 +40,7 @@ namespace HrisApp.Server.Controllers.Auth
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<ServiceResponse<string>>> Login(UserLoginDto request)
+        public async Task<ActionResult<ServiceResponse<string>>> Login(UserMasterT request)
         {
             var response = await _userService.Login(request.Username, request.Password);
             if (!response.Success)
