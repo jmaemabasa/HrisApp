@@ -1,0 +1,28 @@
+﻿@layout AuthLayout
+@page "/"
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+@inject IAuthService AuthService
+
+
+<PageTitle>Register</PageTitle>
+
+<MudGrid Justify="Justify.Center" Class="w-75">
+    <MudItem xs="12" sm="7">
+        <h3>Register</h3>
+        @if (showAlert)
+        {
+            <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
+        }
+        <MudForm Model="reg">
+            <MudTextField @bind-Value="reg.Username" Label="Username" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Username)" Class="mb-2"/>
+            <MudTextField @bind-Value="reg.Email" Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Email)" Class="mb-2" />
+            <div class="d-flex gap-1 mb-2" >
+                <MudTextField @bind-Value="reg.Password" Label=" Password" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+                <MudTextField @bind-Value="reg.ConfirmPassword" Label="Confirm Password" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
+            </div>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="HandleRegistration" Class="mb-2">Register</MudButton>
+        </MudForm>
+    </MudItem>
+</MudGrid>  

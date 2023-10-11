@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.User;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 
 namespace HrisApp.Client.Services.AuthService
 {
