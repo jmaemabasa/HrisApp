@@ -1,4 +1,4 @@
-﻿using HrisApp.Shared.Models.User;
+﻿
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -11,5 +11,6 @@ namespace HrisApp.Server.Data
 
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
+        public DbSet<DivisionT> DivisionT { get; set; }
     }
 }

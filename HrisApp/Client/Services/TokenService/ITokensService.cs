@@ -1,6 +1,6 @@
 ﻿namespace HrisApp.Client.Services.TokenService
 {
-    public interface ITokenService
+    public interface ITokensService
     {
         Task ErrorMessage(string _message);
     }

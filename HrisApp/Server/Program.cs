@@ -1,9 +1,13 @@
 global using MudBlazor.Services;
+global using HrisApp.Shared.Models.MasterData;
+global using HrisApp.Shared.Models.User;
 global using HrisApp.Server.Data;
+global using Microsoft.EntityFrameworkCore;
 global using HrisApp.Server.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Blazored.Toast;
+using CurrieTechnologies.Razor.SweetAlert2;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +20,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddMudServices();
+builder.Services.AddBlazoredToast();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthenticationCore();
+builder.Services.AddSweetAlert2();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
