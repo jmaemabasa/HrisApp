@@ -35,9 +35,7 @@ else
         <RowTemplate>
             <MudTd DataLabel="">@divisions.Name</MudTd>
             <MudTd Class="text-sm-end">
-                @*<MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.End))"><i class="oi oi-pencil" /></MudButton>*@
                 <button class="btn btn-primary" @onclick="(() => OpenUpdateDivision(divisions.Id))"><i class="oi oi-pencil"></i></button>
-                
             </MudTd>
 
         </RowTemplate>

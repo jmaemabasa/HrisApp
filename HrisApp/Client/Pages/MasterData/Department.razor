@@ -1,6 +1,7 @@
 ﻿@page "/department"
 @inject IDepartmentService DepartmentService
 @inject IDivisionService DivisionService
+@inject IDialogService DialogService
 
 <PageTitle>Department Management</PageTitle>
 
@@ -69,7 +70,7 @@
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
     <div class="d-flex flex-row mt-3 justify-content-between">
         <h3 class="m-3 ms-0">Department Management</h3>
-        <button class="btn btn-primary"><i class="oi oi-plus me-1"></i> Add Department</button>
+        <button class="btn btn-primary" @onclick="OpenAddDepartment"><i class="oi oi-plus me-1"></i> Add Department</button>
     </div>
 </MudContainer>
 
@@ -80,7 +81,6 @@
 
     </ColGroup>
     <ToolBarContent>
-        @* <MudText Typo="Typo.h6">Departments</MudText>*@
         <MudSpacer />
         <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
@@ -93,7 +93,6 @@
         <MudTd DataLabel="">@Divisions.Name</MudTd>
         <MudTd DataLabel="">@Divisions.Division.Name</MudTd>
         <MudTd Class="text-sm-end">
-            @*<MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.End))"><i class="oi oi-pencil" /></MudButton>*@
             <button class="btn btn-primary"><i class="oi oi-pencil"></i></button>
 
         </MudTd>
@@ -124,6 +123,12 @@
         }
     }
 
+    private void OpenAddDepartment()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<AddDepartmentDialog>("New Department", options);
+    }
+
     //TABLEEES
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
     private string searchString1 = "";
@@ -141,5 +146,7 @@
             return true;
         return false;
     }
-        //END FOR TABLES
+    //END FOR TABLES
+
+  
 }
