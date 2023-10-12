@@ -10,6 +10,8 @@ namespace HrisApp.Client.Services.MasterData.DivisionService
 
         Task<DivisionT> GetSingleDivision(int id);
 
+        Task GetDivision();
+
         Task CreateDivision(string divisionName);
 
         Task UpdateDivision(DivisionT division);

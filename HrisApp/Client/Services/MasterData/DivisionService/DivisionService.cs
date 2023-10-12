@@ -24,6 +24,21 @@ namespace HrisApp.Client.Services.MasterData.DivisionService
                 DivisionTs = result;
         }
 
+        public async Task GetDivision()
+        {
+            var result = await _http.GetFromJsonAsync<List<DivisionT>>("/api/Division/GetDivision");
+            if (result != null)
+            {
+                DivisionTs = result;
+
+                // Console.WriteLine to check if the data is fetched
+                foreach (var area in DivisionTs)
+                {
+                    Console.WriteLine($"Area Id: {area.Id}, Name: {area.Name}");
+                }
+            }
+        }
+
         public async Task<DivisionT> GetSingleDivision(int id)
         {
             throw new NotImplementedException();

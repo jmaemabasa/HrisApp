@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231011022212_Initial")]
-    partial class Initial
+    [Migration("20231012050341_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,45 @@ namespace HrisApp.Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.DepartmentT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DivisionId");
+
+                    b.ToTable("DepartmentT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.DivisionT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DivisionT");
+                });
 
             modelBuilder.Entity("HrisApp.Shared.Models.User.UserMasterT", b =>
                 {
@@ -76,6 +115,17 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserMasterT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.DepartmentT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DivisionT", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Division");
                 });
 #pragma warning restore 612, 618
         }

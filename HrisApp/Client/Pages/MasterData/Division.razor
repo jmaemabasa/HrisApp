@@ -7,7 +7,7 @@
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
     <div class="d-flex flex-row mt-3 justify-content-between">
         <h3 class="m-3 ms-0">Division Management</h3>
-        <button class="btn btn-primary" @onclick="OpenAddDivision"><i class="oi oi-plus me-1"></i> Add New Division</button>
+        <button class="btn btn-primary" @onclick="OpenAddDivision"><i class="oi oi-plus me-1"></i> Add Division</button>
     </div>
 </MudContainer>
 
@@ -29,7 +29,7 @@ else
             <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh>Name</MudTh>
+            <MudTh>Division</MudTh>
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>

@@ -12,5 +12,6 @@ namespace HrisApp.Server.Data
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
         public DbSet<DivisionT> DivisionT { get; set; }
+        public DbSet<DepartmentT> DepartmentT { get; set; }
     }
 }

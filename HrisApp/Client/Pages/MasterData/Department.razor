@@ -1,0 +1,145 @@
+﻿@page "/department"
+@inject IDepartmentService DepartmentService
+@inject IDivisionService DivisionService
+
+<PageTitle>Department Management</PageTitle>
+
+@* <MudGrid>
+    <MudItem xs="12">
+        <MudCard>
+            <MudCardContent>
+                @if (Departments.Count > 0)
+                {
+                    foreach (var division in Divisions)
+                    {
+                        <div>
+                            <MudText Typo="Typo.button">@division.Name</MudText>
+                            <div style="margin-left: 20px;">
+                                @foreach (var department in Departments.Where(d => d.DivisionId == division.Id))
+                                {
+                                    <div style="display: flex; align-items: center;">
+                                        <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-right: 5px;" />
+                                        <MudText Typo="Typo.subtitle1">@department.Name</MudText>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <MudChip Color="Color.Primary">No Departments found!</MudChip>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+<MudGrid Spacing="2" Justify="Justify.Center">
+    @if (Departments.Count > 0)
+    {
+        foreach (var division in Divisions)
+        {
+            <MudItem xs="12" md="2">
+                <MudStack Row="true">
+                    <MudCard Style="width:300px;">
+                        <MudCardContent>
+                            <MudText Typo="Typo.button">@division.Name</MudText>
+                            <div style="margin-left: 20px;">
+                                @foreach (var department in Departments.Where(d => d.DivisionId == division.Id))
+                                {
+                                    <div style="display: flex; align-items: center;">
+                                        <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-right: 5px;" />
+                                        <MudText Typo="Typo.subtitle1">@department.Name</MudText>
+                                    </div>
+                                }
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudStack>
+            </MudItem>
+        }
+       
+    }
+    else
+    {
+        <span>No Departments found!</span>
+    }
+    
+</MudGrid> *@
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <div class="d-flex flex-row mt-3 justify-content-between">
+        <h3 class="m-3 ms-0">Department Management</h3>
+        <button class="btn btn-primary"><i class="oi oi-plus me-1"></i> Add Department</button>
+    </div>
+</MudContainer>
+
+<MudTable Items="departmentList" Context="Divisions" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ColGroup>
+        <col style="width: 15px;" />
+        <col style="width: 1px;" />
+
+    </ColGroup>
+    <ToolBarContent>
+        @* <MudText Typo="Typo.h6">Departments</MudText>*@
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Department</MudTh>
+        <MudTh>Division</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="">@Divisions.Name</MudTd>
+        <MudTd DataLabel="">@Divisions.Division.Name</MudTd>
+        <MudTd Class="text-sm-end">
+            @*<MudButton Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.End))"><i class="oi oi-pencil" /></MudButton>*@
+            <button class="btn btn-primary"><i class="oi oi-pencil"></i></button>
+
+        </MudTd>
+
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+    </PagerContent>
+</MudTable>
+
+@code {
+    private List<DepartmentT> Departments = new List<DepartmentT>();
+    private List<DivisionT> Divisions = new List<DivisionT>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await DepartmentService.GetDepartment();
+            await DivisionService.GetDivision();
+
+            Divisions = DivisionService.DivisionTs;
+            departmentList = DepartmentService.DepartmentTs;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    //TABLEEES
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+    List<DepartmentT> departmentList = new List<DepartmentT>();
+    private DepartmentT selectedItem1 = null;
+    private HashSet<DepartmentT> selectedItems = new HashSet<DepartmentT>();
+
+    private bool FilterFunc1(DepartmentT department) => FilterFunc(department, searchString1);
+
+    private bool FilterFunc(DepartmentT department, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+        //END FOR TABLES
+}
