@@ -74,7 +74,7 @@
     </div>
 </MudContainer>
 
-<MudTable Items="departmentList" Context="Divisions" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+<MudTable Items="departmentList" Context="Departments" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ColGroup>
         <col style="width: 15px;" />
         <col style="width: 1px;" />
@@ -90,11 +90,10 @@
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="">@Divisions.Name</MudTd>
-        <MudTd DataLabel="">@Divisions.Division.Name</MudTd>
+        <MudTd DataLabel="">@Departments.Name</MudTd>
+        <MudTd DataLabel="">@Departments.Division.Name</MudTd>
         <MudTd Class="text-sm-end">
-            <button class="btn btn-primary"><i class="oi oi-pencil"></i></button>
-
+            <button class="btn btn-primary" @onclick="(() => OpenUpdateDepartment(Departments.Id))"><i class="oi oi-pencil"></i></button>
         </MudTd>
 
     </RowTemplate>
@@ -127,6 +126,15 @@
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
         DialogService.Show<AddDepartmentDialog>("New Department", options);
+    }
+
+    private void OpenUpdateDepartment(int id)
+    {
+        var parameters = new DialogParameters<UpdateDivisionDialog>();
+        parameters.Add(x => x.Id, id);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<UpdateDepartmentDialog>("Update Department", parameters, options);
     }
 
     //TABLEEES

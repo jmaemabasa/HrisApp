@@ -1,0 +1,63 @@
+﻿@inject IDepartmentService DepartmentService
+@inject SweetAlertService Swal
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField Label="Name" @bind-Value="department.Name"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="UpdateArea">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+#nullable disable
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public int Id { get; set; }
+
+
+    private DepartmentT department = null;
+
+
+    void Cancel() => MudDialog.Cancel();
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        department = DepartmentService.DepartmentTs.Find(d => d.Id == Id);
+    }
+
+    async Task UpdateArea()
+    {
+        if (department == null)
+            return;
+
+        MudDialog.Close();
+
+        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure you want to update the " + department.Name + "?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+        if (confirmResult.IsConfirmed)
+        {
+            await DepartmentService.UpdateDepartment(department);
+            await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Text = department.Name + " updated Successfully!",
+                    Icon = SweetAlertIcon.Success
+                });
+            await jsRuntime.InvokeVoidAsync("location.reload");
+            navigationManager.NavigateTo("/department");
+        }
+    }
+}
