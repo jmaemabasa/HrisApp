@@ -65,19 +65,48 @@ namespace HrisApp.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SectionT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DivisionId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SectionT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SectionT_DepartmentT_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "DepartmentT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentT_DivisionId",
                 table: "DepartmentT",
                 column: "DivisionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SectionT_DepartmentId",
+                table: "SectionT",
+                column: "DepartmentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DepartmentT");
+                name: "SectionT");
 
             migrationBuilder.DropTable(
                 name: "UserMasterT");
+
+            migrationBuilder.DropTable(
+                name: "DepartmentT");
 
             migrationBuilder.DropTable(
                 name: "DivisionT");

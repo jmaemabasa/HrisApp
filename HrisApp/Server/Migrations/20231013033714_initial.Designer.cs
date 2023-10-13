@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231012050341_initial")]
+    [Migration("20231013033714_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,31 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DivisionT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.SectionT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("SectionT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.User.UserMasterT", b =>
@@ -126,6 +151,17 @@ namespace HrisApp.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Division");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.SectionT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DepartmentT", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
                 });
 #pragma warning restore 612, 618
         }

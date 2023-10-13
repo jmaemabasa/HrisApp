@@ -1,9 +1,11 @@
+global using Microsoft.AspNetCore.Components;
 global using Blazored.LocalStorage;
 global using CurrieTechnologies.Razor.SweetAlert2;
 global using HrisApp.Client.Pages.Dialog.MasterData;
 global using HrisApp.Client.Services.AuthService;
 global using HrisApp.Client.Services.MasterData.DepartmentService;
 global using HrisApp.Client.Services.MasterData.DivisionService;
+global using HrisApp.Client.Services.MasterData.SectionService;
 global using HrisApp.Client.Services.TokenService;
 global using HrisApp.Shared.Models.MasterData;
 global using HrisApp.Shared.Models.User;
@@ -13,6 +15,7 @@ global using Microsoft.AspNetCore.WebUtilities;
 global using MudBlazor;
 global using MudBlazor.Services;
 global using Blazored.Toast;
+global using System.Net.Http.Json;
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -37,6 +40,7 @@ builder.Services.AddScoped<ITokensService, TokensService>();
 
 builder.Services.AddScoped<IDivisionService, DivisionService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<ISectionService, SectionService>();
 
 //===========================//////////=======================
 

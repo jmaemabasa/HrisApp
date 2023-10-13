@@ -1,0 +1,55 @@
+﻿@inject NavigationManager navigationManager
+@inject SweetAlertService Swal
+@inject IJSRuntime jsRuntime
+@inject ISectionService SectionService
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+
+<style>
+    .mud-input.mud-input-outlined.mud-input-adorned-end {
+        width: 200px;
+        padding-right: 14px;
+        padding-inline-end: 14px;
+        padding-inline-start: unset;
+    }
+</style>
+
+<MudDialog>
+    <DialogContent>
+        @if (selectedDepartment != 0)
+        {
+            <MudTextField @bind-Value="newSection" Label="Add Section" Variant="Variant.Outlined" Style="margin-bottom:10px;" Margin="Margin.Dense" />
+
+            <MudCheckBox @bind-Checked="notApplicableChecked" Style="margin-top: -20px;margin-left: 75px;">
+                <MudText Typo="Typo.caption">Not Applicable</MudText>
+            </MudCheckBox>
+        }
+        <MudSelect Label="Division" @bind-Value="selectedDivision" Variant="Variant.Outlined" Margin="Margin.Dense">
+            <MudSelectItem Disabled="true" Style="width: 210px;" Value="0">Division</MudSelectItem>
+            @foreach (var div in Division)
+            {
+                <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+            }
+        </MudSelect>
+        @if (selectedDivision != 0)
+        {
+            var selectedCategoryObject = Division.FirstOrDefault(c => c.Id == selectedDivision);
+            if (selectedCategoryObject != null)
+            {
+                var departments = Department.Where(d => d.DivisionId == selectedCategoryObject.Id).ToList();
+                <MudSelect Label="Select Department" @bind-Value="selectedDepartment" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-top:10px;">
+                    <MudSelectItem Disabled="true" Value="0">Department</MudSelectItem>
+                    @foreach (var department in departments)
+                    {
+                        <MudSelectItem Value="@department.Id">@department.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" @onclick="ConfirmCreateSectionAsync">Save</MudButton>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
