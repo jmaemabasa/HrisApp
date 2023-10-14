@@ -1,0 +1,14 @@
+﻿@inject ISectionService SectionService
+@inject SweetAlertService Swal
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField Label="Name" @bind-Value="section.Name"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="UpdateArea">Save</MudButton>
+    </DialogActions>
+</MudDialog>

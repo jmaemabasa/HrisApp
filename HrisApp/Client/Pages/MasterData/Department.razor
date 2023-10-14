@@ -2,52 +2,21 @@
 @inject IDepartmentService DepartmentService
 @inject IDivisionService DivisionService
 @inject IDialogService DialogService
+@attribute [Authorize]
 
 <PageTitle>Department Management</PageTitle>
 
-@* <MudGrid Spacing="2" Justify="Justify.Center">
-    @if (Departments.Count > 0)
-    {
-        foreach (var division in Divisions)
-        {
-            <MudItem xs="12" md="2">
-                <MudStack Row="true">
-                    <MudCard Style="width:300px;">
-                        <MudCardContent>
-                            <MudText Typo="Typo.button">@division.Name</MudText>
-                            <div style="margin-left: 20px;">
-                                @foreach (var department in Departments.Where(d => d.DivisionId == division.Id))
-                                {
-                                    <div style="display: flex; align-items: center;">
-                                        <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-right: 5px;" />
-                                        <MudText Typo="Typo.subtitle1">@department.Name</MudText>
-                                    </div>
-                                }
-                            </div>
-                        </MudCardContent>
-                    </MudCard>
-                </MudStack>
-            </MudItem>
-        }
-       
-    }
-    else
-    {
-        <span>No Departments found!</span>
-    }
-    
-</MudGrid> *@
-<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+<div class="mb-3">
     <div class="d-flex flex-row mt-3 justify-content-between">
         <h3 class="m-3 ms-0">Department Management</h3>
         <button class="btn btn-primary" @onclick="OpenAddDepartment"><i class="oi oi-plus me-1"></i> Add Department</button>
     </div>
-</MudContainer>
+</div>
 
 <MudTable Items="departmentList" Context="Departments" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ColGroup>
-        <col style="width: 15px;" />
-        <col style="width: 1px;" />
+        <col style="width: 200px;" />
+        <col style="width: 200px;" />
 
     </ColGroup>
     <ToolBarContent>
@@ -56,13 +25,29 @@
         <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>Department</MudTh>
-        <MudTh>Division</MudTh>
+        <MudTh>
+            <div class="d-flex justify-content-between">
+                <div class="">Division</div>
+                <div class="">
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" />
+                </div>
+            </div>
+        </MudTh>
+        <MudTh Style="font-weight: bold;">Department</MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="" Style="font-weight: bold;">@Departments.Name</MudTd>
-        <MudTd DataLabel="">@Departments.Division.Name</MudTd>
+
+        <MudTd DataLabel="Division">
+            <div class="d-flex justify-content-between">
+                <div class="">@Departments.Division.Name</div>
+                <div class="">
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
+                </div>
+            </div>
+        </MudTd>
+        <MudTd DataLabel="Department" Style="font-weight: bold;">@Departments.Name</MudTd>
+
         <MudTd Class="text-sm-end">
             <button class="btn btn-primary" @onclick="(() => OpenUpdateDepartment(Departments.Id))"><i class="oi oi-pencil"></i></button>
         </MudTd>

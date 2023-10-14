@@ -6,18 +6,18 @@
 @inject NavigationManager NavigationManager
 @attribute [Authorize]
 
-<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+<div class="mb-3">
     <div class="d-flex flex-row mt-3 justify-content-between">
         <h3 class="m-3 ms-0">Section Management</h3>
         <button class="btn btn-primary" @onclick="OpenAddSection"><i class="oi oi-plus me-1"></i> Add Section</button>
     </div>
-</MudContainer>
+</div>
 
 <MudTable Items="sectionList" Context="Sections" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<SectionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ColGroup>
-        <col style="width: 15px;" />
-        <col style="width: 1px;" />
-
+        <col style="width: 200px;" />
+        <col style="width: 200px;" />
+        <col style="width: auto;" />
     </ColGroup>
     <ToolBarContent>
         <MudSpacer />
@@ -25,94 +25,65 @@
         <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>Section</MudTh>
-        <MudTh>Department</MudTh>
-        <MudTh>Division</MudTh>
+        <MudTh>
+            <div class="d-flex justify-content-between">
+                <div class="">Division</div>  
+                <div class="">
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" />
+                </div>
+            </div>
+        </MudTh>
+        <MudTh>
+            <div class="d-flex justify-content-between">
+                <div class="">Department</div>
+                <div class="">
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardDoubleArrowRight" Title="Favorite" />
+                </div>
+            </div>
+        </MudTh>
+
+        <MudTh Style="font-weight: bold;">Section</MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="" Style="font-weight: bold;">@Sections.Name</MudTd>
-        @foreach (var item in DepartmentService.DepartmentTs)
-        {
-            if (item.Id == Sections.DepartmentId)
-            {
-                <MudTd DataLabel="">@item.Name</MudTd>
-            }
-        }
+     
         @foreach (var item in DivisionService.DivisionTs)
         {
             if (item.Id == Sections.DivisionId)
             {
-                <MudTd DataLabel="">@item.Name</MudTd>
+               
+                <MudTd DataLabel="Division">
+                    <div class="d-flex justify-content-between">
+                        <div class="">@item.Name</div>
+                        <div class="">
+                            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
+                        </div>
+                    </div>
+                </MudTd>
             }
         }
-
+        @foreach (var item in DepartmentService.DepartmentTs)
+        {
+            if (item.Id == Sections.DepartmentId)
+            {
+                <MudTd DataLabel="Department">
+                    <div class="d-flex justify-content-between">
+                        <div class="">@item.Name</div>
+                        <div class="">
+                            <MudIcon Icon="@Icons.Material.Filled.KeyboardDoubleArrowRight" Title="Favorite" Style="color: #90A4AE;" />
+                        </div>
+                    </div>
+                </MudTd>
+            }
+        }
+        <MudTd DataLabel="" Style="font-weight: bold;">@Sections.Name</MudTd>
         <MudTd Class="text-sm-end">
             <button class="btn btn-primary" @onclick="(() => OpenUpdateSection(Sections.Id))"><i class="oi oi-pencil"></i></button>
         </MudTd>
 
     </RowTemplate>
     <PagerContent>
-        <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+        <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
     </PagerContent>
 </MudTable>
 
-@code {
-    private List<DepartmentT> Departments = new List<DepartmentT>();
-    private List<DivisionT> Divisions = new List<DivisionT>();
-    private List<SectionT> Sections = new List<SectionT>();
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            await DepartmentService.GetDepartment();
-            await DivisionService.GetDivision();
-            await SectionService.GetSection();
-
-            Divisions = DivisionService.DivisionTs;
-            Departments = DepartmentService.DepartmentTs;
-            sectionList = SectionService.SectionTs;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-    }
-
-    private void OpenAddSection()
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        DialogService.Show<AddSectionDialog>("New Section", options);
-    }
-
-    private void OpenUpdateSection(int id)
-    {
-        var parameters = new DialogParameters<UpdateDivisionDialog>();
-        parameters.Add(x => x.Id, id);
-
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        DialogService.Show<UpdateDepartmentDialog>("Update Section", parameters, options);
-    }
-
-    //TABLEEES
-    private string infoFormat = "{first_item}-{last_item} of {all_items}";
-    private string searchString1 = "";
-    List<SectionT> sectionList = new List<SectionT>();
-
-    private SectionT selectedItem1 = null;
-    private HashSet<SectionT> selectedItems = new HashSet<SectionT>();
-
-    private bool FilterFunc1(SectionT section) => FilterFunc(section, searchString1);
-
-    private bool FilterFunc(SectionT section, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (section.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;  
-        return false;
-    }
-        //END FOR TABLES
-}

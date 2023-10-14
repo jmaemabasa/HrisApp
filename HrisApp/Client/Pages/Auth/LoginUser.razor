@@ -6,9 +6,8 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
-<MudGrid Justify="Justify.Center" Class="w-75">
-    <MudItem xs="12" sm="7">
-        <h3>Login</h3>
+<img class="mb-4 d-block ms-auto me-auto" Src="./images/SonicSales.png" alt="" width="auto" height="60">
+        <h5>Login</h5>
         @if (showAlert)
         {
             <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
@@ -23,5 +22,3 @@
             <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Info" FullWidth="true" Class="mb-2">Login</MudButton>
 
         </EditForm>
-    </MudItem>
-</MudGrid>

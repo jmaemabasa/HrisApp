@@ -4,12 +4,12 @@
 @inject IDialogService DialogService
 @attribute [Authorize]
 
-<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+<div class="mb-3">
     <div class="d-flex flex-row mt-3 justify-content-between">
         <h3 class="m-3 ms-0">Division Management</h3>
         <button class="btn btn-primary" @onclick="OpenAddDivision"><i class="oi oi-plus me-1"></i> Add Division</button>
     </div>
-</MudContainer>
+</div>
 
 @if (DivisionService.DivisionTs == null || DivisionService.DivisionTs.Count == 0)
 {
@@ -17,14 +17,13 @@
 }
 else
 {
-    <MudTable Items="divisionList" Context="divisions" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<DivisionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Items="divisionList" Context="divisions" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DivisionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ColGroup>
-            <col style="width: 15px;" />
-            <col style="width: 1px;" />
+            <col style="width: 200px;" />
+            <col style="width: 200px;" />
 
         </ColGroup>
         <ToolBarContent>
-            @* <MudText Typo="Typo.h6">Departments</MudText>*@
             <MudSpacer />
             <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>

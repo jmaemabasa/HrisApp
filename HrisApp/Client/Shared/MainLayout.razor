@@ -1,15 +1,26 @@
 ﻿@inherits LayoutComponentBase
 
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
+
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
+@* #EEF1F6 *@
 
-<MudLayout>
-    <MudAppBar>
+<MudLayout Style="background-color: #F4F6F9 ; height: 100vh">
+    <MudAppBar Style="background-color: #031a5a;">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         @* My Application *@
+
+        <MudSpacer/>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Logout" Style="color: white" OnClick="Logout">Logout</MudButton>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
+        <MudDrawerHeader>
+            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" />
+        </MudDrawerHeader>
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
@@ -25,5 +36,12 @@
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+    }
+
+    async Task Logout()
+    {
+        await LocalStorage.RemoveItemAsync("token");
+        await AuthStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("/");
     }
 }
