@@ -4,22 +4,24 @@
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
 
-<MudThemeProvider />
+<MudThemeProvider Theme="MyCustomTheme"/>
 <MudDialogProvider />
 <MudSnackbarProvider />
-@* #EEF1F6 *@
+@* #EEF1F6  #031a5a*@
 
 <MudLayout Style="background-color: #F4F6F9 ; height: 100vh">
-    <MudAppBar Style="background-color: #031a5a;">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudAppBar Style="background-color: #27374D; ">
+        <MudIconButton Icon="@Icons.Material.Rounded.MenuOpen" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         @* My Application *@
 
         <MudSpacer/>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Logout" Style="color: white" OnClick="Logout">Logout</MudButton>
+
     </MudAppBar>
+
     <MudDrawer @bind-Open="@_drawerOpen">
         <MudDrawerHeader>
-            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" />
+            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1"/>
         </MudDrawerHeader>
         <NavMenu/>
     </MudDrawer>
@@ -44,4 +46,15 @@
         await AuthStateProvider.GetAuthenticationStateAsync();
         NavigationManager.NavigateTo("/");
     }
+
+    MudTheme MyCustomTheme = new MudTheme()
+        {
+            Palette = new Palette()
+            {
+                Primary = Colors.Blue.Darken4,
+                
+                //Define other properties here.
+            },
+
+        };
 }

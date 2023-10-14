@@ -19,6 +19,8 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<List<DepartmentT>>> GetDeptByDivision(int divisionId)
         {
             var dept = await _context.DepartmentT
+                .Include(d => d.Division)
+
                 .Where(dept => dept.DivisionId == divisionId)
                 .ToListAsync();
             return Ok(dept);
@@ -28,6 +30,7 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<List<DepartmentT>>> GetDepartmentList()
         {
             var departments = await _context.DepartmentT
+                .Include(d => d.Division)
                 .ToListAsync();
             return Ok(departments);
         }

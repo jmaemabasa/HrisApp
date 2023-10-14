@@ -20,8 +20,21 @@
 
     </ColGroup>
     <ToolBarContent>
-        <MudSpacer />
+        @* ////////////////////////////// *@
 
+        <select @onchange="searchh" class="form-select w-auto" >
+            <option value="0">All Division</option>
+
+            @foreach (var div in Divisions)
+            {
+                <option value="@div.Id">@div.Name</option>
+            }
+
+        </select>
+
+
+        @* ////////////////////////////// *@
+        <MudSpacer />
         <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
@@ -57,3 +70,34 @@
         <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
     </PagerContent>
 </MudTable>
+
+
+
+
+@code {
+    private int searchDiv;
+    private string AllDiv = string.Empty;
+
+    private async Task searchh(ChangeEventArgs e)
+    {
+        if (Convert.ToInt32(e.Value) == 0)
+        {
+            await DepartmentService.GetDepartment();
+            departmentList = DepartmentService.DepartmentTs;
+
+        }
+        else
+        {
+            departmentList = await DepartmentService.GetDeptByDivision(Convert.ToInt32(e.Value));
+        }
+        
+    }
+
+    private void SelectedCarsChanged(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            Console.WriteLine(e.Value);
+        }
+    }
+}
