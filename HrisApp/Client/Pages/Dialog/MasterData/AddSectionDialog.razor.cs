@@ -44,14 +44,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                 if (result.IsConfirmed)
                 {
-                    await SectionService.CreateSection(newSection, selectedDivision, 1);
+                    await SectionService.CreateSection(newSection, selectedDivision, selectedDepartment);
 
                     newSection = "";
-                    await Swal.FireAsync(new SweetAlertOptions
-                    {
-                        Text = newSection + " Created Successfully!",
-                        Icon = SweetAlertIcon.Success
-                    });
+                    
+                    Snackbar.Add(newSection + " Created Successfully!", Severity.Success);
+                    await Task.Delay(1000);
+
                     await jsRuntime.InvokeVoidAsync("location.reload");
                     navigationManager.NavigateTo("/section");
                 }
@@ -81,11 +80,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     await SectionService.CreateSection(newSection, selectedDivision, selectedDepartment);
 
                     newSection = "";
-                    await Swal.FireAsync(new SweetAlertOptions
-                    {
-                        Text = newSection + " Created Successfully!",
-                        Icon = SweetAlertIcon.Success
-                    });
+
+                    Snackbar.Add(newSection + " Created Successfully!", Severity.Success);
+                    await Task.Delay(1000);
+
                     await jsRuntime.InvokeVoidAsync("location.reload");
                     navigationManager.NavigateTo("/");
                 }

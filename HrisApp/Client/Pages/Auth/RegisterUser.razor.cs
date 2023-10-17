@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components.Forms;
 
 namespace HrisApp.Client.Pages.Auth
 {
@@ -15,21 +14,29 @@ namespace HrisApp.Client.Pages.Auth
 
         async Task HandleRegistration()
         {
-            var result = await AuthService.Register(reg);
-            showAlert = true;
-            message = result.Message;
-            if (result.Success)
-                _severity = Severity.Success;
-            else
-                _severity = Severity.Error;
+            try
+            {
+                var result = await AuthService.Register(reg);
+
+                showAlert = true;
+                message = result.Message;
+
+                if (result.Success)
+                    _severity = Severity.Success;
+                else
+                    _severity = Severity.Error;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                message = ex.Message.ToString();
+            }
         }
 
         public void CloseMe()
         {
             showAlert = false;
         }
-
-
         private void OnValidSubmit(EditContext context)
         {
             success = true;
@@ -73,5 +80,6 @@ namespace HrisApp.Client.Pages.Auth
                 CPasswordInput = InputType.Text;
             }
         }
+
     }
 }

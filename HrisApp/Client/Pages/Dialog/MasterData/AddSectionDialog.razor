@@ -4,6 +4,7 @@
 @inject ISectionService SectionService
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
+@inject ISnackbar Snackbar
 
 <style>
     .mud-input.mud-input-outlined.mud-input-adorned-end {
@@ -24,7 +25,7 @@
                 <MudText Typo="Typo.caption">Not Applicable</MudText>
             </MudCheckBox>
         }
-        <MudSelect Label="Division" @bind-Value="selectedDivision" Variant="Variant.Outlined" Margin="Margin.Dense">
+        <MudSelect @bind-Value="selectedDivision" Variant="Variant.Outlined" Margin="Margin.Dense">
             <MudSelectItem Disabled="true" Style="width: 210px;" Value="0">Division</MudSelectItem>
             @foreach (var div in Division)
             {

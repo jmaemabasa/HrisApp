@@ -4,21 +4,42 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ISnackbar Snackbar
 
+<style>
+    .form-control {
+        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+        border-radius: 10px;
+        border: 0;
+        background-color: #e9ecef;
+        padding: 0 15px 10px 25px;
+    }
+</style>
 
-<img class="mb-4 d-block ms-auto me-auto" Src="./images/SonicSales.png" alt="" width="auto" height="60">
-        <h5>Login</h5>
-        @if (showAlert)
-        {
-            <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
-        }
-        <EditForm Model="@log" OnValidSubmit="HandleLogin">
-            <DataAnnotationsValidator />
+<div class="card p-4 mt-5 w-25 w-md-100 m-auto h-auto">
+    <div class="d-flex flex-column align-items-center m-auto mb-3">
+        <img src="./images/SonicSales.png" width="150px" alt=""><span class="h1">@* HRiS App *@</span>
+    </div>
+    <h3>Login to continue</h3>
+    @if (showAlert)
+    {
+        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
+    }
+       <EditForm Model="@log" OnValidSubmit="HandleLogin">
+        <div class="mb-3">
+            <div class="row">
+                <label for="" class="form-label">Username</label>
+                <MudTextField DisableUnderLine @bind-Value="log.Username" Class="form-control" Immediate=true Margin="Margin.Dense"></MudTextField>
+            </div>
+            <div class="row">
+                <label for="" class="form-label">Password</label>
+                 <MudTextField DisableUnderLine @bind-Value="log.Password" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" Class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <a href="/reset" class="w-auto"><small>Forgot your password?</small></a>
+            <button type="submit" class="btn btn-primary w-auto ms-auto">Login</button>
 
-            <MudTextField @bind-Value="log.Username" Label="Username" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => log.Username)" Class="mb-2" />
-
-            <MudTextField @bind-Value="log.Password" Label=" Password" Class="mb-2" For="@(() => log.Username)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
-
-            <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Info" FullWidth="true" Class="mb-2">Login</MudButton>
-
-        </EditForm>
+        </div>
+    </EditForm>
+</div>

@@ -1,8 +1,245 @@
 ﻿@page "/position"
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+@inject ISectionService SectionService
+@inject IPositionService PositionService
+@inject IDialogService DialogService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
 
-<h3>Position</h3>
+<PageTitle>Position Management</PageTitle>
+
+<div class="mb-5 mt-3">
+    <div class="d-flex flex-row mt-5 justify-content-between">
+        <h3 class="m-0">Position Management</h3>
+        <MudButton OnClick="OpenAddPosition" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Position</MudButton>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <MudTable Class="stable" Items="positionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<PositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ColGroup>
+            <col style="width: 12rem;" />
+            <col style="width: 12rem;" />
+            <col style="width: 12rem;" />
+            <col style="width: auto;" />
+            <col style="width: auto;" />
+        </ColGroup>
+        <ToolBarContent>
+            <div class="divsearch d-flex flex-row gap-2">            
+                <select @onchange="searchh" class="form-select w-auto">
+                    <option value="0">All Division</option>
+
+                    @foreach (var div in Divisions)
+                    {
+                        <option value="@div.Id">@div.Name</option>
+                    }
+
+                </select>
+
+                @if (divdd != 0)
+                {
+                    <select id="selectDept" @onchange="searchh1" class="form-select w-auto" style="background-color: #b0c1d4">
+                        @if (depdd == 0)
+                        {
+                            <option value="0" selected>All Departments</option>
+                        }
+                        else
+                        {
+                            <option value="0">All Departments</option>
+                        }
+
+                        @foreach (var dept in Departments.Where(d => d.DivisionId == divdd))
+                        {
+                            <option value="@dept.Id">@dept.Name</option>
+                        }
+
+                    </select>
+
+                } 
+
+                @if (depdd != 0 && Sections.Any(d => d.DepartmentId == depdd))
+                {
+                    <select @onchange="searchh2" class="form-select w-auto" style="background-color: #b0c1d4">
+                        <option value="0">All Sections</option>
+
+                        @foreach (var sect in Sections.Where(s => s.DepartmentId == depdd))
+                        {
+                            <option value="@sect.Id">@sect.Name</option>
+                        }
+
+                    </select>
+                }
+            </div>
+
+             <MudSpacer />
+             <div class="ssize">
+                <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+             </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Style="background: #e9ecef;">
+                <div class="d-flex justify-content-between">
+                    <div class="ttitle">Division</div>  
+                    <div class="">
+                         <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight" Title="Favorite" />
+                    </div>
+                </div>
+            </MudTh>
+            <MudTh Style="background: #e9ecef;">
+                <div class="d-flex justify-content-between">
+                        <div class="ttitle">Department</div>
+                    <div class="">
+                         <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" />
+                    </div>
+                </div>
+            </MudTh>
+             <MudTh Style="background: #e9ecef;">
+                 <div class="d-flex justify-content-between">
+                     <div class="ttitle">Section</div>
+                     <div class="">
+                         <MudIcon Icon="@Icons.Material.Rounded.ArrowRight" Title="Favorite" />
+
+                     </div>
+                 </div>
+             </MudTh>
+
+            <MudTh Style="font-weight: bold; background: #e9ecef;">Position</MudTh>
+            <MudTh Style="font-weight: bold; background: #e9ecef;">Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+     
+            @foreach (var item in DivisionService.DivisionTs)
+            {
+                if (item.Id == pos.DivisionId)
+                {
+                    <MudTd DataLabel="Division">
+                        <div class="d-flex justify-content-between">
+                            <div class="">@item.Name</div>
+                            <div class="">
+                                <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
+                            </div>
+                        </div>
+                    </MudTd>
+                }
+            }
+            @foreach (var item in DepartmentService.DepartmentTs)
+            {
+                    if (item.Id == pos.DepartmentId)
+                {
+                    <MudTd DataLabel="Department">
+                        <div class="d-flex justify-content-between">
+                            <div class="">@item.Name</div>
+                            <div class="">
+                                <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" Style="color: #90A4AE;" />
+                            </div>
+                        </div>
+                    </MudTd>
+                }
+            }
+            @if (pos.SectionId == 0)
+            {
+                <MudTd DataLabel="Section">
+                    <div class="d-flex justify-content-between">
+                        <div class=""></div>
+                        <div class="">
+                            <MudIcon Icon="@Icons.Material.Rounded.ArrowRight" Title="Favorite" Style="color: #90A4AE;" />
+                        </div>
+                    </div>
+                </MudTd>
+            }
+            else
+            {
+                @foreach (var item in SectionService.SectionTs)
+                {
+                    if (item.Id == pos.SectionId)
+                    {
+                        <MudTd DataLabel="Section">
+                            <div class="d-flex justify-content-between">
+                                <div class="">@item.Name</div>
+                                <div class="">
+                                    <MudIcon Icon="@Icons.Material.Rounded.ArrowRight" Title="Favorite" Style="color: #90A4AE;" />
+                                </div>
+                            </div>
+                        </MudTd>
+                    }
+                }
+            }
+           
+            <MudTd DataLabel="" Style="font-weight: bold;">@pos.Name</MudTd>
+            <MudTd >
+                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdatePosition(pos.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+            </MudTd>
+
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+        </PagerContent>
+    </MudTable>
+</div>
 
 
 @code {
+    //DROPDOWN SEARCH LIST
+    private int divdd;
+    private int depdd;
+    private int secdd;
 
+    private async Task searchh(ChangeEventArgs e)
+    {
+
+        divdd = Convert.ToInt32(e.Value);
+        depdd = 0;
+
+        
+
+        await PositionService.GetPosByDivision(Convert.ToInt32(e.Value));
+        positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+
+        if (Convert.ToInt32(e.Value) == 0)
+        {
+            await PositionService.GetPosition();
+            positionList = PositionService.PositionTs;
+        }
+    }
+
+    private async Task searchh1(ChangeEventArgs e)
+    {
+        if (divdd != 0)
+        {
+            if (Convert.ToInt32(e.Value) == 0)
+            {
+                await PositionService.GetPosition();
+                positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+                depdd = Convert.ToInt32(e.Value);
+            }
+            else
+            {
+                await PositionService.GetPosByDepartment(Convert.ToInt32(e.Value));
+                positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+
+                depdd = Convert.ToInt32(e.Value);
+            }
+        }
+       
+    }
+
+    private async Task searchh2(ChangeEventArgs e)
+    {
+        //if ang value sa section na dd kay dli 0, then i display tanan section sa department id
+        if (Convert.ToInt32(e.Value) == 0)
+        {
+            await PositionService.GetPosition();
+            positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
+            secdd = Convert.ToInt32(e.Value);
+        }
+        else
+        {
+            await PositionService.GetPosBySection(Convert.ToInt32(e.Value));
+            positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
+
+            secdd = Convert.ToInt32(e.Value);
+        }
+    }
+    //END DROPDOWN SEARCH   
 }

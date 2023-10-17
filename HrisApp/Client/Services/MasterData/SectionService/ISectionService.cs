@@ -5,7 +5,9 @@
         List<SectionT> SectionTs { get; set; }
 
         Task<List<SectionT>> GetSectionList();
-        Task<List<SectionT>> GetSectByDepartment(int deptId);
+        //Task<List<SectionT>> GetSectByDepartment(int deptId);
+        Task GetSectByDepartment(int deptId);
+        Task GetSectByDivision(int divId);
 
         Task GetSection();
 

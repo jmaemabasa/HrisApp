@@ -41,12 +41,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 {
                     await DivisionService.CreateDivision(newDivision);
                     newDivision = "";
-                    await Swal.FireAsync(new SweetAlertOptions
-                    {
-                        Text = newDivision + " Created Successfully!",
-                        Icon = SweetAlertIcon.Success
 
-                    });
+                    Snackbar.Add(newDivision + " Created Successfully!", Severity.Success);
+                    await Task.Delay(1000);
+
                     await jsRuntime.InvokeVoidAsync("location.reload");
                     NavigationManager.NavigateTo("/division");
                 }

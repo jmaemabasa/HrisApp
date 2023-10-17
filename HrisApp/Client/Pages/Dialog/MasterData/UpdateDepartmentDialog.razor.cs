@@ -41,11 +41,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await DepartmentService.UpdateDepartment(department);
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Text = department.Name + " updated Successfully!",
-                    Icon = SweetAlertIcon.Success
-                });
+
+                Snackbar.Add(department.Name + " updated Successfully!", Severity.Success);
+                await Task.Delay(1000);
+
                 await jsRuntime.InvokeVoidAsync("location.reload");
                 navigationManager.NavigateTo("/department");
             }

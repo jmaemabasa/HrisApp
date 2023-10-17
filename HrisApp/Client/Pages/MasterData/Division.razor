@@ -4,10 +4,12 @@
 @inject IDialogService DialogService
 @attribute [Authorize]
 
-<div class="mb-3">
-    <div class="d-flex flex-row mt-3 justify-content-between">
-        <h3 class="m-3 ms-0">Division Management</h3>
-        <button class="btn btn-primary" @onclick="OpenAddDivision"><i class="oi oi-plus me-1"></i> Add Division</button>
+<PageTitle>Division Management</PageTitle>
+
+<div class="mb-5 mt-3">
+    <div class="d-flex flex-row mt-5 justify-content-between">
+        <h3 class="m-0">Division Management</h3>
+        <MudButton OnClick="OpenAddDivision" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Division</MudButton>
     </div>
 </div>
 
@@ -17,29 +19,35 @@
 }
 else
 {
-    <MudTable Items="divisionList" Context="divisions" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DivisionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-        <ColGroup>
-            <col style="width: 200px;" />
-            <col style="width: 200px;" />
+    <div class="box w-auto">
+        <MudTable Class="stable" Items="divisionList" Context="divisions" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DivisionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+            <ColGroup>
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
 
-        </ColGroup>
-        <ToolBarContent>
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh>Division</MudTh>
-            <MudTh></MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="">@divisions.Name</MudTd>
-            <MudTd Class="text-sm-end">
-                <button class="btn btn-primary" @onclick="(() => OpenUpdateDivision(divisions.Id))"><i class="oi oi-pencil"></i></button>
-            </MudTd>
+            </ColGroup>
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
 
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-        </PagerContent>
-    </MudTable>
+                <div class="ssize">
+                    <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                 </div>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh Style="background: #e9ecef; font-weight: bold;">Division</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="">@divisions.Name</MudTd>
+                <MudTd>
+                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDivision(divisions.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                </MudTd>
+
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    </div>
 }

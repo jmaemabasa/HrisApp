@@ -42,13 +42,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await DivisionService.UpdateDivision(division);
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Text = division.Name + " updated Successfully!",
-                    Icon = SweetAlertIcon.Success
-                });
+
+                Snackbar.Add(division.Name + " updated Successfully!", Severity.Success);
+                await Task.Delay(1000);
+
                 await jsRuntime.InvokeVoidAsync("location.reload");
                 navigationManager.NavigateTo("/division");
+                
             }
         }
     }

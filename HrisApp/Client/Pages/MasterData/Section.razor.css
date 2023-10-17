@@ -1,0 +1,52 @@
+﻿.box {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: 780px;
+    padding: 25px 50px 25px 50px;
+}
+
+.ttitle {
+    font-weight: bold;
+}
+
+.form-select {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #adbbc9;
+    color: #27374D;
+    font-weight: bold;
+    height: 45px;
+    margin-bottom: 15px;
+}
+::deep .stable {
+    background: #e9ecef;
+    border-radius: 20px;
+}
+
+::deep .tsearch {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+
+.ssize {
+    width: 617px;
+}
+
+::deep .btnedit {
+    color: #27374D;
+}
+
+::deep .btnadd {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    background-color: #b0c1d4;
+    color: black;
+    padding-bottom: 4px;
+}

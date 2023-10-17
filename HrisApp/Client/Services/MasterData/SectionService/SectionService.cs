@@ -16,10 +16,33 @@
 
 
         //GEEEEEEET
-        public async Task<List<SectionT>> GetSectByDepartment(int deptId)
+        //public async Task<List<SectionT>> GetSectByDepartment(int deptId)
+        //{
+        //    var sections = await _http.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDepartment/{deptId}");
+        //    return sections;
+        //}
+
+        public async Task GetSectByDepartment(int deptId)
         {
             var sections = await _http.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDepartment/{deptId}");
-            return sections;
+            if (sections != null)
+            {
+                SectionTs = sections;
+            }
+        }
+        //public async Task<List<SectionT>> GetSectByDivision(int divId)
+        //{
+        //    var sections = await _http.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDivision/{divId}");
+        //    return sections;
+        //}
+
+        public async Task GetSectByDivision(int divId)
+        {
+            var sections = await _http.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDivision/{divId}");
+            if ( sections != null )
+            {
+                SectionTs = sections;
+            }
         }
 
         public async Task GetSection()

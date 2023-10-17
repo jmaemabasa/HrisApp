@@ -47,11 +47,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     await DepartmentService.CreateDepartment(newDepartment, selectedDivision);
                     newDepartment = "";
 
-                    await Swal.FireAsync(new SweetAlertOptions
-                    {
-                        Text = newDepartment + " Created Successfully!",
-                        Icon = SweetAlertIcon.Success
-                    });
+                    Snackbar.Add(newDepartment + " Created Successfully!", Severity.Success);
+                    await Task.Delay(1000);
+
                     await jsRuntime.InvokeVoidAsync("location.reload");
                     NavigationManager.NavigateTo("/department");
 

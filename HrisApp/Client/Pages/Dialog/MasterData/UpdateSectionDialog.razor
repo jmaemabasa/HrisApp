@@ -2,8 +2,9 @@
 @inject SweetAlertService Swal
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
+@inject ISnackbar Snackbar
 
-<MudDialog>
+<MudDialog >
     <DialogContent>
         <MudTextField Label="Name" @bind-Value="section.Name"></MudTextField>
     </DialogContent>

@@ -2,16 +2,15 @@
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
-    public partial class UpdateSectionDialog : ComponentBase
+    public partial class UpdatePositionDialog : ComponentBase
     {
-
 #nullable disable
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
         [Parameter]
         public int Id { get; set; }
 
 
-        private SectionT section = null;
+        private PositionT position = null;
 
 
         void Cancel() => MudDialog.Cancel();
@@ -19,12 +18,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
         protected override async Task OnParametersSetAsync()
         {
-            section = SectionService.SectionTs.Find(d => d.Id == Id);
+            position = PositionService.PositionTs.Find(d => d.Id == Id);
         }
 
         async Task UpdateArea()
         {
-            if (section == null)
+            if (position == null)
                 return;
 
             MudDialog.Close();
@@ -32,7 +31,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var confirmResult = await Swal.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmation",
-                Text = "Are you sure you want to update the " + section.Name + "?",
+                Text = "Are you sure you want to update the " + position.Name + "?",
                 Icon = SweetAlertIcon.Question,
                 ShowCancelButton = true,
                 ConfirmButtonText = "Yes",
@@ -41,13 +40,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             if (confirmResult.IsConfirmed)
             {
-                await SectionService.UpdateSection(section);
-             
-                Snackbar.Add(section.Name + " updated Successfully!", Severity.Success);
+                await PositionService.UpdatePosition(position);
+
+                Snackbar.Add(position.Name + " updated Successfully!", Severity.Success);
                 await Task.Delay(1000);
 
                 await jsRuntime.InvokeVoidAsync("location.reload");
-                navigationManager.NavigateTo("/section");
+                navigationManager.NavigateTo("/position");
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components.Forms;
 
 namespace HrisApp.Client.Pages.Auth
 {
@@ -51,6 +50,7 @@ namespace HrisApp.Client.Pages.Auth
                     await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
                     NavigationManager.NavigateTo("/index");
+                    Snackbar.Add("Successfully Login.", Severity.Success);
 
                 }
                 else
@@ -76,13 +76,13 @@ namespace HrisApp.Client.Pages.Auth
 
         void ButtonTestclick()
         {
-            if(isShow)
+            if (isShow)
             {
                 isShow = false;
                 PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
                 PasswordInput = InputType.Password;
             }
-        else
+            else
             {
                 isShow = true;
                 PasswordInputIcon = Icons.Material.Filled.Visibility;

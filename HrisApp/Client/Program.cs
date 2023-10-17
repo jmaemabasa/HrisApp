@@ -6,6 +6,7 @@ global using HrisApp.Client.Services.AuthService;
 global using HrisApp.Client.Services.MasterData.DepartmentService;
 global using HrisApp.Client.Services.MasterData.DivisionService;
 global using HrisApp.Client.Services.MasterData.SectionService;
+global using HrisApp.Client.Services.MasterData.PositionService;
 global using HrisApp.Client.Services.TokenService;
 global using HrisApp.Shared.Models.MasterData;
 global using HrisApp.Shared.Models.User;
@@ -41,6 +42,20 @@ builder.Services.AddScoped<ITokensService, TokensService>();
 builder.Services.AddScoped<IDivisionService, DivisionService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ISectionService, SectionService>();
+builder.Services.AddScoped<IPositionService, PositionService>();
+
+builder.Services.AddMudServices(config =>
+{
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+
+    config.SnackbarConfiguration.PreventDuplicates = false;
+    config.SnackbarConfiguration.NewestOnTop = false;
+    config.SnackbarConfiguration.ShowCloseIcon = true;
+    config.SnackbarConfiguration.VisibleStateDuration = 10000;
+    config.SnackbarConfiguration.HideTransitionDuration = 500;
+    config.SnackbarConfiguration.ShowTransitionDuration = 500;
+    config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+});
 
 //===========================//////////=======================
 

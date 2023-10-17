@@ -1,4 +1,4 @@
-﻿@inject IDivisionService DivisionService
+﻿@inject IPositionService PositionService
 @inject SweetAlertService Swal
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
@@ -6,7 +6,7 @@
 
 <MudDialog>
     <DialogContent>
-        <MudTextField Label="Name" @bind-Value="division.Name"></MudTextField>
+        <MudTextField Label="Name" @bind-Value="position.Name"></MudTextField>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>

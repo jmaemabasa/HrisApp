@@ -4,22 +4,45 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
 @inject IAuthService AuthService
-
-
+@inject ISnackbar Snackbar
 <PageTitle>Register</PageTitle>
 
+<style>
+    .card {
+        background: #e9ecef;
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 20px;
+    }
+</style>
 
-        <h3>Register</h3>
-        @if (showAlert)
-        {
-            <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
-        }
-        <MudForm Model="reg">
-            <MudTextField @bind-Value="reg.Username" Label="Username" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Username)" Class="mb-2"/>
-            <MudTextField @bind-Value="reg.Email" Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Email)" Class="mb-2" />
-            <div class="d-flex gap-1 mb-2" >
-                <MudTextField @bind-Value="reg.Password" Label=" Password" For="@(() => reg.Password)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
-                <MudTextField @bind-Value="reg.ConfirmPassword" Label="Confirm Password" For="@(() => reg.ConfirmPassword)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
-            </div>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="HandleRegistration" Class="mb-2">Register</MudButton>
-        </MudForm>
+<div class="card p-4 mt-5 w-25 w-md-100 m-auto h-auto">
+    <div class="d-flex flex-column align-items-center m-auto mb-3">
+        <img src="./images/SonicSales.png" width="150px" alt=""><span class="h1">@* HRiS App *@</span>
+    </div>
+    <h3>Register</h3>
+    @if (showAlert)
+    {
+        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
+    }
+    <EditForm Model="reg" OnValidSubmit="HandleRegistration">
+        <div class="mb-3">
+            <div class="row">
+                <label for="" class="form-label">Username</label>
+                <MudTextField @bind-Value="reg.Username" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Username)" />
+                 <label for="" class="form-label">Email</label>
+                 <MudTextField @bind-Value="reg.Email" Variant="Variant.Outlined" Margin="Margin.Dense"  />
+             </div>
+             <div class="row">
+                 <label for="" class="form-label">Password</label>
+                 <MudTextField @bind-Value="reg.Password" For="@(() => reg.Password)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+                 <label for="" class="form-label">Confirm Password</label>
+                <MudTextField @bind-Value="reg.ConfirmPassword" For="@(() => reg.ConfirmPassword)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
+             </div>
+         </div>
+         <div class="row">
+            <a href="/" class="w-auto"><small>Login</small></a>
+            <button type="submit" class="btn btn-primary w-auto ms-auto">Register</button>
+         </div>
+     </EditForm>
+ </div>

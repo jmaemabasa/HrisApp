@@ -1,0 +1,78 @@
+﻿@inject NavigationManager navigationManager
+@inject SweetAlertService Swal
+@inject IJSRuntime jsRuntime
+@inject ISectionService SectionService
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+@inject IPositionService PositionService
+@inject ISnackbar Snackbar
+
+<style>
+    .mud-input.mud-input-outlined.mud-input-adorned-end {
+        width: 300px;
+        padding-right: 14px;
+        padding-inline-end: 14px;
+        padding-inline-start: unset;
+    }
+</style>
+
+<MudDialog>
+    <DialogContent>
+        @* Select Division *@
+        <MudSelect Label="Select Division" @bind-Value="selectedDivision" Variant="Variant.Outlined" Margin="Margin.Dense">
+            <MudSelectItem Disabled="true" Style="width: 210px;" Value="0">Division</MudSelectItem>
+            @foreach (var div in Division)
+            {
+                <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+            }
+        </MudSelect>
+
+        @if (selectedDivision != 0)
+        {
+            var selectedCategoryObject = Division.FirstOrDefault(c => c.Id == selectedDivision);
+            if (selectedCategoryObject != null)
+            {
+                var departments = Department.Where(d => d.DivisionId == selectedCategoryObject.Id).ToList();
+                @* Select Department *@
+                <MudSelect Label="Select Department" @bind-Value="selectedDepartment" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-top:10px;">
+                    <MudSelectItem Disabled="true" Value="0">Department</MudSelectItem>
+                    @foreach (var department in departments)
+                    {
+                        <MudSelectItem Value="@department.Id">@department.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        }
+
+        @if (selectedDepartment != 0)
+        {
+            var departmentHasSections = Sections.Any(s => s.DepartmentId == selectedDepartment);
+            if (departmentHasSections)
+            {
+                var departmentSections = Sections.Where(s => s.DepartmentId == selectedDepartment).ToList();
+                @* Select Section *@
+                <MudSelect Label="Select Section" @bind-Value="selectedSection" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-top:10px; margin-bottom: 10px;">
+                    <MudSelectItem Disabled="true" Value="0">Section</MudSelectItem>
+                    @foreach (var sec in departmentSections)
+                    {
+                        <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudDivider DividerType="DividerType.Middle" Class="my-6" />                
+                <MudTextField @bind-Value="newPosition" Label="Add Position in Section" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            }
+            else
+            {
+                <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
+                <MudTextField @bind-Value="newPosition" Label="Add Position in Department" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            }
+        }
+        
+        
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" @onclick="ConfirmCreatePositionAsync">Save</MudButton>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
