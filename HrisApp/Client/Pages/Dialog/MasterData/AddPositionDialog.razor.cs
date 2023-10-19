@@ -84,7 +84,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             newPosition = "";
 
-            Snackbar.Add(positionName + " Created Successfully!", Severity.Success);
+            _toastService.ShowSuccess(positionName + " Created Successfully!");
+
             await Task.Delay(1000);
 
             await jsRuntime.InvokeVoidAsync("location.reload");

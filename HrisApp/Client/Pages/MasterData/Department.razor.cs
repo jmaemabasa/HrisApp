@@ -50,8 +50,6 @@
                 return true;
             if (department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (department.Division.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
             return false;
         }
         //END FOR TABLES

@@ -7,9 +7,12 @@ global using HrisApp.Client.Services.MasterData.DepartmentService;
 global using HrisApp.Client.Services.MasterData.DivisionService;
 global using HrisApp.Client.Services.MasterData.SectionService;
 global using HrisApp.Client.Services.MasterData.PositionService;
+global using HrisApp.Client.Services.MasterData.AreaService;
+global using HrisApp.Client.Services.EmpDetails.EmployeeService;
 global using HrisApp.Client.Services.TokenService;
 global using HrisApp.Shared.Models.MasterData;
 global using HrisApp.Shared.Models.User;
+global using HrisApp.Shared.Models.Employee;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.WebUtilities;
@@ -43,6 +46,8 @@ builder.Services.AddScoped<IDivisionService, DivisionService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ISectionService, SectionService>();
 builder.Services.AddScoped<IPositionService, PositionService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IAreaService, AreaService>();
 
 builder.Services.AddMudServices(config =>
 {

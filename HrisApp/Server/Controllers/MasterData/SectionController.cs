@@ -46,10 +46,8 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<List<SectionT>>> GetSection()
         {
             var sect = await _context.SectionT
-                .Include(sect => sect.Department)
                 .ToListAsync();
             return Ok(sect);
-
         }
 
         private async Task<List<SectionT>> GetDBSection()

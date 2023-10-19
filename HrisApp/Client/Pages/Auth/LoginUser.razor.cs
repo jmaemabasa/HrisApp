@@ -49,8 +49,11 @@ namespace HrisApp.Client.Pages.Auth
                     await LocalStorage.SetItemAsync("token", result.Data);
                     await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
+                    _toastService.ShowSuccess("Successfully Login.");
+                    await Task.Delay(1500);
+
                     NavigationManager.NavigateTo("/index");
-                    Snackbar.Add("Successfully Login.", Severity.Success);
+                    _toastService.ShowSuccess("Successfully Login.");
 
                 }
                 else
@@ -58,6 +61,8 @@ namespace HrisApp.Client.Pages.Auth
                     showAlert = true;
                     _severity = Severity.Error;
                     message = result.Message;
+                    _toastService.ShowError(result.Message);
+
 
                 }
             }

@@ -4,11 +4,11 @@
 @inject ISectionService SectionService
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
-@inject ISnackbar Snackbar
+@inject IToastService _toastService
 
 <style>
     .mud-input.mud-input-outlined.mud-input-adorned-end {
-        width: 200px;
+        width: 300px;
         padding-right: 14px;
         padding-inline-end: 14px;
         padding-inline-start: unset;
@@ -20,13 +20,14 @@
         @if (selectedDepartment != 0)
         {
             <MudTextField @bind-Value="newSection" Label="Add Section" Variant="Variant.Outlined" Style="margin-bottom:10px;" Margin="Margin.Dense" />
-
-            <MudCheckBox @bind-Checked="notApplicableChecked" Style="margin-top: -20px;margin-left: 75px;">
-                <MudText Typo="Typo.caption">Not Applicable</MudText>
-            </MudCheckBox>
+            <div class="d-flex justify-content-end mb-2">
+                <MudCheckBox @bind-Checked="notApplicableChecked">
+                    <MudText Typo="Typo.caption">Not Applicable</MudText>
+                </MudCheckBox>
+            </div>
         }
         <MudSelect @bind-Value="selectedDivision" Variant="Variant.Outlined" Margin="Margin.Dense">
-            <MudSelectItem Disabled="true" Style="width: 210px;" Value="0">Division</MudSelectItem>
+            <MudSelectItem Disabled="true" Style="width: auto;" Value="0">Division</MudSelectItem>
             @foreach (var div in Division)
             {
                 <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>

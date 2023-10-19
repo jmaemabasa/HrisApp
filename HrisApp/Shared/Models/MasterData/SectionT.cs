@@ -16,10 +16,8 @@ namespace HrisApp.Shared.Models.MasterData
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
 
-
         public int DivisionId { get; set; } //Fk
 
-        public DepartmentT? Department { get; set; }
         public int DepartmentId { get; set; } //Fk
     }
 }

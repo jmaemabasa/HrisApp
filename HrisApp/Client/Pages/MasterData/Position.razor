@@ -18,13 +18,6 @@
 
 <div class="box w-auto">
     <MudTable Class="stable" Items="positionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<PositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-        <ColGroup>
-            <col style="width: 12rem;" />
-            <col style="width: 12rem;" />
-            <col style="width: 12rem;" />
-            <col style="width: auto;" />
-            <col style="width: auto;" />
-        </ColGroup>
         <ToolBarContent>
             <div class="divsearch d-flex flex-row gap-2">            
                 <select @onchange="searchh" class="form-select w-auto">
@@ -78,7 +71,7 @@
              </div>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh Style="background: #e9ecef;">
+            <MudTh Class="col-3" Style="background: #e9ecef;">
                 <div class="d-flex justify-content-between">
                     <div class="ttitle">Division</div>  
                     <div class="">
@@ -86,7 +79,7 @@
                     </div>
                 </div>
             </MudTh>
-            <MudTh Style="background: #e9ecef;">
+             <MudTh Class="col-3" Style="background: #e9ecef;">
                 <div class="d-flex justify-content-between">
                         <div class="ttitle">Department</div>
                     <div class="">
@@ -94,7 +87,7 @@
                     </div>
                 </div>
             </MudTh>
-             <MudTh Style="background: #e9ecef;">
+             <MudTh Class="col-3" Style="background: #e9ecef;">
                  <div class="d-flex justify-content-between">
                      <div class="ttitle">Section</div>
                      <div class="">
@@ -103,8 +96,7 @@
                      </div>
                  </div>
              </MudTh>
-
-            <MudTh Style="font-weight: bold; background: #e9ecef;">Position</MudTh>
+             <MudTh Class="col-3" Style="font-weight: bold; background: #e9ecef;">Position</MudTh>
             <MudTh Style="font-weight: bold; background: #e9ecef;">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -177,69 +169,3 @@
         </PagerContent>
     </MudTable>
 </div>
-
-
-@code {
-    //DROPDOWN SEARCH LIST
-    private int divdd;
-    private int depdd;
-    private int secdd;
-
-    private async Task searchh(ChangeEventArgs e)
-    {
-
-        divdd = Convert.ToInt32(e.Value);
-        depdd = 0;
-
-        
-
-        await PositionService.GetPosByDivision(Convert.ToInt32(e.Value));
-        positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
-
-        if (Convert.ToInt32(e.Value) == 0)
-        {
-            await PositionService.GetPosition();
-            positionList = PositionService.PositionTs;
-        }
-    }
-
-    private async Task searchh1(ChangeEventArgs e)
-    {
-        if (divdd != 0)
-        {
-            if (Convert.ToInt32(e.Value) == 0)
-            {
-                await PositionService.GetPosition();
-                positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
-                depdd = Convert.ToInt32(e.Value);
-            }
-            else
-            {
-                await PositionService.GetPosByDepartment(Convert.ToInt32(e.Value));
-                positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
-
-                depdd = Convert.ToInt32(e.Value);
-            }
-        }
-       
-    }
-
-    private async Task searchh2(ChangeEventArgs e)
-    {
-        //if ang value sa section na dd kay dli 0, then i display tanan section sa department id
-        if (Convert.ToInt32(e.Value) == 0)
-        {
-            await PositionService.GetPosition();
-            positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
-            secdd = Convert.ToInt32(e.Value);
-        }
-        else
-        {
-            await PositionService.GetPosBySection(Convert.ToInt32(e.Value));
-            positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
-
-            secdd = Convert.ToInt32(e.Value);
-        }
-    }
-    //END DROPDOWN SEARCH   
-}

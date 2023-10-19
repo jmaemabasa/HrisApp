@@ -48,7 +48,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     newSection = "";
                     
-                    Snackbar.Add(newSection + " Created Successfully!", Severity.Success);
+                    _toastService.ShowSuccess(newSection + " Created Successfully!");
+
                     await Task.Delay(1000);
 
                     await jsRuntime.InvokeVoidAsync("location.reload");
@@ -81,7 +82,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     newSection = "";
 
-                    Snackbar.Add(newSection + " Created Successfully!", Severity.Success);
+                    _toastService.ShowSuccess(newSection + " Created Successfully!");
+
                     await Task.Delay(1000);
 
                     await jsRuntime.InvokeVoidAsync("location.reload");

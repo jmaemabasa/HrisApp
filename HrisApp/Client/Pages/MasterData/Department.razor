@@ -15,11 +15,7 @@
 
 <div class="box w-auto">
     <MudTable Class="stable" Items="departmentList" Context="Departments" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-        <ColGroup>
-            <col style="width: 200px;" />
-            <col style="width: 200px;" />
-
-        </ColGroup>
+        
         <ToolBarContent>
             @* ////////////////////////////// *@
 
@@ -40,22 +36,28 @@
              </div>
         </ToolBarContent>
         <HeaderContent>
-             <MudTh Style="background: #e9ecef;">
+             <MudTh Class="col-4" Style="background: #e9ecef;">
                 <div class="d-flex justify-content-between">
-                    <div class="">Division</div>
+                    <div class="" >Division</div>
                     <div class="">
                         <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" />
                     </div>
                 </div>
             </MudTh>
-             <MudTh Style="font-weight: bold; background: #e9ecef;">Department</MudTh>
+             <MudTh Class="col-4" Style="font-weight: bold; background: #e9ecef;">Department</MudTh>
              <MudTh Style="background: #e9ecef;">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
 
             <MudTd DataLabel="Division">
                 <div class="d-flex justify-content-between">
-                    <div class="">@Departments.Division.Name</div>
+                    @foreach (var div in DivisionService.DivisionTs)
+                    {
+                        if (div.Id == Departments.DivisionId)
+                        {
+                            <div class="">@div.Name</div>
+                        }
+                    }
                     <div class="">
                         <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
                     </div>
@@ -63,8 +65,8 @@
             </MudTd>
             <MudTd DataLabel="Department" Style="font-weight: bold;">@Departments.Name</MudTd>
 
-            <MudTd Class="text-sm-end">
-                <button class="btn btn-primary" @onclick="(() => OpenUpdateDepartment(Departments.Id))"><i class="oi oi-pencil"></i></button>
+            <MudTd>
+                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
             </MudTd>
 
         </RowTemplate>

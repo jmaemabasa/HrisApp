@@ -42,11 +42,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     await DivisionService.CreateDivision(newDivision);
                     newDivision = "";
 
-                    Snackbar.Add(newDivision + " Created Successfully!", Severity.Success);
+                    _toastService.ShowSuccess(newDivision + " Created Successfully!");
+
                     await Task.Delay(1000);
 
                     await jsRuntime.InvokeVoidAsync("location.reload");
                     NavigationManager.NavigateTo("/division");
+
                 }
             }
         }

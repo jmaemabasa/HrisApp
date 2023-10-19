@@ -14,8 +14,8 @@ namespace HrisApp.Shared.Models.MasterData
         [Key]
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public int DivisionId { get; set; }
-        public int DepartmentId { get; set; }
-        public int SectionId { get; set; }
+        public int DivisionId { get; set; } //FK
+        public int DepartmentId { get; set; } //FK
+        public int SectionId { get; set; } //FK
     }
 }

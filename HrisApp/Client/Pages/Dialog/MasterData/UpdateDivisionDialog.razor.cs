@@ -43,7 +43,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             {
                 await DivisionService.UpdateDivision(division);
 
-                Snackbar.Add(division.Name + " updated Successfully!", Severity.Success);
+                _toastService.ShowSuccess(division.Name + " Created Successfully!");
                 await Task.Delay(1000);
 
                 await jsRuntime.InvokeVoidAsync("location.reload");

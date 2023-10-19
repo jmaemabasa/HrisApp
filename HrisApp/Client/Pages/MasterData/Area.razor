@@ -1,0 +1,52 @@
+﻿@page "/area"
+@inject IAreaService AreaService
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+@attribute [Authorize]
+
+<PageTitle>Area Management</PageTitle>
+
+<div class="mb-5 mt-3">
+    <div class="d-flex flex-row mt-5 justify-content-between">
+        <h3 class="m-0">Area Management</h3>
+        <MudButton OnClick="OpenAddArea" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Area</MudButton>
+    </div>
+</div>
+@if (AreaService.AreaTs == null || AreaService.AreaTs.Count == 0)
+{
+    <span>Loading........!!!!</span>
+}
+else
+{
+    <div class="box w-auto">
+        <MudTable Class="stable" Items="areaList" Context="area" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AreaT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+            <ColGroup>
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
+
+            </ColGroup>
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+
+                <div class="ssize">
+                    <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                 </div>
+             </ToolBarContent>
+             <HeaderContent>
+                 <MudTh Style="background: #e9ecef; font-weight: bold;">Areas</MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+             </HeaderContent>
+             <RowTemplate>
+                 <MudTd DataLabel="">@area.Name</MudTd>
+                 <MudTd>
+                     <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                 </MudTd>
+
+             </RowTemplate>
+             <PagerContent>
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+             </PagerContent>
+         </MudTable>
+     </div>
+}

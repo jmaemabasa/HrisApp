@@ -1,0 +1,39 @@
+﻿@page "/test"
+
+<style>
+    .tabx {
+    }
+
+    .mud-tab.mud-tab-active {
+        color: #01579B;
+        font-weight: bold;
+    }
+
+    .mud-tabs-toolbar-content {
+        background: #e9ecef;
+        color: #78909C;
+    }
+    
+</style>
+
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Class="tabx" Text="Step 1" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudText>Content One</MudText>
+    </MudTabPanel>
+    <MudTabPanel Class="tabx" Text="Step 2" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudText>Content Two</MudText>
+    </MudTabPanel>
+    <MudTabPanel Class="tabx" Text="Step 3" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudText>Content Three</MudText>
+    </MudTabPanel>
+    <MudTabPanel Class="tabx" Text="Step 4" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudText>Content Three</MudText>
+    </MudTabPanel>
+    <MudTabPanel Class="tabx" Text="Step 5" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudText>Content Three</MudText>
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+
+}

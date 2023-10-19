@@ -47,7 +47,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     await DepartmentService.CreateDepartment(newDepartment, selectedDivision);
                     newDepartment = "";
 
-                    Snackbar.Add(newDepartment + " Created Successfully!", Severity.Success);
+                    _toastService.ShowSuccess(newDepartment + " Created Successfully!");
                     await Task.Delay(1000);
 
                     await jsRuntime.InvokeVoidAsync("location.reload");

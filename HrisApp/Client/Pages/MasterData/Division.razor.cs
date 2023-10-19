@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace HrisApp.Client.Pages.MasterData
+﻿namespace HrisApp.Client.Pages.MasterData
 {
     public partial class Division : ComponentBase
     {
@@ -21,6 +19,15 @@ namespace HrisApp.Client.Pages.MasterData
             }
         }
 
+        //LOADING
+        private bool isVisible;
+        public async void OpenOverlay()
+        {
+            isVisible = true;
+            await Task.Delay(3000);
+            isVisible = false;
+            StateHasChanged();
+        }
 
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";

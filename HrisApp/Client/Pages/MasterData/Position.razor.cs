@@ -62,5 +62,66 @@
             return false;
         }
         //END FOR TABLES
+
+        //DROPDOWN SEARCH LIST
+        private int divdd;
+        private int depdd;
+        private int secdd;
+
+        private async Task searchh(ChangeEventArgs e)
+        {
+
+            divdd = Convert.ToInt32(e.Value);
+            depdd = 0;
+
+            await PositionService.GetPosByDivision(Convert.ToInt32(e.Value));
+            positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+
+            if (Convert.ToInt32(e.Value) == 0)
+            {
+                await PositionService.GetPosition();
+                positionList = PositionService.PositionTs;
+            }
+        }
+
+        private async Task searchh1(ChangeEventArgs e)
+        {
+            if (divdd != 0)
+            {
+                if (Convert.ToInt32(e.Value) == 0)
+                {
+                    await PositionService.GetPosition();
+                    positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+                    depdd = Convert.ToInt32(e.Value);
+                }
+                else
+                {
+                    await PositionService.GetPosByDepartment(Convert.ToInt32(e.Value));
+                    positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+
+                    depdd = Convert.ToInt32(e.Value);
+                }
+            }
+
+        }
+
+        private async Task searchh2(ChangeEventArgs e)
+        {
+            //if ang value sa section na dd kay dli 0, then i display tanan section sa department id
+            if (Convert.ToInt32(e.Value) == 0)
+            {
+                await PositionService.GetPosition();
+                positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
+                secdd = Convert.ToInt32(e.Value);
+            }
+            else
+            {
+                await PositionService.GetPosBySection(Convert.ToInt32(e.Value));
+                positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
+
+                secdd = Convert.ToInt32(e.Value);
+            }
+        }
+        //END DROPDOWN SEARCH   
     }
 }

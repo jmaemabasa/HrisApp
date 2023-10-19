@@ -1,0 +1,15 @@
+﻿@inject IAreaService AreaService
+@inject SweetAlertService Swal
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+@inject IToastService _toastService
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField Label="Name" @bind-Value="area.Name"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="UpdateArea">Save</MudButton>
+    </DialogActions>
+</MudDialog>

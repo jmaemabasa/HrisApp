@@ -5,7 +5,7 @@
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject IPositionService PositionService
-@inject ISnackbar Snackbar
+@inject IToastService _toastService
 
 <style>
     .mud-input.mud-input-outlined.mud-input-adorned-end {
@@ -20,7 +20,7 @@
     <DialogContent>
         @* Select Division *@
         <MudSelect Label="Select Division" @bind-Value="selectedDivision" Variant="Variant.Outlined" Margin="Margin.Dense">
-            <MudSelectItem Disabled="true" Style="width: 210px;" Value="0">Division</MudSelectItem>
+            <MudSelectItem Disabled="true"  Value="0">Division</MudSelectItem>
             @foreach (var div in Division)
             {
                 <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>

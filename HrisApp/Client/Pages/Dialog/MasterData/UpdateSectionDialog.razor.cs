@@ -42,8 +42,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await SectionService.UpdateSection(section);
-             
-                Snackbar.Add(section.Name + " updated Successfully!", Severity.Success);
+
+                _toastService.ShowSuccess(section.Name + " Created Successfully!");
                 await Task.Delay(1000);
 
                 await jsRuntime.InvokeVoidAsync("location.reload");

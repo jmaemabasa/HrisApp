@@ -42,7 +42,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             {
                 await PositionService.UpdatePosition(position);
 
-                Snackbar.Add(position.Name + " updated Successfully!", Severity.Success);
+                _toastService.ShowSuccess(position.Name + " Created Successfully!");
                 await Task.Delay(1000);
 
                 await jsRuntime.InvokeVoidAsync("location.reload");
