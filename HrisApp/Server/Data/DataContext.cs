@@ -1,5 +1,7 @@
 ﻿
+using HrisApp.Shared.Models.Education;
 using HrisApp.Shared.Models.Employee;
+using HrisApp.Shared.Models.Images;
 using System.Reflection;
 
 namespace HrisApp.Server.Data
@@ -132,5 +134,22 @@ namespace HrisApp.Server.Data
         public DbSet<ReligionT> ReligionT { get; set;}
         public DbSet<GenderT> GenderT { get; set; }
         public DbSet<EmerRelationshipT> EmerRelationshipT { get; set;}
+
+        //EDUCATIONS
+        public DbSet<CollegeT> CollegeT { get; set; }
+        public DbSet<DoctorateT> DoctorateT { get; set; }
+        public DbSet<MasteralT> MasteralT { get; set; }
+        public DbSet<OtherEducT> OtherEducT { get; set; }
+        public DbSet<PrimaryT> PrimaryT { get; set; }
+        public DbSet<SecondaryT> SecondaryT { get; set; }
+        public DbSet<SeniorHST> SeniorHST { get; set; }
+
+
+        //Address
+        public DbSet<AddressT> AddressT { get; set; }
+
+        //IMAGES AND FILES
+        public DbSet<DocumentT> DocumentT { get; set; }
+        public DbSet<EmpPictureT> EmpPictureT { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace HrisApp.Shared.Models.Employee
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string MiddleName { get; set; } = string.Empty;
+        public string Extension { get; set; } = string.Empty;
         public int? Height { get; set; }
         public int? Weight { get; set; }
         public DateTime Birthdate { get; set; }
