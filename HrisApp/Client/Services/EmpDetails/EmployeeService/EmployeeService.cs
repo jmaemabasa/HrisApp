@@ -1,6 +1,4 @@
-﻿using HrisApp.Client.Pages.Employee;
-
-namespace HrisApp.Client.Services.EmpDetails.EmployeeService
+﻿namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {
 #nullable disable
     public class EmployeeService : IEmployeeService

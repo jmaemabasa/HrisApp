@@ -10,6 +10,7 @@ global using HrisApp.Client.Services.MasterData.PositionService;
 global using HrisApp.Client.Services.MasterData.AreaService;
 global using HrisApp.Client.Services.EmpDetails.EmployeeService;
 global using HrisApp.Client.Services.EmpDetails.AddressService;
+global using HrisApp.Client.Services.EmpDetails.EducationService;
 global using HrisApp.Client.Services.ImageService;
 global using HrisApp.Client.Services.TokenService;
 global using HrisApp.Shared.Models.MasterData;
@@ -26,7 +27,6 @@ global using System.Net.Http.Json;
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -54,6 +54,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IEducationService, EducationService>();
 
 builder.Services.AddMudServices(config =>
 {
