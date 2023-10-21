@@ -79,7 +79,7 @@
                             <ButtonTemplate>
                                 <MudButton Class="w-100 btnimagewithimage" DisableElevation HtmlTag="label" for="@context">
                                      <div style="height: 240px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:10px 0 10px 0">
-                                         <MudImage Src="@imgBase64" Style="height: 95%; width: auto; border-radius: 20px; border: none; " />
+                                         <MudImage Src="@imgBase64" Style="height: 95%; width: auto; max-width:100%; border-radius: 20px; border: none; " />
                                      </div>
                                  </MudButton>
                              </ButtonTemplate>
@@ -111,7 +111,8 @@
                     <MudCard>
                         <MudCardContent>
                             <MudStack Row="true" Class="mb-3">
-                                <MudItem xs="12"><MudTextField @bind-Value="employee.EmployeeNo" Label="Company ID No." Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                <MudItem xs="12">
+                                    <MudTextField @bind-Value="employee.EmployeeNo" Label="Company ID No." Variant="Variant.Outlined" Margin="Margin.Dense" />
                                 </MudItem>
                                 <MudItem xs="12">
                                     <MudSelect Label="Area of Assignment" @bind-Value="employee.AreaId" Variant="Variant.Outlined" Margin="Margin.Dense">
@@ -390,7 +391,106 @@
         @* ====================================================================================  EDUCATION  ==================================================================================== *@
 
         <MudTabPanel Class="tabx" Text="Step 3" Icon="@Icons.Material.Rounded.LabelImportant">
-            <MudText>Content Three</MudText>
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudCard>
+                        <MudCardContent>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                                    <span class="spantitle">Primary</span>
+                                    <div>
+                                        <MudTooltip  Text="Click to remove Primary">
+                                            <MudIconButton Class="p-0" OnClick="RemovePrimary" Icon="@Icons.Material.Filled.RemoveCircle" />
+                                        </MudTooltip>
+                                        <MudTooltip Text="Click to add more Primary">
+                                            <MudIconButton Class="p-0" OnClick="() => AddNewPrimary(employee.Verify_Id)" Icon="@Icons.Material.Filled.Add" />
+                                        </MudTooltip>
+                                    </div>  
+                                </div>
+                                @if (listOfPrimary.Any())
+                                {
+                                    @foreach (var pri in listOfPrimary)
+                                    {
+                                        <div class="mb-3">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <MudTextField @bind-Value="pri.PriSchoolName" Label="Name of School" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                                <MudTextField @bind-Value="pri.PriSchoolLoc" Label="School Location" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <MudTextField @bind-Value="pri.PriAward" Label="Award" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                                <MudTextField @bind-Value="pri.PriSchoolYear" Label="School Year" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                            </div>
+                                        </div>
+                                        
+                                    }
+                                }
+                                else
+                                {
+                                    @foreach (var pri in listOfPrimary)
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No Primary information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                }
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudCard>
+                        <MudCardContent>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                                    <span class="spantitle">Secondary</span>
+                                    <div>
+                                        <MudTooltip Text="Click to remove Secondary">
+                                            <MudIconButton Class="p-0" OnClick="RemovePrimary" Icon="@Icons.Material.Filled.RemoveCircle" />
+                                        </MudTooltip>
+                                        <MudTooltip Text="Click to add more Secondary">
+                                            <MudIconButton Class="p-0" OnClick="() => AddNewPrimary(employee.Verify_Id)" Icon="@Icons.Material.Filled.Add" />
+                                        </MudTooltip>
+                                    </div>
+                                </div>
+                                @if (listOfPrimary.Any())
+                                {
+                                    @foreach (var pri in listOfPrimary)
+                                    {
+                                        <div class="mb-3">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <MudTextField @bind-Value="pri.PriSchoolName" Label="Name of School" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                                <MudTextField @bind-Value="pri.PriSchoolLoc" Label="School Location" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <MudTextField @bind-Value="pri.PriAward" Label="Award" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                                <MudTextField @bind-Value="pri.PriSchoolYear" Label="School Year" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                            </div>
+                                        </div>
+
+                                    }
+                                }
+                                else
+                                {
+                                    @foreach (var pri in listOfPrimary)
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No Primary information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                }
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
         </MudTabPanel>
 
         @* ====================================================================================  LICENCE  ==================================================================================== *@
@@ -429,6 +529,15 @@
     private List<CivilStatusT> CivilStatusL = new List<CivilStatusT>();
     private List<ReligionT> ReligionsL = new List<ReligionT>();
     private List<EmerRelationshipT> EmerRelationshipsL = new List<EmerRelationshipT>();
+
+    List<CollegeT> listOfCollege = new();
+    List<OtherEducT> listOfOthers = new();
+    List<SecondaryT> listOfSecondary = new();
+    List<DoctorateT> listOfDoctorate = new();
+    List<PrimaryT> listOfPrimary = new();
+    List<MasteralT> listOfMasteral = new();
+    List<SeniorHST> listOfShs = new();
+
 
     string VerifyCode;
 
@@ -575,6 +684,117 @@
             var base642 = Convert.ToBase64String(imgBuffer);
             imgBase64 = string.Format("data:image/*;base64,{0}", base642);
 
+        }
+    }
+
+    public void AddNewPrimary(string employeeVerifyId)
+    {
+        if (listOfPrimary.Count <= 4)
+        {
+            listOfPrimary.Add(new PrimaryT { Verify_Id = employee.Verify_Id });
+        }
+    }
+
+    public void RemovePrimary()
+    {
+        if (listOfPrimary.Count > 0)
+        {
+            listOfPrimary.RemoveAt(listOfPrimary.Count - 1);
+        }
+    }
+    public void AddNewSecondary(string employeeVerifyId)
+    {
+        if (listOfSecondary.Count <= 2)
+        {
+            listOfSecondary.Add(new SecondaryT { Verify_Id = employee.Verify_Id });
+        }
+    }
+    public void RemoveSecondary()
+    {
+        if (listOfSecondary.Count <= 1) { }
+        else
+        {
+            listOfSecondary.RemoveAt(listOfSecondary.Count - 1);
+        }
+    }
+
+    public void AddNewShs(string employeeVerifyId)
+    {
+        if (listOfShs.Count <= 2)
+        {
+            listOfShs.Add(new SeniorHST { Verify_Id = employee.Verify_Id });
+        }
+    }
+    public void RemoveShs()
+    {
+        if (listOfShs.Count <= 1) { }
+        else
+        {
+            listOfShs.RemoveAt(listOfShs.Count - 1);
+        }
+    }
+
+    public void AddNewCollege(string employeeVerifyId)
+    {
+        if (listOfCollege.Count <= 2)
+        {
+            listOfCollege.Add(new CollegeT { Verify_Id = employee.Verify_Id });
+        }
+    }
+    public void RemoveCollege()
+    {
+        if (listOfCollege.Count <= 1) { }
+        else
+        {
+            listOfCollege.RemoveAt(listOfCollege.Count - 1);
+        }
+    }
+
+    public void AddNewMasteral(string employeeVerifyId)
+    {
+        if (listOfMasteral.Count <= 2)
+        {
+            listOfMasteral.Add(new MasteralT { Verify_Id = employee.Verify_Id });
+        }
+    }
+    public void RemoveMasteral()
+    {
+        if (listOfMasteral.Count <= 1) { }
+        else
+        {
+            listOfMasteral.RemoveAt(listOfMasteral.Count - 1);
+        }
+    }
+
+    public void AddNewDoctorate(string employeeVerifyId)
+    {
+        if (listOfDoctorate.Count <= 2)
+        {
+            listOfDoctorate.Add(new DoctorateT { Verify_Id = employee.Verify_Id });
+        }
+    }
+    public void RemoveDoctorate()
+    {
+        if (listOfDoctorate.Count <= 1) { }
+        else
+        {
+            listOfDoctorate.RemoveAt(listOfDoctorate.Count - 1);
+        }
+    }
+
+    public void AddNewOthers(string employeeVerifyId)
+    {
+        if (listOfOthers.Count <= 4)
+        {
+            listOfOthers.Add(new OtherEducT { Verify_Id = employee.Verify_Id });
+        }
+    }
+    public void RemoveOthers()
+    {
+        if (listOfOthers.Count <= 1) { }
+        else
+        {
+            listOfOthers.RemoveAt(listOfOthers.Count - 1);
         }
     }
 }

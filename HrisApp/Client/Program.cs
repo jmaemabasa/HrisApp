@@ -11,6 +11,7 @@ global using HrisApp.Client.Services.MasterData.AreaService;
 global using HrisApp.Client.Services.EmpDetails.EmployeeService;
 global using HrisApp.Client.Services.EmpDetails.AddressService;
 global using HrisApp.Client.Services.EmpDetails.EducationService;
+global using HrisApp.Shared.Models.Education;
 global using HrisApp.Client.Services.ImageService;
 global using HrisApp.Client.Services.TokenService;
 global using HrisApp.Shared.Models.MasterData;
