@@ -26,10 +26,10 @@ namespace HrisApp.Client.Services.MasterData.DepartmentService
             {
                 DepartmentTs = result;
                 // Console.WriteLine to check if the data is fetched
-                foreach (var area in DepartmentTs)
-                {
-                    Console.WriteLine($"dept Id: {area.Id}, Name: {area.Name}");
-                }
+                //foreach (var area in DepartmentTs)
+                //{
+                //    Console.WriteLine($"dept Id: {area.Id}, Name: {area.Name}");
+                //}
             }
         }
 

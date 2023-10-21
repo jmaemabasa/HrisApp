@@ -63,93 +63,40 @@
 
         //DROPDOWN SEARCH LIST
         private int divdd;
-        private int depdd;
 
-        private async Task searchh(ChangeEventArgs e)
+        private async Task searchh(int div)
         {
-            if (depdd == 0)
+            await Task.Delay(10);
+            if (div == 0)
             {
-                if (Convert.ToInt32(e.Value) == 0)
-                {
-                    await SectionService.GetSection();
-                    sectionList = SectionService.SectionTs;
-
-                    divdd = Convert.ToInt32(e.Value);
-
-                }
-                else
-                {
-                    await SectionService.GetSectByDivision(Convert.ToInt32(e.Value));
-                    sectionList = SectionService.SectionTs;
-
-                    divdd = Convert.ToInt32(e.Value);
-                    Console.WriteLine(divdd);
-                }
+                await SectionService.GetSection();
+                sectionList = SectionService.SectionTs;
+                divdd = 0;
             }
             else
             {
-                if (Convert.ToInt32(e.Value) == 0)
-                {
-                    await SectionService.GetSection();
-                    sectionList = SectionService.SectionTs.Where(d => d.DepartmentId == depdd).ToList();
-
-                    divdd = Convert.ToInt32(e.Value);
-
-                }
-                else
-                {
-                    await SectionService.GetSectByDivision(Convert.ToInt32(e.Value));
-                    sectionList = SectionService.SectionTs.Where(d => d.DepartmentId == depdd).ToList();
-
-                    divdd = Convert.ToInt32(e.Value);
-                    Console.WriteLine(divdd);
-                }
+                await SectionService.GetSectByDivision(div);
+                sectionList = SectionService.SectionTs;
+                divdd = div;
             }
+
         }
-
-        private async Task searchh1(ChangeEventArgs e)
+        private async Task searchh1(int dep)
         {
-
-            //if ang value sa dropdown na division kay all display tanan division by department
-            if (divdd == 0)
+            await Task.Delay(10);
+            if (dep == 0)
             {
-                if (Convert.ToInt32(e.Value) == 0)
-                {
-                    await SectionService.GetSection();
-                    sectionList = SectionService.SectionTs;
-
-                    depdd = Convert.ToInt32(e.Value);
-                }
-                else
-                {
-                    await SectionService.GetSectByDepartment(Convert.ToInt32(e.Value));
-                    sectionList = SectionService.SectionTs;
-
-                    depdd = Convert.ToInt32(e.Value);
-
-                }
+                await SectionService.GetSection();
+                sectionList = SectionService.SectionTs.Where(d => d.DivisionId == divdd).ToList();
             }
-
-            //else naay gi pick sa division drop down display lang ang department sa value sa dropdown na division
             else
             {
-                if (Convert.ToInt32(e.Value) == 0)
-                {
-                    await SectionService.GetSection();
-                    sectionList = SectionService.SectionTs.Where(d => d.DivisionId == divdd).ToList();
-                    depdd = Convert.ToInt32(e.Value);
-
-                }
-                else
-                {
-                    await SectionService.GetSectByDepartment(Convert.ToInt32(e.Value));
-                    sectionList = SectionService.SectionTs.Where(d => d.DivisionId == divdd).ToList();
-
-                    depdd = Convert.ToInt32(e.Value);
-
-                }
+                await SectionService.GetSectByDepartment(dep);
+                sectionList = SectionService.SectionTs.Where(d => d.DivisionId == divdd).ToList();
             }
+
         }
+
         //END DROPDOWN SEARCH LIST
     }
 }

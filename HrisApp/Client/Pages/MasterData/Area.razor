@@ -20,11 +20,6 @@ else
 {
     <div class="box w-auto">
         <MudTable Class="stable" Items="areaList" Context="area" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AreaT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-            <ColGroup>
-                <col style="width: 200px;" />
-                <col style="width: 200px;" />
-
-            </ColGroup>
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -34,8 +29,8 @@ else
                  </div>
              </ToolBarContent>
              <HeaderContent>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Areas</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+                 <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold;">Areas</MudTh>
+                 <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
              </HeaderContent>
              <RowTemplate>
                  <MudTd DataLabel="">@area.Name</MudTd>

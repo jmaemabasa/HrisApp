@@ -17,23 +17,22 @@
     <MudTable Class="stable" Items="departmentList" Context="Departments" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         
         <ToolBarContent>
-            @* ////////////////////////////// *@
-
-            <select @onchange="searchh" class="form-select w-auto" >
-                <option value="0">All Division</option>
-
-                @foreach (var div in Divisions)
-                {
-                    <option value="@div.Id">@div.Name</option>
-                }
-
-            </select>
-            @* ////////////////////////////// *@
-            <MudSpacer />
-
-            <div class="ssize">
-                <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-             </div>
+            <div class="d-flex flex-grow-1 mb-3">
+                <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
+                    <MudItem xs="12" lg="3">
+                        <MudSelect class="dddiv" T="int" ValueChanged="searchh" Margin="Margin.Dense" DisableUnderLine>
+                            <MudSelectItem Value=0>All Division</MudSelectItem>
+                            @foreach (var div in Divisions)
+                            {
+                                <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" lg="4">
+                        <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                    </MudItem>
+                </div>
+            </div>        
         </ToolBarContent>
         <HeaderContent>
              <MudTh Class="col-4" Style="background: #e9ecef;">
@@ -80,28 +79,19 @@
 
 @code {
     private int searchDiv;
-    private string AllDiv = string.Empty;
 
-    private async Task searchh(ChangeEventArgs e)
+    private async Task searchh(int div)
     {
-        if (Convert.ToInt32(e.Value) == 0)
+        await Task.Delay(10);
+        if (div == 0)
         {
             await DepartmentService.GetDepartment();
             departmentList = DepartmentService.DepartmentTs;
-
         }
         else
         {
-            departmentList = await DepartmentService.GetDeptByDivision(Convert.ToInt32(e.Value));
+            departmentList = await DepartmentService.GetDeptByDivision(div);
         }
-        
-    }
 
-    private void SelectedCarsChanged(ChangeEventArgs e)
-    {
-        if (e.Value is not null)
-        {
-            Console.WriteLine(e.Value);
-        }
     }
 }

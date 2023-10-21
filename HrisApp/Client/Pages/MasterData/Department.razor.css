@@ -3,7 +3,7 @@
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 20px;
-    height: 780px;
+    height: 790px;
     padding: 25px 50px 25px 50px;
 }
 
@@ -11,15 +11,25 @@
     font-weight: bold;
 }
 
-.form-select {
+::deep .dddiv {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 10px;
     background-color: #adbbc9;
+    margin-bottom: 15px;
+}
+
+::deep .mud-toolbar {
+        height: auto;
+        padding: 0;
+}
+
+::deep .mud-input.mud-input-text.mud-input-adorned-end.mud-input-margin-dense.mud-shrink.mud-select-input {
+    margin: 0;
+    padding: 10px;
     color: #27374D;
     font-weight: bold;
-    height: 45px;
-    margin-bottom: 15px;
+    margin-top:2px;
 }
 
 ::deep .stable {
@@ -50,4 +60,17 @@
     background-color: #b0c1d4;
     color: black;
     padding-bottom: 4px;
+}
+
+@media (max-width: 576px) {
+    ::deep .dddiv {
+        width: 223px;
+    }
+
+    .box {
+        height: auto;
+        margin-bottom: 15px;
+        padding: 15px 25px 15px 25px;
+    }
+       
 }

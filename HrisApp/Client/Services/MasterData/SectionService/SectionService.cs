@@ -52,10 +52,10 @@
             {
                 SectionTs = result;
                 // Console.WriteLine to check if the data is fetched
-                foreach (var sect in SectionTs)
-                {
-                    Console.WriteLine($"sec Id: {sect.Id}, Name: {sect.Name}");
-                }
+                //foreach (var sect in SectionTs)
+                //{
+                //    Console.WriteLine($"sec Id: {sect.Id}, Name: {sect.Name}");
+                //}
             }
         }
 

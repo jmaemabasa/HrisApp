@@ -59,10 +59,10 @@
             {
                 PositionTs = result;
                 // Console.WriteLine to check if the data is fetched
-                foreach (var pos in PositionTs)
-                {
-                    Console.WriteLine($"pos Id: {pos.Id}, Name: {pos.Name}");
-                }
+                //foreach (var pos in PositionTs)
+                //{
+                //    Console.WriteLine($"pos Id: {pos.Id}, Name: {pos.Name}");
+                //}
             }
         }
 

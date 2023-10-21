@@ -1,4 +1,5 @@
-﻿using HrisApp.Shared.Models.Employee;
+﻿using HrisApp.Client.Pages.Employee;
+using HrisApp.Shared.Models.Employee;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,9 +55,21 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         //CREATE AND UPDATEEEE EMPLOYEEE
 
         [HttpPost("CreateEmployee")]
-        public async Task<ActionResult<List<EmployeeT>>> CreateEmployee(EmployeeT emp)
+        public async Task<ActionResult<List<EmployeeT>>> CreateEmployee(EmployeeT employee)
         {
-            _context.EmployeeT.Add(emp);
+            //employee.Status = null;
+            //employee.EmploymentStatus = null;
+            //employee.EmerRelationship = null;
+            //employee.Gender = null;
+            //employee.CivilStatus = null;
+            //employee.Religion = null;
+            //employee.Division = null;
+            //employee.Department = null;
+            //employee.Section = null;
+            //employee.Area = null;
+            //employee.InactiveStatus = null;
+            //employee.Position = null;
+            _context.EmployeeT.Add(employee);
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBEmployee());

@@ -32,10 +32,10 @@ namespace HrisApp.Client.Services.MasterData.DivisionService
                 DivisionTs = result;
 
                 // Console.WriteLine to check if the data is fetched
-                foreach (var area in DivisionTs)
-                {
-                    Console.WriteLine($"Area Id: {area.Id}, Name: {area.Name}");
-                }
+                //foreach (var area in DivisionTs)
+                //{
+                //    Console.WriteLine($"Area Id: {area.Id}, Name: {area.Name}");
+                //}
             }
         }
 

@@ -68,58 +68,65 @@
         private int depdd;
         private int secdd;
 
-        private async Task searchh(ChangeEventArgs e)
+        private async Task searchh(int div)
         {
-
-            divdd = Convert.ToInt32(e.Value);
-            depdd = 0;
-
-            await PositionService.GetPosByDivision(Convert.ToInt32(e.Value));
-            positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
-
-            if (Convert.ToInt32(e.Value) == 0)
+            await Task.Delay(10);
+            if (div == 0)
             {
                 await PositionService.GetPosition();
                 positionList = PositionService.PositionTs;
-            }
-        }
-
-        private async Task searchh1(ChangeEventArgs e)
-        {
-            if (divdd != 0)
-            {
-                if (Convert.ToInt32(e.Value) == 0)
-                {
-                    await PositionService.GetPosition();
-                    positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
-                    depdd = Convert.ToInt32(e.Value);
-                }
-                else
-                {
-                    await PositionService.GetPosByDepartment(Convert.ToInt32(e.Value));
-                    positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
-
-                    depdd = Convert.ToInt32(e.Value);
-                }
-            }
-
-        }
-
-        private async Task searchh2(ChangeEventArgs e)
-        {
-            //if ang value sa section na dd kay dli 0, then i display tanan section sa department id
-            if (Convert.ToInt32(e.Value) == 0)
-            {
-                await PositionService.GetPosition();
-                positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
-                secdd = Convert.ToInt32(e.Value);
+                depdd = 0;
+                divdd = 0;
             }
             else
             {
-                await PositionService.GetPosBySection(Convert.ToInt32(e.Value));
+                divdd = div;
+                depdd = 0;
+
+                await PositionService.GetPosByDivision(div);
+                positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+            }
+
+        }
+
+
+        private async Task searchh1(int dep)
+        {
+            await Task.Delay(10);
+            if (divdd != 0)
+            {
+                if (dep == 0)
+                {
+                    await PositionService.GetPosition();
+                    positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+                    depdd = dep;
+                }
+                else
+                {
+                    await PositionService.GetPosByDepartment(dep);
+                    positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
+
+                    depdd = dep;
+                }
+            }
+        }
+
+        private async Task searchh2(int sec)
+        {
+            await Task.Delay(10);
+            //if ang value sa section na dd kay dli 0, then i display tanan section sa department id
+            if (sec == 0)
+            {
+                await PositionService.GetPosition();
+                positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
+                secdd = sec;
+            }
+            else
+            {
+                await PositionService.GetPosBySection(sec);
                 positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
 
-                secdd = Convert.ToInt32(e.Value);
+                secdd = sec;
             }
         }
         //END DROPDOWN SEARCH   

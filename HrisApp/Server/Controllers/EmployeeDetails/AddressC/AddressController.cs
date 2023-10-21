@@ -46,7 +46,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails.AddressC
             if (dbaddress == null)
                 return NotFound("Sorry, but no users for you. :/");
 
-
+            dbaddress.Verify_Id = address.Verify_Id; 
 
             dbaddress.CurrentAdd = address.CurrentAdd;
             dbaddress.CurrentBrgy = address.CurrentBrgy;

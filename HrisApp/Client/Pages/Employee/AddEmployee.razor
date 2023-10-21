@@ -3,10 +3,12 @@
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
 @inject IPositionService PositionService
+@inject IAddressService AddressService
 @inject IAreaService AreaService
 @inject IEmployeeService EmployeeService
 @inject IToastService _toastService
 @inject IImageService ImageService
+@inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
 
 <style>
@@ -54,6 +56,7 @@
 </style>
 
 <div class="tabdiv">
+    <MudButton Class="button" Variant="Variant.Outlined" Color="Color.Primary" @onclick="CreateEmployee" StartIcon="@Icons.Material.Filled.PersonAdd" Style="text-transform: none; position: absolute;left: 90%; z-index:10;top: 70px;">Create User</MudButton>
     <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
 
         @* ====================================================================================  JOB  ==================================================================================== *@
@@ -63,7 +66,7 @@
                     <span class="spantitle">Image</span>
                     @if (imgBase64 == "./images/addIcon.png")
                     {
-                        <MudFileUpload T="IBrowserFile" OnFilesChanged="uploadImage" Accept="image/*">
+                        <MudFileUpload T="IBrowserFile" OnFilesChanged="uploadImage" Accept="image/*" capture>
                             <ButtonTemplate>
                                 <MudButton Class="w-100 btnimage" DisableElevation HtmlTag="label" Variant="Variant.Outlined" for="@context">
                                     <div style="height: 240px; display: flex; justify-content: center; align-items: center;">
@@ -75,7 +78,7 @@
                     }
                     else
                     {
-                        <MudFileUpload T="IBrowserFile" OnFilesChanged="uploadImage" Accept="image/*">
+                        <MudFileUpload T="IBrowserFile" OnFilesChanged="uploadImage" Accept="image/*" capture>
                             <ButtonTemplate>
                                 <MudButton Class="w-100 btnimagewithimage" DisableElevation HtmlTag="label" for="@context">
                                      <div style="height: 240px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:10px 0 10px 0">
@@ -212,56 +215,89 @@
                                 }
                             </MudStack>
                             <MudStack Row="true" Class="mb-3">
-                                <MudItem xs="12">
-                                    <MudSelect Label="Division" @bind-Value="employee.DivisionId" Variant="Variant.Outlined" Margin="Margin.Dense">
-                                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                        @foreach (var div in DivisionsL)
-                                        {
-                                            <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
-                                        }
-                                    </MudSelect>
-                                </MudItem>
-                                <MudItem xs="12">
-                                    <MudSelect Label="Department" @bind-Value="employee.DepartmentId" Variant="Variant.Outlined" Margin="Margin.Dense">
-                                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                        @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
-                                        {
-                                            <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
-                                        }
-                                    </MudSelect>
-                                </MudItem>
-                                @if (SectionsL.Where(s => s.DepartmentId == employee.DepartmentId).Any())
+                                @{
+                                    var departmentHasSection = employee.DepartmentId != 0 && SectionService.SectionTs.Any(s => s.DepartmentId == employee.DepartmentId);
+                                }
+                                @if (departmentHasSection)
                                 {
                                     <MudItem xs="12">
-                                        <MudSelect Label="Section" @bind-Value="employee.SectionId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                        <MudSelect Label="Division" @bind-Value="employee.DivisionId" Variant="Variant.Outlined" Margin="Margin.Dense">
                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                         @foreach (var sect in SectionsL.Where(d => d.DepartmentId == employee.DepartmentId))
+                                         @foreach (var div in DivisionsL)
                                             {
-                                                <MudSelectItem Value="@sect.Id">@sect.Name</MudSelectItem>
+                                                <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                    </MudItem>
+                                    <MudItem xs="12">
+                                        <MudSelect Label="Department" @bind-Value="employee.DepartmentId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
+                                            {
+                                                <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                    </MudItem>
+                                    @if (departmentHasSection)
+                                    {
+                                        var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
+                                        <MudItem xs="12">
+                                            <MudSelect Label="Section" @bind-Value="employee.SectionId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @if (sections.Any()) {
+                                                        @foreach (var sect in sections)
+                                                        {
+                                                            <MudSelectItem Value="@sect.Id">@sect.Name</MudSelectItem>
+                                                        }
+                                                }
+                                                else
+                                                {
+                                                    <MudSelectItem Value="0">&nbsp;</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudSelect Label="Position" @bind-Value="employee.PositionId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                 @foreach (var dep in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
+                                                    {
+                                                        <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                                    }
+                                            </MudSelect>
+                                        </MudItem>
+                                    }
+                                }
+                                else {
+                                    <MudItem xs="12">
+                                        <MudSelect Label="Division" @bind-Value="employee.DivisionId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                         @foreach (var div in DivisionsL)
+                                            {
+                                                <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                    </MudItem>
+                                    <MudItem xs="12">
+                                        <MudSelect Label="Department" @bind-Value="employee.DepartmentId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
+                                            {
+                                                <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                                             }
                                         </MudSelect>
                                     </MudItem>
                                     <MudItem xs="12">
                                         <MudSelect Label="Position" @bind-Value="employee.PositionId" Variant="Variant.Outlined" Margin="Margin.Dense">
                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                         @foreach (var pos in PositionsL.Where(d => d.SectionId == employee.SectionId))
-                                            {
-                                                <MudSelectItem Value="@pos.Id">@pos.Name</MudSelectItem>
-                                            }
-                                        </MudSelect>
-                                    </MudItem>
-                                } else
-                                {
-                                    <MudItem xs="12">
-                                        <MudSelect Label="Position" @bind-Value="employee.PositionId" Variant="Variant.Outlined" Margin="Margin.Dense">
-                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                         @foreach (var pos in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
-                                            {
-                                                <MudSelectItem Value="@pos.Id">@pos.Name</MudSelectItem>
-                                            }
+                                             @foreach (var dep in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
+                                                {
+                                                    <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                                }
                                         </MudSelect>
                                     </MudItem>
                                 }
+                                
+                                
                             </MudStack>
                         </MudCardContent>
                     </MudCard>
@@ -555,6 +591,17 @@
     private DateTime? DateHired = DateTime.Today;
     private DateTime? RegularDate = DateTime.Today;
 
+    //attachment
+    private string PDFBase64 { get; set; }
+    private string PDFUrl { get; set; }
+    private string PDFFileName { get; set; }
+    private string PDFContentType { get; set; }
+    private byte[] pdfData { get; set; }
+    private bool pdfbool12 { get; set; }
+    private bool PDFbool12 { get; set; }
+    IList<IBrowserFile> pdffile = new List<IBrowserFile>();
+    private List<MultipartFormDataContent> DocuEmployees = new List<MultipartFormDataContent>();
+
     //image
     private string imgBase64 { get; set; }
     private string ImageUrl { get; set; }
@@ -684,6 +731,80 @@
             var base642 = Convert.ToBase64String(imgBuffer);
             imgBase64 = string.Format("data:image/*;base64,{0}", base642);
 
+        }
+    }
+
+    async Task CreateEmployee()
+    {
+        try
+        {
+            if (bday.HasValue)
+            {
+                DateTime currentDate = DateTime.Today;
+                int age = currentDate.Year - bday.Value.Year;
+
+                if (bday.Value > currentDate.AddYears(-age))
+                    age--;
+
+                employee.Age = age;
+            }
+
+            Console.WriteLine("Saving Page");
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+
+            employee.Verify_Id = verifyCode;
+
+            employee.Birthdate = Convert.ToDateTime(bday);
+            employee.DateHired = Convert.ToDateTime(DateHired);
+
+            employee.InactiveStatusId = 1;
+
+            var verifyId = await EmployeeService.CreateEmployee(employee);
+
+            address.Verify_Id = verifyId;
+            var adres = await AddressService.CreateAddress(address);
+
+            var divisionString = employee.DivisionId;
+            var divisionPDF = employee.DivisionId;
+
+            var departmentString = employee.DepartmentId;
+            var departmentPDF = employee.DepartmentId;
+
+            await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
+            await OnPDFSaving(employee.EmployeeNo, divisionPDF, departmentPDF, employee.LastName, verifyId);
+
+            NavigationManager.NavigateTo("employee");
+
+            var swal = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Text = "Created Successfully!",
+                    Icon = SweetAlertIcon.Success
+                });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async Task OnsavingImg(string EmployeeId, int division, int department, string lastname, string verify)
+    {
+        using var _contentImg = new MultipartFormDataContent();
+        _contentImg.Add(EmpImage.LastOrDefault());
+        await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
+    }
+
+    private async Task OnPDFSaving(string EmployeeId, int division, int department, string lastname, string verify)
+    {
+        Console.WriteLine($"EmployeeId: {EmployeeId}");
+        Console.WriteLine($"division: {division}");
+        Console.WriteLine($"department: {department}");
+        Console.WriteLine($"lastname: {lastname}");
+        Console.WriteLine($"verify: {verify}");
+
+        foreach (var formdata in DocuEmployees)
+        {
+            await ImageService.AttachedFile(formdata, EmployeeId, division, department, lastname, verify);
         }
     }
 

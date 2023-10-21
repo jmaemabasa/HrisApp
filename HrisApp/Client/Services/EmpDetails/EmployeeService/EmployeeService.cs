@@ -1,4 +1,7 @@
-﻿namespace HrisApp.Client.Services.EmpDetails.EmployeeService
+﻿using HrisApp.Client.Pages.Employee;
+using HrisApp.Client.Pages.MasterData;
+
+namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {
 #nullable disable
     public class EmployeeService : IEmployeeService
@@ -12,7 +15,7 @@
             _navigationManager = navigationManager;
         }
 
-        public List<EmployeeT> EmployeeTs { get; set; }
+        public List<EmployeeT> EmployeeTs { get; set; } = new List<EmployeeT>();
         //FK
         public List<StatusT> StatusTs { get; set; }
         public List<EmploymentStatusT> EmploymentStatusTs { get; set; }
@@ -44,7 +47,7 @@
             throw new Exception("employee not found");
 
         }
-        private async Task SetEmployees(HttpResponseMessage result)
+        public async Task SetEmployees(HttpResponseMessage result)
         {
             var response = await result.Content.ReadFromJsonAsync<List<EmployeeT>>();
             EmployeeTs = response;
@@ -54,9 +57,15 @@
         {
             Console.WriteLine("Saving Services sa create employee");
 
-            var result = await _http.PostAsJsonAsync("api/Employee", employee);
-            await SetEmployees(result);
+           
+            HttpResponseMessage response = await _http.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Error: " + errorMessage);
+            }
             return employee.Verify_Id;
+
         }
         public async Task UpdateEmployee(EmployeeT employee)
         {
