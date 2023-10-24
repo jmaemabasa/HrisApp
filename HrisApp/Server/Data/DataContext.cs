@@ -1,9 +1,4 @@
 ﻿
-using HrisApp.Shared.Models.Education;
-using HrisApp.Shared.Models.Employee;
-using HrisApp.Shared.Models.Images;
-using System.Reflection;
-
 namespace HrisApp.Server.Data
 {
     public class DataContext : DbContext
@@ -52,12 +47,12 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<AreaT>().HasData(
-                new AreaT { Id = 1 , Name = "Davao" },
-                new AreaT { Id = 2 , Name = "Digos" },
-                new AreaT { Id = 3 , Name = "Kidapawan" },
-                new AreaT { Id = 4 , Name = "Cotabato" },
-                new AreaT { Id = 5 , Name = "Calinan" },
-                new AreaT { Id = 6 , Name = "Gumalang" }
+                new AreaT { Id = 1, Name = "Davao" },
+                new AreaT { Id = 2, Name = "Digos" },
+                new AreaT { Id = 3, Name = "Kidapawan" },
+                new AreaT { Id = 4, Name = "Cotabato" },
+                new AreaT { Id = 5, Name = "Calinan" },
+                new AreaT { Id = 6, Name = "Gumalang" }
             );
 
             //EMPLOYEE DETAILS
@@ -70,15 +65,16 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<InactiveStatusT>().HasData(
-                new InactiveStatusT { Id = 1 , Name = "Resigned" },    
-                new InactiveStatusT { Id = 2 , Name = "Terminated" },    
-                new InactiveStatusT { Id = 3 , Name = "Awol" },    
-                new InactiveStatusT { Id = 4 , Name = "Retired" }
+                new InactiveStatusT { Id = 1, Name = "Active" },
+                new InactiveStatusT { Id = 2, Name = "Resigned" },
+                new InactiveStatusT { Id = 3, Name = "Terminated" },
+                new InactiveStatusT { Id = 4, Name = "Awol" },
+                new InactiveStatusT { Id = 5, Name = "Retired" }
             );
 
             modelBuilder.Entity<StatusT>().HasData(
-                new StatusT { Id = 1, Name = "Active" },    
-                new StatusT { Id = 2, Name = "Inactive" }    
+                new StatusT { Id = 1, Name = "Active" },
+                new StatusT { Id = 2, Name = "Inactive" }
             );
 
             modelBuilder.Entity<CivilStatusT>().HasData(
@@ -128,12 +124,12 @@ namespace HrisApp.Server.Data
         //Employee Data
         public DbSet<EmployeeT> EmployeeT { get; set; }
         public DbSet<EmploymentStatusT> EmploymentStatusT { get; set; }
-        public DbSet<InactiveStatusT> InactiveStatusT { get; set;}
-        public DbSet<StatusT> StatusT { get; set;}
-        public DbSet<CivilStatusT> CivilStatusT { get; set;}
-        public DbSet<ReligionT> ReligionT { get; set;}
+        public DbSet<InactiveStatusT> InactiveStatusT { get; set; }
+        public DbSet<StatusT> StatusT { get; set; }
+        public DbSet<CivilStatusT> CivilStatusT { get; set; }
+        public DbSet<ReligionT> ReligionT { get; set; }
         public DbSet<GenderT> GenderT { get; set; }
-        public DbSet<EmerRelationshipT> EmerRelationshipT { get; set;}
+        public DbSet<EmerRelationshipT> EmerRelationshipT { get; set; }
 
         //EDUCATIONS
         public DbSet<CollegeT> CollegeT { get; set; }

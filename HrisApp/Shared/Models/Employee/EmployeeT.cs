@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HrisApp.Shared.Models.MasterData;
+using System.ComponentModel;
 
 namespace HrisApp.Shared.Models.Employee
 {
@@ -17,12 +18,16 @@ namespace HrisApp.Shared.Models.Employee
         public string Verify_Id { get; set; } = string.Empty;
 
         //PERSONAL DETAILS
+        [Required]
         public string FirstName { get; set; } = string.Empty;
+        [Required]
         public string LastName { get; set; } = string.Empty;
+        [Required]
         public string MiddleName { get; set; } = string.Empty;
         public string Extension { get; set; } = string.Empty;
         public int? Height { get; set; }
         public int? Weight { get; set; }
+        [Required]
         public DateTime Birthdate { get; set; }
         public int Age { get; set; }
         public string Nationality { get; set; } = string.Empty;

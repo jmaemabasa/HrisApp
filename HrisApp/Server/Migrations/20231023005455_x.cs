@@ -5,10 +5,35 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HrisApp.Server.Migrations
 {
-    public partial class Initial : Migration
+    public partial class x : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AddressT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentAdd = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentBrgy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentProvince = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentCountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentAdd = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentBrgy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentProvince = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentCountry = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddressT", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AreaT",
                 columns: table => new
@@ -36,6 +61,24 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CollegeT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollSchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollSchoolLoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollAward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollSchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollCourse = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollegeT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DepartmentT",
                 columns: table => new
                 {
@@ -60,6 +103,46 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DivisionT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoctorateT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocSchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocSchoolLoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocAward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocSchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocCourse = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorateT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DocumentT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DivisionId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    Img_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Img_Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,6 +198,43 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MasteralT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MasSchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MasSchoolLoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MasAward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MasSchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MasCourse = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MasteralT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OtherEducT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OthersSchoolType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OthersSchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OthersSchoolLoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OthersAward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OthersSchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OthersCourse = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OtherEducT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PositionT",
                 columns: table => new
                 {
@@ -131,6 +251,23 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PrimaryT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PriSchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PriSchoolLoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PriAward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PriSchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrimaryT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReligionT",
                 columns: table => new
                 {
@@ -141,6 +278,23 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReligionT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SecondaryT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecSchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecSchoolLoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecAward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecSchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SecondaryT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +310,23 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SectionT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SeniorHST",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShsSchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShsSchoolLoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShsAward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShsSchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeniorHST", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,6 +366,40 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmpPictureT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DivisionId = table.Column<int>(type: "int", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    Img_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Img_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmpPictureT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmpPictureT_DepartmentT_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "DepartmentT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmpPictureT_DivisionT_DivisionId",
+                        column: x => x.DivisionId,
+                        principalTable: "DivisionT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmployeeT",
                 columns: table => new
                 {
@@ -204,6 +409,7 @@ namespace HrisApp.Server.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: true),
                     Weight = table.Column<int>(type: "int", nullable: true),
                     Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -509,12 +715,52 @@ namespace HrisApp.Server.Migrations
                 name: "IX_EmployeeT_StatusId",
                 table: "EmployeeT",
                 column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmpPictureT_DepartmentId",
+                table: "EmpPictureT",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmpPictureT_DivisionId",
+                table: "EmpPictureT",
+                column: "DivisionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AddressT");
+
+            migrationBuilder.DropTable(
+                name: "CollegeT");
+
+            migrationBuilder.DropTable(
+                name: "DoctorateT");
+
+            migrationBuilder.DropTable(
+                name: "DocumentT");
+
+            migrationBuilder.DropTable(
                 name: "EmployeeT");
+
+            migrationBuilder.DropTable(
+                name: "EmpPictureT");
+
+            migrationBuilder.DropTable(
+                name: "MasteralT");
+
+            migrationBuilder.DropTable(
+                name: "OtherEducT");
+
+            migrationBuilder.DropTable(
+                name: "PrimaryT");
+
+            migrationBuilder.DropTable(
+                name: "SecondaryT");
+
+            migrationBuilder.DropTable(
+                name: "SeniorHST");
 
             migrationBuilder.DropTable(
                 name: "UserMasterT");
@@ -524,12 +770,6 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "CivilStatusT");
-
-            migrationBuilder.DropTable(
-                name: "DepartmentT");
-
-            migrationBuilder.DropTable(
-                name: "DivisionT");
 
             migrationBuilder.DropTable(
                 name: "EmerRelationshipT");
@@ -554,6 +794,12 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "StatusT");
+
+            migrationBuilder.DropTable(
+                name: "DepartmentT");
+
+            migrationBuilder.DropTable(
+                name: "DivisionT");
         }
     }
 }

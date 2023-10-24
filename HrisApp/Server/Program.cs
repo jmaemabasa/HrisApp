@@ -6,6 +6,7 @@ global using Microsoft.EntityFrameworkCore;
 global using HrisApp.Server.Services.UserService;
 global using HrisApp.Shared.Models.Education;
 global using HrisApp.Shared.Models.Images;
+global using HrisApp.Shared.Models.Employee;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Blazored.Toast;

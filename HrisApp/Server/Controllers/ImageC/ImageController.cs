@@ -58,7 +58,8 @@ namespace HrisApp.Server.Controllers.ImageC
                         var divisionName = await _context.DivisionT.Where(d => d.Id == division).Select(d => d.Name).FirstOrDefaultAsync();
                         var departmentName = await _context.DepartmentT.Where(d => d.Id == department).Select(d => d.Name).FirstOrDefaultAsync();
 
-                        var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", EmployeeId, lastname);
+                        //var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", divisionName, departmentName, lastname);
+                        var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", EmployeeId + "_" + lastname);
                         if (!Directory.Exists(filePath))
                             Directory.CreateDirectory(filePath);
 

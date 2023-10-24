@@ -1,0 +1,92 @@
+﻿.tabdiv {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: auto;
+    padding: 25px 50px 25px 50px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.spantitle {
+    font-weight: bold;
+    color: #27374D;
+    font-size: 14px ;
+}
+
+/*IMAGE*/
+::deep .btnimage {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+::deep .btnimagewithimage {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding-bottom: 4px;
+}
+
+/*TEXTFIELD*/
+::deep .txf > .mud-input-control-input-container {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
+    margin-top: 10px;
+}
+
+/*DROP DOWN LIST*/
+::deep .frmselect {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    padding: 0px 15px 4px 15px;
+    background: #e8e1e1;
+}
+
+/*DATE TIME*/
+::deep .mud-picker.mud-picker-inline.mud-picker-input-button.txf, ::deep .mud-picker.mud-picker-inline.mud-picker-input-text.txf {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 15px 10px 15px;
+    margin-top: 0;
+}
+
+/*INPUT CARD*/
+::deep .mdcard1 {
+    background: #e9ecef;
+}
+::deep .mdcard1.lfmargin {
+    margin-left: 20px;
+}
+
+@media (max-width: 576px) {
+    ::deep .mdcard1.lfmargin {
+        margin-left: 0px;
+    }
+
+    ::deep .frmselect {
+        width: 223px;
+    }
+
+    .tabdiv {
+        padding: 15px 0px 15px 0px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .wautobox {
+        width: auto !important;
+        flex-grow: 1;
+    }
+}

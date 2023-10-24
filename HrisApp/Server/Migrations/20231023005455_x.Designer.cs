@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231021071230_test")]
-    partial class test
+    [Migration("20231023005455_x")]
+    partial class x
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -834,37 +834,34 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeNo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_Contenttype")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Img_Data")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("Img_Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Img_Filename")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_URL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Verify_Id")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DivisionId");
 
                     b.ToTable("EmpPictureT");
                 });
@@ -1346,6 +1343,25 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Section");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.EmpPictureT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DepartmentT", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DivisionT", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Division");
                 });
 #pragma warning restore 612, 618
         }

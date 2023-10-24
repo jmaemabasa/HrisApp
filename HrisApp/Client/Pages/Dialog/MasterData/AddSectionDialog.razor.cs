@@ -29,7 +29,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             MudDialog.Close();
             if (notApplicableChecked)
             {
-                newSection = "Not Applicable";
+                newSection = "No Section";
             }
             if (notApplicableChecked)
             {

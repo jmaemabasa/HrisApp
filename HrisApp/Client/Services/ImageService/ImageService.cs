@@ -19,8 +19,8 @@ namespace HrisApp.Client.Services.ImageService
 
         public async Task AttachFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify)
         {
-            Console.WriteLine($"Multipart={formdata.Count()}, EmployId={EmployeeId}, DivisionId={division}, Lastname={lastname}, VerifyId={verify}");
-
+            Console.WriteLine($"Multipart={formdata.Count()}, EmployId={EmployeeId}, DivisionId={division}, Department={department},Lastname={lastname}, VerifyId={verify}");
+            Console.WriteLine(formdata);
             try
             {
                 var response = await _http.PostAsync($"/api/Image/PostUploadImage?EmployeeId={EmployeeId}&division={division}&department={department}&lastname={lastname}&verify={verify}", formdata);
