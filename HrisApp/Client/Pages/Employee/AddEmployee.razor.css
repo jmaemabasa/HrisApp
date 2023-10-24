@@ -11,8 +11,8 @@
 
 .spantitle {
     font-weight: bold;
-    color: #27374D;
-    font-size: 14px ;
+    color: #26446e;
+    font-size: 14px;
 }
 
 /*IMAGE*/
@@ -68,6 +68,109 @@
 }
 ::deep .mdcard1.lfmargin {
     margin-left: 20px;
+}
+
+/*School DIV*/
+.divSchool {
+    padding: 16px;
+    border: 1px ridge #f5f5f5;
+    /*background: #f5f5f5;*/
+    border-radius: 10px;
+}
+
+::deep .addminbtn {
+    color: #26446e;
+}
+
+
+/*TABPANELS*/
+
+::deep .mud-tab.mud-tab-active {
+    color: #79AC78;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-toolbar-content {
+    background: #e9ecef;
+    color: #78909C;
+    font-size: 15px;
+    font-weight: bold;
+    border-bottom: 2px solid #D8DADC;
+}
+
+::deep .mud-tabs-defaultindex {
+    color: #78909C;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-afterindex {
+    color: #79AC78;
+    font-weight: bold;
+    border-bottom: 2px solid #79AC78;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-active {
+    font-weight: bold;
+    color: white;
+    background-color: #AEC3AE;
+    margin-right: 15px;
+}
+
+::deep .mud-chip-after {
+    font-weight: bold;
+    color: white;
+    background-color: #AEC3AE;
+    margin-right: 15px;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-default {
+    font-weight: bold;
+    color: white;
+    background-color: #C5CFD2;
+    margin-right: 15px;
+}
+
+::deep .mud-text-after {
+    font-weight: bold;
+    opacity: 0.5;
+}
+
+::deep .mud-text-default {
+    font-weight: bold;
+}
+
+.active-tab {
+    background-color: pink;
+}
+
+::deep .active-tab0 {
+    color: #A9AF7E;
+    border-bottom: 2px solid #A9AF7E;
+    opacity: 0.5;
+}
+
+::deep .active-tab1 {
+    color: #7D8F69;
+    border-bottom: 2px solid #7D8F69;
+    opacity: 0.5;
+}
+
+::deep .active-tab2 {
+    color: #5F8D4E;
+    border-bottom: 2px solid #5F8D4E;
+    opacity: 0.5;
+}
+
+::deep .active-tab3 {
+    color: #557153;
+    border-bottom: 2px solid #557153;
+    opacity: 0.5;
+}
+
+::deep .active-tab4 {
+    color: #F7FFE5;
 }
 
 @media (max-width: 576px) {

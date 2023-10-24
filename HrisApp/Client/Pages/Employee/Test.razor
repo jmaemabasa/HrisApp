@@ -1,8 +1,7 @@
 ﻿@page "/test"
 
 <style>
-    .tabx {
-    }
+ 
 
     .mud-tab.mud-tab-active {
         color: #01579B;
@@ -13,27 +12,98 @@
         background: #e9ecef;
         color: #78909C;
     }
-    
+
+    .mud-tab.mud-disabled {
+        color: #78909C;
+    }
+
+    .active-tab {
+        background-color: pink;
+    }
+
+    .active-tab0 {
+        background-color: lightgoldenrodyellow;
+        color: #78909C;
+    }
+    .active-tab1 {
+        background-color: yellow;
+    }
+
+    .active-tab2 {
+        background-color: greenyellow;
+    }
+
+    .active-tab3 {
+        background-color: green;
+    }
+
+    .active-tab4 {
+        background-color: darkseagreen;
+    }
+
+    .inactive-tab {
+        background-color: white; /* Set the color for inactive tabs */
+    }
+
 </style>
 
-<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
-    <MudTabPanel Class="tabx" Text="Step 1" Icon="@Icons.Material.Rounded.LabelImportant">
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @bind-ActivePanelIndex="activeIndex" Centered=true>
+    <MudTabPanel Class="@GetTabClass(0)" Text="Step 1" Icon="@Icons.Material.Rounded.LabelImportant">
         <MudText>Content One</MudText>
+        <MudButton OnClick="() => ChangeTab(1)">Go to Step 1</MudButton>    
     </MudTabPanel>
-    <MudTabPanel Class="tabx" Text="Step 2" Icon="@Icons.Material.Rounded.LabelImportant">
+    <MudTabPanel Class="@GetTabClass(1)" Text="Step 2" Icon="@Icons.Material.Rounded.LabelImportant">
         <MudText>Content Two</MudText>
+        <MudButton OnClick="() => ChangeTab(0)">Go to Step 1</MudButton>
+        <MudButton OnClick="() => ChangeTab(2)">Go to Step 2</MudButton>
     </MudTabPanel>
-    <MudTabPanel Class="tabx" Text="Step 3" Icon="@Icons.Material.Rounded.LabelImportant">
+    <MudTabPanel Class="@GetTabClass(2)" Text="Step 3" Icon="@Icons.Material.Rounded.LabelImportant">
         <MudText>Content Three</MudText>
+        <MudButton OnClick="() => ChangeTab(1)">Go to Step 2</MudButton>
+        <MudButton OnClick="() => ChangeTab(3)">Go to Step 3</MudButton>
     </MudTabPanel>
-    <MudTabPanel Class="tabx" Text="Step 4" Icon="@Icons.Material.Rounded.LabelImportant">
+    <MudTabPanel Class="@GetTabClass(3)" Text="Step 4" Icon="@Icons.Material.Rounded.LabelImportant">
         <MudText>Content Three</MudText>
+        <MudButton OnClick="() => ChangeTab(2)">Go to Step 2</MudButton>
+        <MudButton OnClick="() => ChangeTab(4)">Go to Step 3</MudButton>
     </MudTabPanel>
-    <MudTabPanel Class="tabx" Text="Step 5" Icon="@Icons.Material.Rounded.LabelImportant">
+    <MudTabPanel Class="@GetTabClass(4)" Text="Step 5" Icon="@Icons.Material.Rounded.LabelImportant">
         <MudText>Content Three</MudText>
+        <MudButton OnClick="() => ChangeTab(3)">Go to Step 2</MudButton>
+        
     </MudTabPanel>
 </MudTabs>
-
-@code {
+<MudText>@($"Active Index: {activeIndex}")</MudText>
+    @code {
+    int activeIndex;
+    string GetTabClass(int tabId)
+    {
+        if (activeIndex > tabId)
+        {
+            switch (tabId) {
+                case 0:
+                    return "active-tab0";
+                case 1:
+                    return "active-tab1";
+                case 2:
+                    return "active-tab2";
+                case 3:
+                    return "active-tab3";
+                case 4:
+                    return "active-tab4";
+                default:
+                    return "mud-tabs-toolbar-content";
+            }
+        }
+        else
+        {
+            return "mud-tabs-toolbar-content";
+        }
+        
+    }
+    void ChangeTab(int tabId)
+    {
+        activeIndex = tabId;
+    }
 
 }

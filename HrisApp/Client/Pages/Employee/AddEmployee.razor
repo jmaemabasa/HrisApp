@@ -8,30 +8,19 @@
 @inject IEmployeeService EmployeeService
 @inject IToastService _toastService
 @inject IImageService ImageService
+@inject IEducationService EducationService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
 
-<style>
-    .mud-tab.mud-tab-active {
-        color: #01579B;
-        font-weight: bold;
-    }
-
-    .mud-tabs-toolbar-content {
-        background: #e9ecef;
-        color: #78909C;
-    }
-
-   
-</style>
 
 <div class="tabdiv">
     <MudButton Class="button" ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary" @onclick="CreateEmployee" StartIcon="@Icons.Material.Filled.PersonAdd" Style="text-transform: none; position: absolute;left: 90%; z-index:10;top: 70px;">Create User</MudButton>
-    <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex" Centered=true>
 
         @* ====================================================================================  JOB  ==================================================================================== *@
-        <MudTabPanel Class="tabx" Text="Step 1" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudTabPanel Class="@GetTabClass(0)" TabContent="tabHeader(0)">
             <MudGrid>
+                
                 <MudItem xs="12" lg="2">
                     <span class="spantitle mb-3">Image</span>
                     @if (imgBase64 == "./images/addIconImage.png")
@@ -304,10 +293,12 @@
                                                 }
                                             </MudSelect>
                                         </div>
-                                    }
-                                   
-                                </div>
+                                    }                                
+                                    </div>
                             </div>
+                            <MudItem xs="12" Class="d-flex justify-content-end mt-5">
+                                <MudButton OnClick="() => Activate(1)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                            </MudItem>
                         </MudCardContent>
                     </MudCard>
                 </MudItem>
@@ -316,7 +307,7 @@
 
         @* ====================================================================================  PERSONAL  ==================================================================================== *@
 
-        <MudTabPanel Class="tabx" Text="Step 2" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudTabPanel Class="@GetTabClass(1)" TabContent="tabHeader(1)">
             <MudGrid>
                 <MudItem xs="12" >
                     <span class="spantitle">Personal Details</span>
@@ -505,8 +496,11 @@
                                      </div>
                                 </div>
                             </div>
-                            
-                            
+
+                             <MudItem xs="12" Class="d-flex justify-content-between mt-5">
+                                 <MudButton OnClick="() => Activate(0)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                                 <MudButton OnClick="() => Activate(2)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                             </MudItem>
                         </MudCardContent>
                     </MudCard>
                 </MudItem>
@@ -516,35 +510,47 @@
 
         @* ====================================================================================  EDUCATION  ==================================================================================== *@
 
-        <MudTabPanel Class="tabx" Text="Step 3" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudTabPanel Class="@GetTabClass(2)" TabContent="tabHeader(2)">
             <MudGrid>
                 <MudItem xs="12">
-                    <MudCard>
+                     <MudCard Class="mdcard1" Elevation="0">
                         <MudCardContent>
                             <div class="d-flex flex-column flex-grow-1">
-                                <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
                                     <span class="spantitle">Primary</span>
                                     <div>
                                         <MudTooltip  Text="Click to remove Primary">
-                                            <MudIconButton Class="p-0" OnClick="RemovePrimary" Icon="@Icons.Material.Filled.RemoveCircle" />
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="RemovePrimary" Icon="@Icons.Material.Rounded.RemoveCircle" />
                                         </MudTooltip>
                                         <MudTooltip Text="Click to add more Primary">
-                                            <MudIconButton Class="p-0" OnClick="() => AddNewPrimary(employee.Verify_Id)" Icon="@Icons.Material.Filled.Add" />
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewPrimary(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
                                         </MudTooltip>
-                                    </div>  
+                                    </div>                                
                                 </div>
                                 @if (listOfPrimary.Any())
                                 {
                                     @foreach (var pri in listOfPrimary)
                                     {
-                                        <div class="mb-3">
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <MudTextField @bind-Value="pri.PriSchoolName" Label="Name of School" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                                                <MudTextField @bind-Value="pri.PriSchoolLoc" Label="School Location" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                        <div class="mb-3 divSchool">
+                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Name of School</MudInputLabel>
+                                                    <MudTextField @bind-Value="pri.PriSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>School Location</MudInputLabel>
+                                                    <MudTextField @bind-Value="pri.PriSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
                                             </div>
                                             <div class="d-flex flex-wrap gap-2">
-                                                <MudTextField @bind-Value="pri.PriAward" Label="Award" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                                                <MudTextField @bind-Value="pri.PriSchoolYear" Label="School Year" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Award</MudInputLabel>
+                                                    <MudTextField @bind-Value="pri.PriAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                 <div class="flex-grow-1">
+                                                      <MudInputLabel>School Year</MudInputLabel>
+                                                    <MudTextField @bind-Value="pri.PriSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
                                             </div>
                                         </div>
                                         
@@ -568,74 +574,541 @@
                     </MudCard>
                 </MudItem>
                 <MudItem xs="12">
-                    <MudCard>
+                    <MudCard Class="mdcard1" Elevation="0">
                         <MudCardContent>       
                             <div class="d-flex flex-column flex-grow-1">
-                                <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
                                     <span class="spantitle">Secondary</span>
                                     <div>
                                         <MudTooltip Text="Click to remove Secondary">
-                                            <MudIconButton Class="p-0" OnClick="RemovePrimary" Icon="@Icons.Material.Filled.RemoveCircle" />
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="RemoveSecondary" Icon="@Icons.Material.Rounded.RemoveCircle" />
                                         </MudTooltip>
                                         <MudTooltip Text="Click to add more Secondary">
-                                            <MudIconButton Class="p-0" OnClick="() => AddNewPrimary(employee.Verify_Id)" Icon="@Icons.Material.Filled.Add" />
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewSecondary(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
                                         </MudTooltip>
                                     </div>
                                 </div>
-                                @if (listOfPrimary.Any())
+                               
+                                @if (listOfSecondary.Any())
                                 {
-                                    @foreach (var pri in listOfPrimary)
+                                    @foreach (var sec in listOfSecondary)
                                     {
-                                        <div class="mb-3">
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <MudTextField @bind-Value="pri.PriSchoolName" Label="Name of School" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                                                <MudTextField @bind-Value="pri.PriSchoolLoc" Label="School Location" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <MudTextField @bind-Value="pri.PriAward" Label="Award" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                                                <MudTextField @bind-Value="pri.PriSchoolYear" Label="School Year" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                                            </div>
-                                        </div>
-
+                                        <div class="mb-3 divSchool">
+                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Name of School</MudInputLabel>
+                                                    <MudTextField @bind-Value="sec.SecSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>School Location</MudInputLabel>
+                                                     <MudTextField @bind-Value="sec.SecSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                             </div>
+                                             <div class="d-flex flex-wrap gap-2">
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>Award</MudInputLabel>
+                                                     <MudTextField @bind-Value="sec.SecAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>School Year</MudInputLabel>
+                                                     <MudTextField @bind-Value="sec.SecSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                             </div>
+                                         </div>
                                     }
                                 }
                                 else
                                 {
-                                    @foreach (var pri in listOfPrimary)
-                                    {
-                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-                                            <MudCard>
-                                                <MudCardContent>
-                                                    <p>No Primary information available.</p>
-                                                </MudCardContent>
-                                            </MudCard>
-                                        </MudContainer>
-                                    }
+                                    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                         <MudCard>
+                                             <MudCardContent>
+                                                  <p>No Secondary information available.</p>
+                                             </MudCardContent>
+                                         </MudCard>
+                                    </MudContainer>
+                                   
                                 }
                             </div>
                         </MudCardContent>
                     </MudCard>
                 </MudItem>
+                <MudItem xs="12" Style="padding-bottom: 0px;">
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="IsListaddshs" Color="Color.Primary"></MudCheckBox><span class="spantitle">Senior High School</span>
+                    </div>
+                </MudItem>
+                @if (IsListaddshs)
+                {
+                    <MudItem xs="12" Style="padding-top: 0px;">
+                        <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                            <MudCardContent Style="padding-top: 0px;">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-grow-1 justify-content-end align-items-center mb-2">
+                                        <div>
+                                            <MudTooltip Text="Click to remove SHS">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveShs" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Click to add more SHS">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewShs(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                            </MudTooltip>
+                                        </div>
+                                    </div>
+
+                                    @if (listOfShs.Any())
+                                    {
+                                        @foreach (var shs in listOfShs)
+                                        {
+                                            <div class="mb-3 divSchool">
+                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                    <div class="flex-grow-1">
+                                                        <MudInputLabel>Name of School</MudInputLabel>
+                                                        <MudTextField @bind-Value="shs.ShsSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Location</MudInputLabel>
+                                                         <MudTextField @bind-Value="shs.ShsSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                                 <div class="d-flex flex-wrap gap-2">
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Award</MudInputLabel>
+                                                         <MudTextField @bind-Value="shs.ShsAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Year</MudInputLabel>
+                                                         <MudTextField @bind-Value="shs.ShsSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No SHS information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+                <MudItem xs="12" Style="padding-bottom: 0px;">
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="IsListaddcoll" Color="Color.Primary"></MudCheckBox><span class="spantitle">College</span>
+                    </div>
+                </MudItem>
+                @if (IsListaddcoll)
+                {
+                    <MudItem xs="12" Style="padding-top: 0px;">
+                        <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                            <MudCardContent Style="padding-top: 0px;">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-grow-1 justify-content-end align-items-center mb-2">
+                                        <div>
+                                            <MudTooltip Text="Click to remove College">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveCollege" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Click to add more College">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewCollege(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                            </MudTooltip>
+                                        </div>
+                                    </div>
+
+                                    @if (listOfCollege.Any())
+                                    {
+                                        @foreach (var col in listOfCollege)
+                                        {
+                                            <div class="mb-3 divSchool">
+                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                    <div class="flex-grow-1">
+                                                        <MudInputLabel>Name of School</MudInputLabel>
+                                                        <MudTextField @bind-Value="col.CollSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Location</MudInputLabel>
+                                                         <MudTextField @bind-Value="col.CollSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                                 <div class="d-flex flex-wrap gap-2">
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Award</MudInputLabel>
+                                                         <MudTextField @bind-Value="col.CollAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Course</MudInputLabel>
+                                                         <MudTextField @bind-Value="col.CollCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Year</MudInputLabel>
+                                                         <MudTextField @bind-Value="col.CollSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No College information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+                <MudItem xs="12" Style="padding-bottom: 0px;">
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="IsListaddmas" Color="Color.Primary"></MudCheckBox><span class="spantitle">Masteral</span>
+                    </div>
+                </MudItem>
+                @if (IsListaddmas)
+                {
+                    <MudItem xs="12" Style="padding-top: 0px;">
+                        <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                            <MudCardContent Style="padding-top: 0px;">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-grow-1 justify-content-end align-items-center mb-2">
+                                        <div>
+                                            <MudTooltip Text="Click to remove Masteral">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveMasteral" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Click to add more Masteral">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewMasteral(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                            </MudTooltip>
+                                        </div>
+                                    </div>
+
+                                    @if (listOfMasteral.Any())
+                                    {
+                                        @foreach (var mas in listOfMasteral)
+                                        {
+                                            <div class="mb-3 divSchool">
+                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                    <div class="flex-grow-1">
+                                                        <MudInputLabel>Name of School</MudInputLabel>
+                                                        <MudTextField @bind-Value="mas.MasSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Location</MudInputLabel>
+                                                         <MudTextField @bind-Value="mas.MasSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                                 <div class="d-flex flex-wrap gap-2">
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Award</MudInputLabel>
+                                                         <MudTextField @bind-Value="mas.MasAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                      <div class="flex-grow-1">
+                                                         <MudInputLabel>Course</MudInputLabel>
+                                                         <MudTextField @bind-Value="mas.MasCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Year</MudInputLabel>
+                                                         <MudTextField @bind-Value="mas.MasSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No Masteral information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+                <MudItem xs="12" Style="padding-bottom: 0px;">
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="IsListadddoc" Color="Color.Primary"></MudCheckBox><span class="spantitle">Doctorate</span>
+                    </div>
+                </MudItem>
+                @if (IsListadddoc)
+                {
+                    <MudItem xs="12" Style="padding-top: 0px;">
+                        <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                            <MudCardContent Style="padding-top: 0px;">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-grow-1 justify-content-end align-items-center mb-2">
+                                        <div>
+                                            <MudTooltip Text="Click to remove Doctorate">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveDoctorate" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Click to add more Doctorate">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewDoctorate(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                            </MudTooltip>
+                                        </div>
+                                    </div>
+
+                                    @if (listOfDoctorate.Any())
+                                    {
+                                        @foreach (var doc in listOfDoctorate)
+                                        {
+                                            <div class="mb-3 divSchool">
+                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                    <div class="flex-grow-1">
+                                                        <MudInputLabel>Name of School</MudInputLabel>
+                                                        <MudTextField @bind-Value="doc.DocSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Location</MudInputLabel>
+                                                         <MudTextField @bind-Value="doc.DocSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                                 <div class="d-flex flex-wrap gap-2">
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Award</MudInputLabel>
+                                                         <MudTextField @bind-Value="doc.DocAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Course</MudInputLabel>
+                                                         <MudTextField @bind-Value="doc.DocCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Year</MudInputLabel>
+                                                         <MudTextField @bind-Value="doc.DocSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No Doctorate information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+                <MudItem xs="12" Style="padding-bottom: 0px;">
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="IsListaddothers" Color="Color.Primary"></MudCheckBox><span class="spantitle">Other</span>
+                    </div>
+                </MudItem>
+                @if (IsListaddothers)
+                {
+                    <MudItem xs="12" Style="padding-top: 0px;">
+                        <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                            <MudCardContent Style="padding-top: 0px;">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-grow-1 justify-content-end align-items-center mb-2">
+                                        <div>
+                                            <MudTooltip Text="Click to remove Other">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveOthers" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Click to add more Other">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewOthers(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                            </MudTooltip>
+                                        </div>
+                                    </div>
+
+                                    @if (listOfOthers.Any())
+                                    {
+                                        @foreach (var other in listOfOthers)
+                                        {
+                                            <div class="mb-3 divSchool">
+                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                    <div class="flex-grow-1">
+                                                        <MudInputLabel>School Type</MudInputLabel>
+                                                        <MudTextField @bind-Value="other.OthersSchoolType" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudInputLabel>Name of School</MudInputLabel>
+                                                        <MudTextField @bind-Value="other.OthersSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Location</MudInputLabel>
+                                                         <MudTextField @bind-Value="other.OthersSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                                 <div class="d-flex flex-wrap gap-2">
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Award</MudInputLabel>
+                                                         <MudTextField @bind-Value="other.OthersAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>Course</MudInputLabel>
+                                                         <MudTextField @bind-Value="other.OthersCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                     <div class="flex-grow-1">
+                                                         <MudInputLabel>School Year</MudInputLabel>
+                                                         <MudTextField @bind-Value="other.OthersSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No Other information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                </div>
+                                <MudItem xs="12" Class="d-flex justify-content-between mt-5">
+                                 <MudButton OnClick="() => Activate(1)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                                 <MudButton OnClick="() => Activate(3)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                             </MudItem>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
             </MudGrid>
         </MudTabPanel>
 
         @* ====================================================================================  LICENCE  ==================================================================================== *@
 
-        <MudTabPanel Class="tabx" Text="Step 4" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudTabPanel Class="@GetTabClass(3)" TabContent="tabHeader(3)">
             <MudText>Content Three</MudText>
         </MudTabPanel>
 
         @* ====================================================================================  PAYROLL  ==================================================================================== *@
 
-        <MudTabPanel Class="tabx" Text="Step 5" Icon="@Icons.Material.Rounded.LabelImportant">
+        <MudTabPanel Class="@GetTabClass(4)" TabContent="tabHeader(4)">
             <MudText>Content Three</MudText>
         </MudTabPanel>
     </MudTabs>
 </div>
 
 @code {
+    //TAB PANEL
+    MudTabs tabs;
+    void Activate(int index)
+    {
+        tabs.ActivatePanel(index);
+    }
+    int activeIndex;
+    string GetTabClass(int tabId)
+    {
+        if (activeIndex > tabId)
+        {
+            return "mud-tabs-afterindex";
+        }
+        else
+        {
+            return "mud-tabs-defaultindex";
+        }
+    }
+    string GetTabChipClass(int tabId)
+    {
+        if (activeIndex > tabId)
+        {
+            return "mud-chip-after";
+        }
+        else if (activeIndex == tabId) {
+            return "mud-chip-active";
+        }
+        else {
+            return "mud-chip-default";
+        }
+    }
+    
+     string GetTabTextClass(int tabId)
+    {
+        if (activeIndex > tabId)
+        {
+            return "mud-text-after";
+        }
+        else if (activeIndex == tabId)
+        {
+            return "mud-text-active";
+        }
+        else {
+            return "mud-text-default";
+        }
+    }
+
+    RenderFragment tabHeader(int tabId)
+    {
+        return builder =>
+        {
+            if (tabId == 0) {
+                builder.OpenComponent<MudChip>(0);
+                builder.AddAttribute(1, "Class", @GetTabChipClass(0)); // Add your custom class for styling
+                builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                builder.CloseComponent();
+                builder.OpenElement(4, "span");
+                builder.AddAttribute(5, "class", @GetTabTextClass(0)); // Add your custom class for styling
+                builder.AddContent(6, "Job");
+                builder.CloseComponent();
+            }
+            else if (tabId == 1) {
+                builder.OpenComponent<MudChip>(0);
+                builder.AddAttribute(1, "Class", @GetTabChipClass(1)); // Add your custom class for styling
+                builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                builder.CloseComponent();
+                builder.OpenElement(4, "span");
+                builder.AddAttribute(5, "class", @GetTabTextClass(1)); // Add your custom class for styling
+                builder.AddContent(6, "Personal");
+                builder.CloseComponent();
+            }
+            else if (tabId == 2) {
+                builder.OpenComponent<MudChip>(0);
+                builder.AddAttribute(1, "Class", @GetTabChipClass(2)); // Add your custom class for styling
+                builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                builder.CloseComponent();
+                builder.OpenElement(4, "span");
+                builder.AddAttribute(5, "class", @GetTabTextClass(2)); // Add your custom class for styling
+                builder.AddContent(6, "Education");
+                builder.CloseComponent();
+            }
+            else if (tabId == 3) {
+                builder.OpenComponent<MudChip>(0);
+                builder.AddAttribute(1, "Class", @GetTabChipClass(3)); // Add your custom class for styling
+                builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                builder.CloseComponent();
+                builder.OpenElement(4, "span");
+                builder.AddAttribute(5, "class", @GetTabTextClass(3)); // Add your custom class for styling
+                builder.AddContent(6, "Licences & Training");
+                builder.CloseComponent();
+            }
+            else if (tabId == 4)
+            {
+                builder.OpenComponent<MudChip>(0);
+                builder.AddAttribute(1, "Class", @GetTabChipClass(4)); // Add your custom class for styling
+                builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                builder.CloseComponent();
+                builder.OpenElement(4, "span");
+                builder.AddAttribute(5, "class", @GetTabTextClass(4)); // Add your custom class for styling
+                builder.AddContent(6, "Payroll");
+                builder.CloseComponent();
+            }
+
+        };
+    }
+
 
     #nullable disable
+    [Parameter]
+    public int? id { get; set; }   
 
     EmployeeT employee = new();
     AddressT address = new();
@@ -657,6 +1130,7 @@
     private List<ReligionT> ReligionsL = new List<ReligionT>();
     private List<EmerRelationshipT> EmerRelationshipsL = new List<EmerRelationshipT>();
 
+    //EDUCATION
     List<CollegeT> listOfCollege = new();
     List<OtherEducT> listOfOthers = new();
     List<SecondaryT> listOfSecondary = new();
@@ -665,6 +1139,11 @@
     List<MasteralT> listOfMasteral = new();
     List<SeniorHST> listOfShs = new();
 
+    private bool IsListaddshs;
+    private bool IsListaddcoll;
+    private bool IsListaddmas;
+    private bool IsListaddothers;
+    private bool IsListadddoc;
 
     string VerifyCode;
 
@@ -739,6 +1218,14 @@
         EmerRelationshipsL = EmployeeService.EmerRelationshipTs;
 
         imgBase64 = "./images/addIconImage.png";
+
+        AddNewPrimary(employee.Verify_Id);
+        AddNewSecondary(employee.Verify_Id);
+        AddNewShs(employee.Verify_Id);
+        AddNewCollege(employee.Verify_Id);
+        AddNewMasteral(employee.Verify_Id);
+        AddNewDoctorate(employee.Verify_Id);
+        AddNewOthers(employee.Verify_Id);
     }
 
     private void HandleDateHiredChanged(DateTime? newDate)
@@ -866,6 +1353,14 @@
             await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
             await OnPDFSaving(employee.EmployeeNo, divisionPDF, departmentPDF, employee.LastName, verifyId);
 
+            await CreatePrimaryRecords(verifyCode);
+            await CreateSecondaryRecords(verifyCode);
+            await CreateSeniorHSRecords(verifyCode);
+            await CreateCollegeRecords(verifyCode);
+            await CreateMasteralRecords(verifyCode);
+            await CreateDoctorateRecords(verifyCode);
+            await CreateOtherEducRecords(verifyCode);
+
             NavigationManager.NavigateTo("employee");
 
             var swal = await Swal.FireAsync(new SweetAlertOptions
@@ -901,9 +1396,168 @@
         }
     }
 
+    async Task CreatePrimaryRecords(string employeeVerifyId)
+    {
+        //primary
+        var validRecords = listOfPrimary
+            .Where
+            (pri => !string.IsNullOrEmpty(pri.PriSchoolName) || !string.IsNullOrEmpty(pri.PriSchoolLoc)
+                 || !string.IsNullOrEmpty(pri.PriAward) || !string.IsNullOrEmpty(pri.PriSchoolYear))
+            .ToList();
+        if (validRecords.Count == 0)
+        {
+            return;
+        }
+        foreach (var pri in validRecords)
+        {
+            pri.Verify_Id = employeeVerifyId;
+            await EducationService.CreatePrimary(pri);
+        }
+
+        listOfPrimary.Clear();
+        AddNewPrimary(employeeVerifyId);
+    }
+
+
+    async Task CreateSecondaryRecords(string employeeVerifyId)
+    {
+        //secondary
+        var validSecodary = listOfSecondary
+           .Where
+           (sec => !string.IsNullOrEmpty(sec.SecSchoolName) || !string.IsNullOrEmpty(sec.SecSchoolLoc)
+                || !string.IsNullOrEmpty(sec.SecAward) || !string.IsNullOrEmpty(sec.SecSchoolYear))
+           .ToList();
+        if (validSecodary.Count == 0)
+        {
+            return;
+        }
+        foreach (var sec in validSecodary)
+        {
+            sec.Verify_Id = employeeVerifyId;
+            await EducationService.CreateSecondary(sec);
+        }
+
+        listOfSecondary.Clear();
+        AddNewSecondary(employeeVerifyId);
+    }
+
+    async Task CreateSeniorHSRecords(string employeeVerifyId)
+    {  //shs
+        var validShs = listOfShs
+           .Where
+           (shs => !string.IsNullOrEmpty(shs.ShsSchoolName) || !string.IsNullOrEmpty(shs.ShsSchoolLoc)
+                || !string.IsNullOrEmpty(shs.ShsAward) || !string.IsNullOrEmpty(shs.ShsSchoolYear))
+           .ToList();
+        if (validShs.Count == 0)
+        {
+            return;
+        }
+        foreach (var shs in validShs)
+        {
+            shs.Verify_Id = employeeVerifyId;
+            await EducationService.CreateSeniorHS(shs);
+        }
+
+        listOfShs.Clear();
+        AddNewShs(employeeVerifyId);
+    }
+
+    async Task CreateCollegeRecords(string employeeVerifyId)
+    {
+        //college
+        var validCollege = listOfCollege
+           .Where
+           (coll => !string.IsNullOrEmpty(coll.CollSchoolName) || !string.IsNullOrEmpty(coll.CollSchoolLoc)
+                || !string.IsNullOrEmpty(coll.CollAward) || !string.IsNullOrEmpty(coll.CollSchoolYear)
+                || !string.IsNullOrEmpty(coll.CollCourse))
+           .ToList();
+        if (validCollege.Count == 0)
+        {
+            return;
+        }
+        foreach (var coll in validCollege)
+        {
+            coll.Verify_Id = employeeVerifyId;
+            await EducationService.CreateCollege(coll);
+        }
+
+        listOfCollege.Clear();
+        AddNewCollege(employeeVerifyId);
+
+    }
+
+    async Task CreateMasteralRecords(string employeeVerifyId)
+    {
+        //masteral
+        var validMasteral = listOfMasteral
+           .Where
+           (mas => !string.IsNullOrEmpty(mas.MasSchoolName) || !string.IsNullOrEmpty(mas.MasSchoolLoc)
+                || !string.IsNullOrEmpty(mas.MasAward) || !string.IsNullOrEmpty(mas.MasSchoolYear)
+                || !string.IsNullOrEmpty(mas.MasCourse))
+           .ToList();
+        if (validMasteral.Count == 0)
+        {
+            return;
+        }
+        foreach (var mas in validMasteral)
+        {
+            mas.Verify_Id = employeeVerifyId;
+            await EducationService.CreateMasteral(mas);
+        }
+
+        listOfMasteral.Clear();
+        AddNewMasteral(employeeVerifyId);
+    }
+
+    async Task CreateDoctorateRecords(string employeeVerifyId)
+    {
+        //doctorate
+        var validDoctorate = listOfDoctorate
+           .Where
+           (doc => !string.IsNullOrEmpty(doc.DocSchoolName) || !string.IsNullOrEmpty(doc.DocSchoolLoc)
+                || !string.IsNullOrEmpty(doc.DocAward) || !string.IsNullOrEmpty(doc.DocSchoolYear)
+                || !string.IsNullOrEmpty(doc.DocCourse))
+           .ToList();
+        if (validDoctorate.Count == 0)
+        {
+            return;
+        }
+        foreach (var doc in validDoctorate)
+        {
+            doc.Verify_Id = employeeVerifyId;
+            await EducationService.CreateDoctorate(doc);
+        }
+
+        listOfDoctorate.Clear();
+        AddNewDoctorate(employeeVerifyId);
+    }
+
+    async Task CreateOtherEducRecords(string employeeVerifyId)
+    {
+        //othereduc
+        var validothers = listOfOthers
+           .Where
+           (other => !string.IsNullOrEmpty(other.OthersSchoolType) || !string.IsNullOrEmpty(other.OthersSchoolName)
+                || !string.IsNullOrEmpty(other.OthersSchoolLoc) || !string.IsNullOrEmpty(other.OthersAward)
+                || !string.IsNullOrEmpty(other.OthersSchoolYear) || !string.IsNullOrEmpty(other.OthersCourse))
+           .ToList();
+        if (validothers.Count == 0)
+        {
+            return;
+        }
+        foreach (var others in validothers)
+        {
+            others.Verify_Id = employeeVerifyId;
+            await EducationService.CreateOtherEduc(others);
+        }
+
+        listOfOthers.Clear();
+        AddNewOthers(employeeVerifyId);
+    }
+
     public void AddNewPrimary(string employeeVerifyId)
     {
-        if (listOfPrimary.Count <= 4)
+        if (listOfPrimary.Count <= 5)
         {
             listOfPrimary.Add(new PrimaryT { Verify_Id = employee.Verify_Id });
         }
@@ -918,7 +1572,7 @@
     }
     public void AddNewSecondary(string employeeVerifyId)
     {
-        if (listOfSecondary.Count <= 2)
+        if (listOfSecondary.Count <= 3)
         {
             listOfSecondary.Add(new SecondaryT { Verify_Id = employee.Verify_Id });
         }
