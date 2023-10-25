@@ -11,6 +11,8 @@ global using HrisApp.Client.Services.MasterData.AreaService;
 global using HrisApp.Client.Services.EmpDetails.EmployeeService;
 global using HrisApp.Client.Services.EmpDetails.AddressService;
 global using HrisApp.Client.Services.EmpDetails.EducationService;
+global using HrisApp.Client.Services.LicAndTrainService;
+global using HrisApp.Shared.Models.LiscenseAndTraining;
 global using HrisApp.Shared.Models.Education;
 global using HrisApp.Client.Services.ImageService;
 global using HrisApp.Client.Services.TokenService;
@@ -56,6 +58,7 @@ builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
+builder.Services.AddScoped<ILicenseTrainingService, LicenseTrainingService>();
 
 //===========================//////////=======================
 

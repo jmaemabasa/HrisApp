@@ -1,4 +1,5 @@
 ﻿@page "/employee/add"
+@using HrisApp.Shared.Models.LiscenseAndTraining;
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
@@ -9,6 +10,7 @@
 @inject IToastService _toastService
 @inject IImageService ImageService
 @inject IEducationService EducationService
+@inject ILicenseTrainingService LicenseTrainingService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
 
@@ -510,9 +512,9 @@
 
         @* ====================================================================================  EDUCATION  ==================================================================================== *@
 
-        <MudTabPanel TabContent="tabHeader(2)">
+        <MudTabPanel TabContent="tabHeader(2)" >
             <MudGrid>
-                <MudItem xs="12">
+                 <MudItem xs="12" Style="padding-top: 0px;">
                      <MudCard Class="mdcard1" Elevation="0">
                         <MudCardContent>
                             <div class="d-flex flex-column flex-grow-1">
@@ -987,7 +989,121 @@
         @* ====================================================================================  LICENCE  ==================================================================================== *@
 
         <MudTabPanel TabContent="tabHeader(3)">
-            <MudText>Content Three</MudText>
+            <MudGrid>
+                <MudItem xs="12" Style="padding-top: 0px;">
+                    <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                        <MudCardContent>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
+                                    <span class="spantitle">Licences</span>
+                                    <div>
+                                        <MudTooltip Text="Click to remove Licences">
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="RemoveLicense" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                        </MudTooltip>
+                                        <MudTooltip Text="Click to add more Licences">
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewLicense(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                        </MudTooltip>
+                                    </div>
+                                </div>
+                                @if (listofLicense.Any())
+                                {
+                                    @foreach (var lis in listofLicense)
+                                    {
+                                        <div class="mb-3 divSchool">
+                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Professional Licenses/Board Examinations Taken</MudInputLabel>
+                                                    <MudTextField @bind-Value="lis.Examination" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>Professional Membership</MudInputLabel>
+                                                     <MudTextField @bind-Value="lis.ProfMembership" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                             </div>
+                                             <div class="d-flex flex-wrap gap-2">
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>License No.</MudInputLabel>
+                                                     <MudTextField @bind-Value="lis.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>Date(mm/dd/yy)</MudInputLabel>
+                                                     <MudDatePicker Class="txf" DisableUnderLine @bind-Date="lis.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                                 </div>
+                                             </div>
+                                         </div>
+                                    }
+                                }
+                                else
+                                {
+                                    @foreach (var pri in listofLicense)
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No Licenses information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                }
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudCard Class="mdcard1" Elevation="0">
+                        <MudCardContent>       
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
+                                    <span class="spantitle">Secondary</span>
+                                    <div>
+                                        <MudTooltip Text="Click to remove Secondary">
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="RemoveSecondary" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                        </MudTooltip>
+                                        <MudTooltip Text="Click to add more Secondary">
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewSecondary(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                        </MudTooltip>
+                                    </div>
+                                </div>
+                               
+                                @if (listOfTrainings.Any())
+                                {
+                                    @foreach (var train in listOfTrainings)
+                                    {
+                                        <div class="mb-3 divSchool">
+                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Training Name</MudInputLabel>
+                                                    <MudTextField @bind-Value="train.TrainingName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>Training Date(mm/dd/yyyy)</MudInputLabel>
+                                                     <MudDatePicker Class="txf" DisableUnderLine @bind-Date="train.TrainingDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>Remarks</MudInputLabel>
+                                                     <MudTextField @bind-Value="train.Remarks" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                 </div>
+                                             </div>
+                                         </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                         <MudCard>
+                                             <MudCardContent>
+                                                  <p>No Secondary information available.</p>
+                                             </MudCardContent>
+                                         </MudCard>
+                                    </MudContainer>
+                                   
+                                }
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
         </MudTabPanel>
 
         @* ====================================================================================  PAYROLL  ==================================================================================== *@
@@ -1138,6 +1254,8 @@
     List<PrimaryT> listOfPrimary = new();
     List<MasteralT> listOfMasteral = new();
     List<SeniorHST> listOfShs = new();
+    List<TrainingT> listOfTrainings = new();
+    List<LicenseT> listofLicense = new();
 
     private bool IsListaddshs;
     private bool IsListaddcoll;
@@ -1226,6 +1344,8 @@
         AddNewMasteral(employee.Verify_Id);
         AddNewDoctorate(employee.Verify_Id);
         AddNewOthers(employee.Verify_Id);
+        AddNewLicense(employee.Verify_Id);
+        AddNewTrainings(employee.Verify_Id);
     }
 
     private void HandleDateHiredChanged(DateTime? newDate)
@@ -1360,6 +1480,8 @@
             await CreateMasteralRecords(verifyCode);
             await CreateDoctorateRecords(verifyCode);
             await CreateOtherEducRecords(verifyCode);
+            await CreateLicenses(verifyCode);
+            await CreateTrainings(verifyCode);
 
             NavigationManager.NavigateTo("employee");
 
@@ -1555,6 +1677,53 @@
         AddNewOthers(employeeVerifyId);
     }
 
+    async Task CreateLicenses(string employeeVerifyId)
+    {
+        //training
+        var validLicenses = listofLicense
+           .Where
+           (license =>
+                !string.IsNullOrEmpty(license.Examination) ||
+                !string.IsNullOrEmpty(license.ProfMembership) ||
+                !string.IsNullOrEmpty(license.LicenseNo) ||
+                license.Date != DateTime.MinValue)
+           .ToList();
+        if (validLicenses.Count == 0)
+        {
+            return;
+        }
+        foreach (var license in validLicenses)
+        {
+            license.Verify_Id = employeeVerifyId;
+            await LicenseTrainingService.CreateLicense(license);
+        }
+
+        listofLicense.Clear();
+        AddNewLicense(employeeVerifyId);
+    }
+
+    async Task CreateTrainings(string employeeVerifyId)
+    {
+        //training
+        var validtraining = listOfTrainings
+           .Where
+           (train => !string.IsNullOrEmpty(train.TrainingName)
+                || !string.IsNullOrEmpty(train.Remarks))
+           .ToList();
+        if (validtraining.Count == 0)
+        {
+            return;
+        }
+        foreach (var train in validtraining)
+        {
+            train.Verify_Id = employeeVerifyId;
+            await LicenseTrainingService.CreateTraining(train);
+        }
+
+        listOfTrainings.Clear();
+        AddNewTrainings(employeeVerifyId);
+    }
+
     public void AddNewPrimary(string employeeVerifyId)
     {
         if (listOfPrimary.Count <= 5)
@@ -1665,6 +1834,41 @@
             listOfOthers.RemoveAt(listOfOthers.Count - 1);
         }
     }
+
+    public void AddNewLicense(string employeeVerifyId)
+    {
+        if (listofLicense.Count <= 5)
+        {
+            listofLicense.Add(new LicenseT { Verify_Id = employee.Verify_Id });
+            StateHasChanged(); 
+        }
+    }
+
+    public void RemoveLicense()
+    {
+        if (listofLicense.Count <= 1) { }
+        else
+        {
+            listofLicense.RemoveAt(listofLicense.Count - 1);
+        }
+    }
+
+    public void AddNewTrainings(string employeeVerifyId)
+    {
+        if (listOfTrainings.Count <= 5)
+        {
+            listOfTrainings.Add(new TrainingT { Verify_Id = employee.Verify_Id });
+        }
+    }
+    public void RemoveTrainings()
+    {
+        if (listOfTrainings.Count <= 1) { }
+        else
+        {
+            listOfTrainings.RemoveAt(listOfTrainings.Count - 1);
+        }
+    }
+
     private void OnValidSubmit(EditContext context)
     {
         success = true;

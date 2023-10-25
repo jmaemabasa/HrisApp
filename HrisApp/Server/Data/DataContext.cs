@@ -1,4 +1,7 @@
 ﻿
+using HrisApp.Shared.Models.LiscenseAndTraining;
+using System.ComponentModel;
+
 namespace HrisApp.Server.Data
 {
     public class DataContext : DbContext
@@ -139,6 +142,10 @@ namespace HrisApp.Server.Data
         public DbSet<PrimaryT> PrimaryT { get; set; }
         public DbSet<SecondaryT> SecondaryT { get; set; }
         public DbSet<SeniorHST> SeniorHST { get; set; }
+
+        //LICENSE AND TRAINING
+        public DbSet<LicenseT> LicenseT { get; set; }
+        public DbSet<TrainingT> TrainingT { get; set; }
 
 
         //Address
