@@ -18,7 +18,7 @@
     <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex" Centered=true>
 
         @* ====================================================================================  JOB  ==================================================================================== *@
-        <MudTabPanel Class="@GetTabClass(0)" TabContent="tabHeader(0)">
+        <MudTabPanel TabContent="tabHeader(0)">
             <MudGrid>
                 
                 <MudItem xs="12" lg="2">
@@ -307,7 +307,7 @@
 
         @* ====================================================================================  PERSONAL  ==================================================================================== *@
 
-        <MudTabPanel Class="@GetTabClass(1)" TabContent="tabHeader(1)">
+        <MudTabPanel TabContent="tabHeader(1)">
             <MudGrid>
                 <MudItem xs="12" >
                     <span class="spantitle">Personal Details</span>
@@ -510,7 +510,7 @@
 
         @* ====================================================================================  EDUCATION  ==================================================================================== *@
 
-        <MudTabPanel Class="@GetTabClass(2)" TabContent="tabHeader(2)">
+        <MudTabPanel TabContent="tabHeader(2)">
             <MudGrid>
                 <MudItem xs="12">
                      <MudCard Class="mdcard1" Elevation="0">
@@ -986,13 +986,13 @@
 
         @* ====================================================================================  LICENCE  ==================================================================================== *@
 
-        <MudTabPanel Class="@GetTabClass(3)" TabContent="tabHeader(3)">
+        <MudTabPanel TabContent="tabHeader(3)">
             <MudText>Content Three</MudText>
         </MudTabPanel>
 
         @* ====================================================================================  PAYROLL  ==================================================================================== *@
 
-        <MudTabPanel Class="@GetTabClass(4)" TabContent="tabHeader(4)">
+        <MudTabPanel TabContent="tabHeader(4)">
             <MudText>Content Three</MudText>
         </MudTabPanel>
     </MudTabs>
@@ -1052,52 +1052,52 @@
         {
             if (tabId == 0) {
                 builder.OpenComponent<MudChip>(0);
-                builder.AddAttribute(1, "Class", @GetTabChipClass(0)); // Add your custom class for styling
+                builder.AddAttribute(1, "Class", @GetTabChipClass(0));
                 builder.AddAttribute(3, "Text", $"{tabId + 1}");
                 builder.CloseComponent();
                 builder.OpenElement(4, "span");
-                builder.AddAttribute(5, "class", @GetTabTextClass(0)); // Add your custom class for styling
+                builder.AddAttribute(5, "class", @GetTabTextClass(0)); 
                 builder.AddContent(6, "Job");
                 builder.CloseComponent();
             }
             else if (tabId == 1) {
                 builder.OpenComponent<MudChip>(0);
-                builder.AddAttribute(1, "Class", @GetTabChipClass(1)); // Add your custom class for styling
+                builder.AddAttribute(1, "Class", @GetTabChipClass(1)); 
                 builder.AddAttribute(3, "Text", $"{tabId + 1}");
                 builder.CloseComponent();
                 builder.OpenElement(4, "span");
-                builder.AddAttribute(5, "class", @GetTabTextClass(1)); // Add your custom class for styling
+                builder.AddAttribute(5, "class", @GetTabTextClass(1)); 
                 builder.AddContent(6, "Personal");
                 builder.CloseComponent();
             }
             else if (tabId == 2) {
                 builder.OpenComponent<MudChip>(0);
-                builder.AddAttribute(1, "Class", @GetTabChipClass(2)); // Add your custom class for styling
+                builder.AddAttribute(1, "Class", @GetTabChipClass(2)); 
                 builder.AddAttribute(3, "Text", $"{tabId + 1}");
                 builder.CloseComponent();
                 builder.OpenElement(4, "span");
-                builder.AddAttribute(5, "class", @GetTabTextClass(2)); // Add your custom class for styling
+                builder.AddAttribute(5, "class", @GetTabTextClass(2));
                 builder.AddContent(6, "Education");
                 builder.CloseComponent();
             }
             else if (tabId == 3) {
                 builder.OpenComponent<MudChip>(0);
-                builder.AddAttribute(1, "Class", @GetTabChipClass(3)); // Add your custom class for styling
+                builder.AddAttribute(1, "Class", @GetTabChipClass(3)); 
                 builder.AddAttribute(3, "Text", $"{tabId + 1}");
                 builder.CloseComponent();
                 builder.OpenElement(4, "span");
-                builder.AddAttribute(5, "class", @GetTabTextClass(3)); // Add your custom class for styling
+                builder.AddAttribute(5, "class", @GetTabTextClass(3)); 
                 builder.AddContent(6, "Licences & Training");
                 builder.CloseComponent();
             }
             else if (tabId == 4)
             {
                 builder.OpenComponent<MudChip>(0);
-                builder.AddAttribute(1, "Class", @GetTabChipClass(4)); // Add your custom class for styling
+                builder.AddAttribute(1, "Class", @GetTabChipClass(4)); 
                 builder.AddAttribute(3, "Text", $"{tabId + 1}");
                 builder.CloseComponent();
                 builder.OpenElement(4, "span");
-                builder.AddAttribute(5, "class", @GetTabTextClass(4)); // Add your custom class for styling
+                builder.AddAttribute(5, "class", @GetTabTextClass(4)); 
                 builder.AddContent(6, "Payroll");
                 builder.CloseComponent();
             }
