@@ -12,12 +12,14 @@ global using HrisApp.Client.Services.EmpDetails.EmployeeService;
 global using HrisApp.Client.Services.EmpDetails.AddressService;
 global using HrisApp.Client.Services.EmpDetails.EducationService;
 global using HrisApp.Client.Services.LicAndTrainService;
+global using HrisApp.Client.Services.Payroll;
 global using HrisApp.Shared.Models.LiscenseAndTraining;
 global using HrisApp.Shared.Models.Education;
 global using HrisApp.Client.Services.ImageService;
 global using HrisApp.Client.Services.TokenService;
 global using HrisApp.Shared.Models.MasterData;
 global using HrisApp.Shared.Models.User;
+global using HrisApp.Shared.Models.Payroll;
 global using HrisApp.Shared.Models.Employee;
 global using HrisApp.Shared.Models.Images;
 global using Microsoft.AspNetCore.Authorization;
@@ -59,6 +61,7 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<ILicenseTrainingService, LicenseTrainingService>();
+builder.Services.AddScoped<IPayrollService, PayrollService>();
 
 //===========================//////////=======================
 

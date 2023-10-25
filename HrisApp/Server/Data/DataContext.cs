@@ -1,5 +1,6 @@
 ﻿
 using HrisApp.Shared.Models.LiscenseAndTraining;
+using HrisApp.Shared.Models.Payroll;
 using System.ComponentModel;
 
 namespace HrisApp.Server.Data
@@ -112,6 +113,22 @@ namespace HrisApp.Server.Data
              new EmerRelationshipT { Id = 3, Name = "Spouse" },
              new EmerRelationshipT { Id = 4, Name = "Sibling" }
             );
+
+            modelBuilder.Entity<CashBondT>().HasData(
+             new CashBondT { Id = 1, Name = "Yes" },
+             new CashBondT { Id = 2, Name = "No" }
+            );
+
+            modelBuilder.Entity<RateTypeT>().HasData(
+             new RateTypeT { Id = 1, Name = "Monthly Rate" },
+             new RateTypeT { Id = 2, Name = "Daily Rate" }
+            );
+
+            modelBuilder.Entity<ScheduleTypeT>().HasData(
+             new ScheduleTypeT { Id = 1, Name = "Regular", TimeIn = "8:00 AM", TimeOut = "5:00 PM" },
+             new ScheduleTypeT { Id = 2, Name = "On Call", TimeIn = "8:00 AM", TimeOut = "5:00 PM" },
+             new ScheduleTypeT { Id = 3, Name = "Night Shift", TimeIn = "8:00 PM", TimeOut = "5:00 AM" }
+            );
         }
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
@@ -154,5 +171,11 @@ namespace HrisApp.Server.Data
         //IMAGES AND FILES
         public DbSet<DocumentT> DocumentT { get; set; }
         public DbSet<EmpPictureT> EmpPictureT { get; set; }
+
+        //PAYROLL
+        public DbSet<CashBondT> CashBondT { get; set;}
+        public DbSet<RateTypeT> RateTypeT { get; set;}
+        public DbSet<ScheduleTypeT> ScheduleTypeT { get; set;}
+        public DbSet<PayrollT> PayrollT { get; set;}
     }
 }

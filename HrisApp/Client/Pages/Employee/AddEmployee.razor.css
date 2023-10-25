@@ -141,38 +141,6 @@
     font-weight: bold;
 }
 
-.active-tab {
-    background-color: pink;
-}
-
-::deep .active-tab0 {
-    color: #A9AF7E;
-    border-bottom: 2px solid #A9AF7E;
-    opacity: 0.5;
-}
-
-::deep .active-tab1 {
-    color: #7D8F69;
-    border-bottom: 2px solid #7D8F69;
-    opacity: 0.5;
-}
-
-::deep .active-tab2 {
-    color: #5F8D4E;
-    border-bottom: 2px solid #5F8D4E;
-    opacity: 0.5;
-}
-
-::deep .active-tab3 {
-    color: #557153;
-    border-bottom: 2px solid #557153;
-    opacity: 0.5;
-}
-
-::deep .active-tab4 {
-    color: #F7FFE5;
-}
-
 @media (max-width: 576px) {
     ::deep .mdcard1.lfmargin {
         margin-left: 0px;

@@ -10,6 +10,7 @@
 @inject IToastService _toastService
 @inject IImageService ImageService
 @inject IEducationService EducationService
+@inject IPayrollService PayrollService
 @inject ILicenseTrainingService LicenseTrainingService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
@@ -1055,13 +1056,13 @@
                         <MudCardContent>       
                             <div class="d-flex flex-column flex-grow-1">
                                 <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
-                                    <span class="spantitle">Secondary</span>
+                                    <span class="spantitle">Trainings</span>
                                     <div>
-                                        <MudTooltip Text="Click to remove Secondary">
-                                            <MudIconButton Class="p-0 addminbtn" OnClick="RemoveSecondary" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                        <MudTooltip Text="Click to remove Trainings">
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="RemoveTrainings" Icon="@Icons.Material.Rounded.RemoveCircle" />
                                         </MudTooltip>
-                                        <MudTooltip Text="Click to add more Secondary">
-                                            <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewSecondary(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                        <MudTooltip Text="Click to add more Trainings">
+                                            <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewTrainings(employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
                                         </MudTooltip>
                                     </div>
                                 </div>
@@ -1093,7 +1094,7 @@
                                     <MudContainer MaxWidth="MaxWidth.ExtraLarge">
                                          <MudCard>
                                              <MudCardContent>
-                                                  <p>No Secondary information available.</p>
+                                                  <p>No Trainings information available.</p>
                                              </MudCardContent>
                                          </MudCard>
                                     </MudContainer>
@@ -1109,12 +1110,139 @@
         @* ====================================================================================  PAYROLL  ==================================================================================== *@
 
         <MudTabPanel TabContent="tabHeader(4)">
-            <MudText>Content Three</MudText>
+            <MudGrid>
+                <MudItem xs="12" Style="padding-top: 0px;">
+                    <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                        <MudCardContent>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
+                                    <span class="spantitle">Documents</span>
+                                </div>
+                                <div class="mb-3 divSchool">
+                                    <div class="d-flex flex-wrap gap-2 mb-1">
+                                        <div class="flex-grow-1">
+                                            <MudInputLabel>Rate</MudInputLabel>
+                                            <MudTextField @bind-Value="employee.FirstName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>Rate Type</MudInputLabel>
+                                             <MudSelect Class="frmselect" DisableUnderLine @bind-Value="payroll.RateTypeId" Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @foreach (var rate in RateTypeL)
+                                                {
+                                                    <MudSelectItem Value="@rate.Id">@rate.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                         </div>
+                                          <div class="flex-grow-1">
+                                             <MudInputLabel>Cash-Bond</MudInputLabel>
+                                            <MudSelect Class="frmselect" DisableUnderLine @bind-Value="payroll.CashbondId" Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @foreach (var cb in CashbondL)
+                                                {
+                                                    <MudSelectItem Value="@cb.Id">@cb.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                         </div>
+                                     </div>
+                                     <div class="d-flex flex-wrap gap-2">
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>Meal Allowance</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.MealAllowance" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                          <div class="flex-grow-1">
+                                             <MudInputLabel>Biometric Id No.</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.BiometricID" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>Bank Account</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.BankAcc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                     </div>
+                                 </div>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" Style="padding-top: 0px;">
+                    <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                        <MudCardContent>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
+                                     <span class="spantitle">Statutory Documents</span>
+                                </div>
+                                <div class="mb-3 divSchool">
+                                    <div class="d-flex flex-wrap gap-2 mb-1">
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>PHIC No.</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.PhilHealthNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                          <div class="flex-grow-1">
+                                             <MudInputLabel>HDMF No.</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.HDMFNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                     </div>
+                                     <div class="d-flex flex-wrap gap-2">
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>SSS No.</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.SSSNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                          <div class="flex-grow-1">
+                                             <MudInputLabel>TIN No.</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.TINNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                     </div>
+                                 </div>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                 <MudItem xs="12" Style="padding-top: 0px;">
+                     <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                         <MudCardContent>
+                             <div class="d-flex flex-column flex-grow-1">
+                                 <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
+                                     <span class="spantitle">Schedule</span>
+                                 </div>
+                                 <div class="mb-3 divSchool">
+                                     <div class="d-flex flex-wrap gap-2 mb-1">
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>Schedule Type</MudInputLabel>
+                                             <MudSelect Class="frmselect" DisableUnderLine @bind-Value="payroll.ScheduleTypeId" Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @foreach (var sched in ScheduleTypeL)
+                                                {
+                                                    <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                         </div>
+                                         @* <div class="flex-grow-1">
+                                             <MudInputLabel>HDMF No.</MudInputLabel>
+                                           
+                                            @foreach (var item in ScheduleTypeL)
+                                            {
+                                                if (item.Id == payroll.ScheduleTypeId)
+                                                {
+                                                    <MudInputLabel>@item.Name</MudInputLabel>
+                                                }
+                                            }
+                                         </div> *@
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>HDMF No.</MudInputLabel>
+                                             <MudTextField @bind-Value="payroll.ScheduleType.TimeOut" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </MudCardContent>
+                     </MudCard>
+                 </MudItem>
+            </MudGrid>
         </MudTabPanel>
     </MudTabs>
 </div>
 
-@code {
+ @code {
     //TAB PANEL
     MudTabs tabs;
     void Activate(int index)
@@ -1146,8 +1274,8 @@
             return "mud-chip-default";
         }
     }
-    
-     string GetTabTextClass(int tabId)
+
+    string GetTabTextClass(int tabId)
     {
         if (activeIndex > tabId)
         {
@@ -1228,6 +1356,8 @@
 
     EmployeeT employee = new();
     AddressT address = new();
+    PayrollT payroll = new();
+
 
     bool success;
 
@@ -1245,6 +1375,12 @@
     private List<CivilStatusT> CivilStatusL = new List<CivilStatusT>();
     private List<ReligionT> ReligionsL = new List<ReligionT>();
     private List<EmerRelationshipT> EmerRelationshipsL = new List<EmerRelationshipT>();
+
+    //PAYROLL
+    private List<CashBondT> CashbondL = new List<CashBondT>();
+    private List<ScheduleTypeT> ScheduleTypeL = new List<ScheduleTypeT>();
+    private List<RateTypeT> RateTypeL = new List<RateTypeT>();
+
 
     //EDUCATION
     List<CollegeT> listOfCollege = new();
@@ -1334,6 +1470,17 @@
 
         await EmployeeService.GetEmerRelationshipList();
         EmerRelationshipsL = EmployeeService.EmerRelationshipTs;
+
+        await PayrollService.GetRateType();
+        RateTypeL = PayrollService.RateTypeTs;
+
+        await PayrollService.GetScheduleType();
+        ScheduleTypeL = PayrollService.ScheduleTypeTs;
+
+        await PayrollService.GetCashbond();
+        CashbondL = PayrollService.CashBondTs;
+
+
 
         imgBase64 = "./images/addIconImage.png";
 
