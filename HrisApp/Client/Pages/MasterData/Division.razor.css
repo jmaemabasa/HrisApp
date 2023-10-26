@@ -7,6 +7,14 @@
     padding: 25px 50px 25px 50px;
 }
 
+/*TOP BUTTONS*/
+.topnav {
+    position: absolute;
+    top: 30px;
+    width: -webkit-fill-available;
+    padding-right: 35px;
+}
+
 .ttitle {
     font-weight: bold;
 }
@@ -59,6 +67,19 @@
     .box {
         height: auto;
         margin-bottom: 15px;
-        padding: 15px 25px 15px 25px;
+        padding: 35px 25px 15px 25px;
     }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    /*TOP BUTTONS*/
+    .topnav {
+        position: absolute;
+        top: 28px;
+        width: -webkit-fill-available;
+        padding-right: 35px;
+    }
+
 }

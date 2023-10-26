@@ -15,6 +15,16 @@
     font-size: 14px;
 }
 
+/*TOP BUTTONS*/
+.topnav {
+    position: fixed;
+    top: 0;
+    padding-top: 30px;
+    width: -webkit-fill-available;
+    padding-right: 35px;
+    background-color: #e9ecef;
+}
+
 /*BUTTONS*/
 .btnnext {
     border: none;
@@ -208,6 +218,18 @@
 
     .tabdiv {
         padding: 15px 0px 15px 0px;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    /*TOP BUTTONS*/
+    .topnav {
+        position: absolute;
+        top: 28px;
+        width: -webkit-fill-available;
+        padding-right: 35px;
     }
 }
 

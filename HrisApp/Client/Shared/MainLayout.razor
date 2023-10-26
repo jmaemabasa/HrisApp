@@ -1,9 +1,53 @@
 ﻿@using Blazored.Toast.Configuration;
+@using MudBlazor.Services
+
 @inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
+
+<style>
+    .mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
+        background: #e9ecef;
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+        border-radius: 20px;
+        height: 95vh;
+        left: 15px;
+        top: 15px;
+    }
+
+    .mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
+        background: #e9ecef;
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+        border-radius: 20px;
+        height: 95vh;
+        left: 15px;
+        top: 15px;
+        width: 4rem;
+    }
+
+    .mud-container.mud-container-maxwidth-xxl {
+        padding-left: 45px;
+        padding-right: 35px;
+        margin-top: 15px;
+    }
+
+    .mud-appbar.mud-appbar-fixed-top.mud-elevation-0{
+        background-color: #e9ecef;
+        color: #27374D;
+        left: 15px;
+        margin-bottom: 25px;
+        margin-top: 15px;
+    }
+
+    .mud-appbar .mud-toolbar-appbar {
+        padding: 0px !important;
+    }
+
+</style>
 
 <MudThemeProvider Theme="MyCustomTheme"/>
 <MudDialogProvider />
@@ -11,51 +55,95 @@
 @* #EEF1F6  #031a5a*@
 
 <MudLayout>
-    <MudAppBar Style="background-color: #27374D; ">
-        <MudIconButton Icon="@Icons.Material.Rounded.MenuOpen" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        @* My Application *@
+    <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+        <MudAppBar Elevation="0" Style="left: 45px; width: 75%; margin-right: 35px;">
+            <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            @* My Application *@
 
-        <MudSpacer/>
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Logout" Style="color: white" OnClick="Logout">Logout</MudButton>
+            <MudSpacer />
 
-    </MudAppBar>
+        </MudAppBar>
+    </MudHidden>
 
-    <MudDrawer @bind-Open="@_drawerOpen">
-        <MudDrawerHeader>
-            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1"/>
-        </MudDrawerHeader>
-        <NavMenu/>
-        <MudIconButton Icon="@Icons.Material.Rounded.MenuOpen" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-    </MudDrawer>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-            @Body
-        </MudContainer>
-    </MudMainContent>
+    <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
+        <MudAppBar Elevation="0" Style="left: 0; width: max-content; padding-right: 15px; padding-left: 15px; ">
+            <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            @* My Application *@
+
+            <MudSpacer />
+
+        </MudAppBar>
+    </MudHidden>
+    
+
+    <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+        <MudDrawer @bind-Open="@_drawerOpen" Fixed="true" Elevation="0" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true" Class="sidebarmenu">
+            @if (_drawerOpen == true)
+            {
+                <MudDrawerHeader>
+                    <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                </MudDrawerHeader>
+            }
+            else
+            {
+                <MudDrawerHeader Style="padding: 15px 0px 10px 12px">
+                    <MudImage Src="./images/logo.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                </MudDrawerHeader>
+            }
+
+            
+            <NavMenu />
+        </MudDrawer>
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
+        <MudDrawer @bind-Open="@_drawerOpen" Fixed="true" Elevation="0" Class="sidebarmenu">
+            <MudDrawerHeader>
+                <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+            </MudDrawerHeader>
+            <NavMenu />
+        </MudDrawer>
+    </MudHidden>
+    
+    <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudHidden>
+
+    <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Style="padding-right: 15px; padding-left: 15px">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudHidden>
 </MudLayout>
 
 <BlazoredToasts Position="ToastPosition.BottomRight" Timeout="10" IconType="IconType.FontAwesome" SuccessClass="success-toast-override" SuccessIcon="fa fa-thumbs-up" ErrorIcon="fa fa-bug"   />
 
 @code {
+
     bool _drawerOpen = true;
 
     void DrawerToggle()
     {
-        _drawerOpen = !_drawerOpen;
+        if (_drawerOpen == false)
+            _drawerOpen = true;
+        else
+            _drawerOpen = !_drawerOpen;
+
     }
 
-    async Task Logout()
-    {
-        await LocalStorage.RemoveItemAsync("token");
-        await AuthStateProvider.GetAuthenticationStateAsync();
-        NavigationManager.NavigateTo("/");
-    }
+   
 
     MudTheme MyCustomTheme = new MudTheme()
         {
             Palette = new Palette()
             {
                 Primary = Colors.Blue.Darken4,
+
                 
                 //Define other properties here.
             },

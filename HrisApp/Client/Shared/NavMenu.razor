@@ -1,13 +1,37 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="/index" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
-    <MudNavLink Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employee</MudNavLink>
-    <MudNavGroup Title="Master Data" Expanded="true" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Inherit">
-        <MudNavLink Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
-        <MudNavLink Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
-        <MudNavLink Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
-        <MudNavLink Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
-        <MudNavLink Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
+﻿@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
 
-    </MudNavGroup>
-    <MudNavLink Href="/test" Match="NavLinkMatch.Prefix">Test</MudNavLink>
+<MudNavMenu Rounded="true" Margin="Margin.Normal" Bordered="true" Style="height: 100%">
+    <div class="d-flex flex-column flex-grow-1 align-content-space-between h-100">
+        <div class="flex-grow-1">
+            <MudNavLink Href="/index" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
+            <MudNavLink Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employee</MudNavLink>
+            <MudNavGroup Title="Master Data" Expanded="true" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Inherit">
+                <MudNavLink Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
+                <MudNavLink Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
+                <MudNavLink Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
+                <MudNavLink Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
+                <MudNavLink Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
+
+            </MudNavGroup>
+        </div>
+        <div class="mb-5">
+            <MudNavLink Href="/test" Match="NavLinkMatch.Prefix">Test</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Logout" IconColor="Color.Inherit" OnClick="Logout">Logout</MudNavLink>
+
+        </div>
+
+    </div>
+    
+    
 </MudNavMenu>
+
+@code {
+    async Task Logout()
+    {
+        await LocalStorage.RemoveItemAsync("token");
+        await AuthStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("/");
+    }
+}

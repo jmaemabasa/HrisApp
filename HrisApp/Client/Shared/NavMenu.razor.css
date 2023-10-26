@@ -11,6 +11,7 @@
     font-size: 1.1rem;
 }
 
+
 .oi {
     width: 2rem;
     font-size: 1.1rem;
@@ -62,13 +63,6 @@
 }
 
 
-::deep .mud-drawer {
-    background: #e9ecef;
-    border: none;
-    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-    border-radius: 20px;
-    height: auto;
-    padding: 25px 50px 25px 50px;
-    margin-top: 25px;
-    margin-bottom: 20px;
-}
+
+
+
