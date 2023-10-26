@@ -14,6 +14,8 @@
 @inject ILicenseTrainingService LicenseTrainingService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
+@inject IToastService _toastService
+
 
 
 <div class="tabdiv">
@@ -24,7 +26,7 @@
         <MudTabPanel TabContent="tabHeader(0)">
             <MudGrid>
                 
-                <MudItem xs="12" lg="2">
+                <MudItem xs="12" lg="2"  style="z-index: 99">
                     <span class="spantitle mb-3">Image</span>
                     @if (imgBase64 == "./images/addIconImage.png")
                     {
@@ -51,29 +53,38 @@
                          </MudFileUpload>
                     }
                 </MudItem>
-                <MudItem xs="12" lg="9">
+                <EditForm Model="employee" OnValidSubmit="() => Activate(1)" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+                    <DataAnnotationsValidator />
+                
+                <MudItem xs="12">
                     <span class="spantitle">Basic Fields</span>
                     <MudCard Class="mdcard1 lfmargin" Elevation="0">
                         <MudCardContent>
                             <MudInputLabel>First Name</MudInputLabel>
-                            <MudStack Row="true" Class="mb-1">
-                                <MudItem xs="12"><MudTextField Class="txf" @bind-Value="employee.FirstName" For="() => employee.FirstName" DisableUnderLine Margin="Margin.Dense" /></MudItem>
+                            <MudStack Row="true" Class="mb-2">
+                                 <MudItem xs="12"><InputText class="txf1 w-100" @bind-Value="employee.FirstName" /></MudItem>
                             </MudStack>
+                            <ValidationMessage For="@(() => employee.FirstName)" class="mb-2"/>  
                             <MudInputLabel>Middle Name</MudInputLabel>
-                            <MudStack Row="true" Class="mb-1">
-                                <MudItem xs="12"><MudTextField Class="txf" @bind-Value="employee.MiddleName" DisableUnderLine Margin="Margin.Dense" /></MudItem>
+                            <MudStack Row="true" Class="mb-2">
+                                <MudItem xs="12"><InputText Class="txf1 w-100" @bind-Value="employee.MiddleName" /></MudItem>
                             </MudStack>
+                            <ValidationMessage For="@(() => employee.MiddleName)" class="mb-2"/>  
+
                              <MudInputLabel>Last Name</MudInputLabel>
-                            <MudStack Row="true" Class="mb-1">
-                                <MudItem xs="12"><MudTextField Class="txf" @bind-Value="employee.LastName" DisableUnderLine Margin="Margin.Dense" /></MudItem>
+                            <MudStack Row="true" Class="mb-2">
+                                <MudItem xs="12"><InputText Class="txf1 w-100" @bind-Value="employee.LastName" /></MudItem>
                             </MudStack>
+                            <ValidationMessage For="@(() => employee.LastName)" class="mb-2"/>  
+
                             <MudInputLabel>Email</MudInputLabel>
-                            <MudStack Row="true" Class="mb-1">
+                            <MudStack Row="true" Class="mb-2">
                                  <MudItem xs="12">
-                                     <MudTextField Class="txf" @bind-Value="employee.Email" DisableUnderLine Margin="Margin.Dense" />
+                                        <InputText Class="txf1 w-100" @bind-Value="employee.Email" />
                                 </MudItem>
                             </MudStack>
-                        </MudCardContent>
+                                <ValidationMessage For="@(() => employee.Email)" class="mb-2" />
+                            </MudCardContent>
                     </MudCard>
                 </MudItem>
                 <MudItem xs="12" Class="mt-3">
@@ -84,27 +95,30 @@
                                  <div class="d-flex flex-wrap gap-lg-3 gap-sm-2">
                                      <div class="flex-grow-1">
                                          <MudInputLabel>Company ID No.</MudInputLabel>
-                                         <MudTextField Class="txf" @bind-Value="employee.EmployeeNo" DisableUnderLine Margin="Margin.Dense" />
+                                         <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.EmployeeNo" />
+                                         <ValidationMessage For="@(() => employee.EmployeeNo)" class="mb-2" />
                                      </div>
                                      <div class="flex-grow-1">
                                          <MudInputLabel>Area of Assignment</MudInputLabel>
-                                         <MudSelect Class="frmselect" @bind-Value="employee.AreaId" DisableUnderLine Margin="Margin.Dense">
+                                            <MudSelect Class="@slectClasss" @bind-Value="employee.AreaId" DisableUnderLine Margin="Margin.Dense">
                                              <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                             @foreach (var area in AreasL)
                                             {
                                                 <MudSelectItem Value="@area.Id">@area.Name</MudSelectItem>
                                             }
                                         </MudSelect>
+                                            <ValidationMessage For="@(() => employee.AreaId)" class="mb-2" />
                                      </div>
                                     <div class="flex-grow-1">
                                         <MudInputLabel>Status</MudInputLabel>
-                                        <MudSelect Class="frmselect" @bind-Value="employee.StatusId" DisableUnderLine Margin="Margin.Dense">
+                                        <MudSelect Class="@slectClasss" @bind-Value="employee.StatusId" DisableUnderLine Margin="Margin.Dense">
                                              <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                             @foreach (var status in StatusL.Where(s => s.Id == 1))
                                             {
                                                 <MudSelectItem Value="@status.Id">@status.Name</MudSelectItem>
                                             }
                                         </MudSelect>
+                                         <ValidationMessage For="@(() => employee.StatusId)" class="mb-2" />
                                      </div>
                                  </div>
                              </div>
@@ -112,17 +126,14 @@
                                     <div class="d-flex flex-wrap gap-lg-3 gap-sm-2">
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Employment Status</MudInputLabel>
-                                            <MudSelect Class="frmselect" @bind-Value="employee.EmploymentStatusId"   
-                                                DisableUnderLine
-                                             Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0   
-                                                    Disabled
-                                                 >---Select---</MudSelectItem>
+                                            <MudSelect Class="@slectClasss" @bind-Value="employee.EmploymentStatusId" DisableUnderLine Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0  Disabled >---Select---</MudSelectItem>
                                                  @foreach (var status in EmploymentStatusL)
                                                 {
                                                     <MudSelectItem Value="@status.Id">@status.Name</MudSelectItem>
                                                 }
                                             </MudSelect>
+                                             <ValidationMessage For="@(() => employee.EmploymentStatusId)" class="mb-2" />
                                         </div>
                                         @if (employee.EmploymentStatusId == 1)
                                         {
@@ -215,7 +226,7 @@
                                     {
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Division</MudInputLabel>
-                                            <MudSelect Class="frmselect" DisableUnderLine @bind-Value="employee.DivisionId" Margin="Margin.Dense">
+                                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DivisionId" Margin="Margin.Dense">
                                                  <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                              @foreach (var div in DivisionsL)
                                                 {
@@ -225,7 +236,7 @@
                                         </div>
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Department</MudInputLabel>
-                                            <MudSelect Class="frmselect" DisableUnderLine @bind-Value="employee.DepartmentId" Margin="Margin.Dense">
+                                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DepartmentId" Margin="Margin.Dense">
                                                  <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                              @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
                                                 {
@@ -238,7 +249,7 @@
                                             var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
                                             <div class="flex-grow-1">
                                                 <MudInputLabel>Section</MudInputLabel>
-                                                <MudSelect Class="frmselect" DisableUnderLine @bind-Value="employee.SectionId" Margin="Margin.Dense">
+                                                <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Margin="Margin.Dense">
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                  @if (sections.Any())
                                                     {
@@ -255,7 +266,7 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <MudInputLabel>Position</MudInputLabel>
-                                                <MudSelect Class="frmselect" DisableUnderLine @bind-Value="employee.PositionId" Margin="Margin.Dense">
+                                                    <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Margin="Margin.Dense">
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                  @foreach (var dep in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
                                                     {
@@ -268,7 +279,7 @@
                                     else {
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Division</MudInputLabel>
-                                            <MudSelect @bind-Value="employee.DivisionId" Class="frmselect" DisableUnderLine Margin="Margin.Dense">
+                                            <MudSelect @bind-Value="employee.DivisionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
                                                  <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                              @foreach (var div in DivisionsL)
                                                 {
@@ -278,7 +289,7 @@
                                         </div>
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Department</MudInputLabel>
-                                            <MudSelect @bind-Value="employee.DepartmentId" Class="frmselect" DisableUnderLine Margin="Margin.Dense">
+                                            <MudSelect @bind-Value="employee.DepartmentId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
                                                  <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                              @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
                                                 {
@@ -288,7 +299,7 @@
                                         </div>
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Position</MudInputLabel>
-                                            <MudSelect @bind-Value="employee.PositionId" Class="frmselect" DisableUnderLine Margin="Margin.Dense">
+                                                <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
                                                  <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                              @foreach (var dep in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
                                                 {
@@ -300,11 +311,13 @@
                                     </div>
                             </div>
                             <MudItem xs="12" Class="d-flex justify-content-end mt-5">
-                                <MudButton OnClick="() => Activate(1)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                                @* <MudButton OnClick="() => Activate(1)" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton> *@
+                                    <button Class="btn btnnext" type="submit">NEXT</button>
                             </MudItem>
                         </MudCardContent>
                     </MudCard>
                 </MudItem>
+                </EditForm>
             </MudGrid>
         </MudTabPanel>
 
@@ -342,7 +355,7 @@
                                      </div>
                                      <div class="wautobox" style="width: 468px;">
                                          <MudInputLabel>Age</MudInputLabel>
-                                         <MudTextField Class="txf" DisableUnderLine Value="@CalculateAge(bday)" Disabled Margin="Margin.Dense" />
+                                         <MudTextField Class="txf" DisableUnderLine Value="@CalculateAge(bday)" ReadOnly="true" Margin="Margin.Dense" />
                                      </div>
                                      <div class="wautobox" style="width: 468px;">
                                          <MudInputLabel>Gender</MudInputLabel>
@@ -501,7 +514,7 @@
                             </div>
 
                              <MudItem xs="12" Class="d-flex justify-content-between mt-5">
-                                 <MudButton OnClick="() => Activate(0)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                                 <MudButton OnClick="() => Activate(0)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Back</MudButton>
                                  <MudButton OnClick="() => Activate(2)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
                              </MudItem>
                         </MudCardContent>
@@ -977,7 +990,7 @@
                                     }
                                 </div>
                                 <MudItem xs="12" Class="d-flex justify-content-between mt-5">
-                                 <MudButton OnClick="() => Activate(1)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                                 <MudButton OnClick="() => Activate(1)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Back</MudButton>
                                  <MudButton OnClick="() => Activate(3)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
                              </MudItem>
                             </MudCardContent>
@@ -1216,21 +1229,42 @@
                                                 }
                                             </MudSelect>
                                          </div>
-                                         @* <div class="flex-grow-1">
-                                             <MudInputLabel>HDMF No.</MudInputLabel>
-                                           
-                                            @foreach (var item in ScheduleTypeL)
-                                            {
-                                                if (item.Id == payroll.ScheduleTypeId)
+                                         @if (payroll.ScheduleTypeId != 0) {
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Time In</MudInputLabel>
+
+                                                @foreach (var item in ScheduleTypeL.Where(s => s.Id == payroll.ScheduleTypeId))
                                                 {
-                                                    <MudInputLabel>@item.Name</MudInputLabel>
+                                                    if (item.Id == payroll.ScheduleTypeId)
+                                                    {
+                                                        <MudTextField @bind-Value="item.TimeIn" Class="txf" DisableUnderLine Margin="Margin.Dense" ReadOnly="true"/>
+                                                    }
                                                 }
-                                            }
-                                         </div> *@
-                                         <div class="flex-grow-1">
-                                             <MudInputLabel>HDMF No.</MudInputLabel>
-                                             <MudTextField @bind-Value="payroll.ScheduleType.TimeOut" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                         </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Time In</MudInputLabel>
+
+                                                @foreach (var item in ScheduleTypeL.Where(s => s.Id == payroll.ScheduleTypeId))
+                                                {
+                                                    if (item.Id == payroll.ScheduleTypeId)
+                                                    {
+                                                        <MudTextField @bind-Value="item.TimeOut" Class="txf" DisableUnderLine Margin="Margin.Dense" ReadOnly="true" />
+                                                    }
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                             <div class="flex-grow-1">
+                                                <MudInputLabel>Time In</MudInputLabel>
+                                                <MudTextField T="string" Class="txf" DisableUnderLine Margin="Margin.Dense" ReadOnly="true" />
+                                             </div>
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Time In</MudInputLabel>
+                                                <MudTextField T="string" Class="txf" DisableUnderLine Margin="Margin.Dense" ReadOnly="true" />
+                                             </div>
+                                        }
+
                                      </div>
                                  </div>
                              </div>
@@ -1242,12 +1276,25 @@
     </MudTabs>
 </div>
 
- @code {
+@code {
     //TAB PANEL
     MudTabs tabs;
+    private string slectClasss = "frmselect";
+    private string ifclass;
+
     void Activate(int index)
     {
-        tabs.ActivatePanel(index);
+        // tabs.ActivatePanel(index);
+
+        if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
+        {
+            _toastService.ShowError("Fill out all fields.");
+            slectClasss = "frmselecterror";
+        }
+        else {
+            tabs.ActivatePanel(index);
+            slectClasss = "frmselect";
+        }
     }
     int activeIndex;
     string GetTabClass(int tabId)
