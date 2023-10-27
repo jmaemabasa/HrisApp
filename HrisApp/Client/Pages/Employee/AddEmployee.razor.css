@@ -15,6 +15,17 @@
     font-size: 14px;
 }
 
+::deep .validation-message, ::deep .me-auto {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+    margin-top: 2px;
+}
+
+::deep .paddingitem {
+    margin-left: 50px;
+}
+
 /*TOP BUTTONS*/
 .topnav {
     position: fixed;
@@ -80,6 +91,19 @@
     padding-top: 10px;
     padding-right: 10px;
 }
+
+::deep .txf1error {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 1px solid red;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    background: #e9ecef;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
 
 ::deep .txf > .mud-input-control-input-container:hover {
    border: 2px solid #C5CFD2 !important;
@@ -162,7 +186,9 @@
     font-size: 15px;
     font-weight: bold;
     border-bottom: 2px solid #D8DADC;
+    /*pointer-events: none;*/
 }
+
 
 ::deep .mud-tabs-defaultindex {
     color: #78909C;
@@ -209,6 +235,10 @@
 
 @media (max-width: 576px) {
     ::deep .mdcard1.lfmargin {
+        margin-left: 0px;
+    }
+
+    ::deep .paddingitem {
         margin-left: 0px;
     }
 

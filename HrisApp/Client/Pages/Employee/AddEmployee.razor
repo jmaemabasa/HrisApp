@@ -1,6 +1,7 @@
 ﻿@page "/employee/add"
 @using HrisApp.Shared.Models.LiscenseAndTraining;
 @using System.Net.Http.Headers;
+@using System.Security.Claims;
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
@@ -17,14 +18,15 @@
 @inject SweetAlertService Swal
 @inject IToastService _toastService
 @inject NavigationManager NavigationManager
-
+@inject IJSRuntime JSRuntime
+@attribute [Authorize(Roles = "Admin")]
 
 <div class="topnav d-flex justify-content-end align-items-center z-60">
     <MudButton OnClick="backbtn" Size="Size.Medium">Back</MudButton>
 </div>
 <div class="tabdiv">
     <MudButton Class="button" ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary" @onclick="CreateEmployee" StartIcon="@Icons.Material.Filled.PersonAdd" Style="text-transform: none; position: absolute;left: 90%; z-index:10;top: 70px;">Create User</MudButton>
-    <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex" Centered=true>
+    <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex" Centered=true >
 
         @* ====================================================================================  JOB  ==================================================================================== *@
         <MudTabPanel TabContent="tabHeader(0)">
@@ -59,362 +61,417 @@
                 <EditForm Model="employee" OnValidSubmit="() => Activate(1)" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                     <DataAnnotationsValidator />
                 
-                <MudItem xs="12">
-                    <span class="spantitle">Basic Fields</span>
-                    <MudCard Class="mdcard1 lfmargin" Elevation="0">
-                        <MudCardContent>
-                            <MudInputLabel>First Name</MudInputLabel>
-                            <MudStack Row="true" Class="mb-2">
-                                 <MudItem xs="12"><InputText class="txf1 w-100" @bind-Value="employee.FirstName" /></MudItem>
-                            </MudStack>
-                            <ValidationMessage For="@(() => employee.FirstName)" class="mb-2"/>  
-                            <MudInputLabel>Middle Name</MudInputLabel>
-                            <MudStack Row="true" Class="mb-2">
-                                <MudItem xs="12"><InputText Class="txf1 w-100" @bind-Value="employee.MiddleName" /></MudItem>
-                            </MudStack>
-                            <ValidationMessage For="@(() => employee.MiddleName)" class="mb-2"/>  
+                    <MudItem xs="12" Class="paddingitem">
+                        <span class="spantitle">Personal Information</span>
+                        <MudCard Class="mdcard1 lfmargin" Elevation="0">
+                            <MudCardContent>
+                                <MudInputLabel>First Name</MudInputLabel>
+                                <MudStack Row="true" Class="mb-2">
+                                     <MudItem xs="12"><InputText class="txf1 w-100" @bind-Value="employee.FirstName" /></MudItem>
+                                </MudStack>
+                                <ValidationMessage For="@(() => employee.FirstName)" class="mb-2"/>  
+                                <MudInputLabel>Middle Name</MudInputLabel>
+                                <MudStack Row="true" Class="mb-2">
+                                    <MudItem xs="12"><InputText Class="txf1 w-100" @bind-Value="employee.MiddleName" /></MudItem>
+                                </MudStack>
+                                <ValidationMessage For="@(() => employee.MiddleName)" class="mb-2"/>  
 
-                             <MudInputLabel>Last Name</MudInputLabel>
-                            <MudStack Row="true" Class="mb-2">
-                                <MudItem xs="12"><InputText Class="txf1 w-100" @bind-Value="employee.LastName" /></MudItem>
-                            </MudStack>
-                            <ValidationMessage For="@(() => employee.LastName)" class="mb-2"/>  
+                                 <MudInputLabel>Last Name</MudInputLabel>
+                                <MudStack Row="true" Class="mb-2">
+                                    <MudItem xs="12"><InputText Class="txf1 w-100" @bind-Value="employee.LastName" /></MudItem>
+                                </MudStack>
+                                <ValidationMessage For="@(() => employee.LastName)" class="mb-2"/>  
 
-                            <MudInputLabel>Email</MudInputLabel>
-                            <MudStack Row="true" Class="mb-2">
-                                 <MudItem xs="12">
-                                        <InputText Class="txf1 w-100" @bind-Value="employee.Email" />
-                                </MudItem>
-                            </MudStack>
-                                <ValidationMessage For="@(() => employee.Email)" class="mb-2" />
-                            </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem xs="12" Class="mt-3">
-                    <span class="spantitle">Work Information</span>
-                     <MudCard Class="mdcard1" Elevation="0">
-                         <MudCardContent>
-                             <div class="d-flex flex-column flex-grow-1 mb-3">
-                                 <div class="d-flex flex-wrap gap-lg-3 gap-sm-2">
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Company ID No.</MudInputLabel>
-                                         <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.EmployeeNo" />
-                                         <ValidationMessage For="@(() => employee.EmployeeNo)" class="mb-2" />
-                                     </div>
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Area of Assignment</MudInputLabel>
-                                            <MudSelect Class="@slectClasss" @bind-Value="employee.AreaId" DisableUnderLine Margin="Margin.Dense">
-                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                            @foreach (var area in AreasL)
-                                            {
-                                                <MudSelectItem Value="@area.Id">@area.Name</MudSelectItem>
-                                            }
-                                        </MudSelect>
-                                            <ValidationMessage For="@(() => employee.AreaId)" class="mb-2" />
-                                     </div>
-                                    <div class="flex-grow-1">
-                                        <MudInputLabel>Status</MudInputLabel>
-                                        <MudSelect Class="@slectClasss" @bind-Value="employee.StatusId" DisableUnderLine Margin="Margin.Dense">
-                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                            @foreach (var status in StatusL.Where(s => s.Id == 1))
-                                            {
-                                                <MudSelectItem Value="@status.Id">@status.Name</MudSelectItem>
-                                            }
-                                        </MudSelect>
-                                         <ValidationMessage For="@(() => employee.StatusId)" class="mb-2" />
-                                     </div>
-                                 </div>
-                             </div>
-                            <div class="d-flex flex-column flex-grow-1 mb-3">
-                                    <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 align-items-center">
+                                <MudInputLabel>Email</MudInputLabel>
+                                <MudStack Row="true" Class="mb-2">
+                                     <MudItem xs="12">
+                                            <InputText Class="txf1 w-100" @bind-Value="employee.Email" />
+                                    </MudItem>
+                                </MudStack>
+                                    <ValidationMessage For="@(() => employee.Email)" class="mb-2" />
+                                </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                        <MudItem xs="12" Class="mt-3 paddingitem" >
+                        <span class="spantitle">Work Information</span>
+                         <MudCard Class="mdcard1" Elevation="0">
+                             <MudCardContent>
+                                 <div class="d-flex flex-column flex-grow-1 mb-3">
+                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>Company ID No.</MudInputLabel>
+                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.EmployeeNo" />
+                                             <ValidationMessage For="@(() => employee.EmployeeNo)" class="mb-2" />
+                                         </div>
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>Area of Assignment</MudInputLabel>
+                                                <MudSelect Class="@slectClasss" @bind-Value="employee.AreaId" DisableUnderLine Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @foreach (var area in AreasL)
+                                                {
+                                                    <MudSelectItem Value="@area.Id">@area.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                                <ValidationMessage For="@(() => employee.AreaId)" class="mb-2" />
+                                         </div>
                                         <div class="flex-grow-1">
-                                            <MudInputLabel>Employment Status</MudInputLabel>
-                                            <MudSelect Class="@slectClasss" @bind-Value="employee.EmploymentStatusId" DisableUnderLine Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0  Disabled >---Select---</MudSelectItem>
-                                                 @foreach (var status in EmploymentStatusL)
+                                            <MudInputLabel>Status</MudInputLabel>
+                                            <MudSelect Class="@slectClasss" @bind-Value="employee.StatusId" DisableUnderLine Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @foreach (var status in StatusL.Where(s => s.Id == 1))
                                                 {
                                                     <MudSelectItem Value="@status.Id">@status.Name</MudSelectItem>
                                                 }
                                             </MudSelect>
-                                             <ValidationMessage For="@(() => employee.EmploymentStatusId)" class="mb-2" />
-                                        </div>
-                                        @if (employee.EmploymentStatusId == 1)
-                                        {
+                                             <ValidationMessage For="@(() => employee.StatusId)" class="mb-2" />
+                                         </div>
+                                     </div>
+                                 </div>
+                                <div class="d-flex flex-column flex-grow-1 mb-3">
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 align-items-center">
                                             <div class="flex-grow-1">
-                                                <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy"   
-                                                    DisableUnderLine
-                                                 Editable="true" Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                                 <MudInputLabel>Regularization Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker Class="txf" @bind-Date="RegularDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Margin="Margin.Dense"/>
-                                             </div>
-                                        }
-                                        else if (employee.EmploymentStatusId == 2) {
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf"      DisableUnderLine Margin="Margin.Dense" />
+                                                <MudInputLabel>Employment Status</MudInputLabel>
+                                                <MudSelect Class="@slectClasss" @bind-Value="employee.EmploymentStatusId" DisableUnderLine Margin="Margin.Dense">
+                                                     <MudSelectItem Value=0  Disabled >---Select---</MudSelectItem>
+                                                     @foreach (var status in EmploymentStatusL)
+                                                    {
+                                                        <MudSelectItem Value="@status.Id">@status.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                                 <ValidationMessage For="@(() => employee.EmploymentStatusId)" class="mb-2" />
                                             </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Probation Start Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker DateChanged="HandleDateHiredChanged" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Date="ProbStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Probation End Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="ProbEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                        }
-                                        else if (employee.EmploymentStatusId == 3) {
-                                            <div class="flex-grow-1">
-                                            <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
-                                            <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Casual Start Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="CasualStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Casual End Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="CasualEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                        }
-                                        else if (employee.EmploymentStatusId == 4) {
-                                            <div class="flex-grow-1">
-                                                 <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
-                                            <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Fixed Term Start Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="FixedStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Fixed Term End Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="FixedEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                        }
-                                        else if (employee.EmploymentStatusId == 5) {
-                                            <div class="flex-grow-1">
+                                            @if (employee.EmploymentStatusId == 1)
+                                            {
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy"   
+                                                        DisableUnderLine
+                                                     Editable="true" Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
+                                                 </div>
+                                                 <div class="flex-grow-1">
+                                                     <MudInputLabel>Regularization Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker Class="txf" @bind-Date="RegularDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Margin="Margin.Dense"/>
+                                                 </div>
+                                            }
+                                            else if (employee.EmploymentStatusId == 2) {
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf"      DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Probation Start Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker DateChanged="HandleDateHiredChanged" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Date="ProbStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Probation End Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="ProbEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            }
+                                            else if (employee.EmploymentStatusId == 3) {
+                                                <div class="flex-grow-1">
                                                 <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
                                                 <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Project Based Start Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="ProjStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudInputLabel>Project Based End Date (mm/dd/yyyy)</MudInputLabel>
-                                                <MudDatePicker @bind-Date="ProjEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                            </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Casual Start Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="CasualStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Casual End Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="CasualEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            }
+                                            else if (employee.EmploymentStatusId == 4) {
+                                                <div class="flex-grow-1">
+                                                     <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
+                                                <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Fixed Term Start Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="FixedStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Fixed Term End Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="FixedEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            }
+                                            else if (employee.EmploymentStatusId == 5) {
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Project Based Start Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="ProjStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Project Based End Date (mm/dd/yyyy)</MudInputLabel>
+                                                    <MudDatePicker @bind-Date="ProjEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
+                                                 <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Disabled DisableUnderLine Editable="true" Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                <MudInputLabel>Regularization Date (mm/dd/yyyy)</MudInputLabel>
+                                                <MudDatePicker Class="txf" @bind-Date="RegularDate" Mask="@(new DateMask("MM/dd/yyyy"))" Disabled DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Margin="Margin.Dense" />
+                                             </div>
+                                            }
+                                    </div>
+                                 </div>
+                                <div class="d-flex flex-column flex-grow-1 mb-3">
+                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                        @{
+                                            var departmentHasSection = employee.DepartmentId != 0 && SectionService.SectionTs.Any(s => s.DepartmentId == employee.DepartmentId);
                                         }
-                                        else
-                                        {
-                                         <div class="flex-grow-1">
-                                             <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
-                                             <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Disabled DisableUnderLine Editable="true" Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
-                                         </div>
-                                         <div class="flex-grow-1">
-                                            <MudInputLabel>Regularization Date (mm/dd/yyyy)</MudInputLabel>
-                                            <MudDatePicker Class="txf" @bind-Date="RegularDate" Mask="@(new DateMask("MM/dd/yyyy"))" Disabled DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Margin="Margin.Dense" />
-                                         </div>
-                                        }
-                                </div>
-                             </div>
-                            <div class="d-flex flex-column flex-grow-1 mb-3">
-                                <div class="d-flex flex-wrap gap-lg-3 gap-sm-2">
-                                    @{
-                                        var departmentHasSection = employee.DepartmentId != 0 && SectionService.SectionTs.Any(s => s.DepartmentId == employee.DepartmentId);
-                                    }
-                                    @if (departmentHasSection)
-                                    {
-                                        <div class="flex-grow-1">
-                                            <MudInputLabel>Division</MudInputLabel>
-                                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DivisionId" Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                             @foreach (var div in DivisionsL)
-                                                {
-                                                    <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
-                                                }
-                                            </MudSelect>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <MudInputLabel>Department</MudInputLabel>
-                                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DepartmentId" Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                             @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
-                                                {
-                                                    <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
-                                                }
-                                            </MudSelect>
-                                        </div>
                                         @if (departmentHasSection)
                                         {
-                                            var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
                                             <div class="flex-grow-1">
-                                                <MudInputLabel>Section</MudInputLabel>
-                                                <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Margin="Margin.Dense">
+                                                <MudInputLabel>Division</MudInputLabel>
+                                                <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DivisionId" Margin="Margin.Dense">
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @if (sections.Any())
+                                                 @foreach (var div in DivisionsL)
                                                     {
-                                                        @foreach (var sect in sections)
-                                                        {
-                                                            <MudSelectItem Value="@sect.Id">@sect.Name</MudSelectItem>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <MudSelectItem Value="0">&nbsp;</MudSelectItem>
+                                                        <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
                                                     }
                                                 </MudSelect>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <MudInputLabel>Position</MudInputLabel>
-                                                    <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Margin="Margin.Dense">
+                                                <MudInputLabel>Department</MudInputLabel>
+                                                <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DepartmentId" Margin="Margin.Dense">
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @foreach (var dep in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
+                                                 @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
                                                     {
                                                         <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                                                     }
                                                 </MudSelect>
                                             </div>
+                                            @if (departmentHasSection)
+                                            {
+                                                var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Section</MudInputLabel>
+                                                    <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Margin="Margin.Dense">
+                                                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                     @if (sections.Any())
+                                                        {
+                                                            @foreach (var sect in sections)
+                                                            {
+                                                                <MudSelectItem Value="@sect.Id">@sect.Name</MudSelectItem>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <MudSelectItem Value="0">&nbsp;</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudInputLabel>Position</MudInputLabel>
+                                                        <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Margin="Margin.Dense">
+                                                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                     @foreach (var dep in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
+                                                        {
+                                                            <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </div>
+                                            }
                                         }
-                                    }
-                                    else {
-                                        <div class="flex-grow-1">
-                                            <MudInputLabel>Division</MudInputLabel>
-                                            <MudSelect @bind-Value="employee.DivisionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                             @foreach (var div in DivisionsL)
-                                                {
-                                                    <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
-                                                }
-                                            </MudSelect>
+                                        else {
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Division</MudInputLabel>
+                                                <MudSelect @bind-Value="employee.DivisionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                 @foreach (var div in DivisionsL)
+                                                    {
+                                                        <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Department</MudInputLabel>
+                                                <MudSelect @bind-Value="employee.DepartmentId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                 @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
+                                                    {
+                                                        <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Position</MudInputLabel>
+                                                    <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                 @foreach (var dep in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
+                                                    {
+                                                        <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </div>
+                                        }                                
                                         </div>
-                                        <div class="flex-grow-1">
-                                            <MudInputLabel>Department</MudInputLabel>
-                                            <MudSelect @bind-Value="employee.DepartmentId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                             @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
-                                                {
-                                                    <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
-                                                }
-                                            </MudSelect>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <MudInputLabel>Position</MudInputLabel>
-                                                <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                             @foreach (var dep in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
-                                                {
-                                                    <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
-                                                }
-                                            </MudSelect>
-                                        </div>
-                                    }                                
-                                    </div>
-                            </div>
-                            <MudItem xs="12" Class="d-flex justify-content-end mt-5">
-                                @* <MudButton OnClick="() => Activate(1)" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton> *@
-                                    <button Class="btn btnnext" type="submit">NEXT</button>
-                            </MudItem>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
+                                </div>
+                                <MudItem xs="12" Class="d-flex justify-content-end mt-5">
+                                    @* <MudButton OnClick="() => Activate(1)" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton> *@
+                                        <button Class="btn btnnext" type="submit">NEXT</button>
+                                </MudItem>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
                 </EditForm>
             </MudGrid>
         </MudTabPanel>
 
         @* ====================================================================================  PERSONAL  ==================================================================================== *@
-
         <MudTabPanel TabContent="tabHeader(1)">
             <MudGrid>
-                <MudItem xs="12" >
-                    <span class="spantitle">Personal Details</span>
-                     <MudCard Class="mdcard1" Elevation="0">
-                        <MudCardContent>
-                             <div class="d-flex flex-column flex-grow-1 mb-3">
-                                <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                    <div class="flex-grow-1">
-                                        <MudInputLabel>First Name</MudInputLabel>
-                                        <MudTextField Class="txf" DisableUnderLine @bind-Value="employee.FirstName" Margin="Margin.Dense" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                         <MudInputLabel>Middle Name</MudInputLabel>
-                                         <MudTextField Class="txf" DisableUnderLine @bind-Value="employee.MiddleName" Margin="Margin.Dense" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                         <MudInputLabel>Last Name</MudInputLabel>
-                                         <MudTextField Class="txf" DisableUnderLine @bind-Value="employee.LastName" Margin="Margin.Dense" />
-                                    </div>
-                                     <div class="flex-grow-1 flex-lg-grow-0 ">
-                                         <MudInputLabel>Extension</MudInputLabel>
-                                         <MudTextField Class="txf" DisableUnderLine @bind-Value="employee.Extension" Margin="Margin.Dense" />
+                <EditForm Model="employee" OnValidSubmit="ActivateAddressField" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+
+                    <MudItem xs="12" >
+                            <DataAnnotationsValidator />
+
+                            <span class="spantitle">Personal Details</span>
+                            <MudCard Class="mdcard1" Elevation="0">
+                                <MudCardContent>
+                                    <div class="d-flex flex-column flex-grow-1 mb-3">
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>First Name</MudInputLabel>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.FirstName" />
+                                            <ValidationMessage For="@(() => employee.FirstName)" class="mb-2 valmessage" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Middle Name</MudInputLabel>
+                                                 <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.MiddleName" />
+                                                <ValidationMessage For="@(() => employee.MiddleName)" class="mb-2 valmessage" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Last Name</MudInputLabel>
+                                                 <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.LastName" />
+                                                <ValidationMessage For="@(() => employee.LastName)" class="mb-2 valmessage" />
+                                             </div>
+                                             <div class="flex-grow-1 flex-lg-grow-0 ">
+                                                 <MudInputLabel>Extension</MudInputLabel>
+                                                 <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Extension" />
+                                                 <ValidationMessage For="@(() => employee.Extension)" class="mb-2 valmessage" />
+
+                                             </div>
+                                         </div>
+                                         <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2 align-items-center">
+                                             <div class="flex-grow-1" style="width: 468px;">
+                                                 <MudInputLabel>Birthdate (mm/dd/yyyy)</MudInputLabel>
+                                                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Age</MudInputLabel>
+                                                 <MudTextField Class="txf" DisableUnderLine Value="@CalculateAge(bday)" ReadOnly="true" Margin="Margin.Dense" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Gender</MudInputLabel>
+                                                 <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
+                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var gender in GendersL)
+                                                    {
+                                                        <MudSelectItem Value="@gender.Id">@gender.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Civil Status</MudInputLabel>
+                                                <MudSelect Class="@slectClasss" @bind-Value="employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
+                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var cs in CivilStatusL)
+                                                    {
+                                                        <MudSelectItem Value="@cs.Id">@cs.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Nationality</MudInputLabel>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Nationality" />
+                                                <ValidationMessage For="@(() => employee.Nationality)" class="mb-2 valmessage" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Religion</MudInputLabel>
+                                                 <MudSelect @bind-Value="employee.ReligionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var rel in ReligionsL)
+                                                    {
+                                                        <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                            <div class="flex-grow-1">
+                                                <MudInputLabel>Mobile #</MudInputLabel>
+                                                <MudTextField @bind-Value="employee.MobileNumber" Class="txf" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Weight(kg)</MudInputLabel>
+                                                 <InputNumber Class="txf1 w-100 mt-1" @bind-Value="employee.Weight" />
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                 <MudInputLabel>Height(cm)</MudInputLabel>
+                                                 <InputNumber Class="txf1 w-100 mt-1" @bind-Value="employee.Height" />
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </MudCardContent>
+                             </MudCard>
+                    </MudItem>
+                     <MudItem xs="12">
+                         <div class="d-flex flex-grow-1 justify-content-center">
+                             <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
+                         </div>
+                     </MudItem>
+                    <MudItem xs="12">
+                        <span class="spantitle">Person to Notify in Case of Emergency</span>
+                         <MudCard Class="mdcard1" Elevation="0">
+                            <MudCardContent>
+                                <div class="d-flex flex-column flex-grow-1 mb-3">
+                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                        <div class="flex-grow-1">
+                                             <MudInputLabel>Name</MudInputLabel>
+                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.EmerName" />
+                                             <ValidationMessage For="@(() => employee.EmerName)" class="mb-2 valmessage" />
+                                        </div>
+                                         <div class="flex-grow-1">
+                                             <MudInputLabel>Relationship</MudInputLabel>
+                                             <MudSelect @bind-Value="employee.EmerRelationshipId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @foreach (var rel in EmerRelationshipsL)
+                                                {
+                                                    <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        </div>
+                                         <div class="flex-grow-1">
+                                            <MudInputLabel>Address</MudInputLabel>
+                                            <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.EmerAddress" />
+                                             <ValidationMessage For="@(() => employee.EmerAddress)" class="mb-2 valmessage" />
+                                        </div>
+                                         <div class="flex-grow-1">
+                                            <MudInputLabel>Mobile #</MudInputLabel>
+                                            <MudTextField @bind-Value="employee.EmerMobNum" Class="txf" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.EmerMobNum)" />
+                                         </div>
                                     </div>
                                 </div>
-                                 <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                     <div class="flex-grow-1" style="width: 468px;">
-                                         <MudInputLabel>Birthdate (mm/dd/yyyy)</MudInputLabel>
-                                         <MudDatePicker Class="txf" DisableUnderLine @bind-Date="bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-                                     </div>
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Age</MudInputLabel>
-                                         <MudTextField Class="txf" DisableUnderLine Value="@CalculateAge(bday)" ReadOnly="true" Margin="Margin.Dense" />
-                                     </div>
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Gender</MudInputLabel>
-                                         <MudSelect Class="frmselect" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
-                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                            @foreach (var gender in GendersL)
-                                            {
-                                                <MudSelectItem Value="@gender.Id">@gender.Name</MudSelectItem>
-                                            }
-                                        </MudSelect>
-                                     </div>
-                                 </div>
-                                  <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                    <div class="flex-grow-1">
-                                        <MudInputLabel>Civil Status</MudInputLabel>
-                                        <MudSelect Class="frmselect" @bind-Value="employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
-                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                            @foreach (var cs in CivilStatusL)
-                                            {
-                                                <MudSelectItem Value="@cs.Id">@cs.Name</MudSelectItem>
-                                            }
-                                        </MudSelect>
-                                    </div>
-                                     <div class="flex-grow-1" >
-                                        <MudInputLabel>Nationality</MudInputLabel>
-                                        <MudTextField @bind-Value="employee.Nationality" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                    </div>
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Religion</MudInputLabel>
-                                         <MudSelect @bind-Value="employee.ReligionId" Class="frmselect" DisableUnderLine Margin="Margin.Dense">
-                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                            @foreach (var rel in ReligionsL)
-                                            {
-                                                <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
-                                            }
-                                        </MudSelect>
-                                     </div>
-                                </div>
-                                 <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                      <div class="flex-grow-1" >
-                                        <MudInputLabel>Mobile #</MudInputLabel>
-                                        <MudTextField @bind-Value="employee.MobileNumber" Class="txf" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
-                                     </div>
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Weight(kg)</MudInputLabel>
-                                        <MudTextField @bind-Value="employee.Weight" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                     </div>
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Height(cm)</MudInputLabel>
-                                         <MudTextField @bind-Value="employee.Height" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                     </div>
-                                 </div>
-                             </div>
-                        </MudCardContent>
-                     </MudCard>
-                </MudItem>
+
+                                <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                                    <button Class="btn btnnext" type="submit">NEXT</button>
+                                </MudItem>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                </EditForm>
+
                  <MudItem xs="12">
                      <div class="d-flex flex-grow-1 justify-content-center">
                          <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
@@ -426,16 +483,16 @@
                         <MudCardContent>
                             <span class="spantitle">Present Address</span>
                             <div class="d-flex flex-column flex-grow-1 mb-3">
-                                <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
+                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
                                     <div class="flex-grow-1">
                                          <MudInputLabel>(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudInputLabel>
                                          <MudTextField @bind-Value="address.CurrentAdd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                     </div>
                                 </div>
-                                 <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
+                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
                                      <div class="flex-grow-1">
                                           <MudInputLabel>City</MudInputLabel>
-                                          <MudTextField @bind-Value="address.CurrentCity" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                          <MudTextField id="bb" @bind-Value="address.CurrentCity" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                      </div>
                                       <div class="flex-grow-1">
                                           <MudInputLabel>Province</MudInputLabel>
@@ -451,13 +508,13 @@
                                      </div>
                                  </div>
                                  <span class="spantitle">Permanent Address</span>
-                                 <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
+                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
                                      <div class="flex-grow-1">
                                          <MudInputLabel>(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudInputLabel>
                                          <MudTextField @bind-Value="address.PermanentAdd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                      </div>
                                  </div>
-                                 <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
+                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
                                      <div class="flex-grow-1">
                                          <MudInputLabel>City</MudInputLabel>
                                          <MudTextField @bind-Value="address.PermanentCity" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -476,56 +533,15 @@
                                      </div>
                                  </div>
                             </div>
-                            
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                 <MudItem xs="12">
-                     <div class="d-flex flex-grow-1 justify-content-center">
-                         <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
-                     </div>
-                 </MudItem>
-                <MudItem xs="12">
-                    <span class="spantitle">Person to Notify in Case of Emergency</span>
-                     <MudCard Class="mdcard1" Elevation="0">
-                        <MudCardContent>
-                            <div class="d-flex flex-column flex-grow-1 mb-3">
-                                <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                    <div class="flex-grow-1">
-                                         <MudInputLabel>Name</MudInputLabel>
-                                         <MudTextField @bind-Value="employee.EmerName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                    </div>
-                                     <div class="flex-grow-1">
-                                         <MudInputLabel>Relationship</MudInputLabel>
-                                         <MudSelect @bind-Value="employee.EmerRelationshipId" Class="frmselect" DisableUnderLine Margin="Margin.Dense">
-                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                            @foreach (var rel in EmerRelationshipsL)
-                                            {
-                                                <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
-                                            }
-                                        </MudSelect>
-                                    </div>
-                                     <div class="flex-grow-1">
-                                        <MudInputLabel>Address</MudInputLabel>
-                                        <MudTextField @bind-Value="employee.EmerAddress" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                    </div>
-                                     <div class="flex-grow-1">
-                                        <MudInputLabel>Mobile #</MudInputLabel>
-                                        <MudTextField @bind-Value="employee.EmerMobNum" Class="txf" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.EmerMobNum)" />
-                                     </div>
-                                </div>
-                            </div>
-
                              <MudItem xs="12" Class="d-flex justify-content-between mt-5">
-                                 <MudButton OnClick="() => Activate(0)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Back</MudButton>
-                                 <MudButton OnClick="() => Activate(2)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
-                             </MudItem>
+                                     <MudButton OnClick="() => Activate(0)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Back</MudButton>
+                                     <MudButton OnClick="() => Activate(2)" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton>
+                                 </MudItem>
                         </MudCardContent>
                     </MudCard>
                 </MudItem>
             </MudGrid>
         </MudTabPanel>
-
 
         @* ====================================================================================  EDUCATION  ==================================================================================== *@
 
@@ -551,7 +567,7 @@
                                     @foreach (var pri in listOfPrimary)
                                     {
                                         <div class="mb-3 divSchool">
-                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                 <div class="flex-grow-1">
                                                     <MudInputLabel>Name of School</MudInputLabel>
                                                     <MudTextField @bind-Value="pri.PriSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -561,7 +577,7 @@
                                                     <MudTextField @bind-Value="pri.PriSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                             </div>
-                                            <div class="d-flex flex-wrap gap-2">
+                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                 <div class="flex-grow-1">
                                                     <MudInputLabel>Award</MudInputLabel>
                                                     <MudTextField @bind-Value="pri.PriAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -613,7 +629,7 @@
                                     @foreach (var sec in listOfSecondary)
                                     {
                                         <div class="mb-3 divSchool">
-                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                 <div class="flex-grow-1">
                                                     <MudInputLabel>Name of School</MudInputLabel>
                                                     <MudTextField @bind-Value="sec.SecSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -623,7 +639,7 @@
                                                      <MudTextField @bind-Value="sec.SecSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                  </div>
                                              </div>
-                                             <div class="d-flex flex-wrap gap-2">
+                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                  <div class="flex-grow-1">
                                                      <MudInputLabel>Award</MudInputLabel>
                                                      <MudTextField @bind-Value="sec.SecAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -678,7 +694,7 @@
                                         @foreach (var shs in listOfShs)
                                         {
                                             <div class="mb-3 divSchool">
-                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                     <div class="flex-grow-1">
                                                         <MudInputLabel>Name of School</MudInputLabel>
                                                         <MudTextField @bind-Value="shs.ShsSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -688,7 +704,7 @@
                                                          <MudTextField @bind-Value="shs.ShsSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                      </div>
                                                  </div>
-                                                 <div class="d-flex flex-wrap gap-2">
+                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                      <div class="flex-grow-1">
                                                          <MudInputLabel>Award</MudInputLabel>
                                                          <MudTextField @bind-Value="shs.ShsAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -743,7 +759,7 @@
                                         @foreach (var col in listOfCollege)
                                         {
                                             <div class="mb-3 divSchool">
-                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                     <div class="flex-grow-1">
                                                         <MudInputLabel>Name of School</MudInputLabel>
                                                         <MudTextField @bind-Value="col.CollSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -753,7 +769,7 @@
                                                          <MudTextField @bind-Value="col.CollSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                      </div>
                                                  </div>
-                                                 <div class="d-flex flex-wrap gap-2">
+                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                      <div class="flex-grow-1">
                                                          <MudInputLabel>Award</MudInputLabel>
                                                          <MudTextField @bind-Value="col.CollAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -812,7 +828,7 @@
                                         @foreach (var mas in listOfMasteral)
                                         {
                                             <div class="mb-3 divSchool">
-                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                     <div class="flex-grow-1">
                                                         <MudInputLabel>Name of School</MudInputLabel>
                                                         <MudTextField @bind-Value="mas.MasSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -822,7 +838,7 @@
                                                          <MudTextField @bind-Value="mas.MasSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                      </div>
                                                  </div>
-                                                 <div class="d-flex flex-wrap gap-2">
+                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                      <div class="flex-grow-1">
                                                          <MudInputLabel>Award</MudInputLabel>
                                                          <MudTextField @bind-Value="mas.MasAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -881,7 +897,7 @@
                                         @foreach (var doc in listOfDoctorate)
                                         {
                                             <div class="mb-3 divSchool">
-                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                     <div class="flex-grow-1">
                                                         <MudInputLabel>Name of School</MudInputLabel>
                                                         <MudTextField @bind-Value="doc.DocSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -891,7 +907,7 @@
                                                          <MudTextField @bind-Value="doc.DocSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                      </div>
                                                  </div>
-                                                 <div class="d-flex flex-wrap gap-2">
+                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                      <div class="flex-grow-1">
                                                          <MudInputLabel>Award</MudInputLabel>
                                                          <MudTextField @bind-Value="doc.DocAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -950,7 +966,7 @@
                                         @foreach (var other in listOfOthers)
                                         {
                                             <div class="mb-3 divSchool">
-                                                <div class="d-flex flex-wrap gap-2 mb-1">
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                     <div class="flex-grow-1">
                                                         <MudInputLabel>School Type</MudInputLabel>
                                                         <MudTextField @bind-Value="other.OthersSchoolType" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -964,7 +980,7 @@
                                                          <MudTextField @bind-Value="other.OthersSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                      </div>
                                                  </div>
-                                                 <div class="d-flex flex-wrap gap-2">
+                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                      <div class="flex-grow-1">
                                                          <MudInputLabel>Award</MudInputLabel>
                                                          <MudTextField @bind-Value="other.OthersAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1027,7 +1043,7 @@
                                     @foreach (var lis in listofLicense)
                                     {
                                         <div class="mb-3 divSchool">
-                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                 <div class="flex-grow-1">
                                                     <MudInputLabel>Professional Licenses/Board Examinations Taken</MudInputLabel>
                                                     <MudTextField @bind-Value="lis.Examination" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1037,7 +1053,7 @@
                                                      <MudTextField @bind-Value="lis.ProfMembership" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                  </div>
                                              </div>
-                                             <div class="d-flex flex-wrap gap-2 align-items-center">
+                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 align-items-center">
                                                  <div class="flex-grow-1">
                                                      <MudInputLabel>License No.</MudInputLabel>
                                                      <MudTextField @bind-Value="lis.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1088,7 +1104,7 @@
                                     @foreach (var train in listOfTrainings)
                                     {
                                         <div class="mb-3 divSchool">
-                                            <div class="d-flex flex-wrap gap-2 mb-1 align-items-center">
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1 align-items-center">
                                                 <div class="flex-grow-1">
                                                     <MudInputLabel>Training Name</MudInputLabel>
                                                     <MudTextField @bind-Value="train.TrainingName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1135,7 +1151,7 @@
                                     <span class="spantitle">Documents</span>
                                 </div>
                                 <div class="mb-3 divSchool">
-                                    <div class="d-flex flex-wrap gap-2 mb-1">
+                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Rate</MudInputLabel>
                                             <MudTextField @bind-Value="payroll.Rate" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1161,7 +1177,7 @@
                                             </MudSelect>
                                          </div>
                                      </div>
-                                     <div class="d-flex flex-wrap gap-2">
+                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                          <div class="flex-grow-1">
                                              <MudInputLabel>Meal Allowance</MudInputLabel>
                                              <MudTextField @bind-Value="payroll.MealAllowance" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1188,7 +1204,7 @@
                                      <span class="spantitle">Statutory Documents</span>
                                 </div>
                                 <div class="mb-3 divSchool">
-                                    <div class="d-flex flex-wrap gap-2 mb-1">
+                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                          <div class="flex-grow-1">
                                              <MudInputLabel>PHIC No.</MudInputLabel>
                                              <MudTextField @bind-Value="payroll.PhilHealthNum" Class="txf" MaxLength="12" DisableUnderLine Margin="Margin.Dense" />
@@ -1198,7 +1214,7 @@
                                              <MudTextField @bind-Value="payroll.HDMFNum" Class="txf" MaxLength="12" DisableUnderLine Margin="Margin.Dense" />
                                          </div>
                                      </div>
-                                     <div class="d-flex flex-wrap gap-2">
+                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                          <div class="flex-grow-1">
                                              <MudInputLabel>SSS No.</MudInputLabel>
                                              <MudTextField @bind-Value="payroll.SSSNum" Class="txf" MaxLength="12" DisableUnderLine Margin="Margin.Dense" />
@@ -1221,7 +1237,7 @@
                                      <span class="spantitle">Schedule</span>
                                  </div>
                                  <div class="mb-3 divSchool">
-                                     <div class="d-flex flex-wrap gap-2 mb-1">
+                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                          <div class="flex-grow-1">
                                              <MudInputLabel>Schedule Type</MudInputLabel>
                                              <MudSelect Class="frmselect" DisableUnderLine @bind-Value="payroll.ScheduleTypeId" Margin="Margin.Dense">
@@ -1269,7 +1285,7 @@
                                         }
 
                                      </div>
-                                    <div class="d-flex flex-wrap gap-2 mb-1 align-items-center">
+                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1 align-items-center">
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Rest Day</MudInputLabel>
                                             <MudSelect Class="frmselect" DisableUnderLine @bind-Value="payroll.RestDayId" Margin="Margin.Dense">
@@ -1295,7 +1311,7 @@
                                     <span class="spantitle">Files</span>
                                 </div>
                                 <div class="mb-3 divSchool">
-                                    <div class="d-flex flex-wrap gap-2 mb-1">
+                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                         <div class="flex-grow-1">
                                             @for (int i = 0; i < listOfDocuments.Count; i++)
                                             {
@@ -1335,10 +1351,11 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authState { get; set; }
     //TAB PANEL
     MudTabs tabs;
     private string slectClasss = "frmselect";
-    private string ifclass;
 
     void backbtn()
     {
@@ -1349,16 +1366,40 @@
     {
         // tabs.ActivatePanel(index);
 
-        if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
-        {
-            _toastService.ShowError("Fill out all fields.");
-            slectClasss = "frmselecterror";
+        if (index == 1) {
+            if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
+            {
+                _toastService.ShowError("Fill out all fields.");
+                slectClasss = "frmselecterror";
+            }
+            else
+            {
+                tabs.ActivatePanel(index);
+                slectClasss = "frmselect";
+            }
         }
-        else {
+        else if (index == 2)
+        {
             tabs.ActivatePanel(index);
             slectClasss = "frmselect";
         }
     }
+
+    private async void ActivateAddressField()
+    {
+        if (employee.GenderId == 0 || employee.CivilStatusId == 0 || employee.ReligionId == 0 || employee.EmerRelationshipId == 0)
+        {
+            _toastService.ShowError("Fill out all fields.");
+            slectClasss = "frmselecterror";
+
+        }
+        else
+        {
+            slectClasss = "frmselect";  
+            await JSRuntime.InvokeVoidAsync("scrollToDiv");
+        }
+    }
+
     int activeIndex;
     string GetTabClass(int tabId)
     {
@@ -1555,6 +1596,8 @@
     MultipartFormDataContent EmpImage = new MultipartFormDataContent();
     IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
 
+
+    private string userRole;
     protected override async Task OnInitializedAsync()
     {
         await AreaService.GetAreaList();
@@ -1617,6 +1660,9 @@
         AddNewTrainings(employee.Verify_Id);
         AddNewDocument();
 
+        var auth = await authState;
+           
+        userRole = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
     }
 
     private void HandleDateHiredChanged(DateTime? newDate)
