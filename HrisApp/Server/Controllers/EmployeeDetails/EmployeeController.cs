@@ -57,18 +57,6 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         [HttpPost("CreateEmployee")]
         public async Task<ActionResult<List<EmployeeT>>> CreateEmployee(EmployeeT employee)
         {
-            //employee.Status = null;
-            //employee.EmploymentStatus = null;
-            //employee.EmerRelationship = null;
-            //employee.Gender = null;
-            //employee.CivilStatus = null;
-            //employee.Religion = null;
-            //employee.Division = null;
-            //employee.Department = null;
-            //employee.Section = null;
-            //employee.Area = null;
-            //employee.InactiveStatus = null;
-            //employee.Position = null;
             _context.EmployeeT.Add(employee);
             await _context.SaveChangesAsync();
 

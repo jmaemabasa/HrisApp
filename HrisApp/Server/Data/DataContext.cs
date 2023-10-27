@@ -129,6 +129,16 @@ namespace HrisApp.Server.Data
              new ScheduleTypeT { Id = 2, Name = "On Call", TimeIn = "8:00 AM", TimeOut = "5:00 PM" },
              new ScheduleTypeT { Id = 3, Name = "Night Shift", TimeIn = "8:00 PM", TimeOut = "5:00 AM" }
             );
+
+            modelBuilder.Entity<RestDayT>().HasData(
+             new RestDayT { Id = 1, Name = "Sunday" },
+             new RestDayT { Id = 2, Name = "Monday" },
+             new RestDayT { Id = 3, Name = "Tuesday" },
+             new RestDayT { Id = 4, Name = "Wednesday" },
+             new RestDayT { Id = 5, Name = "Thursday" },
+             new RestDayT { Id = 6, Name = "Friday" },
+             new RestDayT { Id = 7, Name = "Saturday" }
+            );
         }
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
@@ -177,5 +187,6 @@ namespace HrisApp.Server.Data
         public DbSet<RateTypeT> RateTypeT { get; set;}
         public DbSet<ScheduleTypeT> ScheduleTypeT { get; set;}
         public DbSet<PayrollT> PayrollT { get; set;}
+        public DbSet<RestDayT> RestDayT { get; set;}
     }
 }

@@ -7,6 +7,7 @@ namespace HrisApp.Client.Services.Payroll
         List<RateTypeT> RateTypeTs { get; set; }
         List<CashBondT> CashBondTs { get; set; }
         List<ScheduleTypeT> ScheduleTypeTs { get; set; }
+        List<RestDayT> RestDayTs { get; set; }
 
         Task GetPayroll();
         Task<List<PayrollT>> GetPayrollList();
@@ -20,5 +21,6 @@ namespace HrisApp.Client.Services.Payroll
         Task GetCashbond();
 
         Task GetScheduleType();
+        Task GetRestDay();
     }
 }

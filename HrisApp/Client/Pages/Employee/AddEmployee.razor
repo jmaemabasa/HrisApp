@@ -1,5 +1,6 @@
 ﻿@page "/employee/add"
 @using HrisApp.Shared.Models.LiscenseAndTraining;
+@using System.Net.Http.Headers;
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
@@ -27,8 +28,7 @@
 
         @* ====================================================================================  JOB  ==================================================================================== *@
         <MudTabPanel TabContent="tabHeader(0)">
-            <MudGrid>
-                
+            <MudGrid>                
                 <MudItem xs="12" lg="2"  style="z-index: 99">
                     <span class="spantitle mb-3">Image</span>
                     @if (imgBase64 == "./images/addIconImage.png")
@@ -126,7 +126,7 @@
                                  </div>
                              </div>
                             <div class="d-flex flex-column flex-grow-1 mb-3">
-                                    <div class="d-flex flex-wrap gap-lg-3 gap-sm-2">
+                                    <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 align-items-center">
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Employment Status</MudInputLabel>
                                             <MudSelect Class="@slectClasss" @bind-Value="employee.EmploymentStatusId" DisableUnderLine Margin="Margin.Dense">
@@ -352,15 +352,15 @@
                                     </div>
                                 </div>
                                  <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                     <div class="wautobox" style="width: 468px;">
+                                     <div class="flex-grow-1" style="width: 468px;">
                                          <MudInputLabel>Birthdate (mm/dd/yyyy)</MudInputLabel>
                                          <MudDatePicker Class="txf" DisableUnderLine @bind-Date="bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
                                      </div>
-                                     <div class="wautobox" style="width: 468px;">
+                                     <div class="flex-grow-1">
                                          <MudInputLabel>Age</MudInputLabel>
                                          <MudTextField Class="txf" DisableUnderLine Value="@CalculateAge(bday)" ReadOnly="true" Margin="Margin.Dense" />
                                      </div>
-                                     <div class="wautobox" style="width: 468px;">
+                                     <div class="flex-grow-1">
                                          <MudInputLabel>Gender</MudInputLabel>
                                          <MudSelect Class="frmselect" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
                                              <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
@@ -372,7 +372,7 @@
                                      </div>
                                  </div>
                                   <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                    <div class="wautobox" style="width: 468px;">
+                                    <div class="flex-grow-1">
                                         <MudInputLabel>Civil Status</MudInputLabel>
                                         <MudSelect Class="frmselect" @bind-Value="employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
@@ -382,11 +382,11 @@
                                             }
                                         </MudSelect>
                                     </div>
-                                     <div class="wautobox" style="width: 468px;">
+                                     <div class="flex-grow-1" >
                                         <MudInputLabel>Nationality</MudInputLabel>
                                         <MudTextField @bind-Value="employee.Nationality" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                     </div>
-                                     <div class="wautobox" style="width: 468px;">
+                                     <div class="flex-grow-1">
                                          <MudInputLabel>Religion</MudInputLabel>
                                          <MudSelect @bind-Value="employee.ReligionId" Class="frmselect" DisableUnderLine Margin="Margin.Dense">
                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
@@ -398,15 +398,15 @@
                                      </div>
                                 </div>
                                  <div class="d-flex flex-wrap gap-lg-3 gap-sm-2 mb-2">
-                                      <div class="wautobox" style="width: 468px;">
+                                      <div class="flex-grow-1" >
                                         <MudInputLabel>Mobile #</MudInputLabel>
                                         <MudTextField @bind-Value="employee.MobileNumber" Class="txf" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
                                      </div>
-                                     <div class="wautobox" style="width: 468px;">
+                                     <div class="flex-grow-1">
                                          <MudInputLabel>Weight(kg)</MudInputLabel>
                                         <MudTextField @bind-Value="employee.Weight" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                      </div>
-                                     <div class="wautobox" style="width: 468px;">
+                                     <div class="flex-grow-1">
                                          <MudInputLabel>Height(cm)</MudInputLabel>
                                          <MudTextField @bind-Value="employee.Height" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                      </div>
@@ -1037,7 +1037,7 @@
                                                      <MudTextField @bind-Value="lis.ProfMembership" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                  </div>
                                              </div>
-                                             <div class="d-flex flex-wrap gap-2">
+                                             <div class="d-flex flex-wrap gap-2 align-items-center">
                                                  <div class="flex-grow-1">
                                                      <MudInputLabel>License No.</MudInputLabel>
                                                      <MudTextField @bind-Value="lis.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1088,7 +1088,7 @@
                                     @foreach (var train in listOfTrainings)
                                     {
                                         <div class="mb-3 divSchool">
-                                            <div class="d-flex flex-wrap gap-2 mb-1">
+                                            <div class="d-flex flex-wrap gap-2 mb-1 align-items-center">
                                                 <div class="flex-grow-1">
                                                     <MudInputLabel>Training Name</MudInputLabel>
                                                     <MudTextField @bind-Value="train.TrainingName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
@@ -1138,7 +1138,7 @@
                                     <div class="d-flex flex-wrap gap-2 mb-1">
                                         <div class="flex-grow-1">
                                             <MudInputLabel>Rate</MudInputLabel>
-                                            <MudTextField @bind-Value="employee.FirstName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                            <MudTextField @bind-Value="payroll.Rate" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                          </div>
                                          <div class="flex-grow-1">
                                              <MudInputLabel>Rate Type</MudInputLabel>
@@ -1172,7 +1172,7 @@
                                          </div>
                                          <div class="flex-grow-1">
                                              <MudInputLabel>Bank Account</MudInputLabel>
-                                             <MudTextField @bind-Value="payroll.BankAcc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                             <MudTextField @bind-Value="payroll.BankAcc" Class="txf" MaxLength="10" DisableUnderLine Margin="Margin.Dense" />
                                          </div>
                                      </div>
                                  </div>
@@ -1191,21 +1191,21 @@
                                     <div class="d-flex flex-wrap gap-2 mb-1">
                                          <div class="flex-grow-1">
                                              <MudInputLabel>PHIC No.</MudInputLabel>
-                                             <MudTextField @bind-Value="payroll.PhilHealthNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                             <MudTextField @bind-Value="payroll.PhilHealthNum" Class="txf" MaxLength="12" DisableUnderLine Margin="Margin.Dense" />
                                          </div>
                                           <div class="flex-grow-1">
                                              <MudInputLabel>HDMF No.</MudInputLabel>
-                                             <MudTextField @bind-Value="payroll.HDMFNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                             <MudTextField @bind-Value="payroll.HDMFNum" Class="txf" MaxLength="12" DisableUnderLine Margin="Margin.Dense" />
                                          </div>
                                      </div>
                                      <div class="d-flex flex-wrap gap-2">
                                          <div class="flex-grow-1">
                                              <MudInputLabel>SSS No.</MudInputLabel>
-                                             <MudTextField @bind-Value="payroll.SSSNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                             <MudTextField @bind-Value="payroll.SSSNum" Class="txf" MaxLength="12" DisableUnderLine Margin="Margin.Dense" />
                                          </div>
                                           <div class="flex-grow-1">
                                              <MudInputLabel>TIN No.</MudInputLabel>
-                                             <MudTextField @bind-Value="payroll.TINNum" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                             <MudTextField @bind-Value="payroll.TINNum" Class="txf" MaxLength="12" DisableUnderLine Margin="Margin.Dense" />
                                          </div>
                                      </div>
                                  </div>
@@ -1269,11 +1269,66 @@
                                         }
 
                                      </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-1 align-items-center">
+                                        <div class="flex-grow-1">
+                                            <MudInputLabel>Rest Day</MudInputLabel>
+                                            <MudSelect Class="frmselect" DisableUnderLine @bind-Value="payroll.RestDayId" Margin="Margin.Dense">
+                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @foreach (var restday in RestDayL)
+                                                {
+                                                    <MudSelectItem Value="@restday.Id">@restday.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                         </div>
+                                         <MudSpacer/>
+                                     </div>
                                  </div>
                              </div>
                          </MudCardContent>
                      </MudCard>
                  </MudItem>
+                <MudItem xs="12" Style="padding-top: 0px;">
+                    <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                        <MudCardContent>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
+                                    <span class="spantitle">Files</span>
+                                </div>
+                                <div class="mb-3 divSchool">
+                                    <div class="d-flex flex-wrap gap-2 mb-1">
+                                        <div class="flex-grow-1">
+                                            @for (int i = 0; i < listOfDocuments.Count; i++)
+                                            {
+                                                var index = i;
+                                                var docs = listOfDocuments[i];
+                                                @if (docs.PdfFile != null)
+                                                {
+                                                <MudText Typo="@Typo.h6">@docs.PdfFile.Count() File@(docs.PdfFile.Count() == 1 ? "" : "s"):</MudText>
+                                                <MudList>
+                                                    @foreach (var file in docs.PdfFile)
+                                                    {
+                                                        <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
+
+                                                            @file.Name <code>@file.Size bytes</code>
+                                                        </MudListItem>
+                                                    }
+                                                </MudList>
+                                                    <MudCardActions Style="display:flex; justify-content: center; padding-bottom:10px; margin-bottom:-15px;">
+                                                        <MudFileUpload T="IBrowserFile" OnFilesChanged="e => UpPdfSec12(e, index)" Accept=".pdf">
+                                                            <ButtonTemplate>
+                                                                <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CloudUpload" for="@context" Style="text-transform: none;">Upload Files</MudButton>
+                                                            </ButtonTemplate>
+                                                        </MudFileUpload>
+                                                    </MudCardActions>
+                                            }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
             </MudGrid>
         </MudTabPanel>
     </MudTabs>
@@ -1412,6 +1467,8 @@
     EmployeeT employee = new();
     AddressT address = new();
     PayrollT payroll = new();
+    LicenseT license = new();
+    DocumentT document = new();
 
 
     bool success;
@@ -1435,6 +1492,7 @@
     private List<CashBondT> CashbondL = new List<CashBondT>();
     private List<ScheduleTypeT> ScheduleTypeL = new List<ScheduleTypeT>();
     private List<RateTypeT> RateTypeL = new List<RateTypeT>();
+    private List<RestDayT> RestDayL = new List<RestDayT>();
 
 
     //EDUCATION
@@ -1447,6 +1505,7 @@
     List<SeniorHST> listOfShs = new();
     List<TrainingT> listOfTrainings = new();
     List<LicenseT> listofLicense = new();
+    List<DocumentT> listOfDocuments = new();
 
     private bool IsListaddshs;
     private bool IsListaddcoll;
@@ -1480,6 +1539,11 @@
     private bool PDFbool12 { get; set; }
     IList<IBrowserFile> pdffile = new List<IBrowserFile>();
     private List<MultipartFormDataContent> DocuEmployees = new List<MultipartFormDataContent>();
+
+    public class DocumentT
+    {
+        public IList<IBrowserFile> PdfFile { get; set; } = new List<IBrowserFile>();
+    }
 
     //image
     private string imgBase64 { get; set; }
@@ -1535,6 +1599,9 @@
         await PayrollService.GetCashbond();
         CashbondL = PayrollService.CashBondTs;
 
+        await PayrollService.GetRestDay();
+        RestDayL = PayrollService.RestDayTs;
+
 
 
         imgBase64 = "./images/addIconImage.png";
@@ -1548,6 +1615,8 @@
         AddNewOthers(employee.Verify_Id);
         AddNewLicense(employee.Verify_Id);
         AddNewTrainings(employee.Verify_Id);
+        AddNewDocument();
+
     }
 
     private void HandleDateHiredChanged(DateTime? newDate)
@@ -1593,6 +1662,8 @@
 
         return string.Empty;
     }
+
+    //IMAGE
     async Task uploadImage(InputFileChangeEventArgs e)
     {
         long lngImage = long.MaxValue;
@@ -1633,6 +1704,49 @@
         }
     }
 
+    //documents
+    private async Task UpPdfSec12(InputFileChangeEventArgs e, int index)
+    {
+        long maxPDFSize = long.MaxValue;
+        var _pdfModel = e.File;
+        var _pdfFilename = e.File.Name;
+        var _pdfContent = e.File.ContentType;
+        var _pdfBuffer = new byte[e.File.Size];
+        var _pdfURL = $"data:{_pdfContent};base64,{Convert.ToBase64String(_pdfBuffer)}";
+
+        using (var _stream = _pdfModel.OpenReadStream(maxPDFSize))
+        {
+            await _stream.ReadAsync(_pdfBuffer);
+        }
+        if (e.File.Name is null)
+        {
+            imgBase64 = "Images/empty1.png";
+        }
+        else
+        {
+            var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(_pdfModel.OpenReadStream(maxPDFSize));
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(_pdfContent);
+
+            PDFFileName = _pdfFilename;
+            PDFUrl = _pdfURL;
+            pdfData = _pdfBuffer;
+
+            var streamContent = new StreamContent(_pdfModel.OpenReadStream(maxPDFSize));
+            streamContent.Headers.ContentType = new MediaTypeHeaderValue(_pdfContent);
+
+            content.Add(streamContent, "\"files\"", _pdfFilename);
+
+            var pdfbase64 = Convert.ToBase64String(_pdfBuffer);
+            PDFBase64 = string.Format("data:application/pdf;base64,{0}", pdfbase64);
+
+            pdfbool12 = false;
+            PDFbool12 = true;
+            listOfDocuments[index].PdfFile.Add(e.File);
+            DocuEmployees.Add(content);
+        }
+    }
+
     async Task CreateEmployee()
     {
         try
@@ -1655,6 +1769,8 @@
 
             employee.Birthdate = Convert.ToDateTime(bday);
             employee.DateHired = Convert.ToDateTime(DateHired);
+            license.Date = Convert.ToDateTime(Date);
+
 
             if (!string.IsNullOrEmpty(employee.InactiveStatusId.ToString()))
             {
@@ -1665,6 +1781,12 @@
 
             address.Verify_Id = verifyId;
             var adres = await AddressService.CreateAddress(address);
+
+
+            payroll.Salary = "212";
+            payroll.Paytype = "test";
+            payroll.Verify_Id = verifyId;
+            var savepayroll = await PayrollService.CreatePayroll(payroll);
 
             var divisionString = employee.DivisionId;
             var divisionPDF = employee.DivisionId;
@@ -1696,6 +1818,7 @@
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            _toastService.ShowError(ex.Message);
         }
     }
 
@@ -1887,8 +2010,7 @@
            (license =>
                 !string.IsNullOrEmpty(license.Examination) ||
                 !string.IsNullOrEmpty(license.ProfMembership) ||
-                !string.IsNullOrEmpty(license.LicenseNo) ||
-                license.Date != DateTime.MinValue)
+                !string.IsNullOrEmpty(license.LicenseNo))
            .ToList();
         if (validLicenses.Count == 0)
         {
@@ -2070,6 +2192,15 @@
             listOfTrainings.RemoveAt(listOfTrainings.Count - 1);
         }
     }
+
+    public void AddNewDocument()
+    {
+        if (listOfDocuments.Count <= 9)
+        {
+            listOfDocuments.Add(new DocumentT());
+        }
+    }
+
 
     private void OnValidSubmit(EditContext context)
     {

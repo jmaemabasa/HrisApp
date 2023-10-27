@@ -14,6 +14,7 @@ namespace HrisApp.Client.Services.Payroll
         public List<RateTypeT> RateTypeTs { get; set; } = new List<RateTypeT>();
         public List<CashBondT> CashBondTs { get; set; } = new List<CashBondT>();
         public List<ScheduleTypeT> ScheduleTypeTs { get; set; } = new List<ScheduleTypeT>();
+        public List<RestDayT> RestDayTs { get; set; } = new List<RestDayT>();
 
         public async Task GetPayroll()
         {
@@ -79,6 +80,13 @@ namespace HrisApp.Client.Services.Payroll
             var result = await _http.GetFromJsonAsync<List<ScheduleTypeT>>("api/Payroll/scheduletype");
             if (result != null)
                 ScheduleTypeTs = result;
+        }
+
+        public async Task GetRestDay()
+        {
+            var result = await _http.GetFromJsonAsync<List<RestDayT>>("api/Payroll/restday");
+            if (result != null)
+                RestDayTs = result;
         }
     }
 }

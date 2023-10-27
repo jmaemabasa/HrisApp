@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231025074731_payroll")]
-    partial class payroll
+    [Migration("20231027011801_initial1")]
+    partial class initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1279,7 +1279,84 @@ namespace HrisApp.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HrisApp.Shared.Models.Payroll.SalaryTypeT", b =>
+            modelBuilder.Entity("HrisApp.Shared.Models.Payroll.PayrollT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BankAcc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BiometricID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CashbondId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HDMFNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MealAllowance")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Paytype")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhilHealthNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RateTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RestDayId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SSSNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Salary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ScheduleTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TINNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CashbondId");
+
+                    b.HasIndex("RateTypeId");
+
+                    b.HasIndex("RestDayId");
+
+                    b.HasIndex("ScheduleTypeId");
+
+                    b.ToTable("PayrollT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Payroll.RateTypeT", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1293,7 +1370,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SalaryTypeT");
+                    b.ToTable("RateTypeT");
 
                     b.HasData(
                         new
@@ -1305,6 +1382,108 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 2,
                             Name = "Daily Rate"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Payroll.RestDayT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RestDayT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sunday"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Monday"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tuesday"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Wednesday"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Thursday"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Friday"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Saturday"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Payroll.ScheduleTypeT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeIn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeOut")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScheduleTypeT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Regular",
+                            TimeIn = "8:00 AM",
+                            TimeOut = "5:00 PM"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "On Call",
+                            TimeIn = "8:00 AM",
+                            TimeOut = "5:00 PM"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Night Shift",
+                            TimeIn = "8:00 PM",
+                            TimeOut = "5:00 AM"
                         });
                 });
 
@@ -1478,6 +1657,41 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Division");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Payroll.PayrollT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Payroll.CashBondT", "Cashbond")
+                        .WithMany()
+                        .HasForeignKey("CashbondId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Payroll.RateTypeT", "RateType")
+                        .WithMany()
+                        .HasForeignKey("RateTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Payroll.RestDayT", "RestDay")
+                        .WithMany()
+                        .HasForeignKey("RestDayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Payroll.ScheduleTypeT", "ScheduleType")
+                        .WithMany()
+                        .HasForeignKey("ScheduleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cashbond");
+
+                    b.Navigation("RateType");
+
+                    b.Navigation("RestDay");
+
+                    b.Navigation("ScheduleType");
                 });
 #pragma warning restore 612, 618
         }

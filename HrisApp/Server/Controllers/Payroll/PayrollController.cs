@@ -23,7 +23,8 @@ namespace HrisApp.Server.Controllers.Payroll
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)
-                 .ToListAsync();
+                .Include(em => em.RestDay)
+                .ToListAsync();
             return Ok(payroll);
         }
 
@@ -34,6 +35,7 @@ namespace HrisApp.Server.Controllers.Payroll
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)
+                .Include(em => em.RestDay)
                  .ToListAsync();
             return Ok(payroll);
         }
@@ -46,6 +48,7 @@ namespace HrisApp.Server.Controllers.Payroll
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)
+                .Include(em => em.RestDay)
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (pr == null)
             {
@@ -70,7 +73,7 @@ namespace HrisApp.Server.Controllers.Payroll
             dbPayroll.PhilHealthNum = payroll.PhilHealthNum;
             dbPayroll.HDMFNum = payroll.HDMFNum;
             dbPayroll.BiometricID = payroll.HDMFNum;
-            dbPayroll.Restday = payroll.Restday;
+            dbPayroll.RestDayId = payroll.RestDayId;
             dbPayroll.ScheduleType = payroll.ScheduleType;
             dbPayroll.ScheduleTypeId = payroll.ScheduleTypeId;
             dbPayroll.Paytype = payroll.Paytype;
@@ -90,6 +93,9 @@ namespace HrisApp.Server.Controllers.Payroll
         public async Task<ActionResult<List<PayrollT>>> CreatePayroll(PayrollT pr)
         {
             pr.Cashbond = null;
+            pr.RestDay = null;
+            pr.RateType = null;
+            pr.ScheduleType = null;
             _context.PayrollT.Add(pr);
             await _context.SaveChangesAsync();
 
@@ -127,6 +133,7 @@ namespace HrisApp.Server.Controllers.Payroll
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)
+                .Include(em => em.RestDay)
                 .ToListAsync();
         }
 
@@ -150,6 +157,12 @@ namespace HrisApp.Server.Controllers.Payroll
         {
             var sched = await _context.ScheduleTypeT.ToListAsync();
             return Ok(sched);
+        }
+        [HttpGet("restday")]
+        public async Task<ActionResult<List<RestDayT>>> GetRestDay()
+        {
+            var rest = await _context.RestDayT.ToListAsync();
+            return Ok(rest);
         }
     }
 }

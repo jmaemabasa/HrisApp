@@ -19,7 +19,7 @@ namespace HrisApp.Shared.Models.Payroll
         public string Rate { get; set; } = string.Empty;
         public RateTypeT? RateType { get; set; }
         public int RateTypeId { get; set; }
-        public string Salary { get; set; } = string.Empty;
+        public string Salary { get; set; } = string.Empty; //   
 
         public CashBondT? Cashbond { get; set; }
         public int CashbondId { get; set; }
@@ -39,7 +39,9 @@ namespace HrisApp.Shared.Models.Payroll
         [RegularExpression("^[0-9]{12}$", ErrorMessage = "Value must be exactly 12 digits")]
         public string HDMFNum { get; set; } = string.Empty;
 
-        public string Restday { get; set; } = string.Empty;
+        public RestDayT? RestDay { get; set; }
+        public int RestDayId { get; set; }
+
         public ScheduleTypeT? ScheduleType { get; set; }
         public int ScheduleTypeId { get; set; } 
 

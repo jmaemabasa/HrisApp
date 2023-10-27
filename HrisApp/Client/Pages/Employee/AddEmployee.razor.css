@@ -233,9 +233,3 @@
     }
 }
 
-@media (max-width: 1200px) {
-    .wautobox {
-        width: auto !important;
-        flex-grow: 1;
-    }
-}

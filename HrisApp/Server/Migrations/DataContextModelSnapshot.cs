@@ -787,37 +787,34 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeNo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_Contenttype")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Img_Data")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("Img_Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Img_Filename")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_URL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Verify_Id")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DivisionId");
 
                     b.ToTable("DocumentT");
                 });
@@ -1319,9 +1316,8 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("RateTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Restday")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RestDayId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SSSNum")
                         .IsRequired()
@@ -1347,6 +1343,8 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("CashbondId");
 
                     b.HasIndex("RateTypeId");
+
+                    b.HasIndex("RestDayId");
 
                     b.HasIndex("ScheduleTypeId");
 
@@ -1379,6 +1377,60 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 2,
                             Name = "Daily Rate"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Payroll.RestDayT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RestDayT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sunday"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Monday"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tuesday"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Wednesday"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Thursday"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Friday"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Saturday"
                         });
                 });
 
@@ -1583,6 +1635,25 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Status");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.DocumentT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DepartmentT", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DivisionT", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Division");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Images.EmpPictureT", b =>
                 {
                     b.HasOne("HrisApp.Shared.Models.MasterData.DepartmentT", "Department")
@@ -1616,6 +1687,12 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HrisApp.Shared.Models.Payroll.RestDayT", "RestDay")
+                        .WithMany()
+                        .HasForeignKey("RestDayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HrisApp.Shared.Models.Payroll.ScheduleTypeT", "ScheduleType")
                         .WithMany()
                         .HasForeignKey("ScheduleTypeId")
@@ -1625,6 +1702,8 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Cashbond");
 
                     b.Navigation("RateType");
+
+                    b.Navigation("RestDay");
 
                     b.Navigation("ScheduleType");
                 });

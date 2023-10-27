@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HrisApp.Server.Migrations
 {
-    public partial class x : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,19 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AreaT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CashBondT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashBondT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +211,23 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LicenseT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Examination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfMembership = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LicenseNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LicenseT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MasteralT",
                 columns: table => new
                 {
@@ -268,6 +298,19 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RateTypeT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RateTypeT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReligionT",
                 columns: table => new
                 {
@@ -278,6 +321,34 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReligionT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RestDayT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RestDayT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ScheduleTypeT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeIn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeOut = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduleTypeT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -343,6 +414,22 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TrainingT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainingName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainingT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserMasterT",
                 columns: table => new
                 {
@@ -395,6 +482,51 @@ namespace HrisApp.Server.Migrations
                         name: "FK_EmpPictureT_DivisionT_DivisionId",
                         column: x => x.DivisionId,
                         principalTable: "DivisionT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PayrollT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RateTypeId = table.Column<int>(type: "int", nullable: false),
+                    Salary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CashbondId = table.Column<int>(type: "int", nullable: false),
+                    MealAllowance = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BiometricID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BankAcc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TINNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SSSNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhilHealthNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HDMFNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Restday = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ScheduleTypeId = table.Column<int>(type: "int", nullable: false),
+                    Paytype = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PayrollT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PayrollT_CashBondT_CashbondId",
+                        column: x => x.CashbondId,
+                        principalTable: "CashBondT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PayrollT_RateTypeT_RateTypeId",
+                        column: x => x.RateTypeId,
+                        principalTable: "RateTypeT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PayrollT_ScheduleTypeT_ScheduleTypeId",
+                        column: x => x.ScheduleTypeId,
+                        principalTable: "ScheduleTypeT",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -526,6 +658,15 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "CashBondT",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Yes" },
+                    { 2, "No" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "CivilStatusT",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -577,20 +718,20 @@ namespace HrisApp.Server.Migrations
                     { 1, "Sales Operations Division" },
                     { 2, "Finance Accounting Management Service Division" },
                     { 3, "Supply Chain Management Service" },
-                    { 4, "Central Administration Division" },
-                    { 5, "Agro Industrial Division" }
+                    { 4, "Central Administration Division" }
                 });
 
             migrationBuilder.InsertData(
-                table: "EmerRelationshipT",
+                table: "DivisionT",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Mother" });
+                values: new object[] { 5, "Agro Industrial Division" });
 
             migrationBuilder.InsertData(
                 table: "EmerRelationshipT",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { 1, "Mother" },
                     { 2, "Father" },
                     { 3, "Spouse" },
                     { 4, "Sibling" }
@@ -622,10 +763,20 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Resigned" },
-                    { 2, "Terminated" },
-                    { 3, "Awol" },
-                    { 4, "Retired" }
+                    { 1, "Active" },
+                    { 2, "Resigned" },
+                    { 3, "Terminated" },
+                    { 4, "Awol" },
+                    { 5, "Retired" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RateTypeT",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Monthly Rate" },
+                    { 2, "Daily Rate" }
                 });
 
             migrationBuilder.InsertData(
@@ -648,13 +799,38 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "StatusT",
+                table: "RestDayT",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Active" },
-                    { 2, "Inactive" }
+                    { 1, "Sunday" },
+                    { 2, "Monday" },
+                    { 3, "Tuesday" },
+                    { 4, "Wednesday" },
+                    { 5, "Thursday" },
+                    { 6, "Friday" },
+                    { 7, "Saturday" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "ScheduleTypeT",
+                columns: new[] { "Id", "Name", "TimeIn", "TimeOut" },
+                values: new object[,]
+                {
+                    { 1, "Regular", "8:00 AM", "5:00 PM" },
+                    { 2, "On Call", "8:00 AM", "5:00 PM" },
+                    { 3, "Night Shift", "8:00 PM", "5:00 AM" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "StatusT",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Active" });
+
+            migrationBuilder.InsertData(
+                table: "StatusT",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 2, "Inactive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeT_AreaId",
@@ -725,6 +901,21 @@ namespace HrisApp.Server.Migrations
                 name: "IX_EmpPictureT_DivisionId",
                 table: "EmpPictureT",
                 column: "DivisionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollT_CashbondId",
+                table: "PayrollT",
+                column: "CashbondId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollT_RateTypeId",
+                table: "PayrollT",
+                column: "RateTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollT_ScheduleTypeId",
+                table: "PayrollT",
+                column: "ScheduleTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -748,19 +939,31 @@ namespace HrisApp.Server.Migrations
                 name: "EmpPictureT");
 
             migrationBuilder.DropTable(
+                name: "LicenseT");
+
+            migrationBuilder.DropTable(
                 name: "MasteralT");
 
             migrationBuilder.DropTable(
                 name: "OtherEducT");
 
             migrationBuilder.DropTable(
+                name: "PayrollT");
+
+            migrationBuilder.DropTable(
                 name: "PrimaryT");
+
+            migrationBuilder.DropTable(
+                name: "RestDayT");
 
             migrationBuilder.DropTable(
                 name: "SecondaryT");
 
             migrationBuilder.DropTable(
                 name: "SeniorHST");
+
+            migrationBuilder.DropTable(
+                name: "TrainingT");
 
             migrationBuilder.DropTable(
                 name: "UserMasterT");
@@ -800,6 +1003,15 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "DivisionT");
+
+            migrationBuilder.DropTable(
+                name: "CashBondT");
+
+            migrationBuilder.DropTable(
+                name: "RateTypeT");
+
+            migrationBuilder.DropTable(
+                name: "ScheduleTypeT");
         }
     }
 }
