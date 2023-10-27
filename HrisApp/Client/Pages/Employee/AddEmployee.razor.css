@@ -90,6 +90,7 @@
     background: #e9ecef;
     padding-top: 10px;
     padding-right: 10px;
+    width: 100%;
 }
 
 ::deep .txf1error {
@@ -102,6 +103,7 @@
     background: #e9ecef;
     padding-top: 10px;
     padding-right: 10px;
+    width: 100%;
 }
 
 
