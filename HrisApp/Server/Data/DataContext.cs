@@ -78,7 +78,11 @@ namespace HrisApp.Server.Data
 
             modelBuilder.Entity<StatusT>().HasData(
                 new StatusT { Id = 1, Name = "Active" },
-                new StatusT { Id = 2, Name = "Inactive" }
+                new StatusT { Id = 2, Name = "Inactive" },
+                new StatusT { Id = 3, Name = "Resigned" },
+                new StatusT { Id = 4, Name = "Terminated" },
+                new StatusT { Id = 5, Name = "Awol" },
+                new StatusT { Id = 6, Name = "Retired" }
             );
 
             modelBuilder.Entity<CivilStatusT>().HasData(

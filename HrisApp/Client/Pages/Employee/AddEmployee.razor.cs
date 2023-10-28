@@ -11,17 +11,8 @@ namespace HrisApp.Client.Pages.Employee
         [CascadingParameter]
         private Task<AuthenticationState> authState { get; set; }
 
-        private void OnValidSubmit(EditContext context)
-        {
-            success = true;
-            StateHasChanged();
-        }
 
-        void backbtn()
-        {
-            NavigationManager.NavigateTo("/employee");
-        }
-
+        #region MUDTABS
         MudTabs tabs;
         private string slectClasss = "frmselect";
         void Activate(int index)
@@ -54,6 +45,7 @@ namespace HrisApp.Client.Pages.Employee
             tabs.ActivatePanel(index);
 
         }
+        #endregion
 
         #region PERSONAL TAB ERROR TRAP
         private string slectClasssGender = "frmselect";
@@ -191,6 +183,8 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         private string userRole;
+
+        #region ONINITIALIZEDASYNC
         protected override async Task OnInitializedAsync()
         {
             await AreaService.GetAreaList();
@@ -241,6 +235,7 @@ namespace HrisApp.Client.Pages.Employee
 
             userRole = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
         }
+        #endregion
 
         private string slectClasssRT = "frmselect";
         private string slectClasssCB = "frmselect";
@@ -334,7 +329,7 @@ namespace HrisApp.Client.Pages.Employee
             }
         }
 
-        #region FUNCTIONS
+        #region FUNCTIONS / BUTTONS
         private void HandleDateHiredChanged(DateTime? newDate)
         {
             DateHired = newDate;
@@ -377,6 +372,17 @@ namespace HrisApp.Client.Pages.Employee
             }
 
             return string.Empty;
+        }
+
+        private void OnValidSubmit(EditContext context)
+        {
+            success = true;
+            StateHasChanged();
+        }
+
+        void backbtn()
+        {
+            NavigationManager.NavigateTo("/employee");
         }
         #endregion
 

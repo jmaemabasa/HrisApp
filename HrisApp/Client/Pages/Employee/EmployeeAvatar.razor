@@ -1,0 +1,33 @@
+﻿@page "/employeeimage"
+@inherits MudComponentBase
+@inject IImageService ImageService
+
+<MudAvatar>
+    <MudImage Src="@ImageData"></MudImage>
+</MudAvatar>
+
+@code {
+    [Parameter]
+    public string? verify { get; set; }
+
+    private string? ImageData;
+
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+            Console.WriteLine($"2nd Test: {verifyCode}");
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await EmployeeImg(verify);
+
+    }
+}
+

@@ -51,3 +51,23 @@
     color: black;
     padding-bottom: 4px;
 }
+
+/*TABLE*/
+::deep .statusActiveChip {
+    background-color: #AAC8A7;
+}
+::deep .statusAwolChip {
+    background-color: #888C4D;
+}
+::deep .statusInactiveChip {
+    background-color: #B7B7B7;
+}
+::deep .statusResignedChip {
+    background-color: #ebc878;
+}
+::deep .statusTerminatedChip {
+    background-color: #E97777;
+}
+::deep .statusRetiredChip {
+    background-color: #e0dfdc;
+}

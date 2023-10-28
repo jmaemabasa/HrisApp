@@ -21,6 +21,18 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         public async Task<ActionResult<List<EmployeeT>>> GetEmployeeList()
         {
             var emp = await _context.EmployeeT
+                .Include(em => em.Status)
+                .Include(em => em.EmploymentStatus)
+                .Include(em => em.EmerRelationship)
+                .Include(em => em.Gender)
+                .Include(em => em.CivilStatus)
+                .Include(em => em.Religion)
+                .Include(em => em.Division)
+                .Include(em => em.Department)
+                .Include(em => em.Section)
+                .Include(em => em.Area)
+                .Include(em => em.Position)
+                .Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
         }
@@ -29,6 +41,18 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         public async Task<ActionResult<List<EmployeeT>>> GetEmployee()
         {
             var emp = await _context.EmployeeT
+                .Include(em => em.Status)
+                .Include(em => em.EmploymentStatus)
+                .Include(em => em.EmerRelationship)
+                .Include(em => em.Gender)
+                .Include(em => em.CivilStatus)
+                .Include(em => em.Religion)
+                .Include(em => em.Division)
+                .Include(em => em.Department)
+                .Include(em => em.Section)
+                .Include(em => em.Area)
+                .Include(em => em.Position)
+                .Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
 
