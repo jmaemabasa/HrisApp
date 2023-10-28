@@ -14,8 +14,8 @@ namespace HrisApp.Shared.Models.Payroll
         [Key]
         public int Id { get; set; }
         public string Verify_Id { get; set; } = string.Empty;
-        [RegularExpression("^[0-9]{1,12}$", ErrorMessage = "Value must be digits only")]
 
+        [RegularExpression("^[0-9]{1,12}$", ErrorMessage = "Value must be digits only")]
         public string Rate { get; set; } = string.Empty;
         public RateTypeT? RateType { get; set; }
         public int RateTypeId { get; set; }
@@ -26,7 +26,6 @@ namespace HrisApp.Shared.Models.Payroll
 
         public string MealAllowance { get; set; } = string.Empty;
         public string BiometricID { get; set; } = string.Empty;
-
 
         [RegularExpression("^[0-9]{10}$", ErrorMessage = "Value must be 10 digits only")]
         public string BankAcc { get; set; } = string.Empty;

@@ -75,23 +75,3 @@
     </MudTable>
 </div>
 
-
-
-@code {
-    private int searchDiv;
-
-    private async Task searchh(int div)
-    {
-        await Task.Delay(10);
-        if (div == 0)
-        {
-            await DepartmentService.GetDepartment();
-            departmentList = DepartmentService.DepartmentTs;
-        }
-        else
-        {
-            departmentList = await DepartmentService.GetDeptByDivision(div);
-        }
-
-    }
-}

@@ -10,20 +10,23 @@ namespace HrisApp.Client.Pages.Employee
     {
         [CascadingParameter]
         private Task<AuthenticationState> authState { get; set; }
-       
-        MudTabs tabs;
-        private string slectClasss = "frmselect";
-        
+
+        private void OnValidSubmit(EditContext context)
+        {
+            success = true;
+            StateHasChanged();
+        }
 
         void backbtn()
         {
             NavigationManager.NavigateTo("/employee");
         }
 
+        MudTabs tabs;
+        private string slectClasss = "frmselect";
         void Activate(int index)
         {
-            // tabs.ActivatePanel(index);
-
+            //tabs.ActivatePanel(index);
             if (index == 1)
             {
                 if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
@@ -40,36 +43,49 @@ namespace HrisApp.Client.Pages.Employee
             else if (index == 2)
             {
                 tabs.ActivatePanel(index);
-                slectClasss = "frmselect";
             }
+            else if (index == 0)
+            {
+                tabs.ActivatePanel(index);
+            }
+        }
+        void Activate2(int index)
+        {
+            tabs.ActivatePanel(index);
+
         }
 
         #region PERSONAL TAB ERROR TRAP
-        private string slectClasssPer = "frmselect";
+        private string slectClasssGender = "frmselect";
+        private string slectClasssCV = "frmselect";
+        private string slectClasssReli = "frmselect";
+        private string slectClasssRela = "frmselect";
         private string txfieldClasss = "txf1";
-
-        private static bool tesst(string x)
-        {
-            if (x == "0")
-                return true;
-            return false;
-        }
+        private string txfieldClasssNat = "txf1";
+        private string txfieldClasssMN = "txf";
+        private string txfieldClasssEN = "txf1";
+        private string txfieldClasssEA = "txf1";
+        private string txfieldClasssEMN = "txf";
 
         private async void ActivateAddressField()
         {
+            slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
+            slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
+            slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
+            slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
+            txfieldClasssNat = (String.IsNullOrWhiteSpace(employee.Nationality)) ? "txf1error" : "txf1";
+            txfieldClasssMN = (String.IsNullOrWhiteSpace(employee.MobileNumber)) ? "txf1error" : "txf";
+            txfieldClasssEN = (String.IsNullOrWhiteSpace(employee.EmerName)) ? "txf1error" : "txf1";
+            txfieldClasssEA = (String.IsNullOrWhiteSpace(employee.EmerAddress)) ? "txf1error" : "txf1";
+            txfieldClasssEMN = (String.IsNullOrWhiteSpace(employee.EmerMobNum)) ? "txf1error" : "txf";
+
             if (employee.GenderId == 0 || employee.CivilStatusId == 0 || employee.ReligionId == 0 || employee.EmerRelationshipId == 0 || String.IsNullOrWhiteSpace(employee.Nationality))
             {
                 _toastService.ShowError("Fill out all fields.");
-                slectClasssPer = "frmselecterror";
-                txfieldClasss = "txf1error";
-
             }
             else
             {
-                slectClasssPer = "frmselect";
                 await JSRuntime.InvokeVoidAsync("scrollToDiv");
-                txfieldClasss = "txf1";
-
             }
         }
         #endregion
@@ -85,7 +101,7 @@ namespace HrisApp.Client.Pages.Employee
 
 
         bool success;
-
+        #region LIST VARIABLES
         //FK
         private List<AreaT> AreasL = new List<AreaT>();
         private List<StatusT> StatusL = new List<StatusT>();
@@ -106,8 +122,9 @@ namespace HrisApp.Client.Pages.Employee
         private List<ScheduleTypeT> ScheduleTypeL = new List<ScheduleTypeT>();
         private List<RateTypeT> RateTypeL = new List<RateTypeT>();
         private List<RestDayT> RestDayL = new List<RestDayT>();
+        #endregion
 
-
+        #region EDUCATION VARIABLE
         //EDUCATION
         List<CollegeT> listOfCollege = new();
         List<OtherEducT> listOfOthers = new();
@@ -119,6 +136,7 @@ namespace HrisApp.Client.Pages.Employee
         List<TrainingT> listOfTrainings = new();
         List<LicenseT> listofLicense = new();
         List<DocumentT> listOfDocuments = new();
+        #endregion
 
         private bool IsListaddshs;
         private bool IsListaddcoll;
@@ -128,6 +146,7 @@ namespace HrisApp.Client.Pages.Employee
 
         string VerifyCode;
 
+        #region DATA VARIBALE
         private DateTime? bday { get; set; }
         private DateTime? Date = DateTime.Today;
         private DateTime? ResignationDate = DateTime.Today;
@@ -141,7 +160,9 @@ namespace HrisApp.Client.Pages.Employee
         private DateTime? ProjEnd = DateTime.Today;
         private DateTime? DateHired = DateTime.Today;
         private DateTime? RegularDate = DateTime.Today;
+        #endregion
 
+        #region IMAGE VARIABLE
         //attachment
         private string PDFBase64 { get; set; }
         private string PDFUrl { get; set; }
@@ -167,7 +188,7 @@ namespace HrisApp.Client.Pages.Employee
 
         MultipartFormDataContent EmpImage = new MultipartFormDataContent();
         IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
-
+        #endregion
 
         private string userRole;
         protected override async Task OnInitializedAsync()
@@ -221,6 +242,99 @@ namespace HrisApp.Client.Pages.Employee
             userRole = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
         }
 
+        private string slectClasssRT = "frmselect";
+        private string slectClasssCB = "frmselect";
+        private string slectClasssST = "frmselect";
+        private string slectClasssRD = "frmselect";
+        async Task CreateEmployee()
+        {
+            try
+            {
+                if (bday.HasValue)
+                {
+                    DateTime currentDate = DateTime.Today;
+                    int age = currentDate.Year - bday.Value.Year;
+
+                    if (bday.Value > currentDate.AddYears(-age))
+                        age--;
+
+                    employee.Age = age;
+                }
+
+                slectClasssRT = (payroll.RateTypeId == 0) ? "frmselecterror" : "frmselect";
+                slectClasssCB = (payroll.CashbondId == 0) ? "frmselecterror" : "frmselect";
+                slectClasssST = (payroll.ScheduleTypeId == 0) ? "frmselecterror" : "frmselect";
+                slectClasssRD = (payroll.RestDayId == 0) ? "frmselecterror" : "frmselect";
+                if (payroll.RateTypeId == 0 || payroll.CashbondId == 0 || payroll.ScheduleTypeId == 0 || payroll.RestDayId == 0 )
+                {
+                    _toastService.ShowError("Fill out all fields.");
+                }
+                else
+                {
+                    Console.WriteLine("Saving Page");
+                    var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+
+                    employee.Verify_Id = verifyCode;
+
+                    employee.Birthdate = Convert.ToDateTime(bday);
+                    employee.DateHired = Convert.ToDateTime(DateHired);
+                    license.Date = Convert.ToDateTime(Date);
+
+
+                    if (!string.IsNullOrEmpty(employee.InactiveStatusId.ToString()))
+                    {
+                        employee.InactiveStatusId = 1;
+                    }
+
+                    var verifyId = await EmployeeService.CreateEmployee(employee);
+
+                    address.Verify_Id = verifyId;
+                    var adres = await AddressService.CreateAddress(address);
+
+
+                    payroll.Salary = "212";
+                    payroll.Paytype = "test";
+                    payroll.Verify_Id = verifyId;
+                    var savepayroll = await PayrollService.CreatePayroll(payroll);
+
+                    var divisionString = employee.DivisionId;
+                    var divisionPDF = employee.DivisionId;
+
+                    var departmentString = employee.DepartmentId;
+                    var departmentPDF = employee.DepartmentId;
+
+                    await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
+                    await OnPDFSaving(employee.EmployeeNo, divisionPDF, departmentPDF, employee.LastName, verifyId);
+
+                    await CreatePrimaryRecords(verifyCode);
+                    await CreateSecondaryRecords(verifyCode);
+                    await CreateSeniorHSRecords(verifyCode);
+                    await CreateCollegeRecords(verifyCode);
+                    await CreateMasteralRecords(verifyCode);
+                    await CreateDoctorateRecords(verifyCode);
+                    await CreateOtherEducRecords(verifyCode);
+                    await CreateLicenses(verifyCode);
+                    await CreateTrainings(verifyCode);
+
+                    NavigationManager.NavigateTo("employee");
+
+                    var swal = await Swal.FireAsync(new SweetAlertOptions
+                    {
+                        Text = "Created Successfully!",
+                        Icon = SweetAlertIcon.Success
+                    });
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                _toastService.ShowError(ex.Message);
+            }
+        }
+
+        #region FUNCTIONS
         private void HandleDateHiredChanged(DateTime? newDate)
         {
             DateHired = newDate;
@@ -264,82 +378,9 @@ namespace HrisApp.Client.Pages.Employee
 
             return string.Empty;
         }
+        #endregion
 
-        async Task CreateEmployee()
-        {
-            try
-            {
-                if (bday.HasValue)
-                {
-                    DateTime currentDate = DateTime.Today;
-                    int age = currentDate.Year - bday.Value.Year;
-
-                    if (bday.Value > currentDate.AddYears(-age))
-                        age--;
-
-                    employee.Age = age;
-                }
-
-                Console.WriteLine("Saving Page");
-                var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
-
-                employee.Verify_Id = verifyCode;
-
-                employee.Birthdate = Convert.ToDateTime(bday);
-                employee.DateHired = Convert.ToDateTime(DateHired);
-                license.Date = Convert.ToDateTime(Date);
-
-
-                if (!string.IsNullOrEmpty(employee.InactiveStatusId.ToString()))
-                {
-                    employee.InactiveStatusId = 1;
-                }
-
-                var verifyId = await EmployeeService.CreateEmployee(employee);
-
-                address.Verify_Id = verifyId;
-                var adres = await AddressService.CreateAddress(address);
-
-
-                payroll.Salary = "212";
-                payroll.Paytype = "test";
-                payroll.Verify_Id = verifyId;
-                var savepayroll = await PayrollService.CreatePayroll(payroll);
-
-                var divisionString = employee.DivisionId;
-                var divisionPDF = employee.DivisionId;
-
-                var departmentString = employee.DepartmentId;
-                var departmentPDF = employee.DepartmentId;
-
-                await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
-                await OnPDFSaving(employee.EmployeeNo, divisionPDF, departmentPDF, employee.LastName, verifyId);
-
-                await CreatePrimaryRecords(verifyCode);
-                await CreateSecondaryRecords(verifyCode);
-                await CreateSeniorHSRecords(verifyCode);
-                await CreateCollegeRecords(verifyCode);
-                await CreateMasteralRecords(verifyCode);
-                await CreateDoctorateRecords(verifyCode);
-                await CreateOtherEducRecords(verifyCode);
-                await CreateLicenses(verifyCode);
-                await CreateTrainings(verifyCode);
-
-                NavigationManager.NavigateTo("employee");
-
-                var swal = await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Text = "Created Successfully!",
-                    Icon = SweetAlertIcon.Success
-                });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                _toastService.ShowError(ex.Message);
-            }
-        }
-
+        #region IMAGE
         //IMAGE
         async Task uploadImage(InputFileChangeEventArgs e)
         {
@@ -444,7 +485,9 @@ namespace HrisApp.Client.Pages.Employee
                 await ImageService.AttachedFile(formdata, EmployeeId, division, department, lastname, verify);
             }
         }
+        #endregion
 
+        #region EDUCATION
         async Task CreatePrimaryRecords(string employeeVerifyId)
         {
             //primary
@@ -802,14 +845,9 @@ namespace HrisApp.Client.Pages.Employee
                 listOfDocuments.Add(new DocumentT());
             }
         }
+        #endregion
 
-
-        private void OnValidSubmit(EditContext context)
-        {
-            success = true;
-            StateHasChanged();
-        }
-
+        #region TAB CLASS
         //TAB PANEL
         int activeIndex;
 
@@ -918,5 +956,6 @@ namespace HrisApp.Client.Pages.Employee
 
             };
         }
+        #endregion
     }
 }

@@ -35,7 +35,7 @@
             DialogService.Show<UpdateDepartmentDialog>("Update Department", parameters, options);
         }
 
-        //TABLEEES
+        #region TABLES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
         List<DepartmentT> departmentList = new List<DepartmentT>();
@@ -52,6 +52,25 @@
                 return true;
             return false;
         }
-        //END FOR TABLES
+        #endregion
+
+        #region Search Text Box
+        private int searchDiv;
+
+        private async Task searchh(int div)
+        {
+            await Task.Delay(10);
+            if (div == 0)
+            {
+                await DepartmentService.GetDepartment();
+                departmentList = DepartmentService.DepartmentTs;
+            }
+            else
+            {
+                departmentList = await DepartmentService.GetDeptByDivision(div);
+            }
+
+        }
+        #endregion
     }
 }
