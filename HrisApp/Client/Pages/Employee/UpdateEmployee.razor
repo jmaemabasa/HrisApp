@@ -1,0 +1,27 @@
+﻿@page "/employee/edit"
+@page "/employee/edit/{id:int}"
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+@inject ISectionService SectionService
+@inject IPositionService PositionService
+@inject IAddressService AddressService
+@inject IAreaService AreaService
+@inject IEmployeeService EmployeeService
+@inject IToastService _toastService
+@inject IImageService ImageService
+@inject IEducationService EducationService
+@inject IPayrollService PayrollService
+@inject ILicenseTrainingService LicenseTrainingService
+@inject NavigationManager NavigationManager
+@inject SweetAlertService Swal
+@inject IToastService _toastService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@attribute [Authorize(Roles = "Admin")]
+
+<div class="topnav d-flex justify-content-end align-items-center z-60">
+    <MudButton OnClick="backbtn" Size="Size.Medium">Back</MudButton>
+</div>
+<div class="tabdiv">
+
+</div>

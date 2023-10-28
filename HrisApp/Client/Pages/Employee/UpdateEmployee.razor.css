@@ -47,7 +47,7 @@
     padding-top: 10px;
     font-weight: bold;
     width: 200px;
-    margin-top: 15px;   
+    margin-top: 15px;
 }
 
     .btnnext:hover {
@@ -57,12 +57,13 @@
 
 /*IMAGE*/
 ::deep .btnimage {
-   box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
-   border-radius: 10px;
-   border: 0;
-   padding: 0 0 10px 15px;
-   margin-top: 0;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
 }
+
 ::deep .btnimagewithimage {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
@@ -108,7 +109,7 @@
 
 
 ::deep .txf > .mud-input-control-input-container:hover {
-   border: 2px solid #C5CFD2 !important;
+    border: 2px solid #C5CFD2 !important;
 }
 
 ::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
@@ -134,6 +135,7 @@
     background: #e8e1e1;
     height: 45px;
 }
+
 ::deep .frmselectvalid {
     border: 1px solid green;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
@@ -158,9 +160,10 @@
 ::deep .mdcard1 {
     background: #e9ecef;
 }
-::deep .mdcard1.lfmargin {
-    margin-left: 20px;
-}
+
+    ::deep .mdcard1.lfmargin {
+        margin-left: 20px;
+    }
 
 /*School DIV*/
 .divSchool {
@@ -264,4 +267,3 @@
         padding-right: 35px;
     }
 }
-

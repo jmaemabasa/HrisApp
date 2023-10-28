@@ -55,7 +55,6 @@
         #endregion
 
         #region Search Text Box
-        private int searchDiv;
 
         private async Task searchh(int div)
         {

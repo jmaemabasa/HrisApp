@@ -72,16 +72,24 @@
                  </div>
              </ToolBarContent>
              <HeaderContent>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Full Name</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Date Hired</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Position</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Division | Department | Section</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Status</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Full Name</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Date Hired</MudTh>
+                 <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold;">Position</MudTh>
+                 <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold;">
+                     <div class="d-flex flex-row gap-4">
+                         <div>Division</div>
+                         <div>|</div>
+                         <div>Department</div>
+                         <div>|</div>
+                         <div>Section</div>
+                     </div>
+                 </MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Status</MudTh>
                  <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
              </HeaderContent>
              <RowTemplate>
              <MudTd DataLabel="Full Name">
-                     <div class="d-flex flex-row align-items-center gap-2">
+                     <div class="d-flex flex-row align-items-center gap-3">
                          <div>
                         <EmployeeAvatar verify="@employeeee.Verify_Id" />
                      </div>
@@ -98,7 +106,7 @@
              <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("d")</MudTd>
              <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
              <MudTd DataLabel="Disignation">
-                     <MudChip Style="background-color: #B7D3DF">@employeeee.Division?.Name</MudChip> | <MudChip Style="background-color: #AEBDCA">@employeeee.Department.Name</MudChip> | <MudChip Class="statusChip">@employeeee.Section.Name </MudChip>
+                     <MudChip Style="background-color: #B7D3DF">@employeeee.Division?.Name</MudChip> | <MudChip Style="background-color: #AEBDCA">@employeeee.Department?.Name</MudChip> | <MudChip Class="statusChip">@employeeee.Section?.Name </MudChip>
              </MudTd>
                  <MudTd DataLabel="Status">
                      <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
@@ -115,102 +123,3 @@
          </MudTable>
     } 
 </div>
-
-
-
-@code {
-
-    [CascadingParameter]
-    private Task<AuthenticationState> authState { get; set; }
-    string? userRole;
-
-    private List<EmployeeT> EmployeesL = new List<EmployeeT>();
-    private EmployeeT employeeee = new EmployeeT();
-
-    private List<string> PDFDataList = new List<string>();
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        var auth = await authState;
-        userRole = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-
-        await EmployeeService.GetEmployee();
-        employeeList = EmployeeService.EmployeeTs;
-    }
-
-
-
-    #region FUNCTIONS / METHODS
-    private string StatusChipColor(string status)
-    {
-        switch (status)
-        {
-            case "Active":
-                return "statusActiveChip";
-            case "Awol":
-                return "statusAwolChip";
-            case "Inactive":
-                return "statusInactiveChip";
-            case "Resigned":
-                return "statusResignedChip";
-            case "Terminated":
-                return "statusTerminatedChip";
-            case "Retired":
-                return "statusRetiredChip";
-            default:
-                return "statusRetiredChip";
-
-        }
-    
-    }
-
-    void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");
-    void ShowEmployee(int id) => NavigationManager.NavigateTo($"/employee/edit{id}");
-    
-    //LOADING
-    private bool isVisible;
-    public async void OpenOverlay()
-    {
-        isVisible = true;
-        await Task.Delay(3000);
-        isVisible = false;
-        StateHasChanged();
-    }
-
-    private string CapitalizeFirstLetter(string input)
-    {
-        if (string.IsNullOrEmpty(input))
-        {
-            return input;
-        }
-
-        return char.ToUpper(input[0]) + input.Substring(1);
-    }
-    #endregion
-
-    #region TABLE VARIABLES
-    private string infoFormat = "{first_item}-{last_item} of {all_items}";
-    private string searchString1 = "";
-    List<EmployeeT> employeeList = new List<EmployeeT>();
-    private EmployeeT selectedItem1 = null;
-    private HashSet<EmployeeT> selectedItems = new HashSet<EmployeeT>();
-
-    private bool FilterFunc1(EmployeeT emp) => FilterFunc(emp, searchString1);
-
-    private bool FilterFunc(EmployeeT emp, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (emp.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (emp.MiddleName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (emp.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        return false;
-    }
-    #endregion
-
-
-}

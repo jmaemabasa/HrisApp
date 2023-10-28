@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.JSInterop;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-
-namespace HrisApp.Client.Pages.Employee
+﻿namespace HrisApp.Client.Pages.Employee
 {
 #nullable disable
-    public partial class AddEmployee: ComponentBase
+    public partial class AddEmployee : ComponentBase
     {
         [CascadingParameter]
         private Task<AuthenticationState> authState { get; set; }
@@ -52,7 +47,6 @@ namespace HrisApp.Client.Pages.Employee
         private string slectClasssCV = "frmselect";
         private string slectClasssReli = "frmselect";
         private string slectClasssRela = "frmselect";
-        private string txfieldClasss = "txf1";
         private string txfieldClasssNat = "txf1";
         private string txfieldClasssMN = "txf";
         private string txfieldClasssEN = "txf1";
@@ -93,6 +87,7 @@ namespace HrisApp.Client.Pages.Employee
 
 
         bool success;
+        
         #region LIST VARIABLES
         //FK
         private List<AreaT> AreasL = new List<AreaT>();
@@ -128,15 +123,13 @@ namespace HrisApp.Client.Pages.Employee
         List<TrainingT> listOfTrainings = new();
         List<LicenseT> listofLicense = new();
         List<DocumentT> listOfDocuments = new();
-        #endregion
 
         private bool IsListaddshs;
         private bool IsListaddcoll;
         private bool IsListaddmas;
         private bool IsListaddothers;
         private bool IsListadddoc;
-
-        string VerifyCode;
+        #endregion
 
         #region DATA VARIBALE
         private DateTime? bday { get; set; }
@@ -260,7 +253,7 @@ namespace HrisApp.Client.Pages.Employee
                 slectClasssCB = (payroll.CashbondId == 0) ? "frmselecterror" : "frmselect";
                 slectClasssST = (payroll.ScheduleTypeId == 0) ? "frmselecterror" : "frmselect";
                 slectClasssRD = (payroll.RestDayId == 0) ? "frmselecterror" : "frmselect";
-                if (payroll.RateTypeId == 0 || payroll.CashbondId == 0 || payroll.ScheduleTypeId == 0 || payroll.RestDayId == 0 )
+                if (payroll.RateTypeId == 0 || payroll.CashbondId == 0 || payroll.ScheduleTypeId == 0 || payroll.RestDayId == 0)
                 {
                     _toastService.ShowError("Fill out all fields.");
                 }
@@ -320,7 +313,7 @@ namespace HrisApp.Client.Pages.Employee
                     });
                 }
 
-                
+
             }
             catch (Exception ex)
             {
