@@ -58,6 +58,30 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
 
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<EmployeeT>> GetSingleEmployee(int id)
+        {
+            var user = await _context.EmployeeT
+                .Include(em => em.Status)
+                .Include(em => em.EmploymentStatus)
+                .Include(em => em.EmerRelationship)
+                .Include(em => em.Gender)
+                .Include(em => em.CivilStatus)
+                .Include(em => em.Religion)
+                .Include(em => em.Division)
+                .Include(em => em.Department)
+                .Include(em => em.Section)
+                .Include(em => em.Area)
+                .Include(em => em.Position)
+                .Include(em => em.InactiveStatus)
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (user == null)
+            {
+                return NotFound("sorry no users here");
+            }
+            return Ok(user);
+        }
+
         private async Task<List<EmployeeT>> GetDBEmployee()
         {
             return await _context.EmployeeT

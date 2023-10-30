@@ -9,10 +9,34 @@
     margin-bottom: 20px;
 }
 
+::deep .empdleft, ::deep .empdmain {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: auto;
+    padding: 10px 10px 10px 10px;
+}
+
+::deep .mud-typography {
+    font-family: 'Nunito Sans' !important;
+}
+
+.divsingledetails, ::deep .divsingledetails {
+    background-color: #F7F8FF;
+    padding: 7px 15px 7px 15px;
+    border-radius: 10px;
+}
+
+::deep .mud-avatar.mud-avatar-medium {
+    width: 230px;
+    height: 230px;
+}
+
 .spantitle {
     font-weight: bold;
     color: #26446e;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 ::deep .validation-message, ::deep .me-auto {
@@ -47,13 +71,16 @@
     padding-top: 10px;
     font-weight: bold;
     width: 200px;
-    margin-top: 15px;
 }
 
-    .btnnext:hover {
-        background-color: #7d917d;
-        color: #fff;
-    }
+.btnnext:hover {
+    background-color: #7d917d;
+    color: #fff;
+}
+
+::deep .btnedit {
+    color: #27374D;
+}
 
 /*IMAGE*/
 ::deep .btnimage {
@@ -71,6 +98,12 @@
     padding-bottom: 4px;
 }
 
+/*DRAWERS*/
+
+::deep .drawerdetails {
+    background: #e9ecef;
+    padding: 20px;
+}
 /*TEXTFIELD*/
 ::deep .txf > .mud-input-control-input-container {
     height: 45px;
@@ -113,7 +146,8 @@
 }
 
 ::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
-    margin-top: 10px;
+    margin-top: 7px;
+    margin-left: 5px;
     width: 100%;
 }
 
@@ -180,6 +214,10 @@
 
 /*TABPANELS*/
 
+::deep .mud-tabs-toolbar {
+    margin-left: 26px;
+}
+
 ::deep .mud-tab.mud-tab-active {
     color: #79AC78;
     font-weight: bold;
@@ -190,8 +228,9 @@
     color: #78909C;
     font-size: 15px;
     font-weight: bold;
-    border-bottom: 2px solid #D8DADC;
-    pointer-events: none;
+    border: none;
+/*    border-bottom: 2px solid #D8DADC;
+*/    /*pointer-events: none;*/
 }
 
 
@@ -236,6 +275,43 @@
 
 ::deep .mud-text-default {
     font-weight: bold;
+}
+
+/*STATUSCHIP LEFT BAR*/
+::deep .statusActiveChip {
+    background-color: #AAC8A7;
+    border-radius: 16px;
+    padding: 2px 15px 2px 15px;
+}
+
+::deep .statusAwolChip {
+    background-color: #888C4D;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusInactiveChip {
+    background-color: #B7B7B7;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusResignedChip {
+    background-color: #ebc878;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusTerminatedChip {
+    background-color: #E97777;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusRetiredChip {
+    background-color: #e0dfdc;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
 }
 
 @media (max-width: 576px) {

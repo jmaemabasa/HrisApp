@@ -769,6 +769,26 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 2,
                             Name = "Inactive"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Resigned"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Terminated"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Awol"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Retired"
                         });
                 });
 

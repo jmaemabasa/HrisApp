@@ -137,28 +137,6 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DocumentT",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DivisionId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    Img_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    Img_Date = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DocumentT", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EmerRelationshipT",
                 columns: table => new
                 {
@@ -453,6 +431,40 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DocumentT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DivisionId = table.Column<int>(type: "int", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    Img_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Img_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DocumentT_DepartmentT_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "DepartmentT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DocumentT_DivisionT_DivisionId",
+                        column: x => x.DivisionId,
+                        principalTable: "DivisionT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmpPictureT",
                 columns: table => new
                 {
@@ -504,7 +516,7 @@ namespace HrisApp.Server.Migrations
                     SSSNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhilHealthNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HDMFNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Restday = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RestDayId = table.Column<int>(type: "int", nullable: false),
                     ScheduleTypeId = table.Column<int>(type: "int", nullable: false),
                     Paytype = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -521,6 +533,12 @@ namespace HrisApp.Server.Migrations
                         name: "FK_PayrollT_RateTypeT_RateTypeId",
                         column: x => x.RateTypeId,
                         principalTable: "RateTypeT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PayrollT_RestDayT_RestDayId",
+                        column: x => x.RestDayId,
+                        principalTable: "RestDayT",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -830,7 +848,24 @@ namespace HrisApp.Server.Migrations
             migrationBuilder.InsertData(
                 table: "StatusT",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Inactive" });
+                values: new object[,]
+                {
+                    { 2, "Inactive" },
+                    { 3, "Resigned" },
+                    { 4, "Terminated" },
+                    { 5, "Awol" },
+                    { 6, "Retired" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentT_DepartmentId",
+                table: "DocumentT",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentT_DivisionId",
+                table: "DocumentT",
+                column: "DivisionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeT_AreaId",
@@ -913,6 +948,11 @@ namespace HrisApp.Server.Migrations
                 column: "RateTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PayrollT_RestDayId",
+                table: "PayrollT",
+                column: "RestDayId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PayrollT_ScheduleTypeId",
                 table: "PayrollT",
                 column: "ScheduleTypeId");
@@ -952,9 +992,6 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "PrimaryT");
-
-            migrationBuilder.DropTable(
-                name: "RestDayT");
 
             migrationBuilder.DropTable(
                 name: "SecondaryT");
@@ -1009,6 +1046,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "RateTypeT");
+
+            migrationBuilder.DropTable(
+                name: "RestDayT");
 
             migrationBuilder.DropTable(
                 name: "ScheduleTypeT");

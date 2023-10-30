@@ -188,7 +188,7 @@
     font-size: 15px;
     font-weight: bold;
     border-bottom: 2px solid #D8DADC;
-    pointer-events: none;
+    /*pointer-events: none;*/
 }
 
 

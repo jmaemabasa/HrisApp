@@ -5,7 +5,7 @@
     {
         [CascadingParameter]
         private Task<AuthenticationState> authState { get; set; }
-
+        string sectionnull = string.Empty;
 
         #region MUDTABS
         MudTabs tabs;
