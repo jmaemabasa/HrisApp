@@ -87,15 +87,6 @@ namespace HrisApp.Client.Pages.Employee
         bool workInfoOpen;
         bool emerOpen;
         bool addressOpen;
-        bool PrimaryOpen;
-        bool SecondaryOpen;
-        bool SeniorOpen;
-        bool CollegeOpen;
-        bool MasteralOpen;
-        bool DoctorateOpen;
-        bool OtherOpen;
-        bool LicenseOpen;
-        bool trainingOpen;
         bool documentsOpen;
         bool PersonOpen;
         bool DocuOpen;
@@ -111,7 +102,8 @@ namespace HrisApp.Client.Pages.Employee
             workInfoOpen = (drawerx == "workInfoOpen") ? true : false;
             emerOpen = (drawerx == "emerOpen") ? true : false;
             addressOpen = (drawerx == "addressOpen") ? true : false;
-            PrimaryOpen = (drawerx == "PrimaryOpen") ? true : false;
+            documentsOpen = (drawerx == "documentsOpen") ? true : false;
+            StatutoryOpen = (drawerx == "StatutoryOpen") ? true : false;
             this.anchor = anchor;
         }
         #endregion
@@ -187,6 +179,7 @@ namespace HrisApp.Client.Pages.Employee
 
             await EmployeeService.UpdateEmployee(employee);
             await AddressService.UpdateAddress(_address);
+            await PayrollService.UpdatePayroll(_payroll);
 
             NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
         }
