@@ -44,7 +44,7 @@ namespace HrisApp.Server.Controllers.EducationC
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!TrainingsExists(id))
+                if (!SeniorHSExists(id))
                 {
                     return NotFound();
                 }
@@ -72,7 +72,22 @@ namespace HrisApp.Server.Controllers.EducationC
             return Ok(_shs);
         }
 
-        private bool TrainingsExists(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<SeniorHST>>> DeleteSHS(int id)
+        {
+            var dbshs = await _context.SeniorHST
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dbshs == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.SeniorHST.Remove(dbshs);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbshs);
+        }
+
+        private bool SeniorHSExists(int id)
         {
             return (_context.SeniorHST?.Any(e => e.Id == id)).GetValueOrDefault();
         }

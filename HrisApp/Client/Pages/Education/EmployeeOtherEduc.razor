@@ -1,0 +1,192 @@
+﻿@page "/employeeothereduc"
+@inherits MudComponentBase
+@inject IEducationService EducationService
+@inject NavigationManager NavigationManager
+
+<style>
+    .stable {
+        background: #e9ecef;
+        border-radius: 20px;
+    }
+
+    .txf1 {
+        height: 45px;
+        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+        border-radius: 10px;
+        border: 0;
+        padding: 0 0 10px 15px;
+        margin-top: 0;
+        background: #e9ecef;
+        padding-top: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+
+    .btnnext {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 10px;
+        background-color: #AEC3AE;
+        color: #26446e;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        width: 200px;
+    }
+</style>
+@if (otheredList.Count == 0 || otheredList == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No Other Information.</span>
+        <MudTooltip Text="Add">
+            <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "OtherEducOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+        </MudTooltip>
+    </div>
+}
+else
+{
+    <MudTable Class="stable" Items="otheredList" Context="othered" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<OtherEducT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                <span class="spantitle mb-3">Other Education</span>
+                <MudTooltip Text="Add">
+                    <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "OtherEducOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+                </MudTooltip>
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">School Type</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">School Name</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Location</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Course</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Awards</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">School Year</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="">@othered.OthersSchoolType</MudTd>
+            <MudTd DataLabel="">@othered.OthersSchoolName</MudTd>
+            <MudTd DataLabel="">@othered.OthersSchoolLoc</MudTd>
+            <MudTd DataLabel="">@othered.OthersCourse</MudTd>
+            <MudTd DataLabel="">@othered.OthersAward</MudTd>
+            <MudTd DataLabel="">@othered.OthersSchoolYear</MudTd>
+            <MudTd>
+                <MudIconButton Class="btnedit" OnClick="@(() => DeleteOther(othered.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+<MudDrawer Class="drawerdetails" @bind-Open="@OtherEducOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <span class="spantitle mb-3">Other Education</span>
+    <MudItem xs="12">
+        <EditForm Model="othered" OnValidSubmit="SaveCollege" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Type of School</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="othered.OthersSchoolType" />
+                <ValidationMessage For="@(() => othered.OthersSchoolType)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Name of School</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="othered.OthersSchoolName" />
+                <ValidationMessage For="@(() => othered.OthersSchoolName)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>School Location</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="othered.OthersSchoolLoc" />
+                <ValidationMessage For="@(() => othered.OthersSchoolLoc)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Course</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="othered.OthersCourse" />
+                <ValidationMessage For="@(() => othered.OthersCourse)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Award</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="othered.OthersAward" />
+                <ValidationMessage For="@(() => othered.OthersAward)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>School Year</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="othered.OthersSchoolYear" />
+                <ValidationMessage For="@(() => othered.OthersSchoolYear)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <button Class="btn btnnext" type="submit">SAVE</button>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer>
+
+
+@code {
+    private OtherEducT othered = new OtherEducT();
+    [Parameter]
+    public string? VerifyCode { get; set; }
+
+    bool OtherEducOpen;
+    Anchor anchor;
+    string width = "500px", height = "100%";
+    void OpenDrawer(Anchor anchor, string drawerx)
+    {
+        OtherEducOpen = (drawerx == "OtherEducOpen") ? true : false;
+        this.anchor = anchor;
+    }
+    protected async Task SaveCollege()
+    {
+        othered.Verify_Id = VerifyCode;
+        await EducationService.CreateOtherEduc(othered);
+        othered.OthersSchoolType = "";
+        othered.OthersSchoolName = "";
+        othered.OthersSchoolLoc = "";
+        othered.OthersCourse = "";
+        othered.OthersAward = "";
+        othered.OthersSchoolYear = "";
+        otheredList = await EducationService.GetOtherEduclist(VerifyCode);
+        OtherEducOpen = false;
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            otheredList = await EducationService.GetOtherEduclist(VerifyCode);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    async Task DeleteOther(int id)
+    {
+        await EducationService.DeleteOtherEduc(id);
+        otheredList = await EducationService.GetOtherEduclist(VerifyCode);
+    }
+
+
+    //TABLEEES
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+    List<OtherEducT> otheredList = new List<OtherEducT>();
+    private OtherEducT selectedItem1 = null;
+    private HashSet<OtherEducT> selectedItems = new HashSet<OtherEducT>();
+
+    private bool FilterFunc1(OtherEducT item) => FilterFunc(item, searchString1);
+
+    private bool FilterFunc(OtherEducT item, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        return false;
+    }
+        //END FOR TABLES
+}

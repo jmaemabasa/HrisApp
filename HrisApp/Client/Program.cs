@@ -13,6 +13,7 @@ global using HrisApp.Client.Services.EmpDetails.AddressService;
 global using HrisApp.Client.Services.EmpDetails.EducationService;
 global using HrisApp.Client.Services.LicAndTrainService;
 global using HrisApp.Client.Services.Payroll;
+global using HrisApp.Client.Pages.Education;
 global using HrisApp.Shared.Models.LiscenseAndTraining;
 global using HrisApp.Shared.Models.Education;
 global using HrisApp.Client.Services.ImageService;

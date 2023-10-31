@@ -949,7 +949,7 @@
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(4));
-                    builder.AddContent(6, "Payroll");
+                    builder.AddContent(6, "Documents");
                     builder.CloseComponent();
                 }
 

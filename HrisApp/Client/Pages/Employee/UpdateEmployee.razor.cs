@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Employee
+﻿using System;
+
+namespace HrisApp.Client.Pages.Employee
 {
     public partial class UpdateEmployee : ComponentBase
     {
@@ -109,6 +111,7 @@
             workInfoOpen = (drawerx == "workInfoOpen") ? true : false;
             emerOpen = (drawerx == "emerOpen") ? true : false;
             addressOpen = (drawerx == "addressOpen") ? true : false;
+            PrimaryOpen = (drawerx == "PrimaryOpen") ? true : false;
             this.anchor = anchor;
         }
         #endregion
@@ -158,6 +161,8 @@
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
 
+            
+
             VerifyCode = employee.Verify_Id;
             await EmployeeImg(employee.Verify_Id);//image
 
@@ -181,11 +186,12 @@
             employee.Birthdate = Convert.ToDateTime(bday);
 
             await EmployeeService.UpdateEmployee(employee);
+            await AddressService.UpdateAddress(_address);
 
             NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-
-
         }
+
+
 
         #region MUDTABS
         MudTabs tabs;
@@ -316,7 +322,7 @@
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(4));
-                    builder.AddContent(6, "Payroll");
+                    builder.AddContent(6, "Documents");
                     builder.CloseComponent();
                 }
             };
@@ -459,5 +465,6 @@
             NavigationManager.NavigateTo("/employee");
         }
         #endregion
+
     }
 }

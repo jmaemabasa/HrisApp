@@ -73,6 +73,21 @@ namespace HrisApp.Server.Controllers.EducationC
             return Ok(_doc);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<DoctorateT>>> DeleteDoctorate(int id)
+        {
+            var dbdoc = await _context.DoctorateT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dbdoc == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.DoctorateT.Remove(dbdoc);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbdoc);
+        }
+
         private bool DoctorateExists(int id)
         {
             return (_context.DoctorateT?.Any(e => e.Id == id)).GetValueOrDefault();

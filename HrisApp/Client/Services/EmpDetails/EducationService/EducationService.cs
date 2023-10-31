@@ -68,11 +68,17 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             var result = await _http.PutAsJsonAsync($"api/Primary/UpdatePrimary/{_primaries.Id}", _primaries);
             var response = result.StatusCode.ToString();
         }
+        public async Task DeletePrimary(int id)
+        {
+            var result = await _http.DeleteAsync($"api/Primary/{id}");
+            //await SetPrimary(result);
+        }   
         public async Task CreateNewupdate(PrimaryT _primaries)
         {
             var result = await _http.PostAsJsonAsync("api/Primary", _primaries);
             await SetPrimary(result);
         }
+
         private async Task SetPrimary(HttpResponseMessage result)
         {
             var response = await result.Content.ReadFromJsonAsync<List<PrimaryT>>();
@@ -98,6 +104,11 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             var result = await _http.PutAsJsonAsync($"api/Secondary/UpdateSecondary/{_secondaries.Id}", _secondaries);
             var response = result.StatusCode.ToString();
         }
+        public async Task DeleteSecondary(int id)
+        {
+            var result = await _http.DeleteAsync($"api/Secondary/{id}");
+            //await SetPrimary(result);
+        }
 
         public List<SeniorHST> _seniors { get; set; } = new List<SeniorHST>();
         public async Task<List<SeniorHST>> GetSeniorHSlist(string verCode)
@@ -117,6 +128,11 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             Console.WriteLine("Update SeniorHS ");
             var result = await _http.PutAsJsonAsync($"api/SeniorHS/UpdateSeniorHS/{_shs.Id}", _shs);
             var response = result.StatusCode.ToString();
+        }
+        public async Task DeleteSHS(int id)
+        {
+            var result = await _http.DeleteAsync($"api/SeniorHS/{id}");
+            //await SetPrimary(result);
         }
 
         public List<CollegeT> _college { get; set; }
@@ -138,6 +154,11 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             var result = await _http.PutAsJsonAsync($"api/College/UpdateCollege/{_colleges.Id}", _colleges);
             var response = result.StatusCode.ToString();
         }
+        public async Task DeleteCollege(int id)
+        {
+            var result = await _http.DeleteAsync($"api/College/{id}");
+            //await SetPrimary(result);
+        }
 
         public List<MasteralT> _masteral { get; set; }
         public async Task<List<MasteralT>> GetMasterallist(string verCode)
@@ -157,6 +178,11 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             Console.WriteLine("Update Masteral ");
             var result = await _http.PutAsJsonAsync($"api/Masteral/UpdateMasteral/{_mas.Id}", _mas);
             var response = result.StatusCode.ToString();
+        }
+        public async Task DeleteMasteral(int id)
+        {
+            var result = await _http.DeleteAsync($"api/Masteral/{id}");
+            //await SetPrimary(result);
         }
 
         public List<DoctorateT> _doctorate { get; set; }
@@ -178,6 +204,11 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             var result = await _http.PutAsJsonAsync($"api/Doctorate/UpdateDoctorate/{_doc.Id}", _doc);
             var response = result.StatusCode.ToString();
         }
+        public async Task DeleteDoctorate(int id)
+        {
+            var result = await _http.DeleteAsync($"api/Doctorate/{id}");
+            //await SetPrimary(result);
+        }
 
         public List<OtherEducT> _other { get; set; }
         public async Task<List<OtherEducT>> GetOtherEduclist(string verCode)
@@ -197,6 +228,11 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             Console.WriteLine("Update OtherEduc ");
             var result = await _http.PutAsJsonAsync($"api/OthersEduc/UpdateOtherEduc/{_others.Id}", _others);
             var response = result.StatusCode.ToString();
+        }
+        public async Task DeleteOtherEduc(int id)
+        {
+            var result = await _http.DeleteAsync($"api/OthersEduc/{id}");
+            //await SetPrimary(result);
         }
     }
 }

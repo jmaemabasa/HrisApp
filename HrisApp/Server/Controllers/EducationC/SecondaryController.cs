@@ -46,7 +46,7 @@ namespace HrisApp.Server.Controllers.EducationC
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!TrainingsExists(id))
+                if (!SecondaryExist(id))
                 {
                     return NotFound();
                 }
@@ -59,7 +59,7 @@ namespace HrisApp.Server.Controllers.EducationC
             return Ok(await GetDbSecondary());
         }
 
-        private bool TrainingsExists(int id)
+        private bool SecondaryExist(int id)
         {
             return (_context.SecondaryT?.Any(e => e.Id == id)).GetValueOrDefault();
         }
@@ -77,6 +77,21 @@ namespace HrisApp.Server.Controllers.EducationC
             _context.SecondaryT.Add(_secondaries);
             await _context.SaveChangesAsync();
             return Ok(_secondaries);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<SecondaryT>>> DeleteSecondary(int id)
+        {
+            var dbsecondary = await _context.SecondaryT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dbsecondary == null)
+                return NotFound("Sorry, but no primary");
+
+            _context.SecondaryT.Remove(dbsecondary);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbsecondary);
         }
 
         private async Task<List<SecondaryT>> GetDbSecondary()

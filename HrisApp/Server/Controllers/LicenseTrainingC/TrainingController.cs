@@ -72,6 +72,21 @@ namespace HrisApp.Server.Controllers.LicenseTrainingC
             return Ok(train);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<TrainingT>>> DeleteTraining(int id)
+        {
+            var dbtraining = await _context.TrainingT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dbtraining == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.TrainingT.Remove(dbtraining);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbtraining);
+        }
+
         private bool TrainingsExists(int id)
         {
             return (_context.TrainingT?.Any(e => e.Id == id)).GetValueOrDefault();

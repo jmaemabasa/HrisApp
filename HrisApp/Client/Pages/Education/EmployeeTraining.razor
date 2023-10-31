@@ -1,0 +1,165 @@
+﻿@page "/employeetraining"
+@inherits MudComponentBase
+@inject ILicenseTrainingService LicenseTrainingService
+@inject NavigationManager NavigationManager
+
+<style>
+    .stable {
+        background: #e9ecef;
+        border-radius: 20px;
+    }
+
+    .txf1 {
+        height: 45px;
+        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+        border-radius: 10px;
+        border: 0;
+        padding: 0 0 10px 15px;
+        margin-top: 0;
+        background: #e9ecef;
+        padding-top: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+
+    .btnnext {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 10px;
+        background-color: #AEC3AE;
+        color: #26446e;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        width: 200px;
+    }
+</style>
+@if (trainingListt.Count == 0 ||trainingListt == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No Trainings Information.</span>
+        <MudTooltip Text="Add">
+            <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+        </MudTooltip>
+    </div>
+}
+else
+{
+    <MudTable Class="stable" Items="trainingListt" Context="training" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<TrainingT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                <span class="spantitle mb-3">Trainings</span>
+                <MudTooltip Text="Add">
+                    <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+                </MudTooltip>
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold;">Training Name</MudTh>
+            <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold;">Training Date</MudTh>
+            <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold;">Remarks</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="">@training.TrainingName</MudTd>
+            <MudTd DataLabel="">@training.TrainingDate?.ToString("d")</MudTd>
+            <MudTd DataLabel="">@training.Remarks</MudTd>
+
+            <MudTd>
+                <MudIconButton Class="btnedit" OnClick="@(() => DeleteTraining(training.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+<MudDrawer Class="drawerdetails" @bind-Open="@TrainingOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <span class="spantitle mb-3">Trainings</span>
+    <MudItem xs="12">
+        <EditForm Model="training" OnValidSubmit="SaveTraining" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+             <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Training Name</MudInputLabel>
+                 <MudTextField @bind-Value="training.TrainingName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+             </MudItem>
+             <MudItem xs="12" Class="mb-2">
+                 <MudInputLabel>Training Date(mm/dd/yyyy)</MudInputLabel>
+                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="training.TrainingDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+             </MudItem>
+             <MudItem xs="12" Class="mb-2">
+                 <MudInputLabel>Remarks</MudInputLabel>
+                 <MudTextField @bind-Value="training.Remarks" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+             </MudItem>
+             <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                 <button Class="btn btnnext" type="submit">SAVE</button>
+             </MudItem>
+         </EditForm>
+     </MudItem>
+ </MudDrawer>
+
+
+ @code {
+    private TrainingT training = new TrainingT();
+    [Parameter]
+    public string? VerifyCode { get; set; }
+
+    bool TrainingOpen;
+    Anchor anchor;
+    string width = "500px", height = "100%";
+    void OpenDrawer(Anchor anchor, string drawerx)
+    {
+        TrainingOpen = (drawerx == "TrainingOpen") ? true : false;
+        this.anchor = anchor;
+    }
+    protected async Task SaveTraining()
+    {
+        training.Verify_Id = VerifyCode;
+        await LicenseTrainingService.CreateTraining(training);
+        training.TrainingName = "";
+        training.Remarks = "";
+        training.TrainingDate = DateTime.Today;
+        trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
+        TrainingOpen = false;
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    async Task DeleteTraining(int id)
+    {
+        await LicenseTrainingService.DeleteTraining(id);
+        trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
+    }
+
+
+    //TABLEEES
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+    List<TrainingT> trainingListt = new List<TrainingT>();
+    private TrainingT selectedItem1 = null;
+    private HashSet<TrainingT> selectedItems = new HashSet<TrainingT>();
+
+    private bool FilterFunc1(TrainingT item) => FilterFunc(item, searchString1);
+
+    private bool FilterFunc(TrainingT item, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        
+        return false;
+    }
+        //END FOR TABLES
+}

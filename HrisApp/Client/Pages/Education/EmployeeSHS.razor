@@ -1,0 +1,176 @@
+﻿@page "/employeeshs"
+@inherits MudComponentBase
+@inject IEducationService EducationService
+@inject NavigationManager NavigationManager
+
+<style>
+    .stable {
+        background: #e9ecef;
+        border-radius: 20px;
+    }
+
+    .txf1 {
+        height: 45px;
+        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+        border-radius: 10px;
+        border: 0;
+        padding: 0 0 10px 15px;
+        margin-top: 0;
+        background: #e9ecef;
+        padding-top: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+
+    .btnnext {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 10px;
+        background-color: #AEC3AE;
+        color: #26446e;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        width: 200px;
+    }
+</style>
+@if (shsList.Count == 0 || shsList == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No Senior HS Information.</span>
+        <MudTooltip Text="Add">
+            <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "SeniorOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+        </MudTooltip>
+    </div>
+}
+else
+{
+    <MudTable Class="stable" Items="shsList" Context="secondary" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<SeniorHST,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                <span class="spantitle mb-3">Senir HS Education</span>
+                <MudTooltip Text="Add">
+                    <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "SeniorOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+                </MudTooltip>
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">School Name</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Location</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Awards</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">School Year</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="">@secondary.ShsSchoolName</MudTd>
+            <MudTd DataLabel="">@secondary.ShsSchoolLoc</MudTd>
+            <MudTd DataLabel="">@secondary.ShsAward</MudTd>
+            <MudTd DataLabel="">@secondary.ShsSchoolYear</MudTd>
+            <MudTd>
+                <MudIconButton Class="btnedit" OnClick="@(() => DeleteSenior(secondary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+<MudDrawer Class="drawerdetails" @bind-Open="@SeniorOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <span class="spantitle mb-3">Senir HS Education</span>
+    <MudItem xs="12">
+        <EditForm Model="senior" OnValidSubmit="SaveSenior" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Name of School</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="senior.ShsSchoolName" />
+                <ValidationMessage For="@(() => senior.ShsSchoolName)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>School Location</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="senior.ShsSchoolLoc" />
+                <ValidationMessage For="@(() => senior.ShsSchoolLoc)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Award</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="senior.ShsAward" />
+                <ValidationMessage For="@(() => senior.ShsAward)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>School Year</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="senior.ShsSchoolYear" />
+                <ValidationMessage For="@(() => senior.ShsSchoolYear)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <button Class="btn btnnext" type="submit">SAVE</button>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer>
+
+
+@code {
+    private SeniorHST senior = new SeniorHST();
+    [Parameter]
+    public string? VerifyCode { get; set; }
+
+    bool SeniorOpen;
+    Anchor anchor;
+    string width = "500px", height = "100%";
+    void OpenDrawer(Anchor anchor, string drawerx)
+    {
+        SeniorOpen = (drawerx == "SeniorOpen") ? true : false;
+        this.anchor = anchor;
+    }
+    protected async Task SaveSenior()
+    {
+        senior.Verify_Id = VerifyCode;
+        await EducationService.CreateSeniorHS(senior);
+        senior.ShsSchoolName = "";
+        senior.ShsSchoolLoc = "";
+        senior.ShsAward = "";
+        senior.ShsSchoolYear = "";
+        shsList = await EducationService.GetSeniorHSlist(VerifyCode);
+        SeniorOpen = false;
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            shsList = await EducationService.GetSeniorHSlist(VerifyCode);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    async Task DeleteSenior(int id)
+    {
+        await EducationService.DeleteSHS(id);
+        shsList = await EducationService.GetSeniorHSlist(VerifyCode);
+    }
+
+
+    //TABLEEES
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+    List<SeniorHST> shsList = new List<SeniorHST>();
+    private SeniorHST selectedItem1 = null;
+    private HashSet<SeniorHST> selectedItems = new HashSet<SeniorHST>();
+
+    private bool FilterFunc1(SeniorHST item) => FilterFunc(item, searchString1);
+
+    private bool FilterFunc(SeniorHST item, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        return false;
+    }
+        //END FOR TABLES
+}

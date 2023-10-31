@@ -73,6 +73,21 @@ namespace HrisApp.Server.Controllers.EducationC
             return Ok(_colleges);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<CollegeT>>> DeleteCollege(int id)
+        {
+            var dbcol = await _context.CollegeT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dbcol == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.CollegeT.Remove(dbcol);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbcol);
+        }
+
         private bool CollegeExists(int id)
         {
             return (_context.CollegeT?.Any(e => e.Id == id)).GetValueOrDefault();

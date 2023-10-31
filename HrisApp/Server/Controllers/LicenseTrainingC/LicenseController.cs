@@ -59,6 +59,21 @@ namespace HrisApp.Server.Controllers.LicenseTrainingC
             return Ok(await GetDbLicenses());
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<LicenseT>>> DeleteLicense(int id)
+        {
+            var dblis = await _context.LicenseT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dblis == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.LicenseT.Remove(dblis);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dblis);
+        }
+
         private bool CheckLicenseId(int id)
         {
             return _context.LicenseT.Any(x => x.Id == id);

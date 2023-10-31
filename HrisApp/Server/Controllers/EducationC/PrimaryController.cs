@@ -83,6 +83,21 @@ namespace HrisApp.Server.Controllers.EducationC
             return Ok(primary);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<PrimaryT>>> DeletePrimary(int id)
+        {
+            var dbprimary = await _context.PrimaryT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dbprimary == null)
+                return NotFound("Sorry, but no primary");
+
+            _context.PrimaryT.Remove(dbprimary);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbprimary);
+        }
+
         private async Task<List<PrimaryT>> GetDbPrimary()
         {
             return await _context.PrimaryT.ToListAsync();

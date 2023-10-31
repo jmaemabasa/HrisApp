@@ -1,0 +1,172 @@
+﻿@page "/employeelicense"
+@inherits MudComponentBase
+@inject ILicenseTrainingService LicenseTrainingService
+@inject NavigationManager NavigationManager
+
+<style>
+    .stable {
+        background: #e9ecef;
+        border-radius: 20px;
+    }
+
+    .txf1 {
+        height: 45px;
+        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+        border-radius: 10px;
+        border: 0;
+        padding: 0 0 10px 15px;
+        margin-top: 0;
+        background: #e9ecef;
+        padding-top: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+
+    .btnnext {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 10px;
+        background-color: #AEC3AE;
+        color: #26446e;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        width: 200px;
+    }
+</style>
+@if (licenseList.Count == 0 || licenseList == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No Licenses Information.</span>
+        <MudTooltip Text="Add">
+            <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "LicenseOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+        </MudTooltip>
+    </div>
+}
+else
+{
+    <MudTable Class="stable" Items="licenseList" Context="license" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<LicenseT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                <span class="spantitle mb-3">Licenses</span>
+                <MudTooltip Text="Add">
+                    <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "LicenseOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+                </MudTooltip>
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Licenses/Board Examinations Taken</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Membership</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">License No</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Date</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="">@license.Examination</MudTd>
+            <MudTd DataLabel="">@license.ProfMembership</MudTd>
+            <MudTd DataLabel="">@license.LicenseNo</MudTd>
+            <MudTd DataLabel="">@license.Date?.ToString("d")</MudTd>
+            <MudTd>
+                <MudIconButton Class="btnedit" OnClick="@(() => DeleteLicense(license.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+<MudDrawer Class="drawerdetails" @bind-Open="@LicenseOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <span class="spantitle mb-3">Licenses Education</span>
+    <MudItem xs="12">
+        <EditForm Model="license" OnValidSubmit="SaveLicense" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Professional Licenses/Board Examinations Taken</MudInputLabel>
+                <MudTextField @bind-Value="license.Examination" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                 <MudInputLabel>Professional Membership</MudInputLabel>
+                 <MudTextField @bind-Value="license.ProfMembership" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                 <MudInputLabel>License No.</MudInputLabel>
+                 <MudTextField @bind-Value="license.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                 <MudInputLabel>Date(mm/dd/yy)</MudInputLabel>
+                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="license.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <button Class="btn btnnext" type="submit">SAVE</button>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer>
+
+
+@code {
+    private LicenseT license = new LicenseT();
+    [Parameter]
+    public string? VerifyCode { get; set; }
+
+    bool LicenseOpen;
+    Anchor anchor;
+    string width = "500px", height = "100%";
+    void OpenDrawer(Anchor anchor, string drawerx)
+    {
+        LicenseOpen = (drawerx == "LicenseOpen") ? true : false;
+        this.anchor = anchor;
+    }
+    protected async Task SaveLicense()
+    {
+        license.Verify_Id = VerifyCode;
+        await LicenseTrainingService.CreateLicense(license);
+        license.Examination = "";
+        license.ProfMembership = "";
+        license.LicenseNo = "";
+        license.Date = DateTime.Today;
+        licenseList = await LicenseTrainingService.GetLicenselist(VerifyCode);
+        LicenseOpen = false;
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            licenseList = await LicenseTrainingService.GetLicenselist(VerifyCode);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    async Task DeleteLicense(int id)
+    {
+        await LicenseTrainingService.DeleteLicense(id);
+        licenseList = await LicenseTrainingService.GetLicenselist(VerifyCode);
+    }
+
+
+    //TABLEEES
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+    List<LicenseT> licenseList = new List<LicenseT>();
+    private LicenseT selectedItem1 = null;
+    private HashSet<LicenseT> selectedItems = new HashSet<LicenseT>();
+
+    private bool FilterFunc1(LicenseT item) => FilterFunc(item, searchString1);
+
+    private bool FilterFunc(LicenseT item, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        return false;
+    }
+        //END FOR TABLES
+}

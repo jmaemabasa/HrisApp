@@ -233,6 +233,10 @@
 */    /*pointer-events: none;*/
 }
 
+::deep .mud-tabs-scroll-button {
+    background: #e9ecef;
+}
+
 
 ::deep .mud-tabs-defaultindex {
     color: #78909C;

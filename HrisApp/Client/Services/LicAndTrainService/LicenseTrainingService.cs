@@ -36,7 +36,11 @@ namespace HrisApp.Client.Services.LicAndTrainService
             var result = await _http.PutAsJsonAsync($"api/Training/UpdateTrainings/{train.Id}", train);
             var response = result.StatusCode.ToString();
         }
-
+        public async Task DeleteTraining(int id)
+        {
+            var result = await _http.DeleteAsync($"api/Training/{id}");
+            //await SetPrimary(result);
+        }
 
 
         public async Task<List<LicenseT>> GetLicenselist(string verifyCode)
@@ -60,6 +64,11 @@ namespace HrisApp.Client.Services.LicAndTrainService
         {
             var result = await _http.PutAsJsonAsync($"api/License/Updatelicense/{license.Id}", license);
             var response = result.StatusCode.ToString();
+        }
+        public async Task DeleteLicense(int id)
+        {
+            var result = await _http.DeleteAsync($"api/License/{id}");
+            //await SetPrimary(result);
         }
     }
 }

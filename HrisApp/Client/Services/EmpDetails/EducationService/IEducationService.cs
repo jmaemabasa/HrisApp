@@ -18,35 +18,49 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
         Task<string> CreatePrimary(PrimaryT primary);
         Task UpdatePrimary(PrimaryT _primaries);
         Task CreateNewupdate(PrimaryT _primaries);
+        Task DeletePrimary(int id);
+
 
         List<SecondaryT> _secondary { get; set; }
         Task<List<SecondaryT>> GetSecondarylist(string verCode);
         Task<string> CreateSecondary(SecondaryT _secondaries);
         Task UpdateSecondary(SecondaryT _secondaries);
+        Task DeleteSecondary(int id);
+
 
         List<SeniorHST> _seniors { get; set; }
         Task<List<SeniorHST>> GetSeniorHSlist(string verCode);
         Task<string> CreateSeniorHS(SeniorHST _shs);
         Task UpdateSeniorHS(SeniorHST _shs);
+        Task DeleteSHS(int id);
+
 
         List<CollegeT> _college { get; set; }
         Task<List<CollegeT>> GetCollegelist(string verCode);
         Task<string> CreateCollege(CollegeT _colleges);
         Task UpdateCollege(CollegeT _colleges);
+        Task DeleteCollege(int id);
+
 
         List<MasteralT> _masteral { get; set; }
         Task<List<MasteralT>> GetMasterallist(string verCode);
         Task<string> CreateMasteral(MasteralT _mas);
         Task UpdateMasteral(MasteralT _mas);
+        Task DeleteMasteral(int id);
+
 
         List<DoctorateT> _doctorate { get; set; }
         Task<List<DoctorateT>> GetDoctoratelist(string verCode);
         Task<string> CreateDoctorate(DoctorateT _doc);
         Task UpdateDoctorate(DoctorateT _doc);
+        Task DeleteDoctorate(int id);
+
 
         List<OtherEducT> _other { get; set; }
         Task<List<OtherEducT>> GetOtherEduclist(string verCode);
         Task<string> CreateOtherEduc(OtherEducT _others);
         Task UpdateOtherEduc(OtherEducT _others);
+        Task DeleteOtherEduc(int id);
+
     }
 }
