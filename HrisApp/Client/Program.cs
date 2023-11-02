@@ -11,6 +11,7 @@ global using HrisApp.Client.Services.MasterData.AreaService;
 global using HrisApp.Client.Services.EmpDetails.EmployeeService;
 global using HrisApp.Client.Services.EmpDetails.AddressService;
 global using HrisApp.Client.Services.EmpDetails.EducationService;
+global using HrisApp.Client.Services.AuditLog;
 global using HrisApp.Client.Services.LicAndTrainService;
 global using HrisApp.Client.Services.Payroll;
 global using HrisApp.Client.Pages.Education;
@@ -34,6 +35,7 @@ global using MudBlazor;
 global using MudBlazor.Services;
 global using Blazored.Toast;
 global using System.Net.Http.Json;
+global using HrisApp.Client.Services.MasterData.ScheduleService;
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -67,6 +69,8 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<ILicenseTrainingService, LicenseTrainingService>();
 builder.Services.AddScoped<IPayrollService, PayrollService>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<IAuditlogService, AuditlogService>();
 
 //===========================//////////=======================
 

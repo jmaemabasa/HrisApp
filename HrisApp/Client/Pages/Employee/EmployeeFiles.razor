@@ -1,0 +1,121 @@
+﻿@page "/employeefiles"
+@inherits MudComponentBase
+@inject IImageService ImageService
+@inject IToastService _toastService
+
+<style>
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+</style>
+
+    <MudItem xs="12">
+        <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+            <span class="spantitle mb-3">Files</span>
+
+            @for (int i = 0; i < listOfDocuments.Count; i++)
+            {
+                var index = i;
+                var docs = listOfDocuments[i];
+                @if (docs.PdfFile != null)
+                {
+                
+                    <MudCardActions Style="display:flex; justify-content: center; padding-bottom:10px; margin-bottom:-15px;">
+                    <MudFileUpload T="IBrowserFile" OnFilesChanged="e => OnPDFSaving123(e, index, empid, div, dept, ln, VerifyCode)" Accept=".pdf">
+                            <ButtonTemplate Context="fileContext">
+                                <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CloudUpload" for="@fileContext" Style="text-transform: none;">Upload Files</MudButton>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+                    </MudCardActions>
+                }
+            }
+        </div>
+    </MudItem>
+
+@code {
+    #nullable disable
+    [Parameter]
+    public string? VerifyCode { get; set; }
+    [Parameter]
+    public string ln { get; set; }
+    [Parameter]
+    public int div { get; set; }
+    [Parameter]
+    public int dept { get; set; }
+    [Parameter]
+    public string empid { get; set; }
+    [Parameter]
+    public Action OnFileAdded { get; set; }
+
+    List<DocumentT> listOfDocuments = new();
+    private string imgBase64 { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        listOfDocuments.Add(new DocumentT());
+    }
+
+    #region PDF VARIABLE
+    //attachment
+    private string PDFBase64 { get; set; }
+    private string PDFUrl { get; set; }
+    private string PDFFileName { get; set; }
+    private string PDFContentType { get; set; }
+    private byte[] pdfData { get; set; }
+    private bool pdfbool12 { get; set; }
+    private bool PDFbool12 { get; set; }
+    IList<IBrowserFile> pdffile = new List<IBrowserFile>();
+    private List<MultipartFormDataContent> DocuEmployees = new List<MultipartFormDataContent>();
+
+    public class DocumentT
+    {
+        public IList<IBrowserFile> PdfFile { get; set; } = new List<IBrowserFile>();
+    }
+    #endregion
+
+    //documents
+    private async Task OnPDFSaving123(InputFileChangeEventArgs e, int index, string EmployeeId, int division, int department, string lastname, string verify)
+    {
+        long maxPDFSize = long.MaxValue;
+        var _pdfModel = e.File;
+        var _pdfFilename = e.File.Name;
+        var _pdfContent = e.File.ContentType;
+        var _pdfBuffer = new byte[e.File.Size];
+        var _pdfURL = $"data:{_pdfContent};base64,{Convert.ToBase64String(_pdfBuffer)}";
+
+        using (var _stream = _pdfModel.OpenReadStream(maxPDFSize))
+        {
+            await _stream.ReadAsync(_pdfBuffer);
+        }
+        if (e.File.Name is null)
+        {
+            imgBase64 = "Images/imageholder.png";
+        }
+        else
+        {
+            var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(_pdfModel.OpenReadStream(maxPDFSize));
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(_pdfContent);
+
+            PDFFileName = _pdfFilename;
+            PDFUrl = _pdfURL;
+            pdfData = _pdfBuffer;
+
+            var streamContent = new StreamContent(_pdfModel.OpenReadStream(maxPDFSize));
+            streamContent.Headers.ContentType = new MediaTypeHeaderValue(_pdfContent);
+
+            content.Add(streamContent, "\"files\"", _pdfFilename);
+
+            var pdfbase64 = Convert.ToBase64String(_pdfBuffer);
+            PDFBase64 = string.Format("data:application/pdf;base64,{0}", pdfbase64);
+
+            pdfbool12 = false;
+            PDFbool12 = true;
+            await ImageService.AttachedFile(content, EmployeeId, division, department, lastname, verify);
+            OnFileAdded?.Invoke();
+            _toastService.ShowSuccess("File Uploaded Succesfully.");
+
+        }
+    }
+}

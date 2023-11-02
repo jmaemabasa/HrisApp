@@ -9,8 +9,17 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
         private string newDivision = "";
 
+        [CascadingParameter]
+        private Task<AuthenticationState> authState { get; set; }
+        string? userId;
+
         void Cancel() => MudDialog.Cancel();
 
+        protected override async Task OnInitializedAsync()
+        {
+            var auth = await authState;
+            userId = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        }
 
         private async Task ConfirmCreateDivision()
         {
@@ -43,6 +52,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     newDivision = "";
 
                     _toastService.ShowSuccess(newDivision + " Created Successfully!");
+
+                    await AuditLogService.CreateAudit(Int32.Parse(userId), "DivisionT", "Create");
 
                     await Task.Delay(1000);
 

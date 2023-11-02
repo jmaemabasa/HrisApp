@@ -91,6 +91,17 @@
                 return true;
             if (emp.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if (emp.Division.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (emp.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (emp.Section.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (emp.Position.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (emp.DateHired.ToString("MM/dd/yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+
             return false;
         }
         #endregion

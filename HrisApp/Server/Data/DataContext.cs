@@ -13,11 +13,11 @@ namespace HrisApp.Server.Data
         {
             //MASTER DATA
             modelBuilder.Entity<DivisionT>().HasData(
-                new DivisionT { Id = 1, Name = "Sales Operations Division" },
-                new DivisionT { Id = 2, Name = "Finance Accounting Management Service Division" },
+                new DivisionT { Id = 1, Name = "Sales Operations" }, // new DivisionT { Id = 1, Name = "Sales Operations Division" },
+                new DivisionT { Id = 2, Name = "FAMS" }, //new DivisionT { Id = 2, Name = "Finance Accounting Management Service Division" },
                 new DivisionT { Id = 3, Name = "Supply Chain Management Service" },
-                new DivisionT { Id = 4, Name = "Central Administration Division" },
-                new DivisionT { Id = 5, Name = "Agro Industrial Division" }
+                new DivisionT { Id = 4, Name = "Central Administration" }, // new DivisionT { Id = 4, Name = "Central Administration Division" },
+                new DivisionT { Id = 5, Name = "Agro Industrial" } //new DivisionT { Id = 5, Name = "Agro Industrial Division" }
             );
 
             modelBuilder.Entity<DepartmentT>().HasData(
@@ -129,9 +129,7 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<ScheduleTypeT>().HasData(
-             new ScheduleTypeT { Id = 1, Name = "Regular", TimeIn = "8:00 AM", TimeOut = "5:00 PM" },
-             new ScheduleTypeT { Id = 2, Name = "On Call", TimeIn = "8:00 AM", TimeOut = "5:00 PM" },
-             new ScheduleTypeT { Id = 3, Name = "Night Shift", TimeIn = "8:00 PM", TimeOut = "5:00 AM" }
+             new ScheduleTypeT { Id = 1, Name = "Regular", TimeIn = "08:00 AM", TimeOut = "05:00 PM" }
             );
 
             modelBuilder.Entity<RestDayT>().HasData(
@@ -146,6 +144,8 @@ namespace HrisApp.Server.Data
         }
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
+        public DbSet<AuditLogT> AuditLogT { get; set; }
+
 
         //Master Data
         public DbSet<DivisionT> DivisionT { get; set; }

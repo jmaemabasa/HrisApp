@@ -74,13 +74,12 @@ namespace HrisApp.Server.Controllers.Payroll
             dbPayroll.HDMFNum = payroll.HDMFNum;
             dbPayroll.BiometricID = payroll.HDMFNum;
             dbPayroll.RestDayId = payroll.RestDayId;
-            dbPayroll.ScheduleType = payroll.ScheduleType;
             dbPayroll.ScheduleTypeId = payroll.ScheduleTypeId;
             dbPayroll.Paytype = payroll.Paytype;
             dbPayroll.Rate = payroll.Rate;
             dbPayroll.RateTypeId = payroll.RateTypeId;
             dbPayroll.MealAllowance = payroll.MealAllowance;
-            dbPayroll.Cashbond = payroll.Cashbond;
+            dbPayroll.CashbondId = payroll.CashbondId;
 
             await _context.SaveChangesAsync();
 

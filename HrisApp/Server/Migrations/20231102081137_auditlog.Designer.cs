@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231031005651_initial")]
-    partial class initial
+    [Migration("20231102081137_auditlog")]
+    partial class auditlog
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1194,12 +1194,12 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Sales Operations Division"
+                            Name = "Sales Operations"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Finance Accounting Management Service Division"
+                            Name = "FAMS"
                         },
                         new
                         {
@@ -1209,12 +1209,12 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "Central Administration Division"
+                            Name = "Central Administration"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Agro Industrial Division"
+                            Name = "Agro Industrial"
                         });
                 });
 
@@ -1485,23 +1485,42 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 1,
                             Name = "Regular",
-                            TimeIn = "8:00 AM",
-                            TimeOut = "5:00 PM"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "On Call",
-                            TimeIn = "8:00 AM",
-                            TimeOut = "5:00 PM"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Night Shift",
-                            TimeIn = "8:00 PM",
-                            TimeOut = "5:00 AM"
+                            TimeIn = "08:00 AM",
+                            TimeOut = "05:00 PM"
                         });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.User.AuditLogT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdditionalInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RecordID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuditLogT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.User.UserMasterT", b =>
@@ -1728,6 +1747,17 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("RestDay");
 
                     b.Navigation("ScheduleType");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.User.AuditLogT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.User.UserMasterT", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

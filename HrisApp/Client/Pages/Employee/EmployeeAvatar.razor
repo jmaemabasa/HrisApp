@@ -25,8 +25,14 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        await EmployeeImg(verify);
-
+        try
+        {
+            await EmployeeImg(verify);//image
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/imgholder.jpg");
+        }
     }
 }
 

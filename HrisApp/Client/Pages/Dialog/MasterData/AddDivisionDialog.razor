@@ -3,10 +3,11 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime jsRuntime
 @inject IToastService _toastService
+@inject IAuditlogService AuditLogService
 
 <MudDialog>
     <DialogContent>
-        <MudTextField Label="Division" @bind-Value="newDivision"></MudTextField>
+        <MudTextField Label="Division" @bind-Value="newDivision" Variant="Variant.Outlined"></MudTextField>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>

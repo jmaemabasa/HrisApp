@@ -1,5 +1,6 @@
 ﻿@page "/employee/edit"
 @page "/employee/edit/{id:int}"
+@using HrisApp.Client.Pages.Education
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
@@ -14,6 +15,7 @@
 @inject ILicenseTrainingService LicenseTrainingService
 @inject SweetAlertService Swal
 @inject IToastService _toastService
+@inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
@@ -230,7 +232,7 @@
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Phone</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.EmerMobNum</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">+63 @employee.EmerMobNum</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="divsingledetails">
@@ -248,8 +250,8 @@
                                     <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "addressOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                                     </MudTooltip>
                                 </div>
-                                <span class="spantitle mb-2" style="font-size:14px""">Present Address</span>
-                                <div class="d-flex flex-column gap-3">
+                                <span class="spantitle mb-2" style="font-size:14px">Present Address</span>
+                                <div class="d-flex flex-column gap-3 mb-3">
                                     <div class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.CurrentAdd</MudText>
@@ -273,7 +275,7 @@
                                         </MudItem>
                                     </div>
                                 </div>
-                                <span class="spantitle mb-2" style="font-size:14px""">Permanent Address</span>
+                                <span class="spantitle mb-2" style="font-size:14px">Permanent Address</span>
                                 <div class="d-flex flex-column gap-3">
                                     <div class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
@@ -339,7 +341,7 @@
                         </MudCard>
                     </MudTabPanel>
                     <MudTabPanel TabContent="tabHeader(3)">
-                        <MudCard Class="empdmain" Style="margin-top: 2rem;">
+                        <MudCard Class="empdmain">
                             <MudCardContent>
                             <EmployeeLicense VerifyCode="@VerifyCode" />
                             </MudCardContent>
@@ -421,6 +423,69 @@
                                     </MudItem>
                                 </div>
                             </div>
+                        </MudCardContent>
+                    </MudCard>
+                    <MudCard Class="empdmain" Style="margin-top: 2rem;">
+                        <MudCardContent>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="spantitle mb-3">Schedule</span>
+                                <MudTooltip Text="Update Details">
+                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "ScheduleOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                </MudTooltip>
+                            </div>
+                            <div class="d-flex flex-column gap-3">
+                                <div class="d-flex flex-row gap-4">
+                                    <MudItem xs="12" sm="4" Class="divsingledetails">
+                                        <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Schedule Type</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_payroll.ScheduleType?.Name</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4" Class="divsingledetails">
+                                        <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Time In.</MudText>
+                                        @foreach (var item in ScheduleTypeL.Where(s => s.Id == _payroll.ScheduleTypeId))
+                                        {
+                                            if (item.Id == _payroll.ScheduleTypeId)
+                                            {
+                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.TimeIn</MudText>
+                                            }
+                                        }
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4" Class="divsingledetails">
+                                        <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Time In.</MudText>
+                                        @foreach (var item in ScheduleTypeL.Where(s => s.Id == _payroll.ScheduleTypeId))
+                                        {
+                                            if (item.Id == _payroll.ScheduleTypeId)
+                                            {
+                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.TimeOut</MudText>
+                                            }
+                                        }
+                                    </MudItem>
+                                </div>
+                                <div class="d-flex flex-row gap-4">
+                                    <MudItem xs="12" Class="divsingledetails">
+                                        <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Rest Day</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_payroll.RestDay?.Name</MudText>
+                                    </MudItem>
+                                </div>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                    <MudCard Class="empdmain" Style="margin-top: 2rem;">
+                        <MudCardContent>
+                            <EmployeeFiles VerifyCode="@VerifyCode" ln="@employee.LastName" div="@employee.DivisionId" dept="@employee.DepartmentId" empid="@employee.EmployeeNo" OnFileAdded="@RefreshPdfFileList" />
+                            <div class="d-flex flex-column justify-content-start" Style="margin-top: 1rem;"> 
+                                @if (pdffileList.Any())
+                                {
+                                    @foreach (var pdf in pdffileList)
+                                    {
+                                        <MudButton Class="button" Color="Color.Success" OnClick="OpenPdf" Style="text-transform: none; width: max-content;">@pdf.Img_Filename</MudButton>
+                                    }
+                                }
+                                else
+                                {
+                                    <MudChip Color="Color.Primary">No Files found!</MudChip>
+                                }
+                            </div>
+                            
                         </MudCardContent>
                     </MudCard>
                     </MudTabPanel>
@@ -851,6 +916,64 @@
                      <ValidationMessage For="@(() => _payroll.TINNum)" class="mb-2 valmessage" />
                 </MudItem>
                 
+                <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                    <button Class="btn btnnext" type="submit">SAVE</button>
+                </MudItem>
+            </EditForm>
+        </MudItem>
+    </MudDrawer>
+    
+    <MudDrawer Class="drawerdetails" @bind-Open="@ScheduleOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+        <span class="spantitle mb-3">Schedule</span>
+        <MudItem xs="12">
+            <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+                <MudItem xs="12" Class="mb-2">
+                    <MudInputLabel>Schedule Type</MudInputLabel>
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@_payroll.ScheduleTypeId" Margin="Margin.Dense">
+                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                               @foreach (var sched in ScheduleTypeL)
+                               {
+                                   <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                                }
+                         </MudSelect>
+                </MudItem>
+                @if (_payroll.ScheduleTypeId != 0) {
+                    <div class="d-flex flex-row gap-3 mb-2 align-items-center">
+                        <MudItem xs="12" sm="6">
+                            <MudInputLabel>Time In</MudInputLabel>
+
+                            @foreach (var item in ScheduleTypeL.Where(s => s.Id == _payroll.ScheduleTypeId))
+                            {
+                                if (item.Id == _payroll.ScheduleTypeId)
+                                {
+                                    <MudTextField @bind-Value="item.TimeIn" Class="txf" DisableUnderLine Margin="Margin.Dense" ReadOnly="true" />
+                                }
+                            }
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudInputLabel>Time Out</MudInputLabel>
+
+                            @foreach (var item in ScheduleTypeL.Where(s => s.Id == _payroll.ScheduleTypeId))
+                            {
+                                if (item.Id == _payroll.ScheduleTypeId)
+                                {
+                                    <MudTextField @bind-Value="item.TimeOut" Class="txf" DisableUnderLine Margin="Margin.Dense" ReadOnly="true" />
+                                }
+                            }
+                        </MudItem>
+                    </div>
+                }
+                <MudItem xs="12" Class="mb-2">
+                    <MudInputLabel>Rest Day</MudInputLabel>
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@_payroll.RestDayId" Margin="Margin.Dense">
+                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                        @foreach (var restday in RestDayL)
+                        {
+                            <MudSelectItem Value="@restday.Id">@restday.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">
                     <button Class="btn btnnext" type="submit">SAVE</button>
                 </MudItem>

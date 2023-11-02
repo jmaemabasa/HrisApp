@@ -1,0 +1,100 @@
+﻿@using HrisApp.Client.HelperToken;
+@inject NavigationManager navigationManager
+@inject SweetAlertService Swal
+@inject IEmployeeService EmployeeService
+@inject IJSRuntime jsRuntime
+@inject IImageService _imageService
+@inject HttpClient _httpClient
+
+<MudDialog>
+    <DialogContent>
+        <MudCardContent>
+            
+            <embed src="@pdfView" style="width:100%; height: 680px;" />
+        </MudCardContent>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+#nullable disable
+    [CascadingParameter] protected MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] public EmployeeT employee { get; set; }
+    private string pdfFilename { get; set; }
+    private string pdfView = string.Empty;
+    private List<string> PDFDataList = new List<string>();
+    private void Cancel() => MudDialog.Cancel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var _obj = TokenSetGet.Get_Employeemodel();
+        Console.WriteLine($"EmployeeId = {_obj.EmployeeNo}, Verify Code = {_obj.Verify_Id}");
+        var _attachmentFile = await _imageService.Getdocumentfileview(_obj.EmployeeNo, _obj.Verify_Id);
+        Console.WriteLine($"ByteResul {_attachmentFile.ToString()}");
+        if (_attachmentFile != null)
+        {
+            var base642 = Convert.ToBase64String(_attachmentFile);
+            pdfView = string.Format("data:application/pdf;base64,{0}", base642);
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (employee != null)
+            {
+                await LoadPDF(employee.Verify_Id, employee.EmployeeNo);
+
+                pdfFilename = await _imageService.GetAttfileName(employee.EmployeeNo, employee.Verify_Id);
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+
+    private async Task LoadPDF(string verifyCode, string EmployeeId)
+    {
+        var PdfmodelList = await _imageService.GetPDFData(verifyCode, EmployeeId);
+        if (PdfmodelList != null && PdfmodelList.Count > 0)
+        {
+            PDFDataList.Clear();
+            foreach (var Pdfmodel in PdfmodelList)
+            {
+                var base64 = Convert.ToBase64String(Pdfmodel);
+                var dataUrl = $"data:application/pdf;base64,{base64}";
+                PDFDataList.Add(dataUrl);
+            }
+        }
+
+        Console.WriteLine($"PDFDataList Count: {PDFDataList.Count}");
+
+        await Task.Delay(10);
+        StateHasChanged();
+    }
+
+    private async Task OnDonwloadfile()
+    {
+        var response = await _httpClient.GetAsync($"/api/Document/Getdocumentfile?employeeId={employee.EmployeeNo}&verifyCode={employee.Verify_Id}");
+        Console.WriteLine(response.ToString());
+        if (!response.IsSuccessStatusCode)
+        {
+            await jsRuntime.InvokeVoidAsync("Alert", "File not found");
+        }
+        else
+        {
+            var fileStream = response.Content.ReadAsStream();
+            using var streamref = new DotNetStreamReference(stream: fileStream);
+            await jsRuntime.InvokeVoidAsync("downloadFileFromStream", pdfFilename, streamref);
+        }
+    }
+}

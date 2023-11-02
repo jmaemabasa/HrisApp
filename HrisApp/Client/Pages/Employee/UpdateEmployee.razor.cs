@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HrisApp.Client.HelperToken;
+using HrisApp.Client.Pages.Dialog;
+using System;
+using System.Buffers.Text;
 
 namespace HrisApp.Client.Pages.Employee
 {
@@ -47,23 +50,7 @@ namespace HrisApp.Client.Pages.Employee
         private List<RateTypeT> RateTypeL = new List<RateTypeT>();
         private List<RestDayT> RestDayL = new List<RestDayT>();
 
-        private List<DocumentT> pdffile = new List<DocumentT>();
-
-        List<PrimaryT> listOfPrimary = new List<PrimaryT>();
-        List<SecondaryT> listOfSecondary = new List<SecondaryT>();
-        List<SeniorHST> listOfShs = new List<SeniorHST>();
-        List<CollegeT> listOfCollege = new List<CollegeT>();
-        List<MasteralT> listOfMasteral = new List<MasteralT>();
-        List<DoctorateT> listOfDoctorate = new List<DoctorateT>();
-        List<OtherEducT> listOfOthers = new List<OtherEducT>();
-        List<LicenseT> listofLicense = new List<LicenseT>();
-        List<TrainingT> listOfTrainings = new List<TrainingT>();
-
-        private bool IsListaddshs;
-        private bool IsListaddcoll;
-        private bool IsListaddmas;
-        private bool IsListaddothers;
-        private bool IsListadddoc;
+        private List<DocumentT> pdffileList = new List<DocumentT>();
         #endregion
 
         #region DATES VARIBALE
@@ -88,11 +75,8 @@ namespace HrisApp.Client.Pages.Employee
         bool emerOpen;
         bool addressOpen;
         bool documentsOpen;
-        bool PersonOpen;
-        bool DocuOpen;
         bool ScheduleOpen;
         bool StatutoryOpen;
-        bool RateOpen;
         Anchor anchor;
         string width = "500px", height = "100%";
 
@@ -104,6 +88,7 @@ namespace HrisApp.Client.Pages.Employee
             addressOpen = (drawerx == "addressOpen") ? true : false;
             documentsOpen = (drawerx == "documentsOpen") ? true : false;
             StatutoryOpen = (drawerx == "StatutoryOpen") ? true : false;
+            ScheduleOpen = (drawerx == "ScheduleOpen") ? true : false;
             this.anchor = anchor;
         }
         #endregion
@@ -153,10 +138,22 @@ namespace HrisApp.Client.Pages.Employee
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
 
-            
+            await PDFImage(employee.Verify_Id, employee.EmployeeNo);
+            await ImageService.GetNewPDF(employee.Verify_Id, employee.EmployeeNo);
+            pdffileList = ImageService.DocumentTs;
+
+
 
             VerifyCode = employee.Verify_Id;
-            await EmployeeImg(employee.Verify_Id);//image
+
+            try
+            {
+                await EmployeeImg(employee.Verify_Id);//image
+            }
+            catch (Exception)
+            {
+                ImageData = string.Format("images/imgholder.jpg");
+            }
 
             bday = employee.Birthdate;
             DateHired = employee.DateHired;
@@ -181,10 +178,25 @@ namespace HrisApp.Client.Pages.Employee
             await AddressService.UpdateAddress(_address);
             await PayrollService.UpdatePayroll(_payroll);
 
-            NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
+            _toastService.ShowSuccess("Information updated successfully!");
+
+            //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
+            employee = await EmployeeService.GetSingleEmployee((int)id);
+            _address = await AddressService.GetSingleAddress((int)id);
+            _payroll = await PayrollService.GetSinglePayroll((int)id);
+
+            personalandjobOpen = false;
+            workInfoOpen = false;
+            emerOpen = false;
+            addressOpen = false;
+            documentsOpen = false;
+            ScheduleOpen = false;
+            StatutoryOpen = false;
+            StateHasChanged();
         }
 
 
+        
 
         #region MUDTABS
         MudTabs tabs;
@@ -355,6 +367,36 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         #region FUNCTIONS / BUTTONS
+        private void OpenPdf()
+        {
+            TokenSetGet.Set_Employeemodel(employee);
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
+
+            DialogService.Show<PDFDialog>("", options);
+        }
+
+        private async Task PDFImage(string verifyCode, string EmployeeId)
+        {
+            var PdfmodelList = await ImageService.GetPDFData(verifyCode, EmployeeId);
+            if (PdfmodelList != null && PdfmodelList.Count > 0)
+            {
+                foreach (var Pdfmodel in PdfmodelList)
+                {
+                    var base64 = Convert.ToBase64String(Pdfmodel);
+                    var dataUrl = string.Format("data:application/pdf;base64,{0}", base64);
+                    PDFDataList.Add(dataUrl);
+                }
+            }
+            Console.WriteLine(PDFDataList.Count);
+        }
+
+        private async void RefreshPdfFileList()
+        {
+            await ImageService.GetNewPDF(employee.Verify_Id, employee.EmployeeNo);
+            pdffileList = ImageService.DocumentTs;
+            StateHasChanged();
+        }
+
         private void CopyToClipboard(string text)
         {
             JSRuntime.InvokeVoidAsync("copyToClipboard", text);

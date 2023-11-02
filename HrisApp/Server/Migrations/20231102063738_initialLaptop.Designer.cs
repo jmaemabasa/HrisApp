@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231102063738_initialLaptop")]
+    partial class initialLaptop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1192,12 +1194,12 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Sales Operations"
+                            Name = "Sales Operations Division"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "FAMS"
+                            Name = "Finance Accounting Management Service Division"
                         },
                         new
                         {
@@ -1207,12 +1209,12 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "Central Administration"
+                            Name = "Central Administration Division"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Agro Industrial"
+                            Name = "Agro Industrial Division"
                         });
                 });
 
@@ -1483,42 +1485,23 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 1,
                             Name = "Regular",
-                            TimeIn = "08:00 AM",
-                            TimeOut = "05:00 PM"
+                            TimeIn = "8:00 AM",
+                            TimeOut = "5:00 PM"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "On Call",
+                            TimeIn = "8:00 AM",
+                            TimeOut = "5:00 PM"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Night Shift",
+                            TimeIn = "8:00 PM",
+                            TimeOut = "5:00 AM"
                         });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.User.AuditLogT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AdditionalInfo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RecordID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TableName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AuditLogT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.User.UserMasterT", b =>
@@ -1745,17 +1728,6 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("RestDay");
 
                     b.Navigation("ScheduleType");
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.User.AuditLogT", b =>
-                {
-                    b.HasOne("HrisApp.Shared.Models.User.UserMasterT", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
