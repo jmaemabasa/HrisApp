@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HrisApp.Server.Migrations
 {
-    public partial class initialLaptop : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -413,8 +413,7 @@ namespace HrisApp.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -428,6 +427,19 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserMasterT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRoleT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoleT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -662,6 +674,30 @@ namespace HrisApp.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AuditLogT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TableName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecordID = table.Column<int>(type: "int", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditLogT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditLogT_UserMasterT_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserMasterT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AreaT",
                 columns: new[] { "Id", "Name" },
@@ -733,16 +769,16 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Sales Operations Division" },
-                    { 2, "Finance Accounting Management Service Division" },
+                    { 1, "Sales Operations" },
+                    { 2, "FAMS" },
                     { 3, "Supply Chain Management Service" },
-                    { 4, "Central Administration Division" }
+                    { 4, "Central Administration" }
                 });
 
             migrationBuilder.InsertData(
                 table: "DivisionT",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 5, "Agro Industrial Division" });
+                values: new object[] { 5, "Agro Industrial" });
 
             migrationBuilder.InsertData(
                 table: "EmerRelationshipT",
@@ -833,29 +869,41 @@ namespace HrisApp.Server.Migrations
             migrationBuilder.InsertData(
                 table: "ScheduleTypeT",
                 columns: new[] { "Id", "Name", "TimeIn", "TimeOut" },
+                values: new object[] { 1, "Regular", "08:00 AM", "05:00 PM" });
+
+            migrationBuilder.InsertData(
+                table: "StatusT",
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Regular", "8:00 AM", "5:00 PM" },
-                    { 2, "On Call", "8:00 AM", "5:00 PM" },
-                    { 3, "Night Shift", "8:00 PM", "5:00 AM" }
+                    { 1, "Active" },
+                    { 2, "Inactive" },
+                    { 3, "Resigned" }
                 });
 
             migrationBuilder.InsertData(
                 table: "StatusT",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Active" });
-
-            migrationBuilder.InsertData(
-                table: "StatusT",
-                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 2, "Inactive" },
-                    { 3, "Resigned" },
                     { 4, "Terminated" },
                     { 5, "Awol" },
                     { 6, "Retired" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "UserRoleT",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "User" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditLogT_UserId",
+                table: "AuditLogT",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentT_DepartmentId",
@@ -964,6 +1012,9 @@ namespace HrisApp.Server.Migrations
                 name: "AddressT");
 
             migrationBuilder.DropTable(
+                name: "AuditLogT");
+
+            migrationBuilder.DropTable(
                 name: "CollegeT");
 
             migrationBuilder.DropTable(
@@ -1001,6 +1052,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "TrainingT");
+
+            migrationBuilder.DropTable(
+                name: "UserRoleT");
 
             migrationBuilder.DropTable(
                 name: "UserMasterT");

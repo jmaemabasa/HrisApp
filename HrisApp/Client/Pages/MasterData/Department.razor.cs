@@ -39,7 +39,7 @@
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
         List<DepartmentT> departmentList = new List<DepartmentT>();
-        private DepartmentT selectedItem1 = null;
+        private DepartmentT? selectedItem1 = null;
         private HashSet<DepartmentT> selectedItems = new HashSet<DepartmentT>();
 
         private bool FilterFunc1(DepartmentT department) => FilterFunc(department, searchString1);

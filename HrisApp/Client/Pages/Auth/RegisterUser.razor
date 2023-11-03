@@ -5,6 +5,7 @@
 @inject ILocalStorageService LocalStorage
 @inject IAuthService AuthService
 @inject ISnackbar Snackbar
+@inject IUserRoleService UserRoleService
 <PageTitle>Register</PageTitle>
 
 <style>
@@ -13,6 +14,19 @@
         border: none;
         box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
         border-radius: 20px;
+    }
+
+    .frmselect {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 10px;
+        padding: 0px 15px 4px 15px;
+        background: #e8e1e1;
+        height: 45px;
+    }
+
+    .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
+        margin-top: 12px;
     }
 </style>
 
@@ -26,20 +40,40 @@
         <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
     }
     <EditForm Model="reg" OnValidSubmit="HandleRegistration">
-        <div class="mb-3">
-            <div class="row">
-                <label for="" class="form-label">Username</label>
-                <MudTextField @bind-Value="reg.Username" Variant="Variant.Outlined" Margin="Margin.Dense" For="@(() => reg.Username)" />
-                 <label for="" class="form-label">Email</label>
-                 <MudTextField @bind-Value="reg.Email" Variant="Variant.Outlined" Margin="Margin.Dense"  />
-             </div>
-             <div class="row">
-                 <label for="" class="form-label">Password</label>
-                 <MudTextField @bind-Value="reg.Password" For="@(() => reg.Password)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
-                 <label for="" class="form-label">Confirm Password</label>
+        <DataAnnotationsValidator/>
+        <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.caption">Full Name</MudText>
+                <MudTextField @bind-Value="reg.FullName" For="@(() => reg.FullName)" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.caption">Username</MudText>
+                <MudTextField @bind-Value="reg.Username" For="@(() => reg.Username)" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.caption">Email</MudText>
+                <MudTextField @bind-Value="reg.Email" For="@(() => reg.Email)" Variant="Variant.Outlined" Margin="Margin.Dense" />
+
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.caption">Password</MudText>
+                <MudTextField @bind-Value="reg.Password" For="@(() => reg.Password)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.caption">Confirm Password</MudText>
                 <MudTextField @bind-Value="reg.ConfirmPassword" For="@(() => reg.ConfirmPassword)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
-             </div>
-         </div>
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.caption">Role</MudText>
+                <MudSelect Class="frmselect" @bind-Value="reg.Role" DisableUnderLine Margin="Margin.Dense">
+                     <MudSelectItem Value="@roleholder" Disabled>---Select Role---</MudSelectItem>
+                    @foreach (var roles in UserRolesL)
+                    {
+                        <MudSelectItem Value="@roles.RoleCode">@roles.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </div>
+        </div>
          <div class="row">
             <a href="/" class="w-auto"><small>Login</small></a>
             <button type="submit" class="btn btn-primary w-auto ms-auto">Register</button>

@@ -1,9 +1,13 @@
 ﻿@page "/index"
+@inject GlobalConfigService GlobalConfigService
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>
+    Hello, world! @GlobalConfigService.Role
+</h1>
 
 Welcome to your new app.
+@GlobalConfigService.Role
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<SurveyPrompt Title="How is Blazor working for you? " />

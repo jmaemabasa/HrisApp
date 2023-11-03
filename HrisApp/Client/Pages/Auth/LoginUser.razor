@@ -5,6 +5,8 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+
 
 <style>
     .form-control {
@@ -28,19 +30,19 @@
                 <img src="./images/SonicSales.png" width="150px" alt="">
             </div>
             <h3>Login to continue</h3>
-            @if (showAlert)
+            @if (_showAlert)
             {
-                <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
+                <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
             }
-            <EditForm Model="@log" OnValidSubmit="HandleLogin">
+            <EditForm Model="@_log" OnValidSubmit="@HandleLogin">
                 <div class="mb-3">
                     <div class="row">
-                        <label for="" class="form-label">Username</label>
-                        <MudTextField DisableUnderLine @bind-Value="log.Username" Class="form-control" Immediate=true Margin="Margin.Dense"></MudTextField>
+                        <MudText Typo="Typo.caption">Username</MudText>
+                        <MudTextField DisableUnderLine @bind-Value="_log.Username" Class="form-control" Immediate=true Margin="Margin.Dense"></MudTextField>
                      </div>
                      <div class="row">
-                         <label for="" class="form-label">Password</label>
-                         <MudTextField DisableUnderLine @bind-Value="log.Password" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" Class="form-control" />
+                         <MudText Typo="Typo.caption">Password</MudText>
+                         <MudTextField DisableUnderLine @bind-Value="_log.Password" Margin="Margin.Dense" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" Class="form-control" />
                      </div>
                  </div>
                  <div class="row">

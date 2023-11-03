@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using HrisApp.Client.Services.AuditLog;
+using System.Xml.Linq;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -9,17 +9,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
         private string newDivision = "";
 
-        [CascadingParameter]
-        private Task<AuthenticationState> authState { get; set; }
-        string? userId;
+
 
         void Cancel() => MudDialog.Cancel();
-
-        protected override async Task OnInitializedAsync()
-        {
-            var auth = await authState;
-            userId = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-        }
 
         private async Task ConfirmCreateDivision()
         {
@@ -49,11 +41,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 if (confirmResult.IsConfirmed)
                 {
                     await DivisionService.CreateDivision(newDivision);
-                    newDivision = "";
 
                     _toastService.ShowSuccess(newDivision + " Created Successfully!");
 
-                    await AuditLogService.CreateAudit(Int32.Parse(userId), "DivisionT", "Create");
+                    //var comment = "Added the " + newDivision + " record.";
+                    //await AuditLogService.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "Create", "DivisionT", comment, DateTime.Now);
 
                     await Task.Delay(1000);
 
@@ -63,5 +55,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 }
             }
         }
+
     }
 }

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.MasterData
 {
+#nullable disable
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentController : ControllerBase
@@ -60,7 +60,7 @@ namespace HrisApp.Server.Controllers.MasterData
         [HttpPut("UpdateDepartment")]
         public async Task<ActionResult> UpdateDepartment(DepartmentT dept)
         {
-            var dbdep = await _context.DepartmentT.FirstOrDefaultAsync(d =>  d.Id == dept.Id);
+            var dbdep = await _context.DepartmentT.FirstOrDefaultAsync(d => d.Id == dept.Id);
 
             dbdep.Name = dept.Name;
 

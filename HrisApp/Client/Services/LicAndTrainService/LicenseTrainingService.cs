@@ -1,9 +1,6 @@
-﻿using HrisApp.Shared.Models.LiscenseAndTraining;
-using System.ComponentModel;
-using static System.Net.WebRequestMethods;
-
-namespace HrisApp.Client.Services.LicAndTrainService
+﻿namespace HrisApp.Client.Services.LicAndTrainService
 {
+#nullable disable
     public class LicenseTrainingService : ILicenseTrainingService
     {
         private readonly HttpClient _http;

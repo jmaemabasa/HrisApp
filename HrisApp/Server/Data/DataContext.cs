@@ -1,10 +1,8 @@
-﻿
-using HrisApp.Shared.Models.LiscenseAndTraining;
-using HrisApp.Shared.Models.Payroll;
-using System.ComponentModel;
+﻿using HrisApp.Shared.Models.Payroll;
 
 namespace HrisApp.Server.Data
 {
+#nullable disable
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
@@ -141,10 +139,16 @@ namespace HrisApp.Server.Data
              new RestDayT { Id = 6, Name = "Friday" },
              new RestDayT { Id = 7, Name = "Saturday" }
             );
+
+            modelBuilder.Entity<UserRoleT>().HasData(
+             new UserRoleT { Id = 1, Name = "Administrator", RoleCode = "Admin" },
+             new UserRoleT { Id = 2, Name = "User", RoleCode = "User" }
+            );
         }
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
         public DbSet<AuditLogT> AuditLogT { get; set; }
+        public DbSet<UserRoleT> UserRoleT { get; set; }
 
 
         //Master Data
@@ -187,10 +191,10 @@ namespace HrisApp.Server.Data
         public DbSet<EmpPictureT> EmpPictureT { get; set; }
 
         //PAYROLL
-        public DbSet<CashBondT> CashBondT { get; set;}
-        public DbSet<RateTypeT> RateTypeT { get; set;}
-        public DbSet<ScheduleTypeT> ScheduleTypeT { get; set;}
-        public DbSet<PayrollT> PayrollT { get; set;}
-        public DbSet<RestDayT> RestDayT { get; set;}
+        public DbSet<CashBondT> CashBondT { get; set; }
+        public DbSet<RateTypeT> RateTypeT { get; set; }
+        public DbSet<ScheduleTypeT> ScheduleTypeT { get; set; }
+        public DbSet<PayrollT> PayrollT { get; set; }
+        public DbSet<RestDayT> RestDayT { get; set; }
     }
 }

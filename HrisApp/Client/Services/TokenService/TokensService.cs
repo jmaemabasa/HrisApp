@@ -1,20 +1,20 @@
-﻿namespace HrisApp.Client.Services.TokenService
+﻿using Blazored.Toast.Services;
+
+namespace HrisApp.Client.Services.TokenService
 {
     public class TokensService : ITokensService
     {
 #nullable disable
-        readonly ISnackbar _snackBar;
-        public TokensService(ISnackbar snackbar)
+        readonly IToastService _toastService;
+        public TokensService(IToastService toast)
         {
-            _snackBar = snackbar;
+            _toastService = toast;
         }
         public async Task ErrorMessage(string _message)
         {
             await Task.Delay(10);
-            var _position = Defaults.Classes.Position.TopCenter;
-            _snackBar.Clear();
-            _snackBar.Configuration.PositionClass = _position;
-            _snackBar.Add(_message, Severity.Error, config => { config.Icon = Icons.Filled.Description; });
+            _toastService.ClearAll();
+            _toastService.ShowError(_message);
 
         }
     }

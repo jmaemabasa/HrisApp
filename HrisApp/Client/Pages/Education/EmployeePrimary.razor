@@ -1,5 +1,4 @@
 ﻿@page "/employeeprimary"
-@inherits MudComponentBase
 @inject IEducationService EducationService
 @inject NavigationManager NavigationManager
 
@@ -78,7 +77,7 @@ else
         </RowTemplate>
     </MudTable>
 }
-<MudDrawer Class="drawerdetails" @bind-Open="@PrimaryOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+<MudDrawer Class="drawerdetails" @bind-Open="@_primaryOpen" Width="@_width" Height="@height" Anchor="@_anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <span class="spantitle mb-3">Primary Education</span>
     <MudItem xs="12">
         <EditForm Model="_pri" OnValidSubmit="SavePrimary" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
@@ -109,67 +108,3 @@ else
     </MudItem>
 </MudDrawer>
 
-
-@code {
-    private PrimaryT _pri = new PrimaryT();
-    [Parameter]
-    public string? VerifyCode { get; set; }
-
-    bool PrimaryOpen;
-    Anchor anchor;
-    string width = "500px", height = "100%";
-    void OpenDrawer(Anchor anchor, string drawerx)
-    {
-        PrimaryOpen = (drawerx == "PrimaryOpen") ? true : false;
-        this.anchor = anchor;
-    }
-    protected async Task SavePrimary()
-    {
-        _pri.Verify_Id = VerifyCode;
-        await EducationService.CreatePrimary(_pri); 
-        _pri.PriSchoolName = "";
-        _pri.PriSchoolLoc = "";
-        _pri.PriAward = "";
-        _pri.PriSchoolYear = "";
-        primaryList = await EducationService.GetPrimarylist(VerifyCode);
-        PrimaryOpen = false;
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        try
-        {
-            primaryList = await EducationService.GetPrimarylist(VerifyCode);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-    }
-
-    async Task DeletePrimary(int id)
-    {
-        await EducationService.DeletePrimary(id);
-        primaryList = await EducationService.GetPrimarylist(VerifyCode);
-    }
-
-
-    //TABLEEES
-    private string infoFormat = "{first_item}-{last_item} of {all_items}";
-    private string searchString1 = "";
-    List<PrimaryT> primaryList = new List<PrimaryT>();
-    private PrimaryT selectedItem1 = null;
-    private HashSet<PrimaryT> selectedItems = new HashSet<PrimaryT>();
-
-    private bool FilterFunc1(PrimaryT divisions) => FilterFunc(divisions, searchString1);
-
-    private bool FilterFunc(PrimaryT employees, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //     return true;
-        return false;
-    }
-        //END FOR TABLES
-}

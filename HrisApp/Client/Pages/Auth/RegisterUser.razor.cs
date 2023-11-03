@@ -6,13 +6,21 @@ namespace HrisApp.Client.Pages.Auth
     {
         UserLoginDto reg = new UserLoginDto();
 
-        bool success;
         string message = string.Empty;
         MudBlazor.Severity _severity;
+        string roleholder = string.Empty;
 
         private bool showAlert = false;
 
-        async Task HandleRegistration()
+        private List<UserRoleT> UserRolesL = new List<UserRoleT>();
+
+        protected override async Task OnInitializedAsync()
+        {
+            await UserRoleService.GetUserRole();
+            UserRolesL = UserRoleService.UserRoleTs;
+        }
+
+            async Task HandleRegistration()
         {
             try
             {
@@ -36,11 +44,6 @@ namespace HrisApp.Client.Pages.Auth
         public void CloseMe()
         {
             showAlert = false;
-        }
-        private void OnValidSubmit(EditContext context)
-        {
-            success = true;
-            StateHasChanged();
         }
 
         bool isShow;

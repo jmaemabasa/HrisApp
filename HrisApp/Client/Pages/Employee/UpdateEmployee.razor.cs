@@ -487,12 +487,12 @@ namespace HrisApp.Client.Pages.Employee
 
             return string.Empty;
         }
-        bool success;
-        private void OnValidSubmit(EditContext context)
-        {
-            success = true;
-            StateHasChanged();
-        }
+        //bool success;
+        //private void OnValidSubmit(EditContext context)
+        //{
+        //    success = true;
+        //    StateHasChanged();
+        //}
 
 
         void backbtn()

@@ -4,14 +4,14 @@ namespace HrisApp.Client.Pages.Auth
 {
     public partial class LoginUser : ComponentBase
     {
-        private UserMasterT log = new UserMasterT();
+        private UserMasterT _log = new UserMasterT();
 
-        bool success;
-        string message = string.Empty;
+        //bool _success;
+        string _message = string.Empty;
         MudBlazor.Severity _severity;
-        private bool showAlert = false;
+        private bool _showAlert = false;
 
-        private string returnUrl = string.Empty;
+        private string _returnUrl = string.Empty;
 
         protected override void OnInitialized()
         {
@@ -20,31 +20,31 @@ namespace HrisApp.Client.Pages.Auth
                 var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
                 if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
                 {
-                    returnUrl = url;
+                    _returnUrl = url;
                 }
             }
             catch (Exception ex)
             {
-                showAlert = true;
+                _showAlert = true;
                 _severity = Severity.Error;
-                message = ex.Message.ToString();
+                _message = ex.Message.ToString();
                 Console.WriteLine(ex.Message.ToString());
             }
 
         }
         public void CloseMe()
         {
-            showAlert = false;
+            _showAlert = false;
         }
 
         private async Task HandleLogin()
         {
             try
             {
-                var result = await AuthService.Login(log);
+                var result = await AuthService.Login(_log);
                 if (result.Success)
                 {
-                    message = string.Empty;
+                    _message = string.Empty;
 
                     await LocalStorage.SetItemAsync("token", result.Data);
                     await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -58,9 +58,9 @@ namespace HrisApp.Client.Pages.Auth
                 }
                 else
                 {
-                    showAlert = true;
+                    _showAlert = true;
                     _severity = Severity.Error;
-                    message = result.Message;
+                    _message = result.Message;
                     _toastService.ShowError(result.Message);
 
 
@@ -69,35 +69,35 @@ namespace HrisApp.Client.Pages.Auth
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                showAlert = true;
+                _showAlert = true;
                 _severity = Severity.Error;
-                message = ex.Message.ToString();
+                _message = ex.Message.ToString();
             }
         }
 
-        bool isShow;
-        InputType PasswordInput = InputType.Password;
-        string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+        bool _isShow;
+        InputType _passwordInput = InputType.Password;
+        string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
 
         void ButtonTestclick()
         {
-            if (isShow)
+            if (_isShow)
             {
-                isShow = false;
-                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-                PasswordInput = InputType.Password;
+                _isShow = false;
+                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+                _passwordInput = InputType.Password;
             }
             else
             {
-                isShow = true;
-                PasswordInputIcon = Icons.Material.Filled.Visibility;
-                PasswordInput = InputType.Text;
+                _isShow = true;
+                _passwordInputIcon = Icons.Material.Filled.Visibility;
+                _passwordInput = InputType.Text;
             }
         }
-        private void OnValidSubmit(EditContext context)
-        {
-            success = true;
-            StateHasChanged();
-        }
+        //private void OnValidSubmit(EditContext context)
+        //{
+        //    _success = true;
+        //    StateHasChanged();
+        //}
     }
 }

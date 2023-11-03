@@ -19,6 +19,7 @@ global using HrisApp.Shared.Models.LiscenseAndTraining;
 global using HrisApp.Shared.Models.Education;
 global using HrisApp.Client.Services.ImageService;
 global using HrisApp.Client.Services.TokenService;
+global using HrisApp.Client.Services.UserRole;
 global using HrisApp.Shared.Models.MasterData;
 global using HrisApp.Shared.Models.User;
 global using HrisApp.Shared.Models.Payroll;
@@ -71,6 +72,8 @@ builder.Services.AddScoped<ILicenseTrainingService, LicenseTrainingService>();
 builder.Services.AddScoped<IPayrollService, PayrollService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IAuditlogService, AuditlogService>();
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+builder.Services.AddTransient<GlobalConfigService>();
 
 //===========================//////////=======================
 

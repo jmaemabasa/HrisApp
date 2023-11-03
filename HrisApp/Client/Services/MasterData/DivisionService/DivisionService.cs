@@ -1,9 +1,6 @@
-﻿using HrisApp.Shared.Models.MasterData;
-using Microsoft.AspNetCore.Components;
-using System.Net.Http.Json;
-
-namespace HrisApp.Client.Services.MasterData.DivisionService
+﻿namespace HrisApp.Client.Services.MasterData.DivisionService
 {
+#nullable disable
     public class DivisionService : IDivisionService
     {
         private readonly HttpClient _http;

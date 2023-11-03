@@ -1,7 +1,6 @@
-﻿using HrisApp.Shared.Models.MasterData;
-
-namespace HrisApp.Client.Services.MasterData.AreaService
+﻿namespace HrisApp.Client.Services.MasterData.AreaService
 {
+#nullable disable
     public class AreaService : IAreaService
     {
         private readonly HttpClient _http;
@@ -25,7 +24,12 @@ namespace HrisApp.Client.Services.MasterData.AreaService
 
         public async Task<AreaT> GetSingleArea(int areaId)
         {
-            throw new NotImplementedException();
+            var result = await _http.GetFromJsonAsync<AreaT>($"api/Area/{areaId}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
         }
 
         public async Task GetArea()

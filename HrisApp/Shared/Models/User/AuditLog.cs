@@ -19,5 +19,6 @@ namespace HrisApp.Shared.Models.User
         public string TableName { get; set; } = string.Empty; //name sa table
         public int RecordID { get; set; } //id sa row
         public string AdditionalInfo { get; set; } = string.Empty; //comments/information
+        public DateTime? Date { get; set; }
     }
 }

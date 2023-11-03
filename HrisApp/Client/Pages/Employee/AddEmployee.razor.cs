@@ -86,7 +86,7 @@
         DocumentT document = new();
 
 
-        bool success;
+        //bool success;
         
         #region LIST VARIABLES
         //FK
@@ -367,11 +367,11 @@
             return string.Empty;
         }
 
-        private void OnValidSubmit(EditContext context)
-        {
-            success = true;
-            StateHasChanged();
-        }
+        //private void OnValidSubmit(EditContext context)
+        //{
+        //    success = true;
+        //    StateHasChanged();
+        //}
 
         void backbtn()
         {

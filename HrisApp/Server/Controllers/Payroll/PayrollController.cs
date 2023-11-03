@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.Payroll
 {
+#nullable disable
     [Route("api/[controller]")]
     [ApiController]
     public class PayrollController : ControllerBase

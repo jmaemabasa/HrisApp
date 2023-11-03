@@ -2,9 +2,10 @@
 {
     public partial class Employee: ComponentBase
     {
+#nullable disable
         [CascadingParameter]
         private Task<AuthenticationState> authState { get; set; }
-        string? userRole;
+        string userRole;
 
         private List<EmployeeT> EmployeesL = new List<EmployeeT>();
         private EmployeeT employeeee = new EmployeeT();

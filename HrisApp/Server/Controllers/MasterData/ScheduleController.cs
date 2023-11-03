@@ -5,6 +5,7 @@ using System.Threading;
 
 namespace HrisApp.Server.Controllers.MasterData
 {
+#nullable disable
     [Route("api/[controller]")]
     [ApiController]
     public class ScheduleController : ControllerBase

@@ -7,10 +7,11 @@
 </MudAvatar>
 
 @code {
+    #nullable disable
     [Parameter]
-    public string? verify { get; set; }
+    public string verify { get; set; }
 
-    private string? ImageData;
+    private string ImageData;
 
     private async Task EmployeeImg(string verifyCode)
     {

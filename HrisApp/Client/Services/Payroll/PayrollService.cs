@@ -2,6 +2,7 @@
 
 namespace HrisApp.Client.Services.Payroll
 {
+#nullable disable
     public class PayrollService : IPayrollService
     {
         private readonly HttpClient _http;

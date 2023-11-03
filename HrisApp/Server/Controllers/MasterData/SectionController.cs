@@ -2,6 +2,7 @@
 
 namespace HrisApp.Server.Controllers.MasterData
 {
+#nullable disable
     [Route("api/[controller]")]
     [ApiController]
     public class SectionController : ControllerBase

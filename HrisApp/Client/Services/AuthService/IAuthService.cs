@@ -10,3 +10,4 @@ namespace HrisApp.Client.Services.AuthService
         Task<bool> IsUserAuthenticated();
     }
 }
+

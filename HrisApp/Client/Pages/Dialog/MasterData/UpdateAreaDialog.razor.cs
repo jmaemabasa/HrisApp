@@ -19,6 +19,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         protected override async Task OnParametersSetAsync()
         {
             area = AreaService.AreaTs.Find(d => d.Id == Id);
+            //area = await AreaService.GetSingleArea((int)Id);
         }
 
         async Task UpdateArea()

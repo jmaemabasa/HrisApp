@@ -3,6 +3,7 @@ using HrisApp.Shared.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Exchange.WebServices.Data;
 using System.Security.Claims;
 
@@ -25,9 +26,10 @@ namespace HrisApp.Server.Controllers.Auth
             var response = await _userService.Register(
                 new UserMasterT
                 {
+                    FullName = request.FullName,
                     Email = request.Email,
-                    Username = request.Username
-
+                    Username = request.Username,
+                    Role = request.Role
                 },
                 request.Password);
 
@@ -64,5 +66,7 @@ namespace HrisApp.Server.Controllers.Auth
 
             return Ok(response);
         }
+
+        
     }
 }

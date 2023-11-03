@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HrisApp.Client.Pages.Employee;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.MasterData
 {
+#nullable disable
     [Route("api/[controller]")]
     [ApiController]
     public class AreaController : ControllerBase
@@ -31,13 +33,13 @@ namespace HrisApp.Server.Controllers.MasterData
         [HttpGet("{id}")]
         public async Task<ActionResult<AreaT>> GetSingleArea(int id)
         {
-            var area = await _context.AreaT.FindAsync(id);
+            var area = await _context.AreaT.FirstOrDefaultAsync(h => h.Id == id);
 
             if (area == null)
             {
                 return NotFound();
             }
-            return area;
+            return Ok(area);
         }
 
         private async Task<List<AreaT>> GetDBArea()

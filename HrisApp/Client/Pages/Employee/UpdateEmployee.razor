@@ -499,31 +499,31 @@
         <MudItem xs="12">
             <EditForm Model="employee" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>First Name</MudInputLabel>
+                    <MudText Typo="Typo.body2">First Name</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.FirstName" />
                     <ValidationMessage For="@(() => employee.FirstName)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Middle Name</MudInputLabel>
+                    <MudText Typo="Typo.body2">Middle Name</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.MiddleName" />
                     <ValidationMessage For="@(() => employee.MiddleName)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Last Name</MudInputLabel>
+                    <MudText Typo="Typo.body2">Last Name</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.LastName" />
                     <ValidationMessage For="@(() => employee.LastName)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Extension</MudInputLabel>
+                    <MudText Typo="Typo.body2">Extension</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Extension" />
                 </MudItem>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Birthdate (mm/dd/yyyy)</MudInputLabel>
+                        <MudText Typo="Typo.body2">Birthdate (mm/dd/yyyy)</MudText>
                         <MudDatePicker Class="txf" DisableUnderLine @bind-Date="bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Gender</MudInputLabel>
+                        <MudText Typo="Typo.body2">Gender</MudText>
                         <MudSelect Class="@slectClasssGender" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var gender in GendersL)
@@ -535,7 +535,7 @@
                 </div>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Civil Status</MudInputLabel>
+                        <MudText Typo="Typo.body2">Civil Status</MudText>
                         <MudSelect Class="@slectClasssGender" DisableUnderLine @bind-Value="employee.CivilStatusId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var cs in CivilStatusL)
@@ -545,24 +545,24 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Nationality</MudInputLabel>
+                        <MudText Typo="Typo.body2">Nationality</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Nationality" />
                     </MudItem>
                 </div>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Phone</MudInputLabel>
+                        <MudText Typo="Typo.body2">Phone</MudText>
                         <MudNumericField HideSpinButtons="true" @bind-Value="employee.MobileNumber" Class="@txfieldClasssMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
                         </MudItem>
                         <MudItem xs="12" sm="6">
-                        <MudInputLabel>Email</MudInputLabel>
+                        <MudText Typo="Typo.body2">Email</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Email" />
                         <ValidationMessage For="@(() => employee.Email)" class="mb-2 valmessage" />
 
                         </MudItem>
                     </div>
                     <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Religion</MudInputLabel>
+                    <MudText Typo="Typo.body2">Religion</MudText>
                     <MudSelect Class="@slectClasssGender" DisableUnderLine @bind-Value="employee.ReligionId" Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var r in ReligionsL)
@@ -573,11 +573,11 @@
                 </MudItem>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Weight(kg)</MudInputLabel>
+                        <MudText Typo="Typo.body2">Weight(kg)</MudText>
                         <InputNumber Class="txf1 w-100 mt-1" @bind-Value="employee.Weight" />
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Height(cm)</MudInputLabel>
+                        <MudText Typo="Typo.body2">Height(cm)</MudText>
                         <InputNumber Class="txf1 w-100 mt-1" @bind-Value="employee.Height" />
                     </MudItem>
                 </div>
@@ -594,13 +594,13 @@
         <MudItem xs="12">
             <EditForm Model="employee" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Company ID No.</MudInputLabel>
+                    <MudText Typo="Typo.body2">Company ID No.</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.EmployeeNo" />
                     <ValidationMessage For="@(() => employee.EmployeeNo)" class="mb-2 valmessage" />
                 </MudItem>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Area of Assignment</MudInputLabel>
+                        <MudText Typo="Typo.body2">Area of Assignment</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.AreaId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var area in AreasL)
@@ -610,7 +610,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Status</MudInputLabel>
+                        <MudText Typo="Typo.body2">Status</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.StatusId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var item in StatusL)
@@ -622,7 +622,7 @@
                 </div>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Area of Assignment</MudInputLabel>
+                        <MudText Typo="Typo.body2">Area of Assignment</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.EmploymentStatusId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                              @foreach (var item in EmploymentStatusL)
@@ -632,7 +632,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudInputLabel>Date Hired (mm/dd/yyyy)</MudInputLabel>
+                        <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                         <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
                     </MudItem>
                 </div>
@@ -642,7 +642,7 @@
                 @if (departmentHasSection)
                 {
                     <MudItem xs="12" Class="mb-2">
-                        <MudInputLabel>Division</MudInputLabel>
+                        <MudText Typo="Typo.body2">Division</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DivisionId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var div in DivisionsL)
@@ -652,7 +652,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" Class="mb-2">
-                        <MudInputLabel>Department</MudInputLabel>
+                        <MudText Typo="Typo.body2">Department</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DepartmentId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
@@ -665,7 +665,7 @@
                     {
                         var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
                         <MudItem xs="12" Class="mb-2">
-                            <MudInputLabel>Section</MudInputLabel>
+                            <MudText Typo="Typo.body2">Section</MudText>
                             <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @if (sections.Any())
@@ -682,7 +682,7 @@
                             </MudSelect>
                         </MudItem>
                         <MudItem xs="12" Class="mb-2">
-                            <MudInputLabel>Position</MudInputLabel>
+                            <MudText Typo="Typo.body2">Position</MudText>
                             <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var dep in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
@@ -696,7 +696,7 @@
                 else
                 {
                     <MudItem xs="12" Class="mb-2">
-                        <MudInputLabel>Division</MudInputLabel>
+                        <MudText Typo="Typo.body2">Division</MudText>
                         <MudSelect @bind-Value="employee.DivisionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var div in DivisionsL)
@@ -706,7 +706,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" Class="mb-2">
-                        <MudInputLabel>Department</MudInputLabel>
+                        <MudText Typo="Typo.body2">Department</MudText>
                         <MudSelect @bind-Value="employee.DepartmentId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
@@ -716,7 +716,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="12" Class="mb-2">
-                        <MudInputLabel>Position</MudInputLabel>
+                        <MudText Typo="Typo.body2">Position</MudText>
                         <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var dep in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
@@ -739,12 +739,12 @@
         <MudItem xs="12">
             <EditForm Model="employee" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Name</MudInputLabel>
+                    <MudText Typo="Typo.body2">Name</MudText>
                     <InputText Class="@txfieldClasssEN" @bind-Value="employee.EmerName" />
                     <ValidationMessage For="@(() => employee.EmerName)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Relationship</MudInputLabel>
+                    <MudText Typo="Typo.body2">Relationship</MudText>
                     <MudSelect @bind-Value="employee.EmerRelationshipId" Class="@slectClasssRela" DisableUnderLine Margin="Margin.Dense">
                          <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var rel in EmerRelationshipsL)
@@ -754,12 +754,12 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Address</MudInputLabel>
+                    <MudText Typo="Typo.body2">Address</MudText>
                     <InputText Class="@txfieldClasssEA" @bind-Value="employee.EmerAddress" />
                     <ValidationMessage For="@(() => employee.EmerAddress)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Mobile #</MudInputLabel>
+                    <MudText Typo="Typo.body2">Mobile #</MudText>
                     <MudNumericField HideSpinButtons="true" @bind-Value="employee.EmerMobNum" Class="@txfieldClasssEMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.EmerMobNum)" />
                 </MudItem>
                  <MudItem xs="12" Class="d-flex justify-content-center mt-5">
@@ -775,60 +775,60 @@
              <EditForm Model="_address" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                  <MudItem xs="12" Class="mb-2">
                      <span class="spantitle mb-2" style="font-size:14px">Present Address</span>
-                     <MudInputLabel>(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudInputLabel>
+                     <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
                      <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentAdd" />
                      <ValidationMessage For="@(() => _address.CurrentAdd)" class="mb-2 valmessage" />
                  </MudItem>
                  <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                      <MudItem xs="12" sm="6">
-                         <MudInputLabel>City</MudInputLabel>
+                         <MudText Typo="Typo.body2">City</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCity" />
                          <ValidationMessage For="@(() => _address.CurrentCity)" class="mb-2 valmessage" />
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                         <MudInputLabel>Province</MudInputLabel>
+                         <MudText Typo="Typo.body2">Province</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentProvince" />
                          <ValidationMessage For="@(() => _address.CurrentProvince)" class="mb-2 valmessage" />
                      </MudItem>
                  </div>
                  <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                      <MudItem xs="12" sm="6">
-                         <MudInputLabel>ZipCode</MudInputLabel>
+                         <MudText Typo="Typo.body2">ZipCode</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentZipCode" />
                          <ValidationMessage For="@(() => _address.CurrentZipCode)" class="mb-2 valmessage" />
                      </MudItem>
                      <MudItem xs="12" sm="6">
-                         <MudInputLabel>Country</MudInputLabel>
+                         <MudText Typo="Typo.body2">Country</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCountry" />
                          <ValidationMessage For="@(() => _address.CurrentCountry)" class="mb-2 valmessage" />
                      </MudItem>
                  </div>
                  <MudItem xs="12" Class="mb-2">
                      <span class="spantitle mb-2" style="font-size:14px">Permanent Address</span>
-                     <MudInputLabel>(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudInputLabel>
+                     <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
                      <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentAdd" />
                      <ValidationMessage For="@(() => _address.PermanentAdd)" class="mb-2 valmessage" />
                  </MudItem>
                  <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                      <MudItem xs="12" sm="6">
-                         <MudInputLabel>City</MudInputLabel>
+                         <MudText Typo="Typo.body2">City</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentCity" />
                          <ValidationMessage For="@(() => _address.PermanentCity)" class="mb-2 valmessage" />
                      </MudItem>
                      <MudItem xs="12" sm="6">
-                         <MudInputLabel>Province</MudInputLabel>
+                         <MudText Typo="Typo.body2">Province</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentProvince" />
                          <ValidationMessage For="@(() => _address.PermanentProvince)" class="mb-2 valmessage" />
                      </MudItem>
                  </div>
                  <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                      <MudItem xs="12" sm="6">
-                         <MudInputLabel>ZipCode</MudInputLabel>
+                         <MudText Typo="Typo.body2">ZipCode</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentZipCode" />
                          <ValidationMessage For="@(() => _address.PermanentCountry)" class="mb-2 valmessage" />
                      </MudItem>
                      <MudItem xs="12" sm="6">
-                         <MudInputLabel>Country</MudInputLabel>
+                         <MudText Typo="Typo.body2">Country</MudText>
                          <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCountry" />
                          <ValidationMessage For="@(() => _address.PermanentCountry)" class="mb-2 valmessage" />
                      </MudItem>
@@ -845,12 +845,12 @@
          <MudItem xs="12">
              <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                  <MudItem xs="12" Class="mb-2">
-                     <MudInputLabel>Rate</MudInputLabel>
+                     <MudText Typo="Typo.body2">Rate</MudText>
                      <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.Rate" />
                      <ValidationMessage For="@(() => _payroll.Rate)" class="mb-2 valmessage" />
                  </MudItem>
                  <MudItem xs="12" Class="mb-2">
-                     <MudInputLabel>Rate Type</MudInputLabel>
+                     <MudText Typo="Typo.body2">Rate Type</MudText>
                      <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="_payroll.RateTypeId" Margin="Margin.Dense">
                          <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var rate in RateTypeL)
@@ -860,7 +860,7 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Cash-Bond</MudInputLabel>
+                    <MudText Typo="Typo.body2">Cash-Bond</MudText>
                     <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="_payroll.CashbondId" Margin="Margin.Dense">
                          <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var cb in CashbondL)
@@ -870,17 +870,17 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Meal Allowance</MudInputLabel>
+                    <MudText Typo="Typo.body2">Meal Allowance</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.MealAllowance" />
                     <ValidationMessage For="@(() => _payroll.MealAllowance)" class="mb-2 valmessage" />
                  </MudItem>
                  <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Biometric Id No.</MudInputLabel>
+                    <MudText Typo="Typo.body2">Biometric Id No.</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.BiometricID" />
                     <ValidationMessage For="@(() => _payroll.BiometricID)" class="mb-2 valmessage" />
                  </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Bank Account</MudInputLabel>
+                    <MudText Typo="Typo.body2">Bank Account</MudText>
                     <InputText Class="txf1 w-100 mt-1" MaxLength="10" @bind-Value="_payroll.BankAcc" />
                     <ValidationMessage For="@(() => _payroll.BankAcc)" class="mb-2 valmessage" />
                 </MudItem>
@@ -896,22 +896,22 @@
         <MudItem xs="12">
             <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>PHIC No.</MudInputLabel>
+                    <MudText Typo="Typo.body2">PHIC No.</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.PhilHealthNum" MaxLength="12" />
                     <ValidationMessage For="@(() => _payroll.PhilHealthNum)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>HDMF No.</MudInputLabel>
+                    <MudText Typo="Typo.body2">HDMF No.</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.HDMFNum" MaxLength="12" />
                     <ValidationMessage For="@(() => _payroll.HDMFNum)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>SSS No.</MudInputLabel>
+                    <MudText Typo="Typo.body2">SSS No.</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.SSSNum" MaxLength="12" />
                     <ValidationMessage For="@(() => _payroll.SSSNum)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                     <MudInputLabel>TIN No.</MudInputLabel>
+                     <MudText Typo="Typo.body2">TIN No.</MudText>
                      <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.TINNum" MaxLength="12" />
                      <ValidationMessage For="@(() => _payroll.TINNum)" class="mb-2 valmessage" />
                 </MudItem>
@@ -928,7 +928,7 @@
         <MudItem xs="12">
             <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Schedule Type</MudInputLabel>
+                    <MudText Typo="Typo.body2">Schedule Type</MudText>
                     <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@_payroll.ScheduleTypeId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                @foreach (var sched in ScheduleTypeL)
@@ -940,7 +940,7 @@
                 @if (_payroll.ScheduleTypeId != 0) {
                     <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                         <MudItem xs="12" sm="6">
-                            <MudInputLabel>Time In</MudInputLabel>
+                            <MudText Typo="Typo.body2">Time In</MudText>
 
                             @foreach (var item in ScheduleTypeL.Where(s => s.Id == _payroll.ScheduleTypeId))
                             {
@@ -951,7 +951,7 @@
                             }
                         </MudItem>
                         <MudItem xs="12" sm="6">
-                            <MudInputLabel>Time Out</MudInputLabel>
+                            <MudText Typo="Typo.body2">Time Out</MudText>
 
                             @foreach (var item in ScheduleTypeL.Where(s => s.Id == _payroll.ScheduleTypeId))
                             {
@@ -964,7 +964,7 @@
                     </div>
                 }
                 <MudItem xs="12" Class="mb-2">
-                    <MudInputLabel>Rest Day</MudInputLabel>
+                    <MudText Typo="Typo.body2">Rest Day</MudText>
                     <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@_payroll.RestDayId" Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var restday in RestDayL)

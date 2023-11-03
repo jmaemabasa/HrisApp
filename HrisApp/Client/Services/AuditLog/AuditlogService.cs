@@ -13,15 +13,18 @@ namespace HrisApp.Client.Services.AuditLog
             _navigationManager = navigationManager;
         }
 
-        public async Task CreateAudit(int userId, string tablename, string action)
+        public async Task CreateAudit(int userId, string action, string tablename, string comment, DateTime date)
         {
             AuditLogT audit = new AuditLogT
             {
-                UserId = userId
+                UserId = userId,
+                Action = action,
+                TableName = tablename,
+                AdditionalInfo = comment,
+                Date = date
             };
 
             var result = await _http.PostAsJsonAsync("api/AuditLog/CreateAudit", audit);
         }
-
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Blazored.Toast;
 using CurrieTechnologies.Razor.SweetAlert2;
+using HrisApp.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,6 @@
 ﻿namespace HrisApp.Client.Services.EmpDetails.AddressService
 {
+#nullable disable
     public class AddressService : IAddressService
     {
         private readonly HttpClient _http;
