@@ -143,6 +143,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 dbEmployee.MobileNumber = employee.MobileNumber;
                 dbEmployee.Email = employee.Email;
                 dbEmployee.DateHired = employee.DateHired;
+                dbEmployee.DateInactiveStatus = employee.DateInactiveStatus;
                 dbEmployee.EmployeeNo = employee.EmployeeNo;
 
                 dbEmployee.EmerName = employee.EmerName;

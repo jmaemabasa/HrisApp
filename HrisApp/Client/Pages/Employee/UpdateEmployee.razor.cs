@@ -165,10 +165,25 @@ namespace HrisApp.Client.Pages.Employee
             }
 
             employee.Birthdate = Convert.ToDateTime(bday);
+            employee.DateHired = Convert.ToDateTime(DateHired);
 
             await EmployeeService.UpdateEmployee(employee);
             await AddressService.UpdateAddress(_address);
             await PayrollService.UpdatePayroll(_payroll);
+
+            //UPDATE EMPLOYMENT DATE
+            _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
+            _employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
+            _employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
+            _employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
+            _employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
+            _employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
+            _employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
+            _employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
+            _employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
+            _employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
+            _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
+            await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
             _toastService.ShowSuccess("Information updated successfully!");
 
@@ -176,6 +191,7 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee((int)id);
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
+            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
             personalandjobOpen = false;
             workInfoOpen = false;
@@ -393,8 +409,6 @@ namespace HrisApp.Client.Pages.Employee
         {
             JSRuntime.InvokeVoidAsync("copyToClipboard", text);
         }
-
-
 
         private string FUpper(string input)
         {

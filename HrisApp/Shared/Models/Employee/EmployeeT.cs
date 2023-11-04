@@ -56,6 +56,7 @@ namespace HrisApp.Shared.Models.Employee
         //[Required]
         public string EmployeeNo { get; set; } = string.Empty;
         public DateTime DateHired { get; set; }
+        public DateTime? DateInactiveStatus { get; set; }
 
         public EmploymentStatusT? EmploymentStatus { get; set; }
         public int EmploymentStatusId { get; set; } //FK
