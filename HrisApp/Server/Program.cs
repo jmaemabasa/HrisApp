@@ -1,18 +1,17 @@
-global using MudBlazor.Services;
-global using HrisApp.Shared.Models.MasterData;
-global using HrisApp.Shared.Models.User;
 global using HrisApp.Server.Data;
-global using Microsoft.EntityFrameworkCore;
 global using HrisApp.Server.Services.UserService;
 global using HrisApp.Shared.Models.Education;
-global using HrisApp.Shared.Models.Images;
 global using HrisApp.Shared.Models.Employee;
+global using HrisApp.Shared.Models.Images;
 global using HrisApp.Shared.Models.LiscenseAndTraining;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+global using HrisApp.Shared.Models.MasterData;
+global using HrisApp.Shared.Models.User;
+global using Microsoft.EntityFrameworkCore;
+global using MudBlazor.Services;
 using Blazored.Toast;
 using CurrieTechnologies.Razor.SweetAlert2;
-using HrisApp.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,7 +45,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddScoped<IUserService, UserService>();
 //=================///////////////===========================
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyPolicy", builder =>
+    {
+        builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin();
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,6 +79,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
+app.UseCors("MyPolicy");
 app.MapFallbackToFile("index.html");
 
 app.Run();

@@ -41,24 +41,15 @@ namespace HrisApp.Shared.Models.Employee
         public int ReligionId { get; set; } //FK
 
         //CONTACT INFO
-        //[Phone]
-        //[Display(Name = "Mobile Number")]
         public string MobileNumber { get; set; } = string.Empty;
         //[EmailAddress]
         public string Email { get; set; } = string.Empty;
 
         //EMERGENCY CONTACT
-        //[Required]
-        //[Display(Name = "Full Name")]
         public string EmerName {  get; set; } = string.Empty;
         public EmerRelationshipT? EmerRelationship { get; set; }
         public int EmerRelationshipId {  get; set; } //FK
-        //[Required]
-        //[Display(Name = "Address")]
         public string EmerAddress {  get; set; } = string.Empty;
-        //[Required]
-        //[Phone]
-        //[Display(Name = "Mobile Number")]
         public string EmerMobNum {  get; set; } = string.Empty;
 
         //JOB DETAILS & MASTER DATA
@@ -89,8 +80,5 @@ namespace HrisApp.Shared.Models.Employee
 
         public InactiveStatusT? InactiveStatus { get; set; }
         public int InactiveStatusId { get; set; } //FK
-
-
-
     }
 }

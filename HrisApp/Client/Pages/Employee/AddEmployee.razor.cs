@@ -81,6 +81,7 @@
 
         EmployeeT employee = new();
         AddressT address = new();
+        EmploymentDateT employmentDate = new();
         PayrollT payroll = new();
         LicenseT license = new();
         DocumentT document = new();
@@ -131,10 +132,9 @@
         private bool IsListadddoc;
         #endregion
 
-        #region DATA VARIBALE
+        #region DATE VARIBALE
         private DateTime? bday { get; set; }
         private DateTime? Date = DateTime.Today;
-        private DateTime? ResignationDate = DateTime.Today;
         private DateTime? ProbStart = DateTime.Today;
         private DateTime? ProbEnd = DateTime.Today;
         private DateTime? CasualStart = DateTime.Today;
@@ -145,6 +145,7 @@
         private DateTime? ProjEnd = DateTime.Today;
         private DateTime? DateHired = DateTime.Today;
         private DateTime? RegularDate = DateTime.Today;
+        private DateTime? ResignationDate = DateTime.Today;
         #endregion
 
         #region IMAGE VARIABLE
@@ -259,58 +260,82 @@
                 }
                 else
                 {
-                    Console.WriteLine("Saving Page");
-                    var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
 
-                    employee.Verify_Id = verifyCode;
-
-                    employee.Birthdate = Convert.ToDateTime(bday);
-                    employee.DateHired = Convert.ToDateTime(DateHired);
-                    license.Date = Convert.ToDateTime(Date);
-
-
-                    if (!string.IsNullOrEmpty(employee.InactiveStatusId.ToString()))
+                    try
                     {
+                        Console.WriteLine("Saving Page");
+                        var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+
+                        //CREATE EMPLOYEE
+                        employee.Verify_Id = verifyCode;
+                        employee.Birthdate = Convert.ToDateTime(bday);
+                        employee.DateHired = Convert.ToDateTime(DateHired);
                         employee.InactiveStatusId = 1;
+                        license.Date = Convert.ToDateTime(Date);
+                        var verifyId = await EmployeeService.CreateEmployee(employee);
+
+                        //CREATE ADDRESS
+                        address.Verify_Id = verifyId;
+                        var adres = await AddressService.CreateAddress(address);
+
+                        //CREATE EMPLOYMENT DATE
+                        employmentDate.Verify_Id = verifyId;
+                        employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
+
+                        employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
+                        employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
+
+                        employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
+                        employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
+
+                        employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
+                        employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
+
+                        employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
+                        employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
+
+                        employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
+                        employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
+                        var empDate = await EmploymentDateService.CreateEmploymentDate(employmentDate);
+
+                        //CREATE PAYROLL
+                        payroll.Salary = "";
+                        payroll.Paytype = "";
+                        payroll.Verify_Id = verifyId;
+                        var savepayroll = await PayrollService.CreatePayroll(payroll);
+
+                        //CREATE FILES AND IMAGE
+                        var divisionString = employee.DivisionId;
+                        var departmentString = employee.DepartmentId;
+
+                        await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
+                        await OnPDFSaving(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
+
+                        //CREATE EDUCATIONS
+                        await CreatePrimaryRecords(verifyCode);
+                        await CreateSecondaryRecords(verifyCode);
+                        await CreateSeniorHSRecords(verifyCode);
+                        await CreateCollegeRecords(verifyCode);
+                        await CreateMasteralRecords(verifyCode);
+                        await CreateDoctorateRecords(verifyCode);
+                        await CreateOtherEducRecords(verifyCode);
+                        await CreateLicenses(verifyCode);
+                        await CreateTrainings(verifyCode);
+
+                        NavigationManager.NavigateTo("employee");
+
+                        var swal = await Swal.FireAsync(new SweetAlertOptions
+                        {
+                            Text = "Created Successfully!",
+                            Icon = SweetAlertIcon.Success
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        _toastService.ShowError(ex.Message);
                     }
 
-                    var verifyId = await EmployeeService.CreateEmployee(employee);
-
-                    address.Verify_Id = verifyId;
-                    var adres = await AddressService.CreateAddress(address);
-
-
-                    payroll.Salary = "212";
-                    payroll.Paytype = "test";
-                    payroll.Verify_Id = verifyId;
-                    var savepayroll = await PayrollService.CreatePayroll(payroll);
-
-                    var divisionString = employee.DivisionId;
-                    var divisionPDF = employee.DivisionId;
-
-                    var departmentString = employee.DepartmentId;
-                    var departmentPDF = employee.DepartmentId;
-
-                    await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
-                    await OnPDFSaving(employee.EmployeeNo, divisionPDF, departmentPDF, employee.LastName, verifyId);
-
-                    await CreatePrimaryRecords(verifyCode);
-                    await CreateSecondaryRecords(verifyCode);
-                    await CreateSeniorHSRecords(verifyCode);
-                    await CreateCollegeRecords(verifyCode);
-                    await CreateMasteralRecords(verifyCode);
-                    await CreateDoctorateRecords(verifyCode);
-                    await CreateOtherEducRecords(verifyCode);
-                    await CreateLicenses(verifyCode);
-                    await CreateTrainings(verifyCode);
-
-                    NavigationManager.NavigateTo("employee");
-
-                    var swal = await Swal.FireAsync(new SweetAlertOptions
-                    {
-                        Text = "Created Successfully!",
-                        Icon = SweetAlertIcon.Success
-                    });
                 }
 
 
@@ -340,7 +365,6 @@
                     case 2:
                         ProbStart = newDate;
                         ProbEnd = ProbStart.Value.AddMonths(3);
-                        Console.WriteLine(ProbStart.ToString());
                         break;
                 }
             }
@@ -467,6 +491,7 @@
         private async Task OnsavingImg(string EmployeeId, int division, int department, string lastname, string verify)
         {
             using var _contentImg = new MultipartFormDataContent();
+
             _contentImg.Add(EmpImage.LastOrDefault());
             await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
         }

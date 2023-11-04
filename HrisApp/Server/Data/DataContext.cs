@@ -168,6 +168,7 @@ namespace HrisApp.Server.Data
         public DbSet<ReligionT> ReligionT { get; set; }
         public DbSet<GenderT> GenderT { get; set; }
         public DbSet<EmerRelationshipT> EmerRelationshipT { get; set; }
+        public DbSet<EmploymentDateT> EmploymentDateT { get; set; }
 
         //EDUCATIONS
         public DbSet<CollegeT> CollegeT { get; set; }

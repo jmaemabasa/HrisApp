@@ -30,7 +30,7 @@
     }
 
     .mud-container.mud-container-maxwidth-xxl {
-        padding-left: 45px;
+        padding-left: 60px;
         padding-right: 35px;
         margin-top: 15px;
     }
@@ -80,7 +80,7 @@
         <MudDrawer @bind-Open="@_drawerOpen" Fixed="true" Elevation="0" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true" Class="sidebarmenu">
             @if (_drawerOpen == true)
             {
-                <a href="/index">
+                <a href="/dashboard">
                     <MudDrawerHeader>
                         <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
                     </MudDrawerHeader>
@@ -88,7 +88,7 @@
             }
             else
             {
-                <a href="/index">
+                <a href="/dashboard">
                     <MudDrawerHeader Style="padding: 15px 0px 10px 12px">
                         <MudImage Src="./images/logo.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
                     </MudDrawerHeader>

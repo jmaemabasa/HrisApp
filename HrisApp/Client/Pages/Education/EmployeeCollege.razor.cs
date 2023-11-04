@@ -3,13 +3,15 @@
 #nullable disable
     public partial class EmployeeCollege : ComponentBase
     {
-        private CollegeT college = new CollegeT();
+        private readonly CollegeT college = new CollegeT();
         [Parameter]
         public string VerifyCode { get; set; }
 
         bool CollegeOpen;
         Anchor anchor;
-        string width = "500px", height = "100%";
+        private readonly string _width = "500px";
+        private readonly string _height = "100%";
+
         void OpenDrawer(Anchor anchor, string drawerx)
         {
             CollegeOpen = (drawerx == "CollegeOpen") ? true : false;
@@ -55,7 +57,7 @@
 
         private bool FilterFunc1(CollegeT item) => FilterFunc(item, searchString1);
 
-        private bool FilterFunc(CollegeT item, string searchString)
+        private static bool FilterFunc(CollegeT item, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;

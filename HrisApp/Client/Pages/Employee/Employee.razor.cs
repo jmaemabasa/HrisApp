@@ -18,11 +18,10 @@
             var auth = await authState;
             userRole = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
 
+            //await Task.Delay(5000);
             await EmployeeService.GetEmployee();
             employeeList = EmployeeService.EmployeeTs;
         }
-
-
 
         #region FUNCTIONS / METHODS
         void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");

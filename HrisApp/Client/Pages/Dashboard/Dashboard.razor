@@ -1,0 +1,63 @@
+﻿@page "/dashboard"
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+@inject ISectionService SectionService
+@inject IPositionService PositionService
+@inject IAddressService AddressService
+@inject IAreaService AreaService
+@inject IEmployeeService EmployeeService
+@inject IToastService _toastService
+@inject IImageService ImageService
+@inject IEducationService EducationService
+@inject IPayrollService PayrollService
+@inject ILicenseTrainingService LicenseTrainingService
+@inject NavigationManager NavigationManager
+@inject SweetAlertService Swal
+@inject IToastService _toastService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@inject GlobalConfigService GlobalConfigService
+
+@attribute [Authorize(Roles = "Admin, User")]
+
+<PageTitle>Dashboard</PageTitle>
+    <style>
+   /*  .topcards.mud-card-content {
+        padding: 22px 25px 15px 25px;
+        height: 100%;
+    }
+    
+    .topmudcard {
+        height: 9rem;
+        border-radius: 10px;
+        background: #e9ecef;
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 20px;
+        padding: 10px 15px 10px 15px;
+    } */
+
+    </style>
+
+<MudGrid Style="margin-top: 20px;" Spacing="5">
+    <MudItem xs="12" sm="3">
+        <TopCards title="Total Active Employees" value="@_countEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="@Color.Warning" />
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <TopCards title="Total Active Employees" value="@_countEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="@Color.Info" />
+    </MudItem>
+    
+</MudGrid>
+
+@code {
+    #nullable disable
+    private string _countEmployees = "0";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await EmployeeService.GetEmployee();
+        _countEmployees = EmployeeService.EmployeeTs.Count().ToString();
+    }
+
+}

@@ -11,6 +11,7 @@
 @inject IEducationService EducationService
 @inject IPayrollService PayrollService
 @inject ILicenseTrainingService LicenseTrainingService
+@inject IEmploymentDateService EmploymentDateService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
 @inject IToastService _toastService
@@ -142,69 +143,67 @@
                                             {
                                                 <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy"   
-                                                        DisableUnderLine
-                                                     Editable="true" Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
+                                                    <MudDatePicker Class="txf" DisableUnderLine Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
                                                  </div>
                                                  <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Regularization Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker Class="txf" @bind-Date="RegularDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Margin="Margin.Dense"/>
+                                                    <MudDatePicker Class="txf" @bind-Date="RegularDate" DisableUnderLine Margin="Margin.Dense"/>
                                                  </div>
                                             }
                                             else if (employee.EmploymentStatusId == 2) {
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf"      DisableUnderLine Margin="Margin.Dense" />
+                                                <MudDatePicker DateChanged="HandleDateHiredChanged" Date="DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Probation Start Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker DateChanged="HandleDateHiredChanged" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Date="ProbStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                <MudDatePicker @bind-Date="ProbStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Probation End Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="ProbEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="ProbEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                             }
                                             else if (employee.EmploymentStatusId == 3) {
                                                 <div class="flex-grow-1">
                                                  <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
-                                                <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                <MudDatePicker @bind-Date="DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Casual Start Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="CasualStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="CasualStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Casual End Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="CasualEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="CasualEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                             }
                                             else if (employee.EmploymentStatusId == 4) {
                                                 <div class="flex-grow-1">
                                                       <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
-                                                <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                <MudDatePicker @bind-Date="DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Fixed Term Start Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="FixedStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="FixedStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Fixed Term End Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="FixedEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="FixedEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                             }
                                             else if (employee.EmploymentStatusId == 5) {
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="DateHired" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Project Based Start Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="ProjStart" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="ProjStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
                                                      <MudText Typo="Typo.body2">Project Based End Date (mm/dd/yyyy)</MudText>
-                                                    <MudDatePicker @bind-Date="ProjEnd" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    <MudDatePicker @bind-Date="ProjEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                             }
                                             else

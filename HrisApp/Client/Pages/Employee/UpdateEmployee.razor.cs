@@ -14,18 +14,9 @@ namespace HrisApp.Client.Pages.Employee
         #region TABLE VARIABLES
         EmployeeT employee = new();
         AddressT _address = new();
-        TrainingT _trainings = new();
         PayrollT _payroll = new();
-        PrimaryT _pri = new();
-        SecondaryT _sec = new();
-        SeniorHST _shs = new();
-        CollegeT _coll = new();
-        MasteralT _mas = new();
-        DoctorateT _doc = new();
-        OtherEducT _others = new();
-        LicenseT _license = new();
-        DocumentT _pdf = new();
-        EmpPictureT _img = new();
+        EmploymentDateT _employmentDate = new();
+        
         #endregion
 
         #region LIST TABLE VARIABLES
@@ -137,6 +128,7 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee((int)id);
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
+            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
             await PDFImage(employee.Verify_Id, employee.EmployeeNo);
             await ImageService.GetNewPDF(employee.Verify_Id, employee.EmployeeNo);

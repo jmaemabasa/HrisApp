@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231103054252_role")]
-    partial class role
+    [Migration("20231104072300_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -549,6 +549,56 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("EmployeeT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmploymentDateT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CasualEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("CasualStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmpmentStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FixedEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FixedStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ProbationEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ProbationStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ProjEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ProjStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RegularizationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ResignationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmploymentDateT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmploymentStatusT", b =>
                 {
                     b.Property<int>("Id")
@@ -809,9 +859,11 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_Contenttype")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Img_Data")
@@ -821,15 +873,19 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Img_Filename")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_URL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Verify_Id")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -856,9 +912,11 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_Contenttype")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Img_Data")
@@ -868,15 +926,19 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Img_Filename")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_URL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Verify_Id")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

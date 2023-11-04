@@ -47,8 +47,8 @@
 
 <div class="box w-auto">
     @if (EmployeeService.EmployeeTs == null || EmployeeService.EmployeeTs.Count == 0) 
-     { 
-       <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+    {
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
         <MudCardContent>
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
@@ -113,8 +113,7 @@
                          </div>
                      </div>
                  </div>
-               
-                 
+
              </MudTd>
              <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("d")</MudTd>
              <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>

@@ -79,7 +79,7 @@ else
         </RowTemplate>
     </MudTable>
 }
-<MudDrawer Class="drawerdetails" @bind-Open="@CollegeOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+<MudDrawer Class="drawerdetails" @bind-Open="@CollegeOpen" Width="@_width" Height="@_height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <span class="spantitle mb-3">College Education</span>
     <MudItem xs="12">
         <EditForm Model="college" OnValidSubmit="SaveCollege" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">

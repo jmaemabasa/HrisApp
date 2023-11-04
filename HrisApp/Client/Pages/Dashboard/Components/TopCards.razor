@@ -1,0 +1,46 @@
+﻿@page "/topcards"
+<style>
+    .topcards.mud-card-content {
+        padding: 22px 25px 15px 25px;
+        height: 100%;
+    }
+
+    .topmudcard {
+        height: 9rem;
+        border-radius: 10px;
+        background: #e9ecef;
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 20px;
+        padding: 10px 15px 10px 15px;
+    }
+
+</style>
+
+<MudCard Class="topmudcard">
+    <MudCardContent Class="topcards">
+        <div class="d-flex flex-grow-1 justify-content-between align-items-center h-100">
+            <div class="d-flex flex-column flex-grow-1 gap-2">
+                <MudText Typo="Typo.body2">Total Active Employees</MudText>
+                <MudText Typo="Typo.h3"><b>@value</b></MudText>
+            </div>
+            <div>
+                <MudIcon Icon="@icon" Color="@iconColor" Style="font-size: 5rem;" />
+            </div>
+        </div>
+    </MudCardContent>
+</MudCard>
+
+
+@code {
+#nullable disable
+    [Parameter]
+    public string title { get; set; }
+    [Parameter]
+    public string value { get; set; }
+    [Parameter]
+    public string icon { get; set; }
+    [Parameter]
+    public MudBlazor.Color iconColor { get; set; }
+
+}

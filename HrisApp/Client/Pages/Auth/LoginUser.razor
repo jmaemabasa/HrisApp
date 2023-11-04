@@ -1,12 +1,13 @@
 ﻿@layout AuthLayout
 @page "/"
+@using HrisApp.Client.Global;
 @inject IAuthService AuthService
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IToastService _toastService
 @inject GlobalConfigService GlobalConfigService
-
+@inject DummyGlobal _dummyGlobal
 
 <style>
     .form-control {

@@ -39,7 +39,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 if (confirmResult.IsConfirmed)
                 {
                     await AreaService.CreateArea(newArea);
-                    newArea = "";
 
                     _toastService.ShowSuccess(newArea + " Created Successfully!");
 

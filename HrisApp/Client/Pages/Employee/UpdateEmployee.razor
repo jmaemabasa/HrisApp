@@ -1,6 +1,5 @@
 ﻿@page "/employee/edit"
 @page "/employee/edit/{id:int}"
-@using HrisApp.Client.Pages.Education
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
@@ -11,6 +10,7 @@
 @inject IToastService _toastService
 @inject IImageService ImageService
 @inject IEducationService EducationService
+@inject IEmploymentDateService EmploymentDateService
 @inject IPayrollService PayrollService
 @inject ILicenseTrainingService LicenseTrainingService
 @inject SweetAlertService Swal
@@ -188,6 +188,54 @@
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Date Hired</MudText>
                                         <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.DateHired.ToString("d")</MudText>
                                     </MudItem>
+                                    @* @if (employee.EmploymentStatusId == 1) {
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Probation Start Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.RegularizationDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                    }
+                                    else if (employee.EmploymentStatusId == 2) {
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Probation Start Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.ProbationStartDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Probation End Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.ProbationEndDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                    }
+                                    else if (employee.EmploymentStatusId == 3) {
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Casual Start Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.CasualStartDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Casual End Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.CasualEndDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                    }
+                                    else if (employee.EmploymentStatusId == 4) {
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Fixed Start Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.FixedStartDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Fixed End Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.FixedEndDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                    }
+                                    else if (employee.EmploymentStatusId == 5) {
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Project Based Start Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.ProjStartDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6" Class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Project Based End Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_employmentDate.ProjEndDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </MudItem>
+                                    } *@
+
+                                    
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
@@ -622,7 +670,7 @@
                 </div>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
-                        <MudText Typo="Typo.body2">Area of Assignment</MudText>
+                        <MudText Typo="Typo.body2">Employment Status</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.EmploymentStatusId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                              @foreach (var item in EmploymentStatusL)
@@ -636,6 +684,7 @@
                         <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
                     </MudItem>
                 </div>
+                
                 @{
                     var departmentHasSection = employee.DepartmentId != 0 && SectionService.SectionTs.Any(s => s.DepartmentId == employee.DepartmentId);
                 }

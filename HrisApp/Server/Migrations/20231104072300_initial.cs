@@ -150,6 +150,30 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmploymentDateT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmpmentStatusId = table.Column<int>(type: "int", nullable: false),
+                    ProbationStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProbationEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CasualStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CasualEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RegularizationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ResignationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FixedStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FixedEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProjStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProjEndDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmploymentDateT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmploymentStatusT",
                 columns: table => new
                 {
@@ -435,7 +459,8 @@ namespace HrisApp.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -448,16 +473,16 @@ namespace HrisApp.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DivisionId = table.Column<int>(type: "int", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     Img_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Img_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -482,16 +507,16 @@ namespace HrisApp.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_Filename = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_Contenttype = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DivisionId = table.Column<int>(type: "int", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     Img_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Img_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -893,11 +918,11 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserRoleT",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "Name", "RoleCode" },
                 values: new object[,]
                 {
-                    { 1, "Admin" },
-                    { 2, "User" }
+                    { 1, "Administrator", "Admin" },
+                    { 2, "User", "User" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1025,6 +1050,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "EmployeeT");
+
+            migrationBuilder.DropTable(
+                name: "EmploymentDateT");
 
             migrationBuilder.DropTable(
                 name: "EmpPictureT");
