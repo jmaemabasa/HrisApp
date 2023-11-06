@@ -61,20 +61,20 @@
 }
 
 /*BUTTONS*/
-.btnnext {
+::deep .btnnext {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 10px;
-    background-color: #AEC3AE;
-    color: #26446e;
+    background-color: #F1BC3A;
+    color: #424242;
     padding-bottom: 10px;
     padding-top: 10px;
     font-weight: bold;
     width: 200px;
 }
 
-.btnnext:hover {
-    background-color: #7d917d;
+::deep .btnnext:hover {
+    background-color: #E38D0F;
     color: #fff;
 }
 
@@ -255,6 +255,38 @@
     color: white;
     background-color: #AEC3AE;
     margin-right: 15px;
+}
+
+::deep .mud-chip-after0 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.1;
+}
+
+::deep .mud-chip-after1 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.2;
+}
+
+::deep .mud-chip-after2 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.3;
+}
+
+::deep .mud-chip-after3 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.4;
 }
 
 ::deep .mud-chip-after {

@@ -35,7 +35,7 @@
                     {
                         <MudFileUpload T="IBrowserFile" OnFilesChanged="uploadImage" Accept="image/*" capture Style="margin-top: 35px">
                             <ButtonTemplate>
-                                <MudButton Class="w-100 btnimage" DisableElevation HtmlTag="label" Variant="Variant.Outlined" for="@context">
+                                <MudButton Class="@imguploadclass" DisableElevation HtmlTag="label" Variant="Variant.Outlined" for="@context">
                                     <div style="height: 240px; display: flex; justify-content: center; align-items: center; ">
                                         <MudImage Src="@imgBase64" Style="height: 100px; width: 100px; " />
                                     </div>
@@ -313,8 +313,8 @@
                                         </div>
                                 </div>
                                 <MudItem xs="12" Class="d-flex justify-content-end mt-5">
-                                    @* <MudButton OnClick="() => Activate(1)" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Size="Size.Medium" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnadd">Next</MudButton> *@
-                                        <button Class="btn btnnext" type="submit">NEXT</button>
+                                    <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
+                                        @* <button Class="btn btnnext" type="submit">NEXT</button> *@
                                 </MudItem>
                             </MudCardContent>
                         </MudCard>
@@ -333,93 +333,86 @@
                             <span class="spantitle">Personal Details</span>
                             <MudCard Class="mdcard1" Elevation="0">
                                 <MudCardContent>
-                                    <div class="d-flex flex-column flex-grow-1 mb-3">
-                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
-                                            <div class="flex-grow-1">
-                                                <MudText Typo="Typo.body2">First Name</MudText>
+                                <MudGrid Class="d-flex align-items-center">
+                                    <MudItem xs="12" sm="4">
+                                         <MudText Typo="Typo.body2">First Name</MudText>
                                                 <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.FirstName" />
                                             <ValidationMessage For="@(() => employee.FirstName)" class="mb-2 valmessage" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                                 <MudText Typo="Typo.body2">Middle Name</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Middle Name</MudText>
                                                  <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.MiddleName" />
                                                 <ValidationMessage For="@(() => employee.MiddleName)" class="mb-2 valmessage" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                            <MudText Typo="Typo.body2">Last Name</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="3">
+                                        <MudText Typo="Typo.body2">Last Name</MudText>
                                                  <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.LastName" />
                                                 <ValidationMessage For="@(() => employee.LastName)" class="mb-2 valmessage" />
-                                             </div>
-                                             <div class="flex-grow-1 flex-lg-grow-0 ">
-                                            <MudText Typo="Typo.body2">Extension</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="1">
+                                         <MudText Typo="Typo.body2">Suffix</MudText>
                                                  <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Extension" />
                                                  <ValidationMessage For="@(() => employee.Extension)" class="mb-2 valmessage" />
-
-                                             </div>
-                                         </div>
-                                         <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2 align-items-center">
-                                             <div class="flex-grow-1">
-                                                 <MudText Typo="Typo.body2">Birthdate (mm/dd/yyyy)</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Birthdate (mm/dd/yyyy)</MudText>
                                                  <MudDatePicker Class="txf" DisableUnderLine @bind-Date="bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                                 <MudText Typo="Typo.body2">Age</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Age</MudText>
                                                  <MudTextField Class="txf" DisableUnderLine Value="@CalculateAge(bday)" ReadOnly="true" Margin="Margin.Dense" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                                 <MudText Typo="Typo.body2">Gender</MudText>
-                                             <MudSelect Class="@slectClasssGender" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                    @foreach (var gender in GendersL)
-                                                    {
-                                                        <MudSelectItem Value="@gender.Id">@gender.Name</MudSelectItem>
-                                                    }
-                                                </MudSelect>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <MudText Typo="Typo.body2">Civil Status</MudText>
-                                            <MudSelect Class="@slectClasssCV" @bind-Value="employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
-                                                     @*//gibago nako class*@
-                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                    @foreach (var cs in CivilStatusL)
-                                                    {
-                                                        <MudSelectItem Value="@cs.Id">@cs.Name</MudSelectItem>
-                                                    }
-                                                </MudSelect>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <MudText Typo="Typo.body2">Nationality</MudText>
-                                            <InputText Class="@txfieldClasssNat" @bind-Value="employee.Nationality" />
-                                                <ValidationMessage For="@(() => employee.Nationality)" class="mb-2 valmessage" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                                 <MudText Typo="Typo.body2">Religion</MudText>
-                                            <MudSelect @bind-Value="employee.ReligionId" Class="@slectClasssReli" DisableUnderLine Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                    @foreach (var rel in ReligionsL)
-                                                    {
-                                                        <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
-                                                    }
-                                                </MudSelect>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2 align-items-center">
-                                            <div class="flex-grow-1">
-                                                <MudText Typo="Typo.body2">Mobile #</MudText>
-                                                <MudNumericField HideSpinButtons="true" @bind-Value="employee.MobileNumber" Class="@txfieldClasssMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                                 <MudText Typo="Typo.body2">Weight(kg)</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                         <MudText Typo="Typo.body2">Gender</MudText>
+                                         <MudSelect Class="@slectClasssGender" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
+                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                            @foreach (var gender in GendersL)
+                                            {
+                                                <MudSelectItem Value="@gender.Id">@gender.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Civil Status</MudText>
+                                        <MudSelect Class="@slectClasssCV" @bind-Value="employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
+                                             @*//gibago nako class*@
+                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                            @foreach (var cs in CivilStatusL)
+                                            {
+                                                <MudSelectItem Value="@cs.Id">@cs.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Nationality</MudText>
+                                        <InputText Class="@txfieldClasssNat" @bind-Value="employee.Nationality" />
+                                        <ValidationMessage For="@(() => employee.Nationality)" class="mb-2 valmessage" />
+                                    </MudItem>
+                                     <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Religion</MudText>
+                                        <MudSelect @bind-Value="employee.ReligionId" Class="@slectClasssReli" DisableUnderLine Margin="Margin.Dense">
+                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                            @foreach (var rel in ReligionsL)
+                                            {
+                                                <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                     </MudItem>
+                                     <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Mobile #</MudText>
+                                        <MudNumericField HideSpinButtons="true" @bind-Value="employee.MobileNumber" Class="@txfieldClasssMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
+                                     </MudItem>
+                                     <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.body2">Weight(kg)</MudText>
                                                  <InputNumber Class="txf1 w-100 mt-1" @bind-Value="employee.Weight" />
-                                             </div>
-                                             <div class="flex-grow-1">
-                                                 <MudText Typo="Typo.body2">Height(cm)</MudText>
-                                                 <InputNumber Class="txf1 w-100 mt-1" @bind-Value="employee.Height" />
-                                             </div>
-                                         </div>
-                                     </div>
+                                     </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                         <MudText Typo="Typo.body2">Height(cm)</MudText>
+                                         <InputNumber Class="txf1 w-100 mt-1" @bind-Value="employee.Height" />
+                                    </MudItem>
+                                </MudGrid>
+                                
+                                   
                                  </MudCardContent>
                              </MudCard>
                     </MudItem>
@@ -462,7 +455,7 @@
                                 </div>
 
                                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                                    <button Class="btn btnnext" type="submit">NEXT</button>
+                                     <MudButton EndIcon="@Icons.Material.Rounded.KeyboardArrowDown" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
                                 </MudItem>
                             </MudCardContent>
                         </MudCard>
@@ -543,8 +536,8 @@
                                      </div>
                                  </div>
                                  <MudItem xs="12" Class="d-flex justify-content-between mt-5">
-                                     <button Class="btn btnnext" type="button" onclick="@(()=>Activate(0))" style="background-color: #C5CFD2;">BACK</button>
-                                     <button Class="btn btnnext" type="submit">NEXT</button>
+                                     <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=>Activate(0))" style="background-color: #C5CFD2;">BACK</MudButton>
+                                     <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
                                  </MudItem>
                              </MudCardContent>
                          </MudCard>
@@ -1023,8 +1016,8 @@
                     </MudItem>
                 }
                 <MudItem xs="12" Class="d-flex justify-content-between mt-0">
-                    <button Class="btn btnnext" type="button" onclick="@(()=>Activate2(1))" style="background-color: #C5CFD2;">BACK</button>
-                    <button Class="btn btnnext" type="button" onclick="@(()=>Activate2(3))">NEXT</button>
+                    <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=>Activate2(1))" style="background-color: #C5CFD2;">BACK</MudButton>
+                    <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" OnClick="@(()=>Activate2(3))">NEXT</MudButton>
                 </MudItem>
             </MudGrid>
         </MudTabPanel>
@@ -1147,8 +1140,8 @@
                     </MudCard>
                 </MudItem>
                  <MudItem xs="12" Class="d-flex justify-content-between mt-5">
-                    <button Class="btn btnnext" type="button" onclick="@(()=>Activate2(2))" style="background-color: #C5CFD2;">BACK</button>
-                    <button Class="btn btnnext" type="button" onclick="@(()=>Activate2(4))">NEXT</button>
+                    <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=>Activate2(2))" style="background-color: #C5CFD2;">BACK</MudButton>
+                    <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" OnClick="@(()=>Activate2(4))">NEXT</MudButton>
                 </MudItem>
             </MudGrid>
         </MudTabPanel>
@@ -1370,15 +1363,11 @@
                     </MudCard>
                 </MudItem>
                 <MudItem xs="12" Class="d-flex justify-content-between mt-5">
-                    <button Class="btn btnnext" type="button" onclick="@(()=>Activate2(3))" style="background-color: #C5CFD2;">BACK</button>
-                    <button Class="btn btnnext" type="submit">SUBMIT</button>
+                        <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=>Activate2(3))" style="background-color: #C5CFD2;">BACK</MudButton>
+                        <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SUBMIT</MudButton>
                 </MudItem>
                 </EditForm>
             </MudGrid>
         </MudTabPanel>
     </MudTabs>
 </div>
-
-@code {
-    
-}

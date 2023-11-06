@@ -10,20 +10,28 @@
         #region MUDTABS
         MudTabs tabs;
         private string slectClasss = "frmselect";
+        private string imguploadclass = "btnimage";
         void Activate(int index)
         {
             //tabs.ActivatePanel(index);
             if (index == 1)
             {
+                
                 if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
                 {
                     _toastService.ShowError("Fill out all fields.");
                     slectClasss = "frmselecterror";
                 }
+                else if (imgBase64 == "./images/addIconImage.png")
+                {
+                    _toastService.ShowError("Upload Image.");
+                    imguploadclass = "btnimagerror";
+                }
                 else
                 {
                     tabs.ActivatePanel(index);
                     slectClasss = "frmselect";
+                    imguploadclass = "btnimage";
                 }
             }
             else if (index == 2)
@@ -84,7 +92,6 @@
         EmploymentDateT employmentDate = new();
         PayrollT payroll = new();
         LicenseT license = new();
-        DocumentT document = new();
 
 
         //bool success;
@@ -875,22 +882,20 @@
         //TAB PANEL
         int activeIndex;
 
-        string GetTabClass(int tabId)
-        {
-            if (activeIndex > tabId)
-            {
-                return "mud-tabs-afterindex";
-            }
-            else
-            {
-                return "mud-tabs-defaultindex";
-            }
-        }
         string GetTabChipClass(int tabId)
         {
             if (activeIndex > tabId)
             {
-                return "mud-chip-after";
+                if (tabId == 0)
+                    return "mud-chip-after0";
+                else if (tabId == 1)
+                    return "mud-chip-after1";
+                else if (tabId == 2)
+                    return "mud-chip-after2";
+                else if (tabId == 3)
+                    return "mud-chip-after3";
+                else
+                    return "mud-chip-after";
             }
             else if (activeIndex == tabId)
             {
@@ -977,7 +982,6 @@
                     builder.AddContent(6, "Documents");
                     builder.CloseComponent();
                 }
-
             };
         }
         #endregion

@@ -86,7 +86,7 @@ namespace HrisApp.Client.Pages.Employee
 
         string VerifyCode;
 
-        private string ImageData;
+        private string ImageData { get; set; }
         private List<string> PDFDataList = new List<string>();
 
         protected override async Task OnInitializedAsync()
@@ -345,7 +345,16 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (activeIndex > tabId)
             {
-                return "mud-chip-after";
+                if (tabId == 0)
+                    return "mud-chip-after0";
+                else if (tabId == 1)
+                    return "mud-chip-after1";
+                else if (tabId == 2)
+                    return "mud-chip-after2";
+                else if (tabId == 3)
+                    return "mud-chip-after3";
+                else
+                    return "mud-chip-after";
             }
             else if (activeIndex == tabId)
             {
@@ -448,7 +457,7 @@ namespace HrisApp.Client.Pages.Employee
             {
                 var base642 = Convert.ToBase64String(imagemodel);
                 ImageData = string.Format("data:image/png;base64,{0}", base642);
-                Console.WriteLine($"2nd Test: {verifyCode}");
+                //Console.WriteLine($"2nd Test: {verifyCode}");
             }
         }
         private void HandleDateHiredChanged(DateTime? newDate)

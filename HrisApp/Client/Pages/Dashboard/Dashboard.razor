@@ -36,7 +36,6 @@
         border-radius: 20px;
         padding: 10px 15px 10px 15px;
     } */
-
     </style>
 
 <MudGrid Style="margin-top: 20px;" Spacing="5">
@@ -48,7 +47,7 @@
     </MudItem>
     
 </MudGrid>
-
+ 
 @code {
     #nullable disable
     private string _countEmployees = "0";
@@ -57,7 +56,7 @@
     protected override async Task OnInitializedAsync()
     {
         await EmployeeService.GetEmployee();
-        _countEmployees = EmployeeService.EmployeeTs.Count().ToString();
+        _countEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
     }
 
 }

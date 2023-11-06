@@ -593,7 +593,7 @@
                     <ValidationMessage For="@(() => employee.LastName)" class="mb-2 valmessage" />
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
-                    <MudText Typo="Typo.body2">Extension</MudText>
+                    <MudText Typo="Typo.body2">Suffix</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Extension" />
                 </MudItem>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
@@ -661,7 +661,8 @@
                     </MudItem>
                 </div>
                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                    <button Class="btn btnnext" type="submit">SAVE</button>
+                    <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+
                 </MudItem>
             </EditForm>
 
@@ -896,7 +897,8 @@
                     </MudItem>
                 }
                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                    <button Class="btn btnnext" type="submit">SAVE</button>
+                    <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+
                 </MudItem>
             </EditForm>
 
@@ -932,7 +934,8 @@
                     <MudNumericField HideSpinButtons="true" @bind-Value="employee.EmerMobNum" Class="@txfieldClasssEMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.EmerMobNum)" />
                 </MudItem>
                  <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                     <button Class="btn btnnext" type="submit">SAVE</button>
+                                         <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+
                  </MudItem>
             </EditForm>
         </MudItem>
@@ -1003,7 +1006,7 @@
                      </MudItem>
                  </div>
                  <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                     <button Class="btn btnnext" type="submit">SAVE</button>
+                     <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
                  </MudItem>
              </EditForm>
          </MudItem>
@@ -1054,7 +1057,8 @@
                     <ValidationMessage For="@(() => _payroll.BankAcc)" class="mb-2 valmessage" />
                 </MudItem>
                  <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                     <button Class="btn btnnext" type="submit">SAVE</button>
+                    <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+
                  </MudItem>
              </EditForm>
          </MudItem>
@@ -1086,7 +1090,8 @@
                 </MudItem>
                 
                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                    <button Class="btn btnnext" type="submit">SAVE</button>
+                    <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+
                 </MudItem>
             </EditForm>
         </MudItem>
@@ -1144,7 +1149,7 @@
                 </MudItem>
 
                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                    <button Class="btn btnnext" type="submit">SAVE</button>
+                    <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
                 </MudItem>
             </EditForm>
         </MudItem>

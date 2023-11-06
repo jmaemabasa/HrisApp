@@ -30,7 +30,7 @@
             var result = await _http.GetFromJsonAsync<EmploymentDateT>($"api/EmploymentDate/{id}");
             if (result != null)
                 return result;
-            throw new Exception("address not found!");
+            throw new Exception("date not found!");
         }
 
         public async Task UpdateEmploymentDate(EmploymentDateT obj)

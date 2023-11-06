@@ -37,23 +37,23 @@
 }
 
 /*BUTTONS*/
-.btnnext {
+::deep .btnnext {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 10px;
-    background-color: #AEC3AE;
-    color: #26446e;
+    background-color: #F1BC3A;
+    color: #424242;
     padding-bottom: 10px;
     padding-top: 10px;
     font-weight: bold;
     width: 200px;
-    margin-top: 15px;   
+    margin-top: 15px;
 }
 
-    .btnnext:hover {
-        background-color: #7d917d;
-        color: #fff;
-    }
+::deep .btnnext:hover {
+    background-color: #E38D0F;
+    color: #fff;
+}
 
 /*IMAGE*/
 ::deep .btnimage {
@@ -62,7 +62,19 @@
    border: 0;
    padding: 0 0 10px 15px;
    margin-top: 0;
+   width: 100%;
 }
+
+::deep .btnimagerror {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    border: 1px solid red;
+    width: 100%;
+}
+
 ::deep .btnimagewithimage {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
@@ -106,9 +118,8 @@
     width: 100%;
 }
 
-
 ::deep .txf > .mud-input-control-input-container:hover {
-   border: 2px solid #C5CFD2 !important;
+    border: 2px solid #C5CFD2 !important;
 }
 
 ::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
@@ -178,7 +189,7 @@
 /*TABPANELS*/
 
 ::deep .mud-tab.mud-tab-active {
-    color: #79AC78;
+    color: #EEB12F;
     font-weight: bold;
 }
 
@@ -193,12 +204,12 @@
 
 
 ::deep .mud-tabs-defaultindex {
-    color: #78909C;
+    color: #EEB12F;
     font-weight: bold;
 }
 
 ::deep .mud-tabs-afterindex {
-    color: #79AC78;
+    color: #EEB12F;
     font-weight: bold;
     border-bottom: 2px solid #79AC78;
     opacity: 0.5;
@@ -207,16 +218,47 @@
 ::deep .mud-chip-active {
     font-weight: bold;
     color: white;
-    background-color: #AEC3AE;
+    background-color: #EEB12F;
     margin-right: 15px;
 }
 
 ::deep .mud-chip-after {
     font-weight: bold;
     color: white;
-    background-color: #AEC3AE;
+    background-color: #0A86C2;
     margin-right: 15px;
     opacity: 0.5;
+}
+
+::deep .mud-chip-after0 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.1;
+}
+
+::deep .mud-chip-after1 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.2;
+}
+
+::deep .mud-chip-after2 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.3;
+}
+::deep .mud-chip-after3 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.4;
 }
 
 ::deep .mud-chip-default {
@@ -227,8 +269,9 @@
 }
 
 ::deep .mud-text-after {
+    color: #0A86C2;
     font-weight: bold;
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
 ::deep .mud-text-default {

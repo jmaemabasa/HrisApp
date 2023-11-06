@@ -57,10 +57,15 @@
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 20px;
-    background-color: #b0c1d4;
-    color: black;
+    background-color: #F1BC3A;
+    color: #424242;
     padding-bottom: 4px;
 }
+
+    ::deep .btnadd:hover {
+        background-color: #E38D0F;
+        color: #fff;
+    }
 
 @media (max-width: 576px) {
     ::deep .dddiv {

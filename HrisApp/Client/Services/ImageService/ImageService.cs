@@ -46,6 +46,7 @@ namespace HrisApp.Client.Services.ImageService
                 Console.WriteLine($"Services Error: {ex.Message}");
             }
         }
+
         public async Task<byte[]> GetImageData(string verifyCode)
         {
             var _imgs = await _http.GetFromJsonAsync<byte[]>($"api/Image/Getattachmentview?verifyCode={verifyCode}");

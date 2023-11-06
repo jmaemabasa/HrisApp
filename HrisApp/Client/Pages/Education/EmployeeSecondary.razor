@@ -31,13 +31,18 @@
         border: none;
         box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
         border-radius: 10px;
-        background-color: #AEC3AE;
-        color: #26446e;
+        background-color: #F1BC3A;
+        color: #424242;
         padding-bottom: 10px;
         padding-top: 10px;
         font-weight: bold;
         width: 200px;
     }
+
+        .btnnext:hover {
+            background-color: #E38D0F;
+            color: #fff;
+        }
 </style>
 @if (secondaryList.Count == 0 || secondaryList == null)
 {
@@ -102,7 +107,7 @@ else
                 <ValidationMessage For="@(() => sec.SecSchoolYear)" class="mb-2 valmessage" />
             </MudItem>
             <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                <button Class="btn btnnext" type="submit">SAVE</button>
+                <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
             </MudItem>
         </EditForm>
     </MudItem>
