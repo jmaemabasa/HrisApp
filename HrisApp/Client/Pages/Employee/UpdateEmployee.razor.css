@@ -219,7 +219,7 @@
 }
 
 ::deep .mud-tab.mud-tab-active {
-    color: #79AC78;
+    color: #EEB12F;
     font-weight: bold;
 }
 
@@ -253,7 +253,7 @@
 ::deep .mud-chip-active {
     font-weight: bold;
     color: white;
-    background-color: #AEC3AE;
+    background-color: #EEB12F;
     margin-right: 15px;
 }
 
@@ -292,7 +292,7 @@
 ::deep .mud-chip-after {
     font-weight: bold;
     color: white;
-    background-color: #AEC3AE;
+    background-color: #0A86C2;
     margin-right: 15px;
     opacity: 0.5;
 }
@@ -305,8 +305,9 @@
 }
 
 ::deep .mud-text-after {
+    color: #0A86C2;
     font-weight: bold;
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
 ::deep .mud-text-default {

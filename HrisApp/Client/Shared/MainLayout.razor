@@ -6,6 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject GlobalConfigService GlobalConfigService
 
 <style>
     .mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
@@ -45,6 +46,7 @@
 
     .mud-appbar .mud-toolbar-appbar {
         padding: 0px !important;
+        align-items: center;
     }
 
 </style>
@@ -56,9 +58,10 @@
 
 <MudLayout>
     <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
-        <MudAppBar Elevation="0" Style="left: 45px; width: min-content; margin-right: 35px;">
+        <MudAppBar Elevation="0" Style="left: 45px; width: max-content; margin-right: 35px;">
             <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-            @* My Application *@
+            <span style="font-weight: 600;font-size: 1.4rem;">Good Afternoon, @GlobalConfigService.Fullname.Split(' ')[0]</span>
+            
 
             <MudSpacer />
 
@@ -128,7 +131,6 @@
 <BlazoredToasts Position="ToastPosition.BottomRight" Timeout="10" IconType="IconType.FontAwesome" SuccessClass="success-toast-override" SuccessIcon="fa fa-thumbs-up" ErrorIcon="fa fa-bug"   />
 
 @code {
-
     bool _drawerOpen = false;
 
     void DrawerToggle()

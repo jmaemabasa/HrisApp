@@ -38,11 +38,19 @@ namespace HrisApp.Client.Pages.Auth
         {
             _showAlert = false;
         }
+        private bool _processing = false;
 
+        async Task ProcessSomething()
+        {
+            _processing = true;
+            await Task.Delay(2000);
+            _processing = false;
+        }
         private async Task HandleLogin()
         {
             try
             {
+                _processing = true;
                 var result = await AuthService.Login(_log);
                 if (result.Success)
                 {
@@ -75,6 +83,7 @@ namespace HrisApp.Client.Pages.Auth
                 }
                 else
                 {
+                    _processing = false;
                     _showAlert = true;
                     _severity = Severity.Error;
                     _message = result.Message;

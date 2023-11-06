@@ -77,7 +77,13 @@ else
             <MudTd DataLabel="">@primary.PriAward</MudTd>
             <MudTd DataLabel="">@primary.PriSchoolYear</MudTd>
             <MudTd>
-                <MudIconButton Class="btnedit" OnClick="@(() => DeletePrimary(primary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <MudTooltip Text="Update Details">
+                            <MudIconButton Class="btnedit" OnClick="@(() => DeletePrimary(primary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                        </MudTooltip>
+                    </Authorized>
+                </AuthorizeView>
             </MudTd>
         </RowTemplate>
     </MudTable>

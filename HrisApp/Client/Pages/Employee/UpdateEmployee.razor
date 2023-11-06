@@ -19,8 +19,8 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
-@*@attribute [Authorize(Roles = "Admin")]
-*@
+@attribute [Authorize(Roles = "Admin, User")]
+
 <div class="topnav d-flex justify-content-end align-items-center z-60">
     <MudButton OnClick="backbtn" Size="Size.Medium">Back</MudButton>
 </div>
@@ -59,7 +59,8 @@
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Email</MudText>
                                         <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Email</MudText>
                                     </div>
-                                    <div><MudTooltip Text="Copy">
+                                    <div>
+                                        <MudTooltip Text="Copy">
                                         <MudIconButton OnClick="() => CopyToClipboard(employee.Email)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton>
                                         </MudTooltip>
                                         </div>
@@ -96,9 +97,13 @@
                             <MudCardContent>
                                 <div class="d-flex justify-content-between align-items-center">
                                      <span class="spantitle mb-3">Personal Data</span>
-                                     <MudTooltip Text="Update Details">
-                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                     </MudTooltip>
+                                     <AuthorizeView Roles="Admin">
+                                         <Authorized>
+                                             <MudTooltip Text="Update Details">
+                                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                             </MudTooltip>
+                                         </Authorized>
+                                     </AuthorizeView>
                                 </div>
                                 <div class="d-flex flex-column gap-3">
                                     <div class="divsingledetails">
@@ -160,9 +165,13 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Work Information</span>
-                                <MudTooltip Text="Update Details">
-                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "workInfoOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                 <AuthorizeView Roles="Admin">
+                                         <Authorized>
+                                             <MudTooltip Text="Update Details">
+                                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "workInfoOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                             </MudTooltip>
+                                         </Authorized>
+                                     </AuthorizeView>
                             </div>
                             <div class="d-flex flex-column gap-3">
                                 <div class="divsingledetails">
@@ -295,9 +304,13 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Person to Notify in Case of Emergency</span>
-                                <MudTooltip Text="Update Details">
-                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "emerOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                <AuthorizeView Roles="Admin">
+                                         <Authorized>
+                                             <MudTooltip Text="Update Details">
+                                            <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "emerOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                             </MudTooltip>
+                                         </Authorized>
+                                     </AuthorizeView>
                             </div>
                             <div class="d-flex flex-column gap-3">
                                 <div class="divsingledetails">
@@ -325,9 +338,13 @@
                             <MudCardContent>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="spantitle mb-3">Address</span>
-                                    <MudTooltip Text="Update Details">
-                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "addressOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                    </MudTooltip>
+                                    <AuthorizeView Roles="Admin">
+                                        <Authorized>
+                                            <MudTooltip Text="Update Details">
+                                                   <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "addressOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                            </MudTooltip>
+                                        </Authorized>
+                                    </AuthorizeView>
                                 </div>
                                 <span class="spantitle mb-2" style="font-size:14px">Present Address</span>
                                 <div class="d-flex flex-column gap-3 mb-3">
@@ -436,9 +453,13 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Documents</span>
-                                <MudTooltip Text="Update Details">
-                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "documentsOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                <AuthorizeView Roles="Admin">
+                                    <Authorized>
+                                        <MudTooltip Text="Update Details">
+                                            <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "documentsOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                        </MudTooltip>
+                                    </Authorized>
+                                </AuthorizeView>
                             </div>
                             <div class="d-flex flex-column gap-3">
                                 <div class="d-flex flex-row gap-4">
@@ -476,9 +497,13 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Statutory Documents</span>
-                                <MudTooltip Text="Update Details">
-                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "StatutoryOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                 <AuthorizeView Roles="Admin">
+                                    <Authorized>
+                                        <MudTooltip Text="Update Details">
+                                            <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "StatutoryOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                        </MudTooltip>
+                                    </Authorized>
+                                </AuthorizeView>
                             </div>
                             <div class="d-flex flex-column gap-3">
                                 <div class="d-flex flex-row gap-4">
@@ -508,9 +533,13 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Schedule</span>
-                                <MudTooltip Text="Update Details">
-                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "ScheduleOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                <AuthorizeView Roles="Admin">
+                                    <Authorized>
+                                        <MudTooltip Text="Update Details">
+                                            <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "ScheduleOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                        </MudTooltip>
+                                    </Authorized>
+                                </AuthorizeView>
                             </div>
                             <div class="d-flex flex-column gap-3">
                                 <div class="d-flex flex-row gap-4">

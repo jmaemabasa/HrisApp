@@ -46,10 +46,19 @@
                          <MudTextField DisableUnderLine @bind-Value="_log.Password" Margin="Margin.Dense" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" Class="form-control" />
                      </div>
                  </div>
-                 <div class="row">
+                 <div class="d-flex justify-content-between align-items-center">
                      <a href="/reset" class="w-auto"><small>Forgot your password?</small></a>
-                     <button type="submit" class="btn btn-primary w-auto ms-auto">Login</button>
-
+                     <MudButton Disabled="@_processing" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">
+                         @if (_processing)
+                        {
+                            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                            <MudText Class="ms-2">Logging In</MudText>
+                        }
+                        else
+                        {
+                            <MudText>Login</MudText>
+                        }
+                    </MudButton>
                  </div>
              </EditForm>
         </MudItem>

@@ -77,7 +77,13 @@ else
             <MudTd DataLabel="">@license.LicenseNo</MudTd>
             <MudTd DataLabel="">@license.Date?.ToString("d")</MudTd>
             <MudTd>
-                <MudIconButton Class="btnedit" OnClick="@(() => DeleteLicense(license.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <MudTooltip Text="Update Details">
+                            <MudIconButton Class="btnedit" OnClick="@(() => DeleteLicense(license.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                        </MudTooltip>
+                    </Authorized>
+                </AuthorizeView>
             </MudTd>
         </RowTemplate>
     </MudTable>

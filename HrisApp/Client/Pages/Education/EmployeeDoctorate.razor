@@ -79,7 +79,13 @@ else
             <MudTd DataLabel="">@doctorate.DocAward</MudTd>
             <MudTd DataLabel="">@doctorate.DocSchoolYear</MudTd>
             <MudTd>
-                <MudIconButton Class="btnedit" OnClick="@(() => DeleteDoc(doctorate.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <MudTooltip Text="Update Details">
+                            <MudIconButton Class="btnedit" OnClick="@(() => DeleteDoc(doctorate.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                        </MudTooltip>
+                    </Authorized>
+                </AuthorizeView>
             </MudTd>
         </RowTemplate>
     </MudTable>

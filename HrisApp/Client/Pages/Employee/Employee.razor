@@ -18,33 +18,19 @@
 @inject IJSRuntime JSRuntime
 @inject GlobalConfigService GlobalConfigService
 
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin, User")]
 
 <PageTitle>Employees</PageTitle>
-
-<div class="mb-5 mt-3">
-    <div class="d-flex flex-row mt-5 justify-content-between">
-        <h3 class="m-0">Employee List</h3>
-
-       @*  @if (userRole == "Admin")
-        {
-                    <MudButton OnClick="CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
-        } *@
-
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Employee List</span>
         <AuthorizeView Roles="Admin">
             <Authorized>
                 <MudButton OnClick="CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
-
             </Authorized>
-            <NotAuthorized>
-                <MudButton OnClick="CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">User</MudButton>
-
-            </NotAuthorized>
         </AuthorizeView>
     </div>
 </div>
-
-
 <div class="box w-auto">
     @if (EmployeeService.EmployeeTs == null || EmployeeService.EmployeeTs.Count == 0) 
     {
@@ -64,8 +50,7 @@
     }
     else
     {
-    <MudTable Class="stable" Items="employeeList" Context="employeeee" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1" Virtualize="true">
-
+        <MudTable Class="stable" Items="employeeList" Context="employeeee" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1" Virtualize="true">
             <ToolBarContent>
                 <div class="d-flex flex-grow-1 mb-3">
                     <div class="d-flex flex-grow-1 flex-wrap justify-content-between">

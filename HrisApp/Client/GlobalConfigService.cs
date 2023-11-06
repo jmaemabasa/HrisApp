@@ -88,6 +88,7 @@ namespace HrisApp.Client
             User_Id = _authState.User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.NameIdentifier)?.Value;
             Username = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
             Role = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            Fullname = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
             //Fullname = _authState.User.Claims.FirstOrDefault(z => z.Type == ClaimTypes.NameIdentifier)?.Value;
             //User_Code = _authState.User.Claims.FirstOrDefault(b => b.Type == ClaimTypes.Sid)?.Value;
             //User_CodeId = _authState.User.Claims.FirstOrDefault(b => b.Type == ClaimTypes.Rsa)?.Value;
