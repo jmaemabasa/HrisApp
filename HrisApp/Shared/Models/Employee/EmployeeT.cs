@@ -24,8 +24,6 @@ namespace HrisApp.Shared.Models.Employee
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; } = string.Empty;
-        [Required]
-        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; } = string.Empty;
         public string Extension { get; set; } = string.Empty;
         public int? Height { get; set; }
@@ -70,8 +68,7 @@ namespace HrisApp.Shared.Models.Employee
         public DepartmentT? Department { get; set; }
         public int DepartmentId { get; set; } //FK
 
-        public SectionT? Section { get; set; }
-        public int SectionId { get; set; } //FK
+        public int SectionId { get; set; } //NOT FK
 
         public PositionT? Position { get; set; }
         public int PositionId { get; set; } //FK

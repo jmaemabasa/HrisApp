@@ -20,6 +20,7 @@
 @inject IJSRuntime JSRuntime
 
 @attribute [Authorize(Roles = "Admin, User")]
+<PageTitle>Update Employee</PageTitle>
 
 <div class="topnav d-flex justify-content-end align-items-center z-60">
     <MudButton OnClick="backbtn" Size="Size.Medium">Back</MudButton>
@@ -288,7 +289,20 @@
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Section</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Section?.Name</MudText>
+                                        @if (employee.SectionId == 0) {
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">No Section</MudText>
+                                        }
+                                        else {
+                                            @foreach (var item in SectionService.SectionTs)
+                                            {
+                                                @if (item.Id == employee.SectionId)
+                                                {
+                                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.Name</MudText>
+                                                }
+                                            }
+                                        }
+
+                                        
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Position</MudText>

@@ -13,6 +13,7 @@ namespace HrisApp.Shared.Models.MasterData
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
+        public string PosCode { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public int DivisionId { get; set; } //FK
         public int DepartmentId { get; set; } //FK

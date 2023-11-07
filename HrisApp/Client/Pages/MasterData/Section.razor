@@ -7,12 +7,17 @@
 @attribute [Authorize]
 <PageTitle>Section Management</PageTitle>
 
-<div class="mb-5 mt-3">
-    <div class="d-flex flex-row mt-5 justify-content-between">
-        <h3 class="m-0">Section Management</h3>
-        <MudButton OnClick="OpenAddSection" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Section</MudButton>
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Section Management</span>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudButton OnClick="OpenAddSection" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Section</MudButton>
+            </Authorized>
+        </AuthorizeView>
     </div>
 </div>
+
 <div class="box w-auto">
     <MudTable Class="stable" Items="sectionList" Context="Sections" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<SectionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>

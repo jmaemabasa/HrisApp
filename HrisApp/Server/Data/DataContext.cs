@@ -27,26 +27,105 @@ namespace HrisApp.Server.Data
                 new DepartmentT { Id = 6, Name = "URIC", DivisionId = 1 },
                 new DepartmentT { Id = 7, Name = "UFS", DivisionId = 1 },
                 new DepartmentT { Id = 8, Name = "GCash", DivisionId = 1 },
-                new DepartmentT { Id = 9, Name = "Sales Accounting", DivisionId = 2 },
-                new DepartmentT { Id = 10, Name = "Credit and Collection", DivisionId = 2 },
-                new DepartmentT { Id = 11, Name = "Accounts Receivable", DivisionId = 2 },
-                new DepartmentT { Id = 12, Name = "General Accounting", DivisionId = 2 },
-                new DepartmentT { Id = 13, Name = "Accounts Payable", DivisionId = 2 },
-                new DepartmentT { Id = 14, Name = "General Accounting", DivisionId = 2 },
-                new DepartmentT { Id = 15, Name = "Tax Compliance", DivisionId = 2 },
-                new DepartmentT { Id = 16, Name = "Information Technology", DivisionId = 2 },
-                new DepartmentT { Id = 17, Name = "Cash Operations", DivisionId = 2 },
-                new DepartmentT { Id = 18, Name = "Warehouse", DivisionId = 3 },
-                new DepartmentT { Id = 19, Name = "Transport", DivisionId = 3 },
-                new DepartmentT { Id = 20, Name = "Inventory Planning and Principal Relations", DivisionId = 3 },
-                new DepartmentT { Id = 21, Name = "Order Processing", DivisionId = 3 },
-                new DepartmentT { Id = 22, Name = "Logistics", DivisionId = 3 },
-                new DepartmentT { Id = 23, Name = "Human Resource", DivisionId = 4 },
-                new DepartmentT { Id = 24, Name = "General Services", DivisionId = 4 },
-                new DepartmentT { Id = 25, Name = "Canaan", DivisionId = 5 },
-                new DepartmentT { Id = 26, Name = "RTL", DivisionId = 5 },
-                new DepartmentT { Id = 27, Name = "Pullet", DivisionId = 5 }
+
+                new DepartmentT { Id = 9, Name = "General Accounting", DivisionId = 2 },
+                new DepartmentT { Id = 10, Name = "Sales Accounting", DivisionId = 2 },
+                new DepartmentT { Id = 11, Name = "Information Technology", DivisionId = 2 },
+                new DepartmentT { Id = 12, Name = "Treasury", DivisionId = 2 },
+
+                new DepartmentT { Id = 16, Name = "Warehouse", DivisionId = 3 },
+                new DepartmentT { Id = 17, Name = "Transport", DivisionId = 3 },
+                new DepartmentT { Id = 18, Name = "Inventory Planning and Principal Relations", DivisionId = 3 },
+                new DepartmentT { Id = 19, Name = "Order Processing", DivisionId = 3 },
+                new DepartmentT { Id = 20, Name = "Logistics", DivisionId = 3 },
+
+                new DepartmentT { Id = 21, Name = "Human Resource", DivisionId = 4 },
+                new DepartmentT { Id = 22, Name = "General Services", DivisionId = 4 },
+
+                new DepartmentT { Id = 23, Name = "Canaan", DivisionId = 5 },
+                new DepartmentT { Id = 24, Name = "RTL", DivisionId = 5 },
+                new DepartmentT { Id = 25, Name = "Pullet", DivisionId = 5 }
             );
+
+            modelBuilder.Entity<SectionT>().HasData(
+                new SectionT { Id = 4, Name = "Hapi Dealer", DivisionId = 1, DepartmentId = 6}, //uric
+                new SectionT { Id = 5, Name = "Servicing", DivisionId = 1, DepartmentId = 6},
+                new SectionT { Id = 6, Name = "Expansion", DivisionId = 1, DepartmentId = 6},
+                new SectionT { Id = 7, Name = "DTEX", DivisionId = 1, DepartmentId = 6},
+                new SectionT { Id = 8, Name = "Servicing", DivisionId = 1, DepartmentId = 8 }, //Gcash
+                new SectionT { Id = 9, Name = "Expansion", DivisionId = 1, DepartmentId = 8 },
+                new SectionT { Id = 10, Name = "Merchandising", DivisionId = 1, DepartmentId = 8 },
+                new SectionT { Id = 11, Name = "Scan To Pay", DivisionId = 1, DepartmentId = 8 },
+                new SectionT { Id = 12, Name = "Inventory and Accnts. Payable", DivisionId = 1, DepartmentId = 9 }, //FAMS GA
+                new SectionT { Id = 13, Name = "General Accounting", DivisionId = 1, DepartmentId = 9 },
+                new SectionT { Id = 14, Name = "Tax and Compliance", DivisionId = 1, DepartmentId = 9 },
+                new SectionT { Id = 15, Name = "Accounts Receivable", DivisionId = 1, DepartmentId = 10 }, //FAMS SA
+                new SectionT { Id = 16, Name = "Credit and Collection", DivisionId = 1, DepartmentId = 10 },
+                new SectionT { Id = 17, Name = "Billing to Cash Settlement", DivisionId = 1, DepartmentId = 10 },
+                new SectionT { Id = 18, Name = "Cash Operations", DivisionId = 1, DepartmentId = 12 } //FAMS TR
+                );
+
+            modelBuilder.Entity<PositionT>().HasData(
+                new PositionT { Id = 1, PosCode = "S101", Name = "FSS", DivisionId = 1, DepartmentId = 1 /*, SectionId = 1 */}, //No Section Sonic 1
+                new PositionT { Id = 2, PosCode = "S102", Name = "Feeder", DivisionId = 1, DepartmentId = 1 /*, SectionId = 1*/ },
+                new PositionT { Id = 3, PosCode = "S103", Name = "FCCR", DivisionId = 1, DepartmentId = 1 /*, SectionId = 1*/ },
+
+                new PositionT { Id = 4, PosCode = "S3K01", Name = "FSS", DivisionId = 1, DepartmentId = 4 /*, SectionId = 1*/ }, //No Section Sonic 3 Kidapawan
+                new PositionT { Id = 5, PosCode = "S3K02", Name = "DT Booking/ GT Booking", DivisionId = 1, DepartmentId = 4 },
+                new PositionT { Id = 6, PosCode = "S3K03", Name = "DSS", DivisionId = 1, DepartmentId = 4 },
+                new PositionT { Id = 7, PosCode = "S3K04", Name = "PM Salesman", DivisionId = 1, DepartmentId = 4 },
+                new PositionT { Id = 8, PosCode = "S3K05", Name = "OMNI Feeder", DivisionId = 1, DepartmentId = 4 },
+                new PositionT { Id = 9, PosCode = "S3K06", Name = "FCCR", DivisionId = 1, DepartmentId = 4 },
+
+                new PositionT { Id = 10, PosCode = "S3C01", Name = "FSS", DivisionId = 1, DepartmentId = 5  /*, SectionId = 1*/ }, //No Section Sonic 3 Cotabato
+                new PositionT { Id = 11, PosCode = "S3C02", Name = "DT Booking/ GT Booking", DivisionId = 1, DepartmentId = 5 },
+                new PositionT { Id = 12, PosCode = "S3C03", Name = "DSS", DivisionId = 1, DepartmentId = 5 },
+                new PositionT { Id = 13, PosCode = "S3C04", Name = "OMNI Feeder", DivisionId = 1, DepartmentId = 5 },
+                new PositionT { Id = 14, PosCode = "S3C05", Name = "FCCR", DivisionId = 1, DepartmentId = 5 },
+
+                new PositionT { Id = 15, PosCode = "URIC01", Name = "Operations Manager", DivisionId = 1, DepartmentId = 6 }, //URIC
+                new PositionT { Id = 16, PosCode = "URIC02", Name = "HAPI Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 4 }, //URIC HAPI DEALER
+                new PositionT { Id = 17, PosCode = "URIC03", Name = "HAPI Dealer Coor", DivisionId = 1, DepartmentId = 6, SectionId = 4 },
+                new PositionT { Id = 18, PosCode = "URIC04", Name = "FIELD SALES Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 5 }, //URIC SERVICING
+                new PositionT { Id = 19, PosCode = "URIC05", Name = "MAG Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 5 },
+                new PositionT { Id = 20, PosCode = "URIC06", Name = "GTAS", DivisionId = 1, DepartmentId = 6, SectionId = 5 },
+                new PositionT { Id = 21, PosCode = "URIC07", Name = "SMS", DivisionId = 1, DepartmentId = 6, SectionId = 5 },
+                new PositionT { Id = 22, PosCode = "URIC08", Name = "NAO Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 6 }, //URIC EXPANSION
+                new PositionT { Id = 23, PosCode = "URIC09", Name = "NAO", DivisionId = 1, DepartmentId = 6, SectionId = 6 },
+                new PositionT { Id = 24, PosCode = "URIC10", Name = "HAPI NAO", DivisionId = 1, DepartmentId = 6, SectionId = 6 },
+                new PositionT { Id = 25, PosCode = "URIC11", Name = "IT & Support Services Staff", DivisionId = 1, DepartmentId = 6, SectionId = 7 },  //URIC DTEX
+                new PositionT { Id = 26, PosCode = "URIC12", Name = "Teleservices Support Staff / Online Coor", DivisionId = 1, DepartmentId = 6, SectionId = 7 },
+
+                new PositionT { Id = 27, PosCode = "GCASH01", Name = "Field Sales Manager", DivisionId = 1, DepartmentId = 8 },  //GCASH
+                new PositionT { Id = 28, PosCode = "GCASH02", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 8 },  //GCASH
+                new PositionT { Id = 29, PosCode = "GCASH03", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 8, SectionId = 8 },  //GCASH SERVICING
+                new PositionT { Id = 30, PosCode = "GCASH04", Name = "Sonic DSP", DivisionId = 1, DepartmentId = 8, SectionId = 8 },  
+                new PositionT { Id = 31, PosCode = "GCASH05", Name = "DSP (Commando/Incubator)", DivisionId = 1, DepartmentId = 8, SectionId = 8 },
+                new PositionT { Id = 32, PosCode = "GCASH06", Name = "Ambassador", DivisionId = 1, DepartmentId = 8, SectionId = 9 },  //GCASH EXPANSION
+                new PositionT { Id = 33, PosCode = "GCASH07", Name = "Merchandiser", DivisionId = 1, DepartmentId = 8, SectionId = 10 }, //GCASH MERCHANDISING
+                new PositionT { Id = 34, PosCode = "GCASH08", Name = "Scan to Pay", DivisionId = 1, DepartmentId = 8, SectionId = 11 }, //GCASH SCAN TO PAY
+
+                new PositionT { Id = 35, PosCode = "GAIAP01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 12 }, //FAMS GA - IAP
+                new PositionT { Id = 36, PosCode = "GAIAP02", Name = "Trade Payable Staff", DivisionId = 2, DepartmentId = 9, SectionId = 12 },
+                new PositionT { Id = 37, PosCode = "GAIAP03", Name = "Non Trade Payable Staff", DivisionId = 2, DepartmentId = 9, SectionId = 12 },
+                new PositionT { Id = 38, PosCode = "GAGA04", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 13 }, //FAMS GA - GA
+                new PositionT { Id = 39, PosCode = "GAGA05", Name = "Gen Accounting Staff", DivisionId = 2, DepartmentId = 9, SectionId = 13 },
+                new PositionT { Id = 40, PosCode = "GATC06", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 14 }, //FAMS GA - TC
+                new PositionT { Id = 41, PosCode = "GATC07", Name = "Tax and Compliance Staff", DivisionId = 2, DepartmentId = 9, SectionId = 14 },
+                new PositionT { Id = 42, PosCode = "SAAR08", Name = "Team Leader", DivisionId = 2, DepartmentId = 10, SectionId = 15 }, //FAMS SA - AR
+                new PositionT { Id = 43, PosCode = "SAAR09", Name = "Accounts Receivable Staff", DivisionId = 2, DepartmentId = 10, SectionId = 15 },
+                new PositionT { Id = 44, PosCode = "SACC10", Name = "Credit and Collection Staff", DivisionId = 2, DepartmentId = 10, SectionId = 16 }, //FAMS SA - CC
+                new PositionT { Id = 45, PosCode = "SACC11", Name = "C&C - Billings to Customer", DivisionId = 2, DepartmentId = 10, SectionId = 16 },
+                new PositionT { Id = 46, PosCode = "SABCS012", Name = "Billing to Cash Settlement Staff", DivisionId = 2, DepartmentId = 10, SectionId = 16 }, //FAMS SA - BCS
+                new PositionT { Id = 47, PosCode = "IT01", Name = "Manager", DivisionId = 2, DepartmentId = 11 }, //FAMS IT
+                new PositionT { Id = 48, PosCode = "IT02", Name = "IT Associate", DivisionId = 2, DepartmentId = 11 },
+                new PositionT { Id = 49, PosCode = "IT03", Name = "IT Staff", DivisionId = 2, DepartmentId = 11 },
+                new PositionT { Id = 50, PosCode = "TCO01", Name = "Cash Operations Head", DivisionId = 2, DepartmentId = 12, SectionId = 18 }, //FAMS T -CO
+                new PositionT { Id = 51, PosCode = "TCO02", Name = "Davao Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18 },
+                new PositionT { Id = 52, PosCode = "TCO03", Name = "Cotabato Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18 },
+                new PositionT { Id = 53, PosCode = "TCO04", Name = "Kidapawan Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18 },
+                new PositionT { Id = 54, PosCode = "TCO05", Name = "Digos Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18 }
+                );
 
             modelBuilder.Entity<AreaT>().HasData(
                 new AreaT { Id = 1, Name = "Davao" },

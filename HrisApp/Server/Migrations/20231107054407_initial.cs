@@ -272,6 +272,7 @@ namespace HrisApp.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DivisionId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
@@ -613,6 +614,7 @@ namespace HrisApp.Server.Migrations
                     EmerMobNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateHired = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateInactiveStatus = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EmploymentStatusId = table.Column<int>(type: "int", nullable: false),
                     AreaId = table.Column<int>(type: "int", nullable: false),
                     DivisionId = table.Column<int>(type: "int", nullable: false),
@@ -683,12 +685,6 @@ namespace HrisApp.Server.Migrations
                         name: "FK_EmployeeT_ReligionT_ReligionId",
                         column: x => x.ReligionId,
                         principalTable: "ReligionT",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeT_SectionT_SectionId",
-                        column: x => x.SectionId,
-                        principalTable: "SectionT",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -768,25 +764,20 @@ namespace HrisApp.Server.Migrations
                     { 6, 1, "URIC" },
                     { 7, 1, "UFS" },
                     { 8, 1, "GCash" },
-                    { 9, 2, "Sales Accounting" },
-                    { 10, 2, "Credit and Collection" },
-                    { 11, 2, "Accounts Receivable" },
-                    { 12, 2, "General Accounting" },
-                    { 13, 2, "Accounts Payable" },
-                    { 14, 2, "General Accounting" },
-                    { 15, 2, "Tax Compliance" },
-                    { 16, 2, "Information Technology" },
-                    { 17, 2, "Cash Operations" },
-                    { 18, 3, "Warehouse" },
-                    { 19, 3, "Transport" },
-                    { 20, 3, "Inventory Planning and Principal Relations" },
-                    { 21, 3, "Order Processing" },
-                    { 22, 3, "Logistics" },
-                    { 23, 4, "Human Resource" },
-                    { 24, 4, "General Services" },
-                    { 25, 5, "Canaan" },
-                    { 26, 5, "RTL" },
-                    { 27, 5, "Pullet" }
+                    { 9, 2, "General Accounting" },
+                    { 10, 2, "Sales Accounting" },
+                    { 11, 2, "Information Technology" },
+                    { 12, 2, "Treasury" },
+                    { 16, 3, "Warehouse" },
+                    { 17, 3, "Transport" },
+                    { 18, 3, "Inventory Planning and Principal Relations" },
+                    { 19, 3, "Order Processing" },
+                    { 20, 3, "Logistics" },
+                    { 21, 4, "Human Resource" },
+                    { 22, 4, "General Services" },
+                    { 23, 5, "Canaan" },
+                    { 24, 5, "RTL" },
+                    { 25, 5, "Pullet" }
                 });
 
             migrationBuilder.InsertData(
@@ -797,13 +788,9 @@ namespace HrisApp.Server.Migrations
                     { 1, "Sales Operations" },
                     { 2, "FAMS" },
                     { 3, "Supply Chain Management Service" },
-                    { 4, "Central Administration" }
+                    { 4, "Central Administration" },
+                    { 5, "Agro Industrial" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "DivisionT",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 5, "Agro Industrial" });
 
             migrationBuilder.InsertData(
                 table: "EmerRelationshipT",
@@ -850,6 +837,74 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "PositionT",
+                columns: new[] { "Id", "DepartmentId", "DivisionId", "Name", "PosCode", "SectionId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "FSS", "S101", 0 },
+                    { 2, 1, 1, "Feeder", "S102", 0 },
+                    { 3, 1, 1, "FCCR", "S103", 0 },
+                    { 4, 4, 1, "FSS", "S3K01", 0 },
+                    { 5, 4, 1, "DT Booking/ GT Booking", "S3K02", 0 },
+                    { 6, 4, 1, "DSS", "S3K03", 0 },
+                    { 7, 4, 1, "PM Salesman", "S3K04", 0 },
+                    { 8, 4, 1, "OMNI Feeder", "S3K05", 0 },
+                    { 9, 4, 1, "FCCR", "S3K06", 0 },
+                    { 10, 5, 1, "FSS", "S3C01", 0 },
+                    { 11, 5, 1, "DT Booking/ GT Booking", "S3C02", 0 },
+                    { 12, 5, 1, "DSS", "S3C03", 0 },
+                    { 13, 5, 1, "OMNI Feeder", "S3C04", 0 },
+                    { 14, 5, 1, "FCCR", "S3C05", 0 },
+                    { 15, 6, 1, "Operations Manager", "URIC01", 0 },
+                    { 16, 6, 1, "HAPI Supervisor", "URIC02", 4 },
+                    { 17, 6, 1, "HAPI Dealer Coor", "URIC03", 4 },
+                    { 18, 6, 1, "FIELD SALES Supervisor", "URIC04", 5 },
+                    { 19, 6, 1, "MAG Supervisor", "URIC05", 5 },
+                    { 20, 6, 1, "GTAS", "URIC06", 5 },
+                    { 21, 6, 1, "SMS", "URIC07", 5 },
+                    { 22, 6, 1, "NAO Supervisor", "URIC08", 6 },
+                    { 23, 6, 1, "NAO", "URIC09", 6 },
+                    { 24, 6, 1, "HAPI NAO", "URIC10", 6 },
+                    { 25, 6, 1, "IT & Support Services Staff", "URIC11", 7 },
+                    { 26, 6, 1, "Teleservices Support Staff / Online Coor", "URIC12", 7 },
+                    { 27, 8, 1, "Field Sales Manager", "GCASH01", 0 },
+                    { 28, 8, 1, "Field Sales Supervisor", "GCASH02", 0 },
+                    { 29, 8, 1, "Field Sales Supervisor", "GCASH03", 8 },
+                    { 30, 8, 1, "Sonic DSP", "GCASH04", 8 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PositionT",
+                columns: new[] { "Id", "DepartmentId", "DivisionId", "Name", "PosCode", "SectionId" },
+                values: new object[,]
+                {
+                    { 31, 8, 1, "DSP (Commando/Incubator)", "GCASH05", 8 },
+                    { 32, 8, 1, "Ambassador", "GCASH06", 9 },
+                    { 33, 8, 1, "Merchandiser", "GCASH07", 10 },
+                    { 34, 8, 1, "Scan to Pay", "GCASH08", 11 },
+                    { 35, 9, 2, "Team Leader/Supervisor", "GAIAP01", 12 },
+                    { 36, 9, 2, "Trade Payable Staff", "GAIAP02", 12 },
+                    { 37, 9, 2, "Non Trade Payable Staff", "GAIAP03", 12 },
+                    { 38, 9, 2, "Team Leader/Supervisor", "GAGA04", 13 },
+                    { 39, 9, 2, "Gen Accounting Staff", "GAGA05", 13 },
+                    { 40, 9, 2, "Team Leader/Supervisor", "GATC06", 14 },
+                    { 41, 9, 2, "Tax and Compliance Staff", "GATC07", 14 },
+                    { 42, 10, 2, "Team Leader", "SAAR08", 15 },
+                    { 43, 10, 2, "Accounts Receivable Staff", "SAAR09", 15 },
+                    { 44, 10, 2, "Credit and Collection Staff", "SACC10", 16 },
+                    { 45, 10, 2, "C&C - Billings to Customer", "SACC11", 16 },
+                    { 46, 10, 2, "Billing to Cash Settlement Staff", "SABCS012", 16 },
+                    { 47, 11, 2, "Manager", "IT01", 0 },
+                    { 48, 11, 2, "IT Associate", "IT02", 0 },
+                    { 49, 11, 2, "IT Staff", "IT03", 0 },
+                    { 50, 12, 2, "Cash Operations Head", "TCO01", 18 },
+                    { 51, 12, 2, "Davao Cashier", "TCO02", 18 },
+                    { 52, 12, 2, "Cotabato Cashier", "TCO03", 18 },
+                    { 53, 12, 2, "Kidapawan Cashier", "TCO04", 18 },
+                    { 54, 12, 2, "Digos Cashier", "TCO05", 18 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "RateTypeT",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -885,7 +940,14 @@ namespace HrisApp.Server.Migrations
                     { 1, "Sunday" },
                     { 2, "Monday" },
                     { 3, "Tuesday" },
-                    { 4, "Wednesday" },
+                    { 4, "Wednesday" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RestDayT",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
                     { 5, "Thursday" },
                     { 6, "Friday" },
                     { 7, "Saturday" }
@@ -897,13 +959,28 @@ namespace HrisApp.Server.Migrations
                 values: new object[] { 1, "Regular", "08:00 AM", "05:00 PM" });
 
             migrationBuilder.InsertData(
-                table: "StatusT",
-                columns: new[] { "Id", "Name" },
+                table: "SectionT",
+                columns: new[] { "Id", "DepartmentId", "DivisionId", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Active" },
-                    { 2, "Inactive" },
-                    { 3, "Resigned" }
+                    { 1, 1, 1, "No Section" },
+                    { 2, 4, 1, "No Section" },
+                    { 3, 5, 1, "No Section" },
+                    { 4, 6, 1, "Hapi Dealer" },
+                    { 5, 6, 1, "Servicing" },
+                    { 6, 6, 1, "Expansion" },
+                    { 7, 6, 1, "DTEX" },
+                    { 8, 8, 1, "Servicing" },
+                    { 9, 8, 1, "Expansion" },
+                    { 10, 8, 1, "Merchandising" },
+                    { 11, 8, 1, "Scan To Pay" },
+                    { 12, 9, 1, "Inventory and Accnts. Payable" },
+                    { 13, 9, 1, "General Accounting" },
+                    { 14, 9, 1, "Tax and Compliance" },
+                    { 15, 10, 1, "Accounts Receivable" },
+                    { 16, 10, 1, "Credit and Collection" },
+                    { 17, 10, 1, "Billing to Cash Settlement" },
+                    { 18, 12, 1, "Cash Operations" }
                 });
 
             migrationBuilder.InsertData(
@@ -911,6 +988,9 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { 1, "Active" },
+                    { 2, "Inactive" },
+                    { 3, "Resigned" },
                     { 4, "Terminated" },
                     { 5, "Awol" },
                     { 6, "Retired" }
@@ -989,11 +1069,6 @@ namespace HrisApp.Server.Migrations
                 name: "IX_EmployeeT_ReligionId",
                 table: "EmployeeT",
                 column: "ReligionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeT_SectionId",
-                table: "EmployeeT",
-                column: "SectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeT_StatusId",
@@ -1076,6 +1151,9 @@ namespace HrisApp.Server.Migrations
                 name: "SecondaryT");
 
             migrationBuilder.DropTable(
+                name: "SectionT");
+
+            migrationBuilder.DropTable(
                 name: "SeniorHST");
 
             migrationBuilder.DropTable(
@@ -1110,9 +1188,6 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "ReligionT");
-
-            migrationBuilder.DropTable(
-                name: "SectionT");
 
             migrationBuilder.DropTable(
                 name: "StatusT");

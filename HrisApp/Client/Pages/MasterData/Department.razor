@@ -6,10 +6,14 @@
 
 <PageTitle>Department Management</PageTitle>
 
-<div class="mb-5 mt-3">
-    <div class="d-flex flex-row mt-5 justify-content-between">
-        <h3 class="m-0">Department Management</h3>
-        <MudButton OnClick="OpenAddDepartment" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Department</MudButton>
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Department Management</span>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudButton OnClick="OpenAddDepartment" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Department</MudButton>
+            </Authorized>
+        </AuthorizeView>
     </div>
 </div>
 

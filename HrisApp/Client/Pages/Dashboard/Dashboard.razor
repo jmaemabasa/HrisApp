@@ -22,20 +22,28 @@
 
 <PageTitle>Dashboard</PageTitle>
     <style>
-   /*  .topcards.mud-card-content {
-        padding: 22px 25px 15px 25px;
+    .rightcard.mud-card-content {
+        padding: 22px 25px 20px 25px;
         height: 100%;
     }
     
-    .topmudcard {
-        height: 9rem;
+    .rightmudcard {
+        height: 25rem;
         border-radius: 10px;
         background: #e9ecef;
         border: none;
         box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
         border-radius: 20px;
         padding: 10px 15px 10px 15px;
-    } */
+        overflow: auto;
+    }
+
+    .divsingledetails {
+        background-color: #e9a3a3;
+        padding: 7px 15px 7px 15px;
+        border-radius: 10px;
+        color: #fff;
+    }
     </style>
 
 <MudGrid Style="margin-top: 20px;" Spacing="5">
@@ -43,20 +51,92 @@
         <TopCards title="Total Active Employees" value="@_countEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="@Color.Warning" />
     </MudItem>
     <MudItem xs="12" sm="3">
-        <TopCards title="Total Active Employees" value="@_countEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="@Color.Info" />
+        <TopCards title="Total Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.Person4" iconColor="@Color.Info" />
     </MudItem>
-    
+    <MudItem xs="12" sm="3">
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <MudCard Class="rightmudcard">
+            <MudCardContent Class="rightcard">
+                <MudText Class="mb-3" Typo="Typo.body2" Align="Align.Center"><b>Vacancies As Of Today <br/> @DateTime.Now.ToString("dddd, dd MMMM yyyy")</b></MudText>
+                @try
+                {
+                    @* @foreach (var position in allPositions)
+                    {
+                        var positionId = position.Id;
+                        var vacancy = plantillaPositions.ContainsKey(positionId)
+                        ? plantillaPositions[positionId] - positionCounts[positionId]
+                        : 0;
+
+                        if (vacancy != 0)
+                        {
+                            @foreach (var item in DepartmentService.DepartmentTs)
+                            {
+                                @if (position.DepartmentId == item.Id)
+                                {
+                                    <div class="divsingledetails d-flex justify-content-between mb-2">
+                                        <MudText Align="Align.Start" Typo="Typo.caption">@item.Name</MudText>
+
+                                            <MudText Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                
+                                        <MudText Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                        <MudText Align="Align.Start" Style="color: #fff; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
+                                    </div>                                    
+                                }
+                            }
+                        }
+                    } *@
+                    @foreach (var department in DepartmentService.DepartmentTs)
+                    {
+                        var departmentVacancies = allPositions
+                        .Where(position => position.DepartmentId == department.Id)
+                        .Select(position =>
+                        {
+                            var positionId = position.Id;
+                            var vacancy = plantillaPositions.ContainsKey(positionId)
+                    ? plantillaPositions[positionId] - positionCounts[positionId]
+                    : 0;
+                            return vacancy;
+                        })
+                        .Sum();
+
+                        if (departmentVacancies > 0)
+                        {
+                            <div class="d-flex align-items-center gap-2 m-1">
+                                <MudIcon Icon="@Icons.Material.TwoTone.OtherHouses" Style="font-size: 1.2rem; color: #8176e6" />
+                                <span style="color: #424242">@department.Name</span>
+                            </div>
+                            @foreach (var position in allPositions)
+                            {
+                                var positionId = position.Id;
+                                var vacancy = plantillaPositions.ContainsKey(positionId)
+                                ? plantillaPositions[positionId] - positionCounts[positionId]
+                                : 0;
+
+                                if (position.DepartmentId == department.Id && vacancy != 0)
+                                {
+                                    <div class="divsingledetails d-flex justify-content-between mb-2">
+                                        <MudText Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                        <div class="d-flex w-25 justify-content-between">
+                                            <MudText Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                            <MudText Align="Align.Start" Style="color: #fff; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Something went wrong.");
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+   
 </MudGrid>
  
 @code {
-    #nullable disable
-    private string _countEmployees = "0";
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        await EmployeeService.GetEmployee();
-        _countEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
-    }
-
+    
 }

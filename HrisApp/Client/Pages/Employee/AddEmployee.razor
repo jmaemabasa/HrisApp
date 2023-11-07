@@ -18,7 +18,7 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 @attribute [Authorize(Roles = "Admin")]
-
+<PageTitle>Add Employee</PageTitle>
 <div class="topnav d-flex justify-content-end align-items-center z-60">
     <MudButton OnClick="backbtn" Size="Size.Medium">Back</MudButton>
 </div>
@@ -270,9 +270,9 @@
                                                     <MudText Typo="Typo.body2">Position</MudText>
                                                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Margin="Margin.Dense">
                                                          <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                     @foreach (var dep in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
+                                                     @foreach (var pos in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
                                                         {
-                                                            <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                                            <MudSelectItem Value="@pos.Id">@pos.Name</MudSelectItem>
                                                         }
                                                     </MudSelect>
                                                 </div>
@@ -303,9 +303,9 @@
                                                 <MudText Typo="Typo.body2">Position</MudText>
                                                     <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @foreach (var dep in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
+                                                 @foreach (var pos in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
                                                     {
-                                                        <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                                                        <MudSelectItem Value="@pos.Id">@pos.Name</MudSelectItem>
                                                     }
                                                 </MudSelect>
                                             </div>
@@ -314,7 +314,6 @@
                                 </div>
                                 <MudItem xs="12" Class="d-flex justify-content-end mt-5">
                                     <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
-                                        @* <button Class="btn btnnext" type="submit">NEXT</button> *@
                                 </MudItem>
                             </MudCardContent>
                         </MudCard>

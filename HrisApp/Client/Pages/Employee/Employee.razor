@@ -20,7 +20,7 @@
 
 @attribute [Authorize(Roles = "Admin, User")]
 
-<PageTitle>Employees</PageTitle>
+<PageTitle>Employee Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Employee List</span>
@@ -103,7 +103,23 @@
              <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("d")</MudTd>
              <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
              <MudTd DataLabel="Disignation">
-                     <MudChip Style="background-color: #B7D3DF">@employeeee.Division?.Name</MudChip> | <MudChip Style="background-color: #AEBDCA">@employeeee.Department?.Name</MudChip> | <MudChip Class="statusChip">@employeeee.Section?.Name </MudChip>
+                     <MudChip Style="background-color: #B7D3DF">@employeeee.Division?.Name</MudChip> | <MudChip Style="background-color: #AEBDCA">@employeeee.Department?.Name</MudChip> |
+                     @if (employeeee.SectionId == 0)
+                    {
+                        <MudChip Class="statusChip">No Section</MudChip>
+                    }
+                    else
+                    {
+                        @foreach (var item in SectionsL)
+                        {
+                            @if (item.Id == employeeee.SectionId)
+                            {
+                                
+                            }
+                        }
+                    }
+                    
+                        
              </MudTd>
                  <MudTd DataLabel="Status">
                      <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>

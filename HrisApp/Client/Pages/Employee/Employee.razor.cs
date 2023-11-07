@@ -8,6 +8,7 @@
         string userRole;
 
         private List<EmployeeT> EmployeesL = new List<EmployeeT>();
+        private List<SectionT> SectionsL = new List<SectionT>();
         private EmployeeT employeeee = new EmployeeT();
 
         private List<string> PDFDataList = new List<string>();
@@ -21,6 +22,8 @@
             //await Task.Delay(5000);
             await EmployeeService.GetEmployee();
             employeeList = EmployeeService.EmployeeTs;
+            await SectionService.GetSection();
+            SectionsL = SectionService.SectionTs;
         }
 
         #region FUNCTIONS / METHODS
@@ -94,8 +97,6 @@
             if (emp.Division.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (emp.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (emp.Section.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (emp.Position.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;

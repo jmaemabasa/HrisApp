@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231104085030_initial1")]
-    partial class initial1
+    [Migration("20231107054407_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -544,8 +544,6 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("PositionId");
 
                     b.HasIndex("ReligionId");
-
-                    b.HasIndex("SectionId");
 
                     b.HasIndex("StatusId");
 
@@ -1127,113 +1125,83 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 9,
                             DivisionId = 2,
-                            Name = "Sales Accounting"
+                            Name = "General Accounting"
                         },
                         new
                         {
                             Id = 10,
                             DivisionId = 2,
-                            Name = "Credit and Collection"
+                            Name = "Sales Accounting"
                         },
                         new
                         {
                             Id = 11,
                             DivisionId = 2,
-                            Name = "Accounts Receivable"
+                            Name = "Information Technology"
                         },
                         new
                         {
                             Id = 12,
                             DivisionId = 2,
-                            Name = "General Accounting"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            DivisionId = 2,
-                            Name = "Accounts Payable"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            DivisionId = 2,
-                            Name = "General Accounting"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            DivisionId = 2,
-                            Name = "Tax Compliance"
+                            Name = "Treasury"
                         },
                         new
                         {
                             Id = 16,
-                            DivisionId = 2,
-                            Name = "Information Technology"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            DivisionId = 2,
-                            Name = "Cash Operations"
-                        },
-                        new
-                        {
-                            Id = 18,
                             DivisionId = 3,
                             Name = "Warehouse"
                         },
                         new
                         {
-                            Id = 19,
+                            Id = 17,
                             DivisionId = 3,
                             Name = "Transport"
                         },
                         new
                         {
-                            Id = 20,
+                            Id = 18,
                             DivisionId = 3,
                             Name = "Inventory Planning and Principal Relations"
                         },
                         new
                         {
-                            Id = 21,
+                            Id = 19,
                             DivisionId = 3,
                             Name = "Order Processing"
                         },
                         new
                         {
-                            Id = 22,
+                            Id = 20,
                             DivisionId = 3,
                             Name = "Logistics"
                         },
                         new
                         {
-                            Id = 23,
+                            Id = 21,
                             DivisionId = 4,
                             Name = "Human Resource"
                         },
                         new
                         {
-                            Id = 24,
+                            Id = 22,
                             DivisionId = 4,
                             Name = "General Services"
                         },
                         new
                         {
-                            Id = 25,
+                            Id = 23,
                             DivisionId = 5,
                             Name = "Canaan"
                         },
                         new
                         {
-                            Id = 26,
+                            Id = 24,
                             DivisionId = 5,
                             Name = "RTL"
                         },
                         new
                         {
-                            Id = 27,
+                            Id = 25,
                             DivisionId = 5,
                             Name = "Pullet"
                         });
@@ -1301,12 +1269,504 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("PositionT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DepartmentId = 1,
+                            DivisionId = 1,
+                            Name = "FSS",
+                            PosCode = "S101",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DepartmentId = 1,
+                            DivisionId = 1,
+                            Name = "Feeder",
+                            PosCode = "S102",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DepartmentId = 1,
+                            DivisionId = 1,
+                            Name = "FCCR",
+                            PosCode = "S103",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DepartmentId = 4,
+                            DivisionId = 1,
+                            Name = "FSS",
+                            PosCode = "S3K01",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DepartmentId = 4,
+                            DivisionId = 1,
+                            Name = "DT Booking/ GT Booking",
+                            PosCode = "S3K02",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DepartmentId = 4,
+                            DivisionId = 1,
+                            Name = "DSS",
+                            PosCode = "S3K03",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DepartmentId = 4,
+                            DivisionId = 1,
+                            Name = "PM Salesman",
+                            PosCode = "S3K04",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DepartmentId = 4,
+                            DivisionId = 1,
+                            Name = "OMNI Feeder",
+                            PosCode = "S3K05",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DepartmentId = 4,
+                            DivisionId = 1,
+                            Name = "FCCR",
+                            PosCode = "S3K06",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DepartmentId = 5,
+                            DivisionId = 1,
+                            Name = "FSS",
+                            PosCode = "S3C01",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DepartmentId = 5,
+                            DivisionId = 1,
+                            Name = "DT Booking/ GT Booking",
+                            PosCode = "S3C02",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            DepartmentId = 5,
+                            DivisionId = 1,
+                            Name = "DSS",
+                            PosCode = "S3C03",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            DepartmentId = 5,
+                            DivisionId = 1,
+                            Name = "OMNI Feeder",
+                            PosCode = "S3C04",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 14,
+                            DepartmentId = 5,
+                            DivisionId = 1,
+                            Name = "FCCR",
+                            PosCode = "S3C05",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 15,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "Operations Manager",
+                            PosCode = "URIC01",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "HAPI Supervisor",
+                            PosCode = "URIC02",
+                            SectionId = 4
+                        },
+                        new
+                        {
+                            Id = 17,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "HAPI Dealer Coor",
+                            PosCode = "URIC03",
+                            SectionId = 4
+                        },
+                        new
+                        {
+                            Id = 18,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "FIELD SALES Supervisor",
+                            PosCode = "URIC04",
+                            SectionId = 5
+                        },
+                        new
+                        {
+                            Id = 19,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "MAG Supervisor",
+                            PosCode = "URIC05",
+                            SectionId = 5
+                        },
+                        new
+                        {
+                            Id = 20,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "GTAS",
+                            PosCode = "URIC06",
+                            SectionId = 5
+                        },
+                        new
+                        {
+                            Id = 21,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "SMS",
+                            PosCode = "URIC07",
+                            SectionId = 5
+                        },
+                        new
+                        {
+                            Id = 22,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "NAO Supervisor",
+                            PosCode = "URIC08",
+                            SectionId = 6
+                        },
+                        new
+                        {
+                            Id = 23,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "NAO",
+                            PosCode = "URIC09",
+                            SectionId = 6
+                        },
+                        new
+                        {
+                            Id = 24,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "HAPI NAO",
+                            PosCode = "URIC10",
+                            SectionId = 6
+                        },
+                        new
+                        {
+                            Id = 25,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "IT & Support Services Staff",
+                            PosCode = "URIC11",
+                            SectionId = 7
+                        },
+                        new
+                        {
+                            Id = 26,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "Teleservices Support Staff / Online Coor",
+                            PosCode = "URIC12",
+                            SectionId = 7
+                        },
+                        new
+                        {
+                            Id = 27,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Field Sales Manager",
+                            PosCode = "GCASH01",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 28,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Field Sales Supervisor",
+                            PosCode = "GCASH02",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 29,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Field Sales Supervisor",
+                            PosCode = "GCASH03",
+                            SectionId = 8
+                        },
+                        new
+                        {
+                            Id = 30,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Sonic DSP",
+                            PosCode = "GCASH04",
+                            SectionId = 8
+                        },
+                        new
+                        {
+                            Id = 31,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "DSP (Commando/Incubator)",
+                            PosCode = "GCASH05",
+                            SectionId = 8
+                        },
+                        new
+                        {
+                            Id = 32,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Ambassador",
+                            PosCode = "GCASH06",
+                            SectionId = 9
+                        },
+                        new
+                        {
+                            Id = 33,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Merchandiser",
+                            PosCode = "GCASH07",
+                            SectionId = 10
+                        },
+                        new
+                        {
+                            Id = 34,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Scan to Pay",
+                            PosCode = "GCASH08",
+                            SectionId = 11
+                        },
+                        new
+                        {
+                            Id = 35,
+                            DepartmentId = 9,
+                            DivisionId = 2,
+                            Name = "Team Leader/Supervisor",
+                            PosCode = "GAIAP01",
+                            SectionId = 12
+                        },
+                        new
+                        {
+                            Id = 36,
+                            DepartmentId = 9,
+                            DivisionId = 2,
+                            Name = "Trade Payable Staff",
+                            PosCode = "GAIAP02",
+                            SectionId = 12
+                        },
+                        new
+                        {
+                            Id = 37,
+                            DepartmentId = 9,
+                            DivisionId = 2,
+                            Name = "Non Trade Payable Staff",
+                            PosCode = "GAIAP03",
+                            SectionId = 12
+                        },
+                        new
+                        {
+                            Id = 38,
+                            DepartmentId = 9,
+                            DivisionId = 2,
+                            Name = "Team Leader/Supervisor",
+                            PosCode = "GAGA04",
+                            SectionId = 13
+                        },
+                        new
+                        {
+                            Id = 39,
+                            DepartmentId = 9,
+                            DivisionId = 2,
+                            Name = "Gen Accounting Staff",
+                            PosCode = "GAGA05",
+                            SectionId = 13
+                        },
+                        new
+                        {
+                            Id = 40,
+                            DepartmentId = 9,
+                            DivisionId = 2,
+                            Name = "Team Leader/Supervisor",
+                            PosCode = "GATC06",
+                            SectionId = 14
+                        },
+                        new
+                        {
+                            Id = 41,
+                            DepartmentId = 9,
+                            DivisionId = 2,
+                            Name = "Tax and Compliance Staff",
+                            PosCode = "GATC07",
+                            SectionId = 14
+                        },
+                        new
+                        {
+                            Id = 42,
+                            DepartmentId = 10,
+                            DivisionId = 2,
+                            Name = "Team Leader",
+                            PosCode = "SAAR08",
+                            SectionId = 15
+                        },
+                        new
+                        {
+                            Id = 43,
+                            DepartmentId = 10,
+                            DivisionId = 2,
+                            Name = "Accounts Receivable Staff",
+                            PosCode = "SAAR09",
+                            SectionId = 15
+                        },
+                        new
+                        {
+                            Id = 44,
+                            DepartmentId = 10,
+                            DivisionId = 2,
+                            Name = "Credit and Collection Staff",
+                            PosCode = "SACC10",
+                            SectionId = 16
+                        },
+                        new
+                        {
+                            Id = 45,
+                            DepartmentId = 10,
+                            DivisionId = 2,
+                            Name = "C&C - Billings to Customer",
+                            PosCode = "SACC11",
+                            SectionId = 16
+                        },
+                        new
+                        {
+                            Id = 46,
+                            DepartmentId = 10,
+                            DivisionId = 2,
+                            Name = "Billing to Cash Settlement Staff",
+                            PosCode = "SABCS012",
+                            SectionId = 16
+                        },
+                        new
+                        {
+                            Id = 47,
+                            DepartmentId = 11,
+                            DivisionId = 2,
+                            Name = "Manager",
+                            PosCode = "IT01",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 48,
+                            DepartmentId = 11,
+                            DivisionId = 2,
+                            Name = "IT Associate",
+                            PosCode = "IT02",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 49,
+                            DepartmentId = 11,
+                            DivisionId = 2,
+                            Name = "IT Staff",
+                            PosCode = "IT03",
+                            SectionId = 0
+                        },
+                        new
+                        {
+                            Id = 50,
+                            DepartmentId = 12,
+                            DivisionId = 2,
+                            Name = "Cash Operations Head",
+                            PosCode = "TCO01",
+                            SectionId = 18
+                        },
+                        new
+                        {
+                            Id = 51,
+                            DepartmentId = 12,
+                            DivisionId = 2,
+                            Name = "Davao Cashier",
+                            PosCode = "TCO02",
+                            SectionId = 18
+                        },
+                        new
+                        {
+                            Id = 52,
+                            DepartmentId = 12,
+                            DivisionId = 2,
+                            Name = "Cotabato Cashier",
+                            PosCode = "TCO03",
+                            SectionId = 18
+                        },
+                        new
+                        {
+                            Id = 53,
+                            DepartmentId = 12,
+                            DivisionId = 2,
+                            Name = "Kidapawan Cashier",
+                            PosCode = "TCO04",
+                            SectionId = 18
+                        },
+                        new
+                        {
+                            Id = 54,
+                            DepartmentId = 12,
+                            DivisionId = 2,
+                            Name = "Digos Cashier",
+                            PosCode = "TCO05",
+                            SectionId = 18
+                        });
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.MasterData.SectionT", b =>
@@ -1330,6 +1790,134 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SectionT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DepartmentId = 1,
+                            DivisionId = 1,
+                            Name = "No Section"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DepartmentId = 4,
+                            DivisionId = 1,
+                            Name = "No Section"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DepartmentId = 5,
+                            DivisionId = 1,
+                            Name = "No Section"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "Hapi Dealer"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "Servicing"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "Expansion"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DepartmentId = 6,
+                            DivisionId = 1,
+                            Name = "DTEX"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Servicing"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Expansion"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Merchandising"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DepartmentId = 8,
+                            DivisionId = 1,
+                            Name = "Scan To Pay"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            DepartmentId = 9,
+                            DivisionId = 1,
+                            Name = "Inventory and Accnts. Payable"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            DepartmentId = 9,
+                            DivisionId = 1,
+                            Name = "General Accounting"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            DepartmentId = 9,
+                            DivisionId = 1,
+                            Name = "Tax and Compliance"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            DepartmentId = 10,
+                            DivisionId = 1,
+                            Name = "Accounts Receivable"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            DepartmentId = 10,
+                            DivisionId = 1,
+                            Name = "Credit and Collection"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            DepartmentId = 10,
+                            DivisionId = 1,
+                            Name = "Billing to Cash Settlement"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            DepartmentId = 12,
+                            DivisionId = 1,
+                            Name = "Cash Operations"
+                        });
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Payroll.CashBondT", b =>
@@ -1738,12 +2326,6 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.MasterData.SectionT", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HrisApp.Shared.Models.Employee.StatusT", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -1769,8 +2351,6 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Position");
 
                     b.Navigation("Religion");
-
-                    b.Navigation("Section");
 
                     b.Navigation("Status");
                 });
