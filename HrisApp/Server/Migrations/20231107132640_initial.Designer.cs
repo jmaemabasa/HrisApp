@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231107054407_initial")]
+    [Migration("20231107132640_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1792,27 +1792,6 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("SectionT");
 
                     b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DepartmentId = 1,
-                            DivisionId = 1,
-                            Name = "No Section"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            Name = "No Section"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DepartmentId = 5,
-                            DivisionId = 1,
-                            Name = "No Section"
-                        },
                         new
                         {
                             Id = 4,

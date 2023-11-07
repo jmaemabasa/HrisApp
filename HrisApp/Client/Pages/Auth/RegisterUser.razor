@@ -18,15 +18,25 @@
 
     .frmselect {
         border: none;
-        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        /*box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;*/
         border-radius: 10px;
         padding: 0px 15px 4px 15px;
         background: #e8e1e1;
         height: 45px;
+        border: 1px solid #e8e1e1;
     }
 
     .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
         margin-top: 12px;
+    }
+
+    .btnlogin {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 20px;
+        background-color: #F1BC3A;
+        color: #424242;
+        padding: 10px 0px 6px 0px;
     }
 </style>
 
@@ -74,9 +84,21 @@
                 </MudSelect>
             </div>
         </div>
-         <div class="row">
-            <a href="/" class="w-auto"><small>Login</small></a>
-            <button type="submit" class="btn btn-primary w-auto ms-auto">Register</button>
+         <div class="d-flex flex-column flex-grow-1">
+                 <MudButton Class="btnlogin mb-2" Disabled="@_processing" ButtonType="ButtonType.Submit">
+                    @if (_processing)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                        <MudText Class="ms-2">Register</MudText>
+                    }
+                    else
+                    {
+                        <MudText>Register</MudText>
+                    }
+                </MudButton>
+                <div class="d-flex justify-content-center mb-2">
+                    <a href="/" class="w-auto"><small>Already have an account? <span style="text-decoration: underline">Login</span></small></a>
+                </div>
          </div>
      </EditForm>
  </div>

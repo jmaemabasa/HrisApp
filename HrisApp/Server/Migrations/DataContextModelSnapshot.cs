@@ -1792,27 +1792,6 @@ namespace HrisApp.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            DepartmentId = 1,
-                            DivisionId = 1,
-                            Name = "No Section"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            Name = "No Section"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DepartmentId = 5,
-                            DivisionId = 1,
-                            Name = "No Section"
-                        },
-                        new
-                        {
                             Id = 4,
                             DepartmentId = 6,
                             DivisionId = 1,

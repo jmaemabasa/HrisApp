@@ -5,6 +5,7 @@ namespace HrisApp.Client.Pages.Auth
     public partial class RegisterUser : ComponentBase
     {
         UserLoginDto reg = new UserLoginDto();
+        private bool _processing = false;
 
         string message = string.Empty;
         MudBlazor.Severity _severity;
@@ -24,6 +25,7 @@ namespace HrisApp.Client.Pages.Auth
         {
             try
             {
+                _processing = true;
                 var result = await AuthService.Register(reg);
 
                 showAlert = true;
@@ -38,6 +40,8 @@ namespace HrisApp.Client.Pages.Auth
             {
                 Console.WriteLine(ex.Message.ToString());
                 message = ex.Message.ToString();
+                _processing = false;
+
             }
         }
 

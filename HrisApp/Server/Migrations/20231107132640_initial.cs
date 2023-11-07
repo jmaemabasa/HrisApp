@@ -963,9 +963,6 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "DepartmentId", "DivisionId", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "No Section" },
-                    { 2, 4, 1, "No Section" },
-                    { 3, 5, 1, "No Section" },
                     { 4, 6, 1, "Hapi Dealer" },
                     { 5, 6, 1, "Servicing" },
                     { 6, 6, 1, "Expansion" },
