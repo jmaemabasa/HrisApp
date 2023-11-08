@@ -9,6 +9,21 @@
     margin-bottom: 20px;
 }
 
+::deep .diveditimg {
+    position: absolute;
+    margin-inline-start: 10rem;
+}
+
+::deep .btnupdateimg {
+    border-radius: 30px;
+    background-color: #fff;
+}
+
+    ::deep .btnupdateimg:hover {
+        background-color: #FFC107;
+        color: #fff;
+    }
+
 ::deep .empdleft, ::deep .empdmain {
     background: #e9ecef;
     border: none;

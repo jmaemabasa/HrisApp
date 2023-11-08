@@ -70,20 +70,14 @@
                  </div>
              </ToolBarContent>
              <HeaderContent>
-                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Full Name</MudTh>
-                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Date Hired</MudTh>
-                 <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold;">Position</MudTh>
-                 <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold;">
-                     <div class="d-flex flex-row gap-4">
-                         <div>Division</div>
-                         <div>|</div>
-                         <div>Department</div>
-                         <div>|</div>
-                         <div>Section</div>
-                     </div>
-                 </MudTh>
-                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Status</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Full Name</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">ID No.</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Date Hired</MudTh>
+                 <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
              </HeaderContent>
              <RowTemplate>
              <MudTd DataLabel="Full Name">
@@ -100,10 +94,10 @@
                  </div>
 
              </MudTd>
-             <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("d")</MudTd>
+                 <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
              <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
-             <MudTd DataLabel="Disignation">
-                     <MudChip Style="background-color: #B7D3DF">@employeeee.Division?.Name</MudChip> | <MudChip Style="background-color: #AEBDCA">@employeeee.Department?.Name</MudChip> |
+             <MudTd DataLabel="Division">@employeeee.Division?.Name
+                     @* |
                      @if (employeeee.SectionId == 0)
                     {
                         <MudChip Class="statusChip">No Section</MudChip>
@@ -114,18 +108,20 @@
                         {
                             @if (item.Id == employeeee.SectionId)
                             {
-                                
+                                <MudChip Class="statusChip">@item.Name</MudChip>
                             }
                         }
-                    }
+                    } *@
                     
                         
              </MudTd>
-                 <MudTd DataLabel="Status">
+                 <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
+                 <MudTd DataLabel="Date Hired" Style="text-align: center;">@employeeee.DateHired.ToString("d")</MudTd>
+                 <MudTd DataLabel="Status" Style="text-align: center;">
                      <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
              </MudTd>
                  <MudTd>
-                     <MudTooltip Text="Show Details">
+                     <MudTooltip Text="View Details">
                          <MudIconButton Class="btnedit" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Edit"></MudIconButton>
                      </MudTooltip>
                  </MudTd>

@@ -1,0 +1,26 @@
+﻿.box {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: 784px;
+    padding: 45px 50px 25px 50px;
+    margin-top: 30px;
+    overflow: auto;
+}
+
+::deep .carddep {
+    border-radius: 15px;
+    height: 12rem;
+    padding: 0px 10px 0 10px;
+    background-color: #F5F5FA;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+::deep .carddepcontent {
+    color: #292727;
+}
+
+::deep .txt {
+    font-size: 13px;
+}

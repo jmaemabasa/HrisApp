@@ -55,7 +55,7 @@
              </div>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh Class="col-4" Style="background: #e9ecef;">
+             <MudTh Class="col-4" Style="background: #e9ecef; font-size: 16px;">
                 <div class="d-flex justify-content-between">
                     <div class="ttitle">Division</div>  
                     <div class="">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </MudTh>
-             <MudTh Class="col-3" Style="background: #e9ecef;">
+             <MudTh Class="col-3" Style="background: #e9ecef; font-size: 16px;">
                 <div class="d-flex justify-content-between">
                         <div class="ttitle">Department</div>
                     <div class="">
@@ -72,8 +72,8 @@
                 </div>
             </MudTh>
 
-             <MudTh Class="col-3" Style="font-weight: bold; background: #e9ecef;">Section</MudTh>
-             <MudTh Class="col-3" Style="font-weight: bold; background: #e9ecef;">Action</MudTh>
+             <MudTh Class="col-3" Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Section</MudTh>
+             <MudTh Class="col-3" Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center;">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
      
@@ -106,8 +106,8 @@
                     </MudTd>
                 }
             }
-            <MudTd DataLabel="" Style="font-weight: bold;">@Sections.Name</MudTd>
-            <MudTd >
+            <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@Sections.Name</MudTd>
+            <MudTd Style="text-align: center;">
                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateSection(Sections.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
             </MudTd>
 

@@ -15,8 +15,17 @@
         border-radius: 20px;
         padding: 10px 15px 10px 15px;
     }
-
-</style>
+    .icnbtn {
+        padding: 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        overflow: visible;
+    }
+    .icnbtn:hover {
+        background-color: #DADDDF;
+    }
+    </style>
 
 <MudCard Class="topmudcard">
     <MudCardContent Class="topcards">
@@ -26,7 +35,9 @@
                 <MudText Typo="Typo.h3"><b>@value</b></MudText>
             </div>
             <div>
-                <MudIcon Icon="@icon" Color="@iconColor" Style="font-size: 5rem;" />
+                <MudTooltip Text="Show Details" Color="Color.Tertiary">
+                    <MudIcon Class="icnbtn" Icon="@icon" Style=@iconColor @onclick="@HandleIconClick" />
+                </MudTooltip>
             </div>
         </div>
     </MudCardContent>
@@ -34,7 +45,7 @@
 
 
 @code {
-#nullable disable
+    #nullable disable
     [Parameter]
     public string title { get; set; }
     [Parameter]
@@ -42,6 +53,12 @@
     [Parameter]
     public string icon { get; set; }
     [Parameter]
-    public MudBlazor.Color iconColor { get; set; }
+    public string iconColor { get; set; }
+    [Parameter]
+    public EventCallback OnIconClick { get; set; }
 
+    private async Task HandleIconClick()
+    {
+        await OnIconClick.InvokeAsync(null);
+    }
 }

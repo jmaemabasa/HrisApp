@@ -39,7 +39,7 @@
             </div>        
         </ToolBarContent>
         <HeaderContent>
-             <MudTh Class="col-4" Style="background: #e9ecef;">
+             <MudTh Class="col-4" Style="background: #e9ecef; font-size: 16px;">
                 <div class="d-flex justify-content-between">
                     <div class="" >Division</div>
                     <div class="">
@@ -47,12 +47,12 @@
                     </div>
                 </div>
             </MudTh>
-             <MudTh Class="col-4" Style="font-weight: bold; background: #e9ecef;">
+             <MudTh Class="col-4" Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
                 <MudTableSortLabel SortBy="new Func<DepartmentT, object>(x=>x.Name)">
                     Department
                 </MudTableSortLabel>
              </MudTh>
-             <MudTh Style="background: #e9ecef;">Action</MudTh>
+             <MudTh Style="background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
 
@@ -70,9 +70,9 @@
                     </div>
                 </div>
             </MudTd>
-            <MudTd DataLabel="Department" Style="font-weight: bold;">@Departments.Name</MudTd>
+            <MudTd DataLabel="Department" Style="font-weight: bold; background-color: rgb(197,207,210, 0.2);">@Departments.Name</MudTd>
 
-            <MudTd>
+            <MudTd Style="text-align: center;">
                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
             </MudTd>
 

@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Employee
+﻿using System.Net.Security;
+
+namespace HrisApp.Client.Pages.Employee
 {
 #nullable disable
     public partial class AddEmployee : ComponentBase
@@ -21,11 +23,6 @@
                 {
                     _toastService.ShowError("Fill out all fields.");
                     slectClasss = "frmselecterror";
-                }
-                else if (imgBase64 == "./images/addIconImage.png")
-                {
-                    _toastService.ShowError("Upload Image.");
-                    imguploadclass = "btnimagerror";
                 }
                 else
                 {
@@ -499,8 +496,28 @@
         {
             using var _contentImg = new MultipartFormDataContent();
 
-            _contentImg.Add(EmpImage.LastOrDefault());
-            await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
+            //_contentImg.Add(EmpImage.LastOrDefault());
+            //await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
+            if (EmpImage.Any())
+            {
+                _contentImg.Add(EmpImage.LastOrDefault());
+                await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
+            }
+            else
+            {
+                //string defaultImagePath = "images/imgholder.jpg";
+                //using (FileStream fs = new FileStream(defaultImagePath, FileMode.Open))
+                //{
+                //    using (var streamContent = new StreamContent(fs))
+                //    {
+                //        streamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+                //        _contentImg.Add(streamContent, "default_image", "imgholder.jpg");
+
+                //        await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
+                //    }
+                //}
+            }
         }
 
         private async Task OnPDFSaving(string EmployeeId, int division, int department, string lastname, string verify)

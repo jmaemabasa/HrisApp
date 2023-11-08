@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using HrisApp.Client.Pages.Employee;
+using System.Text.Json;
 
 namespace HrisApp.Client.Services.ImageService
 {
@@ -15,7 +16,25 @@ namespace HrisApp.Client.Services.ImageService
         public List<EmpPictureT> EmpPictureTs { get; set; } = new List<EmpPictureT>();
         public List<DocumentT> DocumentTs { get; set; } = new List<DocumentT>();
 
-       
+
+        public async Task UpdateDBImage(EmpPictureT img)
+        {
+            var result = await _http.PutAsJsonAsync($"api/Image/{img.Id}", img);
+            //await Ok(result);
+        }
+
+        public async Task<EmpPictureT> GetSingleImage(int id)
+        {
+            var result = await _http.GetFromJsonAsync<EmpPictureT>($"api/Image/{id}");
+            if (result != null)
+                return result;
+            throw new Exception("employee not found");
+        }
+        public async Task SetImages(HttpResponseMessage result)
+        {
+            var response = await result.Content.ReadFromJsonAsync<List<EmpPictureT>>();
+            EmpPictureTs = response;
+        }
 
         public async Task AttachFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify)
         {

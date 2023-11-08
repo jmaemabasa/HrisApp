@@ -9,6 +9,10 @@ namespace HrisApp.Client.Services.ImageService
         Task<byte[]> GetImageData(string verifyCode);
         Task<List<DocumentT>> GetDocuImagelist(string verCode);
         Task<List<byte[]>> GetPDFData(string verifyCode, string EmployeeNo);
+        Task UpdateDBImage(EmpPictureT img);
+        Task<EmpPictureT> GetSingleImage(int id);
+
+
 
         Task GetNewPDF(string verifyId, string employeId);
 
@@ -21,6 +25,7 @@ namespace HrisApp.Client.Services.ImageService
 
         public Task<string> GetAttfileName(string _employeeId, string _verifyCode);
         public Task<byte[]> Getdocumentfileview(string _employeeId, string _verifyCode);
+
 
     }
 }

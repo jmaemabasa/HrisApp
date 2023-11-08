@@ -30,18 +30,24 @@
                 int positionId = position.Id;
                 int count = EmployeeService.EmployeeTs.Count(e => e.PositionId == positionId);
                 positionCounts[positionId] = count;
-
-                if (plantillaPositions.ContainsKey(positionId) && (plantillaPositions[positionId] - positionCounts[positionId] != 0))
-                {
-                    // You can display the position in the dashboard if the plantilla is not zero
-                    Console.WriteLine($"Position ID: {positionId}, Employee Count: {count}, Plantilla: {plantillaPositions[positionId]}, ds: {plantillaPositions[positionId] - positionCounts[positionId]}");
-                }
             }
-
              _totalVacancy = allPositions
             .Select(position => plantillaPositions.ContainsKey(position.Id) ? plantillaPositions[position.Id] - positionCounts[position.Id] : 0)
             .Sum();
+        }
+        public void NavIconBtns(string text)
+        {
+            switch (text)
+            {
+                case "employee":
+                    NavigationManager.NavigateTo("/employee");
+                    break;
+                case "vacancy":
+                    NavigationManager.NavigateTo("/vacancy");
+                    break;
+
             }
+        }
 
         
     }

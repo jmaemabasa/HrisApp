@@ -15,6 +15,7 @@ namespace HrisApp.Client.Pages.Employee
         EmployeeT employee = new();
         AddressT _address = new();
         PayrollT _payroll = new();
+        EmpPictureT _empPicture = new();
         EmploymentDateT _employmentDate = new();
         
         #endregion
@@ -128,6 +129,8 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee((int)id);
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
+            _empPicture = await ImageService.GetSingleImage((int)id);
+
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
             await PDFImage(employee.Verify_Id, employee.EmployeeNo);
@@ -185,13 +188,22 @@ namespace HrisApp.Client.Pages.Employee
             _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
             await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
+            _empPicture.DepartmentId = employee.DepartmentId;
+            _empPicture.DivisionId = employee.DivisionId;
+            _empPicture.LastName = employee.LastName;
+            _empPicture.EmployeeNo = employee.EmployeeNo;
+            await ImageService.UpdateDBImage(_empPicture);
+
             _toastService.ShowSuccess("Information updated successfully!");
 
             //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
             employee = await EmployeeService.GetSingleEmployee((int)id);
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
+            _empPicture = await ImageService.GetSingleImage((int)id);
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
+
+
 
             personalandjobOpen = false;
             workInfoOpen = false;
@@ -203,8 +215,67 @@ namespace HrisApp.Client.Pages.Employee
             StateHasChanged();
         }
 
+        #region Image Update
+        private string imgBase64 { get; set; }
+        private string ImageUrl { get; set; }
+        private string ImgFileName { get; set; }
+        private string ImgContentType { get; set; }
 
-        
+        MultipartFormDataContent EmpImage = new MultipartFormDataContent();
+        async Task uploadImage(InputFileChangeEventArgs e)
+        {
+            long lngImage = long.MaxValue;
+            var brwModel = e.File;
+            var imgFilename = e.File.Name;
+            var imgContent = e.File.ContentType;
+            var imgBuffer = new byte[e.File.Size];
+            var imgURL = $"data:{imgContent};base64,{Convert.ToBase64String(imgBuffer)}";
+
+            using (var _stream = brwModel.OpenReadStream(lngImage))
+            {
+                await _stream.ReadAsync(imgBuffer);
+            }
+
+            if (e.File.Name is null)
+            {
+                await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Error",
+                    Text = "No image uploaded!",
+                    Icon = SweetAlertIcon.Error
+                });
+                return;
+            }
+            else
+            {
+                using var content = new MultipartFormDataContent();
+                var fileContent = new StreamContent(brwModel.OpenReadStream(lngImage));
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(imgContent);
+
+                ImageUrl = imgURL;
+                ImgContentType = imgContent;
+                ImgFileName = imgFilename;
+                EmpImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
+
+                var base642 = Convert.ToBase64String(imgBuffer);
+                imgBase64 = string.Format("data:image/*;base64,{0}", base642);
+
+                await OnsavingImg(employee.EmployeeNo, employee.DivisionId, employee.DepartmentId, employee.LastName, employee.Verify_Id);
+
+
+            }
+        }
+
+        private async Task OnsavingImg(string EmployeeId, int division, int department, string lastname, string verify)
+        {
+            using var _contentImg = new MultipartFormDataContent();
+
+            _contentImg.Add(EmpImage.LastOrDefault());
+            await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
+            await EmployeeImg(employee.Verify_Id);//image
+        }
+        #endregion
+
 
         #region MUDTABS
         MudTabs tabs;

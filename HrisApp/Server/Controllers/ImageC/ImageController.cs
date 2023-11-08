@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Policy;
 
 namespace HrisApp.Server.Controllers.ImageC
 {
@@ -29,7 +30,8 @@ namespace HrisApp.Server.Controllers.ImageC
 
                 if (model == null)
                 {
-                    return NotFound("No image available");
+                    //not found dapat ni
+                    return Ok("No image available");
                 }
 
                 var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
@@ -58,7 +60,6 @@ namespace HrisApp.Server.Controllers.ImageC
                         var divisionName = await _context.DivisionT.Where(d => d.Id == division).Select(d => d.Name).FirstOrDefaultAsync();
                         var departmentName = await _context.DepartmentT.Where(d => d.Id == department).Select(d => d.Name).FirstOrDefaultAsync();
 
-                        //var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", divisionName, departmentName, lastname);
                         var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", EmployeeId + "_" + lastname);
                         if (!Directory.Exists(filePath))
                             Directory.CreateDirectory(filePath);
@@ -69,6 +70,20 @@ namespace HrisApp.Server.Controllers.ImageC
                             System.IO.File.WriteAllBytes(Path.Combine(filePath, file.FileName), memoryStream.ToArray());
 
 
+                            
+                        }
+
+                        var db = await _context.EmpPictureT.Where(a => a.EmployeeNo == EmployeeId && a.Verify_Id == verify && a.DepartmentId == department).FirstOrDefaultAsync();
+                        if (db != null)
+                        {
+
+                            db.Img_Filename = file.FileName;
+
+                            await _context.SaveChangesAsync();
+                            return Ok();
+                        }
+                        else
+                        {
                             EmpPictureT _Model = new EmpPictureT()
                             {
                                 EmployeeNo = EmployeeId,
@@ -83,10 +98,12 @@ namespace HrisApp.Server.Controllers.ImageC
                                 Verify_Id = verify,
                             };
                             _context.EmpPictureT.Add(_Model);
+                            await _context.SaveChangesAsync();
+                            return Ok();
                         }
-                        await _context.SaveChangesAsync();
-                        return Ok();
                     }
+
+                    
                 }
             }
             catch (Exception ex)
@@ -97,5 +114,33 @@ namespace HrisApp.Server.Controllers.ImageC
 
             return BadRequest("Invalid saving Data");
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<EmpPictureT>> GetSingleImage(int id)
+        {
+            var user = await _context.EmpPictureT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (user == null)
+            {
+                return NotFound("sorry no users here");
+            }
+            return Ok(user);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateDBImage(EmpPictureT img, int id)
+        {
+            var dbimg = await _context.EmpPictureT.FirstOrDefaultAsync(d => d.Id == img.Id);
+
+            dbimg.EmployeeNo = img.EmployeeNo;
+            dbimg.DivisionId = img.DivisionId;
+            dbimg.DepartmentId = img.DepartmentId;
+            dbimg.LastName = img.LastName;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbimg);
+        }
+        
     }
 }
