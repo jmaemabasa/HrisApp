@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Security.Policy;
 
 namespace HrisApp.Server.Controllers.ImageC
 {
@@ -23,8 +22,6 @@ namespace HrisApp.Server.Controllers.ImageC
         public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string verifyCode)
         {
             {
-
-
                 var _masterlist = await _context.EmpPictureT.ToListAsync();
                 var model = _masterlist.Where(a => a.Verify_Id == verifyCode).FirstOrDefault();
 
@@ -68,15 +65,11 @@ namespace HrisApp.Server.Controllers.ImageC
                         {
                             await file.CopyToAsync(memoryStream);
                             System.IO.File.WriteAllBytes(Path.Combine(filePath, file.FileName), memoryStream.ToArray());
-
-
-                            
                         }
 
                         var db = await _context.EmpPictureT.Where(a => a.EmployeeNo == EmployeeId && a.Verify_Id == verify && a.DepartmentId == department).FirstOrDefaultAsync();
                         if (db != null)
                         {
-
                             db.Img_Filename = file.FileName;
 
                             await _context.SaveChangesAsync();
@@ -102,8 +95,6 @@ namespace HrisApp.Server.Controllers.ImageC
                             return Ok();
                         }
                     }
-
-                    
                 }
             }
             catch (Exception ex)
@@ -141,6 +132,5 @@ namespace HrisApp.Server.Controllers.ImageC
 
             return Ok(dbimg);
         }
-        
     }
 }

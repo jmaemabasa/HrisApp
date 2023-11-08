@@ -137,8 +137,6 @@ namespace HrisApp.Client.Pages.Employee
             await ImageService.GetNewPDF(employee.Verify_Id, employee.EmployeeNo);
             pdffileList = ImageService.DocumentTs;
 
-
-
             VerifyCode = employee.Verify_Id;
 
             try
@@ -202,8 +200,6 @@ namespace HrisApp.Client.Pages.Employee
             _payroll = await PayrollService.GetSinglePayroll((int)id);
             _empPicture = await ImageService.GetSingleImage((int)id);
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
-
-
 
             personalandjobOpen = false;
             workInfoOpen = false;

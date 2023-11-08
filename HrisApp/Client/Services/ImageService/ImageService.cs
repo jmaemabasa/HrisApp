@@ -30,11 +30,6 @@ namespace HrisApp.Client.Services.ImageService
                 return result;
             throw new Exception("employee not found");
         }
-        public async Task SetImages(HttpResponseMessage result)
-        {
-            var response = await result.Content.ReadFromJsonAsync<List<EmpPictureT>>();
-            EmpPictureTs = response;
-        }
 
         public async Task AttachFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify)
         {
