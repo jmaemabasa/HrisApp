@@ -42,13 +42,15 @@
 
 <MudGrid Style="margin-top: 20px;" Spacing="5">
     <MudItem xs="12" sm="3">
-        <TopCards title="Total Active Employees" value="@_countEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 5rem; color: #FF9800" OnIconClick="@(()=>NavIconBtns("employee"))" />
+        <TopCards title="Total Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 5rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <TopCards title="Total Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("employee")) />
     </MudItem>
     <MudItem xs="12" sm="3">
         <TopCards title="Total Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 5rem; color: #E97777" OnIconClick=@(()=>NavIconBtns("vacancy")) />
     </MudItem>
-    <MudItem xs="12" sm="3">
-    </MudItem>
+    
    
 </MudGrid>
  

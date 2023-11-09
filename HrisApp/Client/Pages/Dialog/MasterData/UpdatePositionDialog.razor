@@ -6,7 +6,8 @@
 
 <MudDialog>
     <DialogContent>
-        <MudTextField Label="Name" @bind-Value="position.Name" Variant="Variant.Outlined"></MudTextField>
+        <MudTextField Style="margin-bottom: 10px" Label="Name" @bind-Value="position.Name" Variant="Variant.Outlined"></MudTextField>
+        <MudTextField Label="Platilla Count" @bind-Value="position.Plantilla" Variant="Variant.Outlined"></MudTextField>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>

@@ -3,11 +3,11 @@
     public partial class Dashboard : ComponentBase
     {
 #nullable disable
-        private string _countEmployees = "0";
+        private string _countActiveEmployees = "0";
+        private string _countInactiveEmployees = "0";
 
         private List<PositionT> allPositions;
         private Dictionary<int, int> positionCounts = new Dictionary<int, int>();
-        private Dictionary<int, int> plantillaPositions = new Dictionary<int, int>();
 
         private int _totalVacancy = 0; 
 
@@ -16,14 +16,10 @@
             await DepartmentService.GetDepartment();
 
             await EmployeeService.GetEmployee();
-            _countEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
+            _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
+            _countInactiveEmployees = EmployeeService.EmployeeTs.Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId)).Count().ToString();
 
             allPositions = await PositionService.GetPositionList();
-
-            plantillaPositions = new Dictionary<int, int>
-            {
-                { 1, 3 }, { 2, 2 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 4 },{ 48, 3 }, { 49, 1 }
-            };
 
             foreach (var position in allPositions)
             {
@@ -31,9 +27,7 @@
                 int count = EmployeeService.EmployeeTs.Count(e => e.PositionId == positionId);
                 positionCounts[positionId] = count;
             }
-             _totalVacancy = allPositions
-            .Select(position => plantillaPositions.ContainsKey(position.Id) ? plantillaPositions[position.Id] - positionCounts[position.Id] : 0)
-            .Sum();
+            _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
         }
         public void NavIconBtns(string text)
         {

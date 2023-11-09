@@ -18,5 +18,6 @@ namespace HrisApp.Shared.Models.MasterData
         public int DivisionId { get; set; } //FK
         public int DepartmentId { get; set; } //FK
         public int SectionId { get; set; } //FK
+        public int Plantilla { get; set; } //FK
     }
 }

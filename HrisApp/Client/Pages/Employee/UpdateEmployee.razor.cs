@@ -15,7 +15,7 @@ namespace HrisApp.Client.Pages.Employee
         EmployeeT employee = new();
         AddressT _address = new();
         PayrollT _payroll = new();
-        EmpPictureT _empPicture = new();
+        //EmpPictureT _empPicture = new();
         EmploymentDateT _employmentDate = new();
         
         #endregion
@@ -129,7 +129,7 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee((int)id);
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
-            _empPicture = await ImageService.GetSingleImage((int)id);
+            //_empPicture = await ImageService.GetSingleImage((int)id);
 
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
@@ -186,11 +186,11 @@ namespace HrisApp.Client.Pages.Employee
             _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
             await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
-            _empPicture.DepartmentId = employee.DepartmentId;
-            _empPicture.DivisionId = employee.DivisionId;
-            _empPicture.LastName = employee.LastName;
-            _empPicture.EmployeeNo = employee.EmployeeNo;
-            await ImageService.UpdateDBImage(_empPicture);
+            //_empPicture.DepartmentId = employee.DepartmentId;
+            //_empPicture.DivisionId = employee.DivisionId;
+            //_empPicture.LastName = employee.LastName;
+            //_empPicture.EmployeeNo = employee.EmployeeNo;
+            //await ImageService.UpdateDBImage(_empPicture);
 
             _toastService.ShowSuccess("Information updated successfully!");
 
@@ -198,7 +198,7 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee((int)id);
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
-            _empPicture = await ImageService.GetSingleImage((int)id);
+            //_empPicture = await ImageService.GetSingleImage((int)id);
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
             personalandjobOpen = false;

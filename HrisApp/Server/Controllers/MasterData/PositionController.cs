@@ -92,6 +92,7 @@ namespace HrisApp.Server.Controllers.MasterData
             var dbpos = await _context.PositionT.FirstOrDefaultAsync(d => d.Id == pos.Id);
 
             dbpos.Name = pos.Name;
+            dbpos.Plantilla = pos.Plantilla;
 
             await _context.SaveChangesAsync();
 

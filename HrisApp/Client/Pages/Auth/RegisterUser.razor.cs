@@ -32,7 +32,16 @@ namespace HrisApp.Client.Pages.Auth
                 message = result.Message;
 
                 if (result.Success)
+                {
+                    _processing = false;
                     _severity = Severity.Success;
+                    reg.FullName = "";
+                    reg.Username = "";
+                    reg.Email = "";
+                    reg.Password = "";
+                    reg.ConfirmPassword = "";
+                    reg.Role = "---Select Role---";
+                }
                 else
                     _severity = Severity.Error;
             }

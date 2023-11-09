@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231107132640_initial")]
-    partial class initial
+    [Migration("20231109083929_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1269,6 +1269,9 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Plantilla")
+                        .HasColumnType("int");
+
                     b.Property<string>("PosCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1287,6 +1290,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 1,
                             DivisionId = 1,
                             Name = "FSS",
+                            Plantilla = 1,
                             PosCode = "S101",
                             SectionId = 0
                         },
@@ -1296,6 +1300,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 1,
                             DivisionId = 1,
                             Name = "Feeder",
+                            Plantilla = 9,
                             PosCode = "S102",
                             SectionId = 0
                         },
@@ -1305,6 +1310,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 1,
                             DivisionId = 1,
                             Name = "FCCR",
+                            Plantilla = 2,
                             PosCode = "S103",
                             SectionId = 0
                         },
@@ -1314,6 +1320,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "FSS",
+                            Plantilla = 1,
                             PosCode = "S3K01",
                             SectionId = 0
                         },
@@ -1323,6 +1330,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "DT Booking/ GT Booking",
+                            Plantilla = 1,
                             PosCode = "S3K02",
                             SectionId = 0
                         },
@@ -1332,6 +1340,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "DSS",
+                            Plantilla = 1,
                             PosCode = "S3K03",
                             SectionId = 0
                         },
@@ -1341,6 +1350,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "PM Salesman",
+                            Plantilla = 1,
                             PosCode = "S3K04",
                             SectionId = 0
                         },
@@ -1350,6 +1360,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "OMNI Feeder",
+                            Plantilla = 3,
                             PosCode = "S3K05",
                             SectionId = 0
                         },
@@ -1359,6 +1370,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "FCCR",
+                            Plantilla = 1,
                             PosCode = "S3K06",
                             SectionId = 0
                         },
@@ -1368,6 +1380,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "FSS",
+                            Plantilla = 1,
                             PosCode = "S3C01",
                             SectionId = 0
                         },
@@ -1377,6 +1390,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "DT Booking/ GT Booking",
+                            Plantilla = 2,
                             PosCode = "S3C02",
                             SectionId = 0
                         },
@@ -1386,6 +1400,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "DSS",
+                            Plantilla = 1,
                             PosCode = "S3C03",
                             SectionId = 0
                         },
@@ -1395,6 +1410,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "OMNI Feeder",
+                            Plantilla = 3,
                             PosCode = "S3C04",
                             SectionId = 0
                         },
@@ -1404,6 +1420,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "FCCR",
+                            Plantilla = 1,
                             PosCode = "S3C05",
                             SectionId = 0
                         },
@@ -1413,6 +1430,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "Operations Manager",
+                            Plantilla = 1,
                             PosCode = "URIC01",
                             SectionId = 0
                         },
@@ -1422,7 +1440,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "HAPI Supervisor",
-                            PosCode = "URIC02",
+                            Plantilla = 1,
+                            PosCode = "URICHAP01",
                             SectionId = 4
                         },
                         new
@@ -1431,7 +1450,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "HAPI Dealer Coor",
-                            PosCode = "URIC03",
+                            Plantilla = 4,
+                            PosCode = "URICHAP02",
                             SectionId = 4
                         },
                         new
@@ -1439,8 +1459,9 @@ namespace HrisApp.Server.Migrations
                             Id = 18,
                             DepartmentId = 6,
                             DivisionId = 1,
-                            Name = "FIELD SALES Supervisor",
-                            PosCode = "URIC04",
+                            Name = "Field Sales Supervisor",
+                            Plantilla = 1,
+                            PosCode = "URICSER01",
                             SectionId = 5
                         },
                         new
@@ -1449,7 +1470,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "MAG Supervisor",
-                            PosCode = "URIC05",
+                            Plantilla = 1,
+                            PosCode = "URICSER02",
                             SectionId = 5
                         },
                         new
@@ -1458,7 +1480,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "GTAS",
-                            PosCode = "URIC06",
+                            Plantilla = 5,
+                            PosCode = "URICSER03",
                             SectionId = 5
                         },
                         new
@@ -1467,7 +1490,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "SMS",
-                            PosCode = "URIC07",
+                            Plantilla = 11,
+                            PosCode = "URICSER04",
                             SectionId = 5
                         },
                         new
@@ -1476,7 +1500,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "NAO Supervisor",
-                            PosCode = "URIC08",
+                            Plantilla = 1,
+                            PosCode = "URICEXP01",
                             SectionId = 6
                         },
                         new
@@ -1485,7 +1510,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "NAO",
-                            PosCode = "URIC09",
+                            Plantilla = 2,
+                            PosCode = "URICEXP02",
                             SectionId = 6
                         },
                         new
@@ -1494,7 +1520,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "HAPI NAO",
-                            PosCode = "URIC10",
+                            Plantilla = 4,
+                            PosCode = "URICEXP02",
                             SectionId = 6
                         },
                         new
@@ -1503,7 +1530,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "IT & Support Services Staff",
-                            PosCode = "URIC11",
+                            Plantilla = 1,
+                            PosCode = "URICDTE01",
                             SectionId = 7
                         },
                         new
@@ -1512,7 +1540,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "Teleservices Support Staff / Online Coor",
-                            PosCode = "URIC12",
+                            Plantilla = 1,
+                            PosCode = "URICDTE02",
                             SectionId = 7
                         },
                         new
@@ -1521,6 +1550,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Field Sales Manager",
+                            Plantilla = 1,
                             PosCode = "GCASH01",
                             SectionId = 0
                         },
@@ -1530,6 +1560,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Field Sales Supervisor",
+                            Plantilla = 1,
                             PosCode = "GCASH02",
                             SectionId = 0
                         },
@@ -1539,7 +1570,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Field Sales Supervisor",
-                            PosCode = "GCASH03",
+                            Plantilla = 1,
+                            PosCode = "GCASHSER01",
                             SectionId = 8
                         },
                         new
@@ -1548,7 +1580,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Sonic DSP",
-                            PosCode = "GCASH04",
+                            Plantilla = 4,
+                            PosCode = "GCASHSER02",
                             SectionId = 8
                         },
                         new
@@ -1557,7 +1590,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "DSP (Commando/Incubator)",
-                            PosCode = "GCASH05",
+                            Plantilla = 6,
+                            PosCode = "GCASHSER03",
                             SectionId = 8
                         },
                         new
@@ -1566,7 +1600,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Ambassador",
-                            PosCode = "GCASH06",
+                            Plantilla = 2,
+                            PosCode = "GCASHEXP01",
                             SectionId = 9
                         },
                         new
@@ -1575,7 +1610,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Merchandiser",
-                            PosCode = "GCASH07",
+                            Plantilla = 3,
+                            PosCode = "GCASHMER01",
                             SectionId = 10
                         },
                         new
@@ -1584,7 +1620,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Scan to Pay",
-                            PosCode = "GCASH08",
+                            Plantilla = 3,
+                            PosCode = "GCASHSCA01",
                             SectionId = 11
                         },
                         new
@@ -1593,7 +1630,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Team Leader/Supervisor",
-                            PosCode = "GAIAP01",
+                            Plantilla = 1,
+                            PosCode = "GAINV01",
                             SectionId = 12
                         },
                         new
@@ -1602,7 +1640,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Trade Payable Staff",
-                            PosCode = "GAIAP02",
+                            Plantilla = 2,
+                            PosCode = "GAINV02",
                             SectionId = 12
                         },
                         new
@@ -1611,7 +1650,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Non Trade Payable Staff",
-                            PosCode = "GAIAP03",
+                            Plantilla = 1,
+                            PosCode = "GAINV03",
                             SectionId = 12
                         },
                         new
@@ -1620,7 +1660,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Team Leader/Supervisor",
-                            PosCode = "GAGA04",
+                            Plantilla = 1,
+                            PosCode = "GAGEN01",
                             SectionId = 13
                         },
                         new
@@ -1629,7 +1670,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Gen Accounting Staff",
-                            PosCode = "GAGA05",
+                            Plantilla = 3,
+                            PosCode = "GAGEN02",
                             SectionId = 13
                         },
                         new
@@ -1638,7 +1680,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Team Leader/Supervisor",
-                            PosCode = "GATC06",
+                            Plantilla = 1,
+                            PosCode = "GATAX01",
                             SectionId = 14
                         },
                         new
@@ -1647,7 +1690,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Tax and Compliance Staff",
-                            PosCode = "GATC07",
+                            Plantilla = 3,
+                            PosCode = "GATAX02",
                             SectionId = 14
                         },
                         new
@@ -1656,7 +1700,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Team Leader",
-                            PosCode = "SAAR08",
+                            Plantilla = 1,
+                            PosCode = "SAACC01",
                             SectionId = 15
                         },
                         new
@@ -1665,7 +1710,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Accounts Receivable Staff",
-                            PosCode = "SAAR09",
+                            Plantilla = 4,
+                            PosCode = "SAACC02",
                             SectionId = 15
                         },
                         new
@@ -1674,7 +1720,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Credit and Collection Staff",
-                            PosCode = "SACC10",
+                            Plantilla = 6,
+                            PosCode = "SACRE01",
                             SectionId = 16
                         },
                         new
@@ -1683,7 +1730,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "C&C - Billings to Customer",
-                            PosCode = "SACC11",
+                            Plantilla = 1,
+                            PosCode = "SACRE02",
                             SectionId = 16
                         },
                         new
@@ -1692,8 +1740,9 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Billing to Cash Settlement Staff",
-                            PosCode = "SABCS012",
-                            SectionId = 16
+                            Plantilla = 1,
+                            PosCode = "SABIL01",
+                            SectionId = 17
                         },
                         new
                         {
@@ -1701,6 +1750,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 11,
                             DivisionId = 2,
                             Name = "Manager",
+                            Plantilla = 1,
                             PosCode = "IT01",
                             SectionId = 0
                         },
@@ -1710,6 +1760,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 11,
                             DivisionId = 2,
                             Name = "IT Associate",
+                            Plantilla = 2,
                             PosCode = "IT02",
                             SectionId = 0
                         },
@@ -1719,6 +1770,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 11,
                             DivisionId = 2,
                             Name = "IT Staff",
+                            Plantilla = 3,
                             PosCode = "IT03",
                             SectionId = 0
                         },
@@ -1728,7 +1780,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Cash Operations Head",
-                            PosCode = "TCO01",
+                            Plantilla = 1,
+                            PosCode = "TREASURYCAS01",
                             SectionId = 18
                         },
                         new
@@ -1737,7 +1790,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Davao Cashier",
-                            PosCode = "TCO02",
+                            Plantilla = 3,
+                            PosCode = "TREASURYCAS02",
                             SectionId = 18
                         },
                         new
@@ -1746,7 +1800,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Cotabato Cashier",
-                            PosCode = "TCO03",
+                            Plantilla = 1,
+                            PosCode = "TREASURYCAS03",
                             SectionId = 18
                         },
                         new
@@ -1755,7 +1810,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Kidapawan Cashier",
-                            PosCode = "TCO04",
+                            Plantilla = 1,
+                            PosCode = "TREASURYCAS04",
                             SectionId = 18
                         },
                         new
@@ -1764,7 +1820,8 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Digos Cashier",
-                            PosCode = "TCO05",
+                            Plantilla = 1,
+                            PosCode = "TREASURYCAS05",
                             SectionId = 18
                         });
                 });

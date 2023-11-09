@@ -15,6 +15,8 @@
     padding: 0px 10px 0 10px;
     background-color: #F5F5FA;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    overflow: auto;
+    color: #292727;
 }
 
 ::deep .carddepcontent {

@@ -16,12 +16,15 @@
 
 ::deep .btnupdateimg {
     border-radius: 30px;
-    background-color: #fff;
+    background-color: #FAFAF5;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
     ::deep .btnupdateimg:hover {
         background-color: #FFC107;
         color: #fff;
+        transform: scale(1.1);
+        box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
     }
 
 ::deep .empdleft, ::deep .empdmain {
@@ -96,6 +99,9 @@
 ::deep .btnedit {
     color: #27374D;
 }
+    ::deep .btnedit:hover {
+        transform: scale(1.1);
+    }
 
 /*IMAGE*/
 ::deep .btnimage {
