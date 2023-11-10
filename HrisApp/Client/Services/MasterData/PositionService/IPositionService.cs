@@ -12,8 +12,8 @@
 
         Task GetPosition();
 
-        Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId);
-        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId);
+        Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int plantilla);
+        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int plantilla);
         Task UpdatePosition(PositionT position);
     }
 }

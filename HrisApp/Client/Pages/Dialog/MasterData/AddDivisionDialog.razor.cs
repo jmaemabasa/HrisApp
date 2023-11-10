@@ -1,5 +1,4 @@
-﻿using HrisApp.Client.Services.AuditLog;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -44,8 +43,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     _toastService.ShowSuccess(newDivision + " Created Successfully!");
 
-                    //var comment = "Added the " + newDivision + " record.";
-                    //await AuditLogService.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "Create", "DivisionT", comment, DateTime.Now);
+                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "DivisionT", $"Division: {newDivision} created successfully.", "_", DateTime.Now);
 
                     await Task.Delay(1000);
 

@@ -1,4 +1,8 @@
-﻿namespace HrisApp.Client.Pages.Education
+﻿using HrisApp.Shared.Models.Education;
+using HrisApp.Shared.Models.LiscenseAndTraining;
+using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeeOtherEduc : ComponentBase
@@ -19,6 +23,7 @@
         {
             othered.Verify_Id = VerifyCode;
             await EducationService.CreateOtherEduc(othered);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "OtherEducT", $"OtherEduc Verify_Id: {othered.Verify_Id} created successfully.", "_", DateTime.Now);
             othered.OthersSchoolType = "";
             othered.OthersSchoolName = "";
             othered.OthersSchoolLoc = "";
@@ -45,6 +50,7 @@
         async Task DeleteOther(int id)
         {
             await EducationService.DeleteOtherEduc(id);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "OtherEducT", $"OtherEduc Verify_Id: {othered.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(otheredList), DateTime.Now);
             otheredList = await EducationService.GetOtherEduclist(VerifyCode);
         }
 

@@ -1,4 +1,8 @@
-﻿namespace HrisApp.Client.Pages.Education
+﻿using HrisApp.Shared.Models.Education;
+using HrisApp.Shared.Models.LiscenseAndTraining;
+using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeeSHS : ComponentBase
@@ -19,6 +23,7 @@
         {
             senior.Verify_Id = VerifyCode;
             await EducationService.CreateSeniorHS(senior);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "SHST", $"SHS Verify_Id: {senior.Verify_Id} created successfully.", "_", DateTime.Now);
             senior.ShsSchoolName = "";
             senior.ShsSchoolLoc = "";
             senior.ShsAward = "";
@@ -43,6 +48,7 @@
         async Task DeleteSenior(int id)
         {
             await EducationService.DeleteSHS(id);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "SHST", $"SHS Verify_Id: {senior.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(shsList), DateTime.Now);
             shsList = await EducationService.GetSeniorHSlist(VerifyCode);
         }
 

@@ -17,6 +17,8 @@
 @inject IToastService _toastService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@inject GlobalConfigService GlobalConfigService
+@inject AuditlogGlobal AuditlogGlobal
 
 @attribute [Authorize(Roles = "Admin")]
 <PageTitle>Add Employee</PageTitle>

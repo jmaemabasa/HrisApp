@@ -1,4 +1,8 @@
-﻿namespace HrisApp.Client.Pages.Education
+﻿using HrisApp.Shared.Models.Education;
+using HrisApp.Shared.Models.LiscenseAndTraining;
+using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeePrimary : ComponentBase
@@ -19,6 +23,7 @@
         {
             _pri.Verify_Id = VerifyCode;
             await EducationService.CreatePrimary(_pri);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "PrimaryT", $"Primary Verify_Id: {_pri.Verify_Id} created successfully.", "_", DateTime.Now);
             _pri.PriSchoolName = "";
             _pri.PriSchoolLoc = "";
             _pri.PriAward = "";
@@ -42,6 +47,7 @@
         async Task DeletePrimary(int id)
         {
             await EducationService.DeletePrimary(id);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "PrimaryT", $"Primary Verify_Id: {_pri.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(primaryList), DateTime.Now);
             primaryList = await EducationService.GetPrimarylist(VerifyCode);
         }
 

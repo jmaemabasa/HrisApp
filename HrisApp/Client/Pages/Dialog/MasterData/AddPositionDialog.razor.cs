@@ -17,6 +17,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private int selectedDepartment=0;
         private int selectedSection=0;
         private string newPosition = "";
+        private int newPlantilla;
 
         void Cancel() => MudDialog.Cancel();
 
@@ -72,6 +73,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var departmentId = selectedDepartment;
             var sectionId = selectedSection;
             var positionName = newPosition;
+            var plantillacount = newPlantilla;
             string posCode = generateposcode(divisionId, departmentId, sectionId);
 
             // Check if the selected department has sections
@@ -80,19 +82,17 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentHasSections)
             {
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, posCode, divisionId, departmentId, sectionId);
+                await PositionService.CreatePositionPerSection(positionName, posCode, divisionId, departmentId, sectionId, plantillacount);
             }
             else
             {
 
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, posCode,divisionId, departmentId);
+                await PositionService.CreatePositionPerDept(positionName, posCode,divisionId, departmentId, plantillacount);
             }
 
-            newPosition = "";
-
             _toastService.ShowSuccess(positionName + " Created Successfully!");
-
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "PositionT", $"Position: {newPosition}, Department: {departmentId} created successfully.", "_", DateTime.Now);
             await Task.Delay(1000);
 
             await jsRuntime.InvokeVoidAsync("location.reload");
@@ -103,7 +103,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         {
             var lastPosCode = Positions
             .Where(s => s.DivisionId == divisionId && s.DepartmentId == departmentId && s.SectionId == sectionId)
-            .OrderByDescending(s => s.Id)  // Assuming Id is the primary key or a field representing the order of insertion
+            .OrderByDescending(s => s.Id)
             .Select(s => s.PosCode)
             .FirstOrDefault();
 

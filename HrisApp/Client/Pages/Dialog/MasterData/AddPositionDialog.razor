@@ -6,6 +6,8 @@
 @inject IDepartmentService DepartmentService
 @inject IPositionService PositionService
 @inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+@inject AuditlogGlobal AuditlogGlobal
 
 <style>
     .mud-input.mud-input-outlined.mud-input-adorned-end {
@@ -60,12 +62,14 @@
                 </MudSelect>
 
                 <MudDivider DividerType="DividerType.Middle" Class="my-6" />                
-                <MudTextField @bind-Value="newPosition" Label="Add Position in Section" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                <MudTextField @bind-Value="newPosition" Label="Add Position in Section" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 10px;"/>
+                <MudTextField @bind-Value="newPlantilla" Label="Plantilla Count" Variant="Variant.Outlined" Margin="Margin.Dense" />
             }
             else
             {
                 <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
-                <MudTextField @bind-Value="newPosition" Label="Add Position in Department" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                <MudTextField @bind-Value="newPosition" Label="Add Position in Department" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 10px;" />
+                <MudTextField @bind-Value="newPlantilla" Label="Plantilla Count" Variant="Variant.Outlined" Margin="Margin.Dense" />
             }
         }
         

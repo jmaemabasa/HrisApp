@@ -1,4 +1,8 @@
-﻿namespace HrisApp.Client.Pages.Education
+﻿using HrisApp.Shared.Models.Education;
+using HrisApp.Shared.Models.LiscenseAndTraining;
+using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeeSecondary : ComponentBase
@@ -19,6 +23,7 @@
         {
             sec.Verify_Id = VerifyCode;
             await EducationService.CreateSecondary(sec);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "SecondaryT", $"Secondary Verify_Id: {sec.Verify_Id} created successfully.", "_", DateTime.Now);
             sec.SecSchoolName = "";
             sec.SecSchoolLoc = "";
             sec.SecAward = "";
@@ -43,6 +48,7 @@
         async Task DeleteSecondary(int id)
         {
             await EducationService.DeleteSecondary(id);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "SecondaryT", $"Secondary Verify_Id: {sec.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(secondaryList), DateTime.Now);
             secondaryList = await EducationService.GetSecondarylist(VerifyCode);
         }
 

@@ -18,6 +18,8 @@
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@inject GlobalConfigService GlobalConfigService
+@inject AuditlogGlobal AuditlogGlobal
 
 @attribute [Authorize(Roles = "Admin, User")]
 <PageTitle>Update Employee</PageTitle>

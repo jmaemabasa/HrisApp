@@ -1,4 +1,7 @@
-﻿using Microsoft.JSInterop;
+﻿using HrisApp.Client.Pages.MasterData;
+using HrisApp.Shared.Models.MasterData;
+using Microsoft.JSInterop;
+using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -41,8 +44,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await PositionService.UpdatePosition(position);
+                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "PositionT", $"PositionId: {position.Id} updated successfully.", JsonConvert.SerializeObject(position), DateTime.Now);
 
-                _toastService.ShowSuccess(position.Name + " Created Successfully!");
+                _toastService.ShowSuccess(position.Name + " Updated Successfully!");
                 await Task.Delay(1000);
 
                 await jsRuntime.InvokeVoidAsync("location.reload");

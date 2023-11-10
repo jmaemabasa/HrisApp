@@ -1,4 +1,8 @@
-﻿namespace HrisApp.Client.Pages.Education
+﻿using HrisApp.Shared.Models.Education;
+using HrisApp.Shared.Models.LiscenseAndTraining;
+using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeeMasteral : ComponentBase
@@ -19,6 +23,7 @@
         {
             masteral.Verify_Id = VerifyCode;
             await EducationService.CreateMasteral(masteral);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "MasteralT", $"Masteral Verify_Id: {masteral.Verify_Id} created successfully.", "_", DateTime.Now);
             masteral.MasSchoolName = "";
             masteral.MasSchoolLoc = "";
             masteral.MasCourse = "";
@@ -44,6 +49,7 @@
         async Task DeleteMasteral(int id)
         {
             await EducationService.DeleteMasteral(id);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "MasteralT", $"Masteral Verify_Id: {masteral.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(masteralList), DateTime.Now);
             masteralList = await EducationService.GetMasterallist(VerifyCode);
         }
 

@@ -52,6 +52,9 @@
 ::deep .btnedit {
     color: #27374D;
 }
+    ::deep .btnedit:hover {
+        transform: scale(1.1);
+    }
 
 ::deep .btnadd {
     border: none;
@@ -65,6 +68,7 @@
     ::deep .btnadd:hover {
         background-color: #E38D0F;
         color: #fff;
+        transform: scale(1.1);
     }
 
 @media (max-width: 576px) {

@@ -12,7 +12,6 @@ global using HrisApp.Client.Services.EmpDetails.EmployeeService;
 global using HrisApp.Client.Services.EmpDetails.AddressService;
 global using HrisApp.Client.Services.EmpDetails.EducationService;
 global using HrisApp.Client.Services.EmpDetails.EmploymentDateService;
-global using HrisApp.Client.Services.AuditLog;
 global using HrisApp.Client.Services.LicAndTrainService;
 global using HrisApp.Client.Services.Payroll;
 global using HrisApp.Client.Pages.Education;
@@ -26,7 +25,6 @@ global using HrisApp.Shared.Models.User;
 global using HrisApp.Shared.Models.Payroll;
 global using HrisApp.Shared.Models.Employee;
 global using HrisApp.Shared.Models.Images;
-global using HrisApp.Shared.Models.Dummy;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.WebUtilities;
@@ -37,12 +35,12 @@ global using System.Security.Claims;
 global using MudBlazor;
 global using MudBlazor.Services;
 global using Blazored.Toast;
+global using HrisApp.Client.Global;
 global using System.Net.Http.Json;
 global using HrisApp.Client.Services.MasterData.ScheduleService;
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using HrisApp.Client.Global;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -74,11 +72,10 @@ builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<ILicenseTrainingService, LicenseTrainingService>();
 builder.Services.AddScoped<IPayrollService, PayrollService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
-builder.Services.AddScoped<IAuditlogService, AuditlogService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IEmploymentDateService, EmploymentDateService>();
 builder.Services.AddTransient<GlobalConfigService>();
-builder.Services.AddTransient<DummyGlobal>();
+builder.Services.AddTransient<AuditlogGlobal>();
 
 //===========================//////////=======================
 

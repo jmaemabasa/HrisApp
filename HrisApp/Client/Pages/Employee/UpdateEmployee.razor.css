@@ -91,10 +91,11 @@
     width: 200px;
 }
 
-::deep .btnnext:hover {
-    background-color: #E38D0F;
-    color: #fff;
-}
+    ::deep .btnnext:hover {
+        background-color: #E38D0F;
+        color: #fff;
+        transform: scale(1.1);
+    }
 
 ::deep .btnedit {
     color: #27374D;

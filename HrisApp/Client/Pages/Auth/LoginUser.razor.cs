@@ -1,5 +1,5 @@
 ﻿using HrisApp.Client.Global;
-using HrisApp.Shared.Models.Dummy;
+using HrisApp.Client.Pages.MasterData;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace HrisApp.Client.Pages.Auth
@@ -59,25 +59,13 @@ namespace HrisApp.Client.Pages.Auth
                     await LocalStorage.SetItemAsync("token", result.Data);
                     await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-                    AuditLogsDummy auditLogsDummy = new AuditLogsDummy()
-                    {
-                        UserId = Convert.ToInt32(GlobalConfigService.User_Id),
-                        Action = "Login",
-                        TableName = "Login",
-                        AdditionalInfo = "Login",
-                        RecordID = 0,
-                        Date = DateTime.Now
-                    };
-
-                    await _dummyGlobal.createAudit(auditLogsDummy);
-                    //_toastService.ShowSuccess(auditLogsDummy.AdditionalInfo);
+                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "LOGIN", "No Table", $"The user logged in.", "_",DateTime.Now);
 
                     _toastService.ShowSuccess("Successfully Login.");
                     await Task.Delay(1500);
 
                     NavigationManager.NavigateTo("/dashboard");
                     _toastService.ShowSuccess("Successfully Login.");
-                    //_toastService.ShowSuccess(auditLogsDummy.AdditionalInfo);
 
 
                 }

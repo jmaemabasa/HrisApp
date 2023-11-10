@@ -1,4 +1,8 @@
-﻿namespace HrisApp.Client.Pages.Education
+﻿using HrisApp.Shared.Models.Education;
+using HrisApp.Shared.Models.LiscenseAndTraining;
+using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeeDoctorate : ComponentBase
@@ -19,6 +23,7 @@
         {
             doctorate.Verify_Id = VerifyCode;
             await EducationService.CreateDoctorate(doctorate);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "DoctorateT", $"Doctorate Verify_Id: {doctorate.Verify_Id} created successfully.", "_", DateTime.Now);
             doctorate.DocSchoolName = "";
             doctorate.DocSchoolLoc = "";
             doctorate.DocCourse = "";
@@ -44,6 +49,7 @@
         async Task DeleteDoc(int id)
         {
             await EducationService.DeleteDoctorate(id);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "DoctorateT", $"Doctorate Verify_Id: {doctorate.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(doctorateList), DateTime.Now);
             doctorateList = await EducationService.GetDoctoratelist(VerifyCode);
         }
 

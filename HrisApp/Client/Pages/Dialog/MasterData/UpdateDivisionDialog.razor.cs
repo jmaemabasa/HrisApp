@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using HrisApp.Client.Pages.MasterData;
+using HrisApp.Shared.Models.MasterData;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -42,8 +45,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await DivisionService.UpdateDivision(division);
+                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "DivisionT", $"DivisionId: {division.Id} updated successfully.", JsonConvert.SerializeObject(division), DateTime.Now);
 
-                _toastService.ShowSuccess(division.Name + " Created Successfully!");
+                _toastService.ShowSuccess(division.Name + " Updated Successfully!");
                 await Task.Delay(1000);
 
                 await jsRuntime.InvokeVoidAsync("location.reload");

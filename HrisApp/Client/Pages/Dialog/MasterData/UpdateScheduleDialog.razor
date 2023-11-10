@@ -4,6 +4,8 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime jsRuntime
 @inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+@inject AuditlogGlobal AuditlogGlobal
 
 <MudDialog>
     <DialogContent>
@@ -16,52 +18,3 @@
         <MudButton Color="Color.Primary" OnClick="UpdateArea">Save</MudButton>
     </DialogActions>
 </MudDialog>
-
-
-@code {
-    #nullable disable
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-    [Parameter]
-    public int Id { get; set; }
-
-
-    private ScheduleTypeT schedule = null;
-
-    void Cancel() => MudDialog.Cancel();
-
-
-    protected override async Task OnParametersSetAsync()
-    {
-        schedule = ScheduleService.ScheduleTs.Find(d => d.Id == Id);
-    }
-
-    async Task UpdateArea()
-    {
-        if (schedule == null)
-            return;
-
-        MudDialog.Close();
-
-        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
-            {
-                Title = "Confirmation",
-                Text = "Are you sure you want to update the " + schedule.Name + "?",
-                Icon = SweetAlertIcon.Question,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Yes",
-                CancelButtonText = "No"
-            });
-
-        if (confirmResult.IsConfirmed)
-        {
-            await ScheduleService.UpdateSchedule(schedule);
-
-            _toastService.ShowSuccess(schedule.Name + " Updated Successfully!");
-            await Task.Delay(1000);
-
-            await jsRuntime.InvokeVoidAsync("location.reload");
-            NavigationManager.NavigateTo("/schedule");
-
-        }
-    }
-}

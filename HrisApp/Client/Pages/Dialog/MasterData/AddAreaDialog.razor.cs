@@ -40,12 +40,15 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 {
                     await AreaService.CreateArea(newArea);
 
+                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "AreaT", $"Area: {newArea} created successfully.", "_", DateTime.Now);
+
                     _toastService.ShowSuccess(newArea + " Created Successfully!");
+
 
                     await Task.Delay(1000);
 
-                    await jsRuntime.InvokeVoidAsync("location.reload");
-                    NavigationManager.NavigateTo("/area");
+                    //await jsRuntime.InvokeVoidAsync("location.reload");
+                    //NavigationManager.NavigateTo("/area");
                 }
             }
         }

@@ -1,5 +1,7 @@
 ﻿using HrisApp.Client.HelperToken;
 using HrisApp.Client.Pages.Dialog;
+using HrisApp.Client.Pages.MasterData;
+using Newtonsoft.Json;
 using System;
 using System.Buffers.Text;
 
@@ -129,7 +131,6 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee((int)id);
             _address = await AddressService.GetSingleAddress((int)id);
             _payroll = await PayrollService.GetSinglePayroll((int)id);
-            //_empPicture = await ImageService.GetSingleImage((int)id);
 
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
@@ -150,7 +151,7 @@ namespace HrisApp.Client.Pages.Employee
 
             bday = employee.Birthdate;
             DateHired = employee.DateHired;
-    }
+        }
         
         protected async Task SaveUpdateEmployee() 
         {
@@ -186,12 +187,7 @@ namespace HrisApp.Client.Pages.Employee
             _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
             await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
-            //_empPicture.DepartmentId = employee.DepartmentId;
-            //_empPicture.DivisionId = employee.DivisionId;
-            //_empPicture.LastName = employee.LastName;
-            //_empPicture.EmployeeNo = employee.EmployeeNo;
-            //await ImageService.UpdateDBImage(_empPicture);
-
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "EmployeeT", $"EmployeeId: {employee.Id} updated successfully.", $"Employee: {JsonConvert.SerializeObject(employee)}, Address: {JsonConvert.SerializeObject(_address)}, Payroll: {JsonConvert.SerializeObject(_payroll)}", DateTime.Now);
             _toastService.ShowSuccess("Information updated successfully!");
 
             //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);

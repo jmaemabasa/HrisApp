@@ -1,4 +1,7 @@
-﻿namespace HrisApp.Client.Pages.Education
+﻿using HrisApp.Shared.Models.Education;
+using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeeTraining : ComponentBase
@@ -19,6 +22,7 @@
         {
             training.Verify_Id = VerifyCode;
             await LicenseTrainingService.CreateTraining(training);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "TrainingT", $"Training Verify_Id: {training.Verify_Id} created successfully.", "_", DateTime.Now);
             training.TrainingName = "";
             training.Remarks = "";
             training.TrainingDate = DateTime.Today;
@@ -42,6 +46,7 @@
         async Task DeleteTraining(int id)
         {
             await LicenseTrainingService.DeleteTraining(id);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "TrainingT", $"Training Verify_Id: {training.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(trainingListt), DateTime.Now);
             trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
         }
 

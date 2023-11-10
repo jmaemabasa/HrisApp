@@ -68,14 +68,15 @@
 
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId)
+        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int plantilla)
         {
             PositionT newPosition = new PositionT
             {
                 Name = posName,
                 DivisionId = divId,
                 DepartmentId = deptId,
-                PosCode = posCode
+                PosCode = posCode,
+                Plantilla = plantilla
             };
 
             HttpResponseMessage response = await _http.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
@@ -85,7 +86,7 @@
                 Console.WriteLine("Error: " + errorMessage);
             }
         }
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int plantilla)
         {
             PositionT newPosition = new PositionT
             {
@@ -93,7 +94,8 @@
                 PosCode = posCode,
                 DivisionId = divId,
                 DepartmentId = deptId,
-                SectionId = sectId
+                SectionId = sectId,
+                Plantilla = plantilla
             };
 
             HttpResponseMessage response = await _http.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
