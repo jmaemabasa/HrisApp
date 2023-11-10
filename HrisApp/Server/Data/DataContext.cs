@@ -226,7 +226,6 @@ namespace HrisApp.Server.Data
         }
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
-        public DbSet<AuditLogT> AuditLogT { get; set; }
         public DbSet<UserRoleT> UserRoleT { get; set; }
 
 

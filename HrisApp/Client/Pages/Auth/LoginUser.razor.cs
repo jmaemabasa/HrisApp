@@ -40,12 +40,6 @@ namespace HrisApp.Client.Pages.Auth
         }
         private bool _processing = false;
 
-        async Task ProcessSomething()
-        {
-            _processing = true;
-            await Task.Delay(2000);
-            _processing = false;
-        }
         private async Task HandleLogin()
         {
             try
@@ -59,15 +53,12 @@ namespace HrisApp.Client.Pages.Auth
                     await LocalStorage.SetItemAsync("token", result.Data);
                     await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "LOGIN", "No Table", $"The user logged in.", "_",DateTime.Now);
-
-                    _toastService.ShowSuccess("Successfully Login.");
                     await Task.Delay(1500);
 
                     NavigationManager.NavigateTo("/dashboard");
                     _toastService.ShowSuccess("Successfully Login.");
 
-
+                    //await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "LOGIN", "No Table", "The user logged in.", "_", DateTime.Now);
                 }
                 else
                 {
@@ -76,8 +67,6 @@ namespace HrisApp.Client.Pages.Auth
                     _severity = Severity.Error;
                     _message = result.Message;
                     _toastService.ShowError(result.Message);
-
-
                 }
             }
             catch (Exception ex)

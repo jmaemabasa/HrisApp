@@ -130,6 +130,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 dbEmployee.FirstName = employee.FirstName;
                 dbEmployee.LastName = employee.LastName;
                 dbEmployee.MiddleName = employee.MiddleName;
+                dbEmployee.Extension = employee.Extension;
                 dbEmployee.Height = employee.Height;
                 dbEmployee.Weight = employee.Weight;
                 dbEmployee.Nationality = employee.Nationality;
