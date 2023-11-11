@@ -1,0 +1,3 @@
+﻿UserId, Action, TableName, AddInfo, BeforeUpdate, Date
+1, CREATE, AreaT, Area: d created successfully., _, 11/12/2023 8:47:24 AM
+

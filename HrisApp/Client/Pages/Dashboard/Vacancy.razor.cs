@@ -12,11 +12,12 @@
         protected override async Task OnInitializedAsync()
         {
             await EmployeeService.GetEmployee();
+            allPositions = await PositionService.GetPositionList();
+
             await DepartmentService.GetDepartment();
             await SectionService.GetSection();
             sections = SectionService.SectionTs;
 
-            allPositions = await PositionService.GetPositionList();
 
             foreach (var position in allPositions)
             {
@@ -32,7 +33,8 @@
             //    sections.AddRange(departmentSections);
             //}
 
-            //Console.WriteLine(sections);
+            //foreach (var kvp in positionCounts)
+            //    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
 
             _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
         }

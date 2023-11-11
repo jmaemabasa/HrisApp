@@ -20,77 +20,112 @@ namespace HrisApp.Server.Controllers.AuditLog
             _logger = logger;
         }
 
-        [HttpPost("createexcelfile")]
-        public IActionResult CreateExcelFile(AuditLogData auditLogData)
+        [HttpPost("createtextfile")]
+        public IActionResult CreateTextFile(AuditLogData auditLogData)
         {
             try
             {
                 var currentDate = DateTime.Now.ToString("yyyyMMdd");
-                var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.xlsx");
+                var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.txt");
 
-                FileInfo fileInfo;
+                // Check if the file exists
+                bool fileExists = System.IO.File.Exists(filePath);
 
-                // Check if the file already exists
-                if (System.IO.File.Exists(filePath))
+                // Create or append the content to the file
+                string fileContent = $"{auditLogData.UserId}, {auditLogData.Action}, {auditLogData.TableName}, {auditLogData.AddInfo}, {auditLogData.BeforeUpdate}, {auditLogData.Date}";
+
+                // If the file doesn't exist, add headers at the first row
+                if (!fileExists)
                 {
-                    fileInfo = new FileInfo(filePath);
-
-                    using (var package = new ExcelPackage(fileInfo))
-                    {
-                        var worksheet = package.Workbook.Worksheets.FirstOrDefault(ws => ws.Name == "AuditLog");
-
-                        // If the worksheet exists, find the next available row
-                        int row = worksheet.Dimension?.Rows ?? 1;
-
-                        // Add data to the next available row
-                        worksheet.Cells[$"A{row + 1}"].Value = auditLogData.UserId;
-                        worksheet.Cells[$"B{row + 1}"].Value = auditLogData.Action;
-                        worksheet.Cells[$"C{row + 1}"].Value = auditLogData.TableName;
-                        worksheet.Cells[$"D{row + 1}"].Value = auditLogData.AddInfo;
-                        worksheet.Cells[$"E{row + 1}"].Value = auditLogData.BeforeUpdate;
-                        worksheet.Cells[$"F{row + 1}"].Value = auditLogData.Date;
-
-                        // Save the Excel package
-                        package.SaveAs(fileInfo);  // Use SaveAs with FileInfo
-                    }
-                }
-                else
-                {
-                    // File does not exist, create a new one
-                    using (var package = new ExcelPackage())
-                    {
-                        var worksheet = package.Workbook.Worksheets.Add("AuditLog");
-
-                        // Add headers
-                        worksheet.Cells["A1"].Value = "UserId";
-                        worksheet.Cells["B1"].Value = "Action";
-                        worksheet.Cells["C1"].Value = "TableName";
-                        worksheet.Cells["D1"].Value = "AddInfo";
-                        worksheet.Cells["E1"].Value = "BeforeUpdate";
-                        worksheet.Cells["F1"].Value = "Date";
-
-                        // Add data
-                        worksheet.Cells["A2"].Value = auditLogData.UserId;
-                        worksheet.Cells["B2"].Value = auditLogData.Action;
-                        worksheet.Cells["C2"].Value = auditLogData.TableName;
-                        worksheet.Cells["D2"].Value = auditLogData.AddInfo;
-                        worksheet.Cells["E2"].Value = auditLogData.BeforeUpdate;
-                        worksheet.Cells["F2"].Value = auditLogData.Date;
-
-                        // Save the Excel package
-                        package.SaveAs(filePath);  // Use SaveAs with FileInfo
-                    }
+                    string headers = "UserId, Action, TableName, AddInfo, BeforeUpdate, Date";
+                    fileContent = $"{headers}\n{fileContent}";
                 }
 
-                _logger.LogInformation($"Excel file created at: {filePath}");
+                // Append the content to the file (create the file if it doesn't exist)
+                System.IO.File.AppendAllText(filePath, fileContent + Environment.NewLine + Environment.NewLine, Encoding.UTF8);
 
-                return Ok("Excel file created successfully.");
+                _logger.LogInformation($"Text file created/appended at: {filePath}");
+
+                return Ok("Text file created/appended successfully.");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error creating Excel file: {ex.Message}");
+                _logger.LogError($"Error creating/appending text file: {ex.Message}");
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        //[HttpPost("createexcelfile")]
+        //public IActionResult CreateExcelFile(AuditLogData auditLogData)
+        //{
+        //    try
+        //    {
+        //        var currentDate = DateTime.Now.ToString("yyyyMMdd");
+        //        var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.xlsx");
+
+        //        FileInfo fileInfo;
+
+        //        // Check if the file already exists
+        //        if (System.IO.File.Exists(filePath))
+        //        {
+        //            fileInfo = new FileInfo(filePath);
+
+        //            using (var package = new ExcelPackage(fileInfo))
+        //            {
+        //                var worksheet = package.Workbook.Worksheets.FirstOrDefault(ws => ws.Name == "AuditLog");
+
+        //                // If the worksheet exists, find the next available row
+        //                int row = worksheet.Dimension?.Rows ?? 1;
+
+        //                // Add data to the next available row
+        //                worksheet.Cells[$"A{row + 1}"].Value = auditLogData.UserId;
+        //                worksheet.Cells[$"B{row + 1}"].Value = auditLogData.Action;
+        //                worksheet.Cells[$"C{row + 1}"].Value = auditLogData.TableName;
+        //                worksheet.Cells[$"D{row + 1}"].Value = auditLogData.AddInfo;
+        //                worksheet.Cells[$"E{row + 1}"].Value = auditLogData.BeforeUpdate;
+        //                worksheet.Cells[$"F{row + 1}"].Value = auditLogData.Date;
+
+        //                // Save the Excel package
+        //                package.SaveAs(fileInfo);  // Use SaveAs with FileInfo
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // File does not exist, create a new one
+        //            using (var package = new ExcelPackage())
+        //            {
+        //                var worksheet = package.Workbook.Worksheets.Add("AuditLog");
+
+        //                // Add headers
+        //                worksheet.Cells["A1"].Value = "UserId";
+        //                worksheet.Cells["B1"].Value = "Action";
+        //                worksheet.Cells["C1"].Value = "TableName";
+        //                worksheet.Cells["D1"].Value = "AddInfo";
+        //                worksheet.Cells["E1"].Value = "BeforeUpdate";
+        //                worksheet.Cells["F1"].Value = "Date";
+
+        //                // Add data
+        //                worksheet.Cells["A2"].Value = auditLogData.UserId;
+        //                worksheet.Cells["B2"].Value = auditLogData.Action;
+        //                worksheet.Cells["C2"].Value = auditLogData.TableName;
+        //                worksheet.Cells["D2"].Value = auditLogData.AddInfo;
+        //                worksheet.Cells["E2"].Value = auditLogData.BeforeUpdate;
+        //                worksheet.Cells["F2"].Value = auditLogData.Date;
+
+        //                // Save the Excel package
+        //                package.SaveAs(filePath);  // Use SaveAs with FileInfo
+        //            }
+        //        }
+
+        //        _logger.LogInformation($"Excel file created at: {filePath}");
+
+        //        return Ok("Excel file created successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Error creating Excel file: {ex.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
     }
 }
