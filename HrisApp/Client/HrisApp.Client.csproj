@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Shared\HrisApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
 </Project>

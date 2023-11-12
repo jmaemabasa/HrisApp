@@ -447,12 +447,14 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         #region FUNCTIONS / BUTTONS
-        private void OpenPdf()
+        private void OpenPdf(string name)
         {
             TokenSetGet.Set_Employeemodel(employee);
             var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
+            var parameters = new DialogParameters<PDFDialog>();
+            parameters.Add(x => x.fileName, name);
 
-            DialogService.Show<PDFDialog>("", options);
+            DialogService.Show<PDFDialog>("", parameters, options);
         }
 
         private async Task PDFImage(string verifyCode, string EmployeeId)

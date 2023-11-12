@@ -79,6 +79,19 @@
 }
 
 /*BUTTONS*/
+::deep .filebtn {
+    text-transform: none;
+    border: 2px solid #DDE0E3;
+    background-color: #F7F8FF;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 10px;
+}
+::deep .filebtn:hover {
+    border: 2px solid #146ebe;
+    background-color: #D6E5FA;
+}
+
 ::deep .btnnext {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
@@ -93,7 +106,7 @@
 
     ::deep .btnnext:hover {
         background-color: #E38D0F;
-        color: #fff;
+        color: #FAFAF5;
         transform: scale(1.1);
     }
 

@@ -138,9 +138,9 @@ namespace HrisApp.Server.Controllers.ImageC
         }
 
         [HttpGet("Getdocumentfileview")]
-        public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string employeeId, [FromQuery] string verifyCode)
+        public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string employeeId, [FromQuery] string verifyCode, [FromQuery] string filename)
         {
-            var _model = await _context.DocumentT.FirstOrDefaultAsync(d => d.EmployeeNo.Equals(employeeId) && d.Verify_Id.Equals(verifyCode));
+            var _model = await _context.DocumentT.FirstOrDefaultAsync(d => d.EmployeeNo.Equals(employeeId) && d.Verify_Id.Equals(verifyCode) && d.Img_Filename == filename);
             if (_model == null)
             {
                 return NotFound("No image available");

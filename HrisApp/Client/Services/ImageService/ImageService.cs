@@ -141,9 +141,9 @@ namespace HrisApp.Client.Services.ImageService
                 return ex.Message;
             }
         }
-        public async Task<byte[]> Getdocumentfileview(string _employeeId, string _verifyCode)
+        public async Task<byte[]> Getdocumentfileview(string _employeeId, string _verifyCode, string _filename)
         {
-            var _imgs = await _http.GetFromJsonAsync<byte[]>($"api/Document/Getdocumentfileview?employeeId={_employeeId}&verifyCode={_verifyCode}");
+            var _imgs = await _http.GetFromJsonAsync<byte[]>($"api/Document/Getdocumentfileview?employeeId={_employeeId}&verifyCode={_verifyCode}&filename={_filename}");
             if (_imgs != null)
                 return _imgs;
             throw new Exception("No Signature Found");

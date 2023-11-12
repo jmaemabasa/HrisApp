@@ -24,7 +24,7 @@ namespace HrisApp.Client.Services.ImageService
         Task AttachedFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify);
 
         public Task<string> GetAttfileName(string _employeeId, string _verifyCode);
-        public Task<byte[]> Getdocumentfileview(string _employeeId, string _verifyCode);
+        public Task<byte[]> Getdocumentfileview(string _employeeId, string _verifyCode, string _filename);
 
 
     }

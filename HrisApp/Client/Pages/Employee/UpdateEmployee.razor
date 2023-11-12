@@ -606,7 +606,18 @@
                                 {
                                     @foreach (var pdf in pdffileList)
                                     {
-                                        <MudButton Class="button" Color="Color.Success" OnClick="OpenPdf" Style="text-transform: none; width: max-content;">@pdf.Img_Filename</MudButton>
+                                        <MudButton Class="filebtn button" OnClick="@(() => OpenPdf(pdf.Img_Filename))">
+                                            <div class="d-flex flex-grow-1 align-items-center">
+                                            <div class="me-2">
+                                                    <MudIcon Icon="@Icons.Material.Filled.PictureAsPdf" Style="color: #E97777; font-size: 3em" />
+
+                                            </div>
+                                            <div class="d-flex flex-column justify-content-start">
+                                                <MudText Align="Align.Start" Typo="Typo.body1">@pdf.Img_Filename</MudText>
+                                                <MudText Align="Align.Start" Typo="Typo.caption">@pdf.Img_Date.ToString("MMMM dd, yyyy")</MudText>
+                                            </div>
+                                        </div>
+                                        </MudButton>
                                     }
                                 }
                                 else
