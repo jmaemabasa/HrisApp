@@ -32,14 +32,13 @@ namespace HrisApp.Server.Controllers.MasterData
         [HttpGet("{id}")]
         public async Task<ActionResult<ScheduleTypeT>> GetSingleSchedule(int id)
         {
-            var sched = await _context.ScheduleTypeT.FindAsync(id);
+            var sched = await _context.ScheduleTypeT.FirstOrDefaultAsync(h => h.Id == id);
 
             if (sched == null)
             {
                 return NotFound();
             }
-
-            return sched;
+            return Ok(sched);
         }
 
         private async Task<List<ScheduleTypeT>> GetDBSchedule()

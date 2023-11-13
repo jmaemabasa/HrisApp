@@ -15,29 +15,6 @@
         box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
         border-radius: 20px;
     }
-
-    .frmselect {
-        border: none;
-        /*box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;*/
-        border-radius: 10px;
-        padding: 0px 15px 4px 15px;
-        background: #e8e1e1;
-        height: 45px;
-        border: 1px solid #e8e1e1;
-    }
-
-    .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
-        margin-top: 12px;
-    }
-
-    .btnlogin {
-        border: none;
-        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-        border-radius: 20px;
-        background-color: #F1BC3A;
-        color: #424242;
-        padding: 10px 0px 6px 0px;
-    }
 </style>
 
 <div class="card p-4 mt-5 w-25 w-md-100 m-auto h-auto">
@@ -73,7 +50,7 @@
                 <MudText Typo="Typo.caption">Confirm Password</MudText>
                 <MudTextField @bind-Value="reg.ConfirmPassword" For="@(() => reg.ConfirmPassword)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
             </div>
-            <div class="flex-grow-1">
+            <div class="flex-grow-1 mb-4">
                 <MudText Typo="Typo.caption">Role</MudText>
                 <MudSelect Class="frmselect" @bind-Value="reg.Role" DisableUnderLine Margin="Margin.Dense">
                      <MudSelectItem Value="@roleholder" Disabled>---Select Role---</MudSelectItem>
@@ -85,7 +62,7 @@
             </div>
         </div>
          <div class="d-flex flex-column flex-grow-1">
-                 <MudButton Class="btnlogin mb-2" Disabled="@_processing" ButtonType="ButtonType.Submit">
+                 <MudButton Class="btnReg mb-2" Disabled="@_processing" ButtonType="ButtonType.Submit">
                     @if (_processing)
                     {
                         <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />

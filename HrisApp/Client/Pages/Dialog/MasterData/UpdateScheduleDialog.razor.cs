@@ -11,14 +11,16 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public int Id { get; set; }
 
 
-        private ScheduleTypeT schedule = null;
+        //private ScheduleTypeT schedule = null;
+        private ScheduleTypeT schedule = new();
 
         void Cancel() => MudDialog.Cancel();
 
 
         protected override async Task OnParametersSetAsync()
         {
-            schedule = ScheduleService.ScheduleTs.Find(d => d.Id == Id);
+            //schedule = ScheduleService.ScheduleTs.Find(d => d.Id == Id);
+            schedule = await ScheduleService.GetSingleSchedule(Id);
         }
 
         async Task UpdateArea()

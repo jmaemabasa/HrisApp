@@ -25,7 +25,7 @@ namespace HrisApp.Client.Pages.Education
             training.TrainingName = "";
             training.SponsorSpeaker = "";
             training.TrainingDate = DateTime.Today;
-            trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
+            _trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
             TrainingOpen = false;
 
         }
@@ -34,7 +34,7 @@ namespace HrisApp.Client.Pages.Education
         {
             try
             {
-                trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
+                _trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
             }
             catch (Exception ex)
             {
@@ -45,18 +45,18 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteTraining(int id)
         {
             await LicenseTrainingService.DeleteTraining(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "TrainingT", $"Training Verify_Id: {training.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(trainingListt), DateTime.Now);
-            trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "TrainingT", $"Training Verify_Id: {training.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(_trainingListt), DateTime.Now);
+            _trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
         }
 
 
         //TABLEEES
-        private string searchString1 = "";
-        List<Emp_TrainingT> trainingListt = new List<Emp_TrainingT>();
-        private Emp_TrainingT selectedItem1 = null;
-        private HashSet<Emp_TrainingT> selectedItems = new HashSet<Emp_TrainingT>();
+        private string _searchString1 = "";
+        List<Emp_TrainingT> _trainingListt = new List<Emp_TrainingT>();
+        private Emp_TrainingT _selectedItem1 = null;
+        private HashSet<Emp_TrainingT> _selectedItems = new HashSet<Emp_TrainingT>();
 
-        private bool FilterFunc1(Emp_TrainingT item) => FilterFunc(item, searchString1);
+        private bool FilterFunc1(Emp_TrainingT item) => FilterFunc(item, _searchString1);
 
         private bool FilterFunc(Emp_TrainingT item, string searchString)
         {

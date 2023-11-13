@@ -7,7 +7,7 @@ namespace HrisApp.Client.Pages.Employee
     {
         [CascadingParameter]
         private Task<AuthenticationState> authState { get; set; }
-        string sectionnull = string.Empty;
+        string _sectionnull = string.Empty;
 
         #region MUDTABS
         MudTabs tabs;
@@ -48,27 +48,27 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         #region PERSONAL TAB ERROR TRAP
-        private string slectClasssGender = "frmselect";
-        private string slectClasssCV = "frmselect";
-        private string slectClasssReli = "frmselect";
-        private string slectClasssRela = "frmselect";
-        private string txfieldClasssNat = "txf1";
-        private string txfieldClasssMN = "txf";
-        private string txfieldClasssEN = "txf1";
-        private string txfieldClasssEA = "txf1";
-        private string txfieldClasssEMN = "txf";
+        private string _slectClasssGender = "frmselect";
+        private string _slectClasssCV = "frmselect";
+        private string _slectClasssReli = "frmselect";
+        private string _slectClasssRela = "frmselect";
+        private string _txfieldClasssNat = "txf1";
+        private string _txfieldClasssMN = "txf";
+        private string _txfieldClasssEN = "txf1";
+        private string _txfieldClasssEA = "txf1";
+        private string _txfieldClasssEMN = "txf";
 
         private async void ActivateAddressField()
         {
-            slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
-            txfieldClasssNat = (String.IsNullOrWhiteSpace(employee.Nationality)) ? "txf1error" : "txf1";
-            txfieldClasssMN = (String.IsNullOrWhiteSpace(employee.MobileNumber)) ? "txf1error" : "txf";
-            txfieldClasssEN = (String.IsNullOrWhiteSpace(employee.EmerName)) ? "txf1error" : "txf1";
-            txfieldClasssEA = (String.IsNullOrWhiteSpace(employee.EmerAddress)) ? "txf1error" : "txf1";
-            txfieldClasssEMN = (String.IsNullOrWhiteSpace(employee.EmerMobNum)) ? "txf1error" : "txf";
+            _slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
+            _txfieldClasssNat = (String.IsNullOrWhiteSpace(employee.Nationality)) ? "txf1error" : "txf1";
+            _txfieldClasssMN = (String.IsNullOrWhiteSpace(employee.MobileNumber)) ? "txf1error" : "txf";
+            _txfieldClasssEN = (String.IsNullOrWhiteSpace(employee.EmerName)) ? "txf1error" : "txf1";
+            _txfieldClasssEA = (String.IsNullOrWhiteSpace(employee.EmerAddress)) ? "txf1error" : "txf1";
+            _txfieldClasssEMN = (String.IsNullOrWhiteSpace(employee.EmerMobNum)) ? "txf1error" : "txf";
 
             if (employee.GenderId == 0 || employee.CivilStatusId == 0 || employee.ReligionId == 0 || employee.EmerRelationshipId == 0 || String.IsNullOrWhiteSpace(employee.Nationality))
             {
@@ -187,10 +187,10 @@ namespace HrisApp.Client.Pages.Employee
         {
             await AreaService.GetAreaList();
             AreasL = AreaService.AreaTs;
-            await EmployeeService.GetStatusList();
-            StatusL = EmployeeService.StatusTs;
-            await EmployeeService.GetEmploymentStatusList();
-            EmploymentStatusL = EmployeeService.EmploymentStatusTs;
+            await StaticService.GetStatusList();
+            StatusL = StaticService.StatusTs;
+            await StaticService.GetEmploymentStatusList();
+            EmploymentStatusL = StaticService.EmploymentStatusTs;
             await DivisionService.GetDivision();
             DivisionsL = DivisionService.DivisionTs;
             await DepartmentService.GetDepartment();
@@ -199,22 +199,22 @@ namespace HrisApp.Client.Pages.Employee
             SectionsL = SectionService.SectionTs;
             await PositionService.GetPosition();
             PositionsL = PositionService.PositionTs;
-            await EmployeeService.GetGenderList();
-            GendersL = EmployeeService.GenderTs;
-            await EmployeeService.GetCivilStatusList();
-            CivilStatusL = EmployeeService.CivilStatusTs;
-            await EmployeeService.GetReligionList();
-            ReligionsL = EmployeeService.ReligionTs;
-            await EmployeeService.GetEmerRelationshipList();
-            EmerRelationshipsL = EmployeeService.EmerRelationshipTs;
-            await PayrollService.GetRateType();
-            RateTypeL = PayrollService.RateTypeTs;
+            await StaticService.GetGenderList();
+            GendersL = StaticService.GenderTs;
+            await StaticService.GetCivilStatusList();
+            CivilStatusL = StaticService.CivilStatusTs;
+            await StaticService.GetReligionList();
+            ReligionsL = StaticService.ReligionTs;
+            await StaticService.GetEmerRelationshipList();
+            EmerRelationshipsL = StaticService.EmerRelationshipTs;
+            await StaticService.GetRateType();
+            RateTypeL = StaticService.RateTypeTs;
             await PayrollService.GetScheduleType();
             ScheduleTypeL = PayrollService.ScheduleTypeTs;
-            await PayrollService.GetCashbond();
-            CashbondL = PayrollService.CashBondTs;
-            await PayrollService.GetRestDay();
-            RestDayL = PayrollService.RestDayTs;
+            await StaticService.GetCashbond();
+            CashbondL = StaticService.CashBondTs;
+            await StaticService.GetRestDay();
+            RestDayL = StaticService.RestDayTs;
 
             imgBase64 = "./images/addIconImage.png";
 

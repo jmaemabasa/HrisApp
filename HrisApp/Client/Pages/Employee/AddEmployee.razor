@@ -12,6 +12,7 @@
 @inject IPayrollService PayrollService
 @inject ILicenseTrainingService LicenseTrainingService
 @inject IEmploymentDateService EmploymentDateService
+@inject IStaticService StaticService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
 @inject IToastService _toastService
@@ -366,7 +367,7 @@
                                     </MudItem>
                                     <MudItem xs="12" sm="4">
                                          <MudText Typo="Typo.body2">Gender</MudText>
-                                         <MudSelect Class="@slectClasssGender" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
+                                         <MudSelect Class="@_slectClasssGender" DisableUnderLine @bind-Value="employee.GenderId" Margin="Margin.Dense">
                                              <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                             @foreach (var gender in GendersL)
                                             {
@@ -376,7 +377,7 @@
                                     </MudItem>
                                     <MudItem xs="12" sm="4">
                                         <MudText Typo="Typo.body2">Civil Status</MudText>
-                                        <MudSelect Class="@slectClasssCV" @bind-Value="employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
+                                        <MudSelect Class="@_slectClasssCV" @bind-Value="employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
                                              @*//gibago nako class*@
                                              <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                             @foreach (var cs in CivilStatusL)
@@ -387,12 +388,12 @@
                                     </MudItem>
                                     <MudItem xs="12" sm="4">
                                         <MudText Typo="Typo.body2">Nationality</MudText>
-                                        <InputText Class="@txfieldClasssNat" @bind-Value="employee.Nationality" />
+                                        <InputText Class="@_txfieldClasssNat" @bind-Value="employee.Nationality" />
                                         <ValidationMessage For="@(() => employee.Nationality)" class="mb-2 valmessage" />
                                     </MudItem>
                                      <MudItem xs="12" sm="4">
                                         <MudText Typo="Typo.body2">Religion</MudText>
-                                        <MudSelect @bind-Value="employee.ReligionId" Class="@slectClasssReli" DisableUnderLine Margin="Margin.Dense">
+                                        <MudSelect @bind-Value="employee.ReligionId" Class="@_slectClasssReli" DisableUnderLine Margin="Margin.Dense">
                                              <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                             @foreach (var rel in ReligionsL)
                                             {
@@ -402,7 +403,7 @@
                                      </MudItem>
                                      <MudItem xs="12" sm="4">
                                         <MudText Typo="Typo.body2">Mobile #</MudText>
-                                        <MudNumericField HideSpinButtons="true" @bind-Value="employee.MobileNumber" Class="@txfieldClasssMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
+                                        <MudNumericField HideSpinButtons="true" @bind-Value="employee.MobileNumber" Class="@_txfieldClasssMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
                                      </MudItem>
                                      <MudItem xs="12" sm="4">
                                         <MudText Typo="Typo.body2">Weight(kg)</MudText>
@@ -431,12 +432,12 @@
                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2 align-items-center">
                                         <div class="flex-grow-1">
                                              <MudText Typo="Typo.body2">Name</MudText>
-                                             <InputText Class="@txfieldClasssEN" @bind-Value="employee.EmerName" />
+                                             <InputText Class="@_txfieldClasssEN" @bind-Value="employee.EmerName" />
                                              <ValidationMessage For="@(() => employee.EmerName)" class="mb-2 valmessage" />
                                         </div>
                                          <div class="flex-grow-1">
                                              <MudText Typo="Typo.body2">Relationship</MudText>
-                                             <MudSelect @bind-Value="employee.EmerRelationshipId" Class="@slectClasssRela" DisableUnderLine Margin="Margin.Dense">
+                                             <MudSelect @bind-Value="employee.EmerRelationshipId" Class="@_slectClasssRela" DisableUnderLine Margin="Margin.Dense">
                                                  <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                 @foreach (var rel in EmerRelationshipsL)
                                                 {
@@ -446,12 +447,12 @@
                                         </div>
                                          <div class="flex-grow-1">
                                             <MudText Typo="Typo.body2">Address</MudText>
-                                            <InputText Class="@txfieldClasssEA" @bind-Value="employee.EmerAddress" />
+                                            <InputText Class="@_txfieldClasssEA" @bind-Value="employee.EmerAddress" />
                                              <ValidationMessage For="@(() => employee.EmerAddress)" class="mb-2 valmessage" />
                                         </div>
                                          <div class="flex-grow-1">
                                             <MudText Typo="Typo.body2">Mobile #</MudText>
-                                            <MudNumericField HideSpinButtons="true" @bind-Value="employee.EmerMobNum" Class="@txfieldClasssEMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.EmerMobNum)" />
+                                            <MudNumericField HideSpinButtons="true" @bind-Value="employee.EmerMobNum" Class="@_txfieldClasssEMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.EmerMobNum)" />
                                          </div>
                                     </div>
                                 </div>

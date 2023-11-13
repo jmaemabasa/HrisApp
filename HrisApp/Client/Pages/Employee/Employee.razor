@@ -6,6 +6,7 @@
 @inject IAddressService AddressService
 @inject IAreaService AreaService
 @inject IEmployeeService EmployeeService
+@inject IStaticService StaticService
 @inject IToastService _toastService
 @inject IImageService ImageService
 @inject IEducationService EducationService
@@ -45,27 +46,28 @@
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
         </MudCardActions>
-        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+        <MudOverlay Visible="_isVisible" DarkBackground="true" Absolute="true">
             <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
         </MudOverlay> 
     }
     else
     {
-        <MudTable Class="stable" Items="employeeList" Context="employeeee" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1" Virtualize="true">
+        <MudTable Class="stable" Items="_employeeList" Context="employeeee" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1" Virtualize="true">
             <ToolBarContent>
                 <div class="d-flex flex-grow-1 mb-3">
                     <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
-                        <MudItem xs="12" lg="3">
-                            @* <MudSelect class="dddiv" T="int" ValueChanged="searchh" Margin="Margin.Dense" DisableUnderLine>
-                        <MudSelectItem Value=0>All Division</MudSelectItem>
-                        @foreach (var div in Divisions)
-                        {
-                        <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
-                        }
-                        </MudSelect> *@
-                        </MudItem>
-                        <MudItem xs="12" lg="4">
-                            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                        <div class="d-flex gap-3 flex-grow-1 flex-wrap">
+                            <MudItem xs="12" lg="3">
+                                <MudSelect class="dddiv" T="int" ValueChanged="SearchStatus" Margin="Margin.Dense" DisableUnderLine>
+                                    <MudSelectItem Value=0>All Status</MudSelectItem>
+                                    @foreach (var item in StatusL)
+                                    {
+                                    <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
+                                    }
+                                    </MudSelect>
+                            </MudItem>
+                        </div>                        <MudItem xs="12" lg="4">
+                            <MudTextField DisableUnderLine @bind-Value="_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
                          </MudItem>
                      </div>
                  </div>
@@ -117,7 +119,7 @@
                         
              </MudTd>
                  <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
-                 <MudTd DataLabel="Date Hired" Style="text-align: center;">@employeeee.DateHired.ToString("d")</MudTd>
+                 <MudTd DataLabel="Date Hired" Style="text-align: center;">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
                  <MudTd DataLabel="Status" Style="text-align: center;">
                      <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
              </MudTd>
@@ -135,7 +137,7 @@
                  </MudTd>
              </RowTemplate>
              <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
              </PagerContent>
          </MudTable>
     } 

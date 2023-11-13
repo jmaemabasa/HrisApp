@@ -9,29 +9,6 @@
 @inject AuditlogGlobal AuditlogGlobal
 
 <style>
-    .form-control {
-        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
-        border-radius: 10px;
-        border: 0;
-        background-color: #e9ecef;
-        padding: 0 15px 10px 25px;
-        margin-top: 0px !important;
-    }
-
-    .btnlogin {
-        border: none;
-        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-        border-radius: 20px;
-        background-color: #F1BC3A;
-        color: #424242;
-        padding: 14px 0px 10px 0px;
-    }
-
-        .btnlogin:hover {
-        background-color: #E38D0F;
-        color: #fff;
-    }
-
     .card {
         background: #e9ecef;
         border: none;
@@ -50,14 +27,17 @@
                 <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
             }
             <EditForm Model="@_log" OnValidSubmit="@HandleLogin">
+                <DataAnnotationsValidator />
                 <div class="mb-2">
                     <div class="d-flex flex-column mb-3">
                         <MudText Typo="Typo.caption" Style="font-size: 16px">Username</MudText>
-                        <MudTextField DisableUnderLine @bind-Value="_log.Username" Class="form-control" Immediate=true Margin="Margin.Normal"></MudTextField>
+                        <InputText class="txf1 w-100" @bind-Value="_log.Username" />
+                        <ValidationMessage For="@(() => _log.Username)" class="mb-2" />
                      </div>
                     <div class="d-flex flex-column">
                         <MudText Typo="Typo.caption" Style="font-size: 16px">Password</MudText>
-                         <MudTextField DisableUnderLine @bind-Value="_log.Password" Margin="Margin.Normal" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" Class="form-control" />
+                        <MudTextField DisableUnderLine @bind-Value="_log.Password" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" Class="txtpass w-100" />
+                         <ValidationMessage For="@(() => _log.Password)" class="mb-2" />
                      </div>
                  </div>
                  <div class="d-flex flex-grow-1 flex-column gap-3">

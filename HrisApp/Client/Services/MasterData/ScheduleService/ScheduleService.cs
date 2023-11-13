@@ -23,7 +23,10 @@
 
         public async Task<ScheduleTypeT> GetSingleSchedule(int id)
         {
-            throw new NotImplementedException();
+            var result = await _http.GetFromJsonAsync<ScheduleTypeT>($"api/Schedule/{id}");
+            if (result != null)
+                return result;
+            throw new Exception("document not found");
         }
 
         public async Task GetSchedule()

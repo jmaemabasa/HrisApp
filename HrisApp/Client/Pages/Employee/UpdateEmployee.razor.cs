@@ -1,9 +1,4 @@
-﻿using HrisApp.Client.HelperToken;
-using HrisApp.Client.Pages.Dialog;
-using HrisApp.Client.Pages.MasterData;
-using Newtonsoft.Json;
-using System;
-using System.Buffers.Text;
+﻿using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Employee
 {
@@ -19,7 +14,7 @@ namespace HrisApp.Client.Pages.Employee
         Emp_PayrollT _payroll = new();
         //EmpPictureT _empPicture = new();
         Emp_EmploymentDateT _employmentDate = new();
-        
+
         #endregion
 
         #region LIST TABLE VARIABLES
@@ -48,7 +43,7 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         #region DATES VARIBALE
-        private DateTime? bday { get; set; } 
+        private DateTime? bday { get; set; }
         private DateTime? Date = DateTime.Today;
         private DateTime? ResignationDate = DateTime.Today;
         private DateTime? ProbStart = DateTime.Today;
@@ -96,10 +91,10 @@ namespace HrisApp.Client.Pages.Employee
         {
             await AreaService.GetAreaList();
             AreasL = AreaService.AreaTs;
-            await EmployeeService.GetStatusList();
-            StatusL = EmployeeService.StatusTs;
-            await EmployeeService.GetEmploymentStatusList();
-            EmploymentStatusL = EmployeeService.EmploymentStatusTs;
+            await StaticService.GetStatusList();
+            StatusL = StaticService.StatusTs;
+            await StaticService.GetEmploymentStatusList();
+            EmploymentStatusL = StaticService.EmploymentStatusTs;
             await DivisionService.GetDivision();
             DivisionsL = DivisionService.DivisionTs;
             await DepartmentService.GetDepartment();
@@ -108,22 +103,22 @@ namespace HrisApp.Client.Pages.Employee
             SectionsL = SectionService.SectionTs;
             await PositionService.GetPosition();
             PositionsL = PositionService.PositionTs;
-            await EmployeeService.GetGenderList();
-            GendersL = EmployeeService.GenderTs;
-            await EmployeeService.GetCivilStatusList();
-            CivilStatusL = EmployeeService.CivilStatusTs;
-            await EmployeeService.GetReligionList();
-            ReligionsL = EmployeeService.ReligionTs;
-            await EmployeeService.GetEmerRelationshipList();
-            EmerRelationshipsL = EmployeeService.EmerRelationshipTs;
-            await PayrollService.GetRateType();
-            RateTypeL = PayrollService.RateTypeTs;
+            await StaticService.GetGenderList();
+            GendersL = StaticService.GenderTs;
+            await StaticService.GetCivilStatusList();
+            CivilStatusL = StaticService.CivilStatusTs;
+            await StaticService.GetReligionList();
+            ReligionsL = StaticService.ReligionTs;
+            await StaticService.GetEmerRelationshipList();
+            EmerRelationshipsL = StaticService.EmerRelationshipTs;
+            await StaticService.GetRateType();
+            RateTypeL = StaticService.RateTypeTs;
             await PayrollService.GetScheduleType();
             ScheduleTypeL = PayrollService.ScheduleTypeTs;
-            await PayrollService.GetCashbond();
-            CashbondL = PayrollService.CashBondTs;
-            await PayrollService.GetRestDay();
-            RestDayL = PayrollService.RestDayTs;
+            await StaticService.GetCashbond();
+            CashbondL = StaticService.CashBondTs;
+            await StaticService.GetRestDay();
+            RestDayL = StaticService.RestDayTs;
         }
 
         protected override async Task OnParametersSetAsync()
@@ -152,8 +147,8 @@ namespace HrisApp.Client.Pages.Employee
             bday = employee.Birthdate;
             DateHired = employee.DateHired;
         }
-        
-        protected async Task SaveUpdateEmployee() 
+
+        protected async Task SaveUpdateEmployee()
         {
             if (bday.HasValue)
             {
@@ -306,10 +301,7 @@ namespace HrisApp.Client.Pages.Employee
 
         #region PERSONAL TAB ERROR TRAP
         private string slectClasssGender = "frmselect";
-        private string slectClasssCV = "frmselect";
-        private string slectClasssReli = "frmselect";
         private string slectClasssRela = "frmselect";
-        private string txfieldClasssNat = "txf1";
         private string txfieldClasssMN = "txf";
         private string txfieldClasssEN = "txf1";
         private string txfieldClasssEA = "txf1";
@@ -318,10 +310,7 @@ namespace HrisApp.Client.Pages.Employee
         private async void ActivateAddressField()
         {
             slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
             slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
-            txfieldClasssNat = (String.IsNullOrWhiteSpace(employee.Nationality)) ? "txf1error" : "txf1";
             txfieldClasssMN = (String.IsNullOrWhiteSpace(employee.MobileNumber)) ? "txf1error" : "txf";
             txfieldClasssEN = (String.IsNullOrWhiteSpace(employee.EmerName)) ? "txf1error" : "txf1";
             txfieldClasssEA = (String.IsNullOrWhiteSpace(employee.EmerAddress)) ? "txf1error" : "txf1";
@@ -479,10 +468,7 @@ namespace HrisApp.Client.Pages.Employee
             StateHasChanged();
         }
 
-        private void CopyToClipboard(string text)
-        {
-            JSRuntime.InvokeVoidAsync("copyToClipboard", text);
-        }
+        private async Task CopyToClipboard(string text) => await JSRuntime.InvokeVoidAsync("copyToClipboard", text);
 
         private string FUpper(string input)
         {
@@ -491,28 +477,21 @@ namespace HrisApp.Client.Pages.Employee
                 return input;
             }
 
-            return char.ToUpper(input[0]) + input.Substring(1);
+            return char.ToUpper(input[0]) + input[1..];
         }
 
         private string StatusChipColor(string status)
         {
-            switch (status)
+            return status switch
             {
-                case "Active":
-                    return "statusActiveChip";
-                case "Awol":
-                    return "statusAwolChip";
-                case "Inactive":
-                    return "statusInactiveChip";
-                case "Resigned":
-                    return "statusResignedChip";
-                case "Terminated":
-                    return "statusTerminatedChip";
-                case "Retired":
-                    return "statusRetiredChip";
-                default:
-                    return "statusRetiredChip";
-            }
+                "Active" => "statusActiveChip",
+                "Awol" => "statusAwolChip",
+                "Inactive" => "statusInactiveChip",
+                "Resigned" => "statusResignedChip",
+                "Terminated" => "statusTerminatedChip",
+                "Retired" => "statusRetiredChip",
+                _ => "statusRetiredChip",
+            };
         }
 
         private async Task EmployeeImg(string verifyCode)

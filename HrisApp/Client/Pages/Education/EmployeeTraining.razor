@@ -46,7 +46,7 @@
             color: #fff;
         }
 </style>
-@if (trainingListt.Count == 0 ||trainingListt == null)
+@if (_trainingListt.Count == 0 ||_trainingListt == null)
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No Trainings Information.</span>
@@ -57,7 +57,7 @@
 }
 else
 {
-    <MudTable Class="stable" Items="trainingListt" Context="training" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<Emp_TrainingT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Class="stable" Items="_trainingListt" Context="training" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<Emp_TrainingT,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1">
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Trainings</span>

@@ -12,11 +12,9 @@ namespace HrisApp.Client.Services.Payroll
             _http = http;
         }
         public List<Emp_PayrollT> PayrollTs { get; set; } = new List<Emp_PayrollT>();
-        public List<RateTypeT> RateTypeTs { get; set; } = new List<RateTypeT>();
-        public List<CashBondT> CashBondTs { get; set; } = new List<CashBondT>();
         public List<ScheduleTypeT> ScheduleTypeTs { get; set; } = new List<ScheduleTypeT>();
-        public List<RestDayT> RestDayTs { get; set; } = new List<RestDayT>();
 
+       
         public async Task GetPayroll()
         {
             var result = await _http.GetFromJsonAsync<List<Emp_PayrollT>>("api/PayrollT");
@@ -62,32 +60,11 @@ namespace HrisApp.Client.Services.Payroll
         }
 
         //FK
-        public async Task GetRateType()
-        {
-            var result = await _http.GetFromJsonAsync<List<RateTypeT>>("api/Payroll/ratetype");
-            if (result != null)
-                RateTypeTs = result;
-        }
-
-        public async Task GetCashbond()
-        {
-            var result = await _http.GetFromJsonAsync<List<CashBondT>>("api/Payroll/cashbond");
-            if (result != null)
-                CashBondTs = result;
-        }
-
         public async Task GetScheduleType()
         {
             var result = await _http.GetFromJsonAsync<List<ScheduleTypeT>>("api/Payroll/scheduletype");
             if (result != null)
                 ScheduleTypeTs = result;
-        }
-
-        public async Task GetRestDay()
-        {
-            var result = await _http.GetFromJsonAsync<List<RestDayT>>("api/Payroll/restday");
-            if (result != null)
-                RestDayTs = result;
         }
     }
 }

@@ -34,7 +34,10 @@
             switch (text)
             {
                 case "employee":
-                    NavigationManager.NavigateTo("/employee");
+                    NavigationManager.NavigateTo("/employee?allInStatus=active");
+                    break;
+                case "inactiveEmployee":
+                    NavigationManager.NavigateTo("/employee?allInStatus=inactive");
                     break;
                 case "vacancy":
                     NavigationManager.NavigateTo("/vacancy");

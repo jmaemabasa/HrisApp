@@ -136,31 +136,12 @@ namespace HrisApp.Server.Controllers.Payroll
         }
 
         //FK
-        [HttpGet("ratetype")]
-        public async Task<ActionResult<List<RateTypeT>>> GetRateType()
-        {
-            var Salary = await _context.RateTypeT.ToListAsync();
-            return Ok(Salary);
-        }
-
-        [HttpGet("cashbond")]
-        public async Task<ActionResult<List<CashBondT>>> GetCashbond()
-        {
-            var cash = await _context.CashBondT.ToListAsync();
-            return Ok(cash);
-        }
 
         [HttpGet("scheduletype")]
         public async Task<ActionResult<List<ScheduleTypeT>>> GetScheduleType()
         {
             var sched = await _context.ScheduleTypeT.ToListAsync();
             return Ok(sched);
-        }
-        [HttpGet("restday")]
-        public async Task<ActionResult<List<RestDayT>>> GetRestDay()
-        {
-            var rest = await _context.RestDayT.ToListAsync();
-            return Ok(rest);
         }
     }
 }

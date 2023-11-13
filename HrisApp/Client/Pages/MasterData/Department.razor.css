@@ -26,10 +26,10 @@
 
 ::deep .mud-input.mud-input-text.mud-input-adorned-end.mud-input-margin-dense.mud-shrink.mud-select-input {
     margin: 0;
-    padding: 10px;
+    padding: 10px 10px 6px 15px;
     color: #27374D;
     font-weight: bold;
-    margin-top:2px;
+    margin-top: 2px;
 }
 
 ::deep .stable {

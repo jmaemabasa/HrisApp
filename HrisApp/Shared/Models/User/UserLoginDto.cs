@@ -18,6 +18,7 @@ namespace HrisApp.Shared.Models.User
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
         //[Required, StringLength(100, MinimumLength = 6)]
+        [Required]
         public string Password { get; set; } = string.Empty;
         [Required]
         [Compare("Password", ErrorMessage = "The passwords do not match.")]

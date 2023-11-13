@@ -8,6 +8,23 @@
     margin-top: 30px;
 }
 
+/*select SEARCH*/
+::deep .dddiv {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #adbbc9;
+    margin-bottom: 15px;
+}
+::deep .mud-input.mud-input-text.mud-input-adorned-end.mud-input-margin-dense.mud-shrink.mud-select-input {
+    margin: 0;
+    padding: 10px 10px 6px 15px;
+    color: #27374D;
+    font-weight: bold;
+    margin-top: 2px;
+}
+/*END select SEARCH*/
+
 .ttitle {
     font-weight: bold;
 }
