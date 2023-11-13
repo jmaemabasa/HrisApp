@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.Payroll;
-
-namespace HrisApp.Server.Data
+﻿namespace HrisApp.Server.Data
 {
 #nullable disable
     public class DataContext : DbContext
@@ -221,7 +219,8 @@ namespace HrisApp.Server.Data
 
             modelBuilder.Entity<UserRoleT>().HasData(
              new UserRoleT { Id = 1, Name = "Administrator", RoleCode = "Admin" },
-             new UserRoleT { Id = 2, Name = "User", RoleCode = "User" }
+             new UserRoleT { Id = 2, Name = "User", RoleCode = "User" },
+             new UserRoleT { Id = 3, Name = "HR", RoleCode = "HR" }
             );
         }
 
@@ -275,5 +274,27 @@ namespace HrisApp.Server.Data
         public DbSet<ScheduleTypeT> ScheduleTypeT { get; set; }
         public DbSet<PayrollT> PayrollT { get; set; }
         public DbSet<RestDayT> RestDayT { get; set; }
+
+        //APPLICANT
+        public DbSet<ApplicantT> ApplicantT { get; set; }
+        //app Family
+        public DbSet<App_ChildrenT> App_ChildrenT { get; set; }
+        public DbSet<App_SiblingT> App_SiblingT { get; set; }
+        //app Prof Background
+        public DbSet<App_ProfBackgroundT> App_ProfBackgroundT { get; set; }
+        //app Prof Education
+        public DbSet<App_PrimaryT> App_PrimaryT { get; set; }
+        public DbSet<App_SecondaryT> App_SecondaryT { get; set; }
+        public DbSet<App_SeniorHST> App_SeniorHST { get; set; }
+        public DbSet<App_CollegeT> App_CollegeT { get; set; }
+        public DbSet<App_DoctorateT> App_DoctorateT { get; set; }
+        public DbSet<App_MasteralT> App_MasteralT { get; set; }
+        public DbSet<App_OtherEducT> App_OtherEducT { get; set; }
+        //app LICENSE AND TRAINING
+        public DbSet<App_LicenseT> App_LicenseT { get; set; }
+        public DbSet<App_TrainingT> App_TrainingT { get; set; }
+        public DbSet<App_OtherAwardsT> App_OtherAwardsT { get; set; }
+
+
     }
 }

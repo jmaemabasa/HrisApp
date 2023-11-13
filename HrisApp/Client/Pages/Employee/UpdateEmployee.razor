@@ -21,7 +21,7 @@
 @inject GlobalConfigService GlobalConfigService
 @inject AuditlogGlobal AuditlogGlobal
 
-@attribute [Authorize(Roles = "Admin, User")]
+@attribute [Authorize(Roles = "HR")]
 <PageTitle>Update Employee</PageTitle>
 
 <div class="topnav d-flex justify-content-end align-items-center z-60">
@@ -96,8 +96,6 @@
                                 <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Department?.Name</MudText>
                             </div>
                         </div>
-                       
-                        
                     </div>
                 </MudCardContent>
             </MudCard>
@@ -108,14 +106,14 @@
                         <MudCard Class="empdmain">
                             <MudCardContent>
                                 <div class="d-flex justify-content-between align-items-center">
-                                     <span class="spantitle mb-3">Personal Data</span>
-                                     <AuthorizeView Roles="Admin">
+                                     <span class="spantitle mb-3">Personal Data</span><AuthorizeView Roles="HR">
                                          <Authorized>
                                              <MudTooltip Text="Update Details">
                                                     <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                                              </MudTooltip>
                                          </Authorized>
                                      </AuthorizeView>
+                                     
                                 </div>
                                 <div class="d-flex flex-column gap-3">
                                     <div class="divsingledetails">
@@ -177,7 +175,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Work Information</span>
-                                 <AuthorizeView Roles="Admin">
+                                 <AuthorizeView Roles="HR">
                                          <Authorized>
                                              <MudTooltip Text="Update Details">
                                                     <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "workInfoOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
@@ -325,7 +323,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Person to Notify in Case of Emergency</span>
-                                <AuthorizeView Roles="Admin">
+                                <AuthorizeView Roles="HR">
                                          <Authorized>
                                              <MudTooltip Text="Update Details">
                                             <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "emerOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
@@ -359,7 +357,7 @@
                             <MudCardContent>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="spantitle mb-3">Address</span>
-                                    <AuthorizeView Roles="Admin">
+                                    <AuthorizeView Roles="HR">
                                         <Authorized>
                                             <MudTooltip Text="Update Details">
                                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "addressOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
@@ -474,7 +472,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Documents</span>
-                                <AuthorizeView Roles="Admin">
+                                <AuthorizeView Roles="HR">
                                     <Authorized>
                                         <MudTooltip Text="Update Details">
                                             <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "documentsOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
@@ -518,7 +516,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Statutory Documents</span>
-                                 <AuthorizeView Roles="Admin">
+                                 <AuthorizeView Roles="HR">
                                     <Authorized>
                                         <MudTooltip Text="Update Details">
                                             <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "StatutoryOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
@@ -554,7 +552,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Schedule</span>
-                                <AuthorizeView Roles="Admin">
+                                <AuthorizeView Roles="HR">
                                     <Authorized>
                                         <MudTooltip Text="Update Details">
                                             <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "ScheduleOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>

@@ -15,6 +15,9 @@ namespace HrisApp.Shared.Models.Application
         [Key]
         public int Id { get; set; }
         public string App_VerifyId { get; set; } = string.Empty;
+        public string App_PosApplied { get; set; } = string.Empty;
+        public string App_PresSalary { get; set; } = string.Empty;
+
 
         //PERSONAL BACKGROUND
         public string App_LastName { get; set; } = string.Empty;
@@ -23,6 +26,7 @@ namespace HrisApp.Shared.Models.Application
         public string App_Suffix { get; set; } = string.Empty;
         public string App_ContactNo1 {  get; set; } = string.Empty;
         public string App_ContactNo2 {  get; set; } = string.Empty;
+        public string App_Email {  get; set; } = string.Empty;
         public DateTime App_DOB { get; set; }
         public int App_Age { get; set; }
         public GenderT? App_Gender { get; set; }
@@ -38,6 +42,13 @@ namespace HrisApp.Shared.Models.Application
         public string App_SSS { get; set; } = string.Empty;
         public string App_PagIbig { get; set; } = string.Empty;
         public string App_Philhealth { get; set; } = string.Empty;
+
+        //EMERGENCY CONTACT
+        public string App_EmerName { get; set; } = string.Empty;
+        public EmerRelationshipT? App_EmerRelationship { get; set; }
+        public int App_EmerRelationshipId { get; set; } //FK
+        public string App_EmerAddress { get; set; } = string.Empty;
+        public string App_EmerMobNum { get; set; } = string.Empty;
 
         //FAMILY INFORMATION
         public string App_SpouseName { get; set; } = string.Empty;

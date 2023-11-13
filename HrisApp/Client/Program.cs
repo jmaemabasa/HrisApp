@@ -20,11 +20,13 @@ global using HrisApp.Shared.Models.Education;
 global using HrisApp.Client.Services.ImageService;
 global using HrisApp.Client.Services.TokenService;
 global using HrisApp.Client.Services.UserRole;
+global using HrisApp.Client.Services.ApplicantDetails.ApplicantService;
 global using HrisApp.Shared.Models.MasterData;
 global using HrisApp.Shared.Models.User;
 global using HrisApp.Shared.Models.Payroll;
 global using HrisApp.Shared.Models.Employee;
 global using HrisApp.Shared.Models.Images;
+global using HrisApp.Shared.Models.Application;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.WebUtilities;
@@ -76,6 +78,8 @@ builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IEmploymentDateService, EmploymentDateService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
+
+builder.Services.AddScoped<IApplicantService, ApplicantService>();
 
 //===========================//////////=======================
 

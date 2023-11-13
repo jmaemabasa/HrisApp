@@ -14,8 +14,8 @@ namespace HrisApp.Shared.Models.LiscenseAndTraining
         [Key]
         public int Id { get; set; }
         public string? Examination { get; set; } = string.Empty;
-        public string? ProfMembership { get; set; } = string.Empty;
         public string? LicenseNo { get; set; } = string.Empty;
+        public string? Rating { get; set; } = string.Empty;
         public DateTime? Date { get; set; } = DateTime.Now;
         public string? Verify_Id { get; set; }
     }

@@ -108,7 +108,16 @@
             }
             <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@Sections.Name</MudTd>
             <MudTd Style="text-align: center;">
-                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateSection(Sections.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <MudTooltip Text="Update">
+                            <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateSection(Sections.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                        </MudTooltip>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateSection(Sections.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                     </NotAuthorized>
+                 </AuthorizeView>
             </MudTd>
 
         </RowTemplate>

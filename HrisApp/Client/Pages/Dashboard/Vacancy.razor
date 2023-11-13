@@ -3,6 +3,9 @@
 @inject IDepartmentService DepartmentService
 @inject IPositionService PositionService
 @inject ISectionService SectionService
+
+@attribute [Authorize(Roles = "Admin, HR, User")]
+
 <PageTitle>Vacancies</PageTitle>
 
 <div class="mb-5">

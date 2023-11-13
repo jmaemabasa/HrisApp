@@ -55,9 +55,17 @@ else
              <RowTemplate>
                  <MudTd DataLabel="">@divisions.Name</MudTd>
                  <MudTd>
-                     <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDivision(divisions.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                     <AuthorizeView Roles="Admin">
+                         <Authorized>
+                             <MudTooltip Text="Update">
+                                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDivision(divisions.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                             </MudTooltip>
+                         </Authorized>
+                         <NotAuthorized>
+                             <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDivision(divisions.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                         </NotAuthorized>
+                     </AuthorizeView>
                  </MudTd>
-
              </RowTemplate>
              <PagerContent>
                  <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />

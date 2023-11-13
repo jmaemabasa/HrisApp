@@ -59,7 +59,16 @@ else
                 <MudTd DataLabel="">@schedules.TimeIn</MudTd>
                 <MudTd DataLabel="">@schedules.TimeOut</MudTd>
                 <MudTd>
-                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                     <AuthorizeView Roles="Admin">
+                         <Authorized>
+                             <MudTooltip Text="Update">
+                                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                             </MudTooltip>
+                         </Authorized>
+                         <NotAuthorized>
+                             <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                         </NotAuthorized>
+                     </AuthorizeView>
                 </MudTd>
 
             </RowTemplate>

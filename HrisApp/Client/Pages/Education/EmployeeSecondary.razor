@@ -67,10 +67,10 @@ else
             </div>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">School Name</MudTh>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Location</MudTh>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Awards</MudTh>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">School Year</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">School Name</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Location</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Honors Received / Earned Units</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Inclusive Years</MudTh>
             <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -79,9 +79,9 @@ else
             <MudTd DataLabel="">@secondary.SecAward</MudTd>
             <MudTd DataLabel="">@secondary.SecSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="Admin">
+                <AuthorizeView Roles="HR">
                     <Authorized>
-                        <MudTooltip Text="Update Details">
+                        <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteSecondary(secondary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
                         </MudTooltip>
                     </Authorized>
@@ -105,12 +105,12 @@ else
                 <ValidationMessage For="@(() => sec.SecSchoolLoc)" class="mb-2 valmessage" />
             </MudItem>
             <MudItem xs="12" Class="mb-2">
-                <MudInputLabel>Award</MudInputLabel>
+                <MudInputLabel>Honors Received / Earned Units</MudInputLabel>
                 <InputText Class="txf1" @bind-Value="sec.SecAward" />
                 <ValidationMessage For="@(() => sec.SecAward)" class="mb-2 valmessage" />
             </MudItem>
             <MudItem xs="12" Class="mb-2">
-                <MudInputLabel>School Year</MudInputLabel>
+                <MudInputLabel>Inclusive Years</MudInputLabel>
                 <InputText Class="txf1" @bind-Value="sec.SecSchoolYear" />
                 <ValidationMessage For="@(() => sec.SecSchoolYear)" class="mb-2 valmessage" />
             </MudItem>

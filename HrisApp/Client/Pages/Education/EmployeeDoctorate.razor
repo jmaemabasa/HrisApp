@@ -70,8 +70,8 @@ else
             <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">School Name</MudTh>
             <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Location</MudTh>
             <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Course</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Awards</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">School Year</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Honors Received / Earned Units</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Inclusive Years</MudTh>
             <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -81,9 +81,9 @@ else
             <MudTd DataLabel="">@doctorate.DocAward</MudTd>
             <MudTd DataLabel="">@doctorate.DocSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="Admin">
+                <AuthorizeView Roles="HR">
                     <Authorized>
-                        <MudTooltip Text="Update Details">
+                        <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteDoc(doctorate.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
                         </MudTooltip>
                     </Authorized>
@@ -112,12 +112,12 @@ else
                 <ValidationMessage For="@(() => doctorate.DocCourse)" class="mb-2 valmessage" />
             </MudItem>
             <MudItem xs="12" Class="mb-2">
-                <MudInputLabel>Award</MudInputLabel>
+                <MudInputLabel>Honors Received / Earned Units</MudInputLabel>
                 <InputText Class="txf1" @bind-Value="doctorate.DocAward" />
                 <ValidationMessage For="@(() => doctorate.DocAward)" class="mb-2 valmessage" />
             </MudItem>
             <MudItem xs="12" Class="mb-2">
-                <MudInputLabel>School Year</MudInputLabel>
+                <MudInputLabel>Inclusive Years</MudInputLabel>
                 <InputText Class="txf1" @bind-Value="doctorate.DocSchoolYear" />
                 <ValidationMessage For="@(() => doctorate.DocSchoolYear)" class="mb-2 valmessage" />
             </MudItem>

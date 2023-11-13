@@ -25,12 +25,11 @@ namespace HrisApp.Client.Pages.Education
             await LicenseTrainingService.CreateLicense(license);
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "LicenseT", $"License Verify_Id: {license.Verify_Id} created successfully.", "_", DateTime.Now);
             license.Examination = "";
-            license.ProfMembership = "";
+            license.Rating = "";
             license.LicenseNo = "";
             license.Date = DateTime.Today;
             licenseList = await LicenseTrainingService.GetLicenselist(VerifyCode);
             LicenseOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()

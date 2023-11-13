@@ -72,8 +72,17 @@
             </MudTd>
             <MudTd DataLabel="Department" Style="font-weight: bold; background-color: rgb(197,207,210, 0.2);">@Departments.Name</MudTd>
 
-            <MudTd Style="text-align: center;">
-                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+            <MudTd Style="text-align: center;">                
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <MudTooltip Text="Update">
+                            <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                        </MudTooltip>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                     </NotAuthorized>
+                 </AuthorizeView>
             </MudTd>
 
         </RowTemplate>

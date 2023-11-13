@@ -19,13 +19,13 @@
 @inject GlobalConfigService GlobalConfigService
 @inject AuditlogGlobal AuditlogGlobal
 
-@attribute [Authorize(Roles = "Admin, User")]
+@attribute [Authorize(Roles = "Admin, HR, User")]
 
 <PageTitle>Employee Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Employee List</span>
-        <AuthorizeView Roles="Admin">
+        <AuthorizeView Roles="HR">
             <Authorized>
                 <MudButton OnClick="CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
             </Authorized>
@@ -122,9 +122,16 @@
                      <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
              </MudTd>
                  <MudTd>
-                     <MudTooltip Text="View Details">
-                         <MudIconButton Class="btnedit" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Edit"></MudIconButton>
-                     </MudTooltip>
+                     <AuthorizeView Roles="HR">
+                         <Authorized>
+                             <MudTooltip Text="View Details">
+                                 <MudIconButton Class="btnedit" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Edit"></MudIconButton>
+                             </MudTooltip>
+                         </Authorized>
+                         <NotAuthorized>
+                                <MudIconButton Disabled Class="btnedit" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Edit"></MudIconButton>
+                         </NotAuthorized>
+                     </AuthorizeView>
                  </MudTd>
              </RowTemplate>
              <PagerContent>

@@ -24,7 +24,7 @@ namespace HrisApp.Client.Pages.Education
             await LicenseTrainingService.CreateTraining(training);
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "TrainingT", $"Training Verify_Id: {training.Verify_Id} created successfully.", "_", DateTime.Now);
             training.TrainingName = "";
-            training.Remarks = "";
+            training.SponsorSpeaker = "";
             training.TrainingDate = DateTime.Today;
             trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
             TrainingOpen = false;

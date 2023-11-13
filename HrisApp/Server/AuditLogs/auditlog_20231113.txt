@@ -1,0 +1,19 @@
+﻿UserId, Action, TableName, AddInfo, BeforeUpdate, Date
+1, CREATE, EmployeeT, Employee Verify_Id: 20231113082101545 created successfully., _, 11/13/2023 8:21:02 AM
+
+1, CREATE, PrimaryT, Primary Verify_Id: 20231113082101545 created successfully., _, 11/13/2023 8:53:19 AM
+
+1, CREATE, SecondaryT, Secondary Verify_Id: 20231113082101545 created successfully., _, 11/13/2023 8:54:07 AM
+
+1, CREATE, SHST, SHS Verify_Id: 20231113082101545 created successfully., _, 11/13/2023 8:55:29 AM
+
+1, CREATE, LicenseT, License Verify_Id: 20231113082101545 created successfully., _, 11/13/2023 9:19:50 AM
+
+1, CREATE, TrainingT, Training Verify_Id: 20231113082101545 created successfully., _, 11/13/2023 9:19:59 AM
+
+1, DELETE, SHST, SHS Verify_Id:  deleted successfully., [{"Id":1,"Verify_Id":"20231113082101545","ShsSchoolName":"s","ShsSchoolLoc":"s","ShsAward":"s","ShsSchoolYear":"s"}], 11/13/2023 10:58:45 AM
+
+1, DELETE, SecondaryT, Secondary Verify_Id:  deleted successfully., [{"Id":1,"Verify_Id":"20231113082101545","SecSchoolName":"e","SecSchoolLoc":"e","SecAward":"e","SecSchoolYear":"e"}], 11/13/2023 10:58:46 AM
+
+1, DELETE, PrimaryT, Primary Verify_Id:  deleted successfully., [{"Id":1,"Verify_Id":"20231113082101545","PriSchoolName":"lk","PriSchoolLoc":"lk","PriAward":"lk","PriSchoolYear":"kl"}], 11/13/2023 10:58:47 AM
+

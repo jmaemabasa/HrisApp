@@ -67,21 +67,21 @@ else
             </div>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Licenses/Board Examinations Taken</MudTh>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Membership</MudTh>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">License No</MudTh>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">Date</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Licenses/Board Examinations Taken</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Date</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">License No</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Rating %</MudTh>
             <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="">@license.Examination</MudTd>
-            <MudTd DataLabel="">@license.ProfMembership</MudTd>
+            <MudTd DataLabel="">@license.Date?.ToString("MM/dd/yyyy")</MudTd>
             <MudTd DataLabel="">@license.LicenseNo</MudTd>
-            <MudTd DataLabel="">@license.Date?.ToString("d")</MudTd>
+            <MudTd DataLabel="">@license.Rating</MudTd>
             <MudTd>
-                <AuthorizeView Roles="Admin">
+                <AuthorizeView Roles="HR">
                     <Authorized>
-                        <MudTooltip Text="Update Details">
+                        <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteLicense(license.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
                         </MudTooltip>
                     </Authorized>
@@ -98,18 +98,18 @@ else
                 <MudInputLabel>Professional Licenses/Board Examinations Taken</MudInputLabel>
                 <MudTextField @bind-Value="license.Examination" Class="txf" DisableUnderLine Margin="Margin.Dense" />
             </MudItem>
-            <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Professional Membership</MudInputLabel>
-                 <MudTextField @bind-Value="license.ProfMembership" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-            </MudItem>
+             <MudItem xs="12" Class="mb-2">
+                 <MudInputLabel>Date(mm/dd/yy)</MudInputLabel>
+                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="license.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+             </MudItem>
             <MudItem xs="12" Class="mb-2">
                  <MudInputLabel>License No.</MudInputLabel>
                  <MudTextField @bind-Value="license.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-            </MudItem>
+            </MudItem>             
             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Date(mm/dd/yy)</MudInputLabel>
-                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="license.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-            </MudItem>
+                 <MudInputLabel>Rating %</MudInputLabel>
+                 <MudTextField @bind-Value="license.Rating" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+             </MudItem>
             <MudItem xs="12" Class="d-flex justify-content-center mt-5">
                  <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
             </MudItem>

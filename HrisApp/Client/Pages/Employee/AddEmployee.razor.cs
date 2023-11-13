@@ -691,7 +691,7 @@ namespace HrisApp.Client.Pages.Employee
                .Where
                (license =>
                     !string.IsNullOrEmpty(license.Examination) ||
-                    !string.IsNullOrEmpty(license.ProfMembership) ||
+                    !string.IsNullOrEmpty(license.Rating) ||
                     !string.IsNullOrEmpty(license.LicenseNo))
                .ToList();
             if (validLicenses.Count == 0)
@@ -714,7 +714,7 @@ namespace HrisApp.Client.Pages.Employee
             var validtraining = listOfTrainings
                .Where
                (train => !string.IsNullOrEmpty(train.TrainingName)
-                    || !string.IsNullOrEmpty(train.Remarks))
+                    || !string.IsNullOrEmpty(train.SponsorSpeaker))
                .ToList();
             if (validtraining.Count == 0)
             {
