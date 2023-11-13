@@ -116,7 +116,7 @@ namespace HrisApp.Server.Controllers.ImageC
         }
 
         [HttpGet("GetDocuImagelist")]
-        public async Task<ActionResult<List<PrimaryT>>> GetDocuImagelist([FromQuery] string verCode)
+        public async Task<ActionResult<List<Emp_PrimaryT>>> GetDocuImagelist([FromQuery] string verCode)
         {
             var doculist = await _context.DocumentT
                 .Where(x => x.Verify_Id == verCode)

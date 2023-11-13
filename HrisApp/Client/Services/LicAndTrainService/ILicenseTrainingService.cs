@@ -1,22 +1,19 @@
-﻿using HrisApp.Shared.Models.LiscenseAndTraining;
-using System.ComponentModel;
-
-namespace HrisApp.Client.Services.LicAndTrainService
+﻿namespace HrisApp.Client.Services.LicAndTrainService
 {
     public interface ILicenseTrainingService
     {
-        List<TrainingT> TrainingTs { get; set; }
-        Task<List<TrainingT>> GetTraininglist(string verCode);
-        Task<string> CreateTraining(TrainingT train);
-        Task UpdateTraining(TrainingT train);
+        List<Emp_TrainingT> TrainingTs { get; set; }
+        Task<List<Emp_TrainingT>> GetTraininglist(string verCode);
+        Task<string> CreateTraining(Emp_TrainingT train);
+        Task UpdateTraining(Emp_TrainingT train);
         Task DeleteTraining(int id);
 
 
-        List<LicenseT> LicenseTs { get; set; }
-        Task<List<LicenseT>> GetLicenselist(string verifyCode);
-        Task<string> CreateLicense(LicenseT _license);
-        Task<List<LicenseT>> GetExistlicense(string _verifyCode, int id);
-        Task UpdateLicense(LicenseT license);
+        List<Emp_LicenseT> LicenseTs { get; set; }
+        Task<List<Emp_LicenseT>> GetLicenselist(string verifyCode);
+        Task<string> CreateLicense(Emp_LicenseT _license);
+        Task<List<Emp_LicenseT>> GetExistlicense(string _verifyCode, int id);
+        Task UpdateLicense(Emp_LicenseT license);
         Task DeleteLicense(int id);
 
     }

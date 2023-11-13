@@ -16,9 +16,9 @@ namespace HrisApp.Server.Controllers.LicenseTrainingC
         }
         //ok
         [HttpGet("GetLicenselist")]
-        public async Task<ActionResult<List<LicenseT>>> GetLicenselist([FromQuery] string verifyCode)
+        public async Task<ActionResult<List<Emp_LicenseT>>> GetLicenselist([FromQuery] string verifyCode)
         {
-            var licenses = await _context.LicenseT
+            var licenses = await _context.Emp_LicenseT
                 .Where(x => x.Verify_Id == verifyCode)
                 .ToListAsync();
 
@@ -29,7 +29,7 @@ namespace HrisApp.Server.Controllers.LicenseTrainingC
         // PUT: api/WorkExperiences/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Updatelicense/{Id}")]
-        public async Task<IActionResult> UpdateLicense(int Id, LicenseT _license)
+        public async Task<IActionResult> UpdateLicense(int Id, Emp_LicenseT _license)
         {
 
             if (Id != _license.Id)
@@ -60,14 +60,14 @@ namespace HrisApp.Server.Controllers.LicenseTrainingC
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<LicenseT>>> DeleteLicense(int id)
+        public async Task<ActionResult<List<Emp_LicenseT>>> DeleteLicense(int id)
         {
-            var dblis = await _context.LicenseT
+            var dblis = await _context.Emp_LicenseT
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (dblis == null)
                 return NotFound("Sorry, but no senior");
 
-            _context.LicenseT.Remove(dblis);
+            _context.Emp_LicenseT.Remove(dblis);
 
             await _context.SaveChangesAsync();
 
@@ -76,34 +76,34 @@ namespace HrisApp.Server.Controllers.LicenseTrainingC
 
         private bool CheckLicenseId(int id)
         {
-            return _context.LicenseT.Any(x => x.Id == id);
+            return _context.Emp_LicenseT.Any(x => x.Id == id);
         }
 
         // POST: api/WorkExperiences
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("InsertLicense")]
-        public async Task<ActionResult<LicenseT>> InsertLicense(LicenseT _license)
+        public async Task<ActionResult<Emp_LicenseT>> InsertLicense(Emp_LicenseT _license)
         {
             if (_license == null)
             {
                 return BadRequest("Invalid data");
             }
 
-            _context.LicenseT.Add(_license);
+            _context.Emp_LicenseT.Add(_license);
             await _context.SaveChangesAsync();
 
             return Ok(_license);
         }
 
         [HttpGet("Getlicenseisexist")]
-        public async Task<ActionResult<IEnumerable<LicenseT>>> Getsettlementreportcount([FromQuery] string verifyId, [FromQuery] int id)
+        public async Task<ActionResult<IEnumerable<Emp_LicenseT>>> Getsettlementreportcount([FromQuery] string verifyId, [FromQuery] int id)
         {
-            return await _context.LicenseT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
+            return await _context.Emp_LicenseT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
         }
 
-        private async Task<List<LicenseT>> GetDbLicenses()
+        private async Task<List<Emp_LicenseT>> GetDbLicenses()
         {
-            return await _context.LicenseT.ToListAsync();
+            return await _context.Emp_LicenseT.ToListAsync();
         }
     }
 }

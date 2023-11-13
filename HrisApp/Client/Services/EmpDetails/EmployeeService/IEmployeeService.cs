@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Services.EmpDetails.EmployeeService
+﻿using HrisApp.Shared.Models.StaticData;
+
+namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {
     public interface IEmployeeService
     {

@@ -85,10 +85,10 @@ namespace HrisApp.Client.Pages.Employee
         public int? id { get; set; }
 
         EmployeeT employee = new();
-        AddressT address = new();
-        EmploymentDateT employmentDate = new();
-        PayrollT payroll = new();
-        LicenseT license = new();
+        Emp_AddressT address = new();
+        Emp_EmploymentDateT employmentDate = new();
+        Emp_PayrollT payroll = new();
+        Emp_LicenseT license = new();
 
 
         //bool success;
@@ -118,15 +118,15 @@ namespace HrisApp.Client.Pages.Employee
 
         #region EDUCATION VARIABLE
         //EDUCATION
-        List<CollegeT> listOfCollege = new();
-        List<OtherEducT> listOfOthers = new();
-        List<SecondaryT> listOfSecondary = new();
-        List<DoctorateT> listOfDoctorate = new();
-        List<PrimaryT> listOfPrimary = new();
-        List<MasteralT> listOfMasteral = new();
-        List<SeniorHST> listOfShs = new();
-        List<TrainingT> listOfTrainings = new();
-        List<LicenseT> listofLicense = new();
+        List<Emp_CollegeT> listOfCollege = new();
+        List<Emp_OtherEducT> listOfOthers = new();
+        List<Emp_SecondaryT> listOfSecondary = new();
+        List<Emp_DoctorateT> listOfDoctorate = new();
+        List<Emp_PrimaryT> listOfPrimary = new();
+        List<Emp_MasteralT> listOfMasteral = new();
+        List<Emp_SeniorHST> listOfShs = new();
+        List<Emp_TrainingT> listOfTrainings = new();
+        List<Emp_LicenseT> listofLicense = new();
         List<DocumentT> listOfDocuments = new();
 
         private bool IsListaddshs;
@@ -734,7 +734,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfPrimary.Count <= 5)
             {
-                listOfPrimary.Add(new PrimaryT { Verify_Id = employee.Verify_Id });
+                listOfPrimary.Add(new Emp_PrimaryT { Verify_Id = employee.Verify_Id });
             }
         }
 
@@ -749,7 +749,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfSecondary.Count <= 3)
             {
-                listOfSecondary.Add(new SecondaryT { Verify_Id = employee.Verify_Id });
+                listOfSecondary.Add(new Emp_SecondaryT { Verify_Id = employee.Verify_Id });
             }
         }
         public void RemoveSecondary()
@@ -765,7 +765,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfShs.Count <= 2)
             {
-                listOfShs.Add(new SeniorHST { Verify_Id = employee.Verify_Id });
+                listOfShs.Add(new Emp_SeniorHST { Verify_Id = employee.Verify_Id });
             }
         }
         public void RemoveShs()
@@ -781,7 +781,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfCollege.Count <= 2)
             {
-                listOfCollege.Add(new CollegeT { Verify_Id = employee.Verify_Id });
+                listOfCollege.Add(new Emp_CollegeT { Verify_Id = employee.Verify_Id });
             }
         }
         public void RemoveCollege()
@@ -797,7 +797,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfMasteral.Count <= 2)
             {
-                listOfMasteral.Add(new MasteralT { Verify_Id = employee.Verify_Id });
+                listOfMasteral.Add(new Emp_MasteralT { Verify_Id = employee.Verify_Id });
             }
         }
         public void RemoveMasteral()
@@ -813,7 +813,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfDoctorate.Count <= 2)
             {
-                listOfDoctorate.Add(new DoctorateT { Verify_Id = employee.Verify_Id });
+                listOfDoctorate.Add(new Emp_DoctorateT { Verify_Id = employee.Verify_Id });
             }
         }
         public void RemoveDoctorate()
@@ -829,7 +829,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfOthers.Count <= 4)
             {
-                listOfOthers.Add(new OtherEducT { Verify_Id = employee.Verify_Id });
+                listOfOthers.Add(new Emp_OtherEducT { Verify_Id = employee.Verify_Id });
             }
         }
         public void RemoveOthers()
@@ -845,7 +845,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listofLicense.Count <= 5)
             {
-                listofLicense.Add(new LicenseT { Verify_Id = employee.Verify_Id });
+                listofLicense.Add(new Emp_LicenseT { Verify_Id = employee.Verify_Id });
                 StateHasChanged();
             }
         }
@@ -863,7 +863,7 @@ namespace HrisApp.Client.Pages.Employee
         {
             if (listOfTrainings.Count <= 5)
             {
-                listOfTrainings.Add(new TrainingT { Verify_Id = employee.Verify_Id });
+                listOfTrainings.Add(new Emp_TrainingT { Verify_Id = employee.Verify_Id });
             }
         }
         public void RemoveTrainings()

@@ -1,5 +1,4 @@
 ﻿using HrisApp.Client.Pages.MasterData;
-using HrisApp.Shared.Models.MasterData;
 using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData

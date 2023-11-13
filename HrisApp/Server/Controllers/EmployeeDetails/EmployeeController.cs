@@ -1,5 +1,5 @@
 ﻿using HrisApp.Client.Pages.Employee;
-using HrisApp.Shared.Models.Employee;
+using HrisApp.Shared.Models.StaticData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

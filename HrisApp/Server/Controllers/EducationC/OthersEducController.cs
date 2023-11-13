@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.Education;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.EducationC
 {
@@ -16,9 +14,9 @@ namespace HrisApp.Server.Controllers.EducationC
         }
 
         [HttpGet("GetOtherEduclist")]
-        public async Task<ActionResult<List<OtherEducT>>> GetOtherEduclist([FromQuery] string verCode)
+        public async Task<ActionResult<List<Emp_OtherEducT>>> GetOtherEduclist([FromQuery] string verCode)
         {
-            var otherEduclist = await _context.OtherEducT
+            var otherEduclist = await _context.Emp_OtherEducT
                 .Where(x => x.Verify_Id == verCode)
                 .ToListAsync();
 
@@ -28,7 +26,7 @@ namespace HrisApp.Server.Controllers.EducationC
         // PUT: api/WorkExperiences/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("UpdateOtherEduc/{id}")]
-        public async Task<ActionResult<List<OtherEducT>>> PutOtherEduc(int id, OtherEducT _others)
+        public async Task<ActionResult<List<Emp_OtherEducT>>> PutOtherEduc(int id, Emp_OtherEducT _others)
         {
             if (id != _others.Id)
             {
@@ -61,7 +59,7 @@ namespace HrisApp.Server.Controllers.EducationC
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 
         [HttpPost]
-        public async Task<ActionResult<OtherEducT>> CreateOtherEduc([FromBody] OtherEducT _others)
+        public async Task<ActionResult<Emp_OtherEducT>> CreateOtherEduc([FromBody] Emp_OtherEducT _others)
         {
             if (_others == null)
             {
@@ -69,21 +67,21 @@ namespace HrisApp.Server.Controllers.EducationC
             }
 
 
-            _context.OtherEducT.Add(_others);
+            _context.Emp_OtherEducT.Add(_others);
             await _context.SaveChangesAsync();
 
             return Ok(_others);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<OtherEducT>>> DeleteOtherEduc(int id)
+        public async Task<ActionResult<List<Emp_OtherEducT>>> DeleteOtherEduc(int id)
         {
-            var dbother = await _context.OtherEducT
+            var dbother = await _context.Emp_OtherEducT
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (dbother == null)
                 return NotFound("Sorry, but no senior");
 
-            _context.OtherEducT.Remove(dbother);
+            _context.Emp_OtherEducT.Remove(dbother);
 
             await _context.SaveChangesAsync();
 
@@ -92,18 +90,18 @@ namespace HrisApp.Server.Controllers.EducationC
 
         private bool OtherEducExists(int id)
         {
-            return (_context.OtherEducT?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Emp_OtherEducT?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private async Task<List<OtherEducT>> GetDbOtherEduc()
+        private async Task<List<Emp_OtherEducT>> GetDbOtherEduc()
         {
-            return await _context.OtherEducT.ToListAsync();
+            return await _context.Emp_OtherEducT.ToListAsync();
         }
 
         [HttpGet("GetExistOtherEduc")]
-        public async Task<ActionResult<IEnumerable<OtherEducT>>> GetExistOtherEduc([FromQuery] string verifyId, [FromQuery] int id)
+        public async Task<ActionResult<IEnumerable<Emp_OtherEducT>>> GetExistOtherEduc([FromQuery] string verifyId, [FromQuery] int id)
         {
-            return await _context.OtherEducT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
+            return await _context.Emp_OtherEducT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
         }
     }
 }

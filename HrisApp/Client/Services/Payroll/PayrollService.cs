@@ -11,7 +11,7 @@ namespace HrisApp.Client.Services.Payroll
         {
             _http = http;
         }
-        public List<PayrollT> PayrollTs { get; set; } = new List<PayrollT>();
+        public List<Emp_PayrollT> PayrollTs { get; set; } = new List<Emp_PayrollT>();
         public List<RateTypeT> RateTypeTs { get; set; } = new List<RateTypeT>();
         public List<CashBondT> CashBondTs { get; set; } = new List<CashBondT>();
         public List<ScheduleTypeT> ScheduleTypeTs { get; set; } = new List<ScheduleTypeT>();
@@ -19,36 +19,36 @@ namespace HrisApp.Client.Services.Payroll
 
         public async Task GetPayroll()
         {
-            var result = await _http.GetFromJsonAsync<List<PayrollT>>("api/PayrollT");
+            var result = await _http.GetFromJsonAsync<List<Emp_PayrollT>>("api/PayrollT");
             if (result != null)
                 PayrollTs = result;
         }
-        public async Task<List<PayrollT>> GetPayrollList()
+        public async Task<List<Emp_PayrollT>> GetPayrollList()
         {
-            return await _http.GetFromJsonAsync<List<PayrollT>>("api/Payroll/GetOPayrollList");
+            return await _http.GetFromJsonAsync<List<Emp_PayrollT>>("api/Payroll/GetOPayrollList");
         }
 
         private async Task SetPayroll(HttpResponseMessage result)
         {
-            var response = await result.Content.ReadFromJsonAsync<List<PayrollT>>();
+            var response = await result.Content.ReadFromJsonAsync<List<Emp_PayrollT>>();
             PayrollTs = response;
         }
 
-        public async Task<string> CreatePayroll(PayrollT payroll)
+        public async Task<string> CreatePayroll(Emp_PayrollT payroll)
         {
             Console.WriteLine("Saving docu");
             var result = await _http.PostAsJsonAsync("api/Payroll", payroll);
             await SetPayroll(result);
             return payroll.Verify_Id;//new
         }
-        public async Task<PayrollT> GetSinglePayroll(int id)
+        public async Task<Emp_PayrollT> GetSinglePayroll(int id)
         {
-            var result = await _http.GetFromJsonAsync<PayrollT>($"api/Payroll/{id}");
+            var result = await _http.GetFromJsonAsync<Emp_PayrollT>($"api/Payroll/{id}");
             if (result != null)
                 return result;
             throw new Exception("document not found");
         }
-        public async Task UpdatePayroll(PayrollT payroll)
+        public async Task UpdatePayroll(Emp_PayrollT payroll)
         {
             try
             {

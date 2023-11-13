@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.Education;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.EducationC
 {
@@ -15,9 +13,9 @@ namespace HrisApp.Server.Controllers.EducationC
             _context = context;
         }
         [HttpGet("GetMasterlist")]
-        public async Task<ActionResult<List<MasteralT>>> GetMasterlist([FromQuery] string verCode)
+        public async Task<ActionResult<List<Emp_MasteralT>>> GetMasterlist([FromQuery] string verCode)
         {
-            var masterlist = await _context.MasteralT
+            var masterlist = await _context.Emp_MasteralT
                 .Where(x => x.Verify_Id == verCode)
                 .ToListAsync();
 
@@ -28,7 +26,7 @@ namespace HrisApp.Server.Controllers.EducationC
         // PUT: api/WorkExperiences/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("UpdateMasteral/{id}")]
-        public async Task<IActionResult> PutMasteral(int id, MasteralT _masters)
+        public async Task<IActionResult> PutMasteral(int id, Emp_MasteralT _masters)
         {
             if (id != _masters.Id)
             {
@@ -59,28 +57,28 @@ namespace HrisApp.Server.Controllers.EducationC
         // POST: api/WorkExperiences
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MasteralT>> CreateMasteral([FromBody] MasteralT _mas)
+        public async Task<ActionResult<Emp_MasteralT>> CreateMasteral([FromBody] Emp_MasteralT _mas)
         {
             if (_mas == null)
             {
                 return BadRequest("Invalid data");
             }
 
-            _context.MasteralT.Add(_mas);
+            _context.Emp_MasteralT.Add(_mas);
             await _context.SaveChangesAsync();
 
             return Ok(_mas);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<MasteralT>>> DeleteMasteral(int id)
+        public async Task<ActionResult<List<Emp_MasteralT>>> DeleteMasteral(int id)
         {
-            var dbmas = await _context.MasteralT
+            var dbmas = await _context.Emp_MasteralT
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (dbmas == null)
                 return NotFound("Sorry, but no senior");
 
-            _context.MasteralT.Remove(dbmas);
+            _context.Emp_MasteralT.Remove(dbmas);
 
             await _context.SaveChangesAsync();
 
@@ -89,18 +87,18 @@ namespace HrisApp.Server.Controllers.EducationC
 
         private bool MasteralExists(int id)
         {
-            return (_context.MasteralT?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Emp_MasteralT?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private async Task<List<MasteralT>> GetDbMasteral()
+        private async Task<List<Emp_MasteralT>> GetDbMasteral()
         {
-            return await _context.MasteralT.ToListAsync();
+            return await _context.Emp_MasteralT.ToListAsync();
         }
 
         [HttpGet("GetExistMasteral")]
-        public async Task<ActionResult<IEnumerable<MasteralT>>> GetExistMasteral([FromQuery] string verifyId, [FromQuery] int id)
+        public async Task<ActionResult<IEnumerable<Emp_MasteralT>>> GetExistMasteral([FromQuery] string verifyId, [FromQuery] int id)
         {
-            return await _context.MasteralT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
+            return await _context.Emp_MasteralT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
         }
     }
 }

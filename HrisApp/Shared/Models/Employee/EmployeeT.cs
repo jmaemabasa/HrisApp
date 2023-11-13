@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HrisApp.Shared.Models.MasterData;
 using System.ComponentModel;
+using HrisApp.Shared.Models.StaticData;
 
 namespace HrisApp.Shared.Models.Employee
 {

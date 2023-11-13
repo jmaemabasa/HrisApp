@@ -15,10 +15,10 @@ namespace HrisApp.Client.Pages.Employee
 
         #region TABLE VARIABLES
         EmployeeT employee = new();
-        AddressT _address = new();
-        PayrollT _payroll = new();
+        Emp_AddressT _address = new();
+        Emp_PayrollT _payroll = new();
         //EmpPictureT _empPicture = new();
-        EmploymentDateT _employmentDate = new();
+        Emp_EmploymentDateT _employmentDate = new();
         
         #endregion
 

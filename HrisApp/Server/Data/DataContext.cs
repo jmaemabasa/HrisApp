@@ -245,24 +245,23 @@
         public DbSet<ReligionT> ReligionT { get; set; }
         public DbSet<GenderT> GenderT { get; set; }
         public DbSet<EmerRelationshipT> EmerRelationshipT { get; set; }
-        public DbSet<EmploymentDateT> EmploymentDateT { get; set; }
+        public DbSet<Emp_EmploymentDateT> Emp_EmploymentDateT { get; set; }
 
         //EDUCATIONS
-        public DbSet<CollegeT> CollegeT { get; set; }
-        public DbSet<DoctorateT> DoctorateT { get; set; }
-        public DbSet<MasteralT> MasteralT { get; set; }
-        public DbSet<OtherEducT> OtherEducT { get; set; }
-        public DbSet<PrimaryT> PrimaryT { get; set; }
-        public DbSet<SecondaryT> SecondaryT { get; set; }
-        public DbSet<SeniorHST> SeniorHST { get; set; }
+        public DbSet<Emp_CollegeT> Emp_CollegeT { get; set; }
+        public DbSet<Emp_DoctorateT> Emp_DoctorateT { get; set; }
+        public DbSet<Emp_MasteralT> Emp_MasteralT { get; set; }
+        public DbSet<Emp_OtherEducT> Emp_OtherEducT { get; set; }
+        public DbSet<Emp_PrimaryT> Emp_PrimaryT { get; set; }
+        public DbSet<Emp_SecondaryT> Emp_SecondaryT { get; set; }
+        public DbSet<Emp_SeniorHST> Emp_SeniorHST { get; set; }
 
         //LICENSE AND TRAINING
-        public DbSet<LicenseT> LicenseT { get; set; }
-        public DbSet<TrainingT> TrainingT { get; set; }
-
+        public DbSet<Emp_LicenseT> Emp_LicenseT { get; set; }
+        public DbSet<Emp_TrainingT> Emp_TrainingT { get; set; }
 
         //Address
-        public DbSet<AddressT> AddressT { get; set; }
+        public DbSet<Emp_AddressT> Emp_AddressT { get; set; }
 
         //IMAGES AND FILES
         public DbSet<DocumentT> DocumentT { get; set; }
@@ -272,7 +271,7 @@
         public DbSet<CashBondT> CashBondT { get; set; }
         public DbSet<RateTypeT> RateTypeT { get; set; }
         public DbSet<ScheduleTypeT> ScheduleTypeT { get; set; }
-        public DbSet<PayrollT> PayrollT { get; set; }
+        public DbSet<Emp_PayrollT> Emp_PayrollT { get; set; }
         public DbSet<RestDayT> RestDayT { get; set; }
 
         //APPLICANT

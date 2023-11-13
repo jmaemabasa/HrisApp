@@ -1,5 +1,6 @@
 ﻿using HrisApp.Client.Pages.Employee;
 using HrisApp.Client.Pages.MasterData;
+using HrisApp.Shared.Models.StaticData;
 
 namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {

@@ -1,5 +1,4 @@
-﻿using HrisApp.Shared.Models.Education;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.EducationC
 {
@@ -16,9 +15,9 @@ namespace HrisApp.Server.Controllers.EducationC
 
         //ok
         [HttpGet("GetCollegelist")]
-        public async Task<ActionResult<List<CollegeT>>> GetCollegelist([FromQuery] string verCode)
+        public async Task<ActionResult<List<Emp_CollegeT>>> GetCollegelist([FromQuery] string verCode)
         {
-            var collegelist = await _context.CollegeT
+            var collegelist = await _context.Emp_CollegeT
                 .Where(x => x.Verify_Id == verCode)
                 .ToListAsync();
 
@@ -28,7 +27,7 @@ namespace HrisApp.Server.Controllers.EducationC
         // PUT: api/WorkExperiences/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("UpdateCollege/{id}")]
-        public async Task<IActionResult> PutCollege(int id, CollegeT _colleges)
+        public async Task<IActionResult> PutCollege(int id, Emp_CollegeT _colleges)
         {
             if (id != _colleges.Id)
             {
@@ -60,28 +59,28 @@ namespace HrisApp.Server.Controllers.EducationC
         // POST: api/WorkExperiences
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CollegeT>> CreateCollege([FromBody] CollegeT _colleges)
+        public async Task<ActionResult<Emp_CollegeT>> CreateCollege([FromBody] Emp_CollegeT _colleges)
         {
             if (_colleges == null)
             {
                 return BadRequest("Invalid data");
             }
 
-            _context.CollegeT.Add(_colleges);
+            _context.Emp_CollegeT.Add(_colleges);
             await _context.SaveChangesAsync();
 
             return Ok(_colleges);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<CollegeT>>> DeleteCollege(int id)
+        public async Task<ActionResult<List<Emp_CollegeT>>> DeleteCollege(int id)
         {
-            var dbcol = await _context.CollegeT
+            var dbcol = await _context.Emp_CollegeT
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (dbcol == null)
                 return NotFound("Sorry, but no senior");
 
-            _context.CollegeT.Remove(dbcol);
+            _context.Emp_CollegeT.Remove(dbcol);
 
             await _context.SaveChangesAsync();
 
@@ -90,18 +89,18 @@ namespace HrisApp.Server.Controllers.EducationC
 
         private bool CollegeExists(int id)
         {
-            return (_context.CollegeT?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Emp_CollegeT?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private async Task<List<CollegeT>> GetDbCollege()
+        private async Task<List<Emp_CollegeT>> GetDbCollege()
         {
-            return await _context.CollegeT.ToListAsync();
+            return await _context.Emp_CollegeT.ToListAsync();
         }
 
         [HttpGet("GetExistCollege")]
-        public async Task<ActionResult<IEnumerable<CollegeT>>> GetExistCollege([FromQuery] string verifyId, [FromQuery] int id)
+        public async Task<ActionResult<IEnumerable<Emp_CollegeT>>> GetExistCollege([FromQuery] string verifyId, [FromQuery] int id)
         {
-            return await _context.CollegeT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
+            return await _context.Emp_CollegeT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
         }
     }
 }

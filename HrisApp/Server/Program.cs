@@ -1,13 +1,14 @@
 global using HrisApp.Server.Data;
 global using HrisApp.Server.Services.UserService;
-global using HrisApp.Shared.Models.Education;
+global using HrisApp.Shared.Models.Emp_Education;
 global using HrisApp.Shared.Models.Employee;
 global using HrisApp.Shared.Models.Images;
-global using HrisApp.Shared.Models.LiscenseAndTraining;
+global using HrisApp.Shared.Models.Emp_LiscenseAndTraining;
 global using HrisApp.Shared.Models.MasterData;
 global using HrisApp.Shared.Models.Application;
-global using HrisApp.Shared.Models.Payroll;
+global using HrisApp.Shared.Models.Emp_Payroll;
 global using HrisApp.Shared.Models.User;
+global using HrisApp.Shared.Models.StaticData;
 global using HrisApp.Shared.Models.App_Education;
 global using HrisApp.Shared.Models.App_LiscenseAndTraining;
 global using HrisApp.Shared.Models.Application.App_Family;

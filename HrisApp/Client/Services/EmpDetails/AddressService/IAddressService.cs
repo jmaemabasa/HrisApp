@@ -2,11 +2,11 @@
 {
     public interface IAddressService
     {
-        List<AddressT> AddressT { get; set; }
+        List<Emp_AddressT> AddressT { get; set; }
 
-        Task<string> CreateAddress(AddressT address);
+        Task<string> CreateAddress(Emp_AddressT address);
         Task GetAddress();
-        Task<AddressT> GetSingleAddress(int id);
-        Task UpdateAddress(AddressT address);
+        Task<Emp_AddressT> GetSingleAddress(int id);
+        Task UpdateAddress(Emp_AddressT address);
     }
 }

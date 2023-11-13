@@ -1,13 +1,11 @@
-﻿using HrisApp.Shared.Models.Education;
-using HrisApp.Shared.Models.LiscenseAndTraining;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
     public partial class EmployeeSecondary : ComponentBase
     {
-        private SecondaryT sec = new SecondaryT();
+        private Emp_SecondaryT sec = new Emp_SecondaryT();
         [Parameter]
         public string VerifyCode { get; set; }
 
@@ -55,13 +53,13 @@ namespace HrisApp.Client.Pages.Education
 
         //TABLEEES
         private string searchString1 = "";
-        List<SecondaryT> secondaryList = new List<SecondaryT>();
-        private SecondaryT selectedItem1 = null;
-        private HashSet<SecondaryT> selectedItems = new HashSet<SecondaryT>();
+        List<Emp_SecondaryT> secondaryList = new List<Emp_SecondaryT>();
+        private Emp_SecondaryT selectedItem1 = null;
+        private HashSet<Emp_SecondaryT> selectedItems = new HashSet<Emp_SecondaryT>();
 
-        private bool FilterFunc1(SecondaryT divisions) => FilterFunc(divisions, searchString1);
+        private bool FilterFunc1(Emp_SecondaryT divisions) => FilterFunc(divisions, searchString1);
 
-        private bool FilterFunc(SecondaryT employees, string searchString)
+        private bool FilterFunc(Emp_SecondaryT employees, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;

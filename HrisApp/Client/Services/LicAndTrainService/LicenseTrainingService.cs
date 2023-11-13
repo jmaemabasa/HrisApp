@@ -12,22 +12,22 @@
             _navigationManager = navigationManager;
         }
 
-        public List<TrainingT> TrainingTs { get; set; } = new List<TrainingT>();
-        public List<LicenseT> LicenseTs { get; set; } = new List<LicenseT>();
+        public List<Emp_TrainingT> TrainingTs { get; set; } = new List<Emp_TrainingT>();
+        public List<Emp_LicenseT> LicenseTs { get; set; } = new List<Emp_LicenseT>();
 
-        public async Task<List<TrainingT>> GetTraininglist(string verifyCode)
+        public async Task<List<Emp_TrainingT>> GetTraininglist(string verifyCode)
         {
-            var result = await _http.GetFromJsonAsync<List<TrainingT>>($"api/Training/GetTraininglist?verifyCode={verifyCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_TrainingT>>($"api/Training/GetTraininglist?verifyCode={verifyCode}");
             return result;
         }
-        public async Task<string> CreateTraining(TrainingT train)
+        public async Task<string> CreateTraining(Emp_TrainingT train)
         {
             Console.WriteLine("Saving train");
             var result = await _http.PostAsJsonAsync("api/Training", train);
-            var response = await result.Content.ReadFromJsonAsync<TrainingT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_TrainingT>();
             return response?.Verify_Id;
         }
-        public async Task UpdateTraining(TrainingT train)
+        public async Task UpdateTraining(Emp_TrainingT train)
         {
             Console.WriteLine("Update train");
             var result = await _http.PutAsJsonAsync($"api/Training/UpdateTrainings/{train.Id}", train);
@@ -40,24 +40,24 @@
         }
 
 
-        public async Task<List<LicenseT>> GetLicenselist(string verifyCode)
+        public async Task<List<Emp_LicenseT>> GetLicenselist(string verifyCode)
         {
-            var result = await _http.GetFromJsonAsync<List<LicenseT>>($"api/License/GetLicenselist?verifyCode={verifyCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_LicenseT>>($"api/License/GetLicenselist?verifyCode={verifyCode}");
             return result;
         }
-        public async Task<string> CreateLicense(LicenseT _license)
+        public async Task<string> CreateLicense(Emp_LicenseT _license)
         {
             Console.WriteLine("Saving License");
             var result = await _http.PostAsJsonAsync("api/License/InsertLicense", _license);
-            var response = await result.Content.ReadFromJsonAsync<LicenseT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_LicenseT>();
             return response?.Verify_Id;
         }
-        public async Task<List<LicenseT>> GetExistlicense(string _verifyCode, int id)
+        public async Task<List<Emp_LicenseT>> GetExistlicense(string _verifyCode, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<LicenseT>>($"api/License/Getlicenseisexist?verifyId={_verifyCode}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_LicenseT>>($"api/License/Getlicenseisexist?verifyId={_verifyCode}&id={id}");
             return result;
         }
-        public async Task UpdateLicense(LicenseT license)
+        public async Task UpdateLicense(Emp_LicenseT license)
         {
             var result = await _http.PutAsJsonAsync($"api/License/Updatelicense/{license.Id}", license);
             var response = result.StatusCode.ToString();

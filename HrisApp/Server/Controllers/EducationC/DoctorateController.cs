@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.Education;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.EducationC
 {
@@ -16,9 +14,9 @@ namespace HrisApp.Server.Controllers.EducationC
         }
 
         [HttpGet("GetDoctoratelist")]
-        public async Task<ActionResult<List<DoctorateT>>> GetDoctoratelist([FromQuery] string verCode)
+        public async Task<ActionResult<List<Emp_DoctorateT>>> GetDoctoratelist([FromQuery] string verCode)
         {
-            var doctoratelist = await _context.DoctorateT
+            var doctoratelist = await _context.Emp_DoctorateT
                 .Where(x => x.Verify_Id == verCode)
                 .ToListAsync();
 
@@ -28,7 +26,7 @@ namespace HrisApp.Server.Controllers.EducationC
         // PUT: api/WorkExperiences/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("UpdateDoctorate/{id}")]
-        public async Task<IActionResult> PutDoctorate(int id, DoctorateT _doctorates)
+        public async Task<IActionResult> PutDoctorate(int id, Emp_DoctorateT _doctorates)
         {
             if (id != _doctorates.Id)
             {
@@ -60,28 +58,28 @@ namespace HrisApp.Server.Controllers.EducationC
         // POST: api/WorkExperiences
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<DoctorateT>> CreateDoctorate([FromBody] DoctorateT _doc)
+        public async Task<ActionResult<Emp_DoctorateT>> CreateDoctorate([FromBody] Emp_DoctorateT _doc)
         {
             if (_doc == null)
             {
                 return BadRequest("Invalid data");
             }
 
-            _context.DoctorateT.Add(_doc);
+            _context.Emp_DoctorateT.Add(_doc);
             await _context.SaveChangesAsync();
 
             return Ok(_doc);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<DoctorateT>>> DeleteDoctorate(int id)
+        public async Task<ActionResult<List<Emp_DoctorateT>>> DeleteDoctorate(int id)
         {
-            var dbdoc = await _context.DoctorateT
+            var dbdoc = await _context.Emp_DoctorateT
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (dbdoc == null)
                 return NotFound("Sorry, but no senior");
 
-            _context.DoctorateT.Remove(dbdoc);
+            _context.Emp_DoctorateT.Remove(dbdoc);
 
             await _context.SaveChangesAsync();
 
@@ -90,18 +88,18 @@ namespace HrisApp.Server.Controllers.EducationC
 
         private bool DoctorateExists(int id)
         {
-            return (_context.DoctorateT?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Emp_DoctorateT?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private async Task<List<DoctorateT>> GetDbDoctorate()
+        private async Task<List<Emp_DoctorateT>> GetDbDoctorate()
         {
-            return await _context.DoctorateT.ToListAsync();
+            return await _context.Emp_DoctorateT.ToListAsync();
         }
 
         [HttpGet("GetExistDoctorate")]
-        public async Task<ActionResult<IEnumerable<DoctorateT>>> GetExistDoctorate([FromQuery] string verifyId, [FromQuery] int id)
+        public async Task<ActionResult<IEnumerable<Emp_DoctorateT>>> GetExistDoctorate([FromQuery] string verifyId, [FromQuery] int id)
         {
-            return await _context.DoctorateT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
+            return await _context.Emp_DoctorateT.Where(a => a.Verify_Id == verifyId && a.Id == id).ToListAsync();
         }
     }
 }

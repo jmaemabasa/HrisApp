@@ -18,17 +18,17 @@ namespace HrisApp.Server.Controllers.EmployeeDetails.AddressC
 
         // GET: api/Addresses
         [HttpGet("GetAddresses")]
-        public async Task<ActionResult<IEnumerable<AddressT>>> GetAddresses()
+        public async Task<ActionResult<IEnumerable<Emp_AddressT>>> GetAddresses()
         {
-            var address = await _context.AddressT.ToListAsync();
+            var address = await _context.Emp_AddressT.ToListAsync();
             return Ok(address);
         }
 
         // GET: api/Addresses/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AddressT>> GetSingleAddress(int id)
+        public async Task<ActionResult<Emp_AddressT>> GetSingleAddress(int id)
         {
-            var address = await _context.AddressT.FirstOrDefaultAsync(h => h.Id == id);
+            var address = await _context.Emp_AddressT.FirstOrDefaultAsync(h => h.Id == id);
             if (address == null)
             {
                 return NotFound("sorry no address here");
@@ -39,9 +39,9 @@ namespace HrisApp.Server.Controllers.EmployeeDetails.AddressC
         // PUT: api/Addresses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAddress(int id, AddressT address)
+        public async Task<IActionResult> PutAddress(int id, Emp_AddressT address)
         {
-            var dbaddress = await _context.AddressT
+            var dbaddress = await _context.Emp_AddressT
                  .FirstOrDefaultAsync(sh => sh.Id == id);
             if (dbaddress == null)
                 return NotFound("Sorry, but no users for you. :/");
@@ -71,9 +71,9 @@ namespace HrisApp.Server.Controllers.EmployeeDetails.AddressC
         // POST: api/Addresses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AddressT>> PostAddress(AddressT address)
+        public async Task<ActionResult<Emp_AddressT>> PostAddress(Emp_AddressT address)
         {
-            _context.AddressT.Add(address);
+            _context.Emp_AddressT.Add(address);
             await _context.SaveChangesAsync();
 
             return Ok(await GetDbAddress());
@@ -83,17 +83,17 @@ namespace HrisApp.Server.Controllers.EmployeeDetails.AddressC
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
-            if (_context.AddressT == null)
+            if (_context.Emp_AddressT == null)
             {
                 return NotFound();
             }
-            var address = await _context.AddressT.FindAsync(id);
+            var address = await _context.Emp_AddressT.FindAsync(id);
             if (address == null)
             {
                 return NotFound();
             }
 
-            _context.AddressT.Remove(address);
+            _context.Emp_AddressT.Remove(address);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -101,11 +101,11 @@ namespace HrisApp.Server.Controllers.EmployeeDetails.AddressC
 
         private bool AddressExists(int id)
         {
-            return (_context.AddressT?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Emp_AddressT?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-        private async Task<List<AddressT>> GetDbAddress()
+        private async Task<List<Emp_AddressT>> GetDbAddress()
         {
-            return await _context.AddressT.ToListAsync();
+            return await _context.Emp_AddressT.ToListAsync();
         }
     }
 }

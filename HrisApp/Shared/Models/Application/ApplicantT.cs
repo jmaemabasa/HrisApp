@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HrisApp.Shared.Models.Employee;
+using HrisApp.Shared.Models.StaticData;
 
 namespace HrisApp.Shared.Models.Application
 {

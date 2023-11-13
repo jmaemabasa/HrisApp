@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.Payroll;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.Payroll
 {
@@ -18,9 +16,9 @@ namespace HrisApp.Server.Controllers.Payroll
 
         // GET: api/Payroll
         [HttpGet]
-        public async Task<ActionResult<List<PayrollT>>> GetPayroll()
+        public async Task<ActionResult<List<Emp_PayrollT>>> GetPayroll()
         {
-            var payroll = await _context.PayrollT
+            var payroll = await _context.Emp_PayrollT
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)
@@ -30,9 +28,9 @@ namespace HrisApp.Server.Controllers.Payroll
         }
 
         [HttpGet("GetOPayrollList")]
-        public async Task<ActionResult<List<PayrollT>>> GetPayrollList()
+        public async Task<ActionResult<List<Emp_PayrollT>>> GetPayrollList()
         {
-            var payroll = await _context.PayrollT
+            var payroll = await _context.Emp_PayrollT
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)
@@ -43,9 +41,9 @@ namespace HrisApp.Server.Controllers.Payroll
 
         // GET: api/Payroll/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PayrollT>> GetSinglePayroll(int id)
+        public async Task<ActionResult<Emp_PayrollT>> GetSinglePayroll(int id)
         {
-            var pr = await _context.PayrollT
+            var pr = await _context.Emp_PayrollT
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)
@@ -61,9 +59,9 @@ namespace HrisApp.Server.Controllers.Payroll
         // PUT: api/Others/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<PayrollT>> UpdatePayroll(int id, PayrollT payroll)
+        public async Task<ActionResult<Emp_PayrollT>> UpdatePayroll(int id, Emp_PayrollT payroll)
         {
-            var dbPayroll = await _context.PayrollT
+            var dbPayroll = await _context.Emp_PayrollT
                  .FirstOrDefaultAsync(sh => sh.Id == id);
 
             dbPayroll.Salary = payroll.Salary;
@@ -90,13 +88,13 @@ namespace HrisApp.Server.Controllers.Payroll
         // POST: api/Others
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<List<PayrollT>>> CreatePayroll(PayrollT pr)
+        public async Task<ActionResult<List<Emp_PayrollT>>> CreatePayroll(Emp_PayrollT pr)
         {
             pr.Cashbond = null;
             pr.RestDay = null;
             pr.RateType = null;
             pr.ScheduleType = null;
-            _context.PayrollT.Add(pr);
+            _context.Emp_PayrollT.Add(pr);
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBPayroll());
@@ -106,17 +104,17 @@ namespace HrisApp.Server.Controllers.Payroll
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePayroll(int id)
         {
-            if (_context.PayrollT == null)
+            if (_context.Emp_PayrollT == null)
             {
                 return NotFound();
             }
-            var pr = await _context.PayrollT.FindAsync(id);
+            var pr = await _context.Emp_PayrollT.FindAsync(id);
             if (pr == null)
             {
                 return NotFound();
             }
 
-            _context.PayrollT.Remove(pr);
+            _context.Emp_PayrollT.Remove(pr);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -124,12 +122,12 @@ namespace HrisApp.Server.Controllers.Payroll
 
         private bool OthersExists(int id)
         {
-            return (_context.PayrollT?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Emp_PayrollT?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private async Task<List<PayrollT>> GetDBPayroll()
+        private async Task<List<Emp_PayrollT>> GetDBPayroll()
         {
-            return await _context.PayrollT
+            return await _context.Emp_PayrollT
                 .Include(em => em.Cashbond)
                 .Include(em => em.RateType)
                 .Include(em => em.ScheduleType)

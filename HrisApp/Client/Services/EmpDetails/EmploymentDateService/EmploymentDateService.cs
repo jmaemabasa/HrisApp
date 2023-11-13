@@ -8,9 +8,9 @@
             _http = http;
         }
 
-        public List<EmploymentDateT> EmploymentDateT { get; set; } = new List<EmploymentDateT>();
+        public List<Emp_EmploymentDateT> EmploymentDateT { get; set; } = new List<Emp_EmploymentDateT>();
 
-        public async Task<string> CreateEmploymentDate(EmploymentDateT obj)
+        public async Task<string> CreateEmploymentDate(Emp_EmploymentDateT obj)
         {
             Console.WriteLine("Saving EmploymentDate");
             var result = await _http.PostAsJsonAsync("api/EmploymentDate", obj);
@@ -20,20 +20,20 @@
 
         public async Task GetEmploymentDate()
         {
-            var result = await _http.GetFromJsonAsync<List<EmploymentDateT>>("api/EmploymentDate");
+            var result = await _http.GetFromJsonAsync<List<Emp_EmploymentDateT>>("api/EmploymentDate");
             if (result != null)
                 EmploymentDateT = result;
         }
 
-        public async Task<EmploymentDateT> GetSingleEmploymentDate(int id)
+        public async Task<Emp_EmploymentDateT> GetSingleEmploymentDate(int id)
         {
-            var result = await _http.GetFromJsonAsync<EmploymentDateT>($"api/EmploymentDate/{id}");
+            var result = await _http.GetFromJsonAsync<Emp_EmploymentDateT>($"api/EmploymentDate/{id}");
             if (result != null)
                 return result;
             throw new Exception("date not found!");
         }
 
-        public async Task UpdateEmploymentDate(EmploymentDateT obj)
+        public async Task UpdateEmploymentDate(Emp_EmploymentDateT obj)
         {
             var result = await _http.PutAsJsonAsync($"api/EmploymentDate/{obj.Id}", obj);
             await SetEmploymentDate(result);
@@ -41,7 +41,7 @@
 
         private async Task SetEmploymentDate(HttpResponseMessage result)
         {
-            var response = await result.Content.ReadFromJsonAsync<List<EmploymentDateT>>();
+            var response = await result.Content.ReadFromJsonAsync<List<Emp_EmploymentDateT>>();
             EmploymentDateT = response;
 
         }

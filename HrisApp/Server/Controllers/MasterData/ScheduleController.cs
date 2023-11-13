@@ -1,7 +1,4 @@
-﻿using HrisApp.Shared.Models.Payroll;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.MasterData
 {

@@ -1,8 +1,4 @@
-﻿using HrisApp.Shared.Models.Education;
-using System;
-using static MudBlazor.Icons;
-
-namespace HrisApp.Client.Services.EmpDetails.EducationService
+﻿namespace HrisApp.Client.Services.EmpDetails.EducationService
 {
     public class EducationService : IEducationService
     {
@@ -13,56 +9,56 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             _http = http;
         }
 
-        public async Task<List<PrimaryT>> GetExistPrimary(string verifyId, int id)
+        public async Task<List<Emp_PrimaryT>> GetExistPrimary(string verifyId, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<PrimaryT>>($"api/Primary/GetExistPrimary?verifyId={verifyId}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_PrimaryT>>($"api/Primary/GetExistPrimary?verifyId={verifyId}&id={id}");
             return result;
         }
-        public async Task<List<SecondaryT>> GetExistSecondary(string verifyId, int id)
+        public async Task<List<Emp_SecondaryT>> GetExistSecondary(string verifyId, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<SecondaryT>>($"api/Secondary/GetExistSecondary?verifyId={verifyId}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_SecondaryT>>($"api/Secondary/GetExistSecondary?verifyId={verifyId}&id={id}");
             return result;
         }
-        public async Task<List<SeniorHST>> GetExistSeniorHS(string verifyId, int id)
+        public async Task<List<Emp_SeniorHST>> GetExistSeniorHS(string verifyId, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<SeniorHST>>($"api/SeniorHS/GetExistSeniorHS?verifyId={verifyId}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_SeniorHST>>($"api/SeniorHS/GetExistSeniorHS?verifyId={verifyId}&id={id}");
             return result;
         }
-        public async Task<List<CollegeT>> GetExistCollege(string verifyId, int id)
+        public async Task<List<Emp_CollegeT>> GetExistCollege(string verifyId, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<CollegeT>>($"api/College/GetExistCollege?verifyId={verifyId}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_CollegeT>>($"api/College/GetExistCollege?verifyId={verifyId}&id={id}");
             return result;
         }
-        public async Task<List<MasteralT>> GetExistMasteral(string verifyId, int id)
+        public async Task<List<Emp_MasteralT>> GetExistMasteral(string verifyId, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<MasteralT>>($"api/Masteral/GetExistMasteral?verifyId={verifyId}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_MasteralT>>($"api/Masteral/GetExistMasteral?verifyId={verifyId}&id={id}");
             return result;
         }
-        public async Task<List<DoctorateT>> GetExistDoctorate(string verifyId, int id)
+        public async Task<List<Emp_DoctorateT>> GetExistDoctorate(string verifyId, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<DoctorateT>>($"api/Doctorate/GetExistDoctorate?verifyId={verifyId}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_DoctorateT>>($"api/Doctorate/GetExistDoctorate?verifyId={verifyId}&id={id}");
             return result;
         }
-        public async Task<List<OtherEducT>> GetExistOtherEduc(string verifyId, int id)
+        public async Task<List<Emp_OtherEducT>> GetExistOtherEduc(string verifyId, int id)
         {
-            var result = await _http.GetFromJsonAsync<List<OtherEducT>>($"api/OthersEduc/GetExistOtherEduc?verifyId={verifyId}&id={id}");
+            var result = await _http.GetFromJsonAsync<List<Emp_OtherEducT>>($"api/OthersEduc/GetExistOtherEduc?verifyId={verifyId}&id={id}");
             return result;
         }
 
-        public List<PrimaryT> _primary { get; set; } = new List<PrimaryT>();   
-        public async Task<List<PrimaryT>> GetPrimarylist(string verCode)
+        public List<Emp_PrimaryT> _primary { get; set; } = new List<Emp_PrimaryT>();
+        public async Task<List<Emp_PrimaryT>> GetPrimarylist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<PrimaryT>>($"api/Primary/GetPrimarylist?verCode={verCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_PrimaryT>>($"api/Primary/GetPrimarylist?verCode={verCode}");
             return result;
         }
-        public async Task<string> CreatePrimary(PrimaryT primary)
+        public async Task<string> CreatePrimary(Emp_PrimaryT primary)
         {
             Console.WriteLine("Saving primary");
             var result = await _http.PostAsJsonAsync("api/Primary", primary);
-            var response = await result.Content.ReadFromJsonAsync<PrimaryT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_PrimaryT>();
             return response?.Verify_Id;
         }
-        public async Task UpdatePrimary(PrimaryT _primaries)
+        public async Task UpdatePrimary(Emp_PrimaryT _primaries)
         {
             Console.WriteLine("Update Primary ");
             var result = await _http.PutAsJsonAsync($"api/Primary/UpdatePrimary/{_primaries.Id}", _primaries);
@@ -72,8 +68,8 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
         {
             var result = await _http.DeleteAsync($"api/Primary/{id}");
             //await SetPrimary(result);
-        }   
-        public async Task CreateNewupdate(PrimaryT _primaries)
+        }
+        public async Task CreateNewupdate(Emp_PrimaryT _primaries)
         {
             var result = await _http.PostAsJsonAsync("api/Primary", _primaries);
             await SetPrimary(result);
@@ -81,24 +77,24 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
 
         private async Task SetPrimary(HttpResponseMessage result)
         {
-            var response = await result.Content.ReadFromJsonAsync<List<PrimaryT>>();
+            var response = await result.Content.ReadFromJsonAsync<List<Emp_PrimaryT>>();
             _primary = response;
         }
 
-        public List<SecondaryT> _secondary { get; set; } = new List<SecondaryT>();
-        public async Task<List<SecondaryT>> GetSecondarylist(string verCode)
+        public List<Emp_SecondaryT> _secondary { get; set; } = new List<Emp_SecondaryT>();
+        public async Task<List<Emp_SecondaryT>> GetSecondarylist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<SecondaryT>>($"api/Secondary/GetSecondarylist?verCode={verCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_SecondaryT>>($"api/Secondary/GetSecondarylist?verCode={verCode}");
             return result;
         }
-        public async Task<string> CreateSecondary(SecondaryT _secondaries)
+        public async Task<string> CreateSecondary(Emp_SecondaryT _secondaries)
         {
             Console.WriteLine("Saving secondary");
             var result = await _http.PostAsJsonAsync("api/Secondary", _secondaries);
-            var response = await result.Content.ReadFromJsonAsync<SecondaryT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_SecondaryT>();
             return response?.Verify_Id;
         }
-        public async Task UpdateSecondary(SecondaryT _secondaries)
+        public async Task UpdateSecondary(Emp_SecondaryT _secondaries)
         {
             Console.WriteLine("Update Secondary ");
             var result = await _http.PutAsJsonAsync($"api/Secondary/UpdateSecondary/{_secondaries.Id}", _secondaries);
@@ -110,20 +106,20 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             //await SetPrimary(result);
         }
 
-        public List<SeniorHST> _seniors { get; set; } = new List<SeniorHST>();
-        public async Task<List<SeniorHST>> GetSeniorHSlist(string verCode)
+        public List<Emp_SeniorHST> _seniors { get; set; } = new List<Emp_SeniorHST>();
+        public async Task<List<Emp_SeniorHST>> GetSeniorHSlist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<SeniorHST>>($"api/SeniorHS/GetSeniorHSlist?verCode={verCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_SeniorHST>>($"api/SeniorHS/GetSeniorHSlist?verCode={verCode}");
             return result;
         }
-        public async Task<string> CreateSeniorHS(SeniorHST _shs)
+        public async Task<string> CreateSeniorHS(Emp_SeniorHST _shs)
         {
             Console.WriteLine("Saving SeniorHS");
             var result = await _http.PostAsJsonAsync("api/SeniorHS", _shs);
-            var response = await result.Content.ReadFromJsonAsync<SeniorHST>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_SeniorHST>();
             return response?.Verify_Id;
         }
-        public async Task UpdateSeniorHS(SeniorHST _shs)
+        public async Task UpdateSeniorHS(Emp_SeniorHST _shs)
         {
             Console.WriteLine("Update SeniorHS ");
             var result = await _http.PutAsJsonAsync($"api/SeniorHS/UpdateSeniorHS/{_shs.Id}", _shs);
@@ -135,20 +131,20 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             //await SetPrimary(result);
         }
 
-        public List<CollegeT> _college { get; set; }
-        public async Task<List<CollegeT>> GetCollegelist(string verCode)
+        public List<Emp_CollegeT> _college { get; set; }
+        public async Task<List<Emp_CollegeT>> GetCollegelist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<CollegeT>>($"api/College/GetCollegelist?verCode={verCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_CollegeT>>($"api/College/GetCollegelist?verCode={verCode}");
             return result;
         }
-        public async Task<string> CreateCollege(CollegeT _colleges)
+        public async Task<string> CreateCollege(Emp_CollegeT _colleges)
         {
             Console.WriteLine("Saving College");
             var result = await _http.PostAsJsonAsync("api/College", _colleges);
-            var response = await result.Content.ReadFromJsonAsync<CollegeT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_CollegeT>();
             return response?.Verify_Id;
         }
-        public async Task UpdateCollege(CollegeT _colleges)
+        public async Task UpdateCollege(Emp_CollegeT _colleges)
         {
             Console.WriteLine("Update College ");
             var result = await _http.PutAsJsonAsync($"api/College/UpdateCollege/{_colleges.Id}", _colleges);
@@ -160,20 +156,20 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             //await SetPrimary(result);
         }
 
-        public List<MasteralT> _masteral { get; set; }
-        public async Task<List<MasteralT>> GetMasterallist(string verCode)
+        public List<Emp_MasteralT> _masteral { get; set; }
+        public async Task<List<Emp_MasteralT>> GetMasterallist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<MasteralT>>($"api/Masteral/GetMasterlist?verCode={verCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_MasteralT>>($"api/Masteral/GetMasterlist?verCode={verCode}");
             return result;
         }
-        public async Task<string> CreateMasteral(MasteralT _mas)
+        public async Task<string> CreateMasteral(Emp_MasteralT _mas)
         {
             Console.WriteLine("Saving Masteral");
             var result = await _http.PostAsJsonAsync("api/Masteral", _mas);
-            var response = await result.Content.ReadFromJsonAsync<MasteralT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_MasteralT>();
             return response?.Verify_Id;
         }
-        public async Task UpdateMasteral(MasteralT _mas)
+        public async Task UpdateMasteral(Emp_MasteralT _mas)
         {
             Console.WriteLine("Update Masteral ");
             var result = await _http.PutAsJsonAsync($"api/Masteral/UpdateMasteral/{_mas.Id}", _mas);
@@ -185,20 +181,20 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             //await SetPrimary(result);
         }
 
-        public List<DoctorateT> _doctorate { get; set; }
-        public async Task<List<DoctorateT>> GetDoctoratelist(string verCode)
+        public List<Emp_DoctorateT> _doctorate { get; set; }
+        public async Task<List<Emp_DoctorateT>> GetDoctoratelist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<DoctorateT>>($"api/Doctorate/GetDoctoratelist?verCode={verCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_DoctorateT>>($"api/Doctorate/GetDoctoratelist?verCode={verCode}");
             return result;
         }
-        public async Task<string> CreateDoctorate(DoctorateT _doc)
+        public async Task<string> CreateDoctorate(Emp_DoctorateT _doc)
         {
             Console.WriteLine("Saving Doctorate");
             var result = await _http.PostAsJsonAsync("api/Doctorate", _doc);
-            var response = await result.Content.ReadFromJsonAsync<DoctorateT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_DoctorateT>();
             return response?.Verify_Id;
         }
-        public async Task UpdateDoctorate(DoctorateT _doc)
+        public async Task UpdateDoctorate(Emp_DoctorateT _doc)
         {
             Console.WriteLine("Update Doctorate ");
             var result = await _http.PutAsJsonAsync($"api/Doctorate/UpdateDoctorate/{_doc.Id}", _doc);
@@ -210,20 +206,20 @@ namespace HrisApp.Client.Services.EmpDetails.EducationService
             //await SetPrimary(result);
         }
 
-        public List<OtherEducT> _other { get; set; }
-        public async Task<List<OtherEducT>> GetOtherEduclist(string verCode)
+        public List<Emp_OtherEducT> _other { get; set; }
+        public async Task<List<Emp_OtherEducT>> GetOtherEduclist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<OtherEducT>>($"api/OthersEduc/GetOtherEduclist?verCode={verCode}");
+            var result = await _http.GetFromJsonAsync<List<Emp_OtherEducT>>($"api/OthersEduc/GetOtherEduclist?verCode={verCode}");
             return result;
         }
-        public async Task<string> CreateOtherEduc(OtherEducT _others)
+        public async Task<string> CreateOtherEduc(Emp_OtherEducT _others)
         {
             Console.WriteLine("Saving OtherEduc");
             var result = await _http.PostAsJsonAsync("api/OthersEduc", _others);
-            var response = await result.Content.ReadFromJsonAsync<OtherEducT>();
+            var response = await result.Content.ReadFromJsonAsync<Emp_OtherEducT>();
             return response?.Verify_Id;
         }
-        public async Task UpdateOtherEduc(OtherEducT _others)
+        public async Task UpdateOtherEduc(Emp_OtherEducT _others)
         {
             Console.WriteLine("Update OtherEduc ");
             var result = await _http.PutAsJsonAsync($"api/OthersEduc/UpdateOtherEduc/{_others.Id}", _others);

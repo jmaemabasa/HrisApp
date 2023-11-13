@@ -2,11 +2,11 @@
 {
     public interface IEmploymentDateService
     {
-        List<EmploymentDateT> EmploymentDateT { get; set; }
+        List<Emp_EmploymentDateT> EmploymentDateT { get; set; }
 
-        Task<string> CreateEmploymentDate(EmploymentDateT obj);
+        Task<string> CreateEmploymentDate(Emp_EmploymentDateT obj);
         Task GetEmploymentDate();
-        Task<EmploymentDateT> GetSingleEmploymentDate(int id);
-        Task UpdateEmploymentDate(EmploymentDateT obj);
+        Task<Emp_EmploymentDateT> GetSingleEmploymentDate(int id);
+        Task UpdateEmploymentDate(Emp_EmploymentDateT obj);
     }
 }
