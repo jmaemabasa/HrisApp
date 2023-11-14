@@ -5,6 +5,12 @@ namespace HrisApp.Client.Pages.Education
 #nullable disable
     public partial class EmployeeSecondary : ComponentBase
     {
+        //TABLEEES
+        List<Emp_SecondaryT> secondaryList = new List<Emp_SecondaryT>();
+        private Emp_SecondaryT selectedItem1 = null;
+
+        //END FOR TABLES
+
         private Emp_SecondaryT sec = new Emp_SecondaryT();
         [Parameter]
         public string VerifyCode { get; set; }
@@ -49,24 +55,5 @@ namespace HrisApp.Client.Pages.Education
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "SecondaryT", $"Secondary Verify_Id: {sec.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(secondaryList), DateTime.Now);
             secondaryList = await EducationService.GetSecondarylist(VerifyCode);
         }
-
-
-        //TABLEEES
-        private string searchString1 = "";
-        List<Emp_SecondaryT> secondaryList = new List<Emp_SecondaryT>();
-        private Emp_SecondaryT selectedItem1 = null;
-        private HashSet<Emp_SecondaryT> selectedItems = new HashSet<Emp_SecondaryT>();
-
-        private bool FilterFunc1(Emp_SecondaryT divisions) => FilterFunc(divisions, searchString1);
-
-        private bool FilterFunc(Emp_SecondaryT employees, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            //     return true;
-            return false;
-        }
-        //END FOR TABLES
     }
 }

@@ -45,24 +45,38 @@
             background-color: #E38D0F;
             color: #fff;
         }
+
+    .btnadd {
+        border-radius: 15px;
+        background-color: #26446e;
+        color: #FAFAF5;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .btnadd:hover {
+            background-color: #E38D0F;
+            transform: scale(1.1);
+        }
 </style>
 @if (collegeList.Count == 0 || collegeList == null)
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No College Information.</span>
         <MudTooltip Text="Add">
-            <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "CollegeOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+            <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "CollegeOpen"))" Size="Size.Small" >Add Information</MudButton>
         </MudTooltip>
     </div>
 }
 else
 {
-    <MudTable Class="stable" Items="collegeList" Context="college" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<Emp_CollegeT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Class="stable" Items="collegeList" Context="college" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">College Education</span>
                 <MudTooltip Text="Add">
-                    <MudButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "CollegeOpen"))" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Add Information</MudButton>
+                    <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "CollegeOpen"))" Size="Size.Small">Add Information</MudButton>
                 </MudTooltip>
             </div>
         </ToolBarContent>

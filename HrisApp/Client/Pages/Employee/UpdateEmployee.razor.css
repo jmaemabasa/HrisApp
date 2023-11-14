@@ -176,8 +176,9 @@
 }
 
 
-::deep .txf > .mud-input-control-input-container:hover {
-    border: 2px solid #C5CFD2 !important;
+::deep .txf:focus-within {
+    border: 2px solid black !important;
+    border-radius: 10px;
 }
 
 ::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {

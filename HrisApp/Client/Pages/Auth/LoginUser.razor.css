@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-::deep .txtpass:hover {
+::deep .txtpass:focus-within {
     border: 2px solid black;
 }
 

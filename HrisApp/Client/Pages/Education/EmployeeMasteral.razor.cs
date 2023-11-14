@@ -5,6 +5,12 @@ namespace HrisApp.Client.Pages.Education
 #nullable disable
     public partial class EmployeeMasteral : ComponentBase
     {
+        //TABLEEES
+        List<Emp_MasteralT> masteralList = new List<Emp_MasteralT>();
+        private Emp_MasteralT selectedItem1 = null;
+
+        //END FOR TABLES
+
         private Emp_MasteralT masteral = new Emp_MasteralT();
         [Parameter]
         public string VerifyCode { get; set; }
@@ -50,24 +56,5 @@ namespace HrisApp.Client.Pages.Education
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "MasteralT", $"Masteral Verify_Id: {masteral.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(masteralList), DateTime.Now);
             masteralList = await EducationService.GetMasterallist(VerifyCode);
         }
-
-
-        //TABLEEES
-        private string searchString1 = "";
-        List<Emp_MasteralT> masteralList = new List<Emp_MasteralT>();
-        private Emp_MasteralT selectedItem1 = null;
-        private HashSet<Emp_MasteralT> selectedItems = new HashSet<Emp_MasteralT>();
-
-        private bool FilterFunc1(Emp_MasteralT item) => FilterFunc(item, searchString1);
-
-        private bool FilterFunc(Emp_MasteralT item, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            //     return true;
-            return false;
-        }
-        //END FOR TABLES
     }
 }

@@ -2,7 +2,7 @@
 {
     public partial class Division : ComponentBase
     {
-        private DivisionT divisions = new DivisionT();
+        private DivisionT divisions = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -45,13 +45,13 @@
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<DivisionT> divisionList = new List<DivisionT>();
+        List<DivisionT> divisionList = new();
         private DivisionT selectedItem1 = null;
-        private HashSet<DivisionT> selectedItems = new HashSet<DivisionT>();
+        private HashSet<DivisionT> selectedItems = new();
 
         private bool FilterFunc1(DivisionT divisions) => FilterFunc(divisions, searchString1);
 
-        private bool FilterFunc(DivisionT employees, string searchString)
+        private static bool FilterFunc(DivisionT employees, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -64,8 +64,10 @@
         //OPEN DIALOGS
         private void OpenUpdateDivision(int id)
         {
-            var parameters = new DialogParameters<UpdateDivisionDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdateDivisionDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdateDivisionDialog>("Update Division", parameters, options);

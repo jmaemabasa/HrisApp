@@ -25,9 +25,9 @@
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<AreaT> areaList = new List<AreaT>();
+        List<AreaT> areaList = new();
         private AreaT selectedItem1 = null;
-        private HashSet<AreaT> selectedItems = new HashSet<AreaT>();
+        private HashSet<AreaT> selectedItems = new();
 
         private bool FilterFunc1(AreaT area) => FilterFunc(area, searchString1);
 
@@ -44,8 +44,10 @@
         //OPEN DIALOGS
         private void OpenUpdateArea(int id)
         {
-            var parameters = new DialogParameters<UpdateAreaDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdateAreaDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdateAreaDialog>("Update Area", parameters, options);

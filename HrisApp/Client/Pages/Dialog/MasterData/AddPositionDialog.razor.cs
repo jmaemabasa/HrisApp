@@ -8,10 +8,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 #nullable disable
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        private List<DepartmentT> Department = new List<DepartmentT>();
-        private List<DivisionT> Division = new List<DivisionT>();
-        private List<SectionT> Sections = new List<SectionT>();
-        private List<PositionT> Positions = new List<PositionT>();
+        private List<DepartmentT> Department = new();
+        private List<DivisionT> Division = new();
+        private List<SectionT> Sections = new();
+        private List<PositionT> Positions = new();
 
         private int selectedDivision =0;
         private int selectedDepartment=0;

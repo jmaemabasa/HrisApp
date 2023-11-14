@@ -67,9 +67,18 @@ namespace HrisApp.Server.Controllers.ImageC
                             System.IO.File.WriteAllBytes(Path.Combine(filePath, file.FileName), memoryStream.ToArray());
                         }
 
+                        //update
                         var db = await _context.EmpPictureT.Where(a => a.EmployeeNo == EmployeeId && a.Verify_Id == verify && a.DepartmentId == department).FirstOrDefaultAsync();
                         if (db != null)
                         {
+
+                            //delete previous image
+                            var previousImagePath = Path.Combine(filePath, db.Img_Filename);
+                            if (System.IO.File.Exists(previousImagePath))
+                            {
+                                System.IO.File.Delete(previousImagePath);
+                            }
+
                             db.Img_Filename = file.FileName;
 
                             await _context.SaveChangesAsync();
@@ -77,7 +86,7 @@ namespace HrisApp.Server.Controllers.ImageC
                         }
                         else
                         {
-                            EmpPictureT _Model = new EmpPictureT()
+                            EmpPictureT _Model = new()
                             {
                                 EmployeeNo = EmployeeId,
                                 Img_Filename = file.Name,

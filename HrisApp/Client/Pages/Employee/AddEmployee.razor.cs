@@ -82,7 +82,7 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         [Parameter]
-        public int? id { get; set; }
+        public int? Id { get; set; }
 
         EmployeeT employee = new();
         Emp_AddressT address = new();
@@ -95,25 +95,25 @@ namespace HrisApp.Client.Pages.Employee
         
         #region LIST VARIABLES
         //FK
-        private List<AreaT> AreasL = new List<AreaT>();
-        private List<StatusT> StatusL = new List<StatusT>();
-        private List<EmploymentStatusT> EmploymentStatusL = new List<EmploymentStatusT>();
+        private List<AreaT> AreasL = new();
+        private List<StatusT> StatusL = new();
+        private List<EmploymentStatusT> EmploymentStatusL = new();
 
-        private List<DivisionT> DivisionsL = new List<DivisionT>();
-        private List<DepartmentT> DepartmentsL = new List<DepartmentT>();
-        private List<SectionT> SectionsL = new List<SectionT>();
-        private List<PositionT> PositionsL = new List<PositionT>();
+        private List<DivisionT> DivisionsL = new();
+        private List<DepartmentT> DepartmentsL = new();
+        private List<SectionT> SectionsL = new();
+        private List<PositionT> PositionsL = new();
 
-        private List<GenderT> GendersL = new List<GenderT>();
-        private List<CivilStatusT> CivilStatusL = new List<CivilStatusT>();
-        private List<ReligionT> ReligionsL = new List<ReligionT>();
-        private List<EmerRelationshipT> EmerRelationshipsL = new List<EmerRelationshipT>();
+        private List<GenderT> GendersL = new();
+        private List<CivilStatusT> CivilStatusL = new();
+        private List<ReligionT> ReligionsL = new();
+        private List<EmerRelationshipT> EmerRelationshipsL = new();
 
         //PAYROLL
-        private List<CashBondT> CashbondL = new List<CashBondT>();
-        private List<ScheduleTypeT> ScheduleTypeL = new List<ScheduleTypeT>();
-        private List<RateTypeT> RateTypeL = new List<RateTypeT>();
-        private List<RestDayT> RestDayL = new List<RestDayT>();
+        private List<CashBondT> CashbondL = new();
+        private List<ScheduleTypeT> ScheduleTypeL = new();
+        private List<RateTypeT> RateTypeL = new();
+        private List<RestDayT> RestDayL = new();
         #endregion
 
         #region EDUCATION VARIABLE
@@ -162,7 +162,7 @@ namespace HrisApp.Client.Pages.Employee
         private bool pdfbool12 { get; set; }
         private bool PDFbool12 { get; set; }
         IList<IBrowserFile> pdffile = new List<IBrowserFile>();
-        private List<MultipartFormDataContent> DocuEmployees = new List<MultipartFormDataContent>();
+        private List<MultipartFormDataContent> DocuEmployees = new();
 
         public class DocumentT
         {
@@ -176,7 +176,7 @@ namespace HrisApp.Client.Pages.Employee
         private string ImgContentType { get; set; }
         private string verifyId { get; set; }
 
-        MultipartFormDataContent EmpImage = new MultipartFormDataContent();
+        MultipartFormDataContent EmpImage = new();
         IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
         #endregion
 

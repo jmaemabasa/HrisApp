@@ -5,7 +5,11 @@ namespace HrisApp.Client.Pages.Education
 #nullable disable
     public partial class EmployeeCollege : ComponentBase
     {
-        private readonly Emp_CollegeT college = new Emp_CollegeT();
+        //TABLEEES
+        List<Emp_CollegeT> collegeList = new();
+        private Emp_CollegeT selectedItem1 = null;
+
+        private readonly Emp_CollegeT college = new();
         [Parameter]
         public string VerifyCode { get; set; }
 
@@ -16,7 +20,7 @@ namespace HrisApp.Client.Pages.Education
 
         void OpenDrawer(Anchor anchor, string drawerx)
         {
-            CollegeOpen = (drawerx == "CollegeOpen") ? true : false;
+            CollegeOpen = (drawerx == "CollegeOpen");
             this.anchor = anchor;
         }
         protected async Task SaveCollege()
@@ -51,24 +55,5 @@ namespace HrisApp.Client.Pages.Education
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "CollegeT", $"College Verify_Id: {college.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(collegeList), DateTime.Now);
             collegeList = await EducationService.GetCollegelist(VerifyCode);
         }
-
-
-        //TABLEEES
-        private string searchString1 = "";
-        List<Emp_CollegeT> collegeList = new List<Emp_CollegeT>();
-        private Emp_CollegeT selectedItem1 = null;
-        private HashSet<Emp_CollegeT> selectedItems = new HashSet<Emp_CollegeT>();
-
-        private bool FilterFunc1(Emp_CollegeT item) => FilterFunc(item, searchString1);
-
-        private static bool FilterFunc(Emp_CollegeT item, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            //     return true;
-            return false;
-        }
-        //END FOR TABLES
     }
 }

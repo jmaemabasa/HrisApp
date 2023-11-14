@@ -3,7 +3,6 @@
     public partial class Schedule : ComponentBase
     {
 #nullable disable
-        private ScheduleTypeT schedules = new ScheduleTypeT();
 
         protected override async Task OnInitializedAsync()
         {
@@ -45,11 +44,11 @@
         }
 
         //TABLEEES
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<ScheduleTypeT> scheduleList = new List<ScheduleTypeT>();
+        List<ScheduleTypeT> scheduleList = new();
         private ScheduleTypeT selectedItem1 = null;
-        private HashSet<ScheduleTypeT> selectedItems = new HashSet<ScheduleTypeT>();
+        private readonly HashSet<ScheduleTypeT> selectedItems = new();
 
         private bool FilterFunc1(ScheduleTypeT items) => FilterFunc(items, searchString1);
 
@@ -66,8 +65,10 @@
         //OPEN DIALOGS
         private void OpenUpdateScheudle(int id)
         {
-            var parameters = new DialogParameters<UpdateScheduleDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdateScheduleDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdateScheduleDialog>("Update Schedule", parameters, options);

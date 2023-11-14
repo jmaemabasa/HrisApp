@@ -19,27 +19,27 @@ namespace HrisApp.Client.Pages.Employee
 
         #region LIST TABLE VARIABLES
         //FK
-        private List<AreaT> AreasL = new List<AreaT>();
-        private List<StatusT> StatusL = new List<StatusT>();
-        private List<EmploymentStatusT> EmploymentStatusL = new List<EmploymentStatusT>();
+        private List<AreaT> AreasL = new();
+        private List<StatusT> StatusL = new();
+        private List<EmploymentStatusT> EmploymentStatusL = new();
 
-        private List<DivisionT> DivisionsL = new List<DivisionT>();
-        private List<DepartmentT> DepartmentsL = new List<DepartmentT>();
-        private List<SectionT> SectionsL = new List<SectionT>();
-        private List<PositionT> PositionsL = new List<PositionT>();
+        private List<DivisionT> DivisionsL = new();
+        private List<DepartmentT> DepartmentsL = new();
+        //private List<SectionT> SectionsL = new();
+        private List<PositionT> PositionsL = new();
 
-        private List<GenderT> GendersL = new List<GenderT>();
-        private List<CivilStatusT> CivilStatusL = new List<CivilStatusT>();
-        private List<ReligionT> ReligionsL = new List<ReligionT>();
-        private List<EmerRelationshipT> EmerRelationshipsL = new List<EmerRelationshipT>();
+        private List<GenderT> GendersL = new();
+        private List<CivilStatusT> CivilStatusL = new();
+        private List<ReligionT> ReligionsL = new();
+        private List<EmerRelationshipT> EmerRelationshipsL = new();
 
         //PAYROLL
-        private List<CashBondT> CashbondL = new List<CashBondT>();
-        private List<ScheduleTypeT> ScheduleTypeL = new List<ScheduleTypeT>();
-        private List<RateTypeT> RateTypeL = new List<RateTypeT>();
-        private List<RestDayT> RestDayL = new List<RestDayT>();
+        private List<CashBondT> CashbondL = new();
+        private List<ScheduleTypeT> ScheduleTypeL = new();
+        private List<RateTypeT> RateTypeL = new();
+        private List<RestDayT> RestDayL = new();
 
-        private List<DocumentT> pdffileList = new List<DocumentT>();
+        private List<DocumentT> pdffileList = new();
         #endregion
 
         #region DATES VARIBALE
@@ -71,13 +71,13 @@ namespace HrisApp.Client.Pages.Employee
 
         void OpenDrawer(Anchor anchor, string drawerx)
         {
-            personalandjobOpen = (drawerx == "personalandjobOpen") ? true : false;
-            workInfoOpen = (drawerx == "workInfoOpen") ? true : false;
-            emerOpen = (drawerx == "emerOpen") ? true : false;
-            addressOpen = (drawerx == "addressOpen") ? true : false;
-            documentsOpen = (drawerx == "documentsOpen") ? true : false;
-            StatutoryOpen = (drawerx == "StatutoryOpen") ? true : false;
-            ScheduleOpen = (drawerx == "ScheduleOpen") ? true : false;
+            personalandjobOpen = (drawerx == "personalandjobOpen");
+            workInfoOpen = (drawerx == "workInfoOpen");
+            emerOpen = (drawerx == "emerOpen");
+            addressOpen = (drawerx == "addressOpen");
+            documentsOpen = (drawerx == "documentsOpen");
+            StatutoryOpen = (drawerx == "StatutoryOpen");
+            ScheduleOpen = (drawerx == "ScheduleOpen");
             this.anchor = anchor;
         }
         #endregion
@@ -85,7 +85,7 @@ namespace HrisApp.Client.Pages.Employee
         string VerifyCode;
 
         private string ImageData { get; set; }
-        private List<string> PDFDataList = new List<string>();
+        private List<string> PDFDataList = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -100,7 +100,7 @@ namespace HrisApp.Client.Pages.Employee
             await DepartmentService.GetDepartment();
             DepartmentsL = DepartmentService.DepartmentTs;
             await SectionService.GetSection();
-            SectionsL = SectionService.SectionTs;
+            //SectionsL = SectionService.SectionTs;
             await PositionService.GetPosition();
             PositionsL = PositionService.PositionTs;
             await StaticService.GetGenderList();
@@ -208,7 +208,7 @@ namespace HrisApp.Client.Pages.Employee
         private string ImgFileName { get; set; }
         private string ImgContentType { get; set; }
 
-        MultipartFormDataContent EmpImage = new MultipartFormDataContent();
+        MultipartFormDataContent EmpImage = new();
         async Task uploadImage(InputFileChangeEventArgs e)
         {
             long lngImage = long.MaxValue;
@@ -255,9 +255,10 @@ namespace HrisApp.Client.Pages.Employee
 
         private async Task OnsavingImg(string EmployeeId, int division, int department, string lastname, string verify)
         {
-            using var _contentImg = new MultipartFormDataContent();
-
-            _contentImg.Add(EmpImage.LastOrDefault());
+            using var _contentImg = new MultipartFormDataContent
+            {
+                EmpImage.LastOrDefault()
+            };
             await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
             await EmployeeImg(employee.Verify_Id);//image
         }
@@ -267,36 +268,6 @@ namespace HrisApp.Client.Pages.Employee
         #region MUDTABS
         MudTabs tabs;
         private string slectClasss = "frmselect";
-        void Activate(int index)
-        {
-            //tabs.ActivatePanel(index);
-            if (index == 1)
-            {
-                if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
-                {
-                    _toastService.ShowError("Fill out all fields.");
-                    slectClasss = "frmselecterror";
-                }
-                else
-                {
-                    tabs.ActivatePanel(index);
-                    slectClasss = "frmselect";
-                }
-            }
-            else if (index == 2)
-            {
-                tabs.ActivatePanel(index);
-            }
-            else if (index == 0)
-            {
-                tabs.ActivatePanel(index);
-            }
-        }
-        void Activate2(int index)
-        {
-            tabs.ActivatePanel(index);
-
-        }
         #endregion
 
         #region PERSONAL TAB ERROR TRAP
@@ -421,8 +392,10 @@ namespace HrisApp.Client.Pages.Employee
         {
             TokenSetGet.Set_Employeemodel(employee);
             var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters<PDFDialog>();
-            parameters.Add(x => x.fileName, name);
+            var parameters = new DialogParameters<PDFDialog>
+            {
+                { x => x.fileName, name }
+            };
 
             DialogService.Show<PDFDialog>("", parameters, options);
         }
@@ -511,21 +484,6 @@ namespace HrisApp.Client.Pages.Employee
                 // If DateHired is not set, clear RegularDate.
                 RegularDate = null;
             }
-        }
-        private static string CalculateAge(DateTime? selectedDate)
-        {
-            if (selectedDate.HasValue)
-            {
-                DateTime currentDate = DateTime.Today;
-                int age = currentDate.Year - selectedDate.Value.Year;
-
-                if (selectedDate.Value > currentDate.AddYears(-age))
-                    age--;
-
-                return age.ToString();
-            }
-
-            return string.Empty;
         }
         //bool success;
         //private void OnValidSubmit(EditContext context)

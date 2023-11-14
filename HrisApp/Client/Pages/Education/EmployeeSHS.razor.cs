@@ -5,6 +5,12 @@ namespace HrisApp.Client.Pages.Education
 #nullable disable
     public partial class EmployeeSHS : ComponentBase
     {
+        //TABLEEES
+        List<Emp_SeniorHST> shsList = new List<Emp_SeniorHST>();
+        private Emp_SeniorHST selectedItem1 = null;
+
+        //END FOR TABLES
+
         private Emp_SeniorHST senior = new Emp_SeniorHST();
         [Parameter]
         public string VerifyCode { get; set; }
@@ -49,24 +55,5 @@ namespace HrisApp.Client.Pages.Education
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "SHST", $"SHS Verify_Id: {senior.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(shsList), DateTime.Now);
             shsList = await EducationService.GetSeniorHSlist(VerifyCode);
         }
-
-
-        //TABLEEES
-        private string searchString1 = "";
-        List<Emp_SeniorHST> shsList = new List<Emp_SeniorHST>();
-        private Emp_SeniorHST selectedItem1 = null;
-        private HashSet<Emp_SeniorHST> selectedItems = new HashSet<Emp_SeniorHST>();
-
-        private bool FilterFunc1(Emp_SeniorHST item) => FilterFunc(item, searchString1);
-
-        private bool FilterFunc(Emp_SeniorHST item, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            // if (employees.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            //     return true;
-            return false;
-        }
-        //END FOR TABLES
     }
 }

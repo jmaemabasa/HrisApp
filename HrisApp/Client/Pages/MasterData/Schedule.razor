@@ -40,7 +40,7 @@
 else
 {
     <div class="box w-auto">
-        <MudTable Class="stable" Items="scheduleList" Context="schedules" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<ScheduleTypeT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <MudTable Class="stable" Items="scheduleList" Context="schedules" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<ScheduleTypeT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -50,7 +50,11 @@ else
                 </div>
             </ToolBarContent>
             <HeaderContent>
-                 <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Schedule Type</MudTh>
+                 <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                     <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ScheduleTypeT, object>(x=>x.Name)">
+                         Schedule Type
+                     </MudTableSortLabel>
+                 </MudTh>
                  <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time-in</MudTh>
                  <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time-out</MudTh>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>

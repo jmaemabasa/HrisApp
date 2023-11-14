@@ -2,8 +2,8 @@
 {
     public partial class Department : ComponentBase
     {
-        private List<DepartmentT> Departments = new List<DepartmentT>();
-        private List<DivisionT> Divisions = new List<DivisionT>();
+        private List<DepartmentT> Departments = new();
+        private List<DivisionT> Divisions = new();
         protected override async Task OnInitializedAsync()
         {
             try
@@ -35,9 +35,9 @@
         #region TABLES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<DepartmentT> departmentList = new List<DepartmentT>();
+        List<DepartmentT> departmentList = new();
         private DepartmentT? selectedItem1 = null;
-        private HashSet<DepartmentT> selectedItems = new HashSet<DepartmentT>();
+        private readonly HashSet<DepartmentT> selectedItems = new();
 
         private bool FilterFunc1(DepartmentT department) => FilterFunc(department, searchString1);
 
@@ -58,8 +58,10 @@
 
         private void OpenUpdateDepartment(int id)
         {
-            var parameters = new DialogParameters<UpdateDivisionDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdateDivisionDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdateDepartmentDialog>("Update Department", parameters, options);

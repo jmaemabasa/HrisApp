@@ -2,10 +2,10 @@
 {
     public partial class Position : ComponentBase
     {
-        private List<DepartmentT> Departments = new List<DepartmentT>();
-        private List<DivisionT> Divisions = new List<DivisionT>();
-        private List<SectionT> Sections = new List<SectionT>();
-        private List<PositionT> Positions = new List<PositionT>();
+        private List<DepartmentT> Departments = new();
+        private List<DivisionT> Divisions = new();
+        private List<SectionT> Sections = new();
+        private List<PositionT> Positions = new();
 
 
         protected override async Task OnInitializedAsync()
@@ -51,20 +51,22 @@
 
         private void OpenUpdatePosition(int id)
         {
-            var parameters = new DialogParameters<UpdatePositionDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdatePositionDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdatePositionDialog>("Update Position", parameters, options);
         }
 
         //TABLEEES
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<PositionT> positionList = new List<PositionT>();
+        List<PositionT> positionList = new();
 
         private PositionT selectedItem1 = null;
-        private HashSet<PositionT> selectedItems = new HashSet<PositionT>();
+        private readonly HashSet<PositionT> selectedItems = new();
 
         private bool FilterFunc1(PositionT pos) => FilterFunc(pos, searchString1);
 

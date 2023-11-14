@@ -5,7 +5,7 @@
 #nullable disable
         public event Action OnChange;
 
-        private Dictionary<string, object> _stateDictionary = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _stateDictionary = new();
 
         public T GetState<T>(string key)
         {

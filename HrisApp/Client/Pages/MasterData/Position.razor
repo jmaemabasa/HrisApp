@@ -95,7 +95,11 @@
                      </div>
                  </div>
              </MudTh>
-             <MudTh  Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Position</MudTh>
+             <MudTh  Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                 <MudTableSortLabel SortBy="new Func<PositionT, object>(x=>x.Name)">
+                     Position
+                 </MudTableSortLabel>
+             </MudTh>
              <MudTh  Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Plantilla</MudTh>
             <MudTh Style="font-weight: bold; background: #e9ecef;">Action</MudTh>
         </HeaderContent>

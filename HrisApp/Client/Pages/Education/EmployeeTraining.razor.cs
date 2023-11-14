@@ -5,6 +5,12 @@ namespace HrisApp.Client.Pages.Education
 #nullable disable
     public partial class EmployeeTraining : ComponentBase
     {
+        //TABLEEES
+        List<Emp_TrainingT> _trainingListt = new List<Emp_TrainingT>();
+        private Emp_TrainingT _selectedItem1 = null;
+
+        //END FOR TABLES
+
         private Emp_TrainingT training = new Emp_TrainingT();
         [Parameter]
         public string VerifyCode { get; set; }
@@ -48,23 +54,5 @@ namespace HrisApp.Client.Pages.Education
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "TrainingT", $"Training Verify_Id: {training.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(_trainingListt), DateTime.Now);
             _trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
         }
-
-
-        //TABLEEES
-        private string _searchString1 = "";
-        List<Emp_TrainingT> _trainingListt = new List<Emp_TrainingT>();
-        private Emp_TrainingT _selectedItem1 = null;
-        private HashSet<Emp_TrainingT> _selectedItems = new HashSet<Emp_TrainingT>();
-
-        private bool FilterFunc1(Emp_TrainingT item) => FilterFunc(item, _searchString1);
-
-        private bool FilterFunc(Emp_TrainingT item, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-
-            return false;
-        }
-        //END FOR TABLES
     }
 }

@@ -52,7 +52,7 @@
     }
     else
     {
-        <MudTable Class="stable" Items="_employeeList" Context="employeeee" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1" Virtualize="true">
+        <MudTable Class="stable" Items="_employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1" Virtualize="true">
             <ToolBarContent>
                 <div class="d-flex flex-grow-1 mb-3">
                     <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
@@ -73,21 +73,37 @@
                  </div>
              </ToolBarContent>
              <HeaderContent>
-                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Full Name</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">ID No.</MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                         Full Name
+                     </MudTableSortLabel>
+                 </MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                         ID No.
+                     </MudTableSortLabel>
+                 </MudTh>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Date Hired</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">
+                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                         Date Hired
+                     </MudTableSortLabel>
+                 </MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">
+                     <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<EmployeeT, object>(x=>x.StatusId)">
+                         Status
+                     </MudTableSortLabel>
+                 </MudTh>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
              </HeaderContent>
              <RowTemplate>
              <MudTd DataLabel="Full Name">
                      <div class="d-flex flex-row align-items-center gap-3">
-                         <div>
-                        <EmployeeAvatar verify="@employeeee.Verify_Id" />
-                     </div>
+                         <div class="d-flex align-items-center">
+                            <EmployeeAvatar verify="@employeeee.Verify_Id" />
+                        </div>
                      <div>
                          <div class="flex-column">
                                  <div>@CapitalizeFirstLetter(employeeee.FirstName)  @employeeee.MiddleName[0].ToString().ToUpper().  @CapitalizeFirstLetter(employeeee.LastName)</div>
@@ -98,8 +114,8 @@
 
              </MudTd>
                  <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
-             <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
-             <MudTd DataLabel="Division">@employeeee.Division?.Name
+                 <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
+                 <MudTd DataLabel="Division">@employeeee.Division?.Name
                      @* |
                      @if (employeeee.SectionId == 0)
                     {

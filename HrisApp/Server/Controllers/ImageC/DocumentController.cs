@@ -43,7 +43,7 @@ namespace HrisApp.Server.Controllers.ImageC
                             System.IO.File.WriteAllBytes(Path.Combine(filePath, file.FileName), memoryStream.ToArray());
 
 
-                            DocumentT _Model = new DocumentT()
+                            DocumentT _Model = new()
                             {
                                 EmployeeNo = EmployeeId,
                                 Img_Filename = file.FileName,
@@ -104,12 +104,10 @@ namespace HrisApp.Server.Controllers.ImageC
             {
                 var path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
 
-                using (var stream = new FileStream(path, FileMode.Open))
-                {
-                    var memory = new MemoryStream();
-                    await stream.CopyToAsync(memory);
-                    pdfList.Add(memory.ToArray());
-                }
+                using var stream = new FileStream(path, FileMode.Open);
+                var memory = new MemoryStream();
+                await stream.CopyToAsync(memory);
+                pdfList.Add(memory.ToArray());
             }
 
             return pdfList;

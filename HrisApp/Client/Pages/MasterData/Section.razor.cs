@@ -2,10 +2,8 @@
 {
     public partial class Section : ComponentBase
     {
-        private List<DepartmentT> Departments = new List<DepartmentT>();
-        private List<DivisionT> Divisions = new List<DivisionT>();
-        private List<SectionT> Sections = new List<SectionT>();
-
+        private List<DepartmentT> Departments = new();
+        private List<DivisionT> Divisions = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -48,24 +46,25 @@
 
         private void OpenUpdateSection(int id)
         {
-            var parameters = new DialogParameters<UpdateSectionDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdateSectionDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdateSectionDialog>("Update Section", parameters, options);
         }
 
         //TABLEEES
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<SectionT> sectionList = new List<SectionT>();
+        List<SectionT> sectionList = new();
 
         private SectionT selectedItem1 = null;
-        private HashSet<SectionT> selectedItems = new HashSet<SectionT>();
 
         private bool FilterFunc1(SectionT section) => FilterFunc(section, searchString1);
 
-        private bool FilterFunc(SectionT section, string searchString)
+        private static bool FilterFunc(SectionT section, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;

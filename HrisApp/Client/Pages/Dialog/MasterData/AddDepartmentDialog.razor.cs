@@ -6,8 +6,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
     {
 #nullable disable
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-        private Dictionary<string, List<DepartmentT>> Department = new Dictionary<string, List<DepartmentT>>();
-        private List<DivisionT> Division = new List<DivisionT>();
+        private readonly Dictionary<string, List<DepartmentT>> Department = new();
+        private List<DivisionT> Division = new();
         private int selectedDivision;
         private string newDepartment = "";
 
