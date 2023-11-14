@@ -26,7 +26,7 @@
 <PageTitle>Update Employee</PageTitle>
 
 <div class="topnav d-flex justify-content-end align-items-center z-60">
-    <MudButton OnClick="backbtn" Size="Size.Medium">Back</MudButton>
+    <MudButton OnClick="Backbtn" Size="Size.Medium">Back</MudButton>
 </div>
 <div class="@*tabdiv*@ ps-5 pt-2">
     <MudGrid Spacing="3">
@@ -113,8 +113,7 @@
                                                     <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                                              </MudTooltip>
                                          </Authorized>
-                                     </AuthorizeView>
-                                     
+                                     </AuthorizeView>                                
                                 </div>
                                 <div class="d-flex flex-column gap-3">
                                     <div class="divsingledetails">
@@ -128,7 +127,16 @@
                                         </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Age</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Age</MudText>
+                                        @if (bday.HasValue)
+                                            {
+                                                DateTime currentDate = DateTime.Today;
+                                                int age = currentDate.Year - bday.Value.Year;
+
+                                                if (bday.Value > currentDate.AddYears(-age))
+                                                    age--;
+
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@age</MudText>
+                                            }
                                     </MudItem>
                                         <MudItem xs="12" sm="4" Class="divsingledetails">
                                             <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Gender</MudText>

@@ -11,6 +11,7 @@
         Task GetPosBySection(int sectId);
 
         Task GetPosition();
+        Task<PositionT> GetSinglePosition(int id);
 
         Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int plantilla);
         Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int plantilla);

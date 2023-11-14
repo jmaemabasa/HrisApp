@@ -163,5 +163,20 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
             }
             return Ok(await GetDBEmployee());
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<EmployeeT>>> DeleteEmployee(int id)
+        {
+            var dbemp = await _context.EmployeeT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (dbemp == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.EmployeeT.Remove(dbemp);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbemp);
+        }
     }
 }

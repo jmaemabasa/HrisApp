@@ -5,6 +5,7 @@
 @inject IPositionService PositionService
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
+@inject StateService StateService
 @attribute [Authorize]
 
 <PageTitle>Position Management</PageTitle>
@@ -100,7 +101,7 @@
         </HeaderContent>
         <RowTemplate>
      
-            @foreach (var item in DivisionService.DivisionTs)
+            @foreach (var item in Divisions)
             {
                 if (item.Id == pos.DivisionId)
                 {
@@ -114,7 +115,7 @@
                     </MudTd>
                 }
             }
-            @foreach (var item in DepartmentService.DepartmentTs)
+            @foreach (var item in Departments)
             {
                     if (item.Id == pos.DepartmentId)
                 {
@@ -141,7 +142,7 @@
             }
             else
             {
-                @foreach (var item in SectionService.SectionTs)
+                @foreach (var item in Sections)
                 {
                     if (item.Id == pos.SectionId)
                     {   
@@ -174,7 +175,7 @@
 
         </RowTemplate>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
         </PagerContent>
     </MudTable>
 </div>

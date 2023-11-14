@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Net.Http.Json;
-
-namespace HrisApp.Client.Services.MasterData.DepartmentService
+﻿namespace HrisApp.Client.Services.MasterData.DepartmentService
 {
 #nullable disable
     public class DepartmentService : IDepartmentService
     {
         private readonly HttpClient _http;
-        private readonly NavigationManager _navigationManager;
 
-        public DepartmentService(HttpClient http, NavigationManager navigationManager)
+        public DepartmentService(HttpClient http)
         {
             _http = http;
-            _navigationManager = navigationManager;
         }
 
         public List<DepartmentT> DepartmentTs { get; set; }
@@ -25,11 +20,6 @@ namespace HrisApp.Client.Services.MasterData.DepartmentService
             if (result != null)
             {
                 DepartmentTs = result;
-                // Console.WriteLine to check if the data is fetched
-                //foreach (var area in DepartmentTs)
-                //{
-                //    Console.WriteLine($"dept Id: {area.Id}, Name: {area.Name}");
-                //}
             }
         }
 
@@ -43,11 +33,20 @@ namespace HrisApp.Client.Services.MasterData.DepartmentService
             return await _http.GetFromJsonAsync<List<DepartmentT>>($"api/Department/DeptByDivision/{divisionId}");
         }
 
+        public async Task<DepartmentT> GetSingleDepartment(int id)
+        {
+            var result = await _http.GetFromJsonAsync<DepartmentT>($"api/Department/{id}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
 
         //CREATE UPDATEEEEEEE
         public async Task CreateDepartment(string deptName, int listDropdownId)
         {
-            DepartmentT department = new DepartmentT
+            DepartmentT department = new()
             {
                 Name = deptName,
                 DivisionId = listDropdownId

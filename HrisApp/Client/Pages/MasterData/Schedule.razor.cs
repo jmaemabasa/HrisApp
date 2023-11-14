@@ -9,8 +9,8 @@
         {
             try
             {
-                await ScheduleService.GetScheduleList();
-                scheduleList = ScheduleService.ScheduleTs;
+                StateService.OnChange += OnStateChanged;
+                await LoadList();
             }
             catch (Exception ex)
             {
@@ -20,6 +20,20 @@
             }
         }
 
+        private async Task LoadList()
+        {
+            await ScheduleService.GetScheduleList();
+            StateService.SetState("SchedList", ScheduleService.ScheduleTs);
+        }
+
+        private void OnStateChanged()
+        {
+            // Handle state changes, e.g., update the areaList
+            scheduleList = StateService.GetState<List<ScheduleTypeT>>("SchedList");
+            StateHasChanged();
+        }
+
+        #region function
         //LOADING
         private bool isVisible;
         public async void OpenOverlay()
@@ -64,5 +78,6 @@
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<AddScheduleDialog>("New Schedule", options);
         }
+        #endregion
     }
 }

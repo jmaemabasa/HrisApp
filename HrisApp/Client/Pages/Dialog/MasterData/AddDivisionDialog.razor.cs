@@ -45,10 +45,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "DivisionT", $"Division: {newDivision} created successfully.", "_", DateTime.Now);
 
-                    await Task.Delay(1000);
-
-                    await jsRuntime.InvokeVoidAsync("location.reload");
-                    NavigationManager.NavigateTo("/division");
+                    await DivisionService.GetDivision();
+                    var newList = DivisionService.DivisionTs;
+                    StateService.SetState("DivisionList", newList);
 
                 }
             }

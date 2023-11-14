@@ -1,6 +1,4 @@
-﻿using HrisApp.Client.Pages.MasterData;
-using Microsoft.JSInterop;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -11,14 +9,14 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         [Parameter]
         public int Id { get; set; }
 
-        private AreaT area = null;
+        private AreaT area = new();
 
         void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnParametersSetAsync()
         {
-            area = AreaService.AreaTs.Find(d => d.Id == Id);
-            //area = await AreaService.GetSingleArea((int)Id);
+            //area = AreaService.AreaTs.Find(d => d.Id == Id);
+            area = await AreaService.GetSingleArea((int)Id);
         }
 
         async Task UpdateArea()
@@ -44,11 +42,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "AreaT", $"AreaId: {area.Id} updated successfully.", JsonConvert.SerializeObject(area), DateTime.Now);
 
                 _toastService.ShowSuccess(area.Name + " Updated Successfully!");
-                await Task.Delay(1000);
 
-                await jsRuntime.InvokeVoidAsync("location.reload");
-                navigationManager.NavigateTo("/area");
-
+                // Update the areaList using the StateService
+                await AreaService.GetAreaList();
+                var newAreaList = AreaService.AreaTs;
+                StateService.SetState("AreaList", newAreaList);
             }
         }
     }

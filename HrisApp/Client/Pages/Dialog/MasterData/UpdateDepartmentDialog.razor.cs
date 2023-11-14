@@ -1,6 +1,4 @@
-﻿using HrisApp.Client.Pages.MasterData;
-using Microsoft.JSInterop;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -12,7 +10,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public int Id { get; set; }
 
 
-        private DepartmentT department = null;
+        private DepartmentT department = new();
 
 
         void Cancel() => MudDialog.Cancel();
@@ -20,7 +18,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
         protected override async Task OnParametersSetAsync()
         {
-            department = DepartmentService.DepartmentTs.Find(d => d.Id == Id);
+            department = await DepartmentService.GetSingleDepartment(Id);
         }
 
         async Task UpdateArea()
@@ -46,10 +44,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "DepartmentT", $"DepartmentId: {department.Id} updated successfully.", JsonConvert.SerializeObject(department), DateTime.Now);
 
                 _toastService.ShowSuccess(department.Name + " Updated Successfully!");
-                await Task.Delay(1000);
 
-                await jsRuntime.InvokeVoidAsync("location.reload");
-                navigationManager.NavigateTo("/department");
+                await DepartmentService.GetDepartment();
+                var newList = DepartmentService.DepartmentTs;
+                StateService.SetState("DepartmentList", newList);
             }
         }
     }

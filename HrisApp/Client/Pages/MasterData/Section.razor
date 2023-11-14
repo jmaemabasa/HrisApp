@@ -4,6 +4,7 @@
 @inject ISectionService SectionService
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
+@inject StateService StateService
 @attribute [Authorize]
 <PageTitle>Section Management</PageTitle>
 
@@ -77,7 +78,7 @@
         </HeaderContent>
         <RowTemplate>
      
-            @foreach (var item in DivisionService.DivisionTs)
+            @foreach (var item in Divisions)
             {
                 if (item.Id == Sections.DivisionId)
                 {
@@ -92,7 +93,7 @@
                     </MudTd>
                 }
             }
-            @foreach (var item in DepartmentService.DepartmentTs)
+            @foreach (var item in Departments)
             {
                 if (item.Id == Sections.DepartmentId)
                 {

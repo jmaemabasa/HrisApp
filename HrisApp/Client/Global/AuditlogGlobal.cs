@@ -80,6 +80,7 @@ namespace HrisApp.Client.Global
         //        Console.WriteLine($"Error creating audit: {ex.Message}");
         //    }
         //}
+
         public async Task CreateAudit(int userId, string action, string tablename, string addInfo, string beforeUpdate, DateTime date)
         {
             try

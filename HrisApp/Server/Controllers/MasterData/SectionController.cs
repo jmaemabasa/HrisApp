@@ -51,6 +51,19 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(sect);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<SectionT>> GetSingleSection(int id)
+        {
+            var sect = await _context.SectionT.FindAsync(id);
+
+            if (sect == null)
+            {
+                return NotFound();
+            }
+
+            return sect;
+        }
+
         private async Task<List<SectionT>> GetDBSection()
         {
             return await _context.SectionT

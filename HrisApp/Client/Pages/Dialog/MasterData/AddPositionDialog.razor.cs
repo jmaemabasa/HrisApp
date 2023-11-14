@@ -93,10 +93,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             _toastService.ShowSuccess(positionName + " Created Successfully!");
             await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "PositionT", $"Position: {newPosition}, Department: {departmentId} created successfully.", "_", DateTime.Now);
-            await Task.Delay(1000);
 
-            await jsRuntime.InvokeVoidAsync("location.reload");
-            navigationManager.NavigateTo("/position");
+            await PositionService.GetPosition();
+            var newList = PositionService.PositionTs;
+            StateService.SetState("PositionList", newList);
         }
 
         private string generateposcode(int divisionId, int departmentId, int sectionId)

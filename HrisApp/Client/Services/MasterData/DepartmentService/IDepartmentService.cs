@@ -6,6 +6,7 @@
 
         Task<List<DepartmentT>> GetDeptByDivision(int divisionId);
         Task<List<DepartmentT>> GetDepartmentList();
+        Task<DepartmentT> GetSingleDepartment(int id);
 
         Task CreateDepartment(string deptName, int listDropdownId);
         Task GetDepartment();

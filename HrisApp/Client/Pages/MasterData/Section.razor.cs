@@ -11,19 +11,34 @@
         {
             try
             {
+                StateService.OnChange += OnStateChanged;
+                await LoadList();
+
                 await DepartmentService.GetDepartment();
                 await DivisionService.GetDivision();
-                await SectionService.GetSection();
 
                 Divisions = DivisionService.DivisionTs;
                 Departments = DepartmentService.DepartmentTs;
-                sectionList = SectionService.SectionTs;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
         }
+
+        private async Task LoadList()
+        {
+            await SectionService.GetSection();
+            StateService.SetState("SectionList", SectionService.SectionTs);
+        }
+
+        private void OnStateChanged()
+        {
+            // Handle state changes, e.g., update the areaList
+            sectionList = StateService.GetState<List<SectionT>>("SectionList");
+            StateHasChanged();
+        }
+
 
         private void OpenAddSection()
         {

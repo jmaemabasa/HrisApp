@@ -10,5 +10,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         Task<EmployeeT> GetSingleEmployee(int id);
         Task<string> CreateEmployee(EmployeeT employee);
         Task UpdateEmployee(EmployeeT employee);
+        Task DeleteEmployee(int id);
+
     }
 }

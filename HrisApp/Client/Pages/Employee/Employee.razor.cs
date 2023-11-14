@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Employee
+﻿using Newtonsoft.Json;
+
+namespace HrisApp.Client.Pages.Employee
 {
     public partial class Employee: ComponentBase
     {
@@ -28,6 +30,11 @@
         #region FUNCTIONS / METHODS
         void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");
         void ShowEmployee(int id) => NavigationManager.NavigateTo($"/employee/edit/{id}");
+
+        async Task DeleteEmployee(int id)
+        {
+            await EmployeeService.DeleteEmployee(id);
+        }
 
         private async Task SearchStatus(int status)
         {

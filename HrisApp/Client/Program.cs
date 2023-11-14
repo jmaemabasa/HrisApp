@@ -82,6 +82,8 @@ builder.Services.AddScoped<IEmploymentDateService, EmploymentDateService>();
 builder.Services.AddScoped<IStaticService, StaticService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
+builder.Services.AddSingleton<StateService>();
+
 
 builder.Services.AddScoped<IApplicantService, ApplicantService>();
 

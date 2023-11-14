@@ -33,7 +33,7 @@ namespace HrisApp.Server.Controllers.ImageC
                         var departmentPDF = await _context.DepartmentT.Where(d => d.Id == department).Select(d => d.Name).FirstOrDefaultAsync();
 
                         //var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", divisionPDF, departmentPDF, lastname);
-                        var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", EmployeeId + "_" + lastname);
+                        var filePath = Path.Combine(_evs.ContentRootPath, "EmployeeImages", verify + "_" + lastname);
                         if (!Directory.Exists(filePath))
                             Directory.CreateDirectory(filePath);
 

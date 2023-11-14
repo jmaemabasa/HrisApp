@@ -2,21 +2,26 @@
 {
     public partial class Area : ComponentBase
     {
-        private AreaT areas = new AreaT();
-
         protected override async Task OnInitializedAsync()
         {
-            try
-            {
-                await AreaService.GetAreaList();
-                areaList = AreaService.AreaTs;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            StateService.OnChange += OnStateChanged;
+            await LoadAreaList();
         }
 
+        private async Task LoadAreaList()
+        {
+            await AreaService.GetArea();
+            StateService.SetState("AreaList", AreaService.AreaTs);
+        }
+
+        private void OnStateChanged()
+        {
+            // Handle state changes, e.g., update the areaList
+            areaList = StateService.GetState<List<AreaT>>("AreaList");
+            StateHasChanged();
+        }
+
+        #region TABLES DATA
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
@@ -51,5 +56,6 @@
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<AddAreaDialog>("New Area", options);
         }
+        #endregion
     }
 }

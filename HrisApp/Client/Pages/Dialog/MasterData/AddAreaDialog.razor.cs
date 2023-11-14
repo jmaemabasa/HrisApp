@@ -1,6 +1,4 @@
-﻿using Microsoft.JSInterop;
-
-namespace HrisApp.Client.Pages.Dialog.MasterData
+﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
     public partial class AddAreaDialog : ComponentBase
     {
@@ -44,13 +42,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     _toastService.ShowSuccess(newArea + " Created Successfully!");
 
-
-                    await Task.Delay(1000);
-
-                    //await jsRuntime.InvokeVoidAsync("location.reload");
-                    //NavigationManager.NavigateTo("/area");
+                    // Update the areaList using the StateService
+                    await AreaService.GetAreaList();
+                    var newAreaList =  AreaService.AreaTs;
+                    StateService.SetState("AreaList", newAreaList);
                 }
             }
         }
+
     }
 }

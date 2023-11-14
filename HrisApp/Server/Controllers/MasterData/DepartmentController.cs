@@ -40,6 +40,20 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(dept);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<DepartmentT>> GetSingleDepartment(int id)
+        {
+            var dept = await _context.DepartmentT.FindAsync(id);
+
+            if (dept == null)
+            {
+                return NotFound();
+            }
+
+            return dept;
+        }
+
+
         private async Task<List<DepartmentT>> GetDBDepartment()
         {
             return await _context.DepartmentT

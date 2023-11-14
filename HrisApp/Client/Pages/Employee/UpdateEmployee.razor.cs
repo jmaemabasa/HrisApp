@@ -306,25 +306,6 @@ namespace HrisApp.Client.Pages.Employee
         private string txfieldClasssEN = "txf1";
         private string txfieldClasssEA = "txf1";
         private string txfieldClasssEMN = "txf";
-
-        private async void ActivateAddressField()
-        {
-            slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
-            txfieldClasssMN = (String.IsNullOrWhiteSpace(employee.MobileNumber)) ? "txf1error" : "txf";
-            txfieldClasssEN = (String.IsNullOrWhiteSpace(employee.EmerName)) ? "txf1error" : "txf1";
-            txfieldClasssEA = (String.IsNullOrWhiteSpace(employee.EmerAddress)) ? "txf1error" : "txf1";
-            txfieldClasssEMN = (String.IsNullOrWhiteSpace(employee.EmerMobNum)) ? "txf1error" : "txf";
-
-            if (employee.GenderId == 0 || employee.CivilStatusId == 0 || employee.ReligionId == 0 || employee.EmerRelationshipId == 0 || String.IsNullOrWhiteSpace(employee.Nationality))
-            {
-                _toastService.ShowError("Fill out all fields.");
-            }
-            else
-            {
-                await JSRuntime.InvokeVoidAsync("scrollToDiv");
-            }
-        }
         #endregion
 
         #region TAB CLASS
@@ -470,7 +451,7 @@ namespace HrisApp.Client.Pages.Employee
 
         private async Task CopyToClipboard(string text) => await JSRuntime.InvokeVoidAsync("copyToClipboard", text);
 
-        private string FUpper(string input)
+        private static string FUpper(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -480,7 +461,7 @@ namespace HrisApp.Client.Pages.Employee
             return char.ToUpper(input[0]) + input[1..];
         }
 
-        private string StatusChipColor(string status)
+        private static string StatusChipColor(string status)
         {
             return status switch
             {
@@ -531,7 +512,7 @@ namespace HrisApp.Client.Pages.Employee
                 RegularDate = null;
             }
         }
-        private string CalculateAge(DateTime? selectedDate)
+        private static string CalculateAge(DateTime? selectedDate)
         {
             if (selectedDate.HasValue)
             {
@@ -554,7 +535,7 @@ namespace HrisApp.Client.Pages.Employee
         //}
 
 
-        void backbtn()
+        void Backbtn()
         {
             NavigationManager.NavigateTo("/employee");
         }

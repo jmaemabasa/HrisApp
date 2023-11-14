@@ -45,11 +45,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "ScheduleT", $"ScheduleId: {schedule.Id} updated successfully.", JsonConvert.SerializeObject(schedule), DateTime.Now);
 
                 _toastService.ShowSuccess(schedule.Name + " Updated Successfully!");
-                await Task.Delay(1000);
 
-                await jsRuntime.InvokeVoidAsync("location.reload");
-                NavigationManager.NavigateTo("/schedule");
-
+                await ScheduleService.GetScheduleList();
+                var newList = ScheduleService.ScheduleTs;
+                StateService.SetState("SchedList", newList);
             }
         }
     }

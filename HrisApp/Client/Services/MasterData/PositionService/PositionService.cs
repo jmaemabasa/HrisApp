@@ -4,12 +4,10 @@
     public class PositionService : IPositionService
     {
         private readonly HttpClient _http;
-        private readonly NavigationManager _navigationManager;
 
-        public PositionService(HttpClient http, NavigationManager navigationManager)
+        public PositionService(HttpClient http)
         {
             _http = http;
-            _navigationManager = navigationManager;
         }
 
         public List<PositionT> PositionTs { get; set; }
@@ -58,19 +56,22 @@
             if (result != null)
             {
                 PositionTs = result;
-                // Console.WriteLine to check if the data is fetched
-                //foreach (var pos in PositionTs)
-                //{
-                //    Console.WriteLine($"pos Id: {pos.Id}, Name: {pos.Name}");
-                //}
             }
         }
-
+        public async Task<PositionT> GetSinglePosition(int id)
+        {
+            var result = await _http.GetFromJsonAsync<PositionT>($"api/Position/{id}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
 
         //CREATE AND UPDATEEEEEE
         public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int plantilla)
         {
-            PositionT newPosition = new PositionT
+            PositionT newPosition = new()
             {
                 Name = posName,
                 DivisionId = divId,
@@ -88,7 +89,7 @@
         }
         public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int plantilla)
         {
-            PositionT newPosition = new PositionT
+            PositionT newPosition = new()
             {
                 Name = posName,
                 PosCode = posCode,

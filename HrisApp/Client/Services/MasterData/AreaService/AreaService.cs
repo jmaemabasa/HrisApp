@@ -4,12 +4,10 @@
     public class AreaService : IAreaService
     {
         private readonly HttpClient _http;
-        private readonly NavigationManager _navigationManager;
 
-        public AreaService(HttpClient http, NavigationManager navigationManager)
+        public AreaService(HttpClient http)
         {
             _http = http;
-            _navigationManager = navigationManager;
         }
 
         public List<AreaT> AreaTs { get; set; }
@@ -42,7 +40,7 @@
         //CREATE AND UPDATE
         public async Task CreateArea(string areaName)
         {
-            AreaT areaT = new AreaT
+            AreaT areaT = new()
             {
                 Name = areaName
             };

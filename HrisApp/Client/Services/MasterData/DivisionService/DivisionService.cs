@@ -4,12 +4,10 @@
     public class DivisionService : IDivisionService
     {
         private readonly HttpClient _http;
-        private readonly NavigationManager _navigationManager;
 
-        public DivisionService(HttpClient http, NavigationManager navigationManager)
+        public DivisionService(HttpClient http)
         {
             _http = http;
-            _navigationManager = navigationManager;
         }
 
         public List<DivisionT> DivisionTs { get; set; }
@@ -38,12 +36,17 @@
 
         public async Task<DivisionT> GetSingleDivision(int id)
         {
-            throw new NotImplementedException();
+            var result = await _http.GetFromJsonAsync<DivisionT>($"api/Division/{id}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
         }
 
         public async Task CreateDivision(string divisionName)
         {
-            DivisionT div = new DivisionT
+            DivisionT div = new()
             {
                 Name = divisionName
             };

@@ -8,17 +8,30 @@
         {
             try
             {
-                await DivisionService.GetDivisionList();
-                divisionList = DivisionService.DivisionTs;
+                StateService.OnChange += OnStateChanged;
+                await LoadList();
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex);
-
             }
         }
 
+        private async Task LoadList()
+        {
+            await DivisionService.GetDivision();
+            StateService.SetState("DivisionList", DivisionService.DivisionTs);
+        }
+
+        private void OnStateChanged()
+        {
+            // Handle state changes, e.g., update the areaList
+            divisionList = StateService.GetState<List<DivisionT>>("DivisionList");
+            StateHasChanged();
+        }
+
+
+        #region table
         //LOADING
         private bool isVisible;
         public async void OpenOverlay()
@@ -63,5 +76,6 @@
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<AddDivisionDialog>("New Division", options);
         }
+        #endregion
     }
 }

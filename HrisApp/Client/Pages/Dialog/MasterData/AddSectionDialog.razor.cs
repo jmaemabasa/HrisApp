@@ -50,10 +50,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     _toastService.ShowSuccess(newSection + " Created Successfully!");
 
-                    await Task.Delay(1000);
-
-                    await jsRuntime.InvokeVoidAsync("location.reload");
-                    navigationManager.NavigateTo("/section");
+                    await SectionService.GetSection();
+                    var newList = SectionService.SectionTs;
+                    StateService.SetState("SectionList", newList);
                 }
             }
             else if (string.IsNullOrWhiteSpace(newSection))
@@ -84,10 +83,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     _toastService.ShowSuccess(newSection + " Created Successfully!");
 
-                    await Task.Delay(1000);
-
-                    await jsRuntime.InvokeVoidAsync("location.reload");
-                    navigationManager.NavigateTo("/");
+                    await SectionService.GetSection();
+                    var newList = SectionService.SectionTs;
+                    StateService.SetState("SectionList", newList);
                 }
             }
         }

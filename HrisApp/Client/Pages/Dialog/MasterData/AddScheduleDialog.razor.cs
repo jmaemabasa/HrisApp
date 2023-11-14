@@ -45,10 +45,9 @@
                     await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "ScheduleT", $"Schedule: {newSchedule} created successfully.", "_", DateTime.Now);
                     _toastService.ShowSuccess(newSchedule + " Created Successfully!");
 
-                    await Task.Delay(1000);
-
-                    await jsRuntime.InvokeVoidAsync("location.reload");
-                    NavigationManager.NavigateTo("/schedule");
+                    await ScheduleService.GetScheduleList();
+                    var newList = ScheduleService.ScheduleTs;
+                    StateService.SetState("SchedList", newList);
                 }
             }
         }

@@ -1,7 +1,4 @@
-﻿using HrisApp.Client.Pages.MasterData;
-using HrisApp.Shared.Models.MasterData;
-using Microsoft.JSInterop;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -13,15 +10,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public int Id { get; set; }
 
 
-        private PositionT position = null;
-
-
+        private PositionT position = new();
         void Cancel() => MudDialog.Cancel();
 
 
         protected override async Task OnParametersSetAsync()
         {
-            position = PositionService.PositionTs.Find(d => d.Id == Id);
+            position = await PositionService.GetSinglePosition(Id);
         }
 
         async Task UpdateArea()
@@ -47,10 +42,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "PositionT", $"PositionId: {position.Id} updated successfully.", JsonConvert.SerializeObject(position), DateTime.Now);
 
                 _toastService.ShowSuccess(position.Name + " Updated Successfully!");
-                await Task.Delay(1000);
 
-                await jsRuntime.InvokeVoidAsync("location.reload");
-                navigationManager.NavigateTo("/position");
+                await PositionService.GetPosition();
+                var newList = PositionService.PositionTs;
+                StateService.SetState("PositionList", newList);
             }
         }
     }

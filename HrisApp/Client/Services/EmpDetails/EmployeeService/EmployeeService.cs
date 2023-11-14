@@ -66,5 +66,11 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             var result = await _http.PutAsJsonAsync($"api/Employee/{employee.Id}", employee);
             await SetEmployees(result);
         }
+
+        public async Task DeleteEmployee(int id)
+        {
+            var result = await _http.DeleteAsync($"api/Employee/{id}");
+            await SetEmployees(result);
+        }
     }
 }

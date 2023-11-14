@@ -2,6 +2,7 @@
 @inject IDepartmentService DepartmentService
 @inject IDivisionService DivisionService
 @inject IDialogService DialogService
+@inject StateService StateService
 @attribute [Authorize]
 
 <PageTitle>Department Management</PageTitle>
@@ -58,7 +59,7 @@
 
             <MudTd DataLabel="Division">
                 <div class="d-flex justify-content-between">
-                    @foreach (var div in DivisionService.DivisionTs)
+                    @foreach (var div in Divisions)
                     {
                         if (div.Id == Departments.DivisionId)
                         {

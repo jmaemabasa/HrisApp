@@ -4,12 +4,10 @@
     public class SectionService : ISectionService
     {
         private readonly HttpClient _http;
-        private readonly NavigationManager _navigationManager;
 
-        public SectionService(HttpClient http, NavigationManager navigationManager)
+        public SectionService(HttpClient http)
         {
             _http = http;
-            _navigationManager = navigationManager;
         }
         
         public List<SectionT> SectionTs { get; set; }
@@ -64,12 +62,21 @@
             return await _http.GetFromJsonAsync<List<SectionT>>("api/Section");
         }
 
+        public async Task<SectionT> GetSingleSection(int id)
+        {
+            var result = await _http.GetFromJsonAsync<SectionT>($"api/Section/{id}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
 
         //CREATE UPDATE
 
         public async Task CreateSection(string sectName, int divId, int deptId)
         {
-            SectionT newSect = new SectionT
+            SectionT newSect = new()
             {
                 Name = sectName,
                 DivisionId = divId,

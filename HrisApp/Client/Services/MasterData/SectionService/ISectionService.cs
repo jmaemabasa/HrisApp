@@ -8,7 +8,7 @@
         //Task<List<SectionT>> GetSectByDepartment(int deptId);
         Task GetSectByDepartment(int deptId);
         Task GetSectByDivision(int divId);
-
+        Task<SectionT> GetSingleSection(int id);
         Task GetSection();
 
         Task CreateSection(string sectName, int divId, int deptId);

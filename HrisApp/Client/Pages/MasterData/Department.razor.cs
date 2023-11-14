@@ -8,16 +8,46 @@
         {
             try
             {
-                await DepartmentService.GetDepartment();
-                await DivisionService.GetDivision();
+                StateService.OnChange += OnStateChanged;
+                await LoadList();
 
+                await DivisionService.GetDivision();
                 Divisions = DivisionService.DivisionTs;
-                departmentList = DepartmentService.DepartmentTs;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        private async Task LoadList()
+        {
+            await DepartmentService.GetDepartment();
+            StateService.SetState("DepartmentList", DepartmentService.DepartmentTs);
+        }
+
+        private void OnStateChanged()
+        {
+            departmentList = StateService.GetState<List<DepartmentT>>("DepartmentList");
+            StateHasChanged();
+        }
+
+        #region TABLES
+        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private string searchString1 = "";
+        List<DepartmentT> departmentList = new List<DepartmentT>();
+        private DepartmentT? selectedItem1 = null;
+        private HashSet<DepartmentT> selectedItems = new HashSet<DepartmentT>();
+
+        private bool FilterFunc1(DepartmentT department) => FilterFunc(department, searchString1);
+
+        private static bool FilterFunc(DepartmentT department, string searchString)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
         }
 
         private void OpenAddDepartment()
@@ -33,24 +63,6 @@
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdateDepartmentDialog>("Update Department", parameters, options);
-        }
-
-        #region TABLES
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
-        private string searchString1 = "";
-        List<DepartmentT> departmentList = new List<DepartmentT>();
-        private DepartmentT? selectedItem1 = null;
-        private HashSet<DepartmentT> selectedItems = new HashSet<DepartmentT>();
-
-        private bool FilterFunc1(DepartmentT department) => FilterFunc(department, searchString1);
-
-        private bool FilterFunc(DepartmentT department, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            if (department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            return false;
         }
         #endregion
 

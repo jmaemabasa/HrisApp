@@ -1,0 +1,71 @@
+﻿UserId, Action, TableName, AddInfo, BeforeUpdate, Date
+2, UPDATE, ScheduleT, ScheduleId: 2 updated successfully., {"Id":2,"Name":"test","TimeIn":"20:02:00","TimeOut":"08:07 PM"}, 11/14/2023 8:31:00 AM
+
+2, UPDATE, AreaT, AreaId: 6 updated successfully., {"Id":6,"Name":"Gumalang1"}, 11/14/2023 8:32:50 AM
+
+2, UPDATE, AreaT, AreaId: 6 updated successfully., {"Id":6,"Name":"Gumalang"}, 11/14/2023 8:32:57 AM
+
+2, UPDATE, DivisionT, DivisionId: 5 updated successfully., {"Id":5,"Name":"Agro Industrial1"}, 11/14/2023 8:36:24 AM
+
+2, UPDATE, DivisionT, DivisionId: 5 updated successfully., {"Id":5,"Name":"Agro Industrial"}, 11/14/2023 8:36:31 AM
+
+2, UPDATE, DivisionT, DivisionId: 5 updated successfully., {"Id":5,"Name":"Agro Industrial1"}, 11/14/2023 8:52:08 AM
+
+2, UPDATE, DivisionT, DivisionId: 5 updated successfully., {"Id":5,"Name":"Agro Industrial"}, 11/14/2023 8:52:14 AM
+
+2, CREATE, AreaT, Area: l created successfully., _, 11/14/2023 8:54:30 AM
+
+2, UPDATE, PositionT, PositionId: 2 updated successfully., {"Id":2,"PosCode":"S102","Name":"Feeder","DivisionId":1,"DepartmentId":1,"SectionId":0,"Plantilla":2}, 11/14/2023 9:00:57 AM
+
+2, UPDATE, SectionT, SectionId: 4 updated successfully., {"Id":4,"Name":"Hapi Dealer1","DivisionId":1,"DepartmentId":6}, 11/14/2023 9:06:21 AM
+
+2, UPDATE, SectionT, SectionId: 4 updated successfully., {"Id":4,"Name":"Hapi Dealer","DivisionId":1,"DepartmentId":6}, 11/14/2023 9:06:28 AM
+
+2, UPDATE, ScheduleT, ScheduleId: 2 updated successfully., {"Id":2,"Name":"Test","TimeIn":"08:02 PM","TimeOut":"08:07 PM"}, 11/14/2023 9:12:31 AM
+
+2, CREATE, AreaT, Area: jj created successfully., _, 11/14/2023 9:33:04 AM
+
+2, CREATE, AreaT, Area: test created successfully., _, 11/14/2023 9:33:22 AM
+
+2, UPDATE, AreaT, AreaId: 9 updated successfully., {"Id":9,"Name":"x"}, 11/14/2023 9:35:48 AM
+
+2, UPDATE, AreaT, AreaId: 8 updated successfully., {"Id":8,"Name":"a"}, 11/14/2023 9:35:56 AM
+
+2, UPDATE, AreaT, AreaId: 7 updated successfully., {"Id":7,"Name":"WWWWWW"}, 11/14/2023 9:36:05 AM
+
+2, CREATE, AreaT, Area: dasd created successfully., _, 11/14/2023 9:36:17 AM
+
+2, UPDATE, AreaT, AreaId: 10 updated successfully., {"Id":10,"Name":"dasdt"}, 11/14/2023 9:50:40 AM
+
+2, CREATE, AreaT, Area: jh created successfully., _, 11/14/2023 10:11:38 AM
+
+2, UPDATE, AreaT, AreaId: 11 updated successfully., {"Id":11,"Name":"jhjg"}, 11/14/2023 10:11:45 AM
+
+2, CREATE, DivisionT, Division: fd created successfully., _, 11/14/2023 10:16:00 AM
+
+2, UPDATE, DivisionT, DivisionId: 6 updated successfully., {"Id":6,"Name":"fdasa"}, 11/14/2023 10:16:48 AM
+
+2, CREATE, ScheduleT, Schedule: gdf created successfully., _, 11/14/2023 10:38:47 AM
+
+2, UPDATE, ScheduleT, ScheduleId: 3 updated successfully., {"Id":3,"Name":"23123","TimeIn":"03:42 PM","TimeOut":"05:43 AM"}, 11/14/2023 10:38:56 AM
+
+2, CREATE, SectionT, Section: sda, Department: 23 created successfully., _, 11/14/2023 10:47:38 AM
+
+2, UPDATE, SectionT, SectionId: 19 updated successfully., {"Id":19,"Name":"asfsdfsdf","DivisionId":5,"DepartmentId":23}, 11/14/2023 10:48:24 AM
+
+2, CREATE, SectionT, Section: dasd, Department: 24 created successfully., _, 11/14/2023 10:49:09 AM
+
+2, CREATE, DepartmentT, Department: tert created successfully., _, 11/14/2023 10:53:53 AM
+
+2, UPDATE, DepartmentT, DepartmentId: 26 updated successfully., {"Id":26,"Name":"tewtrtert","DivisionId":6}, 11/14/2023 10:53:57 AM
+
+2, CREATE, PositionT, Position: gdfsgf, Department: 26 created successfully., _, 11/14/2023 10:58:21 AM
+
+2, UPDATE, PositionT, PositionId: 55 updated successfully., {"Id":55,"PosCode":"TEWTRTERT01","Name":"34","DivisionId":6,"DepartmentId":26,"SectionId":0,"Plantilla":0}, 11/14/2023 10:58:29 AM
+
+1, UPDATE, EmployeeT, EmployeeId: 3 updated successfully., Employee: {"Id":3,"Verify_Id":"20231113034900201","FirstName":"jg","LastName":"jg","MiddleName":"hjgh","Extension":"","Height":545,"Weight":64,"Birthdate":"5645-06-04T00:00:00","Age":-3622,"Nationality":"645","Gender":{"Id":1,"Name":"Male"},"GenderId":2,"CivilStatus":{"Id":1,"Name":"Single"},"CivilStatusId":1,"Religion":{"Id":1,"Name":"Roman Catholic"},"ReligionId":1,"MobileNumber":"4","Email":"jghj","EmerName":"54","EmerRelationship":{"Id":1,"Name":"Mother"},"EmerRelationshipId":1,"EmerAddress":"654","EmerMobNum":"564645","EmployeeNo":"jg","DateHired":"2023-11-13T00:00:00","DateInactiveStatus":"2023-11-14T00:00:00","EmploymentStatus":{"Id":2,"Name":"Probationary"},"EmploymentStatusId":2,"Area":{"Id":1,"Name":"Davao"},"AreaId":1,"Division":{"Id":2,"Name":"FAMS"},"DivisionId":2,"Department":{"Id":9,"Name":"General Accounting","DivisionId":2},"DepartmentId":9,"SectionId":12,"Position":{"Id":35,"PosCode":"GAINV01","Name":"Team Leader/Supervisor","DivisionId":2,"DepartmentId":9,"SectionId":12,"Plantilla":1},"PositionId":35,"Status":{"Id":5,"Name":"Awol"},"StatusId":5,"InactiveStatus":{"Id":1,"Name":"Active"},"InactiveStatusId":1}, Address: {"Id":3,"Verify_Id":"20231113034900201","CurrentAdd":"maa, davao city 123","CurrentBrgy":"","CurrentCity":"davao city","CurrentProvince":"davao del sur","CurrentZipCode":"8000","PermanentCountry":"Philippines","PermanentAdd":"maa, davao city 123","PermanentBrgy":"","PermanentCity":"davao city","PermanentProvince":"davao del sur","PermanentZipCode":"8000","CurrentCountry":"Philippines"}, Payroll: {"Id":3,"Verify_Id":"20231113034900201","Rate":"645","RateType":{"Id":1,"Name":"Monthly Rate"},"RateTypeId":1,"Salary":"","Cashbond":{"Id":1,"Name":"Yes"},"CashbondId":1,"MealAllowance":"","BiometricID":"555555555555","BankAcc":"4444444444","TINNum":"555555555555","SSSNum":"555555555555","PhilHealthNum":"555555555555","HDMFNum":"555555555555","RestDay":{"Id":1,"Name":"Sunday"},"RestDayId":1,"ScheduleType":{"Id":1,"Name":"Regular","TimeIn":"09:00 AM","TimeOut":"05:00 PM"},"ScheduleTypeId":1,"Paytype":""}, 11/14/2023 11:05:06 AM
+
+1, CREATE, EmployeeT, Employee Verify_Id: 20231114114252520 created successfully., _, 11/14/2023 11:42:52 AM
+
+1, UPDATE, EmployeeT, EmployeeId: 4 updated successfully., Employee: {"Id":4,"Verify_Id":"20231114114252520","FirstName":"yer","LastName":"yry","MiddleName":"tr","Extension":"","Height":543,"Weight":545345,"Birthdate":"1997-05-31T00:00:00","Age":26,"Nationality":"wer","Gender":{"Id":1,"Name":"Male"},"GenderId":1,"CivilStatus":{"Id":1,"Name":"Single"},"CivilStatusId":1,"Religion":{"Id":1,"Name":"Roman Catholic"},"ReligionId":1,"MobileNumber":"543","Email":"tyrty","EmerName":"543","EmerRelationship":{"Id":1,"Name":"Mother"},"EmerRelationshipId":1,"EmerAddress":"5","EmerMobNum":"4354","EmployeeNo":"rty","DateHired":"2023-11-14T00:00:00","DateInactiveStatus":null,"EmploymentStatus":{"Id":1,"Name":"Regular"},"EmploymentStatusId":1,"Area":{"Id":1,"Name":"Davao"},"AreaId":1,"Division":{"Id":2,"Name":"FAMS"},"DivisionId":2,"Department":{"Id":11,"Name":"Information Technology","DivisionId":2},"DepartmentId":11,"SectionId":0,"Position":{"Id":49,"PosCode":"IT03","Name":"IT Staff","DivisionId":2,"DepartmentId":11,"SectionId":0,"Plantilla":3},"PositionId":49,"Status":{"Id":1,"Name":"Active"},"StatusId":1,"InactiveStatus":{"Id":1,"Name":"Active"},"InactiveStatusId":1}, Address: {"Id":4,"Verify_Id":"20231114114252520","CurrentAdd":"5345","CurrentBrgy":"","CurrentCity":"543","CurrentProvince":"davao del sur","CurrentZipCode":"8000","PermanentCountry":"Philippines","PermanentAdd":"maa, davao city 123","PermanentBrgy":"","PermanentCity":"davao city","PermanentProvince":"davao del sur","PermanentZipCode":"8000","CurrentCountry":"Philippines"}, Payroll: {"Id":4,"Verify_Id":"20231114114252520","Rate":"534","RateType":{"Id":1,"Name":"Monthly Rate"},"RateTypeId":1,"Salary":"","Cashbond":{"Id":1,"Name":"Yes"},"CashbondId":1,"MealAllowance":"","BiometricID":"44","BankAcc":"4444444444","TINNum":"444444444444","SSSNum":"444444444444","PhilHealthNum":"444444444444","HDMFNum":"444444444444","RestDay":{"Id":1,"Name":"Sunday"},"RestDayId":1,"ScheduleType":{"Id":1,"Name":"Regular","TimeIn":"09:00 AM","TimeOut":"05:00 PM"},"ScheduleTypeId":1,"Paytype":""}, 11/14/2023 11:55:21 AM
+
