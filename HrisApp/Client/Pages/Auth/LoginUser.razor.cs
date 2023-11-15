@@ -6,7 +6,7 @@ namespace HrisApp.Client.Pages.Auth
 {
     public partial class LoginUser : ComponentBase
     {
-        private readonly UserMasterT _log = new UserMasterT();
+        private readonly UserMasterT _log = new();
 
         //bool _success;
         string _message = string.Empty;
@@ -14,6 +14,11 @@ namespace HrisApp.Client.Pages.Auth
         private bool _showAlert = false;
 
         private string _returnUrl = string.Empty;
+
+        //SUPER ADMIN
+        private const string Adminusername = "Administrator";
+        private const string Adminpassword = "1t@dm1n2022";
+        private const string Adminuserrole = "MainAdmin";
 
         protected override void OnInitialized()
         {
@@ -45,30 +50,37 @@ namespace HrisApp.Client.Pages.Auth
             try
             {
                 _processing = true;
-                var result = await AuthService.Login(_log);
-                if (result.Success)
+
+                if (_log.Password == Adminpassword && _log.Username == Adminusername)
                 {
-                    _message = string.Empty;
-
-                    await LocalStorage.SetItemAsync("token", result.Data);
-                    await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
-                    await Task.Delay(1500);
-
-                    NavigationManager.NavigateTo("/dashboard");
-                    _toastService.ShowSuccess("Successfully Login.");
-
-                    //await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "LOGIN", "No Table", "The user logged in.", "_", DateTime.Now);
+                    NavigationManager.NavigateTo("/usermasterlist");
                 }
                 else
                 {
-                    _processing = false;
-                    _showAlert = true;
-                    _severity = Severity.Error;
-                    _message = result.Message;
-                    _toastService.ShowError(result.Message);
-                }
-            }
+                    var result = await AuthService.Login(_log);
+                    if (result.Success)
+                    {
+                        _message = string.Empty;
+
+                        await LocalStorage.SetItemAsync("token", result.Data);
+                        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+                        await Task.Delay(1500);
+
+                        NavigationManager.NavigateTo("/dashboard");
+                        _toastService.ShowSuccess("Successfully Login.");
+                        //await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "LOGIN", "No Table", "The user logged in.", "_", DateTime.Now);
+                    }
+                    else
+                    {
+                        _processing = false;
+                        _showAlert = true;
+                        _severity = Severity.Error;
+                        _message = result.Message;
+                        _toastService.ShowError(result.Message);
+
+                    }
+                }            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());

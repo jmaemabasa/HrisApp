@@ -38,7 +38,8 @@ namespace HrisApp.Server.Services.UserService
 
         public async Task<UserMasterT> GetUserByEmail(string email)
         {
-            return await _context.UserMasterT.FirstOrDefaultAsync(u => u.Email.Equals(email));
+            return await _context.UserMasterT.FirstOrDefaultAsync(u => u.Username.Equals(email));
+            //return await _context.UserMasterT.FirstOrDefaultAsync(u => u.Email.Equals(email));
         }
 
         //PASSWORDSSSSSSSS and TOKEN
@@ -48,9 +49,9 @@ namespace HrisApp.Server.Services.UserService
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name,  user.Username),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.PostalCode, user.UserAreaId.ToString()),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.GivenName, user.FullName)
+                new Claim(ClaimTypes.GivenName, user.FirstName + " " + user.LastName)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8

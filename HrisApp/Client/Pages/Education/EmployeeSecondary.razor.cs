@@ -27,7 +27,7 @@ namespace HrisApp.Client.Pages.Education
         {
             sec.Verify_Id = VerifyCode;
             await EducationService.CreateSecondary(sec);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "SecondaryT", $"Secondary Verify_Id: {sec.Verify_Id} created successfully.", "_", DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Secondary", DateTime.Now);
             sec.SecSchoolName = "";
             sec.SecSchoolLoc = "";
             sec.SecAward = "";
@@ -52,7 +52,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteSecondary(int id)
         {
             await EducationService.DeleteSecondary(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "SecondaryT", $"Secondary Verify_Id: {sec.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(secondaryList), DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE Secondary", DateTime.Now);
             secondaryList = await EducationService.GetSecondarylist(VerifyCode);
         }
     }

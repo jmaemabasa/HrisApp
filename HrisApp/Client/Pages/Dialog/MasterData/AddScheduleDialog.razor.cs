@@ -42,7 +42,7 @@
                     string strTimeout = DateTime.Parse(timeout).ToString(@"hh\:mm tt");
                     await ScheduleService.CreateSchedule(newSchedule, strTimein, strTimeout);
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "ScheduleT", $"Schedule: {newSchedule} created successfully.", "_", DateTime.Now);
+                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Schedule", DateTime.Now);
                     _toastService.ShowSuccess(newSchedule + " Created Successfully!");
 
                     await ScheduleService.GetScheduleList();

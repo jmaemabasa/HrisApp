@@ -11,23 +11,20 @@ namespace HrisApp.Shared.Models.User
     {
         public int Id { get; set; }
         [Required]
-        public string FullName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
         [Required]
+        public string LastName { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = string.Empty;
         //[Required, StringLength(100, MinimumLength = 6)]
-        [Required]
         public string Password { get; set; } = string.Empty;
-        [Required]
-        [Compare("Password", ErrorMessage = "The passwords do not match.")]
+        //[Required]
+        //[Compare("Password", ErrorMessage = "The passwords do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
         public string UserStatus { get; set; } = string.Empty;
-
+        public int UserAreaId { get; set; }
         public byte[]? PasswordHash { get; set; }
         public byte[]? PasswordSalt { get; set; }
-        public bool LoginStatus { get; set; }
+        public string LoginStatus { get; set; } = string.Empty;
         public string ReferralCode { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
     }

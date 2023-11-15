@@ -1,0 +1,206 @@
+﻿@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+@inject IAuthService AuthService
+@inject IUserRoleService UserRoleService
+@inject IAreaService AreaService
+@inject AuditlogGlobal AuditlogGlobal
+@inject SweetAlertService Swal
+@inject StateService StateService
+@inject IToastService _toastService
+
+<main>
+    <div style="text-align: center; margin-bottom: 10px;">
+        <span style="font-size: x-large;">New Account</span>
+    </div>
+    <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+    @if (showAlert)
+    {
+        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
+    }
+    <EditForm Model="reg" OnValidSubmit="HandleRegistration">
+        <DataAnnotationsValidator />
+        <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">
+            <div class="flex-grow-1 mb-2">
+                <MudText Typo="Typo.body2">Area of Assignment</MudText>
+                <MudSelect @bind-Value="reg.UserAreaId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                    <MudSelectItem Value=0 Disabled>---Select Area---</MudSelectItem>
+                    @foreach (var area in AreasL)
+                    {
+                        <MudSelectItem Value="@area.Id">@area.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </div>
+            <div class="flex-grow-1 mb-2">
+                <MudText Typo="Typo.body2">Role</MudText>
+                <MudSelect Class="" @bind-Value="reg.Role" Variant="Variant.Outlined" Margin="Margin.Dense">
+                    <MudSelectItem Value="@roleholder" Disabled>---Select Role---</MudSelectItem>
+                    @foreach (var roles in UserRolesL)
+                    {
+                        <MudSelectItem Value="@roles.RoleCode">@roles.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </div>
+            <div class="d-flex flex-grow-1 flex-row flex-wrap gap-3 mb-2">
+                <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">First Name</MudText>
+                    <MudTextField @bind-Value="reg.FirstName" Immediate="true" For="@(() => reg.FirstName)" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+                <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">Last Name</MudText>
+                    <MudTextField @bind-Value="reg.LastName" Immediate="true" For="@(() => reg.LastName)" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+            </div>
+            <div class="flex-grow-1  mb-4">
+                <MudText Typo="Typo.body2">Username</MudText>
+                @if (readonlyvar)
+                {
+                    <MudTextField T="string" Value="@GetFormattedUsername()" ReadOnly="@readonlyvar" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                }else
+                {
+                    <MudTextField @bind-Value="reg.Username" Immediate="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                }
+                
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-grow-1">
+            <MudButton Class="btnReg mb-2" Disabled="@_processing" ButtonType="ButtonType.Submit">
+                @if (_processing)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Registering</MudText>
+                }
+                else
+                {
+                    <MudText>Register Account</MudText>
+                }
+            </MudButton>
+        </div>
+    </EditForm>
+</main>
+
+@code {
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+
+    void Cancel() => MudDialog?.Cancel();
+
+    UserLoginDto reg = new();
+    private bool _processing = false;
+    private bool readonlyvar = true;
+    private string? usernameHolder { get; set; }
+
+    // MudAlert properties
+    string message = string.Empty;
+    MudBlazor.Severity _severity;
+    private bool showAlert = false;
+    public void CloseMe() => showAlert = false;
+
+    string roleholder = string.Empty;
+
+    private List<UserRoleT> UserRolesL = new();
+    private List<AreaT> AreasL = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UserRoleService.GetUserRole();
+        UserRolesL = UserRoleService.UserRoleTs;
+
+        await AreaService.GetArea();
+        AreasL = AreaService.AreaTs;
+    }
+
+    string GetFormattedUsername()
+    {
+        if (readonlyvar)
+        {
+            reg.Username = !string.IsNullOrEmpty(reg.FirstName) && !string.IsNullOrEmpty(reg.LastName)
+                ? $"{reg.FirstName[0].ToString().ToLower()}.{reg.LastName.ToLower()}"
+                : "";
+            return !string.IsNullOrEmpty(reg.FirstName) && !string.IsNullOrEmpty(reg.LastName)
+                ? $"{reg.FirstName[0].ToString().ToLower()}.{reg.LastName.ToLower()}"
+                : "";
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    async Task HandleRegistration()
+    {
+        if (string.IsNullOrWhiteSpace(reg.Role))
+        {
+            showAlert = true;
+            message = "Please select a Role.";
+            _severity = Severity.Error;
+        }
+        else if (reg.UserAreaId == 0)
+        {
+            showAlert = true;
+            message = "Please select an Area.";
+            _severity = Severity.Error;
+        }
+        else
+        {
+            try
+            {
+                _processing = true;
+
+                // reg.Username = $"{reg.FirstName[0].ToString().ToLower()}.{reg.LastName.ToLower()}";
+
+                await Task.Delay(1000);
+                bool isUsernameExist = await AuthService.IsUsernameExist(reg.Username);
+
+                if (isUsernameExist)
+                {
+                    showAlert = true;
+                    message = "Username already exists.";
+                    _severity = Severity.Error;
+                    _processing = false;
+                    readonlyvar = false;
+                }
+                else
+                {
+                    MudDialog?.Close();
+                    reg.Password = "p@ssw0rd";
+                    reg.LoginStatus = "Inactive";
+                    var result = await AuthService.Register(reg);
+
+                    _processing = false;
+                    await AuditlogGlobal.CreateAudit(000000, "CREATE User", DateTime.Now);
+                    _toastService.ShowSuccess(reg.Username + " Registered Successfully!");
+
+                    // Update the List using the StateService
+                    await AuthService.GetUsers();
+                    var newList = AuthService.UserMasterTs;
+                    StateService.SetState("UserList", newList);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                _processing = false;
+            }
+        }
+    }
+
+    bool isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    void ShowPassword()
+    {
+        if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+}

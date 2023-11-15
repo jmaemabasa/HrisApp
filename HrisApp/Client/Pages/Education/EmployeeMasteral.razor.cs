@@ -27,7 +27,7 @@ namespace HrisApp.Client.Pages.Education
         {
             masteral.Verify_Id = VerifyCode;
             await EducationService.CreateMasteral(masteral);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "MasteralT", $"Masteral Verify_Id: {masteral.Verify_Id} created successfully.", "_", DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Masteral", DateTime.Now);
             masteral.MasSchoolName = "";
             masteral.MasSchoolLoc = "";
             masteral.MasCourse = "";
@@ -53,7 +53,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteMasteral(int id)
         {
             await EducationService.DeleteMasteral(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "MasteralT", $"Masteral Verify_Id: {masteral.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(masteralList), DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE Masteral", DateTime.Now);
             masteralList = await EducationService.GetMasterallist(VerifyCode);
         }
     }

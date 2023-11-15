@@ -4,7 +4,6 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
 @inject IAuthService AuthService
-@inject ISnackbar Snackbar
 @inject IUserRoleService UserRoleService
 <PageTitle>Register</PageTitle>
 
@@ -29,18 +28,13 @@
     <EditForm Model="reg" OnValidSubmit="HandleRegistration">
         <DataAnnotationsValidator/>
         <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">
-            <div class="flex-grow-1">
+            @* <div class="flex-grow-1">
                 <MudText Typo="Typo.caption">Full Name</MudText>
                 <MudTextField @bind-Value="reg.FullName" For="@(() => reg.FullName)" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
+            </div> *@
             <div class="flex-grow-1">
                 <MudText Typo="Typo.caption">Username</MudText>
                 <MudTextField @bind-Value="reg.Username" For="@(() => reg.Username)" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
-            <div class="flex-grow-1">
-                <MudText Typo="Typo.caption">Email</MudText>
-                <MudTextField @bind-Value="reg.Email" For="@(() => reg.Email)" Variant="Variant.Outlined" Margin="Margin.Dense" />
-
             </div>
             <div class="flex-grow-1">
                 <MudText Typo="Typo.caption">Password</MudText>

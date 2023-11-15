@@ -27,7 +27,7 @@ namespace HrisApp.Client.Pages.Education
         {
             college.Verify_Id = VerifyCode;
             await EducationService.CreateCollege(college);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "CollegeT", $"College Verify_Id: {college.Verify_Id} created successfully.", "_", DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE College", DateTime.Now);
             college.CollSchoolName = "";
             college.CollSchoolLoc = "";
             college.CollAward = "";
@@ -52,7 +52,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteCollege(int id)
         {
             await EducationService.DeleteCollege(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "CollegeT", $"College Verify_Id: {college.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(collegeList), DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE College", DateTime.Now);
             collegeList = await EducationService.GetCollegelist(VerifyCode);
         }
     }

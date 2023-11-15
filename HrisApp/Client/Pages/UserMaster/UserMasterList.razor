@@ -1,0 +1,134 @@
+﻿@layout AccountListLayout
+@page "/usermasterlist"
+@inject IAuthService AuthService
+@inject IDialogService DialogService
+@inject IAreaService AreaService
+@inject StateService StateService
+@inject IToastService _toastService
+
+<main class="container">
+    <MudGrid>
+        <MudItem xs="12">
+            <div class="d-flex flex-grow-1 justify-content-center divheader">
+                <h2>User Master List</h2>
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTable Class="stable" Items="userList" Context="user" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<UserMasterT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+                <ToolBarContent>
+                    <div class="w-25">
+                        <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                     </div>
+
+                    <MudSpacer />
+                     <MudButton OnClick="OpenAddUser" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add User</MudButton>
+
+                   
+                 </ToolBarContent>
+                 <HeaderContent>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                         <MudTableSortLabel SortBy="new Func<UserMasterT, object>(x=>x.FirstName)">
+                             User Fullname
+                         </MudTableSortLabel>
+                     </MudTh>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Area</MudTh>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
+                 </HeaderContent>
+                 <RowTemplate>
+                     <MudTd DataLabel="">@user.FirstName @user.LastName</MudTd>
+                     <MudTd DataLabel="">@user.Username</MudTd>
+                     <MudTd DataLabel="">@user.Role</MudTd>
+                     <MudTd DataLabel="">
+                         @foreach (var item in areaList)
+                        {
+                            if (item.Id == user.UserAreaId)
+                            {
+                                @item.Name
+                            }
+                        }
+                     </MudTd>
+                    <MudTd DataLabel="">
+                        <div class="d-flex justify-content-center">
+                            <div class="@userstatusclass(user.LoginStatus)">
+                            </div>
+                        </div>
+                       
+                     </MudTd>
+                     <MudTd>
+                     </MudTd>
+                 </RowTemplate>
+                 <PagerContent>
+                     <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                 </PagerContent>
+             </MudTable>
+        </MudItem>
+    </MudGrid>
+    
+    
+</main>
+
+@code {
+    List<AreaT> areaList = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        await AreaService.GetArea();
+        areaList = AreaService.AreaTs;
+    }
+
+    private async Task LoadList()
+    {
+        await AuthService.GetUsers();
+        StateService.SetState("UserList", AuthService.UserMasterTs);
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        userList = StateService.GetState<List<UserMasterT>>("UserList");
+        StateHasChanged();
+    }
+
+    private static string userstatusclass(string status)
+    {
+        return status switch
+        {
+            "Active" => "statusActive",
+            "Inactive" => "statusInActive",
+            _ => "statusRetiredChip",
+        };
+    }
+
+    //TABLEEES
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+    List<UserMasterT> userList = new();
+    private UserMasterT selectedItem1 = null;
+    private HashSet<UserMasterT> selectedItems = new();
+
+    private bool FilterFunc1(UserMasterT user) => FilterFunc(user, searchString1);
+
+    private bool FilterFunc(UserMasterT user, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if ((user.FirstName + " " + user.LastName).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (user.Role.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    private void OpenAddUser()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true, NoHeader = true };
+        DialogService.Show<AddUserDialog>("", options);
+    }
+}

@@ -182,7 +182,7 @@ namespace HrisApp.Client.Pages.Employee
             _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
             await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "EmployeeT", $"EmployeeId: {employee.Id} updated successfully.", $"Employee: {JsonConvert.SerializeObject(employee)}, Address: {JsonConvert.SerializeObject(_address)}, Payroll: {JsonConvert.SerializeObject(_payroll)}", DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE Employee", DateTime.Now);
             _toastService.ShowSuccess("Information updated successfully!");
 
             //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);

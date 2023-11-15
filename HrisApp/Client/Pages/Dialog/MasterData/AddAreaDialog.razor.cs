@@ -38,7 +38,7 @@
                 {
                     await AreaService.CreateArea(newArea);
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "AreaT", $"Area: {newArea} created successfully.", "_", DateTime.Now);
+                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Area", DateTime.Now);
 
                     _toastService.ShowSuccess(newArea + " Created Successfully!");
 

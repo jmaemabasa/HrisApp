@@ -882,35 +882,6 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("Emp_TrainingT");
                 });
 
-            modelBuilder.Entity("HrisApp.Shared.Models.Emp_Payroll.CashBondT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CashBondT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Yes"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "No"
-                        });
-                });
-
             modelBuilder.Entity("HrisApp.Shared.Models.Emp_Payroll.Emp_PayrollT", b =>
                 {
                     b.Property<int>("Id")
@@ -986,196 +957,6 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("ScheduleTypeId");
 
                     b.ToTable("Emp_PayrollT");
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Emp_Payroll.RateTypeT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RateTypeT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Monthly Rate"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Daily Rate"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Emp_Payroll.RestDayT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RestDayT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Sunday"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Monday"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Tuesday"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Wednesday"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Thursday"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Friday"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Saturday"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Emp_Payroll.ScheduleTypeT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeIn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeOut")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ScheduleTypeT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Regular",
-                            TimeIn = "08:00 AM",
-                            TimeOut = "05:00 PM"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.CivilStatusT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CivilStatusT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Single"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Married"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Widowed"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmerRelationshipT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmerRelationshipT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Mother"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Father"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Spouse"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Sibling"
-                        });
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_AddressT", b =>
@@ -1428,251 +1209,6 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("EmployeeT");
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmploymentStatusT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmploymentStatusT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Regular"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Probationary"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Casual"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Fixed Term"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Project Based"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.GenderT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GenderT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Male"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Female"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.InactiveStatusT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InactiveStatusT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Active"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Resigned"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Terminated"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Awol"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Retired"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.ReligionT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReligionT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Roman Catholic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Iglesia ni Cristo"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Evangelicals (PCEC)"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Non-Roman Catholic"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Protestant (NCCP)"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Aglipayan"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Seventh-day Adventist"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Bible Baptist Church"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "United Church of Christ in the Philippines"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Jehovah's Witnesses"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "None"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Others"
-                        });
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.StatusT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StatusT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Active"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Inactive"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Resigned"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Terminated"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Awol"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Retired"
-                        });
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Images.DocumentT", b =>
@@ -2603,6 +2139,40 @@ namespace HrisApp.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.ScheduleTypeT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeIn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeOut")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScheduleTypeT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Regular",
+                            TimeIn = "08:00 AM",
+                            TimeOut = "05:00 PM"
+                        });
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.MasterData.SectionT", b =>
                 {
                     b.Property<int>("Id")
@@ -2733,6 +2303,436 @@ namespace HrisApp.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.CashBondT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CashBondT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Yes"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "No"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.CivilStatusT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CivilStatusT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Single"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Married"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Widowed"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.EmerRelationshipT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmerRelationshipT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Mother"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Father"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Spouse"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Sibling"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.EmploymentStatusT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmploymentStatusT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Regular"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Probationary"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Casual"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Fixed Term"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Project Based"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.GenderT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GenderT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Male"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Female"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.InactiveStatusT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InactiveStatusT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Resigned"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Terminated"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Awol"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Retired"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.RateTypeT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RateTypeT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Monthly Rate"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Daily Rate"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.ReligionT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReligionT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Roman Catholic"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Iglesia ni Cristo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Evangelicals (PCEC)"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Non-Roman Catholic"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Protestant (NCCP)"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Aglipayan"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Seventh-day Adventist"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Bible Baptist Church"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "United Church of Christ in the Philippines"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Jehovah's Witnesses"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "None"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Others"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.RestDayT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RestDayT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sunday"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Monday"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tuesday"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Wednesday"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Thursday"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Friday"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Saturday"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.StatusT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Inactive"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Resigned"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Terminated"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Awol"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Retired"
+                        });
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.User.UserMasterT", b =>
                 {
                     b.Property<int>("Id")
@@ -2741,16 +2741,17 @@ namespace HrisApp.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Email")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("LoginStatus")
-                        .HasColumnType("bit");
+                    b.Property<string>("LoginStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -2769,6 +2770,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserAreaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserStatus")
                         .IsRequired()
@@ -2826,25 +2830,25 @@ namespace HrisApp.Server.Migrations
 
             modelBuilder.Entity("HrisApp.Shared.Models.Application.ApplicantT", b =>
                 {
-                    b.HasOne("HrisApp.Shared.Models.Employee.CivilStatusT", "App_CivilStatus")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.CivilStatusT", "App_CivilStatus")
                         .WithMany()
                         .HasForeignKey("App_CivilStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.EmerRelationshipT", "App_EmerRelationship")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.EmerRelationshipT", "App_EmerRelationship")
                         .WithMany()
                         .HasForeignKey("App_EmerRelationshipId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.GenderT", "App_Gender")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.GenderT", "App_Gender")
                         .WithMany()
                         .HasForeignKey("App_GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.ReligionT", "App_Religion")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.ReligionT", "App_Religion")
                         .WithMany()
                         .HasForeignKey("App_ReligionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2861,25 +2865,25 @@ namespace HrisApp.Server.Migrations
 
             modelBuilder.Entity("HrisApp.Shared.Models.Emp_Payroll.Emp_PayrollT", b =>
                 {
-                    b.HasOne("HrisApp.Shared.Models.Emp_Payroll.CashBondT", "Cashbond")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.CashBondT", "Cashbond")
                         .WithMany()
                         .HasForeignKey("CashbondId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Emp_Payroll.RateTypeT", "RateType")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.RateTypeT", "RateType")
                         .WithMany()
                         .HasForeignKey("RateTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Emp_Payroll.RestDayT", "RestDay")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.RestDayT", "RestDay")
                         .WithMany()
                         .HasForeignKey("RestDayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Emp_Payroll.ScheduleTypeT", "ScheduleType")
+                    b.HasOne("HrisApp.Shared.Models.MasterData.ScheduleTypeT", "ScheduleType")
                         .WithMany()
                         .HasForeignKey("ScheduleTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2902,7 +2906,7 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.CivilStatusT", "CivilStatus")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.CivilStatusT", "CivilStatus")
                         .WithMany()
                         .HasForeignKey("CivilStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2920,25 +2924,25 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.EmerRelationshipT", "EmerRelationship")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.EmerRelationshipT", "EmerRelationship")
                         .WithMany()
                         .HasForeignKey("EmerRelationshipId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.EmploymentStatusT", "EmploymentStatus")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.EmploymentStatusT", "EmploymentStatus")
                         .WithMany()
                         .HasForeignKey("EmploymentStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.GenderT", "Gender")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.GenderT", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.InactiveStatusT", "InactiveStatus")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.InactiveStatusT", "InactiveStatus")
                         .WithMany()
                         .HasForeignKey("InactiveStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2950,13 +2954,13 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.ReligionT", "Religion")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.ReligionT", "Religion")
                         .WithMany()
                         .HasForeignKey("ReligionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.Employee.StatusT", "Status")
+                    b.HasOne("HrisApp.Shared.Models.StaticData.StatusT", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)

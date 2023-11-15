@@ -14,10 +14,12 @@ namespace HrisApp.Server.Controllers.Auth
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly DataContext _context;
 
-        public AuthController(IUserService userService)
+        public AuthController(IUserService userService, DataContext context)
         {
             _userService = userService;
+            _context = context;
         }
 
         [HttpPost("register")]
@@ -26,8 +28,9 @@ namespace HrisApp.Server.Controllers.Auth
             var response = await _userService.Register(
                 new UserMasterT
                 {
-                    FullName = request.FullName,
-                    Email = request.Email,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    UserAreaId = request.UserAreaId,
                     Username = request.Username,
                     Role = request.Role
                 },
@@ -44,6 +47,8 @@ namespace HrisApp.Server.Controllers.Auth
         [HttpPost("login")]
         public async Task<ActionResult<ServiceResponse<string>>> Login(UserMasterT request)
         {
+            request.LoginStatus = "Active";
+
             var response = await _userService.Login(request.Username, request.Password);
             if (!response.Success)
             {
@@ -67,6 +72,24 @@ namespace HrisApp.Server.Controllers.Auth
             return Ok(response);
         }
 
-        
+        [HttpGet("GetUserList")]
+        public async Task<ActionResult<List<UserMasterT>>> GetUserList()
+        {
+            var user = await _context.UserMasterT.ToListAsync();
+            return Ok(user);
+        }
+
+        [HttpGet("UserExists")]
+        public async Task<bool> UserExists(string username)
+        {
+            if (await _context.UserMasterT.AnyAsync(user => user.Username.ToLower()
+                .Equals(username.ToLower())))
+            {
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }

@@ -46,7 +46,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 {
                     await DepartmentService.CreateDepartment(newDepartment, selectedDivision);
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "DepartmentT", $"Department: {newDepartment} created successfully.", "_", DateTime.Now);
+                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Department", DateTime.Now);
 
                     _toastService.ShowSuccess(newDepartment + " Created Successfully!");
 

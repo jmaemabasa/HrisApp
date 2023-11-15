@@ -34,12 +34,12 @@
                 if (departmentVacancies > 0)
                 {
                     <MudItem xs="12" sm="3">
-                        <MudCard Class="carddep" Elevation="0">
+                        <MudCard Class="carddep divvac" Elevation="0">
                             <MudCardContent Class="carddepcontent">
-                                <div class="d-flex justify-content-center gap-2" style="background-color: #F5F5FA;position: sticky;top: 0;margin-bottom: 5px;">
-                                    <div class="d-flex align-items-start gap-2" style="padding: 7px 0 10px 0;">
-                                        <MudIcon Icon="@Icons.Material.TwoTone.Diversity3" Style="font-size: 1.4rem; color: #E38D0F" />
-                                        <span style="color: #424242; font-size: 16px; font-weight: bold">@department.Name</span>
+                                <div class="d-flex justify-content-center gap-2 divvacheader" style="background-color: #F5F5FA;position: sticky;top: 0;margin-bottom: 10px;">
+                                    <div class="d-flex align-items-start gap-2" style="padding: 7px 0 7px 0;">
+                                        <MudIcon Class="child" Icon="@Icons.Material.TwoTone.Diversity3" Style="font-size: 1.4rem; color: #E38D0F" />
+                                        <span class="child" style="color: #424242; font-size: 16px; font-weight: bold">@department.Name</span>
                                     </div>
                                 </div>
                                 <div>
@@ -55,10 +55,10 @@
                                             if (vacancy > 0)
                                             {
                                                 <div class="divsingledetails d-flex justify-content-between mb-2">
-                                                    <MudText Class="txt" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                                    <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
                                                     <div class="d-flex w-25 justify-content-between">
-                                                        <MudText Class="txt" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                        <MudText Class="txt" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
+                                                        <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                                        <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
                                                     </div>
                                                 </div>
                                             }
@@ -79,8 +79,8 @@
                                                 if (sectionVacancies > 0)
                                                 {
                                                     <div class="d-flex align-items-center gap-2 mb-2">
-                                                        <MudIcon Icon="@Icons.Material.TwoTone.Diversity2" Style="font-size: 1.2rem; color: #F1BC3A" />
-                                                        <span style="font-size: 15px;">@sect.Name</span>
+                                                        <MudIcon Icon="@Icons.Material.TwoTone.Diversity2" Class="child" Style="font-size: 1.2rem; color: #F1BC3A" />
+                                                        <span class="child" style="font-size: 15px;">@sect.Name</span>
                                                     </div>
                                                     @foreach (var position in allPositions.Where(p => p.SectionId == sect.Id))
                                                     {
@@ -89,10 +89,10 @@
                                                         if (vacancy > 0)
                                                         {
                                                             <div class="divsingledetails d-flex justify-content-between mb-2 ms-3">
-                                                                <MudText Class="txt" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                                                <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
                                                                 <div class="d-flex w-25 justify-content-between">
-                                                                    <MudText Class="txt" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                                    <MudText Class="txt" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
+                                                                    <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                                                    <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
                                                                 </div>
                                                             </div>
                                                         }
@@ -110,10 +110,10 @@
                                             if (vacancy > 0)
                                             {
                                                 <div class="divsingledetails d-flex justify-content-between mb-2">
-                                                    <MudText Class="txt" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                                    <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
                                                     <div class="d-flex w-25 justify-content-between">
-                                                        <MudText Class="txt" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                        <MudText Class="txt" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
+                                                        <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                                        <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
                                                     </div>
                                                 </div>
                                             }

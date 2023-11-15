@@ -92,7 +92,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             }
 
             _toastService.ShowSuccess(positionName + " Created Successfully!");
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "PositionT", $"Position: {newPosition}, Department: {departmentId} created successfully.", "_", DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Position", DateTime.Now);
 
             await PositionService.GetPosition();
             var newList = PositionService.PositionTs;

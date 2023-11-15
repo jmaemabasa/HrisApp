@@ -20,40 +20,40 @@ namespace HrisApp.Server.Controllers.AuditLog
             _logger = logger;
         }
 
-        [HttpPost("createtextfile")]
-        public IActionResult CreateTextFile(AuditLogData auditLogData)
-        {
-            try
-            {
-                var currentDate = DateTime.Now.ToString("yyyyMMdd");
-                var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.txt");
+        //[HttpPost("createtextfile")]
+        //public IActionResult CreateTextFile(AuditLogData auditLogData)
+        //{
+        //    try
+        //    {
+        //        var currentDate = DateTime.Now.ToString("yyyyMMdd");
+        //        var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.txt");
 
-                // Check if the file exists
-                bool fileExists = System.IO.File.Exists(filePath);
+        //        // Check if the file exists
+        //        bool fileExists = System.IO.File.Exists(filePath);
 
-                // Create or append the content to the file
-                string fileContent = $"{auditLogData.UserId}, {auditLogData.Action}, {auditLogData.TableName}, {auditLogData.AddInfo}, {auditLogData.BeforeUpdate}, {auditLogData.Date}";
+        //        // Create or append the content to the file
+        //        string fileContent = $"{auditLogData.UserId}, {auditLogData.Action}, {auditLogData.TableName}, {auditLogData.AddInfo}, {auditLogData.BeforeUpdate}, {auditLogData.Date}";
 
-                // If the file doesn't exist, add headers at the first row
-                if (!fileExists)
-                {
-                    string headers = "UserId, Action, TableName, AddInfo, BeforeUpdate, Date";
-                    fileContent = $"{headers}\n{fileContent}";
-                }
+        //        // If the file doesn't exist, add headers at the first row
+        //        if (!fileExists)
+        //        {
+        //            string headers = "UserId, Action, TableName, AddInfo, BeforeUpdate, Date";
+        //            fileContent = $"{headers}\n{fileContent}";
+        //        }
 
-                // Append the content to the file (create the file if it doesn't exist)
-                System.IO.File.AppendAllText(filePath, fileContent + Environment.NewLine + Environment.NewLine, Encoding.UTF8);
+        //        // Append the content to the file (create the file if it doesn't exist)
+        //        System.IO.File.AppendAllText(filePath, fileContent + Environment.NewLine + Environment.NewLine, Encoding.UTF8);
 
-                _logger.LogInformation($"Text file created/appended at: {filePath}");
+        //        _logger.LogInformation($"Text file created/appended at: {filePath}");
 
-                return Ok("Text file created/appended successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error creating/appending text file: {ex.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        //        return Ok("Text file created/appended successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Error creating/appending text file: {ex.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
         //[HttpPost("createexcelfile")]
         //public IActionResult CreateExcelFile(AuditLogData auditLogData)
@@ -127,5 +127,44 @@ namespace HrisApp.Server.Controllers.AuditLog
         //        return StatusCode(500, "Internal Server Error");
         //    }
         //}
+
+        [HttpPost("createcsvfile")]
+        public IActionResult CreateCsvFile(AuditLogData auditLogData)
+        {
+            try
+            {
+                var currentDate = DateTime.Now.ToString("yyyyMMdd");
+                var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.csv");
+
+                // Check if the file already exists
+                if (System.IO.File.Exists(filePath))
+                {
+                    // Append data to the existing CSV file
+                    var csvRow = $"{auditLogData.UserId},{auditLogData.Action},{auditLogData.Date}";
+                    System.IO.File.AppendAllText(filePath, csvRow + Environment.NewLine);
+                }
+                else
+                {
+                    // File does not exist, create a new one
+                    var csvContent = new StringBuilder();
+                    csvContent.AppendLine("UserId,Action,Date");
+                    var csvRow = $"{auditLogData.UserId},{auditLogData.Action},{auditLogData.Date}";
+                    csvContent.AppendLine(csvRow);
+
+                    // Save the CSV content to the file
+                    System.IO.File.WriteAllText(filePath, csvContent.ToString());
+                }
+
+                _logger.LogInformation($"CSV file created at: {filePath}");
+
+                return Ok("CSV file created successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error creating CSV file: {ex.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
     }
 }

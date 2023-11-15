@@ -26,7 +26,7 @@ namespace HrisApp.Client.Pages.Education
         {
             license.Verify_Id = VerifyCode;
             await LicenseTrainingService.CreateLicense(license);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "LicenseT", $"License Verify_Id: {license.Verify_Id} created successfully.", "_", DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE License", DateTime.Now);
             license.Examination = "";
             license.Rating = "";
             license.LicenseNo = "";
@@ -50,7 +50,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteLicense(int id)
         {
             await LicenseTrainingService.DeleteLicense(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "LicenseT", $"License Verify_Id: {license.Verify_Id} deleted successfully.", JsonConvert.SerializeObject(licenseList), DateTime.Now);
+            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE License", DateTime.Now);
             licenseList = await LicenseTrainingService.GetLicenselist(VerifyCode);
         }
     }

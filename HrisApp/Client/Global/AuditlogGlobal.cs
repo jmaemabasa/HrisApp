@@ -81,7 +81,7 @@ namespace HrisApp.Client.Global
         //    }
         //}
 
-        public async Task CreateAudit(int userId, string action, string tablename, string addInfo, string beforeUpdate, DateTime date)
+        public async Task CreateAudit(int userId, string action, DateTime date)
         {
             try
             {
@@ -89,16 +89,13 @@ namespace HrisApp.Client.Global
                 {
                     UserId = userId,
                     Action = action,
-                    TableName = tablename,
-                    AddInfo = addInfo,
-                    BeforeUpdate = beforeUpdate,
                     Date = date
                 };
 
                 var jsonAuditData = JsonConvert.SerializeObject(auditData);
                 var content = new StringContent(jsonAuditData, Encoding.UTF8, "application/json");
 
-                var response = await _http.PostAsync("/api/Auditlog/createtextfile", content);
+                var response = await _http.PostAsync("/api/Auditlog/createcsvfile", content);
 
                 if (response.IsSuccessStatusCode)
                 {

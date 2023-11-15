@@ -26,3 +26,33 @@
 ::deep .txt {
     font-size: 13px;
 }
+
+::deep .divvac {
+    background-size: 0 100%;
+    background-image: linear-gradient(331deg, rgba(141, 139, 226, 1), rgba(241, 143, 167, 1));
+    background-repeat: no-repeat;
+    transition: .4s;
+}
+
+    ::deep .divvac:hover {
+        background-size: 100% 100%;
+    }
+
+    ::deep .divvac:hover .child {
+        color: #FAFAF5 !important;
+        font-weight: bold;
+    }
+
+    ::deep .divvac .divvacheader {
+        background-size: 0 100%;
+        background-image: linear-gradient(90deg, rgba(141, 139, 226, 1), rgba(158, 154, 219, 1) 100%, rgba(202, 164, 173, 1));
+        background-repeat: no-repeat;
+        transition: .4s;
+    }
+
+    ::deep .divvac:hover .divvacheader {
+        background-size: 100% 100%;
+        border-radius: 10px;
+        color: #FAFAF5 !important;
+        font-weight: bold;
+    }

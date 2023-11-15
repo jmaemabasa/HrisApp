@@ -4,7 +4,7 @@ namespace HrisApp.Client.Pages.Auth
 {
     public partial class RegisterUser : ComponentBase
     {
-        UserLoginDto reg = new UserLoginDto();
+        UserLoginDto reg = new();
         private bool _processing = false;
 
         string message = string.Empty;
@@ -35,9 +35,7 @@ namespace HrisApp.Client.Pages.Auth
                 {
                     _processing = false;
                     _severity = Severity.Success;
-                    reg.FullName = "";
                     reg.Username = "";
-                    reg.Email = "";
                     reg.Password = "";
                     reg.ConfirmPassword = "";
                     reg.Role = "---Select Role---";
@@ -54,10 +52,7 @@ namespace HrisApp.Client.Pages.Auth
             }
         }
 
-        public void CloseMe()
-        {
-            showAlert = false;
-        }
+        public void CloseMe() => showAlert = false;
 
         bool isShow;
         InputType PasswordInput = InputType.Password;

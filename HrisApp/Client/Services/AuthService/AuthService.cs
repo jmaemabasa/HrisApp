@@ -8,6 +8,8 @@ namespace HrisApp.Client.Services.AuthService
         private readonly HttpClient _http;
         private readonly AuthenticationStateProvider _authStateProvider;
 
+        public List<UserMasterT> UserMasterTs { get; set; } = new List<UserMasterT>();
+
         public AuthService(HttpClient http, AuthenticationStateProvider authStateProvider)
         {
             _http = http;
@@ -24,6 +26,11 @@ namespace HrisApp.Client.Services.AuthService
             return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
         }
 
+        public async Task<bool> IsUsernameExist(string username)
+        {
+            return await _http.GetFromJsonAsync<bool>($"api/Auth/UserExists?username={username}");
+        }
+
         public async Task<ServiceResponse<string>> Login(UserMasterT request)
         {
             var result = await _http.PostAsJsonAsync("api/Auth/login", request);
@@ -35,5 +42,16 @@ namespace HrisApp.Client.Services.AuthService
             var result = await _http.PostAsJsonAsync("api/Auth/register", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
+
+        public async Task GetUsers()
+        {
+            var result = await _http.GetFromJsonAsync<List<UserMasterT>>("api/Auth/GetUserList");
+            if (result != null)
+            {
+                UserMasterTs = result;
+            }
+        }
+
+        
     }
 }
