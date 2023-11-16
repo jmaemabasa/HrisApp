@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HrisApp.Shared.Models.Employee;
+using HrisApp.Shared.Models.StaticData;
 
 namespace HrisApp.Shared.Models.User
 {
@@ -15,6 +17,8 @@ namespace HrisApp.Shared.Models.User
         public int Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
+        public EmployeeT? Employee { get; set; }
+        public int EmployeeId { get; set; }
         [Required]
         public string Username { get; set; } = string.Empty;
         [Required]

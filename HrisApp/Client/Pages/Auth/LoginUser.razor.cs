@@ -1,8 +1,4 @@
-﻿using HrisApp.Client.Global;
-using HrisApp.Client.Pages.MasterData;
-using Microsoft.AspNetCore.Components.Forms;
-
-namespace HrisApp.Client.Pages.Auth
+﻿namespace HrisApp.Client.Pages.Auth
 {
     public partial class LoginUser : ComponentBase
     {
@@ -16,14 +12,19 @@ namespace HrisApp.Client.Pages.Auth
         private string _returnUrl = string.Empty;
 
         //SUPER ADMIN
-        private const string Adminusername = "Administrator";
-        private const string Adminpassword = "1t@dm1n2022";
+        //private const string Adminusername = "Administrator";
+        private const string Adminusername = "11";
+        //private const string Adminpassword = "1t@dm1n2022";
+        private const string Adminpassword = "11";
         private const string Adminuserrole = "MainAdmin";
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             try
             {
+                await LocalStorage.RemoveItemAsync("token");
+                await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
                 var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
                 if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
                 {
@@ -37,8 +38,9 @@ namespace HrisApp.Client.Pages.Auth
                 _message = ex.Message.ToString();
                 Console.WriteLine(ex.Message.ToString());
             }
-
         }
+
+        
         public void CloseMe()
         {
             _showAlert = false;
@@ -67,9 +69,13 @@ namespace HrisApp.Client.Pages.Auth
 
                         await Task.Delay(1500);
 
+                        //var iduser = GlobalConfigService.Fullname;
+                        var iduser = Convert.ToInt32(result.Message);
+                        await AuditlogGlobal.CreateAudit(iduser, "LOGGED IN", DateTime.Now);
+                        Console.WriteLine(iduser.ToString());
+
                         NavigationManager.NavigateTo("/dashboard");
                         _toastService.ShowSuccess("Successfully Login.");
-                        //await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "LOGIN", "No Table", "The user logged in.", "_", DateTime.Now);
                     }
                     else
                     {
@@ -80,7 +86,8 @@ namespace HrisApp.Client.Pages.Auth
                         _toastService.ShowError(result.Message);
 
                     }
-                }            }
+                }
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());

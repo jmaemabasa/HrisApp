@@ -1,0 +1,116 @@
+﻿@inject IAuthService AuthService
+@inject AuditlogGlobal AuditlogGlobal
+@inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+
+<main>
+    <div style="text-align: center; margin-bottom: 10px;">
+        <span style="font-size: x-large;">Change Password</span>
+    </div>
+    <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+    @if (showAlert)
+    {
+        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
+    }
+    <EditForm Model="cpass" OnValidSubmit="ChangePassword">
+        <DataAnnotationsValidator />
+        <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">            
+            <div class="flex-grow-1 mb-2">
+                <MudText Typo="Typo.body2">New Password</MudText>
+                <MudTextField @bind-Value="cpass.Password" For="@(() => cpass.Password)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+            </div>
+            <div class="flex-grow-1  mb-4">
+                <MudText Typo="Typo.body2">Confirm Password</MudText>
+                <MudTextField @bind-Value="cpass.ConfirmPassword" For="@(() => cpass.ConfirmPassword)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@CPasswordInput" Adornment="Adornment.End" AdornmentIcon="@CPasswordInputIcon" OnAdornmentClick="CButtonTestclick" AdornmentAriaLabel="Show Password" />
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-grow-1">
+            <MudButton Class="btnReg mb-2" Disabled="@_processing" ButtonType="ButtonType.Submit">
+                @if (_processing)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Changing</MudText>
+                }
+                else
+                {
+                    <MudText>Change Password</MudText>
+                }
+            </MudButton>
+        </div>
+    </EditForm>
+</main>
+
+@code {
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+
+    void Cancel() => MudDialog?.Cancel();
+
+    ChangePassDTO cpass = new();
+    private bool _processing = false;
+
+
+    // MudAlert properties
+    string message = string.Empty;
+    MudBlazor.Severity _severity;
+    private bool showAlert = false;
+    public void CloseMe() => showAlert = false;
+
+    string roleholder = string.Empty;
+
+    private async Task ChangePassword()
+    {
+        try
+        {
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+            await AuthService.UpdatePassword(id, cpass.Password);
+            MudDialog?.Close();
+            _toastService.ShowSuccess("Successfully change your password.");
+            await AuditlogGlobal.CreateAudit(id, "UPDATE Password", DateTime.Now);
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+            return;
+        }
+    }
+
+   
+
+    bool isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+    InputType CPasswordInput = InputType.Password;
+    string CPasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    void ButtonTestclick()
+    {
+        if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+
+    void CButtonTestclick()
+    {
+        if (isShow)
+        {
+            isShow = false;
+            CPasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            CPasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            CPasswordInputIcon = Icons.Material.Filled.Visibility;
+            CPasswordInput = InputType.Text;
+        }
+    }
+}

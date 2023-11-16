@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using System.Linq;
 using System.Text;
 
 namespace HrisApp.Server.Controllers.AuditLog
@@ -165,6 +166,52 @@ namespace HrisApp.Server.Controllers.AuditLog
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        //[HttpGet("getcsvdata")]
+        //public IActionResult GetCsvData()
+        //{
+        //    try
+        //    {
+        //        var currentDate = DateTime.Now.ToString("yyyyMMdd");
+        //        var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.csv");
+
+        //        // Check if the file exists
+        //        if (System.IO.File.Exists(filePath))
+        //        {
+        //            // Read all lines from the CSV file
+        //            var csvLines = System.IO.File.ReadAllLines(filePath);
+
+        //            // Extract header and data
+        //            var header = csvLines.First();
+        //            var data = csvLines.Skip(1).ToList();
+
+        //            // Split lines and create a list of dictionaries
+        //            var result = data.Select(line =>
+        //            {
+        //                var values = line.Split(",");
+        //                var row = new Dictionary<string, string>();
+
+        //                for (var i = 0; i < header.Length; i++)
+        //                {
+        //                    row[header[i]] = values[i];
+        //                }
+
+        //                return row;
+        //            }).ToList();
+
+        //            return Ok(result);
+        //        }
+        //        else
+        //        {
+        //            return NotFound("CSV file not found.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Error reading CSV file: {ex.Message}");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
 
     }
 }

@@ -47,7 +47,7 @@ namespace HrisApp.Server.Services.UserService
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Sid, user.Id.ToString()),
                 new Claim(ClaimTypes.Name,  user.Username),
                 new Claim(ClaimTypes.PostalCode, user.UserAreaId.ToString()),
                 new Claim(ClaimTypes.Role, user.Role),
@@ -131,7 +131,10 @@ namespace HrisApp.Server.Services.UserService
             }
             else
             {
+                response.Message = login.Id.ToString();
                 response.Data = CreateToken(login);
+                login.LoginStatus = "Active";
+                await _context.SaveChangesAsync();
             }
 
             return response;
@@ -158,5 +161,46 @@ namespace HrisApp.Server.Services.UserService
             return new ServiceResponse<int> { Data = user.Id, Message = "Registration successful!" };
         }
 
+        //[HttpPut("Putaccount/{id}")]
+        public async Task<ServiceResponse<int>> Putaccount(int id)
+        {
+            var db = await _context.UserMasterT.Where(s => s.Id == id).FirstOrDefaultAsync();
+            if (db == null)
+            {
+                return new ServiceResponse<int>
+                {
+                    Success = false,
+                    Message = "Not Found."
+                };
+            }
+
+            db.LoginStatus = "Inactive";
+
+            await _context.SaveChangesAsync();
+
+            return new ServiceResponse<int> { Data = db.Id, Message = "Successful!" };
+        }
+
+        public async Task<ServiceResponse<int>> Putpassword(int id, string newpass)
+        {
+            var db = await _context.UserMasterT.Where(s => s.Id == id).FirstOrDefaultAsync();
+            if (db == null)
+            {
+                return new ServiceResponse<int>
+                {
+                    Success = false,
+                    Message = "Not Found."
+                };
+            }
+
+            CreatePasswordHash(newpass, out byte[] passwordHash, out byte[] passwordSalt);
+
+            db.PasswordHash = passwordHash;
+            db.PasswordSalt = passwordSalt;
+
+            await _context.SaveChangesAsync();
+
+            return new ServiceResponse<int> { Data = db.Id, Message = "Successful!" };
+        }
     }
 }

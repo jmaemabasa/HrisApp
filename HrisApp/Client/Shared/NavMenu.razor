@@ -1,13 +1,18 @@
 ﻿@inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthService AuthService
+@inject GlobalConfigService GlobalConfigService
+@inject IToastService _toastService
+@inject IDialogService DialogService
 
 <MudNavMenu Rounded="true" Margin="Margin.Normal" Bordered="true" Style="height: 100%">
     <div class="d-flex flex-column flex-grow-1 align-content-space-between h-100">
         <div class="flex-grow-1">
             <MudNavLink Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
             <MudNavLink Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employee</MudNavLink>
-            <MudNavGroup Title="Master Data" Expanded="true" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
+            <MudNavLink Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
+            <MudNavGroup Title="Master Data" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
                 <MudNavLink Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
                 <MudNavLink Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
                 <MudNavLink Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
@@ -15,13 +20,12 @@
                 <MudNavLink Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
                 <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink>
             </MudNavGroup>
-            <MudNavLink Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
+            <MudNavGroup Title="Account" Expanded="false" Icon="@Icons.Material.Rounded.LockPerson" IconColor="Color.Inherit">
+                <MudNavLink Href="/accounts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">User List</MudNavLink>
+            </MudNavGroup>
         </div>
         <div class="mb-5">
-            <MudNavLink Href="/applicant" Match="NavLinkMatch.Prefix">Applicant</MudNavLink>
-            <MudNavLink Href="/test" Match="NavLinkMatch.Prefix">Test</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Logout" IconColor="Color.Inherit" OnClick="Logout">Logout</MudNavLink>
-
+            
         </div>
 
     </div>
@@ -32,8 +36,26 @@
 @code {
     async Task Logout()
     {
-        await LocalStorage.RemoveItemAsync("token");
-        await AuthStateProvider.GetAuthenticationStateAsync();
-        NavigationManager.NavigateTo("/");
+        try
+        {
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+            await AuthService.UpdateLoginStatus(id);
+            await LocalStorage.RemoveItemAsync("token");
+            await AuthStateProvider.GetAuthenticationStateAsync();
+
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+            return;
+        }
+        
+    }
+
+    private void OpenChangePass()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true, NoHeader = true };
+        DialogService.Show<ChangePassDialog>("", options);
     }
 }

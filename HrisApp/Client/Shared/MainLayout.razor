@@ -6,7 +6,10 @@
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthService AuthService
 @inject GlobalConfigService GlobalConfigService
+@inject IToastService _toastService
+@inject IDialogService DialogService
 
 <style>
     .mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
@@ -41,14 +44,25 @@
         color: #27374D;
         left: 15px;
         margin-bottom: 25px;
-        margin-top: 15px;
     }
 
     .mud-appbar .mud-toolbar-appbar {
         padding: 0px !important;
         align-items: center;
+        width: calc(100% - 80px) !important; 
+        padding-left: 26px !important;
+        padding-top: 15px !important;
     }
 
+    .btnburger {
+        background: #e9ecef;
+        border: none;
+        box-shadow: -5px -5px 23px #ffffff, 5px 5px 12px #cacdcf;
+        border-radius: 10px;
+    }
+
+
+    
 </style>
 
 <MudThemeProvider Theme="MyCustomTheme"/>
@@ -57,14 +71,27 @@
 @* #EEF1F6  #031a5a*@
 
 <MudLayout>
-    <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+    @* <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
         <MudAppBar Elevation="0" Style="left: 45px; width: max-content; margin-right: 35px;">
             <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             @* <span style="font-weight: 600;font-size: 1.4rem;">Good Afternoon, @GlobalConfigService.Fullname.Split(' ')[0]</span> *@
             
 
-            <MudSpacer />
+             @*<MudSpacer />
 
+        </MudAppBar>
+    </MudHidden> *@
+
+    <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+        <MudAppBar Elevation="0" Style="left: 45px;">
+            <MudIconButton Class="" Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <MudSpacer />
+            <MudTooltip Text="Settings">
+                <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.TopLeft">
+                    <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                    <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                </MudMenu>
+            </MudTooltip>
         </MudAppBar>
     </MudHidden>
 
@@ -153,4 +180,30 @@
             },
 
         };
+
+    async Task Logout()
+    {
+        try
+        {
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+            await AuthService.UpdateLoginStatus(id);
+
+            await LocalStorage.RemoveItemAsync("token");
+            await AuthStateProvider.GetAuthenticationStateAsync();
+            NavigationManager.NavigateTo("/", true);
+
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+            return;
+        }
+
+    }
+
+    private void OpenChangePass()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true, NoHeader = true };
+        DialogService.Show<ChangePassDialog>("", options);
+    }
 }

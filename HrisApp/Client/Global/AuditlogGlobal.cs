@@ -112,5 +112,7 @@ namespace HrisApp.Client.Global
                 Console.WriteLine($"Error creating audit: {ex.Message}");
             }
         }
+
+        
     }
 }

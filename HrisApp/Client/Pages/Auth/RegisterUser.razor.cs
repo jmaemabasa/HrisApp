@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-
-namespace HrisApp.Client.Pages.Auth
+﻿namespace HrisApp.Client.Pages.Auth
 {
     public partial class RegisterUser : ComponentBase
     {
@@ -21,10 +19,14 @@ namespace HrisApp.Client.Pages.Auth
             UserRolesL = UserRoleService.UserRoleTs;
         }
 
-            async Task HandleRegistration()
+        async Task HandleRegistration()
         {
             try
             {
+                reg.FirstName = "j";
+                reg.LastName = "m";
+                reg.UserAreaId = 1;
+                reg.LoginStatus = "Inactive";
                 _processing = true;
                 var result = await AuthService.Register(reg);
 

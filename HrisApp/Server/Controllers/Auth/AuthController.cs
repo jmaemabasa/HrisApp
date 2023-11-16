@@ -30,9 +30,11 @@ namespace HrisApp.Server.Controllers.Auth
                 {
                     FirstName = request.FirstName,
                     LastName = request.LastName,
+                    EmployeeId = request.EmployeeId,
                     UserAreaId = request.UserAreaId,
                     Username = request.Username,
-                    Role = request.Role
+                    Role = request.Role,
+                    LoginStatus = request.LoginStatus
                 },
                 request.Password);
 
@@ -43,6 +45,35 @@ namespace HrisApp.Server.Controllers.Auth
 
             return Ok(response);
         }
+
+        [HttpPut("UpdateLoginStatus/{id}")]
+        public async Task<ActionResult<ServiceResponse>> UpdateLoginStatus(int id)
+        {
+            var response = await _userService.Putaccount(id);
+                
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPut("UpdatePassword/{id}")]
+        public async Task<ActionResult<ServiceResponse>> UpdatePassword(int id, [FromBody]string newpass)
+        {
+            var response = await _userService.Putpassword(id, newpass);
+
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
 
         [HttpPost("login")]
         public async Task<ActionResult<ServiceResponse<string>>> Login(UserMasterT request)
@@ -89,6 +120,8 @@ namespace HrisApp.Server.Controllers.Auth
             }
             return false;
         }
+
+        
 
 
     }

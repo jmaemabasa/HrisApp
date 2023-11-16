@@ -85,7 +85,7 @@ namespace HrisApp.Client
         private async void OnLoadAuth()
         {
             var _authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-            User_Id = _authState.User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.NameIdentifier)?.Value;
+            User_Id = _authState.User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Sid)?.Value;
             Username = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
             Role = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
             Fullname = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;

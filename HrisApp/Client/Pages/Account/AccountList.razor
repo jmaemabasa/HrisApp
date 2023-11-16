@@ -1,0 +1,71 @@
+﻿@page "/accounts"
+@inject IAuthService AuthService
+@inject IDialogService DialogService
+@inject IAreaService AreaService
+@inject StateService StateService
+@inject IToastService _toastService
+@inject NavigationManager NavigationManager
+
+@attribute [Authorize(Roles = "Admin")]
+<PageTitle>Accounts</PageTitle>
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Account User List</span>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+<div class="box w-auto">
+    <MudTable Class="stable" Items="userList" Context="user" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<UserMasterT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="w-25">
+                <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+             </div>
+
+             <MudSpacer />
+             <MudButton OnClick="OpenAddUser" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add User</MudButton>
+         </ToolBarContent>
+         <HeaderContent>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                 <MudTableSortLabel SortBy="new Func<UserMasterT, object>(x=>x.FirstName)">
+                     User Fullname
+                 </MudTableSortLabel>
+             </MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Area</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
+         </HeaderContent>
+         <RowTemplate>
+             <MudTd DataLabel="">@user.FirstName @user.LastName</MudTd>
+             <MudTd DataLabel="">@user.Username</MudTd>
+             <MudTd DataLabel="">@user.Role</MudTd>
+             <MudTd DataLabel="">
+                 @foreach (var item in areaList)
+                {
+                    if (item.Id == user.UserAreaId)
+                    {
+                        @item.Name
+                    }
+                }
+            </MudTd>
+            <MudTd DataLabel="">
+                <div class="d-flex justify-content-center">
+                    <div class="@userstatusclass(user.LoginStatus)">
+                    </div>
+                </div>
+            </MudTd>
+            <MudTd Style="text-align:center;">
+                <MudTooltip Text="View History">
+                    <MudIconButton OnClick="(() => ShowLogs(user.Id))" Icon="@Icons.Material.Rounded.History" aria-label="view" />
+                </MudTooltip>            
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+        </PagerContent>
+    </MudTable>
+</div>

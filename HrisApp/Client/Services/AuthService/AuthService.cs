@@ -52,6 +52,16 @@ namespace HrisApp.Client.Services.AuthService
             }
         }
 
-        
+        public async Task<ServiceResponse<int>> UpdateLoginStatus(int id)
+        {
+            var result = await _http.PutAsJsonAsync($"api/Auth/UpdateLoginStatus/{id}", id);
+            return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
+        }
+
+        public async Task<ServiceResponse<int>> UpdatePassword(int id, string newpass)
+        {
+            var result = await _http.PutAsJsonAsync($"api/Auth/UpdatePassword/{id}", newpass);
+            return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
+        }
     }
 }

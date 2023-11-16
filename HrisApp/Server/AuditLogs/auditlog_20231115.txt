@@ -1,5 +1,0 @@
-﻿UserId, Action, TableName, AddInfo, BeforeUpdate, Date
-1, CREATE, EmployeeT, Employee Verify_Id: 20231115095230828 created successfully., _, 11/15/2023 9:52:31 AM
-
-1, UPDATE EMPLOYEE, 11/15/2023 9:53:39 AM
-
