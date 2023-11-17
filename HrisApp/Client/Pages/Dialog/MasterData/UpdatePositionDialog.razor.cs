@@ -39,7 +39,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await PositionService.UpdatePosition(position);
-                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE Position", DateTime.Now);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
                 _toastService.ShowSuccess(position.Name + " Updated Successfully!");
 

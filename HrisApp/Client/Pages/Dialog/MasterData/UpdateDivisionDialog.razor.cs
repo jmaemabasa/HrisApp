@@ -42,7 +42,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await DivisionService.UpdateDivision(division);
-                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE Division", DateTime.Now);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
                 _toastService.ShowSuccess(division.Name + " Updated Successfully!");
 

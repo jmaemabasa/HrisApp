@@ -578,6 +578,35 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("ApplicantT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Audit.AuditlogsT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuditlogsT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Emp_Education.Emp_CollegeT", b =>
                 {
                     b.Property<int>("Id")
@@ -2744,14 +2773,6 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LoginStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -2773,9 +2794,6 @@ namespace HrisApp.Server.Migrations
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserAreaId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserStatus")
                         .IsRequired()
@@ -2866,6 +2884,17 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("App_Gender");
 
                     b.Navigation("App_Religion");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Audit.AuditlogsT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.User.UserMasterT", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Emp_Payroll.Emp_PayrollT", b =>

@@ -47,11 +47,9 @@ namespace HrisApp.Server.Services.UserService
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(ClaimTypes.Sid, user.EmployeeId.ToString()),
                 new Claim(ClaimTypes.Name,  user.Username),
-                new Claim(ClaimTypes.PostalCode, user.UserAreaId.ToString()),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.GivenName, user.FirstName + " " + user.LastName)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8
@@ -131,7 +129,7 @@ namespace HrisApp.Server.Services.UserService
             }
             else
             {
-                response.Message = login.Id.ToString();
+                response.Message = login.EmployeeId.ToString();
                 response.Data = CreateToken(login);
                 login.LoginStatus = "Active";
                 await _context.SaveChangesAsync();

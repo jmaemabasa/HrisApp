@@ -28,10 +28,7 @@ namespace HrisApp.Server.Controllers.Auth
             var response = await _userService.Register(
                 new UserMasterT
                 {
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
                     EmployeeId = request.EmployeeId,
-                    UserAreaId = request.UserAreaId,
                     Username = request.Username,
                     Role = request.Role,
                     LoginStatus = request.LoginStatus

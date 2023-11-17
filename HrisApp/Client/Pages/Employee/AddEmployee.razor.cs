@@ -323,7 +323,7 @@ namespace HrisApp.Client.Pages.Employee
                     await CreateLicenses(verifyCode);
                     await CreateTrainings(verifyCode);
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Employee",  DateTime.Now);
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model",  DateTime.Now);
                     NavigationManager.NavigateTo("employee");
 
                     var swal = await Swal.FireAsync(new SweetAlertOptions

@@ -5,7 +5,7 @@
 @inject IAreaService AreaService
 @inject StateService StateService
 @inject IToastService _toastService
-
+@inject IEmployeeService EmployeeService
 <main class="container">
     <MudGrid>
         <MudItem xs="12">
@@ -26,27 +26,31 @@
                    
                  </ToolBarContent>
                  <HeaderContent>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
-                         <MudTableSortLabel SortBy="new Func<UserMasterT, object>(x=>x.FirstName)">
-                             User Fullname
-                         </MudTableSortLabel>
-                     </MudTh>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Fullname</MudTh>
                      <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
                      <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Area</MudTh>
+                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Department</MudTh>
                      <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
                      <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
                  </HeaderContent>
                  <RowTemplate>
-                     <MudTd DataLabel="">@user.FirstName @user.LastName</MudTd>
+                     <MudTd DataLabel="">
+                         @foreach (var emp in employeeList)
+                         {
+                            if (emp.Id == user.EmployeeId)
+                            {
+                                @($"{emp.FirstName} {emp.LastName}")
+                            }
+                         }
+                     </MudTd>
                      <MudTd DataLabel="">@user.Username</MudTd>
                      <MudTd DataLabel="">@user.Role</MudTd>
                      <MudTd DataLabel="">
-                         @foreach (var item in areaList)
+                        @foreach (var emp in employeeList)
                         {
-                            if (item.Id == user.UserAreaId)
+                            if (emp.Id == user.EmployeeId)
                             {
-                                @item.Name
+                                @emp.Department?.Name
                             }
                         }
                      </MudTd>
@@ -66,18 +70,19 @@
              </MudTable>
         </MudItem>
     </MudGrid>
-    
-    
 </main>
 
-@code {
+ @code {
     List<AreaT> areaList = new();
-
+    List<EmployeeT> employeeList = new();
 
     protected override async Task OnInitializedAsync()
     {
         StateService.OnChange += OnStateChanged;
         await LoadList();
+
+        await EmployeeService.GetEmployee();
+        employeeList = EmployeeService.EmployeeTs;
 
         await AreaService.GetArea();
         areaList = AreaService.AreaTs;
@@ -119,8 +124,8 @@
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if ((user.FirstName + " " + user.LastName).Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
+        // if ((user.FirstName + " " + user.LastName).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
         if (user.Role.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;

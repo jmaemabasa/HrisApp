@@ -11,6 +11,7 @@
 @inject IEducationService EducationService
 @inject IPayrollService PayrollService
 @inject ILicenseTrainingService LicenseTrainingService
+@inject IEmployeeService EmployeeService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
 @inject IToastService _toastService
@@ -51,6 +52,7 @@
     <MudItem xs="12" sm="3">
         <TopCards title="Total Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 5rem; color: #E97777" OnIconClick=@(()=>NavIconBtns("vacancy")) />
     </MudItem>
+    @* <h1>@GlobalConfigService.Fullname</h1> *@
     
-   
+    <h1>@FULLNAME</h1>
 </MudGrid>

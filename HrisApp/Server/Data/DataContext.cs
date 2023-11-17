@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Server.Data
+﻿using HrisApp.Shared.Models.Audit;
+
+namespace HrisApp.Server.Data
 {
 #nullable disable
     public class DataContext : DbContext
@@ -226,6 +228,7 @@
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
         public DbSet<UserRoleT> UserRoleT { get; set; }
+        public DbSet<AuditlogsT> AuditlogsT { get; set; }
 
 
         //Master Data

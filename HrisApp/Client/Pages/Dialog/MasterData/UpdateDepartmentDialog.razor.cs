@@ -41,7 +41,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await DepartmentService.UpdateDepartment(department);
-                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE Department", DateTime.Now);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
                 _toastService.ShowSuccess(department.Name + " Updated Successfully!");
 

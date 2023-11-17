@@ -6,6 +6,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
     {
         List<EmployeeT> EmployeeTs { get; set; }
         Task<List<EmployeeT>> GetEmployeeList();
+        Task<string> Getname(int id);
         Task GetEmployee();
         Task<EmployeeT> GetSingleEmployee(int id);
         Task<string> CreateEmployee(EmployeeT employee);

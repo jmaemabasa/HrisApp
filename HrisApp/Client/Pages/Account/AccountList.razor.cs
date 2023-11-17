@@ -4,16 +4,15 @@ namespace HrisApp.Client.Pages.Account
 {
     public partial class AccountList : ComponentBase
     {
-        List<AreaT> areaList = new();
-
+        List<EmployeeT> employeeList = new();
 
         protected override async Task OnInitializedAsync()
         {
             StateService.OnChange += OnStateChanged;
             await LoadList();
 
-            await AreaService.GetArea();
-            areaList = AreaService.AreaTs;
+            await EmployeeService.GetEmployee();
+            employeeList = EmployeeService.EmployeeTs;
         }
 
         private async Task LoadList()
@@ -54,8 +53,8 @@ namespace HrisApp.Client.Pages.Account
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if ((user.FirstName + " " + user.LastName).Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
+            //if ((user.FirstName + " " + user.LastName).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            //    return true;
             if (user.Role.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (user.LoginStatus.Contains(searchString, StringComparison.OrdinalIgnoreCase))

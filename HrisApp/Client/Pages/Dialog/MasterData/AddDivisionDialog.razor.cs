@@ -43,7 +43,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                     _toastService.ShowSuccess(newDivision + " Created Successfully!");
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Division", DateTime.Now);
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
                     await DivisionService.GetDivision();
                     var newList = DivisionService.DivisionTs;

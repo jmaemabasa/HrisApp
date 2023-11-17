@@ -178,5 +178,26 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
 
             return Ok(dbemp);
         }
+
+        [HttpGet("GetEmpName/{empid}")]
+        public async Task<ActionResult<List<EmployeeT>>> Getname(int empid)
+        {
+            var emp = await _context.EmployeeT
+                .Include(em => em.Status)
+                .Include(em => em.EmploymentStatus)
+                .Include(em => em.EmerRelationship)
+                .Include(em => em.Gender)
+                .Include(em => em.CivilStatus)
+                .Include(em => em.Religion)
+                .Include(em => em.Division)
+                .Include(em => em.Department)
+                .Include(em => em.Area)
+                .Include(em => em.Position)
+                .Include(em => em.InactiveStatus)
+                .ToListAsync();
+
+            var _response = emp.Where(e => e.Id == empid).ToList();
+            return Ok(_response);
+        }
     }
 }

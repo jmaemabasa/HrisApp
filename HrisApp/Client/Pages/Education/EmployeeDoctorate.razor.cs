@@ -24,7 +24,7 @@ namespace HrisApp.Client.Pages.Education
         {
             doctorate.Verify_Id = VerifyCode;
             await EducationService.CreateDoctorate(doctorate);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Doctorate", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
             doctorate.DocSchoolName = "";
             doctorate.DocSchoolLoc = "";
             doctorate.DocCourse = "";
@@ -50,7 +50,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteDoc(int id)
         {
             await EducationService.DeleteDoctorate(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE Doctorate", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
             doctorateList = await EducationService.GetDoctoratelist(VerifyCode);
         }
     }

@@ -39,7 +39,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await AreaService.UpdateArea(area);
-                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE Area", DateTime.Now);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
                 _toastService.ShowSuccess(area.Name + " Updated Successfully!");
 

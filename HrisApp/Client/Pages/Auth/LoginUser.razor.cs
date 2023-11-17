@@ -71,7 +71,7 @@
 
                         //var iduser = GlobalConfigService.Fullname;
                         var iduser = Convert.ToInt32(result.Message);
-                        await AuditlogGlobal.CreateAudit(iduser, "LOGGED IN", DateTime.Now);
+                        await AuditlogService.CreateLog(iduser, "LOGGED IN", "Site", DateTime.Now);
                         Console.WriteLine(iduser.ToString());
 
                         NavigationManager.NavigateTo("/dashboard");

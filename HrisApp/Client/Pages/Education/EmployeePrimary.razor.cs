@@ -27,7 +27,7 @@ namespace HrisApp.Client.Pages.Education
         {
             _pri.Verify_Id = VerifyCode;
             await EducationService.CreatePrimary(_pri);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Primary", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
             _pri.PriSchoolName = "";
             _pri.PriSchoolLoc = "";
             _pri.PriAward = "";
@@ -51,7 +51,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeletePrimary(int id)
         {
             await EducationService.DeletePrimary(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE Primary", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
             primaryList = await EducationService.GetPrimarylist(VerifyCode);
         }
     }

@@ -1,5 +1,5 @@
 ﻿@inject IAuthService AuthService
-@inject AuditlogGlobal AuditlogGlobal
+@inject IAuditlogService AuditlogService
 @inject IToastService _toastService
 @inject GlobalConfigService GlobalConfigService
 
@@ -65,7 +65,7 @@
             await AuthService.UpdatePassword(id, cpass.Password);
             MudDialog?.Close();
             _toastService.ShowSuccess("Successfully change your password.");
-            await AuditlogGlobal.CreateAudit(id, "UPDATE Password", DateTime.Now);
+            await AuditlogService.CreateLog(id, "UPDATE", "Password", DateTime.Now);
         }
         catch (Exception ex)
         {

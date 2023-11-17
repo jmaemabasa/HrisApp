@@ -1,6 +1,4 @@
-﻿using HrisApp.Client.Pages.Employee;
-using HrisApp.Client.Pages.MasterData;
-using HrisApp.Shared.Models.StaticData;
+﻿using System.Net.Http;
 
 namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {
@@ -17,7 +15,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         }
 
         public List<EmployeeT> EmployeeTs { get; set; } = new List<EmployeeT>();
-        
+
 
         public async Task<List<EmployeeT>> GetEmployeeList()
         {
@@ -51,7 +49,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         {
             Console.WriteLine("Saving Services sa create employee");
 
-           
+
             HttpResponseMessage response = await _http.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
             if (!response.IsSuccessStatusCode)
             {
@@ -71,6 +69,17 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         {
             var result = await _http.DeleteAsync($"api/Employee/{id}");
             await SetEmployees(result);
+        }
+
+        public async Task<string> Getname(int id)
+        {
+            Console.WriteLine($"Global ni dri {id}");
+            var returnlist = await _http.GetFromJsonAsync<List<EmployeeT>>($"api/Employee/GetEmpName/{id}");
+
+
+            var returnmodel = returnlist.Where(e => e.Id == id).FirstOrDefault();
+
+            return $"{returnmodel.FirstName} {returnmodel.LastName}";
         }
     }
 }

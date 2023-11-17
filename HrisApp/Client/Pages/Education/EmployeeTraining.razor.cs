@@ -27,7 +27,7 @@ namespace HrisApp.Client.Pages.Education
         {
             training.Verify_Id = VerifyCode;
             await LicenseTrainingService.CreateTraining(training);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Training", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
             training.TrainingName = "";
             training.SponsorSpeaker = "";
             training.TrainingDate = DateTime.Today;
@@ -51,7 +51,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteTraining(int id)
         {
             await LicenseTrainingService.DeleteTraining(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE Training", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
             _trainingListt = await LicenseTrainingService.GetTraininglist(VerifyCode);
         }
     }

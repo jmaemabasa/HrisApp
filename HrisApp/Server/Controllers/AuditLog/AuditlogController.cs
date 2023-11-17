@@ -141,15 +141,15 @@ namespace HrisApp.Server.Controllers.AuditLog
                 if (System.IO.File.Exists(filePath))
                 {
                     // Append data to the existing CSV file
-                    var csvRow = $"{auditLogData.UserId},{auditLogData.Action},{auditLogData.Date}";
+                    var csvRow = $"{auditLogData.UserId},{auditLogData.Action},{auditLogData.Type},{auditLogData.Date}";
                     System.IO.File.AppendAllText(filePath, csvRow + Environment.NewLine);
                 }
                 else
                 {
                     // File does not exist, create a new one
                     var csvContent = new StringBuilder();
-                    csvContent.AppendLine("UserId,Action,Date");
-                    var csvRow = $"{auditLogData.UserId},{auditLogData.Action},{auditLogData.Date}";
+                    csvContent.AppendLine("UserId,Action,Type,Date");
+                    var csvRow = $"{auditLogData.UserId},{auditLogData.Action},{auditLogData.Type},{auditLogData.Date}";
                     csvContent.AppendLine(csvRow);
 
                     // Save the CSV content to the file
@@ -166,6 +166,38 @@ namespace HrisApp.Server.Controllers.AuditLog
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        [HttpGet("getcsvdata")]
+        public IActionResult GetCsvData()
+        {
+            try
+            {
+                var currentDate = DateTime.Now.ToString("yyyyMMdd");
+                var filePath = Path.Combine(_evs.ContentRootPath, "AuditLogs", $"auditlog_{currentDate}.csv");
+
+                // Check if the file exists
+                if (System.IO.File.Exists(filePath))
+                {
+                    // Read all lines from the CSV file
+                    var csvLines = System.IO.File.ReadAllLines(filePath);
+
+                    // Skip the header line (if it exists) and return the rest of the data
+                    var data = csvLines.Skip(1).ToList();
+
+                    return Ok(data);
+                }
+                else
+                {
+                    return NotFound("CSV file not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error reading CSV file: {ex.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
 
         //[HttpGet("getcsvdata")]
         //public IActionResult GetCsvData()

@@ -5,6 +5,7 @@
 @inject StateService StateService
 @inject IToastService _toastService
 @inject NavigationManager NavigationManager
+@inject IEmployeeService EmployeeService
 
 @attribute [Authorize(Roles = "Admin")]
 <PageTitle>Accounts</PageTitle>
@@ -26,29 +27,35 @@
 
              <MudSpacer />
              <MudButton OnClick="OpenAddUser" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add User</MudButton>
+
+
          </ToolBarContent>
          <HeaderContent>
-             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
-                 <MudTableSortLabel SortBy="new Func<UserMasterT, object>(x=>x.FirstName)">
-                     User Fullname
-                 </MudTableSortLabel>
-             </MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Fullname</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
-             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Area</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Department</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
          </HeaderContent>
          <RowTemplate>
-             <MudTd DataLabel="">@user.FirstName @user.LastName</MudTd>
-             <MudTd DataLabel="">@user.Username</MudTd>
-             <MudTd DataLabel="">@user.Role</MudTd>
              <MudTd DataLabel="">
-                 @foreach (var item in areaList)
+                 @foreach (var emp in employeeList)
                 {
-                    if (item.Id == user.UserAreaId)
+                    if (emp.Id == user.EmployeeId)
                     {
-                        @item.Name
+                        @($"{emp.FirstName} {emp.LastName}")
+                    }
+                }
+            </MudTd>
+            <MudTd DataLabel="">@user.Username</MudTd>
+            <MudTd DataLabel="">@user.Role</MudTd>
+            <MudTd DataLabel="">
+                @foreach (var emp in employeeList)
+                {
+                    if (emp.Id == user.EmployeeId)
+                    {
+                        @emp.Department?.Name
                     }
                 }
             </MudTd>
@@ -61,7 +68,7 @@
             <MudTd Style="text-align:center;">
                 <MudTooltip Text="View History">
                     <MudIconButton OnClick="(() => ShowLogs(user.Id))" Icon="@Icons.Material.Rounded.History" aria-label="view" />
-                </MudTooltip>            
+                </MudTooltip>
             </MudTd>
         </RowTemplate>
         <PagerContent>

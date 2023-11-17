@@ -42,7 +42,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (confirmResult.IsConfirmed)
             {
                 await ScheduleService.UpdateSchedule(schedule);
-                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE Schedule", DateTime.Now);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
                 _toastService.ShowSuccess(schedule.Name + " Updated Successfully!");
 

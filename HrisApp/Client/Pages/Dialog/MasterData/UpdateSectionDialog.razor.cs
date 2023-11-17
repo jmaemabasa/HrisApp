@@ -43,7 +43,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             {
                 await SectionService.UpdateSection(section);
 
-                await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "UPDATE Section", DateTime.Now);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                 _toastService.ShowSuccess(section.Name + " Updated Successfully!");
 
                 await SectionService.GetSection();

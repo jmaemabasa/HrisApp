@@ -6,6 +6,8 @@
         private string _countActiveEmployees = "0";
         private string _countInactiveEmployees = "0";
 
+        private string FULLNAME;
+
         private List<PositionT> allPositions;
         private Dictionary<int, int> positionCounts = new Dictionary<int, int>();
 
@@ -28,7 +30,11 @@
                 positionCounts[positionId] = count;
             }
             _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
+
+            var globalId = Convert.ToInt32(GlobalConfigService.User_Id);
+            FULLNAME = await EmployeeService.Getname(globalId);
         }
+
         public void NavIconBtns(string text)
         {
             switch (text)

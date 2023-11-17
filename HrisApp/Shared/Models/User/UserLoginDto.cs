@@ -11,10 +11,6 @@ namespace HrisApp.Shared.Models.User
     public class UserLoginDto
     {
         public int Id { get; set; }
-        [Required]
-        public string FirstName { get; set; } = string.Empty;
-        [Required]
-        public string LastName { get; set; } = string.Empty;
         public EmployeeT? Employee { get; set; }
         public int EmployeeId { get; set; }
         public string Username { get; set; } = string.Empty;
@@ -24,7 +20,6 @@ namespace HrisApp.Shared.Models.User
         //[Compare("Password", ErrorMessage = "The passwords do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
         public string UserStatus { get; set; } = string.Empty;
-        public int UserAreaId { get; set; }
         public byte[]? PasswordHash { get; set; }
         public byte[]? PasswordSalt { get; set; }
         public string LoginStatus { get; set; } = string.Empty;

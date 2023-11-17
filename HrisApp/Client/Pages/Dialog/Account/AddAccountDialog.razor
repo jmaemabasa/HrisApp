@@ -3,12 +3,14 @@
 @inject ILocalStorageService LocalStorage
 @inject IAuthService AuthService
 @inject IUserRoleService UserRoleService
-@inject IAreaService AreaService
-@inject AuditlogGlobal AuditlogGlobal
+@inject IAuditlogService AuditlogService
 @inject SweetAlertService Swal
 @inject StateService StateService
 @inject IToastService _toastService
 @inject GlobalConfigService GlobalConfigService
+@inject IEmployeeService EmployeeService
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
 
 <main>
     <div style="text-align: center; margin-bottom: 10px;">
@@ -23,14 +25,57 @@
         <DataAnnotationsValidator />
         <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">
             <div class="flex-grow-1 mb-2">
-                <MudText Typo="Typo.body2">Area of Assignment</MudText>
-                <MudSelect @bind-Value="reg.UserAreaId" Variant="Variant.Outlined" Margin="Margin.Dense">
-                    <MudSelectItem Value=0 Disabled>---Select Area---</MudSelectItem>
-                    @foreach (var area in AreasL)
+                <MudText Typo="Typo.body2">Division</MudText>
+                <MudSelect @bind-Value="divvar" Variant="Variant.Outlined" Margin="Margin.Dense">
+                    <MudSelectItem Value=0 Disabled>---Select Division---</MudSelectItem>
+                    @foreach (var div in DivisionsL)
                     {
-                        <MudSelectItem Value="@area.Id">@area.Name</MudSelectItem>
+                        <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
                     }
                 </MudSelect>
+            </div>
+            <div class="flex-grow-1 mb-2">
+                <MudText Typo="Typo.body2">Department</MudText>
+                @if (divvar != 0)
+                {
+                    <MudSelect @bind-Value="deptvar" Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem Value=0
+                                                      Disabled>---Select Department---</MudSelectItem>
+
+                     @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == divvar))
+                        {
+                            <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
+                        }
+
+                    </MudSelect>
+                }
+                else
+                {
+                    <MudSelect @bind-Value="deptvar" Disabled Variant="Variant.Outlined" Margin="Margin.Dense">
+                         <MudSelectItem Value=0 Disabled>---Select Department---</MudSelectItem>
+                 </MudSelect>
+                }
+            </div>
+            <div class="flex-grow-1 mb-2">
+                <MudText Typo="Typo.body2">Employees</MudText>
+                @if (divvar != 0 && deptvar != 0)
+                {
+                    <MudSelect Class="" @bind-Value="reg.EmployeeId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem Value="0"
+                                                      Disabled>---Select Employee---</MudSelectItem>
+
+                     @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar))
+                        {
+                            <MudSelectItem Value="@emp.Id">@emp.FirstName @emp.LastName</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+                else
+                {
+                    <MudSelect Class="" Disabled @bind-Value="reg.EmployeeId" Variant="Variant.Outlined" Margin="Margin.Dense">
+                         <MudSelectItem Value="0" bled>---Select Employee---</MudSelectItem>
+                     </MudSelect>
+                }
             </div>
             <div class="flex-grow-1 mb-2">
                 <MudText Typo="Typo.body2">Role</MudText>
@@ -41,16 +86,6 @@
                         <MudSelectItem Value="@roles.RoleCode">@roles.Name</MudSelectItem>
                     }
                 </MudSelect>
-            </div>
-            <div class="d-flex flex-grow-1 flex-row flex-wrap gap-3 mb-2">
-                <div class="flex-grow-1">
-                    <MudText Typo="Typo.body2">First Name</MudText>
-                    <MudTextField @bind-Value="reg.FirstName" Immediate="true" For="@(() => reg.FirstName)" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                </div>
-                <div class="flex-grow-1">
-                    <MudText Typo="Typo.body2">Last Name</MudText>
-                    <MudTextField @bind-Value="reg.LastName" Immediate="true" For="@(() => reg.LastName)" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                </div>
             </div>
             <div class="flex-grow-1  mb-4">
                 <MudText Typo="Typo.body2">Username</MudText>
@@ -100,32 +135,49 @@
     string roleholder = string.Empty;
 
     private List<UserRoleT> UserRolesL = new();
-    private List<AreaT> AreasL = new();
+    private List<DepartmentT> DepartmentsL = new();
+    private List<DivisionT> DivisionsL = new();
+    private List<EmployeeT> EmployeesL = new();
+
+    private int divvar;
+    private int deptvar;
 
     protected override async Task OnInitializedAsync()
     {
         await UserRoleService.GetUserRole();
         UserRolesL = UserRoleService.UserRoleTs;
 
-        await AreaService.GetArea();
-        AreasL = AreaService.AreaTs;
+        await DivisionService.GetDivision();
+        DivisionsL = DivisionService.DivisionTs;
+
+        await DepartmentService.GetDepartment();
+        DepartmentsL = DepartmentService.DepartmentTs;
+
+        await EmployeeService.GetEmployee();
+        EmployeesL = EmployeeService.EmployeeTs;
     }
 
     string GetFormattedUsername()
     {
         if (readonlyvar)
         {
-            reg.Username = !string.IsNullOrEmpty(reg.FirstName) && !string.IsNullOrEmpty(reg.LastName)
-                ? $"{reg.FirstName[0].ToString().ToLower()}.{reg.LastName.ToLower()}"
-                : "";
-            return !string.IsNullOrEmpty(reg.FirstName) && !string.IsNullOrEmpty(reg.LastName)
-                ? $"{reg.FirstName[0].ToString().ToLower()}.{reg.LastName.ToLower()}"
-                : "";
+            var employee = EmployeesL.FirstOrDefault(e => e.Id == reg.EmployeeId);
+
+            if (employee != null)
+            {
+                reg.Username = !string.IsNullOrEmpty(employee.FirstName) && !string.IsNullOrEmpty(employee.LastName)
+                    ? $"{employee.FirstName[0].ToString().ToLower()}.{employee.LastName.ToLower()}"
+                    : "";
+
+                return !string.IsNullOrEmpty(employee.FirstName) && !string.IsNullOrEmpty(employee.LastName)
+                    ? $"{employee.FirstName[0].ToString().ToLower()}.{employee.LastName.ToLower()}"
+                    : "";
+            }
+            else
+                return "";
         }
         else
-        {
             return "";
-        }
     }
 
     async Task HandleRegistration()
@@ -136,11 +188,13 @@
             message = "Please select a Role.";
             _severity = Severity.Error;
         }
-        else if (reg.UserAreaId == 0)
+        else if (reg.EmployeeId == 0)
         {
             showAlert = true;
-            message = "Please select an Area.";
+            message = "Please select an Employee.";
             _severity = Severity.Error;
+            _processing = false;
+            readonlyvar = false;
         }
         else
         {
@@ -172,7 +226,7 @@
                     _processing = false;
 
                     var userid = Convert.ToInt32(GlobalConfigService.User_Id);
-                    await AuditlogGlobal.CreateAudit(userid, "CREATE User Account", DateTime.Now);
+                    await AuditlogService.CreateLog(userid, "CREATE", "User", DateTime.Now);
 
 
                     // Update the List using the StateService

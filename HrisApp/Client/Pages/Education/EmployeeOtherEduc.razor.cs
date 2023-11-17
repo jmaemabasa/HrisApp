@@ -27,7 +27,7 @@ namespace HrisApp.Client.Pages.Education
         {
             othered.Verify_Id = VerifyCode;
             await EducationService.CreateOtherEduc(othered);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE OtherEduc", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
             othered.OthersSchoolType = "";
             othered.OthersSchoolName = "";
             othered.OthersSchoolLoc = "";
@@ -54,7 +54,7 @@ namespace HrisApp.Client.Pages.Education
         async Task DeleteOther(int id)
         {
             await EducationService.DeleteOtherEduc(id);
-            await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "DELETE OtherEduc", DateTime.Now);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
             otheredList = await EducationService.GetOtherEduclist(VerifyCode);
         }
     }

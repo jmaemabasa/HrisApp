@@ -1,15 +1,20 @@
 ﻿using System.Data;
+using static System.Net.WebRequestMethods;
 
 namespace HrisApp.Client
 {
 #nullable disable
     public class GlobalConfigService
     {
+        private readonly HttpClient httpClient;
+
         private readonly AuthenticationStateProvider _authenticationStateProvider;
-        public GlobalConfigService(AuthenticationStateProvider authenticationStateProvider)
+        public GlobalConfigService(AuthenticationStateProvider authenticationStateProvider, HttpClient _httpClient)
         {
             _authenticationStateProvider = authenticationStateProvider;
+            httpClient = _httpClient;
             OnLoadAuth();
+            //OnName();
         }
 
         private string _username = string.Empty;
@@ -89,10 +94,17 @@ namespace HrisApp.Client
             Username = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
             Role = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
             Fullname = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
-            //Fullname = _authState.User.Claims.FirstOrDefault(z => z.Type == ClaimTypes.NameIdentifier)?.Value;
-            //User_Code = _authState.User.Claims.FirstOrDefault(b => b.Type == ClaimTypes.Sid)?.Value;
-            //User_CodeId = _authState.User.Claims.FirstOrDefault(b => b.Type == ClaimTypes.Rsa)?.Value;
-            //User_Department = _authState.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimaryGroupSid)?.Value;
+        }
+
+        private async void OnName()
+        {
+            int conId = Convert.ToInt32(User_Id);
+            var returnlist = await httpClient.GetFromJsonAsync<List<EmployeeT>>($"api/Employee/GetEmpName/{User_Id}");
+
+
+            var returnmodel = returnlist.Where(e => e.Id == conId).FirstOrDefault();
+
+            Fullname = $"{returnmodel.FirstName} {returnmodel.LastName}";
         }
     }
 }

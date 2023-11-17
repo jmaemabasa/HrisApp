@@ -81,7 +81,7 @@ namespace HrisApp.Client.Global
         //    }
         //}
 
-        public async Task CreateAudit(int userId, string action, DateTime date)
+        public async Task CreateAudit(int userId, string action, string type, DateTime date)
         {
             try
             {
@@ -89,6 +89,7 @@ namespace HrisApp.Client.Global
                 {
                     UserId = userId,
                     Action = action,
+                    Type = type,
                     Date = date
                 };
 
@@ -113,6 +114,30 @@ namespace HrisApp.Client.Global
             }
         }
 
-        
+        public async Task<List<string>> GetCsvData()
+        {
+            try
+            {
+                var response = await _http.GetAsync("/api/Auditlog/getcsvdata");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<List<string>>();
+                }
+                else
+                {
+                    // Handle error, return an empty list, or throw an exception
+                    return new List<string>();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+                Console.WriteLine($"Error getting CSV data: {ex.Message}");
+                return new List<string>();
+            }
+        }
+
+
     }
 }

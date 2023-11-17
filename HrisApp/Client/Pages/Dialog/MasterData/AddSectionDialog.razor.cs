@@ -46,7 +46,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 {
                     await SectionService.CreateSection(newSection, selectedDivision, selectedDepartment);
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Section", DateTime.Now);
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
                     _toastService.ShowSuccess(newSection + " Created Successfully!");
 
@@ -79,7 +79,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 {
                     await SectionService.CreateSection(newSection, selectedDivision, selectedDepartment);
 
-                    await AuditlogGlobal.CreateAudit(Int32.Parse(GlobalConfigService.User_Id), "CREATE Section", DateTime.Now);
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
                     _toastService.ShowSuccess(newSection + " Created Successfully!");
 

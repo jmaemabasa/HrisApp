@@ -23,9 +23,9 @@
         {
             try
             {
-                reg.FirstName = "j";
-                reg.LastName = "m";
-                reg.UserAreaId = 1;
+                //reg.FirstName = "j";
+                //reg.LastName = "m";
+                //reg.UserAreaId = 1;
                 reg.LoginStatus = "Inactive";
                 _processing = true;
                 var result = await AuthService.Register(reg);
