@@ -5,13 +5,11 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 #nullable disable
     public class EmployeeService : IEmployeeService
     {
-        private readonly HttpClient _http;
-        private readonly NavigationManager _navigationManager;
-
-        public EmployeeService(HttpClient http, NavigationManager navigationManager)
+        public HttpClient _httpClient;
+        MainsService _mainService = new MainsService();
+        public EmployeeService()
         {
-            _http = http;
-            _navigationManager = navigationManager;
+            _httpClient = _mainService.Get_Http();
         }
 
         public List<EmployeeT> EmployeeTs { get; set; } = new List<EmployeeT>();
@@ -19,12 +17,12 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
         public async Task<List<EmployeeT>> GetEmployeeList()
         {
-            return await _http.GetFromJsonAsync<List<EmployeeT>>("api/Employee");
+            return await _httpClient.GetFromJsonAsync<List<EmployeeT>>("api/Employee");
         }
 
         public async Task GetEmployee()
         {
-            var result = await _http.GetFromJsonAsync<List<EmployeeT>>("api/Employee/GetEmployee");
+            var result = await _httpClient.GetFromJsonAsync<List<EmployeeT>>("api/Employee/GetEmployee");
             if (result != null)
             {
                 EmployeeTs = result;
@@ -33,7 +31,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
         public async Task<EmployeeT> GetSingleEmployee(int id)
         {
-            var result = await _http.GetFromJsonAsync<EmployeeT>($"api/Employee/{id}");
+            var result = await _httpClient.GetFromJsonAsync<EmployeeT>($"api/Employee/{id}");
             if (result != null)
                 return result;
             throw new Exception("employee not found");
@@ -50,7 +48,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             Console.WriteLine("Saving Services sa create employee");
 
 
-            HttpResponseMessage response = await _http.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
             if (!response.IsSuccessStatusCode)
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
@@ -61,20 +59,20 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         }
         public async Task UpdateEmployee(EmployeeT employee)
         {
-            var result = await _http.PutAsJsonAsync($"api/Employee/{employee.Id}", employee);
+            var result = await _httpClient.PutAsJsonAsync($"api/Employee/{employee.Id}", employee);
             await SetEmployees(result);
         }
 
         public async Task DeleteEmployee(int id)
         {
-            var result = await _http.DeleteAsync($"api/Employee/{id}");
+            var result = await _httpClient.DeleteAsync($"api/Employee/{id}");
             await SetEmployees(result);
         }
 
         public async Task<string> Getname(int id)
         {
             Console.WriteLine($"Global ni dri {id}");
-            var returnlist = await _http.GetFromJsonAsync<List<EmployeeT>>($"api/Employee/GetEmpName/{id}");
+            var returnlist = await _httpClient.GetFromJsonAsync<List<EmployeeT>>($"api/Employee/GetEmpName/{id}");
 
 
             var returnmodel = returnlist.Where(e => e.Id == id).FirstOrDefault();

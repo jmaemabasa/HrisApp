@@ -1,189 +1,49 @@
-﻿using System.Net.Security;
+﻿using Blazored.Toast.Services;
 
-namespace HrisApp.Client.Pages.Employee
+namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
-#nullable disable
-    public partial class AddEmployee : ComponentBase
+    public class AddEmployeeVM : BaseViewModel
     {
+#nullable disable
+        IEmployeeService EmployeeService = new EmployeeService();
+        IEducationService EducationService = new EducationService();
+        ILicenseTrainingService LicenseTrainingService = new LicenseTrainingService();
+        IAddressService AddressService = new AddressService();
+        IPayrollService PayrollService = new PayrollService();
+        IEmploymentDateService EmploymentDateService = new EmploymentDateService();
+        IImageService ImageService = new ImageService();
+        IAuditlogService AuditlogService = new AuditlogService();
+        IToastService _toastService = new ToastService();
+        IAreaService AreaService = new AreaService();
+        IDivisionService DivisionService = new DivisionService();
+        IDepartmentService DepartmentService = new DepartmentService();
+        ISectionService SectionService = new SectionService();
+        IPositionService PositionService = new PositionService();
+        IStaticService StaticService = new StaticService();
+        public SweetAlertService Swal { get; set; }
+
+        private readonly GlobalConfigService GlobalConfigService;
+        private readonly NavigationManager _navigationManager;
+        public AddEmployeeVM(NavigationManager navigationManager, GlobalConfigService globalConfigService)
+        {
+            _navigationManager = navigationManager;
+            GlobalConfigService = globalConfigService;
+        }
+
         [CascadingParameter]
-        private Task<AuthenticationState> authState { get; set; }
+        public Task<AuthenticationState> authState { get; set; }
         string _sectionnull = string.Empty;
-
-        #region MUDTABS
-        MudTabs tabs;
-        private string slectClasss = "frmselect";
-        private string imguploadclass = "btnimage";
-        void Activate(int index)
-        {
-            //tabs.ActivatePanel(index);
-            if (index == 1)
-            {
-                
-                if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
-                {
-                    _toastService.ShowError("Fill out all fields.");
-                    slectClasss = "frmselecterror";
-                }
-                else
-                {
-                    tabs.ActivatePanel(index);
-                    slectClasss = "frmselect";
-                    imguploadclass = "btnimage";
-                }
-            }
-            else if (index == 2)
-            {
-                tabs.ActivatePanel(index);
-            }
-            else if (index == 0)
-            {
-                tabs.ActivatePanel(index);
-            }
-        }
-        void Activate2(int index)
-        {
-            tabs.ActivatePanel(index);
-
-        }
-        #endregion
-
-        #region PERSONAL TAB ERROR TRAP
-        private string _slectClasssGender = "frmselect";
-        private string _slectClasssCV = "frmselect";
-        private string _slectClasssReli = "frmselect";
-        private string _slectClasssRela = "frmselect";
-        private string _txfieldClasssNat = "txf1";
-        private string _txfieldClasssMN = "txf";
-        private string _txfieldClasssEN = "txf1";
-        private string _txfieldClasssEA = "txf1";
-        private string _txfieldClasssEMN = "txf";
-
-        private async void ActivateAddressField()
-        {
-            _slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
-            _slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
-            _slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
-            _slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
-            _txfieldClasssNat = (String.IsNullOrWhiteSpace(employee.Nationality)) ? "txf1error" : "txf1";
-            _txfieldClasssMN = (String.IsNullOrWhiteSpace(employee.MobileNumber)) ? "txf1error" : "txf";
-            _txfieldClasssEN = (String.IsNullOrWhiteSpace(employee.EmerName)) ? "txf1error" : "txf1";
-            _txfieldClasssEA = (String.IsNullOrWhiteSpace(employee.EmerAddress)) ? "txf1error" : "txf1";
-            _txfieldClasssEMN = (String.IsNullOrWhiteSpace(employee.EmerMobNum)) ? "txf1error" : "txf";
-
-            if (employee.GenderId == 0 || employee.CivilStatusId == 0 || employee.ReligionId == 0 || employee.EmerRelationshipId == 0 || String.IsNullOrWhiteSpace(employee.Nationality))
-            {
-                _toastService.ShowError("Fill out all fields.");
-            }
-            else
-            {
-                await JSRuntime.InvokeVoidAsync("scrollToDiv");
-            }
-        }
-        #endregion
 
         [Parameter]
         public int? Id { get; set; }
 
-        EmployeeT employee = new();
-        Emp_AddressT address = new();
-        Emp_EmploymentDateT employmentDate = new();
-        Emp_PayrollT payroll = new();
-        Emp_LicenseT license = new();
+        public EmployeeT employee = new();
+        public Emp_AddressT address = new();
+        public Emp_EmploymentDateT employmentDate = new();
+        public Emp_PayrollT payroll = new();
+        public Emp_LicenseT license = new();
 
-
-        //bool success;
-        
-        #region LIST VARIABLES
-        //FK
-        private List<AreaT> AreasL = new();
-        private List<StatusT> StatusL = new();
-        private List<EmploymentStatusT> EmploymentStatusL = new();
-
-        private List<DivisionT> DivisionsL = new();
-        private List<DepartmentT> DepartmentsL = new();
-        private List<SectionT> SectionsL = new();
-        private List<PositionT> PositionsL = new();
-
-        private List<GenderT> GendersL = new();
-        private List<CivilStatusT> CivilStatusL = new();
-        private List<ReligionT> ReligionsL = new();
-        private List<EmerRelationshipT> EmerRelationshipsL = new();
-
-        //PAYROLL
-        private List<CashBondT> CashbondL = new();
-        private List<ScheduleTypeT> ScheduleTypeL = new();
-        private List<RateTypeT> RateTypeL = new();
-        private List<RestDayT> RestDayL = new();
-        #endregion
-
-        #region EDUCATION VARIABLE
-        //EDUCATION
-        List<Emp_CollegeT> listOfCollege = new();
-        List<Emp_OtherEducT> listOfOthers = new();
-        List<Emp_SecondaryT> listOfSecondary = new();
-        List<Emp_DoctorateT> listOfDoctorate = new();
-        List<Emp_PrimaryT> listOfPrimary = new();
-        List<Emp_MasteralT> listOfMasteral = new();
-        List<Emp_SeniorHST> listOfShs = new();
-        List<Emp_TrainingT> listOfTrainings = new();
-        List<Emp_LicenseT> listofLicense = new();
-        List<DocumentT> listOfDocuments = new();
-
-        private bool IsListaddshs;
-        private bool IsListaddcoll;
-        private bool IsListaddmas;
-        private bool IsListaddothers;
-        private bool IsListadddoc;
-        #endregion
-
-        #region DATE VARIBALE
-        private DateTime? bday { get; set; }
-        private DateTime? Date = DateTime.Today;
-        private DateTime? ProbStart = DateTime.Today;
-        private DateTime? ProbEnd = DateTime.Today;
-        private DateTime? CasualStart = DateTime.Today;
-        private DateTime? CasualEnd = DateTime.Today;
-        private DateTime? FixedStart = DateTime.Today;
-        private DateTime? FixedEnd = DateTime.Today;
-        private DateTime? ProjStart = DateTime.Today;
-        private DateTime? ProjEnd = DateTime.Today;
-        private DateTime? DateHired = DateTime.Today;
-        private DateTime? RegularDate = DateTime.Today;
-        private DateTime? ResignationDate = DateTime.Today;
-        #endregion
-
-        #region IMAGE VARIABLE
-        //attachment
-        private string PDFBase64 { get; set; }
-        private string PDFUrl { get; set; }
-        private string PDFFileName { get; set; }
-        private string PDFContentType { get; set; }
-        private byte[] pdfData { get; set; }
-        private bool pdfbool12 { get; set; }
-        private bool PDFbool12 { get; set; }
-        IList<IBrowserFile> pdffile = new List<IBrowserFile>();
-        private List<MultipartFormDataContent> DocuEmployees = new();
-
-        public class DocumentT
-        {
-            public IList<IBrowserFile> PdfFile { get; set; } = new List<IBrowserFile>();
-        }
-
-        //image
-        private string imgBase64 { get; set; }
-        private string ImageUrl { get; set; }
-        private string ImgFileName { get; set; }
-        private string ImgContentType { get; set; }
-        private string verifyId { get; set; }
-
-        MultipartFormDataContent EmpImage = new();
-        IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
-        #endregion
-
-        private string userRole;
-
-        #region ONINITIALIZEDASYNC
-        protected override async Task OnInitializedAsync()
+        public async Task OnRefreshPage()
         {
             await AreaService.GetAreaList();
             AreasL = AreaService.AreaTs;
@@ -229,17 +89,104 @@ namespace HrisApp.Client.Pages.Employee
             AddNewTrainings(employee.Verify_Id);
             AddNewDocument();
 
-            var auth = await authState;
-
-            userRole = auth.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
         }
+
+        #region LIST VARIABLES
+        //FK
+        public List<AreaT> AreasL = new();
+        public List<StatusT> StatusL = new();
+        public List<EmploymentStatusT> EmploymentStatusL = new();
+
+        public List<DivisionT> DivisionsL = new();
+        public List<DepartmentT> DepartmentsL = new();
+        public List<SectionT> SectionsL = new();
+        public List<PositionT> PositionsL = new();
+
+        public List<GenderT> GendersL = new();
+        public List<CivilStatusT> CivilStatusL = new();
+        public List<ReligionT> ReligionsL = new();
+        public List<EmerRelationshipT> EmerRelationshipsL = new();
+
+        //PAYROLL
+        public List<CashBondT> CashbondL = new();
+        public List<ScheduleTypeT> ScheduleTypeL = new();
+        public List<RateTypeT> RateTypeL = new();
+        public List<RestDayT> RestDayL = new();
         #endregion
 
-        private string slectClasssRT = "frmselect";
-        private string slectClasssCB = "frmselect";
-        private string slectClasssST = "frmselect";
-        private string slectClasssRD = "frmselect";
-        async Task CreateEmployee()
+        #region EDUCATION VARIABLE
+        //EDUCATION
+        public List<Emp_CollegeT> listOfCollege = new();
+        public List<Emp_OtherEducT> listOfOthers = new();
+        public List<Emp_SecondaryT> listOfSecondary = new();
+        public List<Emp_DoctorateT> listOfDoctorate = new();
+        public List<Emp_PrimaryT> listOfPrimary = new();
+        public List<Emp_MasteralT> listOfMasteral = new();
+        public List<Emp_SeniorHST> listOfShs = new();
+        public List<Emp_TrainingT> listOfTrainings = new();
+        public List<Emp_LicenseT> listofLicense = new();
+        public List<DocumentT> listOfDocuments = new();
+
+        public bool IsListaddshs;
+        public bool IsListaddcoll;
+        public bool IsListaddmas;
+        public bool IsListaddothers;
+        public bool IsListadddoc;
+        #endregion
+
+        #region DATE VARIBALE
+        public DateTime? bday { get; set; }
+        public DateTime? Date = DateTime.Today;
+        public DateTime? ProbStart = DateTime.Today;
+        public DateTime? ProbEnd = DateTime.Today;
+        public DateTime? CasualStart = DateTime.Today;
+        public DateTime? CasualEnd = DateTime.Today;
+        public DateTime? FixedStart = DateTime.Today;
+        public DateTime? FixedEnd = DateTime.Today;
+        public DateTime? ProjStart = DateTime.Today;
+        public DateTime? ProjEnd = DateTime.Today;
+        public DateTime? DateHired = DateTime.Today;
+        public DateTime? RegularDate = DateTime.Today;
+        public DateTime? ResignationDate = DateTime.Today;
+        #endregion
+
+        #region IMAGE VARIABLE
+        //attachment
+        public string PDFBase64 { get; set; }
+        public string PDFUrl { get; set; }
+        public string PDFFileName { get; set; }
+        public string PDFContentType { get; set; }
+        public byte[] pdfData { get; set; }
+        public bool pdfbool12 { get; set; }
+        public bool PDFbool12 { get; set; }
+        IList<IBrowserFile> pdffile = new List<IBrowserFile>();
+        public List<MultipartFormDataContent> DocuEmployees = new();
+
+        public class DocumentT
+        {
+            public IList<IBrowserFile> PdfFile { get; set; } = new List<IBrowserFile>();
+        }
+
+        //image
+        public string imgBase64 { get; set; }
+        public string ImageUrl { get; set; }
+        public string ImgFileName { get; set; }
+        public string ImgContentType { get; set; }
+        public string verifyId { get; set; }
+
+        MultipartFormDataContent EmpImage = new();
+        IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
+        #endregion
+
+        public string userRole;
+
+        
+
+        public string slectClasssRT = "frmselect";
+        public string slectClasssCB = "frmselect";
+        public string slectClasssST = "frmselect";
+        public string slectClasssRD = "frmselect";
+        public async Task<string> CreateEmployee()
         {
             if (bday.HasValue)
             {
@@ -258,7 +205,8 @@ namespace HrisApp.Client.Pages.Employee
             slectClasssRD = (payroll.RestDayId == 0) ? "frmselecterror" : "frmselect";
             if (payroll.RateTypeId == 0 || payroll.CashbondId == 0 || payroll.ScheduleTypeId == 0 || payroll.RestDayId == 0)
             {
-                _toastService.ShowError("Fill out all fields.");
+                string message = "Fill out all fields.";
+                return $"{TokenConst.AlertError}xxx{message}";
             }
             else
             {
@@ -323,82 +271,24 @@ namespace HrisApp.Client.Pages.Employee
                     await CreateLicenses(verifyCode);
                     await CreateTrainings(verifyCode);
 
-                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model",  DateTime.Now);
-                    NavigationManager.NavigateTo("employee");
+                    var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
+                    await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);
+                    _navigationManager.NavigateTo("employee");
 
-                    var swal = await Swal.FireAsync(new SweetAlertOptions
-                    {
-                        Text = "Created Successfully!",
-                        Icon = SweetAlertIcon.Success
-                    });
+                    string message = "Successfully Created.";
+                    return $"{TokenConst.AlertSuccess}xxx{message}";
+
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    _toastService.ShowError(ex.Message);
+                    return $"{TokenConst.AlertError}xxx{ex.Message}";
                 }
             }
         }
-
-        #region FUNCTIONS / BUTTONS
-        private void HandleDateHiredChanged(DateTime? newDate)
-        {
-            DateHired = newDate;
-            Console.WriteLine(DateHired.ToString());
-            if (DateHired.HasValue)
-            {
-                // Calculate the regularization date, which is 6 months after the DateHired.
-
-                switch (employee.EmploymentStatusId)
-                {
-                    case 1:
-                        RegularDate = DateHired.Value.AddMonths(6);
-                        break;
-
-                    case 2:
-                        ProbStart = newDate;
-                        ProbEnd = ProbStart.Value.AddMonths(3);
-                        break;
-                }
-            }
-            else
-            {
-                // If DateHired is not set, clear RegularDate.
-                RegularDate = null;
-            }
-        }
-
-        private string CalculateAge(DateTime? selectedDate)
-        {
-            if (selectedDate.HasValue)
-            {
-                DateTime currentDate = DateTime.Today;
-                int age = currentDate.Year - selectedDate.Value.Year;
-
-                if (selectedDate.Value > currentDate.AddYears(-age))
-                    age--;
-
-                return age.ToString();
-            }
-
-            return string.Empty;
-        }
-
-        //private void OnValidSubmit(EditContext context)
-        //{
-        //    success = true;
-        //    StateHasChanged();
-        //}
-
-        void backbtn()
-        {
-            NavigationManager.NavigateTo("/employee");
-        }
-        #endregion
 
         #region IMAGE
         //IMAGE
-        async Task uploadImage(InputFileChangeEventArgs e)
+        public async Task uploadImage(InputFileChangeEventArgs e)
         {
             long lngImage = long.MaxValue;
             var brwModel = e.File;
@@ -439,7 +329,7 @@ namespace HrisApp.Client.Pages.Employee
         }
 
         //documents
-        private async Task UpPdfSec12(InputFileChangeEventArgs e, int index)
+        public async Task UpPdfSec12(InputFileChangeEventArgs e, int index)
         {
             long maxPDFSize = long.MaxValue;
             var _pdfModel = e.File;
@@ -481,7 +371,7 @@ namespace HrisApp.Client.Pages.Employee
             }
         }
 
-        private async Task OnsavingImg(string EmployeeId, int division, int department, string lastname, string verify)
+        public async Task OnsavingImg(string EmployeeId, int division, int department, string lastname, string verify)
         {
             using var _contentImg = new MultipartFormDataContent();
 
@@ -509,7 +399,7 @@ namespace HrisApp.Client.Pages.Employee
             }
         }
 
-        private async Task OnPDFSaving(string EmployeeId, int division, int department, string lastname, string verify)
+        public async Task OnPDFSaving(string EmployeeId, int division, int department, string lastname, string verify)
         {
             Console.WriteLine($"EmployeeId: {EmployeeId}");
             Console.WriteLine($"division: {division}");
@@ -524,8 +414,223 @@ namespace HrisApp.Client.Pages.Employee
         }
         #endregion
 
+        #region FUNCTIONS / BUTTONS
+        public void HandleDateHiredChanged(DateTime? newDate)
+        {
+            DateHired = newDate;
+            Console.WriteLine(DateHired.ToString());
+            if (DateHired.HasValue)
+            {
+                // Calculate the regularization date, which is 6 months after the DateHired.
+
+                switch (employee.EmploymentStatusId)
+                {
+                    case 1:
+                        RegularDate = DateHired.Value.AddMonths(6);
+                        break;
+
+                    case 2:
+                        ProbStart = newDate;
+                        ProbEnd = ProbStart.Value.AddMonths(3);
+                        break;
+                }
+            }
+            else
+            {
+                // If DateHired is not set, clear RegularDate.
+                RegularDate = null;
+            }
+        }
+
+        public string CalculateAge(DateTime? selectedDate)
+        {
+            if (selectedDate.HasValue)
+            {
+                DateTime currentDate = DateTime.Today;
+                int age = currentDate.Year - selectedDate.Value.Year;
+
+                if (selectedDate.Value > currentDate.AddYears(-age))
+                    age--;
+
+                return age.ToString();
+            }
+
+            return string.Empty;
+        }
+
+        //private void OnValidSubmit(EditContext context)
+        //{
+        //    success = true;
+        //    StateHasChanged();
+        //}
+
+        public void backbtn()
+        {
+            _navigationManager.NavigateTo("/employee");
+        }
+        #endregion
+
+        #region MUDTABS
+        public MudTabs tabs;
+        public string slectClasss = "frmselect";
+        public string imguploadclass = "btnimage";
+        public void Activate(int index)
+        {
+            //tabs.ActivatePanel(index);
+            if (index == 1)
+            {
+                if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
+                {
+                    _toastService.ShowError("Fill out all fields.");
+                    slectClasss = "frmselecterror";
+                }
+                else
+                {
+                    tabs.ActivatePanel(index);
+                    slectClasss = "frmselect";
+                    imguploadclass = "btnimage";
+                }
+            }
+            else if (index == 2)
+            {
+                tabs.ActivatePanel(index);
+            }
+            else if (index == 0)
+            {
+                tabs.ActivatePanel(index);
+            }
+        }
+        public void Activate2(int index)
+        {
+            tabs.ActivatePanel(index);
+
+        }
+        #endregion
+
+        #region TAB CLASS
+        //TAB PANEL
+        public int activeIndex;
+
+        public string GetTabChipClass(int tabId)
+        {
+            if (activeIndex > tabId)
+            {
+                if (tabId == 0)
+                    return "mud-chip-after0";
+                else if (tabId == 1)
+                    return "mud-chip-after1";
+                else if (tabId == 2)
+                    return "mud-chip-after2";
+                else if (tabId == 3)
+                    return "mud-chip-after3";
+                else
+                    return "mud-chip-after";
+            }
+            else if (activeIndex == tabId)
+            {
+                return "mud-chip-active";
+            }
+            else
+            {
+                return "mud-chip-default";
+            }
+        }
+
+        public string GetTabTextClass(int tabId)
+        {
+            if (activeIndex > tabId)
+            {
+                return "mud-text-after";
+            }
+            else if (activeIndex == tabId)
+            {
+                return "mud-text-active";
+            }
+            else
+            {
+                return "mud-text-default";
+            }
+        }
+
+        public RenderFragment tabHeader(int tabId)
+        {
+            return builder =>
+            {
+                if (tabId == 0)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(0));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(0));
+                    builder.AddContent(6, "Job");
+                    builder.CloseComponent();
+                }
+                else if (tabId == 1)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(1));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(1));
+                    builder.AddContent(6, "Personal");
+                    builder.CloseComponent();
+                }
+                else if (tabId == 2)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(2));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(2));
+                    builder.AddContent(6, "Education");
+                    builder.CloseComponent();
+                }
+                else if (tabId == 3)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(3));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(3));
+                    builder.AddContent(6, "Licences & Training");
+                    builder.CloseComponent();
+                }
+                else if (tabId == 4)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(4));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(4));
+                    builder.AddContent(6, "Documents");
+                    builder.CloseComponent();
+                }
+            };
+        }
+        #endregion
+
+        #region PERSONAL TAB ERROR TRAP
+        public string _slectClasssGender = "frmselect";
+        public string _slectClasssCV = "frmselect";
+        public string _slectClasssReli = "frmselect";
+        public string _slectClasssRela = "frmselect";
+        public string _txfieldClasssNat = "txf1";
+        public string _txfieldClasssMN = "txf";
+        public string _txfieldClasssEN = "txf1";
+        public string _txfieldClasssEA = "txf1";
+        public string _txfieldClasssEMN = "txf";
+
+        
+        #endregion
+
         #region EDUCATION
-        async Task CreatePrimaryRecords(string employeeVerifyId)
+        public async Task CreatePrimaryRecords(string employeeVerifyId)
         {
             //primary
             var validRecords = listOfPrimary
@@ -548,7 +653,7 @@ namespace HrisApp.Client.Pages.Employee
         }
 
 
-        async Task CreateSecondaryRecords(string employeeVerifyId)
+        public async Task CreateSecondaryRecords(string employeeVerifyId)
         {
             //secondary
             var validSecodary = listOfSecondary
@@ -570,7 +675,7 @@ namespace HrisApp.Client.Pages.Employee
             AddNewSecondary(employeeVerifyId);
         }
 
-        async Task CreateSeniorHSRecords(string employeeVerifyId)
+        public async Task CreateSeniorHSRecords(string employeeVerifyId)
         {  //shs
             var validShs = listOfShs
                .Where
@@ -591,7 +696,7 @@ namespace HrisApp.Client.Pages.Employee
             AddNewShs(employeeVerifyId);
         }
 
-        async Task CreateCollegeRecords(string employeeVerifyId)
+        public async Task CreateCollegeRecords(string employeeVerifyId)
         {
             //college
             var validCollege = listOfCollege
@@ -615,7 +720,7 @@ namespace HrisApp.Client.Pages.Employee
 
         }
 
-        async Task CreateMasteralRecords(string employeeVerifyId)
+        public async Task CreateMasteralRecords(string employeeVerifyId)
         {
             //masteral
             var validMasteral = listOfMasteral
@@ -638,7 +743,7 @@ namespace HrisApp.Client.Pages.Employee
             AddNewMasteral(employeeVerifyId);
         }
 
-        async Task CreateDoctorateRecords(string employeeVerifyId)
+        public async Task CreateDoctorateRecords(string employeeVerifyId)
         {
             //doctorate
             var validDoctorate = listOfDoctorate
@@ -661,7 +766,7 @@ namespace HrisApp.Client.Pages.Employee
             AddNewDoctorate(employeeVerifyId);
         }
 
-        async Task CreateOtherEducRecords(string employeeVerifyId)
+        public async Task CreateOtherEducRecords(string employeeVerifyId)
         {
             //othereduc
             var validothers = listOfOthers
@@ -684,7 +789,7 @@ namespace HrisApp.Client.Pages.Employee
             AddNewOthers(employeeVerifyId);
         }
 
-        async Task CreateLicenses(string employeeVerifyId)
+        public async Task CreateLicenses(string employeeVerifyId)
         {
             //training
             var validLicenses = listofLicense
@@ -708,7 +813,7 @@ namespace HrisApp.Client.Pages.Employee
             AddNewLicense(employeeVerifyId);
         }
 
-        async Task CreateTrainings(string employeeVerifyId)
+        public async Task CreateTrainings(string employeeVerifyId)
         {
             //training
             var validtraining = listOfTrainings
@@ -846,7 +951,7 @@ namespace HrisApp.Client.Pages.Employee
             if (listofLicense.Count <= 5)
             {
                 listofLicense.Add(new Emp_LicenseT { Verify_Id = employee.Verify_Id });
-                StateHasChanged();
+                //StateHasChanged();
             }
         }
 
@@ -881,114 +986,6 @@ namespace HrisApp.Client.Pages.Employee
             {
                 listOfDocuments.Add(new DocumentT());
             }
-        }
-        #endregion
-
-        #region TAB CLASS
-        //TAB PANEL
-        int activeIndex;
-
-        string GetTabChipClass(int tabId)
-        {
-            if (activeIndex > tabId)
-            {
-                if (tabId == 0)
-                    return "mud-chip-after0";
-                else if (tabId == 1)
-                    return "mud-chip-after1";
-                else if (tabId == 2)
-                    return "mud-chip-after2";
-                else if (tabId == 3)
-                    return "mud-chip-after3";
-                else
-                    return "mud-chip-after";
-            }
-            else if (activeIndex == tabId)
-            {
-                return "mud-chip-active";
-            }
-            else
-            {
-                return "mud-chip-default";
-            }
-        }
-
-        string GetTabTextClass(int tabId)
-        {
-            if (activeIndex > tabId)
-            {
-                return "mud-text-after";
-            }
-            else if (activeIndex == tabId)
-            {
-                return "mud-text-active";
-            }
-            else
-            {
-                return "mud-text-default";
-            }
-        }
-
-        RenderFragment tabHeader(int tabId)
-        {
-            return builder =>
-            {
-                if (tabId == 0)
-                {
-                    builder.OpenComponent<MudChip>(0);
-                    builder.AddAttribute(1, "Class", @GetTabChipClass(0));
-                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
-                    builder.CloseComponent();
-                    builder.OpenElement(4, "span");
-                    builder.AddAttribute(5, "class", @GetTabTextClass(0));
-                    builder.AddContent(6, "Job");
-                    builder.CloseComponent();
-                }
-                else if (tabId == 1)
-                {
-                    builder.OpenComponent<MudChip>(0);
-                    builder.AddAttribute(1, "Class", @GetTabChipClass(1));
-                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
-                    builder.CloseComponent();
-                    builder.OpenElement(4, "span");
-                    builder.AddAttribute(5, "class", @GetTabTextClass(1));
-                    builder.AddContent(6, "Personal");
-                    builder.CloseComponent();
-                }
-                else if (tabId == 2)
-                {
-                    builder.OpenComponent<MudChip>(0);
-                    builder.AddAttribute(1, "Class", @GetTabChipClass(2));
-                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
-                    builder.CloseComponent();
-                    builder.OpenElement(4, "span");
-                    builder.AddAttribute(5, "class", @GetTabTextClass(2));
-                    builder.AddContent(6, "Education");
-                    builder.CloseComponent();
-                }
-                else if (tabId == 3)
-                {
-                    builder.OpenComponent<MudChip>(0);
-                    builder.AddAttribute(1, "Class", @GetTabChipClass(3));
-                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
-                    builder.CloseComponent();
-                    builder.OpenElement(4, "span");
-                    builder.AddAttribute(5, "class", @GetTabTextClass(3));
-                    builder.AddContent(6, "Licences & Training");
-                    builder.CloseComponent();
-                }
-                else if (tabId == 4)
-                {
-                    builder.OpenComponent<MudChip>(0);
-                    builder.AddAttribute(1, "Class", @GetTabChipClass(4));
-                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
-                    builder.CloseComponent();
-                    builder.OpenElement(4, "span");
-                    builder.AddAttribute(5, "class", @GetTabTextClass(4));
-                    builder.AddContent(6, "Documents");
-                    builder.CloseComponent();
-                }
-            };
         }
         #endregion
     }

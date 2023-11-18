@@ -34,4 +34,8 @@
     <ProjectReference Include="..\Shared\HrisApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModel\AuthViewModel\" />
+  </ItemGroup>
+
 </Project>

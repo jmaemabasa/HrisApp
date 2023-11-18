@@ -1,6 +1,4 @@
-﻿using Microsoft.JSInterop;
-
-namespace HrisApp.Client.Pages.Dialog.MasterData
+﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
     public partial class AddDepartmentDialog : ComponentBase
     {
@@ -19,7 +17,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             Division = DivisionService.DivisionTs;
         }
 
-        private async Task ConfirmCreateDepartment()
+        public async Task ConfirmCreateDepartment()
         {
             MudDialog.Close();
             if (string.IsNullOrWhiteSpace(newDepartment))

@@ -5,17 +5,18 @@ namespace HrisApp.Client.Services.UserRole
 #nullable disable
     public class UserRoleService : IUserRoleService
     {
-        private readonly HttpClient _http;
-        public UserRoleService(HttpClient http)
+        MainsService _mainService = new MainsService();
+        private readonly HttpClient _httpClient;
+        public UserRoleService()
         {
-            _http = http;
+            _httpClient = _mainService.Get_Http();
         }
 
         public List<UserRoleT> UserRoleTs { get; set; }
 
         public async Task GetUserRole()
         {
-            var result = await _http.GetFromJsonAsync<List<UserRoleT>>("api/Role");
+            var result = await _httpClient.GetFromJsonAsync<List<UserRoleT>>("api/Role");
             if (result != null)
                 UserRoleTs = result;
         }

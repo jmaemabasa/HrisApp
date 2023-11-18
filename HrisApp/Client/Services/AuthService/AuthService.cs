@@ -1,20 +1,20 @@
-﻿using System.Net.Http.Json;
-
-namespace HrisApp.Client.Services.AuthService
+﻿namespace HrisApp.Client.Services.AuthService
 {
 #nullable disable
     public class AuthService : IAuthService
     {
-        private readonly HttpClient _http;
-        private readonly AuthenticationStateProvider _authStateProvider;
+        public HttpClient _httpClient;
+        public readonly AuthenticationStateProvider _authStateProvider;
+
+        MainsService _mainService = new MainsService();
+        public AuthService(/*AuthenticationStateProvider authStateProvider*/)
+        {
+            _httpClient = _mainService.Get_Http();
+            //_authStateProvider = authStateProvider;
+        }
+
 
         public List<UserMasterT> UserMasterTs { get; set; } = new List<UserMasterT>();
-
-        public AuthService(HttpClient http, AuthenticationStateProvider authStateProvider)
-        {
-            _http = http;
-            _authStateProvider = authStateProvider;
-        }
 
         public Task<ServiceResponse<bool>> ChangePassword(UserLoginDto request)
         {
@@ -28,24 +28,24 @@ namespace HrisApp.Client.Services.AuthService
 
         public async Task<bool> IsUsernameExist(string username)
         {
-            return await _http.GetFromJsonAsync<bool>($"api/Auth/UserExists?username={username}");
+            return await _httpClient.GetFromJsonAsync<bool>($"api/Auth/UserExists?username={username}");
         }
 
         public async Task<ServiceResponse<string>> Login(UserMasterT request)
         {
-            var result = await _http.PostAsJsonAsync("api/Auth/login", request);
+            var result = await _httpClient.PostAsJsonAsync("api/Auth/login", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();
         }
 
         public async Task<ServiceResponse<int>> Register(UserLoginDto request)
         {
-            var result = await _http.PostAsJsonAsync("api/Auth/register", request);
+            var result = await _httpClient.PostAsJsonAsync("api/Auth/register", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
 
         public async Task GetUsers()
         {
-            var result = await _http.GetFromJsonAsync<List<UserMasterT>>("api/Auth/GetUserList");
+            var result = await _httpClient.GetFromJsonAsync<List<UserMasterT>>("api/Auth/GetUserList");
             if (result != null)
             {
                 UserMasterTs = result;
@@ -54,13 +54,13 @@ namespace HrisApp.Client.Services.AuthService
 
         public async Task<ServiceResponse<int>> UpdateLoginStatus(int id)
         {
-            var result = await _http.PutAsJsonAsync($"api/Auth/UpdateLoginStatus/{id}", id);
+            var result = await _httpClient.PutAsJsonAsync($"api/Auth/UpdateLoginStatus/{id}", id);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
 
         public async Task<ServiceResponse<int>> UpdatePassword(int id, string newpass)
         {
-            var result = await _http.PutAsJsonAsync($"api/Auth/UpdatePassword/{id}", newpass);
+            var result = await _httpClient.PutAsJsonAsync($"api/Auth/UpdatePassword/{id}", newpass);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
     }

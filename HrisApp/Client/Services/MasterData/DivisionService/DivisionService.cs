@@ -3,25 +3,25 @@
 #nullable disable
     public class DivisionService : IDivisionService
     {
-        private readonly HttpClient _http;
-
-        public DivisionService(HttpClient http)
+        MainsService _mainService = new MainsService();
+        private readonly HttpClient _httpClient;
+        public DivisionService()
         {
-            _http = http;
+            _httpClient = _mainService.Get_Http();
         }
 
         public List<DivisionT> DivisionTs { get; set; }
 
         public async Task GetDivisionList()
         {
-            var result = await _http.GetFromJsonAsync<List<DivisionT>>("api/Division");
+            var result = await _httpClient.GetFromJsonAsync<List<DivisionT>>("api/Division");
             if (result != null)
                 DivisionTs = result;
         }
 
         public async Task GetDivision()
         {
-            var result = await _http.GetFromJsonAsync<List<DivisionT>>("/api/Division/GetDivision");
+            var result = await _httpClient.GetFromJsonAsync<List<DivisionT>>("/api/Division/GetDivision");
             if (result != null)
             {
                 DivisionTs = result;
@@ -36,7 +36,7 @@
 
         public async Task<DivisionT> GetSingleDivision(int id)
         {
-            var result = await _http.GetFromJsonAsync<DivisionT>($"api/Division/{id}");
+            var result = await _httpClient.GetFromJsonAsync<DivisionT>($"api/Division/{id}");
             if (result != null)
             {
                 return result;
@@ -51,12 +51,12 @@
                 Name = divisionName
             };
 
-            var result = await _http.PostAsJsonAsync("api/Division/CreateDivision", div);
+            var result = await _httpClient.PostAsJsonAsync("api/Division/CreateDivision", div);
         }
 
         public async Task UpdateDivision(DivisionT division)
         {
-            var result = await _http.PutAsJsonAsync($"api/division/UpdateDivision", division);
+            var result = await _httpClient.PutAsJsonAsync($"api/division/UpdateDivision", division);
         }
     }
 }

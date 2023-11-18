@@ -1,17 +1,13 @@
-﻿using HrisApp.Client.Pages.MasterData;
-using System.Net;
-using System.Threading;
-
-namespace HrisApp.Client.Services.AuditlogService
+﻿namespace HrisApp.Client.Services.AuditlogService
 {
 #nullable disable
     public class AuditlogService : IAuditlogService
     {
-        private readonly HttpClient _http;
-
-        public AuditlogService(HttpClient http)
+        public HttpClient _httpClient;
+        MainsService _mainService = new MainsService();
+        public AuditlogService()
         {
-            _http = http;
+            _httpClient = _mainService.Get_Http();
         }
 
         public List<AuditlogsT> AuditlogsTs { get; set; }
@@ -20,18 +16,18 @@ namespace HrisApp.Client.Services.AuditlogService
         {
             AuditlogsT logs = new AuditlogsT
             {
-               UserId = userid,
-               Action = action,
-               Type = type,
-               Date = date
+                UserId = userid,
+                Action = action,
+                Type = type,
+                Date = date
             };
-            var result = await _http.PostAsJsonAsync("api/Auditlogs/CreateLogs", logs);
+            var result = await _httpClient.PostAsJsonAsync("api/Auditlogs/CreateLogs", logs);
             //await SetLogs(result);
         }
 
         public async Task GetLogs()
         {
-            var result = await _http.GetFromJsonAsync<List<AuditlogsT>>("/api/Auditlogs/GetLogs");
+            var result = await _httpClient.GetFromJsonAsync<List<AuditlogsT>>("/api/Auditlogs/GetLogs");
             if (result != null)
             {
                 AuditlogsTs = result;
@@ -40,7 +36,7 @@ namespace HrisApp.Client.Services.AuditlogService
 
         public async Task<AuditlogsT> GetSingleLog(int id)
         {
-            var result = await _http.GetFromJsonAsync<AuditlogsT>($"api/Auditlogs/{id}");
+            var result = await _httpClient.GetFromJsonAsync<AuditlogsT>($"api/Auditlogs/{id}");
             if (result != null)
             {
                 return result;

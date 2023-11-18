@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject IMainsService _mainsService
+
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
@@ -18,4 +20,11 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await _mainsService.Set_Http();
+    }
+}
 

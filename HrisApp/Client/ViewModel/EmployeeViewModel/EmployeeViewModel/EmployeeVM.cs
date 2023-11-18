@@ -1,20 +1,31 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Employee
+﻿namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
-    public partial class Employee: ComponentBase
+    public class EmployeeVM : BaseViewModel
     {
-#nullable disable
-        private List<StatusT> StatusL = new();
+        IEmployeeService EmployeeService = new EmployeeService();
+        IStaticService StaticService = new StaticService();
 
-        protected override async Task OnInitializedAsync()
+        private readonly NavigationManager _navigationManager;
+        public EmployeeVM(NavigationManager navigationManager)
+        {
+            _navigationManager = navigationManager;
+        }
+
+        public readonly string _infoFormat = "{first_item}-{last_item} of {all_items}";
+        public string _searchString1 = "";
+        public List<EmployeeT> _employeeList = new();
+        public EmployeeT _selectedItem1 = null;
+        public List<StatusT> StatusL = new();
+
+        public async Task OnRefreshPage()
         {
             await EmployeeService.GetEmployee();
             _employeeList = EmployeeService.EmployeeTs;
             await StaticService.GetStatusList();
             StatusL = StaticService.StatusTs;
+
             #region for DASHBOARD
-            var uri = new Uri(NavigationManager.Uri);
+            var uri = new Uri(_navigationManager.Uri);
             var statusFilterString = uri.Query.Split('=').LastOrDefault();
             if (statusFilterString?.ToLower() == "inactive")
             {
@@ -28,15 +39,15 @@ namespace HrisApp.Client.Pages.Employee
         }
 
         #region FUNCTIONS / METHODS
-        void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");
-        void ShowEmployee(int id) => NavigationManager.NavigateTo($"/employee/edit/{id}");
+        public void CreateNewEmployee() => _navigationManager.NavigateTo("/employee/add");
+        public void ShowEmployee(int id) => _navigationManager.NavigateTo($"/employee/edit/{id}");
 
-        async Task DeleteEmployee(int id)
+        public async Task DeleteEmployee(int id)
         {
             await EmployeeService.DeleteEmployee(id);
         }
 
-        private async Task SearchStatus(int status)
+        public async Task SearchStatus(int status)
         {
             await Task.Delay(10);
             if (status == 0)
@@ -52,7 +63,7 @@ namespace HrisApp.Client.Pages.Employee
 
         }
 
-        private static string StatusChipColor(string status)
+        public string StatusChipColor(string status)
         {
             return status switch
             {
@@ -67,16 +78,16 @@ namespace HrisApp.Client.Pages.Employee
         }
 
         //LOADING
-        private bool _isVisible;
+        public bool _isVisible;
         public async void OpenOverlay()
         {
             _isVisible = true;
             await Task.Delay(5000);
             _isVisible = false;
-            StateHasChanged();
+            //StateHasChanged();
         }
 
-        private static string CapitalizeFirstLetter(string input)
+        public string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -88,12 +99,7 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         #region TABLE VARIABLES
-        private readonly string _infoFormat = "{first_item}-{last_item} of {all_items}";
-        private string _searchString1 = "";
-        List<EmployeeT> _employeeList = new();
-        private EmployeeT _selectedItem1 = null;
-
-        private bool FilterFunc1(EmployeeT emp) => FilterFunc(emp, _searchString1);
+        public bool FilterFunc1(EmployeeT emp) => FilterFunc(emp, _searchString1);
 
         private static bool FilterFunc(EmployeeT emp, string searchString)
         {

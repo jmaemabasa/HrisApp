@@ -1,24 +1,8 @@
 ﻿@page "/employee"
-@inject IDivisionService DivisionService
-@inject IDepartmentService DepartmentService
-@inject ISectionService SectionService
-@inject IPositionService PositionService
-@inject IAddressService AddressService
-@inject IAreaService AreaService
-@inject IEmployeeService EmployeeService
-@inject IStaticService StaticService
 @inject IToastService _toastService
-@inject IImageService ImageService
-@inject IEducationService EducationService
-@inject IPayrollService PayrollService
-@inject ILicenseTrainingService LicenseTrainingService
-@inject NavigationManager NavigationManager
 @inject SweetAlertService Swal
-@inject IToastService _toastService
-@inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
-@inject GlobalConfigService GlobalConfigService
-@inject AuditlogGlobal AuditlogGlobal
+@inject EmployeeVM _employeeVM
 
 @attribute [Authorize(Roles = "Admin, HR, User")]
 
@@ -28,13 +12,13 @@
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Employee List</span>
         <AuthorizeView Roles="HR">
             <Authorized>
-                <MudButton OnClick="CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
+                <MudButton OnClick="@_employeeVM.CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
             </Authorized>
         </AuthorizeView>
     </div>
 </div>
 <div class="box w-auto">
-    @if (EmployeeService.EmployeeTs == null || EmployeeService.EmployeeTs.Count == 0) 
+    @if (_employeeVM._employeeList == null || _employeeVM._employeeList.Count == 0)
     {
         <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
         <MudCardContent>
@@ -46,28 +30,29 @@
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
         </MudCardActions>
-        <MudOverlay Visible="_isVisible" DarkBackground="true" Absolute="true">
+        <MudOverlay Visible="@_employeeVM._isVisible" DarkBackground="true" Absolute="true">
             <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
         </MudOverlay> 
     }
     else
     {
-        <MudTable Class="stable" Items="_employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1" Virtualize="true">
+        <MudTable Class="stable" Items="@_employeeVM._employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(_employeeVM.FilterFunc1)" @bind-SelectedItem="@_employeeVM._selectedItem1" Virtualize="true">
             <ToolBarContent>
                 <div class="d-flex flex-grow-1 mb-3">
                     <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
                         <div class="d-flex gap-3 flex-grow-1 flex-wrap">
                             <MudItem xs="12" lg="3">
-                                <MudSelect class="dddiv" T="int" ValueChanged="SearchStatus" Margin="Margin.Dense" DisableUnderLine>
+                                <MudSelect class="dddiv" T="int" ValueChanged="@_employeeVM.SearchStatus" Margin="Margin.Dense" DisableUnderLine>
                                     <MudSelectItem Value=0>All Status</MudSelectItem>
-                                    @foreach (var item in StatusL)
+                                 @foreach (var item in _employeeVM.StatusL)
                                     {
                                     <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
                                     }
                                     </MudSelect>
                             </MudItem>
-                        </div>                        <MudItem xs="12" lg="4">
-                            <MudTextField DisableUnderLine @bind-Value="_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                        </div>                        
+                        <MudItem xs="12" lg="4">
+                            <MudTextField DisableUnderLine @bind-Value="@_employeeVM._searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
                          </MudItem>
                      </div>
                  </div>
@@ -106,7 +91,7 @@
                         </div>
                      <div>
                          <div class="flex-column">
-                                 <div>@CapitalizeFirstLetter(employeeee.FirstName)  @employeeee.MiddleName[0].ToString().ToUpper().  @CapitalizeFirstLetter(employeeee.LastName)</div>
+                                 <div>@_employeeVM.CapitalizeFirstLetter(employeeee.FirstName)  @employeeee.MiddleName[0].ToString().ToUpper().  @_employeeVM.CapitalizeFirstLetter(employeeee.LastName)</div>
                                  <div style="font-weight: bold;">@employeeee.Email</div> 
                          </div>
                      </div>
@@ -137,24 +122,32 @@
                  <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
                  <MudTd DataLabel="Date Hired" Style="text-align: center;">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
                  <MudTd DataLabel="Status" Style="text-align: center;">
-                     <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
+                     <MudChip Class="@_employeeVM.StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
              </MudTd>
                  <MudTd>
                      <AuthorizeView Roles="HR">
                          <Authorized>
                              <MudTooltip Text="View Details">
-                                 <MudIconButton Class="btnedit" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Edit"></MudIconButton>
+                                 <MudIconButton Class="btnShow" OnClick="(() => _employeeVM.ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Show"></MudIconButton>
                              </MudTooltip>
                          </Authorized>
                          <NotAuthorized>
-                             <MudIconButton Disabled Class="btnedit" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Edit"></MudIconButton>
+                             <MudIconButton Disabled Class="btnShow" OnClick="(() => _employeeVM.ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Show"></MudIconButton>
                          </NotAuthorized>
                      </AuthorizeView>
                  </MudTd>
              </RowTemplate>
              <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {@_employeeVM._infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
              </PagerContent>
          </MudTable>
     } 
 </div>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await _employeeVM.OnRefreshPage();
+    }
+}

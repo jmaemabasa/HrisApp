@@ -1,9 +1,7 @@
 ﻿@page "/area"
-@inject IAreaService AreaService
-@inject NavigationManager NavigationManager
-@inject IDialogService DialogService
-@inject GlobalConfigService GlobalConfigService
-@inject StateService StateService
+@inject IToastService _toastService
+
+@inject AreaVM _areaVM
 
 @attribute [Authorize]
 
@@ -14,25 +12,25 @@
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Area Management</span>
         <AuthorizeView Roles="Admin">
             <Authorized>
-                <MudButton OnClick="OpenAddArea" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Area</MudButton>
+                <MudButton OnClick="@_areaVM.OpenAddArea" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Area</MudButton>
             </Authorized>
         </AuthorizeView>
     </div>
 </div>
-@if (AreaService.AreaTs == null || AreaService.AreaTs.Count == 0)
+@if (_areaVM.areaList == null || _areaVM.areaList.Count == 0)
 {
-    <span>Loading........!!!!</span>
+    <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
 }
 else
 {
     <div class="box w-auto">
-        <MudTable Class="stable" Items="areaList" Context="area" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AreaT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <MudTable Class="stable" Items="@_areaVM.areaList" Context="area" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AreaT,bool>(_areaVM.FilterFunc1)" @bind-SelectedItem="@_areaVM.selectedItem1">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
 
                 <div class="ssize">
-                    <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                    <MudTextField DisableUnderLine @bind-Value="@_areaVM.searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
                  </div>
              </ToolBarContent>
              <HeaderContent>
@@ -49,18 +47,64 @@ else
                      <AuthorizeView Roles="Admin">
                          <Authorized>
                              <MudTooltip Text="Update">
-                                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                 <MudIconButton Class="btnedit" OnClick="(() => _areaVM.OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                              </MudTooltip>
                          </Authorized>
                          <NotAuthorized>
-                             <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                             <MudIconButton Disabled Class="btnedit" OnClick="(() => _areaVM.OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                          </NotAuthorized>
                      </AuthorizeView>
                  </MudTd>
              </RowTemplate>
              <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {_areaVM.infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
              </PagerContent>
          </MudTable>
+
+         <MudMessageBox @ref="_areaVM.Message_Box" Class="msgbox" Title="New Area" CancelText="Cancel">
+             <MessageContent>
+                 <MudTextField Label="Area" @bind-Value="@_areaVM.newArea" Variant="Variant.Outlined"></MudTextField>
+             </MessageContent>
+             <YesButton>
+                 &nbsp;
+                 <MudButton Class="btnSaveMsgbox" @onclick="OnUpdate" StartIcon="@Icons.Material.Filled.Check" Size="Size.Small">   SAVE</MudButton>
+             </YesButton>
+         </MudMessageBox>
+
+        
      </div>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await _areaVM.OnRefreshPage();
+    }
+
+    private async Task OnUpdate()
+    {
+        string response = await _areaVM.ConfirmCreateArea();
+        if (response.Contains(TokenConst.AlertSuccess, StringComparison.OrdinalIgnoreCase))
+        {
+            string[] _resstring = response.Split("xxx");
+            foreach (var _itm in _resstring)
+            {
+                if (_itm != TokenConst.AlertSuccess)
+                {
+                    _toastService.ShowSuccess(_itm);
+                }
+            }
+        }
+        else
+        {
+            string[] _resstring = response.Split("xxx");
+            foreach (var _itm in _resstring)
+            {
+                if (_itm != TokenConst.AlertError)
+                {
+                    _toastService.ShowError(_itm);
+                }
+            }
+        }
+    }
 }

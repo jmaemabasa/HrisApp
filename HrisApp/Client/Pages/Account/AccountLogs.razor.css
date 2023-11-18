@@ -1,0 +1,72 @@
+﻿.box {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: 784px;
+    padding: 25px 50px 25px 50px;
+    margin-top: 30px;
+}
+
+::deep .btnBack {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #C5CFD2;
+    color: #424242;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-weight: bold;
+    width: 200px;
+    margin-top: 15px;
+}
+
+    ::deep .btnBack:hover {
+        background-color: #E38D0F;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+::deep .stable {
+    background: #e9ecef;
+    padding: 25px 50px 25px 50px;
+    border-radius: 20px;
+    margin-top: 0px;
+}
+
+::deep .tsearch {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+
+    ::deep .tsearch:focus-within {
+        border: 2px solid #F1BC3A;
+        font-weight: bolder;
+    }
+
+.actionCreate {
+    color: #1A5D1A;
+    font-weight: bold;
+}
+
+.actionUpdate {
+    color: #1572A1;
+    font-weight: bold;
+}
+
+.actionDelete {
+    color: #EF4B4B;
+    font-weight: bold;
+}
+
+.actionLogged {
+    color: #FF9209;
+    font-weight: bold;
+}
+
+.actionDefault {
+    font-weight: bold;
+}

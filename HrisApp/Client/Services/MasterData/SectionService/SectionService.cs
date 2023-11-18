@@ -3,13 +3,13 @@
 #nullable disable
     public class SectionService : ISectionService
     {
-        private readonly HttpClient _http;
-
-        public SectionService(HttpClient http)
+        MainsService _mainService = new MainsService();
+        private readonly HttpClient _httpClient;
+        public SectionService()
         {
-            _http = http;
+            _httpClient = _mainService.Get_Http();
         }
-        
+
         public List<SectionT> SectionTs { get; set; }
 
 
@@ -22,7 +22,7 @@
 
         public async Task GetSectByDepartment(int deptId)
         {
-            var sections = await _http.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDepartment/{deptId}");
+            var sections = await _httpClient.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDepartment/{deptId}");
             if (sections != null)
             {
                 SectionTs = sections;
@@ -36,7 +36,7 @@
 
         public async Task GetSectByDivision(int divId)
         {
-            var sections = await _http.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDivision/{divId}");
+            var sections = await _httpClient.GetFromJsonAsync<List<SectionT>>($"api/Section/SectByDivision/{divId}");
             if ( sections != null )
             {
                 SectionTs = sections;
@@ -45,7 +45,7 @@
 
         public async Task GetSection()
         {
-            var result = await _http.GetFromJsonAsync<List<SectionT>>("api/Section/GetSection");
+            var result = await _httpClient.GetFromJsonAsync<List<SectionT>>("api/Section/GetSection");
             if (result != null)
             {
                 SectionTs = result;
@@ -59,12 +59,12 @@
 
         public async Task<List<SectionT>> GetSectionList()
         {
-            return await _http.GetFromJsonAsync<List<SectionT>>("api/Section");
+            return await _httpClient.GetFromJsonAsync<List<SectionT>>("api/Section");
         }
 
         public async Task<SectionT> GetSingleSection(int id)
         {
-            var result = await _http.GetFromJsonAsync<SectionT>($"api/Section/{id}");
+            var result = await _httpClient.GetFromJsonAsync<SectionT>($"api/Section/{id}");
             if (result != null)
             {
                 return result;
@@ -83,7 +83,7 @@
                 DepartmentId = deptId
             };
 
-            HttpResponseMessage response = await _http.PostAsJsonAsync("api/Section/CreateSection", newSect);
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Section/CreateSection", newSect);
             if (!response.IsSuccessStatusCode)
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
@@ -95,7 +95,7 @@
         {
             try
             {
-                var result = await _http.PutAsJsonAsync($"api/Section/UpdateSection", section);
+                var result = await _httpClient.PutAsJsonAsync($"api/Section/UpdateSection", section);
                 result.EnsureSuccessStatusCode();
                 var index = SectionTs.FindIndex(s => s.Id == section.Id);
                 if (index >=0)

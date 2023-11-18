@@ -8,8 +8,10 @@
         {
             try
             {
-                StateService.OnChange += OnStateChanged;
-                await LoadList();
+                //StateService.OnChange += OnStateChanged;
+                //await LoadList();
+                await DepartmentService.GetDepartment();
+                departmentList = DepartmentService.DepartmentTs;
 
                 await DivisionService.GetDivision();
                 Divisions = DivisionService.DivisionTs;

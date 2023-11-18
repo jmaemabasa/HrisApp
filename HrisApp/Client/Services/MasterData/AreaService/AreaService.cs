@@ -3,11 +3,11 @@
 #nullable disable
     public class AreaService : IAreaService
     {
-        private readonly HttpClient _http;
-
-        public AreaService(HttpClient http)
+        MainsService _mainService = new MainsService();
+        private readonly HttpClient _httpClient;
+        public AreaService()
         {
-            _http = http;
+            _httpClient = _mainService.Get_Http();
         }
 
         public List<AreaT> AreaTs { get; set; }
@@ -15,14 +15,14 @@
         // GEEEEEEEEEEEET
         public async Task GetAreaList()
         {
-            var result = await _http.GetFromJsonAsync<List<AreaT>>("api/Area");
+            var result = await _httpClient.GetFromJsonAsync<List<AreaT>>("api/Area");
             if (result != null)
                 AreaTs = result;
         }
 
         public async Task<AreaT> GetSingleArea(int areaId)
         {
-            var result = await _http.GetFromJsonAsync<AreaT>($"api/Area/{areaId}");
+            var result = await _httpClient.GetFromJsonAsync<AreaT>($"api/Area/{areaId}");
             if (result != null)
             {
                 return result;
@@ -32,7 +32,7 @@
 
         public async Task GetArea()
         {
-            var result = await _http.GetFromJsonAsync<List<AreaT>>("api/Area/GetArea");
+            var result = await _httpClient.GetFromJsonAsync<List<AreaT>>("api/Area/GetArea");
             if (result != null)
                 AreaTs = result;
         }
@@ -44,13 +44,13 @@
             {
                 Name = areaName
             };
-            var result = await _http.PostAsJsonAsync("api/Area/CreateArea", areaT);
+            var result = await _httpClient.PostAsJsonAsync("api/Area/CreateArea", areaT);
 
         }
 
         public async Task UpdateArea(AreaT area)
         {
-            var result = await _http.PutAsJsonAsync("api/Area/UpdateArea", area);
+            var result = await _httpClient.PutAsJsonAsync("api/Area/UpdateArea", area);
         }
     }
 }

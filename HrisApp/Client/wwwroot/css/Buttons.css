@@ -1,0 +1,46 @@
+﻿.btnadd {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    background-color: #F1BC3A;
+    color: #424242;
+    padding-bottom: 4px;
+}
+.btnadd:hover {
+    background-color: #E38D0F;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+
+.btnShow {
+    color: #27374D;
+}
+.btnShow:hover {
+    transform: scale(1.1);
+}
+
+.btnedit {
+    color: #27374D;
+}
+
+.btnedit:hover {
+        transform: scale(1.1);
+    }
+
+
+/*MESSAGEBOX*/
+.btnSaveMsgbox {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    background-color: #F1BC3A;
+    color: #424242;
+    padding: 7px 12px 5px 11px;
+}
+
+    .btnSaveMsgbox:hover {
+        background-color: #E38D0F;
+        color: #fff;
+        transform: scale(1.1);
+    }

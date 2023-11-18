@@ -1,13 +1,120 @@
 ﻿@page "/account/logs"
 @page "/account/logs/{id:int}"
+@inject IAuditlogService AuditlogService
+@inject IEmployeeService EmployeeService
+@inject NavigationManager _navigationManager
+@inject IAuthService AuthService
 
+@attribute [Authorize(Roles = "Admin")]
 
-<MudGrid Spacing="3">
+<PageTitle>Audit Log</PageTitle>
 
-</MudGrid>
-
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Audit Logs</span>
+        <MudButton OnClick="BackBtn" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.KeyboardArrowLeft" Class="btnBack">Back</MudButton>
+    </div>
+</div>
+<div class="box w-auto">
+    <MudTable Class="stable" Items="logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(FilterFunc1)">
+        <ToolBarContent>
+            <div class="w-25">
+                <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+             </div>
+             <MudSpacer />
+         </ToolBarContent>
+         <HeaderContent>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Type</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Timestamp</MudTh>
+         </HeaderContent>
+         <RowTemplate>
+             <MudTd>
+                 @foreach (var item in employeeList)
+                {
+                    if (item.Id == log.UserId)
+                    {
+                        <div class="d-flex flex-column">
+                            <MudText Typo="Typo.body2" Style="font-weight: bold; color: #424242;">@($"{item.FirstName} {item.LastName}")</MudText>
+                                <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.UserId.ToString())</MudText>
+                            </div>
+                    }
+                }
+            </MudTd>
+            <MudTd Style=""><span class="@ActionColor(log.Action)">@log.Action</span></MudTd>
+            <MudTd>@log.Type</MudTd>
+            <MudTd>
+                <div class="d-flex flex-column">
+                    <MudText Typo="Typo.body2" Style="color: #424242;">@log.Date?.ToString("dd MMM yyyy")</MudText>
+                    <MudText Typo="Typo.caption" Style="color: #A6AABA;">@log.Date?.ToString("hh:mm tt")</MudText>
+                </div>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[] { 100, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+        </PagerContent>
+    </MudTable>
+</div>
 
 @code {
     [Parameter]
-    public int? id { get; set; }
+    public int? Id { get; set; }
+    AuditlogsT _auditlogs = new();
+
+    private List<EmployeeT> employeeList = new List<EmployeeT>();
+    private List<UserMasterT> userList = new List<UserMasterT>();
+    private List<AuditlogsT> logsList = new List<AuditlogsT>();
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AuditlogService.GetLogs();
+
+        await EmployeeService.GetEmployee();
+        employeeList = EmployeeService.EmployeeTs;
+
+        await AuthService.GetUsers();
+        userList = AuthService.UserMasterTs;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Task.Delay(5);
+        logsList = AuditlogService.AuditlogsTs.Where(l => l.UserId == Id).OrderByDescending(log => log.Date).ToList();
+
+    }
+
+    public void BackBtn() => _navigationManager.NavigateTo("/accounts");
+
+    private bool FilterFunc1(AuditlogsT log) => FilterFunc(log, searchString1);
+
+    private bool FilterFunc(AuditlogsT log, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (log.Action.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    private string GetRole(string employeeId)
+    {
+        // Logic to get the user name based on the employee ID
+        var role = userList.FirstOrDefault(e => e.Id == Convert.ToInt32(employeeId));
+        return role != null ? $"{role.Role}" : "";
+    }
+
+    private static string ActionColor(string action)
+    {
+        return action.ToLower() switch
+        {
+            "create" => "actionCreate",
+            "update" => "actionUpdate",
+            "delete" => "actionDelete",
+            "logged in" => "actionLogged",
+            _ => "actionDefault",
+        };
+    }
 }

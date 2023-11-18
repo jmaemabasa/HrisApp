@@ -6,11 +6,11 @@ namespace HrisApp.Client.Services.ImageService
 #nullable disable
     public class ImageService : IImageService
     {
-        private readonly HttpClient _http;
-
-        public ImageService(HttpClient http)
+        MainsService _mainService = new MainsService();
+        private readonly HttpClient _httpClient;
+        public ImageService()
         {
-            _http = http;
+            _httpClient = _mainService.Get_Http();
         }
 
         public List<EmpPictureT> EmpPictureTs { get; set; } = new List<EmpPictureT>();
@@ -19,13 +19,13 @@ namespace HrisApp.Client.Services.ImageService
 
         public async Task UpdateDBImage(EmpPictureT img)
         {
-            var result = await _http.PutAsJsonAsync($"api/Image/{img.Id}", img);
+            var result = await _httpClient.PutAsJsonAsync($"api/Image/{img.Id}", img);
             //await Ok(result);
         }
 
         public async Task<EmpPictureT> GetSingleImage(int id)
         {
-            var result = await _http.GetFromJsonAsync<EmpPictureT>($"api/Image/{id}");
+            var result = await _httpClient.GetFromJsonAsync<EmpPictureT>($"api/Image/{id}");
             if (result != null)
                 return result;
             throw new Exception("employee not found");
@@ -37,7 +37,7 @@ namespace HrisApp.Client.Services.ImageService
             Console.WriteLine(formdata);
             try
             {
-                var response = await _http.PostAsync($"/api/Image/PostUploadImage?EmployeeId={EmployeeId}&division={division}&department={department}&lastname={lastname}&verify={verify}", formdata);
+                var response = await _httpClient.PostAsync($"/api/Image/PostUploadImage?EmployeeId={EmployeeId}&division={division}&department={department}&lastname={lastname}&verify={verify}", formdata);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -63,7 +63,7 @@ namespace HrisApp.Client.Services.ImageService
 
         public async Task<byte[]> GetImageData(string verifyCode)
         {
-            var _imgs = await _http.GetFromJsonAsync<byte[]>($"api/Image/Getattachmentview?verifyCode={verifyCode}");
+            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/Image/Getattachmentview?verifyCode={verifyCode}");
             if (_imgs != null)
                 return _imgs;
             throw new Exception("No Signature Found");
@@ -73,7 +73,7 @@ namespace HrisApp.Client.Services.ImageService
         {
             try
             {
-                var pdfList = await _http.GetFromJsonAsync<List<byte[]>>($"api/Document/GetPDFview?&EmployeeNo={EmployeeNo}&verifyCode={verifyCode}");
+                var pdfList = await _httpClient.GetFromJsonAsync<List<byte[]>>($"api/Document/GetPDFview?&EmployeeNo={EmployeeNo}&verifyCode={verifyCode}");
                 if (pdfList != null)
                     return pdfList;
 
@@ -92,7 +92,7 @@ namespace HrisApp.Client.Services.ImageService
 
         public async Task GetNewPDF(string verifyId, string employeId)
         {
-            var result = await _http.GetFromJsonAsync<List<DocumentT>>($"api/Document/GetFilteredPDF?verifyId={verifyId}&employeId={employeId}");
+            var result = await _httpClient.GetFromJsonAsync<List<DocumentT>>($"api/Document/GetFilteredPDF?verifyId={verifyId}&employeId={employeId}");
             if (result != null)
             {
                 DocumentTs = result;
@@ -108,7 +108,7 @@ namespace HrisApp.Client.Services.ImageService
 
         public async Task AttachedFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify)
         {
-            var response = await _http.PostAsync($"api/Document/Postoutletfile?EmployeeId={EmployeeId}&division={division}&department={department}&lastname={lastname}&verify={verify}", formdata);
+            var response = await _httpClient.PostAsync($"api/Document/Postoutletfile?EmployeeId={EmployeeId}&division={division}&department={department}&lastname={lastname}&verify={verify}", formdata);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -131,7 +131,7 @@ namespace HrisApp.Client.Services.ImageService
         {
             try
             {
-                var _list = await _http.GetFromJsonAsync<List<DocumentT>>($"api/Document/GetFilteredPDF?verifyId={_verifyCode}&employeId={_employeeId}");
+                var _list = await _httpClient.GetFromJsonAsync<List<DocumentT>>($"api/Document/GetFilteredPDF?verifyId={_verifyCode}&employeId={_employeeId}");
                 var _model = _list.FirstOrDefault();
                 return _model.Img_Filename;
             }
@@ -143,14 +143,14 @@ namespace HrisApp.Client.Services.ImageService
         }
         public async Task<byte[]> Getdocumentfileview(string _employeeId, string _verifyCode, string _filename)
         {
-            var _imgs = await _http.GetFromJsonAsync<byte[]>($"api/Document/Getdocumentfileview?employeeId={_employeeId}&verifyCode={_verifyCode}&filename={_filename}");
+            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/Document/Getdocumentfileview?employeeId={_employeeId}&verifyCode={_verifyCode}&filename={_filename}");
             if (_imgs != null)
                 return _imgs;
             throw new Exception("No Signature Found");
         }
         public async Task<List<DocumentT>> GetDocuImagelist(string verCode)
         {
-            var result = await _http.GetFromJsonAsync<List<DocumentT>>($"api/Document/GetDocuImagelist?verCode={verCode}");
+            var result = await _httpClient.GetFromJsonAsync<List<DocumentT>>($"api/Document/GetDocuImagelist?verCode={verCode}");
             return result;
         }
     }

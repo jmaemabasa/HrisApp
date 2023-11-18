@@ -45,6 +45,10 @@ global using MudBlazor.Services;
 global using System.Net.Http.Headers;
 global using System.Net.Http.Json;
 global using System.Security.Claims;
+global using HrisApp.Client.GlobalService;
+global using HrisApp.Client.ViewModel.AdminViewModel.AuditlogViewModel;
+global using HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel;
+global using HrisApp.Client.ViewModel.MasterDataViewModel;
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -62,6 +66,10 @@ builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddSweetAlert2();
 builder.Services.AddBlazoredToast();
+
+//MVVM ni sir buds
+builder.Services.AddScoped<IMainsService, MainsService>();
+
 
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -86,6 +94,14 @@ builder.Services.AddScoped<IStaticService, StaticService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();
+
+
+//VIEWMODEL
+builder.Services.AddTransient<AuditlogVM>();
+builder.Services.AddTransient<EmployeeVM>();
+builder.Services.AddTransient<AddEmployeeVM>();
+builder.Services.AddTransient<AreaVM>();
+builder.Services.AddTransient<DepartmentVM>();
 
 
 builder.Services.AddScoped<IApplicantService, ApplicantService>();

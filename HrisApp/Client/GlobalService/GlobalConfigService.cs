@@ -1,7 +1,6 @@
 ﻿using System.Data;
-using static System.Net.WebRequestMethods;
 
-namespace HrisApp.Client
+namespace HrisApp.Client.GlobalService
 {
 #nullable disable
     public class GlobalConfigService
