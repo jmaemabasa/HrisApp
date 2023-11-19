@@ -8,6 +8,7 @@
         {
             try
             {
+                await Task.Delay(500);
                 StateService.OnChange += OnStateChanged;
                 await LoadList();
             }

@@ -9,6 +9,7 @@
         {
             try
             {
+                await Task.Delay(500);
                 StateService.OnChange += OnStateChanged;
                 await LoadList();
 
@@ -53,6 +54,15 @@
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<UpdateSectionDialog>("Update Section", parameters, options);
+        }
+
+        private bool isVisible;
+        public async void OpenOverlay()
+        {
+            isVisible = true;
+            await Task.Delay(3000);
+            isVisible = false;
+            StateHasChanged();
         }
 
         //TABLEEES

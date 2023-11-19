@@ -8,10 +8,11 @@
         {
             try
             {
-                //StateService.OnChange += OnStateChanged;
-                //await LoadList();
-                await DepartmentService.GetDepartment();
-                departmentList = DepartmentService.DepartmentTs;
+                await Task.Delay(500);
+                StateService.OnChange += OnStateChanged;
+                await LoadList();
+                //await DepartmentService.GetDepartment();
+                //departmentList = DepartmentService.DepartmentTs;
 
                 await DivisionService.GetDivision();
                 Divisions = DivisionService.DivisionTs;
@@ -31,6 +32,15 @@
         private void OnStateChanged()
         {
             departmentList = StateService.GetState<List<DepartmentT>>("DepartmentList");
+            StateHasChanged();
+        }
+
+        private bool isVisible;
+        public async void OpenOverlay()
+        {
+            isVisible = true;
+            await Task.Delay(3000);
+            isVisible = false;
             StateHasChanged();
         }
 

@@ -19,6 +19,7 @@
 
         public async Task OnRefreshPage()
         {
+            await Task.Delay(1000);
             await EmployeeService.GetEmployee();
             _employeeList = EmployeeService.EmployeeTs;
             await StaticService.GetStatusList();

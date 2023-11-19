@@ -29,7 +29,7 @@ namespace HrisApp.Shared.Models.Emp_Payroll
         public string MealAllowance { get; set; } = string.Empty;
         public string BiometricID { get; set; } = string.Empty;
 
-        [RegularExpression("^[0-9]{10}$", ErrorMessage = "Value must be 10 digits only")]
+        [RegularExpression("^[0-9]+$", ErrorMessage = "Value must be digits only")]
         public string BankAcc { get; set; } = string.Empty;
         [RegularExpression("^[0-9]{12}$", ErrorMessage = "Value must be exactly 12 digits")]
         public string TINNum { get; set; } = string.Empty;

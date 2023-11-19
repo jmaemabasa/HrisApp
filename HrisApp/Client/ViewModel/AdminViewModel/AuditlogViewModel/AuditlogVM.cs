@@ -15,6 +15,7 @@
 
         public async Task OnRefreshPage()
         {
+            await Task.Delay(500);
             await AuditlogService.GetLogs();
             logsList = AuditlogService.AuditlogsTs.OrderByDescending(log => log.Date).ToList();
 
@@ -55,6 +56,14 @@
                 "logged in" => "actionLogged",
                 _ => "actionDefault",
             };
+        }
+
+        public bool isVisible;
+        public async void OpenOverlay()
+        {
+            isVisible = true;
+            await Task.Delay(3000);
+            isVisible = false;
         }
     }
 }

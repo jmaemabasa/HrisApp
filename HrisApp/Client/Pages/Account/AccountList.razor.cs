@@ -8,6 +8,7 @@ namespace HrisApp.Client.Pages.Account
 
         protected override async Task OnInitializedAsync()
         {
+            await Task.Delay(500);
             StateService.OnChange += OnStateChanged;
             await LoadList();
 
@@ -25,6 +26,15 @@ namespace HrisApp.Client.Pages.Account
         {
             // Handle state changes, e.g., update the areaList
             userList = StateService.GetState<List<UserMasterT>>("UserList");
+            StateHasChanged();
+        }
+
+        private bool isVisible;
+        public async void OpenOverlay()
+        {
+            isVisible = true;
+            await Task.Delay(3000);
+            isVisible = false;
             StateHasChanged();
         }
 

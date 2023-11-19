@@ -990,6 +990,28 @@ namespace HrisApp.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AuditlogsT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditlogsT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditlogsT_UserMasterT_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserMasterT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AreaT",
                 columns: new[] { "Id", "Name" },
@@ -1295,6 +1317,11 @@ namespace HrisApp.Server.Migrations
                 column: "App_ReligionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuditlogsT_UserId",
+                table: "AuditlogsT",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DocumentT_DepartmentId",
                 table: "DocumentT",
                 column: "DepartmentId");
@@ -1440,6 +1467,9 @@ namespace HrisApp.Server.Migrations
                 name: "ApplicantT");
 
             migrationBuilder.DropTable(
+                name: "AuditlogsT");
+
+            migrationBuilder.DropTable(
                 name: "DocumentT");
 
             migrationBuilder.DropTable(
@@ -1485,10 +1515,10 @@ namespace HrisApp.Server.Migrations
                 name: "SectionT");
 
             migrationBuilder.DropTable(
-                name: "UserMasterT");
+                name: "UserRoleT");
 
             migrationBuilder.DropTable(
-                name: "UserRoleT");
+                name: "UserMasterT");
 
             migrationBuilder.DropTable(
                 name: "CashBondT");
