@@ -54,7 +54,7 @@ else
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Department</MudTh>
-             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
+             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Login Status</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
          </HeaderContent>
          <RowTemplate>
@@ -86,7 +86,7 @@ else
             </MudTd>
             <MudTd Style="text-align:center;">
                 <MudTooltip Text="View History">
-                    <MudIconButton OnClick="(() => ShowLogs(user.EmployeeId))" Icon="@Icons.Material.Rounded.History" aria-label="view" />
+                    <MudIconButton Class="btnedit" OnClick="(() => ShowLogs(user.EmployeeId))" Icon="@Icons.Material.Rounded.History" aria-label="view" />
                 </MudTooltip>
             </MudTd>
         </RowTemplate>

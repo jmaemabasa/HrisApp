@@ -13,11 +13,9 @@
         public List<AreaT> AreaTs { get; set; }
 
         // GEEEEEEEEEEEET
-        public async Task GetAreaList()
+        public async Task<List<AreaT>> GetAreaList()
         {
-            var result = await _httpClient.GetFromJsonAsync<List<AreaT>>("api/Area");
-            if (result != null)
-                AreaTs = result;
+            return await _httpClient.GetFromJsonAsync<List<AreaT>>("api/Area");
         }
 
         public async Task<AreaT> GetSingleArea(int areaId)

@@ -19,24 +19,37 @@
 
         public async Task OnRefreshPage()
         {
-            await Task.Delay(1000);
-            await EmployeeService.GetEmployee();
-            _employeeList = EmployeeService.EmployeeTs;
-            await StaticService.GetStatusList();
-            StatusL = StaticService.StatusTs;
+            try
+            {
+                await Task.Delay(1000);
+                await EmployeeService.GetEmployee();
+                _employeeList = EmployeeService.EmployeeTs;
+                await StaticService.GetStatusList();
+                StatusL = StaticService.StatusTs;
 
-            #region for DASHBOARD
-            var uri = new Uri(_navigationManager.Uri);
-            var statusFilterString = uri.Query.Split('=').LastOrDefault();
-            if (statusFilterString?.ToLower() == "inactive")
-            {
-                _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId != 1).ToList();
+                #region for DASHBOARD
+                var uri = new Uri(_navigationManager.Uri);
+                var statusFilterString = uri.Query.Split('=').LastOrDefault();
+                if (statusFilterString?.ToLower() == "inactive")
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId != 1).ToList();
+                }
+                else if (statusFilterString?.ToLower() == "active")
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).ToList();
+                }
+                else if (statusFilterString?.ToLower() == "inactive5yearsago")
+                {
+                    DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId != 1 && e.DateInactiveStatus <= fiveYearsAgo).ToList();
+                }
+                #endregion
             }
-            else if (statusFilterString?.ToLower() == "active")
+            catch (Exception ex)
             {
-                _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).ToList();
+                Console.WriteLine(ex.Message.ToString());
             }
-            #endregion
+            
         }
 
         #region FUNCTIONS / METHODS

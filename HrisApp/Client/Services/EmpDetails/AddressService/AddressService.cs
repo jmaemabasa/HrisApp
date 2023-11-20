@@ -41,6 +41,13 @@
             await SetAddress(result);
         }
 
+        public async Task DeleteAddress(int id)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Address/{id}");
+            //await SetAddress(result);
+        }
+
+
         private async Task SetAddress(HttpResponseMessage result)
         {
             var response = await result.Content.ReadFromJsonAsync<List<Emp_AddressT>>();

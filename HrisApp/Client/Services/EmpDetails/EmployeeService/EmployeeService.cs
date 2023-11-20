@@ -66,7 +66,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         public async Task DeleteEmployee(int id)
         {
             var result = await _httpClient.DeleteAsync($"api/Employee/{id}");
-            await SetEmployees(result);
+            //await SetEmployees(result);
         }
 
         public async Task<string> Getname(int id)

@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231120063549_area")]
+    partial class area
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1354,11 +1356,16 @@ namespace HrisApp.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AreaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AreaId");
 
                     b.ToTable("AreaT");
 
@@ -1366,31 +1373,37 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 1,
+                            AreaId = 0,
                             Name = "Davao"
                         },
                         new
                         {
                             Id = 2,
+                            AreaId = 0,
                             Name = "Digos"
                         },
                         new
                         {
                             Id = 3,
+                            AreaId = 0,
                             Name = "Kidapawan"
                         },
                         new
                         {
                             Id = 4,
+                            AreaId = 0,
                             Name = "Cotabato"
                         },
                         new
                         {
                             Id = 5,
+                            AreaId = 0,
                             Name = "Calinan"
                         },
                         new
                         {
                             Id = 6,
+                            AreaId = 0,
                             Name = "Gumalang"
                         });
                 });
@@ -1601,9 +1614,6 @@ namespace HrisApp.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AreaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
@@ -1632,7 +1642,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            AreaId = 0,
                             DepartmentId = 1,
                             DivisionId = 1,
                             Name = "FSS",
@@ -1643,7 +1652,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 2,
-                            AreaId = 0,
                             DepartmentId = 1,
                             DivisionId = 1,
                             Name = "Feeder",
@@ -1654,7 +1662,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 3,
-                            AreaId = 0,
                             DepartmentId = 1,
                             DivisionId = 1,
                             Name = "FCCR",
@@ -1665,7 +1672,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 4,
-                            AreaId = 0,
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "FSS",
@@ -1676,7 +1682,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 5,
-                            AreaId = 0,
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "DT Booking/ GT Booking",
@@ -1687,7 +1692,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 6,
-                            AreaId = 0,
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "DSS",
@@ -1698,7 +1702,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 7,
-                            AreaId = 0,
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "PM Salesman",
@@ -1709,7 +1712,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 8,
-                            AreaId = 0,
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "OMNI Feeder",
@@ -1720,7 +1722,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 9,
-                            AreaId = 0,
                             DepartmentId = 4,
                             DivisionId = 1,
                             Name = "FCCR",
@@ -1731,7 +1732,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 10,
-                            AreaId = 0,
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "FSS",
@@ -1742,7 +1742,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 11,
-                            AreaId = 0,
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "DT Booking/ GT Booking",
@@ -1753,7 +1752,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 12,
-                            AreaId = 0,
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "DSS",
@@ -1764,7 +1762,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 13,
-                            AreaId = 0,
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "OMNI Feeder",
@@ -1775,7 +1772,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 14,
-                            AreaId = 0,
                             DepartmentId = 5,
                             DivisionId = 1,
                             Name = "FCCR",
@@ -1786,7 +1782,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 15,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "Operations Manager",
@@ -1797,7 +1792,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 16,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "HAPI Supervisor",
@@ -1808,7 +1802,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 17,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "HAPI Dealer Coor",
@@ -1819,7 +1812,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 18,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "Field Sales Supervisor",
@@ -1830,7 +1822,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 19,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "MAG Supervisor",
@@ -1841,7 +1832,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 20,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "GTAS",
@@ -1852,7 +1842,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 21,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "SMS",
@@ -1863,7 +1852,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 22,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "NAO Supervisor",
@@ -1874,7 +1862,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 23,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "NAO",
@@ -1885,7 +1872,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 24,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "HAPI NAO",
@@ -1896,7 +1882,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 25,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "IT & Support Services Staff",
@@ -1907,7 +1892,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 26,
-                            AreaId = 0,
                             DepartmentId = 6,
                             DivisionId = 1,
                             Name = "Teleservices Support Staff / Online Coor",
@@ -1918,7 +1902,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 27,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Field Sales Manager",
@@ -1929,7 +1912,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 28,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Field Sales Supervisor",
@@ -1940,7 +1922,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 29,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Field Sales Supervisor",
@@ -1951,7 +1932,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 30,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Sonic DSP",
@@ -1962,7 +1942,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 31,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "DSP (Commando/Incubator)",
@@ -1973,7 +1952,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 32,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Ambassador",
@@ -1984,7 +1962,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 33,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Merchandiser",
@@ -1995,7 +1972,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 34,
-                            AreaId = 0,
                             DepartmentId = 8,
                             DivisionId = 1,
                             Name = "Scan to Pay",
@@ -2006,7 +1982,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 35,
-                            AreaId = 0,
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Team Leader/Supervisor",
@@ -2017,7 +1992,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 36,
-                            AreaId = 0,
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Trade Payable Staff",
@@ -2028,7 +2002,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 37,
-                            AreaId = 0,
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Non Trade Payable Staff",
@@ -2039,7 +2012,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 38,
-                            AreaId = 0,
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Team Leader/Supervisor",
@@ -2050,7 +2022,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 39,
-                            AreaId = 0,
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Gen Accounting Staff",
@@ -2061,7 +2032,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 40,
-                            AreaId = 0,
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Team Leader/Supervisor",
@@ -2072,7 +2042,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 41,
-                            AreaId = 0,
                             DepartmentId = 9,
                             DivisionId = 2,
                             Name = "Tax and Compliance Staff",
@@ -2083,7 +2052,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 42,
-                            AreaId = 0,
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Team Leader",
@@ -2094,7 +2062,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 43,
-                            AreaId = 0,
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Accounts Receivable Staff",
@@ -2105,7 +2072,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 44,
-                            AreaId = 0,
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Credit and Collection Staff",
@@ -2116,7 +2082,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 45,
-                            AreaId = 0,
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "C&C - Billings to Customer",
@@ -2127,7 +2092,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 46,
-                            AreaId = 0,
                             DepartmentId = 10,
                             DivisionId = 2,
                             Name = "Billing to Cash Settlement Staff",
@@ -2138,7 +2102,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 47,
-                            AreaId = 0,
                             DepartmentId = 11,
                             DivisionId = 2,
                             Name = "Manager",
@@ -2149,7 +2112,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 48,
-                            AreaId = 0,
                             DepartmentId = 11,
                             DivisionId = 2,
                             Name = "IT Associate",
@@ -2160,7 +2122,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 49,
-                            AreaId = 0,
                             DepartmentId = 11,
                             DivisionId = 2,
                             Name = "IT Staff",
@@ -2171,7 +2132,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 50,
-                            AreaId = 0,
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Cash Operations Head",
@@ -2182,7 +2142,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 51,
-                            AreaId = 0,
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Davao Cashier",
@@ -2193,7 +2152,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 52,
-                            AreaId = 0,
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Cotabato Cashier",
@@ -2204,7 +2162,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 53,
-                            AreaId = 0,
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Kidapawan Cashier",
@@ -2215,7 +2172,6 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 54,
-                            AreaId = 0,
                             DepartmentId = 12,
                             DivisionId = 2,
                             Name = "Digos Cashier",
@@ -3116,6 +3072,17 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Division");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.AreaT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.AreaT", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Area");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.User.UserMasterT", b =>

@@ -12,10 +12,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private List<DivisionT> Division = new();
         private List<SectionT> Sections = new();
         private List<PositionT> Positions = new();
+        private List<AreaT> Areas = new();
 
         private int selectedDivision =0;
         private int selectedDepartment=0;
         private int selectedSection=0;
+        private int selectedArea=0;
         private string newPosition = "";
         private int newPlantilla;
 
@@ -34,6 +36,9 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             await PositionService.GetPosition();
             Positions = PositionService.PositionTs;
+
+            await AreaService.GetArea();
+            Areas = AreaService.AreaTs;
         }
 
         private async Task ConfirmCreatePositionAsync()
@@ -72,6 +77,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var divisionId = selectedDivision;
             var departmentId = selectedDepartment;
             var sectionId = selectedSection;
+            var areaId = selectedArea;
             var positionName = newPosition;
             var plantillacount = newPlantilla;
             string posCode = generateposcode(divisionId, departmentId, sectionId);
@@ -82,13 +88,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentHasSections)
             {
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, posCode, divisionId, departmentId, sectionId, plantillacount);
+                await PositionService.CreatePositionPerSection(positionName, posCode, divisionId, departmentId, sectionId, areaId, plantillacount);
             }
             else
             {
 
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, posCode,divisionId, departmentId, plantillacount);
+                await PositionService.CreatePositionPerDept(positionName, posCode,divisionId, departmentId, areaId, plantillacount);
             }
 
             _toastService.ShowSuccess(positionName + " Created Successfully!");

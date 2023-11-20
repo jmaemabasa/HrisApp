@@ -45,7 +45,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public async Task OnRefreshPage()
         {
-            await AreaService.GetAreaList();
+            await AreaService.GetArea();
             AreasL = AreaService.AreaTs;
             await StaticService.GetStatusList();
             StatusL = StaticService.StatusTs;

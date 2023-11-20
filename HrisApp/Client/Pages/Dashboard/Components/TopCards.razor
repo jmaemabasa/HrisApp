@@ -1,13 +1,13 @@
 ﻿@page "/topcards"
 <style>
     .topcards.mud-card-content {
-        padding: 22px 25px 15px 25px;
         height: 100%;
         color: #424242;
     }
 
     .topmudcard {
-        height: 9rem;
+        /* height: 9rem; */
+        height: 12rem;
         border-radius: 10px;
         background: #e9ecef;
         border: none;
@@ -15,6 +15,12 @@
         border-radius: 20px;
         padding: 10px 15px 10px 15px;
     }
+
+ /*    .topmudcard:hover {
+            background: #DADDDF;
+        transform: scale(1.1);
+    }
+ */
     .icnbtn {
         padding: 12px;
         border-radius: 50%;
@@ -31,7 +37,7 @@
 <MudCard Class="topmudcard">
     <MudCardContent Class="topcards">
         <div class="d-flex flex-grow-1 justify-content-between align-items-center h-100">
-            <div class="d-flex flex-column flex-grow-1 gap-2">
+            <div class="d-flex flex-column flex-grow-1 gap-4">
                 <MudText Typo="Typo.body2" Style="color: #757A90; font-weight: 400;">@title</MudText>
                 <MudText Typo="Typo.h3"><b>@value</b></MudText>
             </div>
@@ -57,9 +63,15 @@
     public string iconColor { get; set; }
     [Parameter]
     public EventCallback OnIconClick { get; set; }
+    [Parameter]
+    public EventCallback OnCardClick { get; set; }
 
     private async Task HandleIconClick()
     {
         await OnIconClick.InvokeAsync(null);
+    }
+    private async Task HandleCardClick()
+    {
+        await OnCardClick.InvokeAsync(null);
     }
 }

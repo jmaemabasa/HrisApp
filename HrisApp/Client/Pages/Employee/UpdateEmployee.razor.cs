@@ -6,7 +6,7 @@ namespace HrisApp.Client.Pages.Employee
     {
 #nullable disable
         [Parameter]
-        public int? id { get; set; }
+        public int id { get; set; }
 
         #region TABLE VARIABLES
         EmployeeT employee = new();
@@ -89,7 +89,7 @@ namespace HrisApp.Client.Pages.Employee
 
         protected override async Task OnInitializedAsync()
         {
-            await AreaService.GetAreaList();
+            await AreaService.GetArea();
             AreasL = AreaService.AreaTs;
             await StaticService.GetStatusList();
             StatusL = StaticService.StatusTs;
@@ -264,6 +264,38 @@ namespace HrisApp.Client.Pages.Employee
         }
         #endregion
 
+        public async Task DeleteEmployee(int id)
+        {
+            var result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Do you really want to delete the record?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (result.IsConfirmed)
+            {
+                await AddressService.DeleteAddress(id);
+                await PayrollService.DeletePayroll(id);
+                await EmployeeService.DeleteEmployee(id);
+                await EducationService.DeleteCollege(id);
+                await EducationService.DeleteDoctorate(id);
+                await EducationService.DeleteMasteral(id);
+                await EducationService.DeleteOtherEduc(id);
+                await EducationService.DeletePrimary(id);
+                await EducationService.DeleteSecondary(id);
+                await EducationService.DeleteSHS(id);
+                await LicenseTrainingService.DeleteLicense(id);
+                await LicenseTrainingService.DeleteTraining(id);
+
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+                NavigationManager.NavigateTo("/employee");
+
+                _toastService.ShowSuccess("Deleted Successfully!");
+            }
+        }
 
         #region MUDTABS
         MudTabs tabs;

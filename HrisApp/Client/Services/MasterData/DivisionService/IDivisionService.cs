@@ -6,7 +6,7 @@ namespace HrisApp.Client.Services.MasterData.DivisionService
     {
         List<DivisionT> DivisionTs { get; set; }
 
-        Task GetDivisionList();
+        Task<List<DivisionT>> GetDivisionList();
 
         Task<DivisionT> GetSingleDivision(int id);
 

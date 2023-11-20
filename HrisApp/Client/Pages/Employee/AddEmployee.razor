@@ -257,9 +257,17 @@
                                                     <MudText Typo="Typo.body2">Position</MudText>
                                                         <MudSelect Class="@_addEmployeeVM.slectClasss" DisableUnderLine @bind-Value="_addEmployeeVM.employee.PositionId" Margin="Margin.Dense">
                                                          <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                     @foreach (var pos in _addEmployeeVM.PositionsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId && d.DepartmentId == _addEmployeeVM.employee.DepartmentId && d.SectionId == _addEmployeeVM.employee.SectionId))
+                                                     
+                                                        @foreach (var pos in _addEmployeeVM.PositionsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId && d.DepartmentId == _addEmployeeVM.employee.DepartmentId && d.SectionId == _addEmployeeVM.employee.SectionId))
                                                         {
-                                                            <MudSelectItem Value="@pos.Id">@pos.Name</MudSelectItem>
+                                                            @foreach (var item in _addEmployeeVM.AreasL) {
+                                                                if (item.Id == pos.AreaId)
+                                                                {
+                                                                    <MudSelectItem Value="@pos.Id">@($"{@pos.Name} - {@item.Name}")</MudSelectItem>
+                                                                }
+                                                                
+                                                            }
+                                                            
                                                         }
                                                     </MudSelect>
                                                 </div>
@@ -292,7 +300,14 @@
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                  @foreach (var pos in _addEmployeeVM.PositionsL.Where(d => d.DepartmentId == _addEmployeeVM.employee.DepartmentId))
                                                     {
-                                                        <MudSelectItem Value="@pos.Id">@pos.Name</MudSelectItem>
+                                                        @foreach (var item in _addEmployeeVM.AreasL)
+                                                        {
+                                                            if (item.Id == pos.AreaId)
+                                                            {
+                                                                <MudSelectItem Value="@pos.Id">@($"{@pos.Name} - {@item.Name}")</MudSelectItem>
+                                                            }
+
+                                                        }
                                                     }
                                                 </MudSelect>
                                             </div>

@@ -11,9 +11,10 @@
         Task<string> CreatePayroll(Emp_PayrollT payroll);
         Task<Emp_PayrollT> GetSinglePayroll(int id);
         Task UpdatePayroll(Emp_PayrollT payroll);
+        Task DeletePayroll(int id);
 
         //FK
-       
+
         Task GetScheduleType();
         
     }

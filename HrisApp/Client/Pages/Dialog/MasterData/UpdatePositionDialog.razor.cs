@@ -9,10 +9,16 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         [Parameter]
         public int Id { get; set; }
 
+        private List<AreaT> Areas = new();
+
 
         private PositionT position = new();
         void Cancel() => MudDialog.Cancel();
-
+        protected override async Task OnInitializedAsync()
+        {
+            await AreaService.GetArea();
+            Areas = AreaService.AreaTs;
+        }
 
         protected override async Task OnParametersSetAsync()
         {

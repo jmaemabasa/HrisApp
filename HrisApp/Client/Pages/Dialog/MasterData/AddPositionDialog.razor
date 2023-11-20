@@ -5,6 +5,7 @@
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject IPositionService PositionService
+@inject IAreaService AreaService
 @inject IToastService _toastService
 @inject GlobalConfigService GlobalConfigService
 @inject IAuditlogService AuditlogService
@@ -62,19 +63,37 @@
                     }
                 </MudSelect>
 
-                <MudDivider DividerType="DividerType.Middle" Class="my-6" />                
+                <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+                @* Select Area *@
+                <MudSelect Label="Select Area" @bind-Value="selectedArea" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-top:10px;">
+                    <MudSelectItem Disabled="true" Value="0">Area</MudSelectItem>
+                    @foreach (var areas in Areas)
+                    {
+                        <MudSelectItem Value="@areas.Id">@areas.Name</MudSelectItem>
+                    }
+                </MudSelect>
                 <MudTextField @bind-Value="newPosition" Label="Add Position in Section" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 10px;"/>
                 <MudTextField @bind-Value="newPlantilla" Label="Plantilla Count" Variant="Variant.Outlined" Margin="Margin.Dense" />
             }
             else
             {
                 <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
+                @* Select Area *@
+                <MudSelect Label="Select Area" @bind-Value="selectedArea" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:10px;">
+                    <MudSelectItem Disabled="true" Value="0">Area</MudSelectItem>
+                    @foreach (var areas in Areas)
+                    {
+                        <MudSelectItem Value="@areas.Id">@areas.Name</MudSelectItem>
+                    }
+                </MudSelect>
                 <MudTextField @bind-Value="newPosition" Label="Add Position in Department" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 10px;" />
                 <MudTextField @bind-Value="newPlantilla" Label="Plantilla Count" Variant="Variant.Outlined" Margin="Margin.Dense" />
             }
         }
+
         
-        
+
+
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Primary" @onclick="ConfirmCreatePositionAsync">Save</MudButton>

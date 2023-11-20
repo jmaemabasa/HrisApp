@@ -23,34 +23,28 @@
 @attribute [Authorize(Roles = "Admin, HR, User")]
 
 <PageTitle>Dashboard</PageTitle>
-    <style>
-    .rightcard.mud-card-content {
-        padding: 22px 25px 20px 25px;
-        height: 100%;
-    }
-    
-    .rightmudcard {
-        height: 25rem;
-        border-radius: 10px;
-        background: #e9ecef;
-        border: none;
-        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-        border-radius: 20px;
-        padding: 10px 15px 10px 15px;
-        overflow: auto;
-    }
 
-    </style>
-
-<MudGrid Style="margin-top: 20px;" Spacing="5">
+<MudGrid Style="margin-top: 20px;" Justify="Justify.Center" Spacing="5">
     <MudItem xs="12" sm="3">
-        <TopCards title="Total Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 5rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
+        <TopCards title="Total Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 6rem; color: #E97777" OnCardClick=@(()=>NavIconBtns("vacancy")) OnIconClick=@(()=>NavIconBtns("vacancy")) />
     </MudItem>
     <MudItem xs="12" sm="3">
-        <TopCards title="Total Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
+        <TopCards title="Total Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 6rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
     </MudItem>
     <MudItem xs="12" sm="3">
-        <TopCards title="Total Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 5rem; color: #E97777" OnIconClick=@(()=>NavIconBtns("vacancy")) />
+        <TopCards title="Total Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 6rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <TopCards title="Areas of Assignment" value="@_countAreas" icon="@Icons.Material.TwoTone.Place" iconColor="font-size: 6rem; color: #F1C27B" OnIconClick=@(()=>NavIconBtns("area")) />
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <TopCards title="Divisions" value="@_countDivisions" icon="@Icons.Material.TwoTone.Workspaces" iconColor="font-size: 6rem; color: #9BABB8" OnIconClick=@(()=>NavIconBtns("division")) />
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <TopCards title="Departments" value="@_countDepartments" icon="@Icons.Material.TwoTone.Diversity3" iconColor="font-size: 6rem; color: #96B6C5" OnIconClick=@(()=>NavIconBtns("department")) />
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <TopCards title="Sections" value="@_countSections" icon="@Icons.Material.TwoTone.Diversity2" iconColor="font-size: 6rem; color: #6096B4" OnIconClick=@(()=>NavIconBtns("section")) />
     </MudItem>
     @* <h1>@GlobalConfigService.Fullname</h1> *@
     

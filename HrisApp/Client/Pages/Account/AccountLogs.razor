@@ -11,7 +11,16 @@
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
-        <span style="font-size: x-large;font-weight: 600;color: #424242;">Audit Logs</span>
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">
+            Audit Logs | @foreach (var item in employeeList)
+            {
+                var userid = logsList.Select(e => e.UserId).ToList();
+                if (item.Id == userid[0])
+                {
+                    <span style="font-weight: 400">@($"{item.FirstName} {item.LastName}")</span>
+                }
+            }
+        </span>
         <MudButton OnClick="BackBtn" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.KeyboardArrowLeft" Class="btnBack">Back</MudButton>
     </div>
 </div>
@@ -71,7 +80,7 @@ else
             </MudTd>
         </RowTemplate>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { 100, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
         </PagerContent>
     </MudTable>
 </div>

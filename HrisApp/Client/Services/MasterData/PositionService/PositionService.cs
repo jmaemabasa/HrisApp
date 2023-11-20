@@ -69,7 +69,7 @@
         }
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int plantilla)
+        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int areaId, int plantilla)
         {
             PositionT newPosition = new()
             {
@@ -77,6 +77,7 @@
                 DivisionId = divId,
                 DepartmentId = deptId,
                 PosCode = posCode,
+                AreaId = areaId,
                 Plantilla = plantilla
             };
 
@@ -87,7 +88,7 @@
                 Console.WriteLine("Error: " + errorMessage);
             }
         }
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int plantilla)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, int plantilla)
         {
             PositionT newPosition = new()
             {
@@ -96,6 +97,7 @@
                 DivisionId = divId,
                 DepartmentId = deptId,
                 SectionId = sectId,
+                AreaId = areaId,
                 Plantilla = plantilla
             };
 

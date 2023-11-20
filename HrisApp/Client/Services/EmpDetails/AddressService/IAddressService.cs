@@ -8,5 +8,6 @@
         Task GetAddress();
         Task<Emp_AddressT> GetSingleAddress(int id);
         Task UpdateAddress(Emp_AddressT address);
+        Task DeleteAddress(int id);
     }
 }

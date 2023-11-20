@@ -12,11 +12,9 @@
 
         public List<DivisionT> DivisionTs { get; set; }
 
-        public async Task GetDivisionList()
+        public async Task<List<DivisionT>> GetDivisionList()
         {
-            var result = await _httpClient.GetFromJsonAsync<List<DivisionT>>("api/Division");
-            if (result != null)
-                DivisionTs = result;
+            return await _httpClient.GetFromJsonAsync<List<DivisionT>>("api/Division");
         }
 
         public async Task GetDivision()

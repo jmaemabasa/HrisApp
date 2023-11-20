@@ -3,6 +3,7 @@
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
 @inject IPositionService PositionService
+@inject IAreaService AreaService
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject StateService StateService
@@ -119,6 +120,7 @@ else
                      Position
                  </MudTableSortLabel>
              </MudTh>
+                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Area</MudTh>
              <MudTh  Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Plantilla</MudTh>
             <MudTh Style="font-weight: bold; background: #e9ecef;">Action</MudTh>
         </HeaderContent>
@@ -181,7 +183,17 @@ else
                 }
             }
            
+           
             <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@pos.Name</MudTd>
+                <MudTd DataLabel="">
+                    @foreach (var item in Areas)
+                    {
+                        if (item.Id == pos.AreaId)
+                        {
+                            @item.Name
+                        }
+                    }
+                </MudTd>
             <MudTd DataLabel="" Style="text-align: center">@pos.Plantilla</MudTd>
             <MudTd >
                     <AuthorizeView Roles="Admin">

@@ -60,6 +60,12 @@ namespace HrisApp.Client.Services.Payroll
             }
         }
 
+        public async Task DeletePayroll(int id)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Payroll/{id}");
+            //await SetPayroll(result);
+        }
+
         //FK
         public async Task GetScheduleType()
         {

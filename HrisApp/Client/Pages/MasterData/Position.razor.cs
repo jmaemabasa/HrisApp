@@ -6,6 +6,7 @@
         private List<DivisionT> Divisions = new();
         private List<SectionT> Sections = new();
         private List<PositionT> Positions = new();
+        private List<AreaT> Areas = new();
 
 
         protected override async Task OnInitializedAsync()
@@ -19,10 +20,12 @@
                 await DepartmentService.GetDepartment();
                 await DivisionService.GetDivision();
                 await SectionService.GetSection();
+                await AreaService.GetArea();
 
                 Divisions = DivisionService.DivisionTs;
                 Departments = DepartmentService.DepartmentTs;
                 Sections = SectionService.SectionTs;
+                Areas = AreaService.AreaTs;
             }
             catch (Exception ex)
             {

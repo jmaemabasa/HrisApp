@@ -6,6 +6,7 @@
     color: #424242;
     padding-bottom: 4px;
 }
+
 .btnadd:hover {
     background-color: #E38D0F;
     color: #fff;
@@ -41,6 +42,21 @@
 
     .btnSaveMsgbox:hover {
         background-color: #E38D0F;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+.btnDelete {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #BD574E;
+    color: #FAFAF5;
+    padding: 5px 15px 4px 15px;
+}
+
+    .btnDelete:hover {
+        background-color: #BB2525;
         color: #fff;
         transform: scale(1.1);
     }
