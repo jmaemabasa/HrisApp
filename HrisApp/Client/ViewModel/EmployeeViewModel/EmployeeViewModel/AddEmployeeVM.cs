@@ -219,7 +219,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     employee.Verify_Id = verifyCode;
                     employee.Birthdate = Convert.ToDateTime(bday);
                     employee.DateHired = Convert.ToDateTime(DateHired);
-                    employee.InactiveStatusId = 1;
+                    //employee.InactiveStatusId = 1;
                     license.Date = Convert.ToDateTime(Date);
                     var verifyId = await EmployeeService.CreateEmployee(employee);
 

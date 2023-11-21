@@ -15,14 +15,53 @@
             @if (item.Id == position.AreaId)
             {
                 <div style="margin-bottom: 15px;" class="d-flex justify-content-center">
-                    <span style="margin-bottom: 10px; font-size: 16px;">Area: <b> @item.Name</b></span>
+                    <span style="font-size: 16px;">Area: <b> @item.Name</b></span>
                 </div>
-                
             }
         }
-       
-        <MudTextField Style="margin-bottom: 10px" Label="Name" @bind-Value="position.Name" Variant="Variant.Outlined"></MudTextField>
-        <MudTextField Label="Platilla Count" @bind-Value="position.Plantilla" Variant="Variant.Outlined"></MudTextField>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Position</MudText>
+            <MudTextField @bind-Value="position.Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Job Summary</MudText>
+            <MudTextField @bind-Value="position.JobSummary" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+        <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Education</MudText>
+            <MudTextField @bind-Value="position.PosEducation" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Work Experience (please specify required years of experience)</MudText>
+            <MudTextField @bind-Value="position.WorkExperience" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+        <div class="d-flex flex-row gap-2">
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Technical Skills:</MudText>
+                <MudTextField @bind-Value="position.TechnicalSkills" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Knowledge Of:</MudText>
+                <MudTextField @bind-Value="position.KnowledgeOf" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Computer Application:</MudText>
+                <MudTextField @bind-Value="position.ComputerApp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Other Competencies:</MudText>
+            <MudTextField @bind-Value="position.OtherCompetencies" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Restrictions (if there is any)</MudText>
+            <MudTextField @bind-Value="position.Restrictions" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Plantilla Count</MudText>
+            <MudTextField @bind-Value="position.Plantilla" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>

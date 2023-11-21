@@ -8,6 +8,8 @@ namespace HrisApp.Client.Pages.Employee
         [Parameter]
         public int id { get; set; }
 
+        DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
+
         #region TABLE VARIABLES
         EmployeeT employee = new();
         Emp_AddressT _address = new();
@@ -161,6 +163,9 @@ namespace HrisApp.Client.Pages.Employee
                 employee.Age = age;
             }
 
+            if (employee.StatusId == 1)
+                employee.DateInactiveStatus = null;
+
             employee.Birthdate = Convert.ToDateTime(bday);
             employee.DateHired = Convert.ToDateTime(DateHired);
 
@@ -291,6 +296,7 @@ namespace HrisApp.Client.Pages.Employee
                 await LicenseTrainingService.DeleteTraining(id);
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+                await BackUpDeletion.CreateBackUp(employee);
                 NavigationManager.NavigateTo("/employee");
 
                 _toastService.ShowSuccess("Deleted Successfully!");

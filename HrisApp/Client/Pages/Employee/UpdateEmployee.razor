@@ -20,6 +20,7 @@
 @inject IJSRuntime JSRuntime
 @inject GlobalConfigService GlobalConfigService
 @inject IAuditlogService AuditlogService
+@inject BackUpDeletion BackUpDeletion
 
 @attribute [Authorize(Roles = "HR")]
 <PageTitle>Update Employee</PageTitle>
@@ -37,7 +38,12 @@
                             <div>
                                 <span class="spantitle">Employee Details</span>
                             </div>
-                             <MudButton StartIcon="@Icons.Material.Rounded.Delete" Class="btnDelete" OnClick="@(() => DeleteEmployee(id))">DELETE</MudButton>
+                            @if (employee.DateInactiveStatus <= fiveYearsAgo) {
+                                 <MudButton StartIcon="@Icons.Material.Rounded.Delete" Class="btnDelete" OnClick="@(() => DeleteEmployee(id))">DELETE</MudButton>
+                            }
+                            else {
+                                 <MudButton Disabled StartIcon="@Icons.Material.Rounded.Delete" Class="btnDelete" OnClick="@(() => DeleteEmployee(id))">DELETE</MudButton>
+                            }
                         </div>
                         <div class="d-flex justify-content-center">
                             <MudAvatar>
@@ -74,11 +80,11 @@
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Email</MudText>
                                         <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Email</MudText>
                                     </div>
-                                    <div>
+                                   @*  <div>
                                         <MudTooltip Text="Copy">
                                         <MudIconButton OnClick="() => CopyToClipboard(employee.Email)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton>
                                         </MudTooltip>
-                                        </div>
+                                        </div> *@
                                 </div>
                             </div>
                             <div class="divsingledetails">
@@ -87,7 +93,7 @@
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Phone</MudText>
                                         <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">+63 @employee.MobileNumber</MudText>
                                     </div>
-                                    <div><MudTooltip Text="Copy"><MudIconButton OnClick="() => CopyToClipboard(employee.MobileNumber)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton></MudTooltip></div>
+                                     @* <div><MudTooltip Text="Copy"><MudIconButton OnClick="() => CopyToClipboard(employee.MobileNumber)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton></MudTooltip></div> *@ 
                                 </div>
                             </div>
                              <div class="divsingledetails">

@@ -1,0 +1,90 @@
+﻿@inject IPositionService PositionService
+@inject IAreaService AreaService
+@inject SweetAlertService Swal
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+@inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+@inject StateService StateService
+
+<style>
+    .divsingledetails{
+        background-color: #093260;
+        padding: 7px 15px 7px 15px;
+        border-radius: 10px;
+    }
+    .cont {
+        background-color: #FAFAF5;
+        padding-top: 10px;
+    }
+</style>
+
+
+<MudDialog Style="background-color: #FAFAF5">
+    <DialogContent>
+        <div class="d-flex flex-column gap-2 cont">
+            <span style="margin-bottom: 5px; font-size: 16px; color: #093260"><b>Qualication Requirements</b></span>
+            <div class="divsingledetails">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Job Summary</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.JobSummary</MudText>
+            </div>
+            <div class="divsingledetails">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Education</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.PosEducation</MudText>
+            </div>
+            <div class="divsingledetails">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Work Experience</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.WorkExperience</MudText>
+            </div>
+            <div class="d-flex flex-row gap-2">
+                <div class="divsingledetails flex-grow-1">
+                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Technical Skills</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.TechnicalSkills</MudText>
+                </div>
+                <div class="divsingledetails flex-grow-1">
+                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Knowledge Of</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.KnowledgeOf</MudText>
+                </div>
+                <div class="divsingledetails flex-grow-1">
+                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Computer Application</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.ComputerApp</MudText>
+                </div>
+            </div>
+            <div class="divsingledetails">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Other Compotencies</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.OtherCompetencies</MudText>
+            </div>
+            <div class="divsingledetails">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Restrictions</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.Restrictions</MudText>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public int Id { get; set; }
+
+    PositionT position = new();
+
+    private List<AreaT> AreasL = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AreaService.GetArea();
+        AreasL = AreaService.AreaTs;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        position = await PositionService.GetSinglePosition((int)Id);
+    }
+
+    void Close() => MudDialog.Close(DialogResult.Ok(true));
+}

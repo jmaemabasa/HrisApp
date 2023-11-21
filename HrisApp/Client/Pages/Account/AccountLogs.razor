@@ -46,10 +46,15 @@ else
 <div class="box w-auto">
     <MudTable Class="stable" Items="logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(FilterFunc1)">
         <ToolBarContent>
-            <div class="w-25">
-                <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-             </div>
-             <MudSpacer />
+                <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between">
+                    <div class="w-25">
+                        <MudTextField DisableUnderLine @bind-Value="@searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                     </div>
+                     <div>
+                         <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
+                     </div>
+
+                 </div>
          </ToolBarContent>
          <HeaderContent>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
@@ -96,6 +101,11 @@ else
     private List<AuditlogsT> logsList = new List<AuditlogsT>();
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
     private string searchString1 = "";
+    public DateRange _dateRange = new DateRange
+        {
+            Start = DateTime.Now.AddDays(-15),
+            End = DateTime.Now
+        };
 
     protected override async Task OnInitializedAsync()
     {
@@ -111,8 +121,19 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        logsList = AuditlogService.AuditlogsTs.Where(l => l.UserId == Id).OrderByDescending(log => log.Date).ToList();
+        logsList = AuditlogService.AuditlogsTs.Where(log => log.UserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End).OrderByDescending(log => log.Date).ToList();
+        await Task.Delay(100);
 
+    }
+
+    public void DateRangeChange(DateRange? dateRange)
+    {
+        _dateRange = dateRange;
+
+        logsList = AuditlogService.AuditlogsTs
+            .Where(log => log.UserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
+            .OrderByDescending(log => log.Date)
+            .ToList();
     }
 
     public void BackBtn() => _navigationManager.NavigateTo("/accounts");

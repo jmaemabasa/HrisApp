@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231121034348_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1599,29 +1601,13 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ComputerApp")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<int>("DivisionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("JobSummary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KnowledgeOf")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OtherCompetencies")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1632,24 +1618,8 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PosEducation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Restrictions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TechnicalSkills")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkExperience")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1660,1027 +1630,595 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 1,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "FSS",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S101",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 2,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Feeder",
-                            OtherCompetencies = "",
                             Plantilla = 9,
                             PosCode = "S102",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 3,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "FCCR",
-                            OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "S103",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 4,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "FSS",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 5,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "DT Booking/ GT Booking",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 6,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "DSS",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K03",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 7,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "PM Salesman",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K04",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 8,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "OMNI Feeder",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "S3K05",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 9,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "FCCR",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K06",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 10,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "FSS",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3C01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 11,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "DT Booking/ GT Booking",
-                            OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "S3C02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 12,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "DSS",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3C03",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 13,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "OMNI Feeder",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "S3C04",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 14,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "FCCR",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3C05",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 15,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Operations Manager",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URIC01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 16,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "HAPI Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICHAP01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 4,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 4
                         },
                         new
                         {
                             Id = 17,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "HAPI Dealer Coor",
-                            OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "URICHAP02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 4,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 4
                         },
                         new
                         {
                             Id = 18,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Field Sales Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICSER01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 5
                         },
                         new
                         {
                             Id = 19,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "MAG Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICSER02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 5
                         },
                         new
                         {
                             Id = 20,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "GTAS",
-                            OtherCompetencies = "",
                             Plantilla = 5,
                             PosCode = "URICSER03",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 5
                         },
                         new
                         {
                             Id = 21,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "SMS",
-                            OtherCompetencies = "",
                             Plantilla = 11,
                             PosCode = "URICSER04",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 5
                         },
                         new
                         {
                             Id = 22,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "NAO Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICEXP01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 6,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 6
                         },
                         new
                         {
                             Id = 23,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "NAO",
-                            OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "URICEXP02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 6,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 6
                         },
                         new
                         {
                             Id = 24,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "HAPI NAO",
-                            OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "URICEXP02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 6,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 6
                         },
                         new
                         {
                             Id = 25,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "IT & Support Services Staff",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICDTE01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 7,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 7
                         },
                         new
                         {
                             Id = 26,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Teleservices Support Staff / Online Coor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICDTE02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 7,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 7
                         },
                         new
                         {
                             Id = 27,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Field Sales Manager",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GCASH01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 28,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Field Sales Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GCASH02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 29,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Field Sales Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GCASHSER01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 8,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 8
                         },
                         new
                         {
                             Id = 30,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Sonic DSP",
-                            OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "GCASHSER02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 8,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 8
                         },
                         new
                         {
                             Id = 31,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "DSP (Commando/Incubator)",
-                            OtherCompetencies = "",
                             Plantilla = 6,
                             PosCode = "GCASHSER03",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 8,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 8
                         },
                         new
                         {
                             Id = 32,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Ambassador",
-                            OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "GCASHEXP01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 9,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 9
                         },
                         new
                         {
                             Id = 33,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Merchandiser",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GCASHMER01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 10,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 10
                         },
                         new
                         {
                             Id = 34,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Scan to Pay",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GCASHSCA01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 11,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 11
                         },
                         new
                         {
                             Id = 35,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Team Leader/Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GAINV01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 12,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 12
                         },
                         new
                         {
                             Id = 36,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Trade Payable Staff",
-                            OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "GAINV02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 12,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 12
                         },
                         new
                         {
                             Id = 37,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Non Trade Payable Staff",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GAINV03",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 12,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 12
                         },
                         new
                         {
                             Id = 38,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Team Leader/Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GAGEN01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 13,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 13
                         },
                         new
                         {
                             Id = 39,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Gen Accounting Staff",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GAGEN02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 13,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 13
                         },
                         new
                         {
                             Id = 40,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Team Leader/Supervisor",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GATAX01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 14,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 14
                         },
                         new
                         {
                             Id = 41,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Tax and Compliance Staff",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GATAX02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 14,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 14
                         },
                         new
                         {
                             Id = 42,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Team Leader",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "SAACC01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 15,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 15
                         },
                         new
                         {
                             Id = 43,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Accounts Receivable Staff",
-                            OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "SAACC02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 15,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 15
                         },
                         new
                         {
                             Id = 44,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Credit and Collection Staff",
-                            OtherCompetencies = "",
                             Plantilla = 6,
                             PosCode = "SACRE01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 16,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 16
                         },
                         new
                         {
                             Id = 45,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "C&C - Billings to Customer",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "SACRE02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 16,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 16
                         },
                         new
                         {
                             Id = 46,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Billing to Cash Settlement Staff",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "SABIL01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 17,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 17
                         },
                         new
                         {
                             Id = 47,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Manager",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "IT01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 48,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "IT Associate",
-                            OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "IT02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 49,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "IT Staff",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "IT03",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 0
                         },
                         new
                         {
                             Id = 50,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Cash Operations Head",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS01",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 18
                         },
                         new
                         {
                             Id = 51,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Davao Cashier",
-                            OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "TREASURYCAS02",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 18
                         },
                         new
                         {
                             Id = 52,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Cotabato Cashier",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS03",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 18
                         },
                         new
                         {
                             Id = 53,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Kidapawan Cashier",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS04",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 18
                         },
                         new
                         {
                             Id = 54,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
-                            JobSummary = "",
-                            KnowledgeOf = "",
                             Name = "Digos Cashier",
-                            OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS05",
-                            PosEducation = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            TechnicalSkills = "",
-                            WorkExperience = ""
+                            SectionId = 18
                         });
                 });
 

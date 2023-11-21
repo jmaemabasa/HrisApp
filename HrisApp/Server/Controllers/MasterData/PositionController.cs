@@ -105,6 +105,14 @@ namespace HrisApp.Server.Controllers.MasterData
             var dbpos = await _context.PositionT.FirstOrDefaultAsync(d => d.Id == pos.Id);
 
             dbpos.Name = pos.Name;
+            dbpos.JobSummary = pos.JobSummary;
+            dbpos.PosEducation = pos.PosEducation;
+            dbpos.WorkExperience = pos.WorkExperience;
+            dbpos.TechnicalSkills = pos.TechnicalSkills;
+            dbpos.KnowledgeOf = pos.KnowledgeOf;
+            dbpos.ComputerApp = pos.ComputerApp;
+            dbpos.OtherCompetencies = pos.OtherCompetencies;
+            dbpos.Restrictions = pos.Restrictions;
             dbpos.Plantilla = pos.Plantilla;
 
             await _context.SaveChangesAsync();

@@ -31,7 +31,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Department)
                 .Include(em => em.Area)
                 .Include(em => em.Position)
-                .Include(em => em.InactiveStatus)
+                //.Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
         }
@@ -50,7 +50,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Department)
                 .Include(em => em.Area)
                 .Include(em => em.Position)
-                .Include(em => em.InactiveStatus)
+                //.Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
 
@@ -70,7 +70,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Department)
                 .Include(em => em.Area)
                 .Include(em => em.Position)
-                .Include(em => em.InactiveStatus)
+                //.Include(em => em.InactiveStatus)
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (user == null)
             {
@@ -92,7 +92,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Department)
                 .Include(em => em.Area)
                 .Include(em => em.Position)
-                .Include(em => em.InactiveStatus)
+                //.Include(em => em.InactiveStatus)
                 .ToListAsync();
         }
 
@@ -121,7 +121,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Department)
                 .Include(em => em.Area)
                 .Include(em => em.Position)
-                .Include(em => em.InactiveStatus)
+                //.Include(em => em.InactiveStatus)
                 
                 .FirstOrDefaultAsync(e => e.Id == employee.Id);
 
@@ -157,7 +157,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 dbEmployee.AreaId = employee.AreaId;
                 dbEmployee.StatusId = employee.StatusId;
                 dbEmployee.EmploymentStatusId = employee.EmploymentStatusId;
-                dbEmployee.InactiveStatusId = employee.InactiveStatusId;
+                //dbEmployee.InactiveStatusId = employee.InactiveStatusId;
 
                 await _context.SaveChangesAsync();
             }
@@ -193,7 +193,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Department)
                 .Include(em => em.Area)
                 .Include(em => em.Position)
-                .Include(em => em.InactiveStatus)
+                //.Include(em => em.InactiveStatus)
                 .ToListAsync();
 
             var _response = emp.Where(e => e.Id == empid).ToList();

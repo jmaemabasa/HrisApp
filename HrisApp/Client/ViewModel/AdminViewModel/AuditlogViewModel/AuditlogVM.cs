@@ -12,18 +12,36 @@
 
         public string infoFormat = "{first_item}-{last_item} of {all_items}";
         public string searchString1 = "";
-
+        public DateRange _dateRange = new DateRange
+        {
+            Start = DateTime.Now.AddDays(-15),
+            End = DateTime.Now
+        };
+       
         public async Task OnRefreshPage()
         {
             await Task.Delay(500);
             await AuditlogService.GetLogs();
-            logsList = AuditlogService.AuditlogsTs.OrderByDescending(log => log.Date).ToList();
+            logsList = AuditlogService.AuditlogsTs
+                .Where(log => log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
+                .OrderByDescending(log => log.Date)
+                .ToList();
 
             await EmployeeService.GetEmployee();
-            employeeList = EmployeeService.EmployeeTs;
+            employeeList = EmployeeService.EmployeeTs;  
 
             await AuthService.GetUsers();
             userList = AuthService.UserMasterTs;
+        }
+
+        public void DateRangeChange(DateRange? dateRange)
+        {
+            _dateRange = dateRange;
+
+            logsList = AuditlogService.AuditlogsTs
+                .Where(log => log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
+                .OrderByDescending(log => log.Date)
+                .ToList();
         }
 
         public bool FilterFunc1(AuditlogsT log) => FilterFunc(log, searchString1);

@@ -49,8 +49,19 @@
 
         private void OpenAddPosition()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small};
             DialogService.Show<AddPositionDialog>("New Position", options);
+        }
+
+        private void OpenViewPosition(int id)
+        {
+            var parameters = new DialogParameters<UpdatePositionDialog>
+            {
+                { x => x.Id, id }
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader=true };
+            DialogService.Show<ViewPositionDialog>("New Position", parameters, options);
         }
 
         private void OpenUpdatePosition(int id)

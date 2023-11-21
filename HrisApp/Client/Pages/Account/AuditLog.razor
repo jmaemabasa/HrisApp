@@ -35,10 +35,15 @@ else
 <div class="box w-auto">
     <MudTable Class="stable" Items="@_auditlogVM.logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(_auditlogVM.FilterFunc1)">
         <ToolBarContent>
-            <div class="w-25">
-                <MudTextField DisableUnderLine @bind-Value="@_auditlogVM.searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-             </div>
-             <MudSpacer />
+            <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between">
+                    <div class="w-25">
+                        <MudTextField DisableUnderLine @bind-Value="@_auditlogVM.searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+                     </div>
+                     <div>
+                         <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@_auditlogVM.DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
+                     </div>
+                     
+            </div>
          </ToolBarContent>
          <HeaderContent>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
@@ -79,4 +84,7 @@ else
     {
        await _auditlogVM.OnRefreshPage();
     }
+
+
+    
 }

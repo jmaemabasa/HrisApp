@@ -57,6 +57,11 @@
 
     .btnDelete:hover {
         background-color: #BB2525;
-        color: #fff;
+        color: #FAFAF5;
         transform: scale(1.1);
+    }
+
+    .btnDelete:disabled {
+        background-color: #C1C4C7;
+        color: #fff;
     }

@@ -102,11 +102,11 @@ else
                 <div class="d-flex justify-content-between">
                         <div class="ttitle">Department</div>
                     <div class="">
-                         <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" />
-                    </div>
+@*                          <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" />
+ *@                    </div>
                 </div>
             </MudTh>
-             <MudTh  Style="background: #e9ecef; font-size: 16px;">
+            @*  <MudTh  Style="background: #e9ecef; font-size: 16px;">
                  <div class="d-flex justify-content-between">
                      <div class="ttitle">Section</div>
                      <div class="">
@@ -114,18 +114,18 @@ else
 
                      </div>
                  </div>
-             </MudTh>
+             </MudTh> *@
              <MudTh  Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
                  <MudTableSortLabel SortBy="new Func<PositionT, object>(x=>x.Name)">
                      Position
                  </MudTableSortLabel>
              </MudTh>
-                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Area</MudTh>
+             <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Area</MudTh>
              <MudTh  Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Plantilla</MudTh>
-            <MudTh Style="font-weight: bold; background: #e9ecef;">Action</MudTh>
+             <MudTh  Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Qualifications</MudTh>
+             <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
         </HeaderContent>
         <RowTemplate>
-     
             @foreach (var item in Divisions)
             {
                 if (item.Id == pos.DivisionId)
@@ -148,13 +148,13 @@ else
                         <div class="d-flex justify-content-between">
                             <div class="">@item.Name</div>
                             <div class="">
-                                <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" Style="color: #90A4AE;" />
+                                @* <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" Style="color: #90A4AE;" /> *@
                             </div>
                         </div>
                     </MudTd>
                 }
             }
-            @if (pos.SectionId == 0)
+            @* @if (pos.SectionId == 0)
             {
                 <MudTd DataLabel="Section">
                     <div class="d-flex justify-content-between">
@@ -181,10 +181,10 @@ else
                         </MudTd>
                     }
                 }
-            }
+            } *@
            
            
-            <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@pos.Name</MudTd>
+                <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@pos.Name</MudTd>
                 <MudTd DataLabel="">
                     @foreach (var item in Areas)
                     {
@@ -194,8 +194,11 @@ else
                         }
                     }
                 </MudTd>
-            <MudTd DataLabel="" Style="text-align: center">@pos.Plantilla</MudTd>
-            <MudTd >
+                <MudTd DataLabel="" Style="text-align: center">@pos.Plantilla</MudTd>
+                <MudTd DataLabel="" Style="text-align: center">
+                    <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="Show"></MudIconButton>
+                </MudTd>
+            <MudTd Style="text-align: center">
                     <AuthorizeView Roles="Admin">
                         <Authorized>
                             <MudTooltip Text="Update">

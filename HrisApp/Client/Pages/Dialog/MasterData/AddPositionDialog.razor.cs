@@ -19,6 +19,14 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private int selectedSection=0;
         private int selectedArea=0;
         private string newPosition = "";
+        private string newSummary = "";
+        private string newEduc = "";
+        private string newWorkExp = "";
+        private string newTechSkill = "";
+        private string newKnowledge = "";
+        private string newComApp = "";
+        private string newOtherComp = "";
+        private string newRestrict = "";
         private int newPlantilla;
 
         void Cancel() => MudDialog.Cancel();
@@ -88,13 +96,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentHasSections)
             {
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, posCode, divisionId, departmentId, sectionId, areaId, plantillacount);
+                await PositionService.CreatePositionPerSection(positionName, posCode, divisionId, departmentId, sectionId, areaId, newSummary,newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict ,plantillacount);
             }
             else
             {
 
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, posCode,divisionId, departmentId, areaId, plantillacount);
+                await PositionService.CreatePositionPerDept(positionName, posCode,divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount);
             }
 
             _toastService.ShowSuccess(positionName + " Created Successfully!");

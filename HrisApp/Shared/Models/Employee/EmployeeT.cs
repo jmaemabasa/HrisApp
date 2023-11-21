@@ -77,7 +77,7 @@ namespace HrisApp.Shared.Models.Employee
         public StatusT? Status { get; set; }
         public int StatusId { get; set; } //FK
 
-        public InactiveStatusT? InactiveStatus { get; set; }
-        public int InactiveStatusId { get; set; } //FK
+        //public InactiveStatusT? InactiveStatus { get; set; }
+        //public int InactiveStatusId { get; set; } //FK
     }
 }

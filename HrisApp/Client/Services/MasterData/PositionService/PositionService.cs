@@ -69,7 +69,7 @@
         }
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int areaId, int plantilla)
+        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla)
         {
             PositionT newPosition = new()
             {
@@ -78,6 +78,14 @@
                 DepartmentId = deptId,
                 PosCode = posCode,
                 AreaId = areaId,
+                JobSummary = summary,
+                PosEducation = educ,
+                WorkExperience = work,
+                TechnicalSkills = tskill,
+                KnowledgeOf = kof,
+                ComputerApp = capp,
+                OtherCompetencies = othercom,
+                Restrictions = restrict,
                 Plantilla = plantilla
             };
 
@@ -88,7 +96,7 @@
                 Console.WriteLine("Error: " + errorMessage);
             }
         }
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, int plantilla)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary,string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla)
         {
             PositionT newPosition = new()
             {
@@ -98,6 +106,14 @@
                 DepartmentId = deptId,
                 SectionId = sectId,
                 AreaId = areaId,
+                JobSummary = summary,
+                PosEducation = educ,
+                WorkExperience = work,
+                TechnicalSkills = tskill,
+                KnowledgeOf = kof,
+                ComputerApp = capp,
+                OtherCompetencies = othercom,
+                Restrictions = restrict,
                 Plantilla = plantilla
             };
 
