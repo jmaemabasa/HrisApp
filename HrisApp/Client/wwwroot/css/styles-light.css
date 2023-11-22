@@ -1,0 +1,35 @@
+﻿.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+    border-radius: 20px;
+    height: 95vh;
+    left: 15px;
+    top: 15px;
+}
+
+.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+    border-radius: 20px;
+    height: 95vh;
+    left: 15px;
+    top: 15px;
+    width: 4rem;
+}
+
+.topcards.mud-card-content {
+    height: 100%;
+    color: #424242;
+}
+
+.topmudcard {
+    /* height: 9rem; */
+    height: 12rem;
+    border-radius: 10px;
+    /*background: #e9ecef;*/
+    background-color: var(--BackgroundGrey);
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+}

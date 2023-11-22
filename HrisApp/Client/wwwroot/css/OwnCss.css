@@ -8,6 +8,17 @@
     margin-top: 30px;
 }
 
+:root {
+    --primary-color: var(--mud-primary);
+    --secondary-color: var(--mud-secondary);
+    --success-color: var(--mud-success);
+    --info-color: var(--mud-info);
+    --warning-color: var(--mud-warning);
+    --error-color: var(--mud-error);
+    --black-color: var(--mud-black);
+    --white-color: var(--mud-white);
+    --BackgroundGrey: var(--mud-palette-background-grey);
+}
 
 
 

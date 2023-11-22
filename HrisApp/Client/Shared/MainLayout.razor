@@ -8,9 +8,10 @@
 @inject GlobalConfigService GlobalConfigService
 @inject IToastService _toastService
 @inject IDialogService DialogService
+@inject IJSRuntime JSRuntime
 
 <style>
-    .mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
+    /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
         background: #e9ecef;
         border: none;
         box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
@@ -18,9 +19,9 @@
         height: 95vh;
         left: 15px;
         top: 15px;
-    }
+    }*/
 
-    .mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
+    /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
         background: #e9ecef;
         border: none;
         box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
@@ -29,7 +30,7 @@
         left: 15px;
         top: 15px;
         width: 4rem;
-    }
+    }*/
 
     .mud-container.mud-container-maxwidth-xxl {
         padding-left: 60px;
@@ -38,9 +39,9 @@
     }
 
     .mud-appbar.mud-appbar-fixed-top.mud-elevation-0{
-        background-color: #e9ecef;
-        color: #27374D;
-        left: 15px;
+        /*background-color: #e9ecef;*/
+/*        color: #27374D;
+*/        left: 15px;
         margin-bottom: 25px;
     }
 
@@ -53,7 +54,7 @@
     }
 
     .btnburger {
-        background: #e9ecef;
+        /*background: #e9ecef;*/
         border: none;
         box-shadow: -5px -5px 23px #ffffff, 5px 5px 12px #cacdcf;
         border-radius: 10px;
@@ -63,7 +64,7 @@
     
 </style>
 
-<MudThemeProvider Theme="MyCustomTheme"/>
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 @* #EEF1F6  #031a5a*@
@@ -84,6 +85,8 @@
         <MudAppBar Elevation="0" Style="left: 45px;">
             <MudIconButton Class="" Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
+            <button class="btn btn-primary" @onclick="ToggleTheme">Toggle Theme</button>
+            <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
             <MudTooltip Text="Settings">
                 <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.TopLeft">
                     <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
@@ -167,15 +170,38 @@
 
     }
 
-   
+    private bool _isDarkMode;
+
+    private async Task ToggleTheme()
+    {
+        _isDarkMode = !_isDarkMode;
+        await JSRuntime.InvokeVoidAsync("themeToggle", _isDarkMode);
+    }
 
     MudTheme MyCustomTheme = new MudTheme()
         {
             Palette = new PaletteLight()
             {
-                Primary = Colors.Blue.Darken4,
-
+                Primary = Colors.Blue.Accent4,
+                Secondary = Colors.Green.Accent4,
+                AppbarBackground = "#E9ECEF",
+                AppbarText = "#27374D",
+                Background = "#E9ECEF",
+                BackgroundGrey = "E9ECEF",
+                DrawerBackground = "E9ECEF",
+                DrawerText = "#424242",
             },
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Lighten1,
+                AppbarBackground = "#24222D",
+                AppbarText = "#FAFAF5",
+                Background = "#24222D",
+                BackgroundGrey = "#2B2934",
+                DrawerBackground = "#111315",
+                DrawerText = "#FAFAF5",
+            },
+
 
         };
 
