@@ -177,48 +177,93 @@ namespace HrisApp.Client.Pages.Employee
                         Text = "Please fill up the Inactive Date!",
                         Icon = SweetAlertIcon.Warning
                     });
+                    employee.StatusId = 1;
+                }
+                else
+                {
+                    employee.Birthdate = Convert.ToDateTime(bday);
+                    employee.DateHired = Convert.ToDateTime(DateHired);
+
+                    await EmployeeService.UpdateEmployee(employee);
+                    await AddressService.UpdateAddress(_address);
+                    await PayrollService.UpdatePayroll(_payroll);
+
+                    //UPDATE EMPLOYMENT DATE
+                    _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
+                    _employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
+                    _employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
+                    _employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
+                    _employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
+                    _employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
+                    _employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
+                    _employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
+                    _employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
+                    _employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
+                    _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
+                    await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
+
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+                    _toastService.ShowSuccess("Information updated successfully!");
+
+                    //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
+                    employee = await EmployeeService.GetSingleEmployee((int)id);
+                    _address = await AddressService.GetSingleAddress((int)id);
+                    _payroll = await PayrollService.GetSinglePayroll((int)id);
+                    //_empPicture = await ImageService.GetSingleImage((int)id);
+                    _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
+
+                    personalandjobOpen = false;
+                    workInfoOpen = false;
+                    emerOpen = false;
+                    addressOpen = false;
+                    documentsOpen = false;
+                    ScheduleOpen = false;
+                    StatutoryOpen = false;
+                    StateHasChanged();
                 }
             }
+            else
+            {
+                employee.Birthdate = Convert.ToDateTime(bday);
+                employee.DateHired = Convert.ToDateTime(DateHired);
 
-            employee.Birthdate = Convert.ToDateTime(bday);
-            employee.DateHired = Convert.ToDateTime(DateHired);
+                await EmployeeService.UpdateEmployee(employee);
+                await AddressService.UpdateAddress(_address);
+                await PayrollService.UpdatePayroll(_payroll);
 
-            await EmployeeService.UpdateEmployee(employee);
-            await AddressService.UpdateAddress(_address);
-            await PayrollService.UpdatePayroll(_payroll);
+                //UPDATE EMPLOYMENT DATE
+                _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
+                _employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
+                _employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
+                _employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
+                _employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
+                _employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
+                _employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
+                _employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
+                _employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
+                _employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
+                _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
+                await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
-            //UPDATE EMPLOYMENT DATE
-            _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
-            _employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
-            _employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
-            _employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
-            _employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
-            _employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
-            _employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
-            _employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
-            _employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
-            _employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
-            _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
-            await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+                _toastService.ShowSuccess("Information updated successfully!");
 
-            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-            _toastService.ShowSuccess("Information updated successfully!");
+                //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
+                employee = await EmployeeService.GetSingleEmployee((int)id);
+                _address = await AddressService.GetSingleAddress((int)id);
+                _payroll = await PayrollService.GetSinglePayroll((int)id);
+                //_empPicture = await ImageService.GetSingleImage((int)id);
+                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
-            //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-            employee = await EmployeeService.GetSingleEmployee((int)id);
-            _address = await AddressService.GetSingleAddress((int)id);
-            _payroll = await PayrollService.GetSinglePayroll((int)id);
-            //_empPicture = await ImageService.GetSingleImage((int)id);
-            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
-
-            personalandjobOpen = false;
-            workInfoOpen = false;
-            emerOpen = false;
-            addressOpen = false;
-            documentsOpen = false;
-            ScheduleOpen = false;
-            StatutoryOpen = false;
-            StateHasChanged();
+                personalandjobOpen = false;
+                workInfoOpen = false;
+                emerOpen = false;
+                addressOpen = false;
+                documentsOpen = false;
+                ScheduleOpen = false;
+                StatutoryOpen = false;
+                StateHasChanged();
+            }
         }
 
         #region Image Update
