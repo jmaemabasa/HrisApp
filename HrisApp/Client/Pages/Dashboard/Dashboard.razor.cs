@@ -46,7 +46,7 @@
             foreach (var position in allPositions)
             {
                 int positionId = position.Id;
-                int count = EmployeeService.EmployeeTs.Count(e => e.PositionId == positionId);
+                int count = EmployeeService.EmployeeTs.Count(e => e.StatusId == 1 && e.PositionId == positionId);
                 positionCounts[positionId] = count;
             }
             _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);

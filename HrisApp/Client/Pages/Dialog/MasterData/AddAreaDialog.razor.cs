@@ -43,7 +43,7 @@
                     _toastService.ShowSuccess(newArea + " Created Successfully!");
 
                     // Update the areaList using the StateService
-                    await AreaService.GetAreaList();
+                    await AreaService.GetArea();
                     var newAreaList =  AreaService.AreaTs;
                     StateService.SetState("AreaList", newAreaList);
                 }

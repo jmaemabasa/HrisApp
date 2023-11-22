@@ -53,7 +53,16 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         {
             MudDialog.Close();
 
-            if (string.IsNullOrWhiteSpace(newPosition))
+            if (selectedArea == 0)
+            {
+                await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Warning",
+                    Text = "Please select an Area!",
+                    Icon = SweetAlertIcon.Warning
+                });
+            }
+            else if (string.IsNullOrWhiteSpace(newPosition))
             {
                 await Swal.FireAsync(new SweetAlertOptions
                 {

@@ -44,7 +44,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 _toastService.ShowSuccess(area.Name + " Updated Successfully!");
 
                 // Update the areaList using the StateService
-                await AreaService.GetAreaList();
+                await AreaService.GetArea();
                 var newAreaList = AreaService.AreaTs;
                 StateService.SetState("AreaList", newAreaList);
             }

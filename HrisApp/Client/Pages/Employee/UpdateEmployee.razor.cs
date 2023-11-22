@@ -166,6 +166,20 @@ namespace HrisApp.Client.Pages.Employee
             if (employee.StatusId == 1)
                 employee.DateInactiveStatus = null;
 
+            if (employee.StatusId != 1)
+            {
+                if (employee.DateInactiveStatus == null)
+                {
+                    workInfoOpen = false;
+                    await Swal.FireAsync(new SweetAlertOptions
+                    {
+                        Title = "Warning",
+                        Text = "Please fill up the Inactive Date!",
+                        Icon = SweetAlertIcon.Warning
+                    });
+                }
+            }
+
             employee.Birthdate = Convert.ToDateTime(bday);
             employee.DateHired = Convert.ToDateTime(DateHired);
 
@@ -531,10 +545,7 @@ namespace HrisApp.Client.Pages.Employee
         //}
 
 
-        void Backbtn()
-        {
-            NavigationManager.NavigateTo("/employee");
-        }
+        void Backbtn() => NavigationManager.NavigateTo("/employee");
         #endregion
 
     }

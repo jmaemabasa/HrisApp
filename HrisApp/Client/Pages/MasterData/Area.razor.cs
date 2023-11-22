@@ -4,11 +4,12 @@
     {
         protected override async Task OnInitializedAsync()
         {
+            await Task.Delay(300);
             StateService.OnChange += OnStateChanged;
-            await LoadAreaList();
+            await LoadList();
         }
 
-        private async Task LoadAreaList()
+        private async Task LoadList()
         {
             await AreaService.GetArea();
             StateService.SetState("AreaList", AreaService.AreaTs);
@@ -36,7 +37,6 @@
         private string searchString1 = "";
         List<AreaT> areaList = new();
         private AreaT selectedItem1 = null;
-        private HashSet<AreaT> selectedItems = new HashSet<AreaT>();
 
         private bool FilterFunc1(AreaT area) => FilterFunc(area, searchString1);
 

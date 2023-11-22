@@ -32,27 +32,41 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             MudDialog.Close();
 
-            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            if (string.IsNullOrWhiteSpace(position.Name))
             {
-                Title = "Confirmation",
-                Text = "Are you sure you want to update the " + position.Name + "?",
-                Icon = SweetAlertIcon.Question,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Yes",
-                CancelButtonText = "No"
-            });
-
-            if (confirmResult.IsConfirmed)
-            {
-                await PositionService.UpdatePosition(position);
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-
-                _toastService.ShowSuccess(position.Name + " Updated Successfully!");
-
-                await PositionService.GetPosition();
-                var newList = PositionService.PositionTs;
-                StateService.SetState("PositionList", newList);
+                await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Warning",
+                    Text = "Please enter a valid position!",
+                    Icon = SweetAlertIcon.Warning
+                });
             }
+            else
+            {
+                var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to update the " + position.Name + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+                if (confirmResult.IsConfirmed)
+                {
+                    await PositionService.UpdatePosition(position);
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+
+                    _toastService.ShowSuccess(position.Name + " Updated Successfully!");
+
+                    await PositionService.GetPosition();
+                    var newList = PositionService.PositionTs;
+                    StateService.SetState("PositionList", newList);
+                }
+            }
+
+            
         }
     }
 }
