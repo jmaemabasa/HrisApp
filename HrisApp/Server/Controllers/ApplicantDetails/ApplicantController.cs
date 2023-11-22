@@ -93,8 +93,7 @@ namespace HrisApp.Server.Controllers.ApplicantDetails
                 dbApplicant.App_LastName = applicant.App_LastName;
                 dbApplicant.App_MiddleName = applicant.App_MiddleName;
                 dbApplicant.App_Suffix = applicant.App_Suffix;
-                dbApplicant.App_ContactNo1 = applicant.App_ContactNo1;
-                dbApplicant.App_ContactNo2 = applicant.App_ContactNo2;
+                dbApplicant.App_ContactNo = applicant.App_ContactNo;
                 dbApplicant.App_Email = applicant.App_Email;
                 dbApplicant.App_DOB = applicant.App_DOB;
                 dbApplicant.App_Age = applicant.App_Age;

@@ -64,7 +64,7 @@
                         <MudSelectItem Value="0"
                                                       Disabled>---Select Employee---</MudSelectItem>
 
-                     @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar))
+                     @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar && d.StatusId ==1))
                         {
                             <MudSelectItem Value="@emp.Id">@emp.FirstName @emp.LastName</MudSelectItem>
                         }

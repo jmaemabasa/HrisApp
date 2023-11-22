@@ -16,7 +16,7 @@
         {
             AuditlogsT logs = new AuditlogsT
             {
-                UserId = userid,
+                EmployeeUserId = userid,
                 Action = action,
                 Type = type,
                 Date = date

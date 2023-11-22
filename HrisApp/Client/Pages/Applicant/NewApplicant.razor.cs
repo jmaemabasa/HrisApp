@@ -4,6 +4,32 @@
     {
 #nullable disable
         MudTabs tabs;
+        ApplicantT applicant = new();
+
+        public List<GenderT> GendersL = new();
+        public List<CivilStatusT> CivilStatusL = new();
+        public List<ReligionT> ReligionsL = new();
+        public List<EmerRelationshipT> EmerRelationshipsL = new();
+
+        public DateTime? bday { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await StaticService.GetGenderList();
+            GendersL = StaticService.GenderTs;
+            await StaticService.GetCivilStatusList();
+            CivilStatusL = StaticService.CivilStatusTs;
+            await StaticService.GetReligionList();
+            ReligionsL = StaticService.ReligionTs;
+            await StaticService.GetEmerRelationshipList();
+            EmerRelationshipsL = StaticService.EmerRelationshipTs;
+        }
+
+        public void Activate(int index)
+        {
+            tabs.ActivatePanel(index);
+
+        }
 
         #region TAB CLASS
         //TAB PANEL
@@ -59,7 +85,7 @@
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(0));
-                    builder.AddContent(6, "Job");
+                    builder.AddContent(6, "Personal");
                     builder.CloseComponent();
                 }
                 else if (tabId == 1)
@@ -70,7 +96,7 @@
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(1));
-                    builder.AddContent(6, "Personal");
+                    builder.AddContent(6, "Family");
                     builder.CloseComponent();
                 }
                 else if (tabId == 2)

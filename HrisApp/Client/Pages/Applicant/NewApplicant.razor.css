@@ -3,23 +3,58 @@
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 20px;
-    height: auto;
+    height: 56rem;
     padding: 25px 50px 25px 50px;
-    margin-top: 5px;
-    margin-bottom: 20px;
+}
+
+.container {
+    padding-top: 30px;
 }
 
 .spantitle {
     font-weight: bold;
     color: #26446e;
-    font-size: 14px;
+    font-size: 1.1em;
 }
 
+/*TEXTFIELDS*/
+::deep .itexfield, ::deep .idatefield {
+    background-color: white;
+    height: 40px;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 2px solid #D8DADC;
+    width: 100%;
+}
+
+::deep .mdtextfield {
+
+}
+
+/*BUTTONS*/
+::deep .btnnext {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #F1BC3A;
+    color: #424242;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    font-weight: bold;
+    width: 150px;
+}
+
+::deep .btnnext:hover {
+    background-color: #E38D0F;
+    color: #fff;
+    transform: scale(1.1);
+}
 
 /*TABPANELS*/
 ::deep .mud-tab.mud-tab-active {
-    color: #EEB12F;
-    font-weight: bold;
+        color: #EEB12F;
+        font-weight: bold;
 }
 
 ::deep .mud-tabs-toolbar-content {

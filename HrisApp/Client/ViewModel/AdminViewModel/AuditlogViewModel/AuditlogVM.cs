@@ -52,15 +52,17 @@
                 return true;
             if (log.Action.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if ((log.EmployeeUSer?.FirstName + " " + log.EmployeeUSer?.LastName).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
             if (String.Format("{0:dd MMM yyyy}", log.Date).Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }
 
-        public string GetRole(string employeeId)
+        public string GetRole(int employeeId)
         {
             // Logic to get the user name based on the employee ID
-            var role = userList.FirstOrDefault(e => e.Id == Convert.ToInt32(employeeId));
+            var role = userList.FirstOrDefault(e => e.EmployeeId == employeeId);
             return role != null ? $"{role.Role}" : "";
         }
 

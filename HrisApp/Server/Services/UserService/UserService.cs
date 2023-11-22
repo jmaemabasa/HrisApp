@@ -162,7 +162,7 @@ namespace HrisApp.Server.Services.UserService
         //[HttpPut("Putaccount/{id}")]
         public async Task<ServiceResponse<int>> Putaccount(int id)
         {
-            var db = await _context.UserMasterT.Where(s => s.Id == id).FirstOrDefaultAsync();
+            var db = await _context.UserMasterT.Where(s => s.EmployeeId == id).FirstOrDefaultAsync();
             if (db == null)
             {
                 return new ServiceResponse<int>
@@ -181,7 +181,7 @@ namespace HrisApp.Server.Services.UserService
 
         public async Task<ServiceResponse<int>> Putpassword(int id, string newpass)
         {
-            var db = await _context.UserMasterT.Where(s => s.Id == id).FirstOrDefaultAsync();
+            var db = await _context.UserMasterT.Where(s => s.EmployeeId == id).FirstOrDefaultAsync();
             if (db == null)
             {
                 return new ServiceResponse<int>

@@ -19,7 +19,7 @@ namespace HrisApp.Server.Controllers.AuditLog
         public async Task<ActionResult<List<AuditlogsT>>> GetLogs()
         {
             var audit = await _context.AuditlogsT
-                .Include(a => a.User)
+                .Include(a => a.EmployeeUSer)
                 .ToListAsync();
             return Ok(audit);
         }
@@ -28,7 +28,7 @@ namespace HrisApp.Server.Controllers.AuditLog
         public async Task<ActionResult<AuditlogsT>> GetSingleLog(int id)
         {
             var log = await _context.AuditlogsT
-               .Include(a => a.User)
+               .Include(a => a.EmployeeUSer)
                .FirstOrDefaultAsync(h => h.Id == id);
 
             if (log == null)
@@ -41,7 +41,7 @@ namespace HrisApp.Server.Controllers.AuditLog
         private async Task<List<AuditlogsT>> GetDBLogs()
         {
             return await _context.AuditlogsT
-               .Include(a => a.User)
+               .Include(a => a.EmployeeUSer)
                .ToListAsync();
         }
 

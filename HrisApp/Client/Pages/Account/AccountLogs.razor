@@ -14,7 +14,7 @@
         <span style="font-size: x-large;font-weight: 600;color: #424242;">
             Audit Logs | @foreach (var item in employeeList)
             {
-                var userid = logsList.Select(e => e.UserId).ToList();
+                var userid = logsList.Select(e => e.EmployeeUserId).ToList();
                 if (item.Id == userid[0])
                 {
                     <span style="font-weight: 400">@($"{item.FirstName} {item.LastName}")</span>
@@ -64,16 +64,10 @@ else
          </HeaderContent>
          <RowTemplate>
              <MudTd>
-                 @foreach (var item in employeeList)
-                {
-                    if (item.Id == log.UserId)
-                    {
-                        <div class="d-flex flex-column">
-                            <MudText Typo="Typo.body2" Style="font-weight: bold; color: #424242;">@($"{item.FirstName} {item.LastName}")</MudText>
-                                <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.UserId.ToString())</MudText>
-                            </div>
-                    }
-                }
+                     <div class="d-flex flex-column">
+                         <MudText Typo="Typo.body2" Style="font-weight: bold; color: #424242;">@log.EmployeeUSer?.FirstName @log.EmployeeUSer?.LastName</MudText>
+                         <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.EmployeeUserId.ToString())</MudText>
+                     </div>
             </MudTd>
             <MudTd Style=""><span class="@ActionColor(log.Action)">@log.Action</span></MudTd>
             <MudTd>@log.Type</MudTd>
@@ -121,7 +115,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        logsList = AuditlogService.AuditlogsTs.Where(log => log.UserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End).OrderByDescending(log => log.Date).ToList();
+        logsList = AuditlogService.AuditlogsTs.Where(log => log.EmployeeUserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End).OrderByDescending(log => log.Date).ToList();
         await Task.Delay(100);
 
     }
@@ -131,7 +125,7 @@ else
         _dateRange = dateRange;
 
         logsList = AuditlogService.AuditlogsTs
-            .Where(log => log.UserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
+            .Where(log => log.EmployeeUserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
             .OrderByDescending(log => log.Date)
             .ToList();
     }
@@ -145,6 +139,10 @@ else
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
         if (log.Action.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ((log.EmployeeUSer?.FirstName + " " + log.EmployeeUSer?.LastName).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (String.Format("{0:dd MMM yyyy}", log.Date).Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
     }
