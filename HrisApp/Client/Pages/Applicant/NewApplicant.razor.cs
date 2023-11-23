@@ -42,7 +42,7 @@ namespace HrisApp.Client.Pages.Applicant
             AddNewOthers(applicant.App_VerifyId);
             AddNewLicense(applicant.App_VerifyId);
             AddNewTrainings(applicant.App_VerifyId);
-
+            AddNewOtherAwards(applicant.App_VerifyId);
         }
 
         public void Activate(int index)

@@ -17,6 +17,6 @@ namespace HrisApp.Shared.Models.App_LiscenseAndTraining
         public string? Examination { get; set; } = string.Empty;
         public string? LicenseNo { get; set; } = string.Empty;
         public string? Rating { get; set; } = string.Empty;
-        public DateTime? Date { get; set; } = DateTime.Now;
+        public DateTime? Date { get; set; }
     }
 }
