@@ -1,8 +1,25 @@
 ﻿@inherits LayoutComponentBase
 
+
+<style>
+    body {
+        background: #e9ecef;
+    }
+
+    .mud-main-content {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+</style>
+
 <MudThemeProvider />
 <MudDialogProvider />
 
 <MudLayout Style="height: 100vh;">
-    @Body
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large">
+            @Body
+        </MudContainer>
+    </MudMainContent>
 </MudLayout>

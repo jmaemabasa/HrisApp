@@ -85,8 +85,8 @@
         <MudAppBar Elevation="0" Style="left: 45px;">
             <MudIconButton Class="" Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
-            <button class="btn btn-primary" @onclick="ToggleTheme">Toggle Theme</button>
-            <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
+            @* <button class="btn btn-primary" @onclick="ToggleTheme">Toggle Theme</button>
+            <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" /> *@
             <MudTooltip Text="Settings">
                 <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.TopLeft">
                     <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>

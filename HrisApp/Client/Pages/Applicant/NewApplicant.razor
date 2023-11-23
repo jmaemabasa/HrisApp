@@ -1,12 +1,13 @@
 ﻿@layout NewApplicantLayout
 @page "/application"
 
+
 @inject IApplicantService ApplicantService
 @inject IStaticService StaticService
+@inject IJSRuntime JSRuntime
 
 <PageTitle>New Applicant</PageTitle>
 
-<div class="container">
     <div class="tabdiv">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="spantitle" style="font-size: 1.5em;">Application For Employment</span>
@@ -15,8 +16,9 @@
 
         <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex" Centered=true>
             <MudTabPanel TabContent="tabHeader(0)">
-                <EditForm Model="applicant" OnValidSubmit="@(() => Activate(1))">
+            <EditForm Model="applicant" OnSubmit="OnValidSubmitPersonal">
                       <DataAnnotationsValidator />
+                      @* <ValidationSummary/> *@
                       <MudCard Class="py-3 px-3" Elevation="0">
                           <MudCardContent>
                               <div class="row mb-2">
@@ -47,11 +49,11 @@
                       </MudCard>
                       
 
-                     <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+                     <MudDivider DividerType="DividerType.Middle" Class="my-4" />
 
-                     <MudCard Class="py-3 px-3" Elevation="0">
+                     <MudCard Class="py-3 px-3 pb-2" Elevation="0">
                          <MudCardContent>
-                              <span class="spantitle">Personal Background</span>
+                              <span class="spantitle">Personal Information</span>
                          <div class="row mb-2 mt-3">
                               <div class="col-sm col-md-3 ">
                                      <MudText Typo="Typo.body2">Last Name</MudText>
@@ -64,7 +66,7 @@
                              <div  class="col-sm col-md-3 ">
                                      <MudText Typo="Typo.body2">Middle Name</MudText>
                                       <MudTextField @bind-Value="applicant.App_MiddleName" For="@(() => applicant.App_MiddleName)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                             </div
+                             </div>
                              <div  class="col-sm col-md-2 ">
                                      <MudText Typo="Typo.body2">Suffix</MudText>
                                       <MudTextField @bind-Value="applicant.App_Suffix" For="@(() => applicant.App_Suffix)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
@@ -77,7 +79,7 @@
                              </div>
                              <div  class="col-sm col-md-6 ">
                                      <MudText Typo="Typo.body2">Email</MudText>
-                                      <MudTextField @bind-Value="applicant.App_Email" For="@(() => applicant.App_Email)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                     <MudTextField @bind-Value="applicant.App_Email" For="@(() => applicant.App_Email)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                              </div>
                           </div>
                           <div class="row mb-2">
@@ -87,38 +89,39 @@
                               </div>
                               <div  class="col-sm col-md-4 ">
                                       <MudText Typo="Typo.body2">Age</MudText>
-                                        <MudTextField @bind-Value="applicant.App_Age" For="@(() => applicant.App_Age)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                              </div
+                                 <MudTextField @bind-Value="applicant.App_Age" For="@(() => applicant.App_Age)" Immediate=true Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                              </div>
                               <div  class="col-sm col-md-4 ">
                                       <MudText Typo="Typo.body2">Gender</MudText>
-                                       <MudSelect @bind-Value="applicant.App_GenderId" For="@(() => applicant.App_GenderId)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense">
-                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                       <MudSelect @bind-Value="applicant.App_GenderId" For=@(() => applicant.App_GenderId) Immediate=true Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                                      <MudSelectItem Value=0 >---Select---</MudSelectItem>
                                                     @foreach (var gender in GendersL)
                                         {
                                                             <MudSelectItem Value="@gender.Id">@gender.Name</MudSelectItem>
                                         }
                                       </MudSelect>
-                                       <ValidationMessage For="@(() => applicant.App_GenderId)" class="mb-2"/>  
+                                       @* <ValidationMessage For=@(() => applicant.App_GenderId) class="mb-2"/> *@
+                               
                              </div>
                           </div>
                           <div class="row mb-2">
                               <div class="col-sm col-md-4 ">
                                      <MudText Typo="Typo.body2">Citizenship</MudText>
-                                      <MudTextField @bind-Value="applicant.App_Citizenship" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                <MudTextField @bind-Value="applicant.App_Citizenship" For=@(() => applicant.App_Citizenship) Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                              </div>
                              <div  class="col-sm col-md-4 ">
                                      <MudText Typo="Typo.body2">Civil Status</MudText>
-                                     <MudSelect @bind-Value="applicant.App_CivilStatusId" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                <MudSelect @bind-Value="applicant.App_CivilStatusId" For=@(() => applicant.App_CivilStatusId) Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense">
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                     @foreach (var cs in CivilStatusL)
                                         {
                                                             <MudSelectItem Value="@cs.Id">@cs.Name</MudSelectItem>
                                         }
                                       </MudSelect>
-                             </div
+                             </div>
                              <div  class="col-sm col-md-4 ">
                                      <MudText Typo="Typo.body2">Religion</MudText>
-                                      <MudSelect @bind-Value="applicant.App_ReligionId" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense">
+                                <MudSelect @bind-Value="applicant.App_ReligionId" For=@(() => applicant.App_ReligionId) Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense">
                                                      <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                     @foreach (var rel in ReligionsL)
                                         {
@@ -128,23 +131,716 @@
                              </div>
                           </div>
                          </MudCardContent>
-                         <MudCardActions>
-                                 <MudItem xs="12" Class="d-flex justify-content-end">
-                                    <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
-                                </MudItem>
-                         </MudCardActions>
-                      </MudCard>
+                </MudCard>
+
+                <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+
+                       <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                         <MudCardContent>
+                        <div class="row mb-2">
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">TIN</MudText>
+                                <MudTextField @bind-Value="applicant.App_TIN" For=@(() => applicant.App_TIN) Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="12" />
+                            </div>
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Pag-Ibig</MudText>
+                                <MudTextField @bind-Value="applicant.App_PagIbig" For=@(() => applicant.App_PagIbig) Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="12" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">SSS</MudText>
+                                <MudTextField @bind-Value="applicant.App_SSS" For=@(() => applicant.App_SSS) Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="12" />
+                            </div>
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Philhealth</MudText>
+                                <MudTextField @bind-Value="applicant.App_Philhealth" For=@(() => applicant.App_Philhealth) Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="12" />
+                            </div>
+                        </div>
+                         </MudCardContent>
+                       </MudCard>
+                    <MudItem xs="12" Class="d-flex justify-content-end mt-4">
+                        <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
+                    </MudItem>
                 </EditForm>
             </MudTabPanel>
-            <MudTabPanel TabContent="tabHeader(1)"></MudTabPanel>
-            <MudTabPanel TabContent="tabHeader(2)"></MudTabPanel>
-            <MudTabPanel TabContent="tabHeader(3)"></MudTabPanel>
-            <MudTabPanel TabContent="tabHeader(4)"></MudTabPanel>
+            <MudTabPanel TabContent="tabHeader(1)">
+            <EditForm Model="address" OnValidSubmit="ActivateAddressField">
+                <DataAnnotationsValidator />
+                @* <ValidationSummary/> *@
+                <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                    <MudCardContent>
+                        <span class="spantitle">Address Information</span> <br />
+                        <span class="spantitle" style="font-size: 14px;">Present Address</span>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
+                                <MudTextField @bind-Value="address.CurrentAdd" For="@(() => address.CurrentAdd)" Class="" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">City</MudText>
+                                <MudTextField @bind-Value="address.CurrentCity" For="@(() => address.CurrentCity)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">Province</MudText>
+                                <MudTextField @bind-Value="address.CurrentProvince" For="@(() => address.CurrentProvince)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">ZipCode</MudText>
+                                <MudTextField @bind-Value="address.CurrentZipCode" For="@(() => address.CurrentZipCode)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">Country</MudText>
+                                <MudTextField @bind-Value="address.CurrentCountry" For="@(() => address.CurrentCountry)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                        </div>
+                        <span class="spantitle" style="font-size: 14px;">Permanent Address</span>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
+                                <MudTextField @bind-Value="address.PermanentAdd" For="@(() => address.PermanentAdd)" Class="" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">City</MudText>
+                                <MudTextField @bind-Value="address.PermanentCity" For="@(() => address.PermanentCity)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">Province</MudText>
+                                <MudTextField @bind-Value="address.PermanentProvince" For="@(() => address.PermanentProvince)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">ZipCode</MudText>
+                                <MudTextField @bind-Value="address.PermanentZipCode" For="@(() => address.PermanentZipCode)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                            <div class="col-md-3 ">
+                                <MudText Typo="Typo.body2">Country</MudText>
+                                <MudTextField @bind-Value="address.PermanentCountry" For="@(() => address.PermanentCountry)" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                        </div>
+                    </MudCardContent>
+                </MudCard>
+                <MudItem xs="12" Class="d-flex justify-content-center mt-4 mb-4">
+                    <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
+                </MudItem>
+            </EditForm>
+                <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                    <MudCardContent>
+                        <span class="spantitle">Family Information</span> <br />
+                        <span class="spantitle" style="font-size: 14px;">Spouse</span>
+                        <div class="row mb-2">
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Spouse Name</MudText>
+                                <MudTextField @bind-Value="applicant.App_SpouseName" Class="" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Spouse Occupation</MudText>
+                                <MudTextField @bind-Value="applicant.App_SpouseOccupation" Class="" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </div>
+                        </div>
+                        <span class="spantitle" style="font-size: 14px;">Father</span>
+                        <div class="row mb-2">
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Father Name</MudText>
+                                <MudTextField @bind-Value="applicant.App_FatherName" Class="@clsFatherName" Immediate=true Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                <span class="mud-input-helper-text mud-input-error">@mesFatherName</span>
+                            </div>
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Father Occupation</MudText>
+                                <MudTextField @bind-Value="applicant.App_FatherOccupation" Class="" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                        </div>
+                        <span class="spantitle" style="font-size: 14px;">Mother</span>
+                        <div class="row mb-2">
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Mother Name</MudText>
+                                <MudTextField @bind-Value="applicant.App_MotherName" Class="@clsMotherName" Immediate=true Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                <span class="mud-input-helper-text mud-input-error">@mesMotherName</span>
+                            </div>
+                            <div class="col-sm col-md-6 ">
+                                <MudText Typo="Typo.body2">Mother Occupation</MudText>
+                                <MudTextField @bind-Value="applicant.App_MotherOccupation" Class="" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                            </div>
+                        </div>
+                        <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                            <span class="spantitle" style="font-size: 14px;">Sibling</span>
+                            <div>
+                                <MudTooltip Text="Click to remove Sibling">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="RemoveSibling" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                </MudTooltip>
+                                <MudTooltip Text="Click to add more Sibling">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewSibling(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                </MudTooltip>
+                            </div>
+                        </div>
+                        @if (listofSiblings.Any())
+                        {
+                            @foreach (var lis in listofSiblings)
+                            {
+                                <div class="row mb-2">
+                                    <div class="col-sm col-md-6 ">
+                                        <MudText Typo="Typo.body2">Sibling Name</MudText>
+                                        <MudTextField @bind-Value="lis.App_SiblingName" Class="" Immediate=true Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                        <span class="mud-input-helper-text mud-input-error"></span>
+                                    </div>
+                                    <div class="col-sm col-md-6 ">
+                                        <MudText Typo="Typo.body2">Sibling Occupation</MudText>
+                                        <MudTextField @bind-Value="lis.App_SiblingOccupation" Class="" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                            }
+                        }
+                        <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                            <span class="spantitle" style="font-size: 14px;">Children</span>
+                            <div>
+                                <MudTooltip Text="Click to remove Children">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="RemoveChild" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                </MudTooltip>
+                                <MudTooltip Text="Click to add more Children">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewChild(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                </MudTooltip>
+                            </div>
+                        </div>
+                        @if (listofChildren.Any())
+                        {
+                            @foreach (var lis in listofChildren)
+                            {
+                                <div class="row mb-2">
+                                    <div class="col-sm col-md-6 ">
+                                        <MudText Typo="Typo.body2">Childen Name</MudText>
+                                        <MudTextField @bind-Value="lis.App_ChildrenName" Class="" Immediate=true Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                        <span class="mud-input-helper-text mud-input-error"></span>
+                                    </div>
+                                    <div class="col-sm col-md-6 ">
+                                        <MudText Typo="Typo.body2">Childen Occupation</MudText>
+                                        <MudTextField @bind-Value="lis.App_ChildrenOccupation" Class="" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                            }
+                        }
+                    </MudCardContent>
+                </MudCard>
+                <MudItem xs="12" Class="d-flex justify-content-between mt-5">
+                    <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=> Activate(0))" style="background-color: #C5CFD2;">BACK</MudButton>
+                    <MudButton id="bb" EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" Disabled=validFam OnClick="OnValidSubmitFamily">NEXT</MudButton>
+                </MudItem>
+            </MudTabPanel>
+            <MudTabPanel TabContent="tabHeader(2)">
+            <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                <MudCardContent>
+                    <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-3">
+                        <span class="spantitle">Professional Background (from most recent experience)</span>
+                        <div>
+                            <MudTooltip Text="Click to remove Experience">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveBgProf" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                            </MudTooltip>
+                            <MudTooltip Text="Click to add more Experience">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewBgProf(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                            </MudTooltip>
+                        </div>
+                    </div>
+                    @if (listofBgProf.Any())
+                    {
+                        @foreach (var lis in listofBgProf)
+                        {
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">From (mm/dd/yyyy)</MudText>
+                                    <MudDatePicker Class="mdtextfield" DisableUnderLine @bind-Date="@lis.App_DateFrom" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                 </div>
+                                 <div class="col-md-6">
+                                     <MudText Typo="Typo.body2">To (mm/dd/yyyy)</MudText>
+                                     <MudDatePicker Class="mdtextfield" DisableUnderLine @bind-Date="@lis.App_DateTo" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                 </div>
+                             </div>
+                            <div class="row mb-2">
+                                <div class="col-md-3 ">
+                                    <MudText Typo="Typo.body2">Company</MudText>
+                                    <MudTextField @bind-Value="@lis.App_CompanyName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-3 ">
+                                    <MudText Typo="Typo.body2">Position</MudText>
+                                    <MudTextField @bind-Value="@lis.App_Position" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-3 ">
+                                    <MudText Typo="Typo.body2">Basic Salary</MudText>
+                                    <MudTextField @bind-Value="@lis.App_BasicSalary" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-3 ">
+                                    <MudText Typo="Typo.body2">Reason for Leaving</MudText>
+                                    <MudTextField @bind-Value="@lis.App_RSLeaving" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                        }
+                    }
+                    
+                </MudCardContent>
+            </MudCard>
+            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
 
+            <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                <MudCardContent>
+                    <span class="spantitle">Educational Background</span>
+
+                    <div class="d-flex flex-grow-1 justify-content-between align-items-center mt-3">
+                        <span class="spantitle">Primary</span>
+                        <div>
+                            <MudTooltip Text="Click to remove Primary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="RemovePrimary" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                            </MudTooltip>
+                            <MudTooltip Text="Click to add more Primary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewPrimary(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                            </MudTooltip>
+                        </div>
+                    </div>
+                    @if (listOfPrimary.Any())
+                    {
+                        @foreach (var lis in listOfPrimary)
+                        {
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Name of School</MudText>
+                                    <MudTextField @bind-Value="@lis.PriSchoolName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                 </div>
+                                 <div class="col-md-6">
+                                     <MudText Typo="Typo.body2">School Location</MudText>
+                                    <MudTextField @bind-Value="@lis.PriSchoolLoc" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                 </div>
+                             </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Awards</MudText>
+                                    <MudTextField @bind-Value="@lis.PriAward" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">School Year</MudText>
+                                    <MudTextField @bind-Value="@lis.PriSchoolYear" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                        }
+                    }
+
+                    <div class="d-flex flex-grow-1 justify-content-between align-items-center mt-3">
+                        <span class="spantitle">Secondary</span>
+                        <div>
+                            <MudTooltip Text="Click to remove Secondary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveSecondary" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                            </MudTooltip>
+                            <MudTooltip Text="Click to add more Secondary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewSecondary(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                            </MudTooltip>
+                        </div>
+                    </div>
+                    @if (listOfSecondary.Any())
+                    {
+                        @foreach (var lis in listOfSecondary)
+                        {
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Name of School</MudText>
+                                    <MudTextField @bind-Value="@lis.SecSchoolName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">School Location</MudText>
+                                    <MudTextField @bind-Value="@lis.SecSchoolLoc" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Awards</MudText>
+                                    <MudTextField @bind-Value="@lis.SecAward" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">School Year</MudText>
+                                    <MudTextField @bind-Value="@lis.SecSchoolYear" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                        }
+                    }
+
+                    <div class="d-flex flex-grow-1 align-items-center mt-3">
+                        <MudCheckBox @bind-Checked="@IsListaddshs" Color="Color.Primary"></MudCheckBox><span class="spantitle">Senior High School</span>
+                    </div>
+                    @if (IsListaddshs)
+                    {
+                        <div class="d-flex flex-grow-1 justify-content-end align-items-center">
+                            <div>
+                                <MudTooltip Text="Click to remove SHS">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="RemoveSHS" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                </MudTooltip>
+                                <MudTooltip Text="Click to add more SHS">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewSHS(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                </MudTooltip>
+                            </div>
+                        </div>
+                        @if (listOfShs.Any())
+                        {
+                            @foreach (var lis in listOfShs)
+                            {
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">Name of School</MudText>
+                                        <MudTextField @bind-Value="@lis.ShsSchoolName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                        <MudTextField @bind-Value="@lis.ShsSchoolLoc" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">Awards</MudText>
+                                        <MudTextField @bind-Value="@lis.ShsAward" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                        <MudTextField @bind-Value="@lis.ShsSchoolYear" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                            }
+                        }
+                    }
+
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="@IsListaddcoll" Color="Color.Primary"></MudCheckBox><span class="spantitle">College</span>
+                    </div>
+                    @if (IsListaddcoll)
+                    {
+                        <div class="d-flex flex-grow-1 justify-content-end align-items-center">
+                            <div>
+                                <MudTooltip Text="Click to remove College">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="RemoveCollege" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                </MudTooltip>
+                                <MudTooltip Text="Click to add more College">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewCollege(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                </MudTooltip>
+                            </div>
+                        </div>
+                        @if (listOfCollege.Any())
+                        {
+                            @foreach (var lis in listOfCollege)
+                            {
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">Name of School</MudText>
+                                        <MudTextField @bind-Value="@lis.CollSchoolName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                        <MudTextField @bind-Value="@lis.CollSchoolLoc" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Awards</MudText>
+                                        <MudTextField @bind-Value="@lis.CollAward" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Course</MudText>
+                                        <MudTextField @bind-Value="@lis.CollCourse" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                        <MudTextField @bind-Value="@lis.CollSchoolYear" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                            }
+                        }
+                    }
+
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="@IsListaddmas" Color="Color.Primary"></MudCheckBox><span class="spantitle">Masteral</span>
+                    </div>
+                    @if (IsListaddmas)
+                    {
+                        <div class="d-flex flex-grow-1 justify-content-end align-items-center">
+                            <div>
+                                <MudTooltip Text="Click to remove Masteral">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="RemoveMasteral" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                </MudTooltip>
+                                <MudTooltip Text="Click to add more Masteral">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewMasteral(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                </MudTooltip>
+                            </div>
+                        </div>
+                        @if (listOfMasteral.Any())
+                        {
+                            @foreach (var lis in listOfMasteral)
+                            {
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">Name of School</MudText>
+                                        <MudTextField @bind-Value="@lis.MasSchoolName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                        <MudTextField @bind-Value="@lis.MasSchoolLoc" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Awards</MudText>
+                                        <MudTextField @bind-Value="@lis.MasAward" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Course</MudText>
+                                        <MudTextField @bind-Value="@lis.MasCourse" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                        <MudTextField @bind-Value="@lis.MasSchoolYear" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                            }
+                        }
+                    }
+
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="@IsListadddoc" Color="Color.Primary"></MudCheckBox><span class="spantitle">Doctorate</span>
+                    </div>
+                    @if (IsListadddoc)
+                    {
+                        <div class="d-flex flex-grow-1 justify-content-end align-items-center">
+                            <div>
+                                <MudTooltip Text="Click to remove Doctorate">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="RemoveDoctorate" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                </MudTooltip>
+                                <MudTooltip Text="Click to add more Doctorate">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewDoctorate(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                </MudTooltip>
+                            </div>
+                        </div>
+                        @if (listOfDoctorate.Any())
+                        {
+                            @foreach (var lis in listOfDoctorate)
+                            {
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">Name of School</MudText>
+                                        <MudTextField @bind-Value="@lis.DocSchoolName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                        <MudTextField @bind-Value="@lis.DocSchoolLoc" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Awards</MudText>
+                                        <MudTextField @bind-Value="@lis.DocAward" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Course</MudText>
+                                        <MudTextField @bind-Value="@lis.DocCourse" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                        <MudTextField @bind-Value="@lis.DocSchoolYear" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                            }
+                        }
+                    }
+
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="@IsListaddothers" Color="Color.Primary"></MudCheckBox><span class="spantitle">Other</span>
+                    </div>
+                    @if (IsListaddothers)
+                    {
+                        <div class="d-flex flex-grow-1 justify-content-end align-items-center">
+                            <div>
+                                <MudTooltip Text="Click to remove Others">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="RemoveOthers" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                </MudTooltip>
+                                <MudTooltip Text="Click to add more Others">
+                                    <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewOthers(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                </MudTooltip>
+                            </div>
+                        </div>
+                        @if (listOfOthers.Any())
+                        {
+                            @foreach (var lis in listOfOthers)
+                            {
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">School Type</MudText>
+                                        <MudTextField @bind-Value="@lis.OthersSchoolType" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Name of School</MudText>
+                                        <MudTextField @bind-Value="@lis.OthersSchoolName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                        <MudTextField @bind-Value="@lis.OthersSchoolLoc" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Awards</MudText>
+                                        <MudTextField @bind-Value="@lis.OthersAward" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Course</MudText>
+                                        <MudTextField @bind-Value="@lis.OthersCourse" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                        <MudTextField @bind-Value="@lis.OthersSchoolYear" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    </div>
+                                </div>
+                                <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                            }
+                        }
+                    }
+
+                </MudCardContent>
+            </MudCard>
+            <MudItem xs="12" Class="d-flex justify-content-between mt-5">
+                    <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=> Activate(1))" style="background-color: #C5CFD2;">BACK</MudButton>
+                    <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" OnClick="@(()=> Activate(3))">NEXT</MudButton>
+            </MudItem>
+            </MudTabPanel>
+            <MudTabPanel TabContent="tabHeader(3)">
+            <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                <MudCardContent>
+                    <div class="d-flex flex-grow-1 justify-content-between align-items-center mt-3">
+                        <span class="spantitle">Licenses</span>
+                        <div>
+                            <MudTooltip Text="Click to remove License">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveLicense" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                            </MudTooltip>
+                            <MudTooltip Text="Click to add more License">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewLicense(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                            </MudTooltip>
+                        </div>
+                    </div>
+                    @if (listOfLicense.Any())
+                    {
+                        @foreach (var lis in listOfLicense)
+                        {
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Professional Licenses/Board Examinations Taken</MudText>
+                                    <MudTextField @bind-Value="@lis.Examination" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Date(mm/dd/yy)</MudText>
+                                   <MudDatePicker Class="mdtextfield" DisableUnderLine @bind-Date="@lis.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">License No.</MudText>
+                                    <MudTextField @bind-Value="@lis.LicenseNo" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Rating %</MudText>
+                                    <MudTextField @bind-Value="@lis.Rating" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                        }
+                    }
+                </MudCardContent>
+            </MudCard>
+
+            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+
+            <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                <MudCardContent>
+                    <div class="d-flex flex-grow-1 justify-content-between align-items-center mt-3">
+                        <span class="spantitle">Trainings</span>
+                        <div>
+                            <MudTooltip Text="Click to remove Secondary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveTrainings" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                            </MudTooltip>
+                            <MudTooltip Text="Click to add more Secondary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewTrainings(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                            </MudTooltip>
+                        </div>
+                    </div>
+                    @if (listOfTrainings.Any())
+                    {
+                        @foreach (var lis in listOfTrainings)
+                        {
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <MudText Typo="Typo.body2">Title</MudText>
+                                    <MudTextField @bind-Value="@lis.TrainingName" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-4">
+                                    <MudText Typo="Typo.body2">Sponsor / Speaker</MudText>
+                                    <MudTextField @bind-Value="@lis.SponsorSpeaker" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-4">
+                                    <MudText Typo="Typo.body2">Date Attended (mm/dd/yyyy)</MudText>
+                                    <MudDatePicker Class="mdtextfield" DisableUnderLine @bind-Date="@lis.TrainingDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                        }
+                    }
+                </MudCardContent>
+            </MudCard>
+
+            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+
+            <MudCard Class="py-3 px-3 pb-2" Elevation="0">
+                <MudCardContent>
+                    <div class="d-flex flex-grow-1 justify-content-between align-items-center mt-3">
+                        <span class="spantitle">Other Information</span>
+                        <div>
+                            <MudTooltip Text="Click to remove Secondary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="RemoveOtherAwards" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                            </MudTooltip>
+                            <MudTooltip Text="Click to add more Secondary">
+                                <MudIconButton Class="p-0 addminbtn" OnClick="() => AddNewOtherAwards(applicant.App_VerifyId)" Icon="@Icons.Material.Rounded.AddCircle" />
+                            </MudTooltip>
+                        </div>
+                    </div>
+                    @if (listOfOtherAwards.Any())
+                    {
+                        @foreach (var lis in listOfOtherAwards)
+                        {
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Special Achievements/Recognition/Awards Received</MudText>
+                                    <MudTextField @bind-Value="@lis.Name" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="col-md-6">
+                                    <MudText Typo="Typo.body2">Date Received (mm/dd/yyyy)</MudText>
+                                    <MudDatePicker Class="mdtextfield" DisableUnderLine @bind-Date="@lis.DateReceived" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                            </div>
+
+                            <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+                        }
+                    }
+                </MudCardContent>
+            </MudCard>
+            <MudItem xs="12" Class="d-flex justify-content-between mt-5">
+                <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=> Activate(2))" style="background-color: #C5CFD2;">BACK</MudButton>
+                <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" OnClick="@(()=> Activate(4))">NEXT</MudButton>
+            </MudItem>
+            </MudTabPanel>
+            <MudTabPanel TabContent="tabHeader(4)"></MudTabPanel>
         </MudTabs>
 
     </div>
-</div>
 
 
 @code {

@@ -3,13 +3,14 @@
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 20px;
-    height: 56rem;
-    padding: 25px 50px 25px 50px;
+    height: auto;
+    padding: 25px 50px 4px 50px;
 }
 
-.container {
-    padding-top: 30px;
-}
+/*.container {
+    padding-top: 24px;
+    background-color: #e9ecef;
+}*/
 
 .spantitle {
     font-weight: bold;

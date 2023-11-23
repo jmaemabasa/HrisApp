@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HrisApp.Shared.Models.StaticData;
+using HrisApp.Shared.Models.CustomValidators;
 
 namespace HrisApp.Shared.Models.Application
 {
@@ -40,21 +41,28 @@ namespace HrisApp.Shared.Models.Application
         [Required]
         [Display(Name = "Date of Birth")]
         public DateTime? App_DOB { get; set; }
-        [GreaterThanZero(ErrorMessage = "App_GenderId must be greater than 0.")]
         public int App_Age { get; set; }
         public GenderT? App_Gender { get; set; }
-        [GreaterThanZero(ErrorMessage = "App_GenderId must be greater than 0.")]
+        [GreaterThanZero(ErrorMessage = "Please Select.")]
         public int App_GenderId { get; set; } //FK
+        [Required]
+        [Display(Name = "Citizenship")]
         public string App_Citizenship { get; set; } = string.Empty;
         public CivilStatusT? App_CivilStatus { get; set; }
+        [GreaterThanZero(ErrorMessage = "Please Select.")]
         public int App_CivilStatusId { get; set; } //FK
         public ReligionT? App_Religion { get; set; }
+        [GreaterThanZero(ErrorMessage = "Please Select.")]
         public int App_ReligionId { get; set; } //FK
         public int? App_Height { get; set; }
         public int? App_Weight { get; set; }
+        [RegularExpression("^[0-9]{12}$", ErrorMessage = "Value must be exactly 12 digits")]
         public string App_TIN { get; set; } = string.Empty;
+        [RegularExpression("^[0-9]{12}$", ErrorMessage = "Value must be exactly 12 digits")]
         public string App_SSS { get; set; } = string.Empty;
+        [RegularExpression("^[0-9]{12}$", ErrorMessage = "Value must be exactly 12 digits")]
         public string App_PagIbig { get; set; } = string.Empty;
+        [RegularExpression("^[0-9]{12}$", ErrorMessage = "Value must be exactly 12 digits")]
         public string App_Philhealth { get; set; } = string.Empty;
 
         //EMERGENCY CONTACT
@@ -72,17 +80,6 @@ namespace HrisApp.Shared.Models.Application
         public string App_MotherName { get; set; } = string.Empty;
         public string App_MotherOccupation { get; set; } = string.Empty;
 
-        public class GreaterThanZeroAttribute : ValidationAttribute
-        {
-            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-            {
-                if (value is int intValue && intValue > 0)
-                {
-                    return ValidationResult.Success;
-                }
-
-                return new ValidationResult("The field must be greater than 0.");
-            }
-        }
+        
     }
 }
