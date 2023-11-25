@@ -95,7 +95,7 @@ else
             <MudTd DataLabel="">@college.CollAward</MudTd>
             <MudTd DataLabel="">@college.CollSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR">
+                <AuthorizeView Roles="HR, System Administrator">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteCollege(college.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

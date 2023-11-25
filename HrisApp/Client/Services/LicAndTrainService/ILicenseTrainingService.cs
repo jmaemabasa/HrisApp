@@ -16,5 +16,11 @@
         Task UpdateLicense(Emp_LicenseT license);
         Task DeleteLicense(int id);
 
+        List<Emp_ProfBackgroundT> Emp_ProfBackgroundTs { get; set; }
+        Task<List<Emp_ProfBackgroundT>> GetProfBglist(string verCode);
+        Task<string> CreateProfBg(Emp_ProfBackgroundT profbg);
+        Task UpdateProfBg(Emp_ProfBackgroundT profbg);
+        Task DeleteProfBg(int id);
+
     }
 }

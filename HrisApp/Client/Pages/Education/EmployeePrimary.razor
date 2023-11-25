@@ -93,7 +93,7 @@ else
             <MudTd DataLabel="">@primary.PriAward</MudTd>
             <MudTd DataLabel="">@primary.PriSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR">
+                <AuthorizeView Roles="HR, System Administrator">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeletePrimary(primary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

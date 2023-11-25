@@ -14,6 +14,7 @@
             await EmployeeService.GetEmployee();
             allPositions = await PositionService.GetPositionList();
 
+            await DivisionService.GetDivision();
             await DepartmentService.GetDepartment();
             await SectionService.GetSection();
             sections = SectionService.SectionTs;

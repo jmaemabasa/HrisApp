@@ -5,14 +5,14 @@
 @inject GlobalConfigService GlobalConfigService
 @inject StateService StateService
 
-@attribute [Authorize]
+@attribute [Authorize(Roles = "System Administrator")]
 
 <PageTitle>Area Management</PageTitle>
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Area Management</span>
-        <AuthorizeView Roles="Admin">
+        <AuthorizeView Roles="System Administrator">
             <Authorized>
                 <MudButton OnClick="OpenAddArea" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add Area</MudButton>
             </Authorized>
@@ -59,7 +59,7 @@ else
              <RowTemplate>
                  <MudTd DataLabel="">@area.Name</MudTd>
                  <MudTd>
-                     <AuthorizeView Roles="Admin">
+                     <AuthorizeView Roles="System Administrator">
                          <Authorized>
                              <MudTooltip Text="Update">
                                  <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>

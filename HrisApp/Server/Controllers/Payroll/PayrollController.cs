@@ -71,7 +71,7 @@ namespace HrisApp.Server.Controllers.Payroll
             dbPayroll.SSSNum = payroll.SSSNum;
             dbPayroll.PhilHealthNum = payroll.PhilHealthNum;
             dbPayroll.HDMFNum = payroll.HDMFNum;
-            dbPayroll.BiometricID = payroll.HDMFNum;
+            dbPayroll.BiometricID = payroll.BiometricID;
             dbPayroll.RestDayId = payroll.RestDayId;
             dbPayroll.ScheduleTypeId = payroll.ScheduleTypeId;
             dbPayroll.Paytype = payroll.Paytype;

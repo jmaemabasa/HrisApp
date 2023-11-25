@@ -87,6 +87,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             AddNewOthers(employee.Verify_Id);
             AddNewLicense(employee.Verify_Id);
             AddNewTrainings(employee.Verify_Id);
+            AddNewProfBg(employee.Verify_Id);
             AddNewDocument();
 
         }
@@ -125,6 +126,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public List<Emp_SeniorHST> listOfShs = new();
         public List<Emp_TrainingT> listOfTrainings = new();
         public List<Emp_LicenseT> listofLicense = new();
+        public List<Emp_ProfBackgroundT> listofProfbg = new();
         public List<DocumentT> listOfDocuments = new();
 
         public bool IsListaddshs;
@@ -188,6 +190,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string slectClasssRD = "frmselect";
         public async Task<string> CreateEmployee()
         {
+            payroll.ScheduleTypeId = 1;
+            payroll.RestDayId = 1;
             if (bday.HasValue)
             {
                 DateTime currentDate = DateTime.Today;
@@ -270,6 +274,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     await CreateOtherEducRecords(verifyCode);
                     await CreateLicenses(verifyCode);
                     await CreateTrainings(verifyCode);
+                    await CreateProfBg(verifyCode);
 
                     var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
                     await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);
@@ -474,31 +479,18 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public MudTabs tabs;
         public string slectClasss = "frmselect";
         public string imguploadclass = "btnimage";
+        public string clsBday = "txf";
+        public string mesBday;
+        public string clsGender = "frmselect";
+        public string mesGender;
         public void Activate(int index)
         {
-            //tabs.ActivatePanel(index);
-            if (index == 1)
-            {
-                if (employee.AreaId == 0 || employee.StatusId == 0 || employee.EmploymentStatusId == 0 || employee.DivisionId == 0 || employee.DepartmentId == 0 || employee.PositionId == 0)
-                {
-                    _toastService.ShowError("Fill out all fields.");
-                    slectClasss = "frmselecterror";
-                }
-                else
-                {
-                    tabs.ActivatePanel(index);
-                    slectClasss = "frmselect";
-                    imguploadclass = "btnimage";
-                }
-            }
-            else if (index == 2)
-            {
-                tabs.ActivatePanel(index);
-            }
-            else if (index == 0)
-            {
-                tabs.ActivatePanel(index);
-            }
+            clsBday = (bday.ToString() == "") ? "mud-input-error txf" : "txf";
+            mesBday = (bday.ToString() == "") ? "Birthdate is required" : string.Empty;
+            _slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
         }
         public void Activate2(int index)
         {
@@ -564,7 +556,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(0));
-                    builder.AddContent(6, "Job");
+                    builder.AddContent(6, "Personal Data");
                     builder.CloseComponent();
                 }
                 else if (tabId == 1)
@@ -575,7 +567,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(1));
-                    builder.AddContent(6, "Personal");
+                    builder.AddContent(6, "Work Data");
                     builder.CloseComponent();
                 }
                 else if (tabId == 2)
@@ -597,7 +589,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(3));
-                    builder.AddContent(6, "Licences & Training");
+                    builder.AddContent(6, "Professional Background");
                     builder.CloseComponent();
                 }
                 else if (tabId == 4)
@@ -608,7 +600,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(4));
-                    builder.AddContent(6, "Documents");
+                    builder.AddContent(6, "Attachment");
                     builder.CloseComponent();
                 }
             };
@@ -835,6 +827,28 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             AddNewTrainings(employeeVerifyId);
         }
 
+        public async Task CreateProfBg(string employeeVerifyId)
+        {
+            //training
+            var validBg = listofProfbg
+               .Where
+               (item => !string.IsNullOrEmpty(item.CompanyName)
+                    || !string.IsNullOrEmpty(item.Position))
+               .ToList();
+            if (validBg.Count == 0)
+            {
+                return;
+            }
+            foreach (var bg in validBg)
+            {
+                bg.Verify_Id = employeeVerifyId;
+                await LicenseTrainingService.CreateProfBg(bg);
+            }
+
+            listOfTrainings.Clear();
+            AddNewTrainings(employeeVerifyId);
+        }
+
         public void AddNewPrimary(string employeeVerifyId)
         {
             if (listOfPrimary.Count <= 5)
@@ -977,6 +991,22 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             else
             {
                 listOfTrainings.RemoveAt(listOfTrainings.Count - 1);
+            }
+        }
+
+        public void AddNewProfBg(string employeeVerifyId)
+        {
+            if (listofProfbg.Count <= 5)
+            {
+                listofProfbg.Add(new Emp_ProfBackgroundT { Verify_Id = employee.Verify_Id });
+            }
+        }
+        public void RemoveProfBg()
+        {
+            if (listofProfbg.Count <= 1) { }
+            else
+            {
+                listofProfbg.RemoveAt(listofProfbg.Count - 1);
             }
         }
 

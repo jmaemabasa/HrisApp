@@ -93,7 +93,7 @@ else
             <MudTd DataLabel="">@license.LicenseNo</MudTd>
             <MudTd DataLabel="">@license.Rating</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR">
+                <AuthorizeView Roles="HR, System Administrator">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteLicense(license.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

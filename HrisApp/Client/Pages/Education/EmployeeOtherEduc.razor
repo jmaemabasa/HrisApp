@@ -97,7 +97,7 @@ else
             <MudTd DataLabel="">@othered.OthersAward</MudTd>
             <MudTd DataLabel="">@othered.OthersSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR">
+                <AuthorizeView Roles="HR, System Administrator">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteOther(othered.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

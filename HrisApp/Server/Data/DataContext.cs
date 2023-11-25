@@ -220,7 +220,7 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<UserRoleT>().HasData(
-             new UserRoleT { Id = 1, Name = "Administrator", RoleCode = "Admin" },
+             new UserRoleT { Id = 1, Name = "System Administrator", RoleCode = "Admin" },
              new UserRoleT { Id = 2, Name = "User", RoleCode = "User" },
              new UserRoleT { Id = 3, Name = "HR", RoleCode = "HR" }
             );
@@ -249,6 +249,7 @@ namespace HrisApp.Server.Data
         public DbSet<GenderT> GenderT { get; set; }
         public DbSet<EmerRelationshipT> EmerRelationshipT { get; set; }
         public DbSet<Emp_EmploymentDateT> Emp_EmploymentDateT { get; set; }
+        public DbSet<Emp_ProfBackgroundT> Emp_ProfBackgroundT { get; set; }
 
         //EDUCATIONS
         public DbSet<Emp_CollegeT> Emp_CollegeT { get; set; }
@@ -279,6 +280,7 @@ namespace HrisApp.Server.Data
 
         //APPLICANT
         public DbSet<ApplicantT> ApplicantT { get; set; }
+        public DbSet<App_AddressT> App_AddressT { get; set; }
         //app Family
         public DbSet<App_ChildrenT> App_ChildrenT { get; set; }
         public DbSet<App_SiblingT> App_SiblingT { get; set; }

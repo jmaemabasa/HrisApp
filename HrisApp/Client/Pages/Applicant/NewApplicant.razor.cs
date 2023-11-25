@@ -1,10 +1,4 @@
-﻿using HrisApp.Shared.Models.App_Education;
-using HrisApp.Shared.Models.App_LiscenseAndTraining;
-using HrisApp.Shared.Models.Application.App_Family;
-using HrisApp.Shared.Models.Application.App_LiscenseAndTraining;
-using HrisApp.Shared.Models.Application.App_ProfBackground;
-
-namespace HrisApp.Client.Pages.Applicant
+﻿namespace HrisApp.Client.Pages.Applicant
 {
     public partial class NewApplicant : ComponentBase
     {

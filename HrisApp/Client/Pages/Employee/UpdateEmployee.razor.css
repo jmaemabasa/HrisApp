@@ -350,6 +350,48 @@
     font-weight: bold;
 }
 
+/*EMPLOYMENT AVATAR CLASS*/
+::deep .statusRegular {
+    border: 5px solid #9BB67C;
+}
+
+::deep .statusProbationary {
+    border: 5px solid #ebc878;
+}
+
+::deep .statusCasual {
+    border: 5px solid #6096B4;
+}
+
+::deep .statusFixedTerm {
+    border: 5px solid #7F669D;
+}
+
+::deep .statusProjectBased {
+    border: 5px solid #6B240C;
+}
+
+/*EMPLOYMENT Text CLASS*/
+::deep .statusTextRegular {
+    color: #9BB67C;
+}
+
+::deep .statusTextProbationary {
+    color: #ebc878;
+}
+
+::deep .statusTextCasual {
+    color: #6096B4;
+}
+
+::deep .statusTextFixedTerm {
+    color: #7F669D;
+}
+
+::deep .statusTextProjectBased {
+    color: #6B240C;
+}
+
 /*STATUSCHIP LEFT BAR*/
 ::deep .statusActiveChip {
     background-color: #AAC8A7;

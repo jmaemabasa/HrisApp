@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Services.LicAndTrainService
+﻿using System.Diagnostics;
+
+namespace HrisApp.Client.Services.LicAndTrainService
 {
 #nullable disable
     public class LicenseTrainingService : ILicenseTrainingService
@@ -12,6 +14,7 @@
 
         public List<Emp_TrainingT> TrainingTs { get; set; } = new List<Emp_TrainingT>();
         public List<Emp_LicenseT> LicenseTs { get; set; } = new List<Emp_LicenseT>();
+        public List<Emp_ProfBackgroundT> Emp_ProfBackgroundTs { get; set; } = new List<Emp_ProfBackgroundT>();
 
         public async Task<List<Emp_TrainingT>> GetTraininglist(string verifyCode)
         {
@@ -64,6 +67,29 @@
         {
             var result = await _httpClient.DeleteAsync($"api/License/{id}");
             //await SetPrimary(result);
+        }
+
+
+        public async Task<List<Emp_ProfBackgroundT>> GetProfBglist(string verCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<Emp_ProfBackgroundT>>($"api/ProfBackground/GetProfBglist?verifyCode={verCode}");
+            return result;
+        }
+        public async Task<string> CreateProfBg(Emp_ProfBackgroundT profbg)
+        {
+            Console.WriteLine("Saving profbg");
+            var result = await _httpClient.PostAsJsonAsync("api/ProfBackground/InsertProfBg", profbg);
+            var response = await result.Content.ReadFromJsonAsync<Emp_ProfBackgroundT>();
+            return response?.Verify_Id;
+        }
+        public async Task UpdateProfBg(Emp_ProfBackgroundT profbg)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/ProfBackground/UpdateProfBg/{profbg.Id}", profbg);
+            var response = result.StatusCode.ToString();
+        }
+        public async Task DeleteProfBg(int id)
+        {
+            var result = await _httpClient.DeleteAsync($"api/ProfBackground/{id}");
         }
     }
 }

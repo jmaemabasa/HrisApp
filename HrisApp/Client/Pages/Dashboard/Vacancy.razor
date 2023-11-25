@@ -1,10 +1,11 @@
 ﻿@page "/vacancy"
 @inject IEmployeeService EmployeeService
+@inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject IPositionService PositionService
 @inject ISectionService SectionService
 
-@attribute [Authorize(Roles = "Admin, HR, User")]
+@attribute [Authorize(Roles = "System Administrator, HR, User")]
 
 <PageTitle>Vacancies</PageTitle>
 
@@ -20,110 +21,132 @@
     <MudGrid Justify="Justify.FlexStart" Spacing="5">
         @try
         {
-            @foreach (var department in DepartmentService.DepartmentTs)
+            @foreach (var division in DivisionService.DivisionTs)
             {
-                var departmentVacancies = allPositions
-                .Where(position => position.DepartmentId == department.Id)
+                var divisionVacancies = allPositions
+                .Where(position => position.DivisionId == division.Id)
                 .Select(position =>
                 {
                     var vacancy = position.Plantilla - positionCounts[position.Id];
                     return vacancy;
                 })
                 .Sum();
-
-                if (departmentVacancies > 0)
+                if (divisionVacancies > 0)
                 {
-                    <MudItem xs="12" sm="3">
-                        <MudCard Class="carddep divvac" Elevation="0">
-                            <MudCardContent Class="carddepcontent">
-                                <div class="d-flex justify-content-center gap-2 divvacheader" style="background-color: #F5F5FA;position: sticky;top: 0;margin-bottom: 10px;">
-                                    <div class="d-flex align-items-start gap-2" style="padding: 7px 0 7px 0;">
-                                        <MudIcon Class="child" Icon="@Icons.Material.TwoTone.Diversity3" Style="font-size: 1.4rem; color: #E38D0F" />
-                                        <span class="child" style="color: #424242; font-size: 16px; font-weight: bold">@department.Name</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    @{
-                                        var departmentHasSection = SectionService.SectionTs.Any(s => s.DepartmentId == department.Id);
-                                    }
-                                    @if (departmentHasSection)
-                                    {
-                                        @foreach (var position in allPositions.Where(p => p.DepartmentId == department.Id && p.SectionId == 0))
-                                        {
-                                            var vacancy = position.Plantilla - positionCounts[position.Id];
+                    <MudItem xs="12" Class="pb-0">
+                        <div class="d-flex align-items-center gap-3">
+                            <MudIcon Class="child" Icon="@Icons.Material.TwoTone.Workspaces" Style="font-size: 1.4rem; color: #908DE2" />
+                            <span style="font-weight: 700;font-size: 1.5em;">@division.Name</span>
+                        </div>
+                        
+                    </MudItem>
+                    @foreach (var department in DepartmentService.DepartmentTs.Where(d => d.DivisionId == division.Id))
+                    {
+                        var departmentVacancies = allPositions
+                        .Where(position => position.DepartmentId == department.Id)
+                        .Select(position =>
+                        {
+                            var vacancy = position.Plantilla - positionCounts[position.Id];
+                            return vacancy;
+                        })
+                        .Sum();
 
-                                            if (vacancy > 0)
-                                            {
-                                                <div class="divsingledetails d-flex justify-content-between mb-2">
-                                                    <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
-                                                    <div class="d-flex w-25 justify-content-between">
-                                                        <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                        <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
-                                                    </div>
-                                                </div>
+                        if (departmentVacancies > 0)
+                        {
+                            <MudItem xs="12" sm="3">
+                                <MudCard Class="carddep divvac" Elevation="0">
+                                    <MudCardContent Class="carddepcontent">
+                                        <div class="d-flex justify-content-center gap-2 divvacheader" style="background-color: #F5F5FA;position: sticky;top: 0;margin-bottom: 10px;">
+                                            <div class="d-flex align-items-start gap-2" style="padding: 7px 0 7px 0;">
+                                                <MudIcon Class="child" Icon="@Icons.Material.TwoTone.Diversity3" Style="font-size: 1.4rem; color: #E38D0F" />
+                                                <span class="child" style="color: #424242; font-size: 16px; font-weight: bold">@department.Name</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            @{
+                                                var departmentHasSection = SectionService.SectionTs.Any(s => s.DepartmentId == department.Id);
                                             }
-                                        }
-                                        var sections = SectionService.SectionTs.Where(s => s.DepartmentId == department.Id);
-                                        @if (sections.Any())
-                                        {
-                                            @foreach (var sect in sections)
+                                            @if (departmentHasSection)
                                             {
-                                                var sectionVacancies = allPositions
-                                                .Where(s => s.DepartmentId == department.Id && s.SectionId == sect.Id)
-                                                .Select(s =>
+                                                @foreach (var position in allPositions.Where(p => p.DepartmentId == department.Id && p.SectionId == 0))
                                                 {
-                                                    var vacancy = s.Plantilla - positionCounts[s.Id];
-                                                    return vacancy;
-                                                })
-                                                .Sum();
-                                                if (sectionVacancies > 0)
-                                                {
-                                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                                        <MudIcon Icon="@Icons.Material.TwoTone.Diversity2" Class="child" Style="font-size: 1.2rem; color: #F1BC3A" />
-                                                        <span class="child" style="font-size: 15px;">@sect.Name</span>
-                                                    </div>
-                                                    @foreach (var position in allPositions.Where(p => p.SectionId == sect.Id))
-                                                    {
-                                                        var vacancy = position.Plantilla - positionCounts[position.Id];
+                                                    var vacancy = position.Plantilla - positionCounts[position.Id];
 
-                                                        if (vacancy > 0)
-                                                        {
-                                                            <div class="divsingledetails d-flex justify-content-between mb-2 ms-3">
-                                                                <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
-                                                                <div class="d-flex w-25 justify-content-between">
-                                                                    <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                                    <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
-                                                                </div>
+                                                    if (vacancy > 0)
+                                                    {
+                                                        <div class="divsingledetails d-flex justify-content-between mb-2">
+                                                            <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                                            <div class="d-flex w-25 justify-content-between">
+                                                                <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                                                <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
                                                             </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                var sections = SectionService.SectionTs.Where(s => s.DepartmentId == department.Id);
+                                                @if (sections.Any())
+                                                {
+                                                    @foreach (var sect in sections)
+                                                    {
+                                                        var sectionVacancies = allPositions
+                                                        .Where(s => s.DepartmentId == department.Id && s.SectionId == sect.Id)
+                                                        .Select(s =>
+                                                        {
+                                                            var vacancy = s.Plantilla - positionCounts[s.Id];
+                                                            return vacancy;
+                                                        })
+                                                        .Sum();
+                                                        if (sectionVacancies > 0)
+                                                        {
+                                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                                <MudIcon Icon="@Icons.Material.TwoTone.Diversity2" Class="child" Style="font-size: 1.2rem; color: #F1BC3A" />
+                                                                <span class="child" style="font-size: 15px;">@sect.Name</span>
+                                                            </div>
+                                                            @foreach (var position in allPositions.Where(p => p.SectionId == sect.Id))
+                                                            {
+                                                                var vacancy = position.Plantilla - positionCounts[position.Id];
+
+                                                                if (vacancy > 0)
+                                                                {
+                                                                    <div class="divsingledetails d-flex justify-content-between mb-2 ms-3">
+                                                                        <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                                                        <div class="d-flex w-25 justify-content-between">
+                                                                            <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                                                            <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @foreach (var position in allPositions.Where(p => p.DepartmentId == department.Id))
-                                        {
-                                            var vacancy = position.Plantilla - positionCounts[position.Id];
-
-                                            if (vacancy > 0)
+                                            else
                                             {
-                                                <div class="divsingledetails d-flex justify-content-between mb-2">
-                                                    <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
-                                                    <div class="d-flex w-25 justify-content-between">
-                                                        <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                        <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
-                                                    </div>
-                                                </div>
+                                                @foreach (var position in allPositions.Where(p => p.DepartmentId == department.Id))
+                                                {
+                                                    var vacancy = position.Plantilla - positionCounts[position.Id];
+
+                                                    if (vacancy > 0)
+                                                    {
+                                                        <div class="divsingledetails d-flex justify-content-between mb-2">
+                                                            <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
+                                                            <div class="d-flex w-25 justify-content-between">
+                                                                <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
+                                                                <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
-                                </div>
-                            </MudCardContent>
-                        </MudCard>
-                    </MudItem>
+                                        </div>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    }
                 }
+                
             }
         }
         catch (Exception)

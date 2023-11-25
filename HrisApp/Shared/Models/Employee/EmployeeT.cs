@@ -31,6 +31,7 @@ namespace HrisApp.Shared.Models.Employee
         public int? Weight { get; set; }
         public DateTime Birthdate { get; set; }
         public int Age { get; set; }
+        [Required]
         public string Nationality { get; set; } = string.Empty;
         public GenderT? Gender { get; set; }
         public int GenderId { get; set; } //FK
@@ -40,8 +41,10 @@ namespace HrisApp.Shared.Models.Employee
         public int ReligionId { get; set; } //FK
 
         //CONTACT INFO
+        [Required]
         public string MobileNumber { get; set; } = string.Empty;
         //[EmailAddress]
+        [Required]
         public string Email { get; set; } = string.Empty;
 
         //EMERGENCY CONTACT

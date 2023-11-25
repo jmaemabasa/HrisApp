@@ -392,7 +392,7 @@ namespace HrisApp.Client.Pages.Employee
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(0));
-                    builder.AddContent(6, "Personal and Job Data");
+                    builder.AddContent(6, "Personal Data");
                     builder.CloseComponent();
                 }
                 else if (tabId == 1)
@@ -403,7 +403,7 @@ namespace HrisApp.Client.Pages.Employee
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(1));
-                    builder.AddContent(6, "Emergency and Address Data");
+                    builder.AddContent(6, "Work Data");
                     builder.CloseComponent();
                 }
                 else if (tabId == 2)
@@ -425,7 +425,7 @@ namespace HrisApp.Client.Pages.Employee
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(3));
-                    builder.AddContent(6, "Licences & Training");
+                    builder.AddContent(6, "Professional Background");
                     builder.CloseComponent();
                 }
                 else if (tabId == 4)
@@ -436,7 +436,7 @@ namespace HrisApp.Client.Pages.Employee
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(4));
-                    builder.AddContent(6, "Documents");
+                    builder.AddContent(6, "Attachment");
                     builder.CloseComponent();
                 }
             };
@@ -542,6 +542,31 @@ namespace HrisApp.Client.Pages.Employee
                 "Terminated" => "statusTerminatedChip",
                 "Retired" => "statusRetiredChip",
                 _ => "statusRetiredChip",
+            };
+        }
+
+        private static string StatusAvatarColor(string status)
+        {
+            return status switch
+            {
+                "Regular" => "statusRegular",
+                "Probationary" => "statusProbationary",
+                "Casual" => "statusCasual",
+                "Fixed Term" => "statusFixedTerm",
+                "Project Based" => "statusProjectBased",
+                _ => "",
+            };
+        }
+        private static string StatusTextColor(string status)
+        {
+            return status switch
+            {
+                "Regular" => "statusTextRegular",
+                "Probationary" => "statusTextProbationary",
+                "Casual" => "statusTextCasual",
+                "Fixed Term" => "statusTextFixedTerm",
+                "Project Based" => "statusTextProjectBased",
+                _ => "",
             };
         }
 

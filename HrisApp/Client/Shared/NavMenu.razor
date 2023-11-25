@@ -12,18 +12,25 @@
             <MudNavLink Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
             <MudNavLink Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employee</MudNavLink>
             <MudNavLink Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
-            <MudNavGroup Title="Master Data" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
-                <MudNavLink Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
-                <MudNavLink Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
-                <MudNavLink Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
-                <MudNavLink Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
-                <MudNavLink Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
-                <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink>
-            </MudNavGroup>
-            <MudNavGroup Title="Account" Expanded="false" Icon="@Icons.Material.Rounded.LockPerson" IconColor="Color.Inherit">
-                <MudNavLink Href="/accounts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">User List</MudNavLink>
-                <MudNavLink Href="/auditlog" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.History" IconColor="Color.Inherit">Audit Log</MudNavLink>
-            </MudNavGroup>
+                <AuthorizeView Roles="System Administrator">
+                    <Authorized>
+                        <MudNavGroup Title="Master Data" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
+                            <MudNavLink Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
+                            <MudNavLink Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
+                            <MudNavLink Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
+                            <MudNavLink Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
+                            <MudNavLink Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
+                            @* <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink> *@
+                        </MudNavGroup>
+                        <MudNavGroup Title="Account" Expanded="false" Icon="@Icons.Material.Rounded.LockPerson" IconColor="Color.Inherit">
+                            <MudNavLink Href="/accounts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">User List</MudNavLink>
+                            <MudNavLink Href="/auditlog" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.History" IconColor="Color.Inherit">Audit Log</MudNavLink>
+                        </MudNavGroup>
+                    </Authorized>
+                    <NotAuthorized></NotAuthorized>
+                </AuthorizeView>
+                
+           
         </div>
         <div class="mb-5">
             
