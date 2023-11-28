@@ -77,7 +77,17 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
             var returnmodel = returnlist.Where(e => e.Id == id).FirstOrDefault();
 
-            return $"{returnmodel.FirstName} {returnmodel.LastName}";
+            return $"{CapitalizeFirstLetter(returnmodel.FirstName)} {CapitalizeFirstLetter(returnmodel.LastName)}";
+        }
+
+        public string CapitalizeFirstLetter(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            return char.ToUpper(input[0]) + input[1..];
         }
     }
 }

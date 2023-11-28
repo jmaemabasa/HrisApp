@@ -16,7 +16,8 @@ namespace HrisApp.Client.Pages.Employee
         Emp_PayrollT _payroll = new();
         //EmpPictureT _empPicture = new();
         Emp_EmploymentDateT _employmentDate = new();
-
+        Emp_PosHistoryT _updateposHistory = new();
+        public Emp_PosHistoryT empHistory = new();
         #endregion
 
         #region LIST TABLE VARIABLES
@@ -42,6 +43,8 @@ namespace HrisApp.Client.Pages.Employee
         private List<RestDayT> RestDayL = new();
 
         private List<DocumentT> pdffileList = new();
+        private List<Emp_PosHistoryT> empHistoryList = new();
+
         #endregion
 
         #region DATES VARIBALE
@@ -125,21 +128,22 @@ namespace HrisApp.Client.Pages.Employee
 
         protected override async Task OnParametersSetAsync()
         {
-            employee = await EmployeeService.GetSingleEmployee((int)id);
-            _address = await AddressService.GetSingleAddress((int)id);
-            _payroll = await PayrollService.GetSinglePayroll((int)id);
+            employee = await EmployeeService.GetSingleEmployee(id);
+            _address = await AddressService.GetSingleAddress(id);
+            _payroll = await PayrollService.GetSinglePayroll(id);
 
-            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
+            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(id);
 
             await PDFImage(employee.Verify_Id, employee.EmployeeNo);
             await ImageService.GetNewPDF(employee.Verify_Id, employee.EmployeeNo);
             pdffileList = ImageService.DocumentTs;
 
             VerifyCode = employee.Verify_Id;
-
             try
             {
+                _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                 await EmployeeImg(employee.Verify_Id);//image
+                Console.WriteLine($"{_updateposHistory.NewAreaId} {_updateposHistory.NewPositionId}");
             }
             catch (Exception)
             {
@@ -202,6 +206,25 @@ namespace HrisApp.Client.Pages.Employee
                     _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
                     await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
+                    //UPDATE THE LAST EMPLOYEE HISTORY END and MODIFIED DATE
+                    if (_updateposHistory.NewAreaId != employee.AreaId || _updateposHistory.NewDivisionId != employee.DivisionId || _updateposHistory.NewDepartmentId != employee.DepartmentId || _updateposHistory.NewSectionId != employee.SectionId || _updateposHistory.NewPositionId != employee.PositionId)
+                    {
+                        _updateposHistory.DateModified = DateTime.Now;
+                        _updateposHistory.DateEnded = DateTime.Now;
+                        await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
+
+                        //CREATE EMPLOYEE HISTORY
+                        empHistory.Verify_Id = VerifyCode;
+                        empHistory.Id = 0;
+                        empHistory.DateStarted = DateTime.Now;
+                        empHistory.NewAreaId = employee.AreaId;
+                        empHistory.NewDivisionId = employee.DivisionId;
+                        empHistory.NewDepartmentId = employee.DepartmentId;
+                        empHistory.NewSectionId = employee.SectionId;
+                        empHistory.NewPositionId = employee.PositionId;
+                        var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
+                    }
+
                     await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                     _toastService.ShowSuccess("Information updated successfully!");
 
@@ -209,6 +232,7 @@ namespace HrisApp.Client.Pages.Employee
                     employee = await EmployeeService.GetSingleEmployee((int)id);
                     _address = await AddressService.GetSingleAddress((int)id);
                     _payroll = await PayrollService.GetSinglePayroll((int)id);
+                    _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                     //_empPicture = await ImageService.GetSingleImage((int)id);
                     _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 
@@ -245,6 +269,29 @@ namespace HrisApp.Client.Pages.Employee
                 _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
                 await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
 
+                //UPDATE THE LAST EMPLOYEE HISTORY END and MODIFIED DATE
+                if (_updateposHistory.NewAreaId != employee.AreaId || _updateposHistory.NewDivisionId != employee.DivisionId || _updateposHistory.NewDepartmentId != employee.DepartmentId || _updateposHistory.NewSectionId != employee.SectionId || _updateposHistory.NewPositionId != employee.PositionId)
+                {
+                    _updateposHistory.DateModified = DateTime.Now;
+                    _updateposHistory.DateEnded = DateTime.Now;
+                    await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
+
+                    //CREATE EMPLOYEE HISTORY
+                    empHistory.Verify_Id = VerifyCode;
+                    empHistory.Id = 0;
+                    empHistory.DateStarted = DateTime.Now;
+                    empHistory.NewAreaId = employee.AreaId;
+                    empHistory.NewDivisionId = employee.DivisionId;
+                    empHistory.NewDepartmentId = employee.DepartmentId;
+                    empHistory.NewSectionId = employee.SectionId;
+                    empHistory.NewPositionId = employee.PositionId;
+                    var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
+
+                    
+                    var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
+                    StateService.SetState("HistoryPosList", newList);
+                }
+
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                 _toastService.ShowSuccess("Information updated successfully!");
 
@@ -252,6 +299,7 @@ namespace HrisApp.Client.Pages.Employee
                 employee = await EmployeeService.GetSingleEmployee((int)id);
                 _address = await AddressService.GetSingleAddress((int)id);
                 _payroll = await PayrollService.GetSinglePayroll((int)id);
+                _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                 //_empPicture = await ImageService.GetSingleImage((int)id);
                 _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
 

@@ -10,6 +10,7 @@
 @inject IImageService ImageService
 @inject IEducationService EducationService
 @inject IEmploymentDateService EmploymentDateService
+@inject IEmpHistoryService EmpHistoryService
 @inject IPayrollService PayrollService
 @inject ILicenseTrainingService LicenseTrainingService
 @inject IStaticService StaticService
@@ -21,6 +22,7 @@
 @inject GlobalConfigService GlobalConfigService
 @inject IAuditlogService AuditlogService
 @inject BackUpDeletion BackUpDeletion
+@inject StateService StateService
 
 @attribute [Authorize(Roles = "HR, System Administrator")]
 <PageTitle>Update Employee</PageTitle>
@@ -314,7 +316,7 @@
                         </MudCard>
                     </MudTabPanel>
                     <MudTabPanel TabContent="tabHeader(1)">
-                    <MudCard Class="empdmain">
+                        <MudCard Class="empdmain">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="spantitle mb-3">Work Information</span>
@@ -516,6 +518,11 @@
                                         </MudItem>
                                     </div>
                                 </div>
+                            </MudCardContent>
+                        </MudCard>
+                        <MudCard Class="empdmain" Style="margin-top: 2rem;">
+                            <MudCardContent>
+                               <EmployeePosHistory VerifyCode="@VerifyCode"/>
                             </MudCardContent>
                         </MudCard>
                     </MudTabPanel>
@@ -754,7 +761,7 @@
                 <div class="d-flex flex-row gap-4 mb-2 align-items-center">
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Area of Assignment</MudText>
-                        <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.AreaId" Margin="Margin.Dense">
+                        <MudSelect Class="@slectClasss" DisableUnderLine Immediate=true @bind-Value="employee.AreaId" Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var area in AreasL)
                             {
@@ -886,7 +893,7 @@
                 {
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Division</MudText>
-                        <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DivisionId" Margin="Margin.Dense">
+                        <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DivisionId" Immediate=true Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var div in DivisionsL)
                             {
@@ -896,7 +903,7 @@
                     </MudItem>
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Department</MudText>
-                        <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DepartmentId" Margin="Margin.Dense">
+                        <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DepartmentId" Immediate=true Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
                             {
@@ -909,7 +916,7 @@
                         var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
                         <MudItem xs="12" Class="mb-2">
                             <MudText Typo="Typo.body2">Section</MudText>
-                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Margin="Margin.Dense">
+                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Immediate=true Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @if (sections.Any())
                                 {
@@ -926,7 +933,7 @@
                         </MudItem>
                         <MudItem xs="12" Class="mb-2">
                             <MudText Typo="Typo.body2">Position</MudText>
-                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Margin="Margin.Dense">
+                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Immediate=true Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var pos in PositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId))
                                 {
@@ -947,7 +954,7 @@
                 {
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Division</MudText>
-                        <MudSelect @bind-Value="employee.DivisionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                        <MudSelect @bind-Value="employee.DivisionId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var div in DivisionsL)
                             {
@@ -957,7 +964,7 @@
                     </MudItem>
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Department</MudText>
-                        <MudSelect @bind-Value="employee.DepartmentId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                        <MudSelect @bind-Value="employee.DepartmentId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
                             {
@@ -967,7 +974,7 @@
                     </MudItem>
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Position</MudText>
-                        <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Margin="Margin.Dense">
+                        <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @foreach (var pos in PositionsL.Where(d => d.DepartmentId == employee.DepartmentId))
                             {

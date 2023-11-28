@@ -1,0 +1,126 @@
+﻿@page "/employeehistory"
+@inject IEmpHistoryService EmpHistoryService
+@inject IDepartmentService DepartmentService
+@inject IPositionService PositionService
+@inject IAreaService AreaService
+@inject StateService StateService
+@inject NavigationManager NavigationManager
+
+<style>
+    .stable {
+        background: #e9ecef;
+        border-radius: 20px;
+        
+    }
+
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+</style>
+
+@if (empHistoryList.Count == 0 || empHistoryList == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No History.</span>
+    </div>
+}
+else
+{
+    <MudTable Class="stable" Items="empHistoryList" Context="history" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                <span class="spantitle mb-3">Employee Position History</span>
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Position</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Started</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Ended</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Area</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Department</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="">
+                @foreach (var item in PositionsL)
+                {
+                    if (item.Id == history.NewPositionId)
+                    {
+                        @item.Name
+                    }
+                }
+            </MudTd>
+            <MudTd DataLabel="">@history.DateStarted?.ToString("MM/dd/yyyy")</MudTd>
+            <MudTd DataLabel="">@history.DateEnded?.ToString("MM/dd/yyyy")</MudTd>
+            <MudTd DataLabel="">
+                @foreach (var item in AreasL)
+                {
+                    if (item.Id == history.NewAreaId)
+                    {
+                        @item.Name
+                    }
+                }
+            </MudTd>
+            <MudTd DataLabel="">
+                @foreach (var item in DepartmentsL)
+                {
+                    if (item.Id == history.NewDepartmentId)
+                    {
+                        @item.Name
+                    }
+                }
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+
+@code {
+    //TABLEEES
+    List<Emp_PosHistoryT> empHistoryList = new();
+    private Emp_PosHistoryT selectedItem1 = null;
+
+    private List<AreaT> AreasL = new();
+    private List<DepartmentT> DepartmentsL = new();
+    private List<PositionT> PositionsL = new();
+
+    private readonly Emp_PosHistoryT college = new();
+    [Parameter]
+    public string VerifyCode { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AreaService.GetArea();
+        AreasL = AreaService.AreaTs;
+        await DepartmentService.GetDepartment();
+        DepartmentsL = DepartmentService.DepartmentTs;
+        await PositionService.GetPosition();
+        PositionsL = PositionService.PositionTs;
+    }
+
+    private async Task LoadList()
+    {
+        empHistoryList =  await EmpHistoryService.GetEmpHistoryList(VerifyCode);
+        StateService.SetState("HistoryPosList", empHistoryList);
+    }
+
+    private void OnStateChanged()
+    {
+        empHistoryList = StateService.GetState<List<Emp_PosHistoryT>>("HistoryPosList");
+        StateHasChanged();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            // empHistoryList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
+            StateService.OnChange += OnStateChanged;
+            await LoadList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+}

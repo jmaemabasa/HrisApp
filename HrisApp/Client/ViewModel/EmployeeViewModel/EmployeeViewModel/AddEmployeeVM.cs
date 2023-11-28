@@ -20,6 +20,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         ISectionService SectionService = new SectionService();
         IPositionService PositionService = new PositionService();
         IStaticService StaticService = new StaticService();
+        IEmpHistoryService EmpHistoryService = new EmpHistoryService();
+
         public SweetAlertService Swal { get; set; }
 
         private readonly GlobalConfigService GlobalConfigService;
@@ -42,6 +44,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public Emp_EmploymentDateT employmentDate = new();
         public Emp_PayrollT payroll = new();
         public Emp_LicenseT license = new();
+        public Emp_PosHistoryT empHistory = new();
 
         public async Task OnRefreshPage()
         {
@@ -256,6 +259,17 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     payroll.Paytype = "";
                     payroll.Verify_Id = verifyId;
                     var savepayroll = await PayrollService.CreatePayroll(payroll);
+
+                    //CREATE EMPLOYEE HISTORY
+                    empHistory.Verify_Id = verifyId;
+                    empHistory.Id = employee.Id;
+                    empHistory.DateStarted = employee.DateHired;
+                    empHistory.NewAreaId = employee.AreaId;
+                    empHistory.NewDivisionId = employee.DivisionId;
+                    empHistory.NewDepartmentId = employee.DepartmentId;
+                    empHistory.NewSectionId = employee.SectionId;
+                    empHistory.NewPositionId = employee.PositionId;
+                    var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
                     //CREATE FILES AND IMAGE
                     var divisionString = employee.DivisionId;

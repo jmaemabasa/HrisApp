@@ -250,6 +250,7 @@ namespace HrisApp.Server.Data
         public DbSet<EmerRelationshipT> EmerRelationshipT { get; set; }
         public DbSet<Emp_EmploymentDateT> Emp_EmploymentDateT { get; set; }
         public DbSet<Emp_ProfBackgroundT> Emp_ProfBackgroundT { get; set; }
+        public DbSet<Emp_PosHistoryT> Emp_PosHistoryT { get; set; }
 
         //EDUCATIONS
         public DbSet<Emp_CollegeT> Emp_CollegeT { get; set; }
