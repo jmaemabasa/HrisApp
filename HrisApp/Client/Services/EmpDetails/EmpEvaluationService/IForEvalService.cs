@@ -2,11 +2,11 @@
 {
     public interface IForEvalService
     {
-        List<EmployeeEvaluationT> EmployeeEvaluationTs { get; set; }
-        Task<List<EmployeeEvaluationT>> GetForEvallist(string verCode);
+        List<Emp_EvaluationT> Emp_EvaluationTs { get; set; }
+        Task<List<Emp_EvaluationT>> GetForEvallist(string verCode);
         Task GetForEval();
-        Task<EmployeeEvaluationT> GetSingleEval(int id);
-        Task<string> CreateForEval(EmployeeEvaluationT eval);
-        Task UpdateForEval(EmployeeEvaluationT eval);
+        Task<Emp_EvaluationT> GetSingleEval(int id);
+        Task<string> CreateForEval(Emp_EvaluationT eval);
+        Task UpdateForEval(Emp_EvaluationT eval);
     }
 }

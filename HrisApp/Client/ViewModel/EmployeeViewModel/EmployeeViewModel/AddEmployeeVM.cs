@@ -21,7 +21,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         IPositionService PositionService = new PositionService();
         IStaticService StaticService = new StaticService();
         IEmpHistoryService EmpHistoryService = new EmpHistoryService();
-        //IForEvalService ForEvalService = new ForEvalService();
+        IForEvalService ForEvalService = new ForEvalService();
 
         public SweetAlertService Swal { get; set; }
 
@@ -46,7 +46,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public Emp_PayrollT payroll = new();
         public Emp_LicenseT license = new();
         public Emp_PosHistoryT empHistory = new();
-        //public EmployeeEvaluationT empEvaluation = new();
+        public Emp_EvaluationT empEvaluation = new();
 
         public async Task OnRefreshPage()
         {
@@ -274,16 +274,18 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
                     //CREATE EMP EVAL
-                    //empEvaluation.Verify_Id = verifyId;
-                    //empEvaluation.EmployeeId = employee.Id;
-                    //empEvaluation.Eval1Status = employee.DateHired >= DateTime.Now.AddMonths(-2) ? "Done" : "Pending";
-                    //empEvaluation.Eval2Status = employee.DateHired >= DateTime.Now.AddMonths(-3) && employee.DateHired <= DateTime.Now.AddMonths(-2) ? "Done" : "Pending";
-                    //empEvaluation.Eval3Status = employee.DateHired >= DateTime.Now.AddMonths(-4) && employee.DateHired <= DateTime.Now.AddMonths(-3) ? "Done" : "Pending";
-                    //empEvaluation.Eval4Status = employee.DateHired >= DateTime.Now.AddMonths(-5) && employee.DateHired <= DateTime.Now.AddMonths(-4) ? "Done" : "Pending";
-                    //empEvaluation.Eval5Status = employee.DateHired >= DateTime.Now.AddMonths(-6) && employee.DateHired <= DateTime.Now.AddMonths(-5) ? "Done" : "Pending";
-                    //empEvaluation.Eval6Status = employee.DateHired >= DateTime.Now.AddMonths(-7) && employee.DateHired <= DateTime.Now.AddMonths(-6) ? "Done" : "Pending";
-                    //empEvaluation.EvalStatus = empEvaluation.Eval1Status == "Done" && empEvaluation.Eval2Status == "Done" && empEvaluation.Eval3Status == "Done" && empEvaluation.Eval4Status == "Done" && empEvaluation.Eval5Status == "Done" && empEvaluation.Eval6Status == "Done" ? "Done" : "Pending";
-                    //var saveeval = await ForEvalService.CreateForEval(empEvaluation);
+                    empEvaluation.Verify_Id = verifyId;
+                    empEvaluation.Eval1Status = employee.DateHired < DateTime.Now.AddMonths(-2) ? "Done" : "Pending";
+                    empEvaluation.Eval2Status = (employee.DateHired < DateTime.Now.AddMonths(-3) && employee.DateHired > DateTime.Now.AddMonths(-2)) ? "Done" : "Pending";
+                    empEvaluation.Eval3Status = (employee.DateHired < DateTime.Now.AddMonths(-4) && employee.DateHired > DateTime.Now.AddMonths(-3)) ? "Done" : "Pending";
+                    empEvaluation.Eval4Status = (employee.DateHired < DateTime.Now.AddMonths(-5) && employee.DateHired > DateTime.Now.AddMonths(-4)) ? "Done" : "Pending";
+                    empEvaluation.Eval5Status = (employee.DateHired < DateTime.Now.AddMonths(-6) && employee.DateHired > DateTime.Now.AddMonths(-5)) ? "Done" : "Pending";
+                    empEvaluation.Eval6Status = (employee.DateHired < DateTime.Now.AddMonths(-7) && employee.DateHired > DateTime.Now.AddMonths(-6)) ? "Done" : "Pending";
+                    empEvaluation.EvalStatus = empEvaluation.Eval1Status == "Done" && empEvaluation.Eval2Status == "Done" && empEvaluation.Eval3Status == "Done" && empEvaluation.Eval4Status == "Done" && empEvaluation.Eval5Status == "Done" && empEvaluation.Eval6Status == "Done" ? "Done" : "Pending";
+                    empEvaluation.DateHired = employee.DateHired;
+                    empEvaluation.DateEvaluate = DateTime.Now;
+                    empEvaluation.TimesEvaluate += 1;
+                    var saveeval = await ForEvalService.CreateForEval(empEvaluation);
 
                     //CREATE FILES AND IMAGE
                     var divisionString = employee.DivisionId;

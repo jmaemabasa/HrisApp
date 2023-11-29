@@ -99,7 +99,7 @@ builder.Services.AddScoped<IEmploymentDateService, EmploymentDateService>();
 builder.Services.AddScoped<IEmpHistoryService, EmpHistoryService>();
 builder.Services.AddScoped<IAuditlogService, AuditlogService>();
 builder.Services.AddScoped<IStaticService, StaticService>();
-//builder.Services.AddScoped<IForEvalService, ForEvalService>();
+builder.Services.AddScoped<IForEvalService, ForEvalService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();

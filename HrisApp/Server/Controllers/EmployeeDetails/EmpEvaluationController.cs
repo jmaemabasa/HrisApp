@@ -1,78 +1,78 @@
-﻿//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-//namespace HrisApp.Server.Controllers.EmployeeDetails
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class EmpEvaluationController : ControllerBase
-//    {
+namespace HrisApp.Server.Controllers.EmployeeDetails
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EmpEvaluationController : ControllerBase
+    {
 
-//        private readonly DataContext _context;
+        private readonly DataContext _context;
 
-//        public EmpEvaluationController(DataContext context)
-//        {
-//            _context = context;
-//        }
+        public EmpEvaluationController(DataContext context)
+        {
+            _context = context;
+        }
 
-//        [HttpGet("GetForEvallist")]
-//        public async Task<ActionResult<List<EmployeeEvaluationT>>> GetForEvallist([FromQuery] string verCode)
-//        {
-//            var histlist = await _context.EmployeeEvaluationT
-//                //.Where(x => x.Verify_Id == verCode && x.Employee.DateHired != null)
-//                //.OrderByDescending(x => x.DateEnded)
-//                .ToListAsync();
+        [HttpGet("GetForEvallist")]
+        public async Task<ActionResult<List<Emp_EvaluationT>>> GetForEvallist([FromQuery] string verCode)
+        {
+            var histlist = await _context.Emp_EvaluationT
+                //.Where(x => x.Verify_Id == verCode && x.Employee.DateHired != null)
+                //.OrderByDescending(x => x.DateEnded)
+                .ToListAsync();
 
-//            return Ok(histlist);
-//        }
+            return Ok(histlist);
+        }
 
-//        [HttpGet("GetForEval")]
-//        public async Task<ActionResult<List<EmployeeEvaluationT>>> GetForEval()
-//        {
-//            var empHis = await _context.EmployeeEvaluationT
-//                .ToListAsync();
-//            return Ok(empHis);
-//        }
+        [HttpGet("GetForEval")]
+        public async Task<ActionResult<List<Emp_EvaluationT>>> GetForEval()
+        {
+            var empHis = await _context.Emp_EvaluationT
+                .ToListAsync();
+            return Ok(empHis);
+        }
 
-//        [HttpGet("{id}")]
-//        public async Task<ActionResult<EmployeeEvaluationT>> GetSingleEval(int id)
-//        {
-//            var history = await _context.EmployeeEvaluationT
-//                .FirstOrDefaultAsync(h => h.Id == id);
-//            if (history == null)
-//            {
-//                return NotFound("sorry no history here");
-//            }
-//            return Ok(history);
-//        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Emp_EvaluationT>> GetSingleEval(int id)
+        {
+            var history = await _context.Emp_EvaluationT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (history == null)
+            {
+                return NotFound("sorry no history here");
+            }
+            return Ok(history);
+        }
 
-//        private async Task<List<EmployeeEvaluationT>> GetDBEval()
-//        {
-//            return await _context.EmployeeEvaluationT
-//                .ToListAsync();
-//        }
+        private async Task<List<Emp_EvaluationT>> GetDBEval()
+        {
+            return await _context.Emp_EvaluationT
+                .ToListAsync();
+        }
 
-//        [HttpPost("CreateForEval")]
-//        public async Task<ActionResult<List<EmployeeEvaluationT>>> CreateForEval(EmployeeEvaluationT eval)
-//        {
-//            _context.EmployeeEvaluationT.Add(eval);
-//            await _context.SaveChangesAsync();
+        [HttpPost("CreateForEval")]
+        public async Task<ActionResult<List<Emp_EvaluationT>>> CreateForEval(Emp_EvaluationT eval)
+        {
+            _context.Emp_EvaluationT.Add(eval);
+            await _context.SaveChangesAsync();
 
-//            return Ok(await GetDBEval());
-//        }
+            return Ok(await GetDBEval());
+        }
 
-//        [HttpPut("{id}")]
-//        public async Task<ActionResult<List<EmployeeEvaluationT>>> UpdateForEval(EmployeeEvaluationT emphistory, int id)
-//        {
-//            var dbEmployeeHis = await _context.EmployeeEvaluationT.FirstOrDefaultAsync(e => e.Id == emphistory.Id);
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<Emp_EvaluationT>>> UpdateForEval(Emp_EvaluationT emphistory, int id)
+        {
+            var dbEmployeeHis = await _context.Emp_EvaluationT.FirstOrDefaultAsync(e => e.Id == emphistory.Id);
 
-//            if (dbEmployeeHis != null)
-//            {
-//                dbEmployeeHis.EvalStatus = emphistory.EvalStatus;
+            if (dbEmployeeHis != null)
+            {
+                dbEmployeeHis.EvalStatus = emphistory.EvalStatus;
 
-//                await _context.SaveChangesAsync();
-//            }
-//            return Ok(await GetDBEval());
-//        }
-//    }
-//}
+                await _context.SaveChangesAsync();
+            }
+            return Ok(await GetDBEval());
+        }
+    }
+}

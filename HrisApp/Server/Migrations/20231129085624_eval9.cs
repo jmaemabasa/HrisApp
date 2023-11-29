@@ -4,17 +4,16 @@
 
 namespace HrisApp.Server.Migrations
 {
-    public partial class eval : Migration
+    public partial class eval9 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "EmployeeEvaluationT",
+                name: "Emp_EvaluationT",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
                     Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Eval1Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Eval2Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -26,25 +25,31 @@ namespace HrisApp.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeEvaluationT", x => x.Verify_Id);
-                    table.ForeignKey(
-                        name: "FK_EmployeeEvaluationT_EmployeeT_EmployeeId",
-                        column: x => x.Verify_Id,
-                        principalTable: "EmployeeT",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Emp_EvaluationT", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeEvaluationT_EmployeeId",
-                table: "EmployeeEvaluationT",
-                column: "EmployeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "EmployeeEvaluationT");
+            migrationBuilder.CreateTable(
+                name: "EmployeeEvaluationT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeVerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval1Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval2Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval3Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval4Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval5Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval6Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EvalStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeEvaluationT", x => x.Id);
+                });
         }
     }
 }

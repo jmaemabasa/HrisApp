@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231129081834_eval1")]
-    partial class eval1
+    [Migration("20231129085624_eval9")]
+    partial class eval9
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1179,6 +1179,51 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("Emp_EmploymentDateT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_EvaluationT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Eval1Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval2Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval3Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval4Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval5Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval6Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvalStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emp_EvaluationT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_PosHistoryT", b =>
                 {
                     b.Property<int>("Id")
@@ -1260,56 +1305,6 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Emp_ProfBackgroundT");
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmployeeEvaluationT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmployeeVerify_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval1Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval2Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval3Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval4Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval5Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval6Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EvalStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("EmployeeEvaluationT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmployeeT", b =>
@@ -3655,15 +3650,6 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("RestDay");
 
                     b.Navigation("ScheduleType");
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmployeeEvaluationT", b =>
-                {
-                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmployeeT", b =>
