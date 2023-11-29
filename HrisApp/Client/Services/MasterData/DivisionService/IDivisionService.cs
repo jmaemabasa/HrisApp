@@ -15,5 +15,8 @@ namespace HrisApp.Client.Services.MasterData.DivisionService
         Task CreateDivision(string divisionName);
 
         Task UpdateDivision(DivisionT division);
+
+        Task<List<string>> GetAllDivisionName();
+        Task<int> GetCountDivision();
     }
 }

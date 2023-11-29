@@ -33,7 +33,7 @@
                         <span style="font-size: 20px;">You have @_countForEval employees pending for evaluation!</span>
                     </div>
                     <div class="">
-                        <MudButton id="evalpanelbtn" Class="btnadd">Check Now</MudButton>
+                        <MudButton id="evalpanelbtn" OnClick="NavForEval" Class="btnadd">Check Now</MudButton>
                     </div>
             </MudCardContent>
         </MudCard>
@@ -50,17 +50,12 @@
     <MudItem xs="12" sm="12">
         <MudCard Class="linepanel">
             <MudCardContent>
-                <div>
-                    <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+                @* <div style="width: 100%">
+                    <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Ch_Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
                 </div>
-                <MudText Typo="Typo.h6">Selected portion of the chart: @Index</MudText>
+                <MudText Typo="Typo.h6">Selected portion of the chart: @Ch_Index</MudText> *@
             </MudCardContent>
         </MudCard>
     </MudItem>
 
-
-
-    @* <h1>@GlobalConfigService.Fullname</h1> *@
-    
-    @*<h1>@FULLNAME</h1>*@
 </MudGrid>

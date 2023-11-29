@@ -199,5 +199,17 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
             var _response = emp.Where(e => e.Id == empid).ToList();
             return Ok(_response);
         }
+
+        [HttpGet("EmployeeCount")]
+        public async Task<ActionResult<int>> GetEmployeeCount()
+        {
+            var Masterlist = await _context.EmployeeT
+                .ToListAsync();
+
+            var returnCount = Masterlist.Count();
+            return Ok(returnCount);
+        }
+
+        
     }
 }

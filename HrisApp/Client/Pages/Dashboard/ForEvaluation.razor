@@ -1,0 +1,429 @@
+﻿@page "/evaluation"
+@inject IEmployeeService EmployeeService
+@inject NavigationManager NavManager
+
+@attribute [Authorize(Roles = "System Administrator, HR, User")]
+
+<PageTitle>Evaluation</PageTitle>
+
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <div class="d-flex align-items-center">    
+            <MudIcon Icon="@Icons.Material.TwoTone.ContentPasteSearch" Style="font-size: 2.2em;margin-right: 10px;color: #E38D0F;" />
+            <span style="font-size: x-large;font-weight: 600;color: #424242;">Employees For Evaluation : <span style="color: #E38D0F">@_totalCountEval</span></span>
+        </div>
+        <span style="font-size: x-large; color: #424242;">@DateTime.Now.ToString("dddd, dd MMMM yyyy")</span>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <MudGrid>
+        <MudItem xs="12">
+            <div>
+                <fieldset class="p-3">
+                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 1st Month</legend>
+                    @* <span class="evaltitle">Evaluations for First Month</span> *@
+                    @if (EmpFirstEval == null || EmpFirstEval.Count == 0)
+                    {
+                        <span class="evaltitle">No Employees for Evaluation.</span>
+                    }
+                    else
+                    {
+                        <MudTable Class="stable" Items="@EmpFirstEval" Context="employe1" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="193px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+                            <HeaderContent>
+                                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                                        Full Name
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                                        ID No
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Position</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Division</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Department</MudTh>
+                                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                                        Date Hired
+                                    </MudTableSortLabel>
+                                </MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe1.Id))" DataLabel="Full Name">
+                                    <div class="d-flex flex-row align-items-center gap-3">
+                                        <div class="d-flex align-items-center">
+                                            <EmployeeAvatar verify="@employe1.Verify_Id" />
+                                        </div>
+                                        <div>
+                                            <div class="flex-column">
+                                                <div>@CapitalizeFirstLetter(employe1.FirstName)  @(employe1.MiddleName != "" ? $"{employe1.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employe1.LastName)</div>
+                                                <div style="font-weight: bold;">@employe1.Email</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe1.Id))" DataLabel="Position">@employe1.EmployeeNo</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe1.Id))" DataLabel="Position">@employe1.Position?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe1.Id))" DataLabel="Division">
+                                    @employe1.Division?.Name
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe1.Id))" DataLabel="Department">@employe1.Department?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe1.Id))" DataLabel="Date Hired">@employe1.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </fieldset>
+                
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <div>
+                <fieldset class="p-3">
+                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 2nd Month</legend>
+                    @* <span class="evaltitle">Evaluations for First Month</span> *@
+                    @if (EmpSecondEval == null || EmpSecondEval.Count == 0)
+                    {
+                        <span class="evaltitle">No Employees for Evaluation.</span>
+                    }
+                    else
+                    {
+                        <MudTable Class="stable" Items="@EmpSecondEval" Context="employe2" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="193px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+                            <HeaderContent>
+                                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                                        Full Name
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                                        ID No
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Position</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Division</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Department</MudTh>
+                                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                                        Date Hired
+                                    </MudTableSortLabel>
+                                </MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Full Name">
+                                    <div class="d-flex flex-row align-items-center gap-3">
+                                        <div class="d-flex align-items-center">
+                                            <EmployeeAvatar verify="@employe2.Verify_Id" />
+                                        </div>
+                                        <div>
+                                            <div class="flex-column">
+                                                <div>@CapitalizeFirstLetter(employe2.FirstName)  @(employe2.MiddleName != "" ? $"{employe2.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employe2.LastName)</div>
+                                                <div style="font-weight: bold;">@employe2.Email</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.EmployeeNo</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.Position?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Division">
+                                    @employe2.Division?.Name
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Department">@employe2.Department?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Date Hired">@employe2.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </fieldset>
+
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <div>
+                <fieldset class="p-3">
+                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 3rd Month</legend>
+                    @* <span class="evaltitle">Evaluations for First Month</span> *@
+                    @if (EmpThirdEval == null || EmpThirdEval.Count == 0)
+                    {
+                        <span class="evaltitle">No Employees for Evaluation.</span>
+                    }
+                    else
+                    {
+                        <MudTable Class="stable" Items="@EmpThirdEval" Context="employe2" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="193px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+                            <HeaderContent>
+                                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                                        Full Name
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                                        ID No
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Position</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Division</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Department</MudTh>
+                                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                                        Date Hired
+                                    </MudTableSortLabel>
+                                </MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Full Name">
+                                    <div class="d-flex flex-row align-items-center gap-3">
+                                        <div class="d-flex align-items-center">
+                                            <EmployeeAvatar verify="@employe2.Verify_Id" />
+                                        </div>
+                                        <div>
+                                            <div class="flex-column">
+                                                <div>@CapitalizeFirstLetter(employe2.FirstName)  @(employe2.MiddleName != "" ? $"{employe2.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employe2.LastName)</div>
+                                                <div style="font-weight: bold;">@employe2.Email</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.EmployeeNo</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.Position?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Division">
+                                    @employe2.Division?.Name
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Department">@employe2.Department?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Date Hired">@employe2.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </fieldset>
+
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <div>
+                <fieldset class="p-3">
+                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 4th Month</legend>
+                    @* <span class="evaltitle">Evaluations for First Month</span> *@
+                    @if (EmpFourthEval == null || EmpFourthEval.Count == 0)
+                    {
+                        <span class="evaltitle">No Employees for Evaluation.</span>
+                    }
+                    else
+                    {
+                        <MudTable Class="stable" Items="@EmpFourthEval" Context="employe2" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="193px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+                            <HeaderContent>
+                                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                                        Full Name
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                                        ID No
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Position</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Division</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Department</MudTh>
+                                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                                        Date Hired
+                                    </MudTableSortLabel>
+                                </MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Full Name">
+                                    <div class="d-flex flex-row align-items-center gap-3">
+                                        <div class="d-flex align-items-center">
+                                            <EmployeeAvatar verify="@employe2.Verify_Id" />
+                                        </div>
+                                        <div>
+                                            <div class="flex-column">
+                                                <div>@CapitalizeFirstLetter(employe2.FirstName)  @(employe2.MiddleName != "" ? $"{employe2.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employe2.LastName)</div>
+                                                <div style="font-weight: bold;">@employe2.Email</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.EmployeeNo</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.Position?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Division">
+                                    @employe2.Division?.Name
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Department">@employe2.Department?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Date Hired">@employe2.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </fieldset>
+
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <div>
+                <fieldset class="p-3">
+                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 5th Month</legend>
+                    @* <span class="evaltitle">Evaluations for First Month</span> *@
+                    @if (EmpFifthEval == null || EmpFifthEval.Count == 0)
+                    {
+                        <span class="evaltitle">No Employees for Evaluation.</span>
+                    }
+                    else
+                    {
+                        <MudTable Class="stable" Items="@EmpFifthEval" Context="employe2" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="193px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+                            <HeaderContent>
+                                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                                        Full Name
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                                        ID No
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Position</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Division</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Department</MudTh>
+                                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                                        Date Hired
+                                    </MudTableSortLabel>
+                                </MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Full Name">
+                                    <div class="d-flex flex-row align-items-center gap-3">
+                                        <div class="d-flex align-items-center">
+                                            <EmployeeAvatar verify="@employe2.Verify_Id" />
+                                        </div>
+                                        <div>
+                                            <div class="flex-column">
+                                                <div>@CapitalizeFirstLetter(employe2.FirstName)  @(employe2.MiddleName != "" ? $"{employe2.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employe2.LastName)</div>
+                                                <div style="font-weight: bold;">@employe2.Email</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.EmployeeNo</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.Position?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Division">
+                                    @employe2.Division?.Name
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Department">@employe2.Department?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Date Hired">@employe2.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </fieldset>
+
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <div>
+                <fieldset class="p-3">
+                    <legend class="float-none w-auto p-2 mb-0">For Evaluations | 6th Month</legend>
+                    @* <span class="evaltitle">Evaluations for First Month</span> *@
+                    @if (EmpSixEval == null || EmpSixEval.Count == 0)
+                    {
+                        <span class="evaltitle">No Employees for Evaluation.</span>
+                    }
+                    else
+                    {
+                        <MudTable Class="stable" Items="@EmpSixEval" Context="employe2" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="193px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+                            <HeaderContent>
+                                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                                        Full Name
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                                        ID No
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Position</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Division</MudTh>
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Department</MudTh>
+                                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                    <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                                        Date Hired
+                                    </MudTableSortLabel>
+                                </MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Full Name">
+                                    <div class="d-flex flex-row align-items-center gap-3">
+                                        <div class="d-flex align-items-center">
+                                            <EmployeeAvatar verify="@employe2.Verify_Id" />
+                                        </div>
+                                        <div>
+                                            <div class="flex-column">
+                                                <div>@CapitalizeFirstLetter(employe2.FirstName)  @(employe2.MiddleName != "" ? $"{employe2.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employe2.LastName)</div>
+                                                <div style="font-weight: bold;">@employe2.Email</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.EmployeeNo</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Position">@employe2.Position?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Division">
+                                    @employe2.Division?.Name
+                                </MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Department">@employe2.Department?.Name</MudTd>
+                                <MudTd Class="cursor-pointer" @onclick="(() => NavToEmpD(employe2.Id))"  DataLabel="Date Hired">@employe2.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </fieldset>
+
+            </div>
+        </MudItem>
+    </MudGrid>
+
+</div>
+
+@code {
+    private string _totalCountEval = "0";
+    public List<EmployeeT> EmpFirstEval = new(); //first
+    public List<EmployeeT> EmpSecondEval = new(); //second
+    public List<EmployeeT> EmpThirdEval = new(); //third
+    public List<EmployeeT> EmpFourthEval = new(); //fourth
+    public List<EmployeeT> EmpFifthEval = new(); //fifth
+    public List<EmployeeT> EmpSixEval = new(); //sixth
+
+    protected override async Task OnInitializedAsync()
+    {
+        await EmployeeService.GetEmployee();
+
+        EmpFirstEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-2)).ToList();
+        EmpSecondEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-3) && e.DateHired <= DateTime.Now.AddMonths(-2)).ToList();
+        EmpThirdEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-4) && e.DateHired <= DateTime.Now.AddMonths(-3)).ToList().ToList();
+        EmpFourthEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-5) && e.DateHired <= DateTime.Now.AddMonths(-4)).ToList().ToList();
+        EmpFifthEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-6) && e.DateHired <= DateTime.Now.AddMonths(-5)).ToList().ToList();
+        EmpSixEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-7) && e.DateHired <= DateTime.Now.AddMonths(-6)).ToList().ToList();
+
+        DateTime sevenMonthsAgo = DateTime.Now.AddMonths(-7);
+        _totalCountEval = EmployeeService.EmployeeTs
+            .Count(e => e.DateHired > sevenMonthsAgo)
+            .ToString();
+    }
+
+    public void NavToEmpD(int id) => NavManager.NavigateTo($"/employee/edit/{id}");
+
+    public string CapitalizeFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        return char.ToUpper(input[0]) + input[1..];
+    }
+}

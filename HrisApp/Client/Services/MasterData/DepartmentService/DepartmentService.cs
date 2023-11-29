@@ -78,5 +78,22 @@
                 Console.WriteLine(ex.Message);
             }
         }
+
+        public async Task<List<string>> GetAllDepartmentName()
+        {
+            List<string> listOfDept = new List<string>();
+            var response = await _httpClient.GetFromJsonAsync<List<DepartmentT>>("api/Department");
+            foreach (var item in response)
+            {
+                listOfDept.Add(item.Name);
+            }
+            return listOfDept;
+        }
+
+        public async Task<int> GetCountDepartment()
+        {
+            var response = await _httpClient.GetFromJsonAsync<int>("api/Department/DepartmentCount");
+            return response;
+        }
     }
 }

@@ -18,6 +18,7 @@
     border-radius: 30px;
     background-color: #FAFAF5;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+    transition: all .5s ease;
 }
 
     ::deep .btnupdateimg:hover {
@@ -86,6 +87,7 @@
     border-radius: 8px;
     margin-bottom: 10px;
     padding: 10px 10px 10px 10px;
+    transition: all .5s ease;
 }
 ::deep .filebtn:hover {
     border: 2px solid #146ebe;
@@ -102,6 +104,7 @@
     padding-top: 10px;
     font-weight: bold;
     width: 200px;
+    transition: all .5s ease;
 }
 
     ::deep .btnnext:hover {
@@ -112,6 +115,7 @@
 
 ::deep .btnedit {
     color: #27374D;
+    transition: all .5s ease;
 }
     ::deep .btnedit:hover {
         transform: scale(1.1);

@@ -68,5 +68,15 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(await GetDBDivision());
         }
+
+        [HttpGet("DivisionCount")]
+        public async Task<ActionResult<int>> GetDivisionCount()
+        {
+            var Masterlist = await _context.DivisionT
+                .ToListAsync();
+
+            var returnCount = Masterlist.Count();
+            return Ok(returnCount);
+        }
     }
 }

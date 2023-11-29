@@ -5,6 +5,7 @@
     background-color: #F1BC3A;
     color: #424242;
     padding-bottom: 4px;
+    transition: all .5s ease;
 }
 
 .btnadd:hover {
@@ -16,6 +17,7 @@
 
 .btnShow {
     color: #27374D;
+    transition: all .5s ease;
 }
 .btnShow:hover {
     transform: scale(1.1);
@@ -23,6 +25,7 @@
 
 .btnedit {
     color: #27374D;
+    transition: all .5s ease;
 }
 
 .btnedit:hover {
@@ -38,6 +41,7 @@
     background-color: #F1BC3A;
     color: #424242;
     padding: 7px 12px 5px 11px;
+    transition: all .5s ease;
 }
 
     .btnSaveMsgbox:hover {
@@ -53,6 +57,7 @@
     background-color: #BD574E;
     color: #FAFAF5;
     padding: 5px 15px 4px 15px;
+    transition: all .5s ease;
 }
 
     .btnDelete:hover {

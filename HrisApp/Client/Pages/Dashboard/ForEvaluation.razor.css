@@ -1,0 +1,28 @@
+﻿.box {
+    overflow: auto;
+}
+
+::deep .stable {
+    background: #e9ecef;
+    border-radius: 20px;
+}
+
+.evaltitle {
+    font-weight: bold;
+    font-size: 16px;
+    font-style: italic;
+    margin-left: 8px;
+    color: #757A90;
+}
+
+
+fieldset {
+    border: 4px solid #DEE2E6;
+    border-radius: 10px;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 20px;
+    color: #E38D0F;
+}

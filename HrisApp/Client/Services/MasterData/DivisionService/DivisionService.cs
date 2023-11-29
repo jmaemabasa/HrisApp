@@ -56,5 +56,23 @@
         {
             var result = await _httpClient.PutAsJsonAsync($"api/division/UpdateDivision", division);
         }
+
+        public async Task<List<string>> GetAllDivisionName()
+        {
+            List<string> listOfDept = new List<string>();
+            var response = await _httpClient.GetFromJsonAsync<List<DivisionT>>("api/Division");
+            foreach (var item in response)
+            {
+                listOfDept.Add(item.Name);
+            }
+            return listOfDept;
+        }
+
+        public async Task<int> GetCountDivision()
+        {
+            var response = await _httpClient.GetFromJsonAsync<int>("api/Division/DivisionCount");
+            return response;
+        }
     }
+
 }

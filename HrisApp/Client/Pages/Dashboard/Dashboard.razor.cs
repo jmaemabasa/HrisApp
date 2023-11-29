@@ -6,11 +6,6 @@
         private string _countActiveEmployees = "0";
         private string _countInactiveEmployees = "0";
         private string _countForEval = "0";
-        private string _countInactiveEmployees5yearFromInactive = "0";
-        private string _countDivisions = "0";
-        private string _countDepartments = "0";
-        private string _countSections = "0";
-        private string _countAreas = "0";
 
         private string FULLNAME;
 
@@ -22,12 +17,11 @@
         private Dictionary<int, int> positionCounts = new Dictionary<int, int>();
 
         public List<string> departmentArr = new List<string>();
+        public List<string> divisionArr = new List<string>();
         private List<double> depEmptArr = new List<double>();
 
-        private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.
-
-        public List<ChartSeries> Series = new List<ChartSeries>();
-        public string[] XAxisLabels = null;
+        private int EmployeeCount = 0;
+        private double[] EmployeeCountPerDivision;
 
         private int _totalVacancy = 0; 
 
@@ -35,26 +29,19 @@
         {
             try
             {
-                Console.WriteLine("Console 1");
-
                 await EmployeeService.GetEmployee();
-                Console.WriteLine("Console 2");
-
                 await DepartmentService.GetDepartment();
-                Console.WriteLine("Console 3");
+                await DivisionService.GetDivision();
 
                 allDepartments = DepartmentService.DepartmentTs;
-
-                
-
 
                 #region Top Cards
                 _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
                 _countInactiveEmployees = EmployeeService.EmployeeTs.Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId)).Count().ToString();
                 DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
-                _countInactiveEmployees5yearFromInactive = EmployeeService.EmployeeTs
-                    .Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId) && e.DateInactiveStatus <= fiveYearsAgo)
-                    .Count().ToString();
+                //_countInactiveEmployees5yearFromInactive = EmployeeService.EmployeeTs
+                //    .Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId) && e.DateInactiveStatus <= fiveYearsAgo)
+                //    .Count().ToString();
 
                 DateTime sevenMonthsAgo = DateTime.Now.AddMonths(-7);
                 _countForEval = EmployeeService.EmployeeTs
@@ -71,13 +58,18 @@
                     positionCounts[positionId] = count;
                 }
                 _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
-                #endregion
-
 
                 var globalId = Convert.ToInt32(GlobalConfigService.User_Id);
                 FULLNAME = await EmployeeService.Getname(globalId);
+                #endregion
 
-                await OnChartRefresh();
+                departmentArr = await DepartmentService.GetAllDepartmentName();
+                divisionArr = await DivisionService.GetAllDivisionName();
+                //DepartmentCount = await DepartmentService.GetCountDepartment();
+                EmployeeCount = await EmployeeService.GetCountEmployee();
+
+                await FilterEmployee();
+                RandomizeData();
             }
             catch (Exception ex)
             {
@@ -88,36 +80,52 @@
         }
 
 
-        private async Task OnChartRefresh()
+        #region Chart area
+        private int Ch_Index = -1; //default value cannot be 0 -> first selectedindex is 0.
+
+        public List<ChartSeries> Series = new List<ChartSeries>()
         {
-            Series[0] = new ChartSeries() { Name = "United States", Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15, 40, 20, 25, 27, 46, 60, 48, 80, 15, 1, 1, 1, 1, 1 } };
+        new ChartSeries() { Name = "Series 1", Data = new double[] { 90, 79, 72, 69, 62, 62, 55, 65, 70 } }
+        };
 
+        public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
+
+        Random random = new Random();
+        public void RandomizeData()
+        {
+            var new_series = new List<ChartSeries>()
+            {
+                new ChartSeries() { Name = "Series 1", Data = EmployeeCountPerDivision }
+            };
+            for (int i = 0; i < EmployeeCount; i++)
+            {
+                new_series[0].Data[i] = random.NextDouble() * EmployeeCount;
+            }
+            XAxisLabels = divisionArr.ToArray();
+            Series = new_series;
+            StateHasChanged();
+        }
+
+        #endregion
+
+
+        private async Task FilterEmployee()
+        {
             await Task.Delay(1);
-            Console.WriteLine("Console 4 " + allDepartments.Count());
-
-            int countindex = 1;
-            foreach (var item in allDepartments)
+            List<double> empCountperDiv = new List<double>();
+            foreach (var item in DivisionService.DivisionTs)
             {
-                departmentArr.Add(item.Name);
-                countindex++;
-                //Console.WriteLine(item.Name);
-                //depEmptArr.Add(Convert.ToDouble(EmployeeService.EmployeeTs.Where(e => e.DepartmentId == item.Id).Count()));
+                Console.WriteLine(item.Name);
+                var countEmployee = EmployeeService.EmployeeTs.Where(s => s.DivisionId == item.Id).Count();
+                empCountperDiv.Add(countEmployee);
             }
-            //Console.WriteLine(departmentArr.ToArray());
-
-
-            XAxisLabels = departmentArr.ToArray();
-
-            foreach (var i in XAxisLabels)
-            {
-                Console.WriteLine(i);
-            }
-
-
+            EmployeeCountPerDivision = empCountperDiv.ToArray();
 
         }
 
 
+
+        public void NavForEval() => NavigationManager.NavigateTo("/evaluation");
 
         public void NavIconBtns(string text)
         {

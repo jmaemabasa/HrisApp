@@ -89,5 +89,11 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
             return char.ToUpper(input[0]) + input[1..];
         }
+
+        public async Task<int> GetCountEmployee()
+        {
+            var response = await _httpClient.GetFromJsonAsync<int>("api/Employee/EmployeeCount");
+            return response;
+        }
     }
 }

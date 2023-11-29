@@ -11,5 +11,8 @@
         Task CreateDepartment(string deptName, int listDropdownId);
         Task GetDepartment();
         Task UpdateDepartment(DepartmentT dept);
+
+        Task<List<string>> GetAllDepartmentName();
+        Task<int> GetCountDepartment();
     }
 }

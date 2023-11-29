@@ -27,17 +27,30 @@
     height: 12rem;
     border-radius: 10px;
     /*background: #e9ecef;*/
-    background-color: var(--BackgroundGrey);
+    /*background-color: var(--BackgroundGrey);*/
+    background: linear-gradient(90deg, rgba(241,188,58,1) 0%, rgba(249,212,79,1) 46%, rgba(249,212,79,0.4430147058823529) 100%);
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 20px;
     padding: 10px 15px 10px 15px;
+    color: #424242;
 }
 
 #evalpanelbtn {
     padding: 10px 35px 8px 35px;
-    border-radius: 10px;
+    border-radius: 45px;
+    background-color: #fafaf5;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all .5s ease;
 }
+
+    #evalpanelbtn:hover {
+        letter-spacing: 3px;
+        background-color: hsl(225deg 73% 57%);
+        color: hsl(0, 0%, 100%);
+        box-shadow: rgb(65 105 225) 0px 7px 25px 0px;
+        transform: scale(1.0);
+    }
 
 .topmudcard {
     border-radius: 10px;

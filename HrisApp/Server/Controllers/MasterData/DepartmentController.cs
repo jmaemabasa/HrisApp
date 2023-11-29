@@ -84,5 +84,14 @@ namespace HrisApp.Server.Controllers.MasterData
         }
 
 
+        [HttpGet("DepartmentCount")]
+        public async Task<ActionResult<int>> GetDepartmentCount() { 
+            var Masterlist = await _context.DepartmentT
+                .ToListAsync();
+
+            var returnCount = Masterlist.Count();
+            return Ok(returnCount);
+        }
+
     }
 }
