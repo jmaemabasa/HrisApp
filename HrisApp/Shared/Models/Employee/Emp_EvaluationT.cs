@@ -21,7 +21,7 @@ namespace HrisApp.Shared.Models.Employee
         public string Eval5Status { get; set; } = string.Empty;
         public string Eval6Status { get; set; } = string.Empty;
         public string EvalStatus { get; set; } = string.Empty;
-        public DateTime? DateHired { get; set; }
+        public DateTime DateHired { get; set; }
         public DateTime? DateEvaluate { get; set;}
         public int TimesEvaluate { get; set; }
     }

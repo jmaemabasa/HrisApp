@@ -37,6 +37,16 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             throw new Exception("employee not found");
 
         }
+
+        public async Task<EmployeeT> GetSingleEmployeeByVerId(string verId)
+        {
+            var result = await _httpClient.GetFromJsonAsync<EmployeeT>($"api/Employee/GetSingleEmployeeByVerId/{verId}");
+            if (result != null)
+                return result;
+            throw new Exception("employee not found");
+
+        }
+
         public async Task SetEmployees(HttpResponseMessage result)
         {
             var response = await result.Content.ReadFromJsonAsync<List<EmployeeT>>();
@@ -95,5 +105,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             var response = await _httpClient.GetFromJsonAsync<int>("api/Employee/EmployeeCount");
             return response;
         }
+
     }
 }

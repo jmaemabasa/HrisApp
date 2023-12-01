@@ -1,0 +1,181 @@
+﻿@page "/evaluationlist"
+@inject IEmployeeService EmployeeService
+@inject IForEvalService ForEvalService
+@inject NavigationManager NavManager
+
+@attribute [Authorize(Roles = "System Administrator, HR, User")]
+
+<PageTitle>Evaluation</PageTitle>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <MudIcon Icon="@Icons.Material.TwoTone.ContentPasteSearch" Style="font-size: 2.2em;margin-right: 10px;color: #E38D0F;" />
+            <span style="font-size: x-large;font-weight: 600;color: #424242;">Evaluations</span>
+        </div>
+        <span style="font-size: x-large; color: #424242;">@DateTime.Now.ToString("dddd, dd MMMM yyyy")</span>
+    </div>
+</div>
+
+<div class="box w-auto">
+    @if (EvalList.Count() == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
+        <MudTable Class="stable" Items="@EvalList" Context="employe1" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="739px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+            <HeaderContent>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Full Name</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Date Hired</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">1st Month</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">2nd Month</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">3rd Month</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">4th Month</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">5th Month</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">6th Month</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">Action</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Full Name">
+                    <EmployeeName verify="@employe1.Verify_Id" />
+                </MudTd>
+                <MudTd DataLabel="">@employe1.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                <MudTd DataLabel="" Class="" Style="text-align: center;">
+                    @if (employe1.Eval1Status != "Done")
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval1Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval1Status</MudChip>
+                    }
+                </MudTd>
+                <MudTd DataLabel="" Style="text-align: center;">
+                    @if (employe1.Eval2Status != "Done")
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval2Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval2Status</MudChip>
+                    }
+                </MudTd>
+                <MudTd DataLabel="" Style="text-align: center;">
+                    @if (employe1.Eval3Status != "Done")
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval3Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval3Status</MudChip>
+                    }
+                </MudTd>
+                <MudTd DataLabel="" Style="text-align: center;">
+                    @if (employe1.Eval4Status != "Done")
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval4Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval4Status</MudChip>
+                    }
+                </MudTd>
+                <MudTd DataLabel="" Style="text-align: center;">
+                    @if (employe1.Eval5Status != "Done")
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval5Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval5Status</MudChip>
+                    }
+                </MudTd>
+                <MudTd DataLabel="" Style="text-align: center;">
+                    @if (employe1.Eval6Status != "Done")
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval6Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval6Status</MudChip>
+                    }
+                </MudTd>
+                @if (employe1.EvalStatus != "Done")
+                {
+                    <MudTd DataLabel="" Style="text-align: center;">
+                        <MudTooltip Text="Update" Color="Color.Success">
+                            <MudIconButton Icon="@Icons.Material.Outlined.SystemUpdateAlt" OnClick="@(() => UpdateTable(employe1))"></MudIconButton>
+                        </MudTooltip>
+                    </MudTd>
+                }
+                else
+                {
+                    <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval1Status</MudChip>
+                }
+            </RowTemplate>
+        </MudTable>
+    }
+</div>
+
+@code {
+    public List<Emp_EvaluationT> EvalList = new();
+    Emp_EvaluationT UpdateEval = new();
+
+    bool isUpdate { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+        await ForEvalService.GetForEval();
+        EvalList = ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done").ToList();
+        // EvalList = ForEvalService.Emp_EvaluationTs;
+
+    }
+
+    private async Task UpdateTable(Emp_EvaluationT obj)
+    {
+        var generateEval = await ForEvalService.GenerateStatus(obj.Verify_Id, obj.DateHired, "Done");
+        await ForEvalService.UpdateForEval(generateEval);
+
+        NavManager.NavigateTo("/evaluationlist", true);
+
+    }
+
+    private bool GetStatusForEval(string status)
+    {
+        var returnstring = true;
+        foreach (var item in EvalList)
+        {
+            if (status == item.EvalStatus)
+            {
+                returnstring = false;
+                return returnstring;
+            }
+
+        }
+        return returnstring;
+    }
+
+    private bool isVisible;
+        public async void OpenOverlay()
+        {
+            isVisible = true;
+            await Task.Delay(3000);
+            isVisible = false;
+            StateHasChanged();
+        }
+}

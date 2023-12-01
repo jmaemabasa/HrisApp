@@ -9,22 +9,26 @@
 <MudNavMenu Rounded="true" Margin="Margin.Normal" Bordered="true" Style="height: 100%">
     <div class="d-flex flex-column flex-grow-1 align-content-space-between h-100">
         <div class="flex-grow-1">
-            <MudNavLink Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
-            <MudNavLink Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employee</MudNavLink>
-            <MudNavLink Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
+            <span class="menutitle">Menu</span>
+            <MudNavLink Class="navlinktitle" Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
+             <MudNavGroup Class="navlinktitle" Title="Employee" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
+                <MudNavLink Class="navlinktitle" Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employees</MudNavLink>
+                <MudNavLink Class="navlinktitle" Href="/evaluationlist" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Assignment" IconColor="Color.Inherit">Evaluation</MudNavLink>
+                <MudNavLink Class="navlinktitle" Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
+             </MudNavGroup>
                 <AuthorizeView Roles="System Administrator">
                     <Authorized>
-                        <MudNavGroup Title="Master Data" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
-                            <MudNavLink Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
-                            <MudNavLink Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
-                            <MudNavLink Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
-                            <MudNavLink Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
-                            <MudNavLink Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
+                        <MudNavGroup Class="navlinktitle" Title="Master Data" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
+                            <MudNavLink Class="navlinktitle" Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
+                            <MudNavLink Class="navlinktitle" Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
+                            <MudNavLink Class="navlinktitle" Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
+                            <MudNavLink Class="navlinktitle" Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
+                            <MudNavLink Class="navlinktitle" Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
                             @* <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink> *@
                         </MudNavGroup>
-                        <MudNavGroup Title="Account" Expanded="false" Icon="@Icons.Material.Rounded.LockPerson" IconColor="Color.Inherit">
-                            <MudNavLink Href="/accounts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">User List</MudNavLink>
-                            <MudNavLink Href="/auditlog" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.History" IconColor="Color.Inherit">Audit Log</MudNavLink>
+                        <MudNavGroup Class="navlinktitle" Title="Account" Expanded="false" Icon="@Icons.Material.Rounded.LockPerson" IconColor="Color.Inherit">
+                            <MudNavLink Class="navlinktitle" Href="/accounts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">User List</MudNavLink>
+                            <MudNavLink Class="navlinktitle" Href="/auditlog" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.History" IconColor="Color.Inherit">Audit Log</MudNavLink>
                         </MudNavGroup>
                     </Authorized>
                     <NotAuthorized></NotAuthorized>

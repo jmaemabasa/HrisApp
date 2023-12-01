@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.StaticData;
-
-namespace HrisApp.Client.Services.EmpDetails.EmployeeService
+﻿namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {
     public interface IEmployeeService
     {
@@ -9,12 +7,14 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         Task<string> Getname(int id);
         Task GetEmployee();
         Task<EmployeeT> GetSingleEmployee(int id);
+        Task<EmployeeT> GetSingleEmployeeByVerId(string verId);
         Task<string> CreateEmployee(EmployeeT employee);
         Task UpdateEmployee(EmployeeT employee);
         Task DeleteEmployee(int id);
 
 
         Task<int> GetCountEmployee();
+
 
     }
 }

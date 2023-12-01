@@ -47,15 +47,15 @@
     <MudItem xs="12" sm="4">
         <TopCards title="Total Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 6rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
     </MudItem>
-    <MudItem xs="12" sm="12">
+    @* <MudItem xs="12" sm="12">
         <MudCard Class="linepanel">
             <MudCardContent>
-                @* <div style="width: 100%">
+                <div style="width: 100%">
                     <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Ch_Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
                 </div>
-                <MudText Typo="Typo.h6">Selected portion of the chart: @Ch_Index</MudText> *@
+                <MudText Typo="Typo.h6">Selected portion of the chart: @Ch_Index</MudText>
             </MudCardContent>
         </MudCard>
-    </MudItem>
+    </MudItem> *@
 
 </MudGrid>

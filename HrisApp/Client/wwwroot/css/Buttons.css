@@ -32,7 +32,19 @@
         transform: scale(1.1);
     }
 
+/*POSITION*/
+.btnsmallsapos {
+    background-color: #E38D4D;
+    height: 40px;
+    margin-top: 3px;
+    transition: all .5s ease;
+}
 
+    .btnsmallsapos:hover {
+        background-color: #BB2525;
+        color: #FAFAF5;
+        transform: scale(1.1);
+    }
 /*MESSAGEBOX*/
 .btnSaveMsgbox {
     border: none;
@@ -45,8 +57,8 @@
 }
 
     .btnSaveMsgbox:hover {
-        background-color: #E38D0F;
-        color: #fff;
+        background-color: hsl(225deg 73% 57%);
+        color: hsl(0, 0%, 100%);
         transform: scale(1.1);
     }
 

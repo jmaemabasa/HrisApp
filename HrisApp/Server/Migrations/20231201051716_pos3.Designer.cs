@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231201051716_pos3")]
+    partial class pos3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1799,56 +1801,6 @@ namespace HrisApp.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionComAppT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ComName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PosCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VerifyId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PositionComAppT");
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionKnowledgeT", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("KnowName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PosCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VerifyId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PositionKnowledgeT");
-                });
-
             modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionT", b =>
                 {
                     b.Property<int>("Id")
@@ -1860,6 +1812,10 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ComputerApp")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
@@ -1867,6 +1823,10 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("JobSummary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KnowledgeOf")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1896,6 +1856,10 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
 
+                    b.Property<string>("TechnicalSkills")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("VerifyId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1913,9 +1877,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 1,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -1923,6 +1889,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -1930,9 +1897,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 2,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Feeder",
                             OtherCompetencies = "",
                             Plantilla = 9,
@@ -1940,6 +1909,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -1947,9 +1917,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 3,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -1957,6 +1929,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -1964,9 +1937,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 4,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -1974,6 +1949,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -1981,9 +1957,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 5,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "DT Booking/ GT Booking",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -1991,6 +1969,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -1998,9 +1977,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 6,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "DSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2008,6 +1989,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2015,9 +1997,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 7,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "PM Salesman",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2025,6 +2009,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2032,9 +2017,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 8,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "OMNI Feeder",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2042,6 +2029,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2049,9 +2037,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 9,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2059,6 +2049,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2066,9 +2057,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 10,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2076,6 +2069,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2083,9 +2077,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 11,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "DT Booking/ GT Booking",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2093,6 +2089,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2100,9 +2097,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 12,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "DSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2110,6 +2109,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2117,9 +2117,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 13,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "OMNI Feeder",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2127,6 +2129,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2134,9 +2137,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 14,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2144,6 +2149,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2151,9 +2157,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 15,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Operations Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2161,6 +2169,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2168,9 +2177,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 16,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "HAPI Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2178,6 +2189,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 4,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2185,9 +2197,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 17,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "HAPI Dealer Coor",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2195,6 +2209,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 4,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2202,9 +2217,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 18,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2212,6 +2229,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 5,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2219,9 +2237,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 19,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "MAG Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2229,6 +2249,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 5,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2236,9 +2257,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 20,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "GTAS",
                             OtherCompetencies = "",
                             Plantilla = 5,
@@ -2246,6 +2269,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 5,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2253,9 +2277,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 21,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "SMS",
                             OtherCompetencies = "",
                             Plantilla = 11,
@@ -2263,6 +2289,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 5,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2270,9 +2297,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 22,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "NAO Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2280,6 +2309,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 6,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2287,9 +2317,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 23,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "NAO",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2297,6 +2329,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 6,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2304,9 +2337,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 24,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "HAPI NAO",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2314,6 +2349,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 6,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2321,9 +2357,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 25,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "IT & Support Services Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2331,6 +2369,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 7,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2338,9 +2377,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 26,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Teleservices Support Staff / Online Coor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2348,6 +2389,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 7,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2355,9 +2397,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 27,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Field Sales Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2365,6 +2409,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2372,9 +2417,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 28,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2382,6 +2429,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2389,9 +2437,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 29,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2399,6 +2449,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 8,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2406,9 +2457,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 30,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Sonic DSP",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2416,6 +2469,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 8,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2423,9 +2477,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 31,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "DSP (Commando/Incubator)",
                             OtherCompetencies = "",
                             Plantilla = 6,
@@ -2433,6 +2489,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 8,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2440,9 +2497,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 32,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Ambassador",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2450,6 +2509,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 9,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2457,9 +2517,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 33,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Merchandiser",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2467,6 +2529,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 10,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2474,9 +2537,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 34,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Scan to Pay",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2484,6 +2549,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 11,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2491,9 +2557,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 35,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2501,6 +2569,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 12,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2508,9 +2577,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 36,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Trade Payable Staff",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2518,6 +2589,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 12,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2525,9 +2597,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 37,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Non Trade Payable Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2535,6 +2609,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 12,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2542,9 +2617,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 38,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2552,6 +2629,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 13,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2559,9 +2637,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 39,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Gen Accounting Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2569,6 +2649,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 13,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2576,9 +2657,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 40,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2586,6 +2669,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 14,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2593,9 +2677,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 41,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Tax and Compliance Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2603,6 +2689,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 14,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2610,9 +2697,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 42,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Team Leader",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2620,6 +2709,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 15,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2627,9 +2717,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 43,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Accounts Receivable Staff",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2637,6 +2729,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 15,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2644,9 +2737,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 44,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Credit and Collection Staff",
                             OtherCompetencies = "",
                             Plantilla = 6,
@@ -2654,6 +2749,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 16,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2661,9 +2757,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 45,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "C&C - Billings to Customer",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2671,6 +2769,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 16,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2678,9 +2777,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 46,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Billing to Cash Settlement Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2688,6 +2789,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 17,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2695,9 +2797,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 47,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2705,6 +2809,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2712,9 +2817,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 48,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "IT Associate",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2722,6 +2829,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2729,9 +2837,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 49,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "IT Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2739,6 +2849,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 0,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2746,9 +2857,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 50,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Cash Operations Head",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2756,6 +2869,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 18,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2763,9 +2877,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 51,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Davao Cashier",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2773,6 +2889,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 18,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2780,9 +2897,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 52,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Cotabato Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2790,6 +2909,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 18,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2797,9 +2917,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 53,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Kidapawan Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2807,6 +2929,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 18,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2814,9 +2937,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 54,
                             AreaId = 1,
+                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
+                            KnowledgeOf = "",
                             Name = "Digos Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2824,6 +2949,7 @@ namespace HrisApp.Server.Migrations
                             PosEducation = "",
                             Restrictions = "",
                             SectionId = 18,
+                            TechnicalSkills = "",
                             VerifyId = "",
                             WorkExperience = ""
                         });

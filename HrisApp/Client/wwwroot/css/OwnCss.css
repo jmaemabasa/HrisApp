@@ -20,5 +20,15 @@
     --BackgroundGrey: var(--mud-palette-background-grey);
 }
 
+.menutitle {
+    margin: 8px 16px 8px 14px;
+    color: rgb(66, 66, 66);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.navlinktitle {
+    font-weight: bold;
+}
 
 

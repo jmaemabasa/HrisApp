@@ -1,0 +1,8 @@
+﻿::deep div.mud-select {
+    width: 112px !important;
+    flex-grow: 0;
+}
+
+::deep .slectstateval {
+    border: 2px solid red;
+}

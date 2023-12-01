@@ -1,5 +1,4 @@
-﻿using Microsoft.JSInterop;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -14,11 +13,17 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private List<PositionT> Positions = new();
         private List<AreaT> Areas = new();
 
-        private int selectedDivision =0;
-        private int selectedDepartment=0;
-        private int selectedSection=0;
-        private int selectedArea=0;
+        //Skills
+        public List<PositionTechSkillT> listOfTechSkills = new();
+        public List<PositionKnowledgeT> listOfKnowledge = new();
+        public List<PositionComAppT> listOfComApp = new();
+
+        private int selectedDivision = 0;
+        private int selectedDepartment = 0;
+        private int selectedSection = 0;
+        private int selectedArea = 0;
         private string newPosition = "";
+        private string newPosCode = "";
         private string newSummary = "";
         private string newEduc = "";
         private string newWorkExp = "";
@@ -91,13 +96,14 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
         private async Task CreatePositionPerDepOrSect()
         {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             var divisionId = selectedDivision;
             var departmentId = selectedDepartment;
             var sectionId = selectedSection;
             var areaId = selectedArea;
             var positionName = newPosition;
             var plantillacount = newPlantilla;
-            string posCode = generateposcode(divisionId, departmentId, sectionId);
+            newPosCode = generateposcode(divisionId, departmentId, sectionId);
 
             // Check if the selected department has sections
             var departmentHasSections = Sections.Any(s => s.DepartmentId == selectedDepartment);
@@ -105,13 +111,19 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentHasSections)
             {
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, posCode, divisionId, departmentId, sectionId, areaId, newSummary,newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict ,plantillacount);
+                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode);
+                await SaveNewTechSkills(newPosCode);
+                await SaveNewKnowledge(newPosCode);
+                await SaveNewComApp(newPosCode);
             }
             else
             {
 
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, posCode,divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount);
+                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode);
+                await SaveNewTechSkills(newPosCode);
+                await SaveNewKnowledge(newPosCode);
+                await SaveNewComApp(newPosCode);
             }
 
             _toastService.ShowSuccess(positionName + " Created Successfully!");
@@ -122,6 +134,155 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             StateService.SetState("PositionList", newList);
         }
 
+        #region TECH SKILLS
+        public async Task SaveNewTechSkills(string posCode)
+        {
+            var validtechSkill = listOfTechSkills
+               .Where
+               (obj => !string.IsNullOrEmpty(obj.PosCode) || !string.IsNullOrEmpty(obj.SkillName))
+               .ToList();
+
+            if (validtechSkill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in validtechSkill)
+            {
+                item.PosCode = posCode;
+
+                int isExistTech = await PositionService.GetExistTech(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await PositionService.CreateTechSkill(item);
+                }
+                else
+                {
+                    await PositionService.UpdateTechSkill(item);
+                }
+            }
+
+            listOfTechSkills.Clear();
+        }
+
+        public void AddNewTechSkill(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newTechSkill))
+                listOfTechSkills.Add(new PositionTechSkillT { PosCode = code, SkillName = newSkill, VerifyId = verifyCode });
+                newTechSkill = "";
+            Console.WriteLine(verifyCode);
+        }
+        public void CloseTechSkill(MudChip chip)
+        {
+            var skillToRemove = listOfTechSkills.FirstOrDefault(item => item.SkillName == chip.Text);
+
+            if (skillToRemove != null)
+            {
+                listOfTechSkills.Remove(skillToRemove);
+            }
+        }
+        #endregion
+
+        #region KNOWLEDGE
+        public async Task SaveNewKnowledge(string posCode)
+        {
+            var validtechSkill = listOfKnowledge
+               .Where
+               (obj => !string.IsNullOrEmpty(obj.PosCode) || !string.IsNullOrEmpty(obj.KnowName))
+               .ToList();
+
+            if (validtechSkill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in validtechSkill)
+            {
+                item.PosCode = posCode;
+
+                int isExistTech = await PositionService.GetExistKnowledge(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await PositionService.CreateKnowledge(item);
+                }
+                else
+                {
+                    await PositionService.UpdateKnowledge(item);
+                }
+            }
+
+            listOfKnowledge.Clear();
+        }
+
+        public void AddNewKnowledge(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newKnowledge))
+                listOfKnowledge.Add(new PositionKnowledgeT { PosCode = code, KnowName = newSkill, VerifyId = verifyCode });
+                newKnowledge = "";
+        }
+        public void CloseKnowledge(MudChip chip)
+        {
+            var skillToRemove = listOfKnowledge.FirstOrDefault(item => item.KnowName == chip.Text);
+
+            if (skillToRemove != null)
+            {
+                listOfKnowledge.Remove(skillToRemove);
+            }
+        }
+        #endregion
+
+        #region COMAPP
+        public async Task SaveNewComApp(string posCode)
+        {
+            var validtechSkill = listOfComApp
+               .Where
+               (obj => !string.IsNullOrEmpty(obj.PosCode) || !string.IsNullOrEmpty(obj.ComName))
+               .ToList();
+
+            if (validtechSkill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in validtechSkill)
+            {
+                item.PosCode = posCode;
+
+                int isExistTech = await PositionService.GetExistComApp(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await PositionService.CreateComApp(item);
+                }
+                else
+                {
+                    await PositionService.UpdateComApp(item);
+                }
+            }
+
+            listOfKnowledge.Clear();
+        }
+
+        public void AddNewComApp(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newComApp))
+                listOfComApp.Add(new PositionComAppT { PosCode = code, ComName = newSkill, VerifyId = verifyCode });
+                newComApp = "";
+        }
+        public void CloseComApp(MudChip chip)
+        {
+            var skillToRemove = listOfComApp.FirstOrDefault(item => item.ComName == chip.Text);
+
+            if (skillToRemove != null)
+            {
+                listOfComApp.Remove(skillToRemove);
+            }
+        }
+        #endregion
+
+        #region POSITION CODE
         private string generateposcode(int divisionId, int departmentId, int sectionId)
         {
             var lastPosCode = Positions
@@ -133,7 +294,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (lastPosCode != null)
             {
                 string numericPart = Regex.Match(lastPosCode, @"\d+").Value;
-                string codename = lastPosCode.Substring(0, lastPosCode.Length -2);
+                string codename = lastPosCode.Substring(0, lastPosCode.Length - 2);
 
                 int incrementedNumber = int.Parse(numericPart) + 1;
 
@@ -175,7 +336,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentName.Split(' ').Length == 1)
             {
                 departmentCode = departmentName;
-            } else
+            }
+            else
             {
                 departmentCode = string.Concat(departmentName.Split(' ').Select(word => word[0]));
             }
@@ -185,6 +347,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             return posCode;
         }
-
+        #endregion
     }
 }

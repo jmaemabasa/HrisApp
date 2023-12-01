@@ -1,4 +1,7 @@
-﻿namespace HrisApp.Client.Services.MasterData.PositionService
+﻿using HrisApp.Shared.Models.Employee;
+using System.Reflection.Emit;
+
+namespace HrisApp.Client.Services.MasterData.PositionService
 {
 #nullable disable
     public class PositionService : IPositionService
@@ -69,7 +72,7 @@
         }
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla)
+        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode)
         {
             PositionT newPosition = new()
             {
@@ -81,12 +84,10 @@
                 JobSummary = summary,
                 PosEducation = educ,
                 WorkExperience = work,
-                TechnicalSkills = tskill,
-                KnowledgeOf = kof,
-                ComputerApp = capp,
                 OtherCompetencies = othercom,
                 Restrictions = restrict,
-                Plantilla = plantilla
+                Plantilla = plantilla,
+                VerifyId = verifyCode
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
@@ -96,7 +97,7 @@
                 Console.WriteLine("Error: " + errorMessage);
             }
         }
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary,string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary,string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode)
         {
             PositionT newPosition = new()
             {
@@ -109,12 +110,11 @@
                 JobSummary = summary,
                 PosEducation = educ,
                 WorkExperience = work,
-                TechnicalSkills = tskill,
-                KnowledgeOf = kof,
-                ComputerApp = capp,
                 OtherCompetencies = othercom,
                 Restrictions = restrict,
-                Plantilla = plantilla
+                Plantilla = plantilla,
+                VerifyId = verifyCode
+                
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
@@ -141,6 +141,113 @@
 
                 Console.WriteLine(ex.Message + "daot ang services");
             }
+        }
+
+
+
+
+        public List<PositionTechSkillT> PositionTechSkillTs { get; set; } = new List<PositionTechSkillT>();
+        public async Task<List<PositionTechSkillT>> GetTechSkill(string posCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<PositionTechSkillT>>($"api/Position/GetTechSkill?posCode={posCode}");
+            return result;
+        }
+        public async Task<int> GetExistTech(string verCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingTechSkill?verifyCode={verCode}");
+            return result;
+        }
+        public async Task UpdateTechSkill(PositionTechSkillT obj)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateTechSkill/{obj.VerifyId}", obj);
+            await SetTechSkill(result);
+        }
+        public async Task<string> CreateTechSkill(PositionTechSkillT obj)
+        {
+            Console.WriteLine("Saving tech skills");
+            var result = await _httpClient.PostAsJsonAsync("api/Position/CreateTechSkill", obj);
+            var response = await result.Content.ReadFromJsonAsync<PositionTechSkillT>();
+            return response?.PosCode;
+        }
+        public async Task DeleteTechSkills(string verId)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Position/DeleteAllTechSkills/{verId}");
+        }
+        public async Task SetTechSkill(HttpResponseMessage result)
+        {
+            var response = await result.Content.ReadFromJsonAsync<List<PositionTechSkillT>>();
+            PositionTechSkillTs = response;
+        }
+
+
+
+
+        public List<PositionKnowledgeT> PositionKnowledgeTs { get; set; } = new List<PositionKnowledgeT>();
+        public async Task<List<PositionKnowledgeT>> GetKnowledge(string posCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<PositionKnowledgeT>>($"api/Position/GetKnowledge?posCode={posCode}");
+            return result;
+        }
+        public async Task<int> GetExistKnowledge(string verCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingKnowledge?verifyCode={verCode}");
+            return result;
+        }
+        public async Task UpdateKnowledge(PositionKnowledgeT obj)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateKnowledge/{obj.VerifyId}", obj);
+            await SetKnowledge(result);
+        }
+        public async Task<string> CreateKnowledge(PositionKnowledgeT obj)
+        {
+            Console.WriteLine("Saving knowdlegde");
+            var result = await _httpClient.PostAsJsonAsync("api/Position/CreateKnowledge", obj);
+            var response = await result.Content.ReadFromJsonAsync<PositionKnowledgeT>();
+            return response?.PosCode;
+        }
+        public async Task DeleteKnowledge(string verId)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Position/DeleteAllKnowledge/{verId}");
+        }
+        public async Task SetKnowledge(HttpResponseMessage result)
+        {
+            var response = await result.Content.ReadFromJsonAsync<List<PositionKnowledgeT>>();
+            PositionKnowledgeTs = response;
+        }
+
+
+
+        public List<PositionComAppT> PositionComAppTs { get; set; } = new List<PositionComAppT>();
+        public async Task<List<PositionComAppT>> GetComApp(string posCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<PositionComAppT>>($"api/Position/GetComApp?posCode={posCode}");
+            return result;
+        }
+        public async Task<int> GetExistComApp(string verCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingComApp?verifyCode={verCode}");
+            return result;
+        }
+        public async Task UpdateComApp(PositionComAppT obj)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateComApp/{obj.VerifyId}", obj);
+            await SetComApp(result);
+        }
+        public async Task<string> CreateComApp(PositionComAppT obj)
+        {
+            Console.WriteLine("Saving ComApp");
+            var result = await _httpClient.PostAsJsonAsync("api/Position/CreateComApp", obj);
+            var response = await result.Content.ReadFromJsonAsync<PositionComAppT>();
+            return response?.PosCode;
+        }
+        public async Task DeleteComApp(string verId)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Position/DeleteAllComApp/{verId}");
+        }
+        public async Task SetComApp(HttpResponseMessage result)
+        {
+            var response = await result.Content.ReadFromJsonAsync<List<PositionComAppT>>();
+            PositionComAppTs = response;
         }
     }
 }

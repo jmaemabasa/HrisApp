@@ -237,6 +237,10 @@ namespace HrisApp.Server.Data
         public DbSet<SectionT> SectionT { get; set; }
         public DbSet<PositionT> PositionT { get; set; }
         public DbSet<AreaT> AreaT { get; set; }
+        public DbSet<PositionTechSkillT> PositionTechSkillT { get; set; }
+        public DbSet<PositionKnowledgeT> PositionKnowledgeT { get; set; }
+        public DbSet<PositionComAppT> PositionComAppT { get; set; }
+        
 
 
         //Employee Data

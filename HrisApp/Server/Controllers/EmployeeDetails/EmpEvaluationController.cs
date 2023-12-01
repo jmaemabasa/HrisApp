@@ -64,11 +64,46 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Emp_EvaluationT>>> UpdateForEval(Emp_EvaluationT emphistory, int id)
         {
-            var dbEmployeeHis = await _context.Emp_EvaluationT.FirstOrDefaultAsync(e => e.Id == emphistory.Id);
+            var dbEmployeeHis = await _context.Emp_EvaluationT.FirstOrDefaultAsync(e => e.Id == id);
 
             if (dbEmployeeHis != null)
             {
+                dbEmployeeHis.Eval1Status = emphistory.Eval1Status;
+                dbEmployeeHis.Eval2Status = emphistory.Eval2Status;
+                dbEmployeeHis.Eval3Status = emphistory.Eval3Status;
+                dbEmployeeHis.Eval4Status = emphistory.Eval4Status;
+                dbEmployeeHis.Eval5Status = emphistory.Eval5Status;
+                dbEmployeeHis.Eval6Status = emphistory.Eval6Status;
                 dbEmployeeHis.EvalStatus = emphistory.EvalStatus;
+
+                await _context.SaveChangesAsync();
+            }
+            return Ok(await GetDBEval());
+        }
+
+        [HttpPut("UpdateFinalStatus/{VerifyId}")]
+        public async Task<ActionResult<List<Emp_EvaluationT>>> UpdateFinalStatus(Emp_EvaluationT emphistory, string VerifyId)
+        {
+            var dbEmployeeHis = await _context.Emp_EvaluationT.FirstOrDefaultAsync(e => e.Verify_Id == VerifyId);
+
+            if (dbEmployeeHis != null)
+            {
+                dbEmployeeHis.Eval1Status = emphistory.Eval1Status;
+                dbEmployeeHis.Eval2Status = emphistory.Eval2Status;
+                dbEmployeeHis.Eval3Status = emphistory.Eval3Status;
+                dbEmployeeHis.Eval4Status = emphistory.Eval4Status;
+                dbEmployeeHis.Eval5Status = emphistory.Eval5Status;
+                dbEmployeeHis.Eval6Status = emphistory.Eval6Status;
+
+                if (dbEmployeeHis.Eval6Status == "Done")
+                {
+                    dbEmployeeHis.EvalStatus = "Done";
+                }
+                else
+                {
+                    dbEmployeeHis.EvalStatus = "Pending";
+                }
+
 
                 await _context.SaveChangesAsync();
             }

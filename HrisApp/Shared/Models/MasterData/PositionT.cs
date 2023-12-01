@@ -22,11 +22,9 @@ namespace HrisApp.Shared.Models.MasterData
         public string JobSummary { get; set; } = string.Empty;
         public string PosEducation { get; set; } = string.Empty;
         public string WorkExperience { get; set; } = string.Empty;
-        public string TechnicalSkills { get; set; } = string.Empty;
-        public string KnowledgeOf { get; set; } = string.Empty;
-        public string ComputerApp { get; set; } = string.Empty;
         public string OtherCompetencies { get; set; } = string.Empty;
         public string Restrictions { get; set; } = string.Empty;
         public int Plantilla { get; set; } //FK
+        public string VerifyId { get; set; } = string.Empty;
     }
 }
