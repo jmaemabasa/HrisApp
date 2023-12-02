@@ -102,25 +102,39 @@
                             <MudText Typo="Typo.body2">Education</MudText>
                             <MudTextField @bind-Value="newEduc" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                         </div>
-                        <div class="flex-grow-1">
-                            <MudText Typo="Typo.body2">Work Experience (please specify required years of experience)</MudText>
-                            <MudTextField @bind-Value="newWorkExp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;"/>
+                        <div class="d-flex flex-column" style="margin-bottom: 10px;">
+                            <div class="flex-grow-1">
+                                <MudText Typo="Typo.body2">Work Experience (please specify required years of experience)</MudText>
+                                <div class="d-flex">
+                                    <MudTextField @bind-Value="newWorkExp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                    <MudIconButton Class="btnsmallsapos" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" OnClick="@(() => AddNewWorkExp(newPosCode, newWorkExp))"></MudIconButton>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap flex-grow-1">
+                                <MudChipSet AllClosable="true" OnClose="CloseComApp">
+                                    @foreach (var item in listOfWorkExp)
+                                    {
+                                        <MudChip Color="Color.Tertiary" Text="@item.ExpName"></MudChip>
+                                    }
+                                </MudChipSet>
+                            </div>
                         </div>
                         <div class="d-flex flex-column" style="margin-bottom: 10px;">
                             <div class="flex-grow-1">
                                 <MudText Typo="Typo.body2">Technical Skills:</MudText>
                                 <div class="d-flex">
                                     <MudTextField @bind-Value="newTechSkill" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => AddNewTechSkill(newPosCode, newTechSkill))"></MudIconButton>
+                                    <MudIconButton Class="btnsmallsapos" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" OnClick="@(() => AddNewTechSkill(newPosCode, newTechSkill))"></MudIconButton>
                                 </div>
                             </div>
                             <div class="d-flex flex-wrap flex-grow-1">
                                 <MudChipSet AllClosable="true" OnClose="CloseTechSkill">
                                     @foreach (var item in listOfTechSkills)
                                     {
-                                        <MudChip Text="@item.SkillName"></MudChip>
+                                        <MudChip Color="Color.Secondary" Text="@item.SkillName"></MudChip>
                                     }
                                 </MudChipSet>
+
                             </div>
                         </div>
                         <div class="d-flex flex-column" style="margin-bottom: 10px;">
@@ -128,30 +142,33 @@
                                 <MudText Typo="Typo.body2">Knowledge Of:</MudText>
                                 <div class="d-flex">
                                     <MudTextField @bind-Value="newKnowledge" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => AddNewKnowledge(newPosCode, newKnowledge))"></MudIconButton>
+                                    <MudIconButton Class="btnsmallsapos" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" OnClick="@(() => AddNewKnowledge(newPosCode, newKnowledge))"></MudIconButton>
                                 </div>
                             </div>
                             <div class="d-flex flex-wrap flex-grow-1">
                                 <MudChipSet AllClosable="true" OnClose="CloseKnowledge">
                                     @foreach (var item in listOfKnowledge)
                                     {
-                                        <MudChip Text="@item.KnowName"></MudChip>
+                                        <MudChip Color="Color.Info" Text="@item.KnowName"></MudChip>
                                     }
                                 </MudChipSet>
                             </div>
                         </div>
-                        <div class="d-flex flex-row gap-2">
-                            <div class="flex-grow-1">
-                                <MudText Typo="Typo.body2">Technical Skills:</MudText>
-                                <MudTextField @bind-Value="newTechSkill" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;"/>
-                            </div>
-                             <div class="flex-grow-1">
-                                <MudText Typo="Typo.body2">Knowledge Of:</MudText>
-                                <MudTextField @bind-Value="newKnowledge" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;"/>
-                            </div>
+                        <div class="d-flex flex-column" style="margin-bottom: 10px;">
                             <div class="flex-grow-1">
                                 <MudText Typo="Typo.body2">Computer Application:</MudText>
-                                <MudTextField @bind-Value="newComApp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                <div class="d-flex">
+                                    <MudTextField @bind-Value="newComApp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                    <MudIconButton Class="btnsmallsapos" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" OnClick="@(() => AddNewComApp(newPosCode, newComApp))"></MudIconButton>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap flex-grow-1">
+                                <MudChipSet AllClosable="true" OnClose="CloseComApp">
+                                    @foreach (var item in listOfComApp)
+                                    {
+                                        <MudChip Color="Color.Tertiary" Text="@item.ComName"></MudChip>
+                                    }
+                                </MudChipSet>
                             </div>
                         </div>
                         <div class="flex-grow-1">
@@ -193,23 +210,36 @@
                             <MudText Typo="Typo.body2">Education</MudText>
                             <MudTextField @bind-Value="newEduc" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                         </div>
-                        <div class="flex-grow-1">
-                            <MudText Typo="Typo.body2">Work Experience (please specify required years of experience)</MudText>
-                            <MudTextField @bind-Value="newWorkExp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;"/>
+                        <div class="d-flex flex-column" style="margin-bottom: 10px;">
+                            <div class="flex-grow-1">
+                                <MudText Typo="Typo.body2">Work Experience (please specify required years of experience)</MudText>
+                                <div class="d-flex">
+                                    <MudTextField @bind-Value="newWorkExp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                    <MudIconButton Class="btnsmallsapos" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" OnClick="@(() => AddNewWorkExp(newPosCode, newWorkExp))"></MudIconButton>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap flex-grow-1">
+                                <MudChipSet AllClosable="true" OnClose="CloseComApp">
+                                    @foreach (var item in listOfWorkExp)
+                                    {
+                                        <MudChip Color="Color.Tertiary" Text="@item.ExpName"></MudChip>
+                                    }
+                                </MudChipSet>
+                            </div>
                         </div>
                         <div class="d-flex flex-column" style="margin-bottom: 10px;">
                             <div class="flex-grow-1">
                                 <MudText Typo="Typo.body2">Technical Skills:</MudText>
                                 <div class="d-flex">
                                     <MudTextField @bind-Value="newTechSkill" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => AddNewTechSkill(newPosCode, newTechSkill))"></MudIconButton>
+                                    <MudIconButton Class="btnsmallsapos" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" OnClick="@(() => AddNewTechSkill(newPosCode, newTechSkill))"></MudIconButton>
                                 </div>
                             </div>
                             <div class="d-flex flex-wrap flex-grow-1">
                                 <MudChipSet AllClosable="true" OnClose="CloseTechSkill">
                                     @foreach (var item in listOfTechSkills)
                                     {
-                                        <MudChip Text="@item.SkillName"></MudChip>
+                                        <MudChip Color="Color.Secondary" Text="@item.SkillName"></MudChip>
                                     }
                                 </MudChipSet>
 
@@ -220,14 +250,14 @@
                                 <MudText Typo="Typo.body2">Knowledge Of:</MudText>
                                 <div class="d-flex">
                                     <MudTextField @bind-Value="newKnowledge" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => AddNewKnowledge(newPosCode, newKnowledge))"></MudIconButton>
+                                    <MudIconButton Class="btnsmallsapos" Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" OnClick="@(() => AddNewKnowledge(newPosCode, newKnowledge))"></MudIconButton>
                                 </div>
                             </div>
                             <div class="d-flex flex-wrap flex-grow-1">
                                 <MudChipSet AllClosable="true" OnClose="CloseKnowledge">
                                     @foreach (var item in listOfKnowledge)
                                     {
-                                        <MudChip Text="@item.KnowName"></MudChip>
+                                        <MudChip Color="Color.Info" Text="@item.KnowName"></MudChip>
                                     }
                                 </MudChipSet>
                             </div>
@@ -244,23 +274,9 @@
                                 <MudChipSet AllClosable="true" OnClose="CloseComApp">
                                     @foreach (var item in listOfComApp)
                                     {
-                                        <MudChip Text="@item.ComName"></MudChip>
+                                        <MudChip Color="Color.Tertiary" Text="@item.ComName"></MudChip>
                                     }
                                 </MudChipSet>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row gap-2">
-                            <div class="flex-grow-1">
-                                <MudText Typo="Typo.body2">Technical Skills:</MudText>
-                                <MudTextField @bind-Value="newTechSkill" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;"/>
-                            </div>
-                            <div class="flex-grow-1">
-                                <MudText Typo="Typo.body2">Knowledge Of:</MudText>
-                                <MudTextField @bind-Value="newKnowledge" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                            </div>
-                            <div class="flex-grow-1">
-                                <MudText Typo="Typo.body2">Computer Application:</MudText>
-                                <MudTextField @bind-Value="newComApp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                             </div>
                         </div>
                         <div class="flex-grow-1">

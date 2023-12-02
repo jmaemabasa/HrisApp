@@ -1,6 +1,7 @@
 ﻿@page "/evaluationlist"
 @inject IEmployeeService EmployeeService
 @inject IForEvalService ForEvalService
+@inject StateService StateService
 @inject NavigationManager NavManager
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
@@ -40,7 +41,11 @@
         <MudTable Class="stable" Items="@EvalList" Context="employe1" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="739px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
             <HeaderContent>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Full Name</MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Date Hired</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                    <MudTableSortLabel SortBy="new Func<Emp_EvaluationT, object>(x=>x.DateHired)">
+                        Date Hired
+                    </MudTableSortLabel>
+                </MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">1st Month</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">2nd Month</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">3rd Month</MudTh>
@@ -50,75 +55,75 @@
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Full Name">
+                <MudTd DataLabel="Full Name" Class="col-2">
                     <EmployeeName verify="@employe1.Verify_Id" />
                 </MudTd>
                 <MudTd DataLabel="">@employe1.DateHired.ToString("MM/dd/yyyy")</MudTd>
                 <MudTd DataLabel="" Class="" Style="text-align: center;">
                     @if (employe1.Eval1Status != "Done")
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval1Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Class="chipPending">@employe1.Eval1Status</MudChip>
                     }
                     else
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval1Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Class="chipDone">@employe1.Eval1Status</MudChip>
                     }
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
                     @if (employe1.Eval2Status != "Done")
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval2Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Class="chipPending">@employe1.Eval2Status</MudChip>
                     }
                     else
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval2Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Class="chipDone">@employe1.Eval2Status</MudChip>
                     }
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
                     @if (employe1.Eval3Status != "Done")
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval3Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Class="chipPending">@employe1.Eval3Status</MudChip>
                     }
                     else
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval3Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Class="chipDone">@employe1.Eval3Status</MudChip>
                     }
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
                     @if (employe1.Eval4Status != "Done")
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval4Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Class="chipPending">@employe1.Eval4Status</MudChip>
                     }
                     else
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval4Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Class="chipDone">@employe1.Eval4Status</MudChip>
                     }
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
                     @if (employe1.Eval5Status != "Done")
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval5Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Class="chipPending">@employe1.Eval5Status</MudChip>
                     }
                     else
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval5Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Class="chipDone">@employe1.Eval5Status</MudChip>
                     }
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
                     @if (employe1.Eval6Status != "Done")
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Style="background-color: #F9B572; color: #fafaf5;">@employe1.Eval6Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.AccessTime" Class="chipPending">@employe1.Eval6Status</MudChip>
                     }
                     else
                     {
-                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval6Status</MudChip>
+                        <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Class="chipDone">@employe1.Eval6Status</MudChip>
                     }
                 </MudTd>
                 @if (employe1.EvalStatus != "Done")
                 {
                     <MudTd DataLabel="" Style="text-align: center;">
-                        <MudTooltip Text="Update" Color="Color.Success">
-                            <MudIconButton Icon="@Icons.Material.Outlined.SystemUpdateAlt" OnClick="@(() => UpdateTable(employe1))"></MudIconButton>
+                        <MudTooltip Text="Update" Color="Color.Tertiary">
+                            <MudIconButton Icon="@Icons.Material.Rounded.DownloadDone" OnClick="@(() => UpdateTable(employe1))"></MudIconButton>
                         </MudTooltip>
                     </MudTd>
                 }
@@ -136,14 +141,30 @@
     Emp_EvaluationT UpdateEval = new();
 
     bool isUpdate { get; set; }
+    public string searchString = "";
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(300);
-        await ForEvalService.GetForEval();
-        EvalList = ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done").ToList();
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+        // await ForEvalService.GetForEval();
+        // EvalList = ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done").ToList();
         // EvalList = ForEvalService.Emp_EvaluationTs;
 
+    }
+
+    private async Task LoadList()
+    {
+        await ForEvalService.GetForEval();
+        StateService.SetState("EvalList", ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done").ToList());
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        EvalList = StateService.GetState<List<Emp_EvaluationT>>("EvalList");
+        StateHasChanged();
     }
 
     private async Task UpdateTable(Emp_EvaluationT obj)
@@ -151,7 +172,11 @@
         var generateEval = await ForEvalService.GenerateStatus(obj.Verify_Id, obj.DateHired, "Done");
         await ForEvalService.UpdateForEval(generateEval);
 
-        NavManager.NavigateTo("/evaluationlist", true);
+        await ForEvalService.GetForEval();
+        var newList = ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done").ToList();
+        StateService.SetState("EvalList", newList);
+
+        // NavManager.NavigateTo("/evaluationlist", true);
 
     }
 

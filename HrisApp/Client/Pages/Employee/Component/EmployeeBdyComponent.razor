@@ -1,0 +1,61 @@
+﻿@inject IEmployeeService EmployeeService
+@inject IImageService ImageService
+
+<div class="d-flex flex-row align-items-center gap-3">
+    <div class="d-flex align-items-center">
+        <MudAvatar Rounded="true">
+            <MudImage Src="@ImageData"></MudImage>
+        </MudAvatar>
+    </div>
+    <div>
+        <div class="flex-column">
+            <div><b>@CapitalizeFirstLetter(employee.FirstName) @CapitalizeFirstLetter(employee.LastName)</b></div>
+            <div>@employee.Position?.Name</div>
+        </div>
+    </div>
+</div>
+
+@code {
+#nullable disable
+    [Parameter]
+    public string verify { get; set; }
+
+    EmployeeT employee = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
+            await EmployeeImg(verify);//image
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/imgholder.jpg");
+            Console.WriteLine("");
+        }
+    }
+
+    private string CapitalizeFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        return char.ToUpper(input[0]) + input[1..];
+    }
+
+    private string ImageData;
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+            // Console.WriteLine($"2nd Test: {verifyCode}");
+        }
+    }
+}

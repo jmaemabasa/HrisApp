@@ -36,12 +36,14 @@
 .btnsmallsapos {
     background-color: #E38D4D;
     height: 40px;
+    margin-left: 5px;
     margin-top: 3px;
+    width: 80px;
     transition: all .5s ease;
 }
 
     .btnsmallsapos:hover {
-        background-color: #BB2525;
+        background-color: #4169E1;
         color: #FAFAF5;
         transform: scale(1.1);
     }

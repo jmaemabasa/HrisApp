@@ -37,6 +37,11 @@
     padding: 10px 10px 10px 10px;
 }
 
+::deep .empdmainbox {
+    height: 54rem;
+    overflow: auto !important;
+}
+
 ::deep .mud-typography {
     font-family: 'Nunito Sans' !important;
 }

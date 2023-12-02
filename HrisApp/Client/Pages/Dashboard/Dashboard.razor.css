@@ -1,1 +1,10 @@
-﻿
+﻿.divlistbday {
+    border: 2px solid #DEE2E6;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.bdaytitle {
+    font-size: 16px;
+}

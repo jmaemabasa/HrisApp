@@ -17,6 +17,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public List<PositionTechSkillT> listOfTechSkills = new();
         public List<PositionKnowledgeT> listOfKnowledge = new();
         public List<PositionComAppT> listOfComApp = new();
+        public List<PositionWorkExpT> listOfWorkExp = new();
 
         private int selectedDivision = 0;
         private int selectedDepartment = 0;
@@ -115,6 +116,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
+                await SaveNewWorkExp(newPosCode);
             }
             else
             {
@@ -124,6 +126,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
+                await SaveNewWorkExp(newPosCode);
             }
 
             _toastService.ShowSuccess(positionName + " Created Successfully!");
@@ -278,6 +281,55 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (skillToRemove != null)
             {
                 listOfComApp.Remove(skillToRemove);
+            }
+        }
+        #endregion
+
+        #region WORKEXP
+        public async Task SaveNewWorkExp(string posCode)
+        {
+            var validtechSkill = listOfWorkExp
+               .Where
+               (obj => !string.IsNullOrEmpty(obj.PosCode) || !string.IsNullOrEmpty(obj.ExpName))
+               .ToList();
+
+            if (validtechSkill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in validtechSkill)
+            {
+                item.PosCode = posCode;
+
+                int isExistTech = await PositionService.GetExistWorkExp(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await PositionService.CreateWorkExp(item);
+                }
+                else
+                {
+                    await PositionService.UpdateWorkExp(item);
+                }
+            }
+
+            listOfKnowledge.Clear();
+        }
+
+        public void AddNewWorkExp(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newWorkExp))
+                listOfWorkExp.Add(new PositionWorkExpT { PosCode = code, ExpName = newSkill, VerifyId = verifyCode });
+                newWorkExp = "";
+        }
+        public void CloseWorkExp(MudChip chip)
+        {
+            var skillToRemove = listOfWorkExp.FirstOrDefault(item => item.ExpName == chip.Text);
+
+            if (skillToRemove != null)
+            {
+                listOfWorkExp.Remove(skillToRemove);
             }
         }
         #endregion

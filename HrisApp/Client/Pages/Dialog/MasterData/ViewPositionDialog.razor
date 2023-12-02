@@ -10,7 +10,7 @@
 
 <style>
     .divsingledetails{
-        background-color: #093260;
+        background-color: #424242;
         padding: 7px 15px 7px 15px;
         border-radius: 10px;
     }
@@ -28,18 +28,30 @@
 <MudDialog Style="background-color: #FAFAF5">
     <DialogContent>
         <div class="d-flex flex-column gap-2 cont">
-            <span style="margin-bottom: 5px; font-size: 16px; color: #093260"><b>Qualication Requirements</b></span>
+            <span style="margin-bottom: 5px; font-size: 16px; color: #424242"><b>Qualication Requirements</b></span>
             <div class="divsingledetails">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Job Summary</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.JobSummary</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.JobSummary) ? "No Information." : position.JobSummary)</MudText>
             </div>
             <div class="divsingledetails">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Education</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.PosEducation</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.PosEducation) ? "No Information." : position.PosEducation)</MudText>
             </div>
-            <div class="divsingledetails">
-                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Work Experience</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.WorkExperience</MudText>
+                <div class="divsingledetails d-flex flex-column">
+                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Work Experience</MudText>
+                    <div class="d-flex flex-wrap">
+                        @if (WorkExpL.Count != 0)
+                    {
+                        @foreach (var item in WorkExpL)
+                        {
+                            <MudChip Text="orange" Variant="Variant.Filled" Style="color: #424242; background-color: #fafaf5;">@item.ExpName</MudChip>
+                        }
+                    }
+                    else
+                    {
+                        <span style="font-weight: bold;color: #fafaf5">No Information</span>
+                    }
+                </div>
             </div>
             <div class="divsingledetails d-flex flex-column">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Technical Skills</MudText>
@@ -48,7 +60,7 @@
                     {
                         @foreach (var item in TechSkillsL)
                         {
-                            <MudChip Text="orange" Variant="Variant.Outlined" Color="Color.Default">@item.SkillName</MudChip>
+                            <MudChip Text="orange" Variant="Variant.Filled" Color="Color.Secondary">@item.SkillName</MudChip>
                         }
                     }
                     else
@@ -64,7 +76,7 @@
                     {
                         @foreach (var item in KnowledgesL)
                         {
-                            <MudChip Text="orange" Variant="Variant.Outlined" Color="Color.Default">@item.KnowName</MudChip>
+                            <MudChip Text="orange" Variant="Variant.Filled" Color="Color.Info">@item.KnowName</MudChip>
                         }
                     }
                     else
@@ -80,7 +92,7 @@
                     {
                         @foreach (var item in ComAppsL)
                         {
-                            <MudChip Text="orange" Variant="Variant.Outlined" Color="Color.Default">@item.ComName</MudChip>
+                            <MudChip Text="orange" Variant="Variant.Filled" Color="Color.Tertiary">@item.ComName</MudChip>
                         }
                     }
                     else
@@ -91,11 +103,11 @@
             </div>
             <div class="divsingledetails">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Other Compotencies</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.OtherCompetencies</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.OtherCompetencies) ? "No Information." : position.OtherCompetencies)</MudText>
             </div>
             <div class="divsingledetails">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Restrictions</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.Restrictions</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.Restrictions) ? "No Information." : position.Restrictions)</MudText>
             </div>
         </div>
     </DialogContent>
@@ -115,6 +127,7 @@
     private List<PositionTechSkillT> TechSkillsL = new();
     private List<PositionKnowledgeT> KnowledgesL = new();
     private List<PositionComAppT> ComAppsL = new();
+    private List<PositionWorkExpT> WorkExpL = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -130,6 +143,7 @@
         TechSkillsL = await PositionService.GetTechSkill(position.PosCode);
         KnowledgesL = await PositionService.GetKnowledge(position.PosCode);
         ComAppsL = await PositionService.GetComApp(position.PosCode);
+        WorkExpL = await PositionService.GetWorkExp(position.PosCode);
     }
 
     void Close() => MudDialog.Close(DialogResult.Ok(true));

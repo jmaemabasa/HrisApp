@@ -249,5 +249,41 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             var response = await result.Content.ReadFromJsonAsync<List<PositionComAppT>>();
             PositionComAppTs = response;
         }
+
+
+
+
+        public List<PositionWorkExpT> PositionWorkExpTs { get; set; } = new List<PositionWorkExpT>();
+        public async Task<List<PositionWorkExpT>> GetWorkExp(string posCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<PositionWorkExpT>>($"api/Position/GetWorkExp?posCode={posCode}");
+            return result;
+        }
+        public async Task<int> GetExistWorkExp(string verCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingWorkExp?verifyCode={verCode}");
+            return result;
+        }
+        public async Task UpdateWorkExp(PositionWorkExpT obj)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateWorkExp/{obj.VerifyId}", obj);
+            await SetWorkExp(result);
+        }
+        public async Task<string> CreateWorkExp(PositionWorkExpT obj)
+        {
+            Console.WriteLine("Saving WorkExp");
+            var result = await _httpClient.PostAsJsonAsync("api/Position/CreateWorkExp", obj);
+            var response = await result.Content.ReadFromJsonAsync<PositionWorkExpT>();
+            return response?.PosCode;
+        }
+        public async Task DeleteWorkExp(string verId)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Position/DeleteAllWorkExp/{verId}");
+        }
+        public async Task SetWorkExp(HttpResponseMessage result)
+        {
+            var response = await result.Content.ReadFromJsonAsync<List<PositionWorkExpT>>();
+            PositionWorkExpTs = response;
+        }
     }
 }

@@ -71,7 +71,7 @@
                 { x => x.Id, id }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
             DialogService.Show<UpdatePositionDialog>("Update Position", parameters, options);
         }
 

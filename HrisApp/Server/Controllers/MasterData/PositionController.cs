@@ -297,6 +297,66 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok();
         }
 
+        //WorkExp
+        [HttpGet("GetWorkExp")]
+        public async Task<ActionResult<List<PositionWorkExpT>>> GetWorkExp([FromQuery] string posCode)
+        {
+            var list = await _context.PositionWorkExpT
+                .Where(x => x.PosCode == posCode)
+                .ToListAsync();
+
+            return Ok(list);
+        }
+        private async Task<List<PositionWorkExpT>> GetDBWorkExp()
+        {
+            return await _context.PositionWorkExpT
+                .ToListAsync();
+        }
+        [HttpGet("GetExistingWorkExp")]
+        public async Task<ActionResult<int>> GetExistingWorkExp([FromQuery] string verifyCode)
+        {
+            var allimage = await _context.PositionWorkExpT.ToListAsync();
+            var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
+            return image;
+        }
+        [HttpPost("CreateWorkExp")]
+        public async Task<ActionResult<PositionWorkExpT>> CreateWorkExp([FromBody] PositionWorkExpT obj)
+        {
+            if (obj == null)
+            {
+                return BadRequest("Invalid data");
+            }
+            _context.PositionWorkExpT.Add(obj);
+            await _context.SaveChangesAsync();
+
+            return Ok(obj);
+        }
+        [HttpPut("UpdateWorkExp/{VerifyId}")]
+        public async Task<ActionResult<List<PositionWorkExpT>>> UpdateWorkExp(PositionWorkExpT emphistory, string VerifyId)
+        {
+            var dbEmployeeHis = await _context.PositionWorkExpT.FirstOrDefaultAsync(e => e.VerifyId == VerifyId);
+
+            if (dbEmployeeHis != null)
+            {
+                dbEmployeeHis.ExpName = emphistory.ExpName;
+
+                await _context.SaveChangesAsync();
+            }
+            return Ok(await GetDBWorkExp());
+        }
+
+        [HttpDelete("DeleteAllWorkExp/{verId}")]
+        public async Task<ActionResult<List<PositionWorkExpT>>> DeleteAllWorkExp(string verId)
+        {
+            var dbcol = await _context.PositionWorkExpT.FirstOrDefaultAsync(h => h.VerifyId == verId);
+            if (dbcol == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.PositionWorkExpT.Remove(dbcol);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
 
 
     }

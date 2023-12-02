@@ -14,6 +14,7 @@
         private List<DepartmentT> allDepartments;
         private List<SectionT> allSections;
         private List<AreaT> allAreas;
+        private List<EmployeeT> employeeBdayL = new List<EmployeeT>();
         private Dictionary<int, int> positionCounts = new Dictionary<int, int>();
 
         public List<string> departmentArr = new List<string>();
@@ -34,6 +35,7 @@
                 await DivisionService.GetDivision();
 
                 allDepartments = DepartmentService.DepartmentTs;
+                employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate).ToList();
 
                 #region Top Cards
                 _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
@@ -115,7 +117,7 @@
             List<double> empCountperDiv = new List<double>();
             foreach (var item in DivisionService.DivisionTs)
             {
-                Console.WriteLine(item.Name);
+                //Console.WriteLine(item.Name);
                 var countEmployee = EmployeeService.EmployeeTs.Where(s => s.DivisionId == item.Id).Count();
                 empCountperDiv.Add(countEmployee);
             }

@@ -104,7 +104,7 @@
                                         Full Name
                                     </MudTableSortLabel>
                                 </MudTh>
-                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
                                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
                                         ID No
                                     </MudTableSortLabel>
@@ -169,7 +169,7 @@
                                         Full Name
                                     </MudTableSortLabel>
                                 </MudTh>
-                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
                                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
                                         ID No
                                     </MudTableSortLabel>
@@ -234,7 +234,7 @@
                                         Full Name
                                     </MudTableSortLabel>
                                 </MudTh>
-                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
                                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
                                         ID No
                                     </MudTableSortLabel>
@@ -299,7 +299,7 @@
                                         Full Name
                                     </MudTableSortLabel>
                                 </MudTh>
-                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
                                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
                                         ID No
                                     </MudTableSortLabel>
@@ -364,7 +364,7 @@
                                         Full Name
                                     </MudTableSortLabel>
                                 </MudTh>
-                                <MudTh Class="2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
+                                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
                                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
                                         ID No
                                     </MudTableSortLabel>
@@ -449,7 +449,7 @@
         return await ForEvalService.GetStatusPerEmp(verifyId);
     }
 
-    public void NavToEmpD(int id) => NavManager.NavigateTo($"/evaluationlist");
+    public void NavToEmpD(int id) => NavManager.NavigateTo($"/employee/edit/{id}");
 
     public string CapitalizeFirstLetter(string input)
     {

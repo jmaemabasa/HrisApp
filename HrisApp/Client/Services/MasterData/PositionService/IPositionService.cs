@@ -39,5 +39,13 @@
         Task<int> GetExistComApp(string verCode);
         Task UpdateComApp(PositionComAppT obj);
         Task DeleteComApp(string verId);
+
+
+        List<PositionWorkExpT> PositionWorkExpTs { get; set; }
+        Task<List<PositionWorkExpT>> GetWorkExp(string posCode);
+        Task<string> CreateWorkExp(PositionWorkExpT obj);
+        Task<int> GetExistWorkExp(string verCode);
+        Task UpdateWorkExp(PositionWorkExpT obj);
+        Task DeleteWorkExp(string verId);
     }
 }

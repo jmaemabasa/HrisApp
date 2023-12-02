@@ -1016,7 +1016,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public void AddNewProfBg(string employeeVerifyId)
         {
-            if (listofProfbg.Count <= 5)
+            if (listofProfbg.Count <= 15)
             {
                 listofProfbg.Add(new Emp_ProfBackgroundT { Verify_Id = employee.Verify_Id });
             }

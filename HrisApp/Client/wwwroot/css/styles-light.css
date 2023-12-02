@@ -10,7 +10,7 @@
 .mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-    border-radius: 20px;
+    border-radius: 15px;
     height: 95vh;
     left: 15px;
     top: 15px;
@@ -72,7 +72,17 @@
     padding: 10px 15px 10px 15px;
 }
 
-
+.bdaypanel {
+    height: 24rem;
+    border-radius: 10px;
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+    color: #424242;
+    overflow: auto;
+}
 
 /*Table*/
 .stable {

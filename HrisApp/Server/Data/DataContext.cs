@@ -240,6 +240,7 @@ namespace HrisApp.Server.Data
         public DbSet<PositionTechSkillT> PositionTechSkillT { get; set; }
         public DbSet<PositionKnowledgeT> PositionKnowledgeT { get; set; }
         public DbSet<PositionComAppT> PositionComAppT { get; set; }
+        public DbSet<PositionWorkExpT> PositionWorkExpT { get; set; }
         
 
 

@@ -13,9 +13,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public List<PositionTechSkillT> listOfTechSkills = new();
         public List<PositionKnowledgeT> listOfKnowledge = new();
         public List<PositionComAppT> listOfComApp = new();
+        public List<PositionWorkExpT> listOfWorkExp = new();
         private string newTechSkill;
         private string newKnowledge;
         private string newComApp;
+        private string newWorkExp;
 
         private PositionT position = new();
         void Cancel() => MudDialog.Cancel();
@@ -31,6 +33,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             listOfTechSkills = await PositionService.GetTechSkill(position.PosCode);
             listOfKnowledge = await PositionService.GetKnowledge(position.PosCode);
             listOfComApp = await PositionService.GetComApp(position.PosCode);
+            listOfWorkExp = await PositionService.GetWorkExp(position.PosCode);
         }
 
         async Task UpdateArea()
@@ -67,6 +70,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     await SaveNewTechSkills(position.PosCode);
                     await SaveNewKnowledge(position.PosCode);
                     await SaveNewComApp(position.PosCode);
+                    await SaveNewWorkExp(position.PosCode);
                     await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
                     _toastService.ShowSuccess(position.Name + " Updated Successfully!");
@@ -280,6 +284,75 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (skillToRemove != null)
             {
                 listOfComApp.Remove(skillToRemove);
+            }
+        }
+
+        #endregion
+
+        #region COM APP
+        public async Task SaveNewWorkExp(string posCode)
+        {
+            var listApi = await PositionService.GetWorkExp(posCode);
+            List<string> arrApi = new();
+
+            var validtechSkill = listOfWorkExp
+               .Where(obj => !string.IsNullOrEmpty(obj.PosCode) || !string.IsNullOrEmpty(obj.ExpName))
+               .ToList();
+
+            var listtechskills = validtechSkill.OrderByDescending(obj => obj.VerifyId).ToList();
+
+            if (listtechskills.Count == 0)
+            {
+                foreach (var item in listApi)
+                {
+                    await PositionService.DeleteWorkExp(item.VerifyId);
+                }
+                return;
+            }
+
+            foreach (var pays in listApi)
+            {
+                var P = listtechskills.Where(p => p.VerifyId == pays.VerifyId).Count();
+
+                if (P == 0)
+                {
+                    await PositionService.DeleteWorkExp(pays.VerifyId);
+                }
+            }
+
+            foreach (var item in listtechskills)
+            {
+                item.PosCode = posCode;
+
+                int isExistTech = await PositionService.GetExistWorkExp(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await PositionService.CreateWorkExp(item);
+                }
+                else
+                {
+                    await PositionService.UpdateWorkExp(item);
+                }
+            }
+
+            listOfWorkExp.Clear();
+        }
+
+        public void AddNewWorkExp(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newWorkExp))
+                listOfWorkExp.Add(new PositionWorkExpT { PosCode = code, ExpName = newSkill, VerifyId = verifyCode });
+                newWorkExp = "";
+            //Console.WriteLine(verifyCode);
+        }
+        public void CloseWorkExp(MudChip chip)
+        {
+            var skillToRemove = listOfWorkExp.FirstOrDefault(item => item.ExpName == chip.Text);
+
+            if (skillToRemove != null)
+            {
+                listOfWorkExp.Remove(skillToRemove);
             }
         }
 

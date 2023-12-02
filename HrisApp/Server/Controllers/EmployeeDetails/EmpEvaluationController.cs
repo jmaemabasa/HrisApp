@@ -103,8 +103,6 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 {
                     dbEmployeeHis.EvalStatus = "Pending";
                 }
-
-
                 await _context.SaveChangesAsync();
             }
             return Ok(await GetDBEval());
