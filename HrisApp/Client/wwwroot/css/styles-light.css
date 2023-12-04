@@ -22,6 +22,17 @@
     color: #424242;
 }
 
+.topmudcard {
+    border-radius: 10px;
+    /*background: #e9ecef;*/
+    background-color: var(--BackgroundGrey);
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding: 0px 0px 0px 10px !important;
+}
+
+
 .evalpanel {
     /* height: 9rem; */
     height: 12rem;
@@ -52,15 +63,6 @@
         transform: scale(1.0);
     }
 
-.topmudcard {
-    border-radius: 10px;
-    /*background: #e9ecef;*/
-    background-color: var(--BackgroundGrey);
-    border: none;
-    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-    border-radius: 20px;
-    padding: 10px 15px 10px 15px;
-}
 
 .linepanel {
     border-radius: 10px;
@@ -89,3 +91,28 @@
     background: #e9ecef;
     border-radius: 20px;
 }
+
+.mud-table-head {
+    border-bottom: 3px solid #DEE2E6;
+}
+
+
+/*Require Manpower*/
+.cmbDivision {
+    background-color: #ADBBC9;
+    border-radius: 10px;
+    width: 335px;
+    min-width: 160px;
+    padding: 8px 15px 5px 15px;
+    max-width: max-content;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+    transition: all .5s ease;
+}
+
+    .cmbDivision:hover {
+        background-color: #7c8c9c;
+        color: #fafaf5;
+        transform: scale(1.1);
+    }
+

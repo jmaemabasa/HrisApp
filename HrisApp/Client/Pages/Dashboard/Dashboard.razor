@@ -32,7 +32,7 @@
                     <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
                         <div class="d-flex flex-column gap-2">
                             <span style="font-size: 24px;">Welcome, <b>@FULLNAME</b>!</span>
-                            <span style="font-size: 20px;">You have @_countForEval employees due for evaluation!</span>
+                            <span style="font-size: 20px;">You have @_countForEval employees pending for performance evaluation!</span>
                         </div>
                         <div class="">
                             <MudButton id="evalpanelbtn" OnClick="NavForEval" Class="btnadd">Check Now</MudButton>
@@ -40,14 +40,17 @@
                     </MudCardContent>
                 </MudCard>
             </MudItem>
-            <MudItem xs="12" sm="4">
-                <TopCards title="Total Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 5rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
+            <MudItem xs="12" sm="3">
+                <TopCards title="Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 4.5rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
             </MudItem>
-            <MudItem xs="12" sm="4">
-                <TopCards title="Total Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
+            <MudItem xs="12" sm="3">
+                <TopCards title="Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 4.5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
             </MudItem>
-            <MudItem xs="12" sm="4">
-                <TopCards title="Total Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 5rem; color: #E97777" OnCardClick=@(()=>NavIconBtns("vacancy")) OnIconClick=@(()=>NavIconBtns("vacancy")) />
+            <MudItem xs="12" sm="3">
+                <TopCards title="Required Manpower" value="@_totalPlantilla.ToString()" icon="@Icons.Material.TwoTone.Group" iconColor="font-size: 4.5rem; color: #9A98E3" OnCardClick=@(()=>NavIconBtns("totalPlantilla")) OnIconClick=@(()=>NavIconBtns("totalPlantilla")) />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <TopCards title="Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 4.5rem; color: #E97777" OnCardClick=@(()=>NavIconBtns("vacancy")) OnIconClick=@(()=>NavIconBtns("vacancy")) />
             </MudItem>
         </MudGrid>
 

@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
+﻿using HrisApp.Client.HelperToken;
+
+namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
     public class EmployeeVM : BaseViewModel
     {
@@ -16,6 +18,9 @@
         public List<EmployeeT> _employeeList = new();
         public EmployeeT _selectedItem1 = null;
         public List<StatusT> StatusL = new();
+
+        public MudDateRangePicker _picker;
+        public DateRange _dateRange = new();
 
         public async Task OnRefreshPage()
         {
@@ -50,6 +55,17 @@
                 Console.WriteLine(ex.Message.ToString());
             }
             
+        }
+
+
+        public void EmpDateRangeChange(DateRange? dateRange)
+        {
+            _dateRange = dateRange;
+
+            _employeeList = EmployeeService.EmployeeTs
+                .Where(log => log.DateHired >= _dateRange.Start && log.DateHired <= _dateRange.End)
+                .OrderByDescending(log => log.DateHired)
+                .ToList();
         }
 
         #region FUNCTIONS / METHODS
@@ -93,13 +109,6 @@
 
         //LOADING
         public bool _isVisible;
-        public async void OpenOverlay()
-        {
-            _isVisible = true;
-            await Task.Delay(5000);
-            _isVisible = false;
-            //StateHasChanged();
-        }
 
         public string CapitalizeFirstLetter(string input)
         {
@@ -139,5 +148,8 @@
             return false;
         }
         #endregion
+
+
+
     }
 }

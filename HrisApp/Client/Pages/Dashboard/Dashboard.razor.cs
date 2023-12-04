@@ -25,6 +25,7 @@
         private double[] EmployeeCountPerDivision;
 
         private int _totalVacancy = 0;
+        private int _totalPlantilla = 0;
         private string cmbBdyTitle = "This Month";
 
         protected override async Task OnInitializedAsync()
@@ -37,20 +38,6 @@
 
                 allDepartments = DepartmentService.DepartmentTs;
                 employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate.Day).ToList();
-
-                #region Top Cards
-                _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
-                _countInactiveEmployees = EmployeeService.EmployeeTs.Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId)).Count().ToString();
-                DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
-                //_countInactiveEmployees5yearFromInactive = EmployeeService.EmployeeTs
-                //    .Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId) && e.DateInactiveStatus <= fiveYearsAgo)
-                //    .Count().ToString();
-
-                DateTime sevenMonthsAgo = DateTime.Now.AddMonths(-7);
-                _countForEval = EmployeeService.EmployeeTs
-                    .Count(e => e.DateHired > sevenMonthsAgo)
-                    .ToString();
-                #endregion
 
                 #region Plantilla
                 allPositions = await PositionService.GetPositionList();
@@ -65,6 +52,27 @@
                 var globalId = Convert.ToInt32(GlobalConfigService.User_Id);
                 FULLNAME = await EmployeeService.Getname(globalId);
                 #endregion
+
+                #region Top Cards
+                _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
+                _countInactiveEmployees = EmployeeService.EmployeeTs.Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId)).Count().ToString();
+                DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
+                //_countInactiveEmployees5yearFromInactive = EmployeeService.EmployeeTs
+                //    .Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId) && e.DateInactiveStatus <= fiveYearsAgo)
+                //    .Count().ToString();
+
+                DateTime sevenMonthsAgo = DateTime.Now.AddMonths(-7);
+                _countForEval = EmployeeService.EmployeeTs
+                    .Count(e => e.DateHired > sevenMonthsAgo)
+                    .ToString();
+
+                foreach (var item in allPositions)
+                {
+                    _totalPlantilla += item.Plantilla;
+                }
+                #endregion
+
+                
 
                 departmentArr = await DepartmentService.GetAllDepartmentName();
                 divisionArr = await DivisionService.GetAllDivisionName();
@@ -158,8 +166,8 @@
                 case "5yearsinactive":
                     NavigationManager.NavigateTo("/employee?allInStatus=inactive5yearsago");
                     break; 
-                case "division":
-                    NavigationManager.NavigateTo("/division");
+                case "totalPlantilla":
+                    NavigationManager.NavigateTo("/totalPlantilla");
                     break;
                 case "department":
                     NavigationManager.NavigateTo("/department");

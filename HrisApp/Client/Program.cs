@@ -41,6 +41,7 @@ global using HrisApp.Shared.Models.Application.App_ProfBackground;
 global using HrisApp.Client.Services.EmpDetails.EmpEvaluationService;
 global using HrisApp.Client.HelperToken;
 global using HrisApp.Client.Pages.Dialog;
+global using HrisApp.Client.ViewModel;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Authorization;
@@ -104,6 +105,7 @@ builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();
 builder.Services.AddTransient<BackUpDeletion>();
+builder.Services.AddTransient<DTOEmployeeExport>();
 
 
 //VIEWMODEL

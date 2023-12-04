@@ -120,12 +120,15 @@
                     <MudTabPanel TabContent="tabHeader(0)">
                         <MudCard Class="empdmain">
                             <MudCardContent>
-                                <div class="d-flex justify-content-between align-items-center">
-                                     <span class="spantitle mb-3">Personal Data</span><AuthorizeView Roles="HR, System Administrator">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                     <span class="spantitle">Personal Data</span><AuthorizeView Roles="HR, System Administrator">
                                          <Authorized>
-                                             <MudTooltip Text="Update Details">
-                                                    <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                             </MudTooltip>
+                                             <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
+
+                                                 <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+
+                                                 <div class="text">Update</div>
+                                             </button> 
                                          </Authorized>
                                      </AuthorizeView>                                
                                 </div>
@@ -217,16 +220,18 @@
                     
                         <MudCard Class="empdmain" Style="margin-top: 2rem;">
                             <MudCardContent>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="spantitle mb-3">Address</span>
-                                    <AuthorizeView Roles="HR, System Administrator">
-                                        <Authorized>
-                                            <MudTooltip Text="Update Details">
-                                                <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "addressOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                            </MudTooltip>
-                                        </Authorized>
-                                    </AuthorizeView>
-                                </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="spantitle">Address Information</span><AuthorizeView Roles="HR, System Administrator">
+                                    <Authorized>
+                                        <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "addressOpen"))">
+
+                                            <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+
+                                            <div class="text">Update</div>
+                                        </button>
+                                    </Authorized>
+                                </AuthorizeView>
+                            </div>
                                 <span class="spantitle mb-2" style="font-size:14px">Present Address</span>
                                 <div class="d-flex flex-column gap-3 mb-3">
                                     <div class="divsingledetails">
@@ -282,13 +287,15 @@
 
                         <MudCard Class="empdmain" Style="margin-top: 2rem;">
                             <MudCardContent>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="spantitle mb-3">Person to Notify in Case of Emergency</span>
-                                    <AuthorizeView Roles="HR, System Administrator">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="spantitle">Person to Notify in Case of Emergency</span><AuthorizeView Roles="HR, System Administrator">
                                         <Authorized>
-                                            <MudTooltip Text="Update Details">
-                                                <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "emerOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                            </MudTooltip>
+                                            <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "emerOpen"))">
+
+                                                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+
+                                                <div class="text">Update</div>
+                                            </button>
                                         </Authorized>
                                     </AuthorizeView>
                                 </div>
@@ -318,13 +325,15 @@
                     <MudTabPanel TabContent="tabHeader(1)">
                         <MudCard Class="empdmain">
                         <MudCardContent>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="spantitle mb-3">Work Information</span>
-                                <AuthorizeView Roles="HR, System Administrator">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="spantitle">Work Information</span><AuthorizeView Roles="HR, System Administrator">
                                     <Authorized>
-                                        <MudTooltip Text="Update Details">
-                                            <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "workInfoOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                        </MudTooltip>
+                                        <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "workInfoOpen"))">
+
+                                            <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+
+                                            <div class="text">Update</div>
+                                        </button>
                                     </Authorized>
                                 </AuthorizeView>
                             </div>
@@ -481,13 +490,15 @@
                         </MudCard>
                         <MudCard Class="empdmain" Style="margin-top: 2rem;">
                             <MudCardContent>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="spantitle mb-3">Compensation Package</span>
-                                    <AuthorizeView Roles="HR, System Administrator">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="spantitle">Compensation Package</span><AuthorizeView Roles="HR, System Administrator">
                                         <Authorized>
-                                            <MudTooltip Text="Update Details">
-                                                <MudIconButton Class="btnedit" OnClick="@(() => OpenDrawer(Anchor.End, "documentsOpen"))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                                            </MudTooltip>
+                                            <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "documentsOpen"))">
+
+                                                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+
+                                                <div class="text">Update</div>
+                                            </button>
                                         </Authorized>
                                     </AuthorizeView>
                                 </div>
@@ -1110,7 +1121,7 @@
      </MudDrawer>
 
     <MudDrawer Class="drawerdetails" @bind-Open="@documentsOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
-         <span class="spantitle mb-3">Documents</span>
+         <span class="spantitle mb-3">Compensation Package</span>
          <MudItem xs="12">
              <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                  <DataAnnotationsValidator />

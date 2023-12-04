@@ -1,0 +1,145 @@
+﻿@page "/totalPlantilla"
+@inject IEmployeeService EmployeeService
+@inject IPositionService PositionService
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+@inject NavigationManager NavManager
+
+@attribute [Authorize(Roles = "System Administrator, HR, User")]
+
+<PageTitle>Total Plantilla</PageTitle>
+
+<style>
+    .mud-table-head {
+        border-bottom: 3px solid #DEE2E6;
+    }
+</style>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <MudIcon Icon="@Icons.Material.TwoTone.Tag" Style="font-size: 2.2em;margin-right: 10px;color: #E38D0F;" />
+            <span style="font-size: x-large;font-weight: 600;color: #424242;">Total Required Manpower : <span style="color: #E38D0F">@_totalPlantilla</span></span>
+        </div>
+        <span style="font-size: x-large; color: #424242;">@DateTime.Now.ToString("dddd, dd MMMM yyyy")</span>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <MudMenu FullWidth="true">
+        <ActivatorContent>
+            <MudButton Class="cmbDivision" EndIcon="@Icons.Material.Filled.KeyboardArrowDown">@cmbDivTitle</MudButton>
+        </ActivatorContent>
+        <ChildContent>
+            <MudMenuItem OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+            @foreach (var item in allDivisions)
+            {
+                <MudMenuItem OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+            }
+        </ChildContent>
+    </MudMenu>
+    @if (allPositions.Count() == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
+        <MudTable Class="stable" Items="@allPositions" Context="pos" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="697px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+            <HeaderContent>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; ">Division</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; ">Department</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; ">Position</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">No. of Personnel Required
+                </MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">Employee Count Per Position</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>
+                    @foreach (var item in allDivisions)
+                    {
+                        @if (item.Id == pos.DivisionId)
+                        {
+                            @item.Name
+                        }
+                    }
+                </MudTd>
+
+                <MudTd>
+                    @foreach (var item in allDepartments)
+                    {
+                        @if (item.Id == pos.DepartmentId)
+                        {
+                            @item.Name
+                        }
+                    }
+                </MudTd>
+
+                <MudTd>@pos.Name</MudTd>
+                <MudTd Style="text-align: center;">@pos.Plantilla</MudTd>
+                <MudTd Style="text-align: center;">@allEmployee.Where(e => e.PositionId == pos.Id).Count()</MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
+</div>
+
+@code {
+    private List<PositionT> allPositions = new();
+    private List<DivisionT> allDivisions = new();
+    private List<DepartmentT> allDepartments = new();
+    private List<EmployeeT> allEmployee = new();
+
+    private int _totalPlantilla = 0;
+    private bool isVisible;
+    private string cmbDivTitle = "All Division";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await EmployeeService.GetEmployee();
+            await PositionService.GetPosition();
+            allPositions = await PositionService.GetPositionList();
+            allDivisions = await DivisionService.GetDivisionList();
+            allDepartments = await DepartmentService.GetDepartmentList();
+            allEmployee = EmployeeService.EmployeeTs;
+
+
+            foreach (var item in allPositions)
+            {
+                _totalPlantilla += item.Plantilla;
+            }
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void CmbDivision(int div)
+    {
+        @foreach (var item in allDivisions)
+        {
+            if (item.Id == div)
+                cmbDivTitle = div == 0 ? "All Division" : item.Name;
+        }
+
+        if (div == 0)
+            cmbDivTitle = "All Division";
+
+        allPositions = div == 0 ? PositionService.PositionTs : PositionService.PositionTs.Where(e => e.DivisionId == div).ToList();
+    }
+}

@@ -13,38 +13,37 @@
     </div>
 </div>
 
-@if (_auditlogVM.logsList == null || _auditlogVM.logsList.Count == 0)
-{
-    <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
-    <MudCardContent>
-        <MudSkeleton Width="30%" Height="42px;" />
-        <MudSkeleton Width="80%" />
-        <MudSkeleton Width="100%" />
-    </MudCardContent>
-    <MudCardActions>
-        <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
-        <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
-    </MudCardActions>
-    <MudOverlay Visible="_auditlogVM.isVisible" DarkBackground="true" Absolute="true">
-        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
-    </MudOverlay>
-}
-else
-{
+
 <div class="box w-auto">
+
+    <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between" style="padding: 0px 50px 0px 50px;">
+            <div class="w-25" >
+                <MudTextField DisableUnderLine @bind-Value="@_auditlogVM.searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+             </div>
+             <div>
+                 <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@_auditlogVM.DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
+             </div>
+         </div>
+     @if (_auditlogVM.logsList == null || _auditlogVM.logsList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        <MudOverlay Visible="_auditlogVM.isVisible" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
     <MudTable Class="stable" Items="@_auditlogVM.logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(_auditlogVM.FilterFunc1)">
-        <ToolBarContent>
-            <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between">
-                    <div class="w-25">
-                        <MudTextField DisableUnderLine @bind-Value="@_auditlogVM.searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-                     </div>
-                     <div>
-                         <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@_auditlogVM.DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
-                     </div>
-                     
-            </div>
-         </ToolBarContent>
          <HeaderContent>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
@@ -71,8 +70,9 @@ else
             <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {@_auditlogVM.infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
         </PagerContent>
     </MudTable>
+    }
 </div>
-}
+
 @code {
     protected override async Task OnInitializedAsync()
     {

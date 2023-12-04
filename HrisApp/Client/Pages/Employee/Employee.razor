@@ -3,6 +3,7 @@
 @inject SweetAlertService Swal
 @inject IJSRuntime JSRuntime
 @inject EmployeeVM _employeeVM
+@inject DTOEmployeeExport _crrExport
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
 
@@ -12,53 +13,52 @@
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Employee List</span>
         <AuthorizeView Roles="HR, System Administrator">
             <Authorized>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" EndIcon="@Icons.Material.Filled.ImportExport" OnClick="OnExporttoExcel">Export to Excel</MudButton>
                 <MudButton OnClick="@_employeeVM.CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
             </Authorized>
         </AuthorizeView>
     </div>
 </div>
 <div class="box w-auto">
+    <div class="d-flex flex-grow-1 mt-3 mb-3">
+        <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
+            <div class="d-flex gap-3 flex-grow-1 flex-wrap">
+                <MudItem xs="12" lg="3">
+                    <MudSelect class="dddiv" T="int" ValueChanged="@_employeeVM.SearchStatus" Margin="Margin.Dense" DisableUnderLine>
+                        <MudSelectItem Value=0>All Status</MudSelectItem>
+                        @foreach (var item in _employeeVM.StatusL)
+                        {
+                            <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
+                </MudItem>
+            </div>
+            <MudItem xs="12" lg="4">
+                <MudTextField DisableUnderLine @bind-Value="@_employeeVM._searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+             </MudItem>
+         </div>
+     </div>
     @if (_employeeVM._employeeList == null || _employeeVM._employeeList.Count == 0)
     {
-        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-       
-        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
-        <MudCardContent>
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_employeeVM._isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_employeeVM._isVisible" />
+        <MudCardContent hidden="@_employeeVM._isVisible">
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
-            <MudSkeleton Width="100%" />
+            <MudSkeleton Width= "100%" />
         </MudCardContent>
-        <MudCardActions>
+        <MudCardActions hidden="@_employeeVM._isVisible" >
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
-        </MudCardActions>
-        <MudOverlay Visible="@_employeeVM._isVisible" DarkBackground="true" Absolute="true">
-            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
-        </MudOverlay> 
+        </MudCardActions  Visible="@_employeeVM._isVisible">
     }
     else
     {
         <MudTable Class="stable" Items="@_employeeVM._employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(_employeeVM.FilterFunc1)" @bind-SelectedItem="@_employeeVM._selectedItem1" Virtualize="true">
-            <ToolBarContent>
-                <div class="d-flex flex-grow-1 mt-3 mb-3">
-                    <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
-                        <div class="d-flex gap-3 flex-grow-1 flex-wrap">
-                            <MudItem xs="12" lg="3">
-                                <MudSelect class="dddiv" T="int" ValueChanged="@_employeeVM.SearchStatus" Margin="Margin.Dense" DisableUnderLine>
-                                    <MudSelectItem Value=0>All Status</MudSelectItem>
-                                 @foreach (var item in _employeeVM.StatusL)
-                                    {
-                                    <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
-                                    }
-                                    </MudSelect>
-                            </MudItem>
-                        </div>                        
-                        <MudItem xs="12" lg="4">
-                            <MudTextField DisableUnderLine @bind-Value="@_employeeVM._searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-                         </MudItem>
-                     </div>
-                 </div>
-             </ToolBarContent>
              <HeaderContent>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
                      <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
@@ -151,5 +151,23 @@
     protected override async Task OnInitializedAsync()
     {
         await _employeeVM.OnRefreshPage();
+    }
+
+    public async Task OnExporttoExcel()
+    {
+        try
+        {
+            
+            
+            var fileBytes = await _crrExport.createExcelPackage(_employeeVM._employeeList);
+            var fileName = $"CRR{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
+            await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            //NavigateError();
+        }
+
     }
 }
