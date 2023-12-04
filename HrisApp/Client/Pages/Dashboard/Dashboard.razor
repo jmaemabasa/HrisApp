@@ -55,13 +55,24 @@
     <MudItem xs="12" sm="3">
         <MudCard Class="bdaypanel">
             <MudCardContent>
-                <span class="bdaytitle">Birthdays</span>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="bdaytitle"><strong>Birthdays</strong></span>
+                    <MudMenu FullWidth="true" ActivationEvent="@MouseEvent.LeftClick">
+                        <ActivatorContent>
+                            <MudChip Variant="Variant.Outlined" Color="Color.Dark" Style="width: 130px">@cmbBdyTitle <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown" Style="font-size: 1.3em; margin-left: 5px;" /></MudChip>
+                        </ActivatorContent>
+                        <ChildContent>
+                            <MudMenuItem OnClick="BdayThisMonth">This Month</MudMenuItem>
+                            <MudMenuItem OnClick="BdayThisDay">Today</MudMenuItem>
+                        </ChildContent>
+                    </MudMenu>
+                </div>
                 <div class="d-flex flex-column divlistbday">
                     @foreach (var item in employeeBdayL)
                     {
                         <div class="d-flex justify-content-between" style="margin-bottom:15px;">
                             <EmployeeBdyComponent verify="@item.Verify_Id" />
-                            <span style="color: #757A90">@item.Birthdate.ToString("MM/dd/yyyy")</span>
+                            <span style="color: #757A90">@item.Birthdate.ToString("MM/dd/")@DateTime.Now.Year</span>
                         </div>
                     }
                 </div>

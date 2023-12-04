@@ -14,10 +14,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public List<PositionKnowledgeT> listOfKnowledge = new();
         public List<PositionComAppT> listOfComApp = new();
         public List<PositionWorkExpT> listOfWorkExp = new();
+        public List<PositionEducT> listOfEduc = new();
         private string newTechSkill;
         private string newKnowledge;
         private string newComApp;
         private string newWorkExp;
+        private string newEduc;
 
         private PositionT position = new();
         void Cancel() => MudDialog.Cancel();
@@ -34,6 +36,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             listOfKnowledge = await PositionService.GetKnowledge(position.PosCode);
             listOfComApp = await PositionService.GetComApp(position.PosCode);
             listOfWorkExp = await PositionService.GetWorkExp(position.PosCode);
+            listOfEduc = await PositionService.GetEduc(position.PosCode);
         }
 
         async Task UpdateArea()
@@ -71,6 +74,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     await SaveNewKnowledge(position.PosCode);
                     await SaveNewComApp(position.PosCode);
                     await SaveNewWorkExp(position.PosCode);
+                    await SaveNewEduc(position.PosCode);
                     await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
                     _toastService.ShowSuccess(position.Name + " Updated Successfully!");
@@ -289,7 +293,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
         #endregion
 
-        #region COM APP
+        #region EXP
         public async Task SaveNewWorkExp(string posCode)
         {
             var listApi = await PositionService.GetWorkExp(posCode);
@@ -353,6 +357,75 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (skillToRemove != null)
             {
                 listOfWorkExp.Remove(skillToRemove);
+            }
+        }
+
+        #endregion
+
+        #region EDUC
+        public async Task SaveNewEduc(string posCode)
+        {
+            var listApi = await PositionService.GetEduc(posCode);
+            List<string> arrApi = new();
+
+            var validtechSkill = listOfEduc
+               .Where(obj => !string.IsNullOrEmpty(obj.PosCode) || !string.IsNullOrEmpty(obj.EducName))
+               .ToList();
+
+            var listtechskills = validtechSkill.OrderByDescending(obj => obj.VerifyId).ToList();
+
+            if (listtechskills.Count == 0)
+            {
+                foreach (var item in listApi)
+                {
+                    await PositionService.DeleteEduc(item.VerifyId);
+                }
+                return;
+            }
+
+            foreach (var pays in listApi)
+            {
+                var P = listtechskills.Where(p => p.VerifyId == pays.VerifyId).Count();
+
+                if (P == 0)
+                {
+                    await PositionService.DeleteEduc(pays.VerifyId);
+                }
+            }
+
+            foreach (var item in listtechskills)
+            {
+                item.PosCode = posCode;
+
+                int isExistTech = await PositionService.GetExistEduc(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await PositionService.CreateEduc(item);
+                }
+                else
+                {
+                    await PositionService.UpdateEduc(item);
+                }
+            }
+
+            listOfEduc.Clear();
+        }
+
+        public void AddNewEduc(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newEduc))
+                listOfEduc.Add(new PositionEducT { PosCode = code, EducName = newSkill, VerifyId = verifyCode });
+            newEduc = "";
+            //Console.WriteLine(verifyCode);
+        }
+        public void CloseEduc(MudChip chip)
+        {
+            var skillToRemove = listOfEduc.FirstOrDefault(item => item.EducName == chip.Text);
+
+            if (skillToRemove != null)
+            {
+                listOfEduc.Remove(skillToRemove);
             }
         }
 

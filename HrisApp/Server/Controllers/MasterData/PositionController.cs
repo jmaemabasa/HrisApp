@@ -297,7 +297,7 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok();
         }
 
-        //WorkExp
+        //Education
         [HttpGet("GetWorkExp")]
         public async Task<ActionResult<List<PositionWorkExpT>>> GetWorkExp([FromQuery] string posCode)
         {
@@ -357,6 +357,65 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok();
         }
 
+        //Educ
+        [HttpGet("GetEduc")]
+        public async Task<ActionResult<List<PositionEducT>>> GetEduc([FromQuery] string posCode)
+        {
+            var list = await _context.PositionEducT
+                .Where(x => x.PosCode == posCode)
+                .ToListAsync();
+
+            return Ok(list);
+        }
+        private async Task<List<PositionEducT>> GetDBEduc()
+        {
+            return await _context.PositionEducT
+                .ToListAsync();
+        }
+        [HttpGet("GetExistingEduc")]
+        public async Task<ActionResult<int>> GetExistingEduc([FromQuery] string verifyCode)
+        {
+            var allimage = await _context.PositionEducT.ToListAsync();
+            var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
+            return image;
+        }
+        [HttpPost("CreateEduc")]
+        public async Task<ActionResult<PositionEducT>> CreateEduc([FromBody] PositionEducT obj)
+        {
+            if (obj == null)
+            {
+                return BadRequest("Invalid data");
+            }
+            _context.PositionEducT.Add(obj);
+            await _context.SaveChangesAsync();
+
+            return Ok(obj);
+        }
+        [HttpPut("UpdateEduc/{VerifyId}")]
+        public async Task<ActionResult<List<PositionEducT>>> UpdateEduc(PositionEducT emphistory, string VerifyId)
+        {
+            var dbEmployeeHis = await _context.PositionEducT.FirstOrDefaultAsync(e => e.VerifyId == VerifyId);
+
+            if (dbEmployeeHis != null)
+            {
+                dbEmployeeHis.EducName = emphistory.EducName;
+
+                await _context.SaveChangesAsync();
+            }
+            return Ok(await GetDBEduc());
+        }
+
+        [HttpDelete("DeleteAllEduc/{verId}")]
+        public async Task<ActionResult<List<PositionEducT>>> DeleteAllEduc(string verId)
+        {
+            var dbcol = await _context.PositionEducT.FirstOrDefaultAsync(h => h.VerifyId == verId);
+            if (dbcol == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.PositionEducT.Remove(dbcol);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
 
     }

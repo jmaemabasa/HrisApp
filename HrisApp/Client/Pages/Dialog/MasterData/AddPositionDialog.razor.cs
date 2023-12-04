@@ -18,6 +18,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public List<PositionKnowledgeT> listOfKnowledge = new();
         public List<PositionComAppT> listOfComApp = new();
         public List<PositionWorkExpT> listOfWorkExp = new();
+        public List<PositionEducT> listOfEduc = new();
 
         private int selectedDivision = 0;
         private int selectedDepartment = 0;
@@ -117,6 +118,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
                 await SaveNewWorkExp(newPosCode);
+                await SaveNewEduc(newPosCode);
             }
             else
             {
@@ -127,6 +129,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
                 await SaveNewWorkExp(newPosCode);
+                await SaveNewEduc(newPosCode);
             }
 
             _toastService.ShowSuccess(positionName + " Created Successfully!");
@@ -330,6 +333,55 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (skillToRemove != null)
             {
                 listOfWorkExp.Remove(skillToRemove);
+            }
+        }
+        #endregion
+
+        #region EDUC
+        public async Task SaveNewEduc(string posCode)
+        {
+            var validtechSkill = listOfEduc
+               .Where
+               (obj => !string.IsNullOrEmpty(obj.PosCode) || !string.IsNullOrEmpty(obj.EducName))
+               .ToList();
+
+            if (validtechSkill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in validtechSkill)
+            {
+                item.PosCode = posCode;
+
+                int isExistTech = await PositionService.GetExistEduc(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await PositionService.CreateEduc(item);
+                }
+                else
+                {
+                    await PositionService.UpdateEduc(item);
+                }
+            }
+
+            listOfKnowledge.Clear();
+        }
+
+        public void AddNewEduc(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newEduc))
+                listOfEduc.Add(new PositionEducT { PosCode = code, EducName = newSkill, VerifyId = verifyCode });
+                newEduc = "";
+        }
+        public void CloseEduc(MudChip chip)
+        {
+            var skillToRemove = listOfEduc.FirstOrDefault(item => item.EducName == chip.Text);
+
+            if (skillToRemove != null)
+            {
+                listOfEduc.Remove(skillToRemove);
             }
         }
         #endregion

@@ -24,7 +24,8 @@
         private int EmployeeCount = 0;
         private double[] EmployeeCountPerDivision;
 
-        private int _totalVacancy = 0; 
+        private int _totalVacancy = 0;
+        private string cmbBdyTitle = "This Month";
 
         protected override async Task OnInitializedAsync()
         {
@@ -35,7 +36,7 @@
                 await DivisionService.GetDivision();
 
                 allDepartments = DepartmentService.DepartmentTs;
-                employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate).ToList();
+                employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate.Day).ToList();
 
                 #region Top Cards
                 _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
@@ -79,6 +80,18 @@
                 Console.WriteLine(ex.Message);
             }
             
+        }
+
+        public void BdayThisDay()
+        {
+            cmbBdyTitle = "Today";
+            employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month && x.Birthdate.Day == DateTime.Now.Day).OrderBy(d => d.Birthdate).ToList();
+        }
+
+        public void BdayThisMonth()
+        {
+            cmbBdyTitle = "This Month";
+            employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate.Day).ToList();
         }
 
 

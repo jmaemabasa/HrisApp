@@ -47,5 +47,12 @@
         Task<int> GetExistWorkExp(string verCode);
         Task UpdateWorkExp(PositionWorkExpT obj);
         Task DeleteWorkExp(string verId);
+
+        List<PositionEducT> PositionEducTs { get; set; }
+        Task<List<PositionEducT>> GetEduc(string posCode);
+        Task<string> CreateEduc(PositionEducT obj);
+        Task<int> GetExistEduc(string verCode);
+        Task UpdateEduc(PositionEducT obj);
+        Task DeleteEduc(string verId);
     }
 }

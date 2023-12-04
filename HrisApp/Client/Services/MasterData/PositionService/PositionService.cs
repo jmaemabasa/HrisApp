@@ -285,5 +285,42 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             var response = await result.Content.ReadFromJsonAsync<List<PositionWorkExpT>>();
             PositionWorkExpTs = response;
         }
+
+
+
+
+
+        public List<PositionEducT> PositionEducTs { get; set; } = new List<PositionEducT>();
+        public async Task<List<PositionEducT>> GetEduc(string posCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<PositionEducT>>($"api/Position/GetEduc?posCode={posCode}");
+            return result;
+        }
+        public async Task<int> GetExistEduc(string verCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingEduc?verifyCode={verCode}");
+            return result;
+        }
+        public async Task UpdateEduc(PositionEducT obj)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateEduc/{obj.VerifyId}", obj);
+            await SetEduc(result);
+        }
+        public async Task<string> CreateEduc(PositionEducT obj)
+        {
+            Console.WriteLine("Saving Educ");
+            var result = await _httpClient.PostAsJsonAsync("api/Position/CreateEduc", obj);
+            var response = await result.Content.ReadFromJsonAsync<PositionEducT>();
+            return response?.PosCode;
+        }
+        public async Task DeleteEduc(string verId)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Position/DeleteAllEduc/{verId}");
+        }
+        public async Task SetEduc(HttpResponseMessage result)
+        {
+            var response = await result.Content.ReadFromJsonAsync<List<PositionEducT>>();
+            PositionEducTs = response;
+        }
     }
 }
