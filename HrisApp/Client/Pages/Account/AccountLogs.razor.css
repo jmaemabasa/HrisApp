@@ -5,7 +5,7 @@
     border-radius: 20px;
     height: 784px;
     padding: 25px 50px 25px 50px;
-    margin-top: 30px;
+    margin-top: 19px;
 }
 
 ::deep .btnBack {
@@ -18,7 +18,7 @@
     padding-top: 10px;
     font-weight: bold;
     width: 200px;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
     ::deep .btnBack:hover {
@@ -46,6 +46,24 @@
         border: 2px solid #F1BC3A;
         font-weight: bolder;
     }
+
+
+::deep .mud-picker-inline {
+    border: 2px solid #DEE2E6;
+    padding: 0px 15px;
+    border-radius: 10px;
+    background-color: #ADBBC9;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #adbbc9;
+    width: 18rem;
+    transition: all .5s ease;
+}
+
+    ::deep .mud-picker-inline:hover {
+        background-color: #82909e;
+    }   
 
 .actionCreate {
     color: #1A5D1A;

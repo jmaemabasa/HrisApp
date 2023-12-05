@@ -20,7 +20,7 @@
             <div class="w-25" >
                 <MudTextField DisableUnderLine @bind-Value="@_auditlogVM.searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
              </div>
-             <div>
+             <div class="d-flex justify-content-end">
                  <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@_auditlogVM.DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
              </div>
          </div>

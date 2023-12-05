@@ -116,3 +116,26 @@
         transform: scale(1.1);
     }
 
+.cmbDivisionFilter {
+    font-weight: bold;
+    background-color: #ADBBC9;
+    border-radius: 10px;
+    width: 207px;
+    font-size: 16px;
+    padding: 14px 15px 10px 15px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+    transition: all .5s;
+}
+
+    .cmbDivisionFilter:hover {
+        background-color: #7c8c9c;
+        color: #fafaf5;
+        transform: scale(1.1);
+    }
+
+.cdivtext {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

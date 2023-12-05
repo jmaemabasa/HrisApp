@@ -9,13 +9,12 @@
 
 <PageTitle>Audit Log</PageTitle>
 
-<div class="mb-5">
-    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+<div class="mb-2">
+    <div class="d-flex flex-row justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">
             Audit Logs | @foreach (var item in employeeList)
             {
-                var userid = logsList.Select(e => e.EmployeeUserId).ToList();
-                if (item.Id == userid[0])
+                if (item.Id == Id)
                 {
                     <span style="font-weight: 400">@($"{item.FirstName} {item.LastName}")</span>
                 }
@@ -24,38 +23,36 @@
         <MudButton OnClick="BackBtn" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.KeyboardArrowLeft" Class="btnBack">Back</MudButton>
     </div>
 </div>
-@if (logsList == null || logsList.Count == 0)
-{
-    <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
-    <MudCardContent>
-        <MudSkeleton Width="30%" Height="42px;" />
-        <MudSkeleton Width="80%" />
-        <MudSkeleton Width="100%" />
-    </MudCardContent>
-    <MudCardActions>
-        <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
-        <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
-    </MudCardActions>
-    <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
-        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
-    </MudOverlay>
-}
-else
-{
-<div class="box w-auto">
-    <MudTable Class="stable" Items="logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(FilterFunc1)">
-        <ToolBarContent>
-                <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between">
-                    <div class="w-25">
-                        <MudTextField DisableUnderLine @bind-Value="@searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-                     </div>
-                     <div>
-                         <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
-                     </div>
 
-                 </div>
-         </ToolBarContent>
+<div class="box w-auto">
+        <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between" style="padding: 0px 50px 0px 50px;">
+            <div class="w-25">
+                <MudTextField DisableUnderLine @bind-Value="@searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+             </div>
+             <div>
+                 <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
+             </div>
+         </div>
+     @if (logsList == null || logsList.Count() == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
+    <MudTable Class="stable" Items="logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(FilterFunc1)">
          <HeaderContent>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
@@ -74,7 +71,7 @@ else
             <MudTd>
                 <div class="d-flex flex-column">
                     <MudText Typo="Typo.body2" Style="color: #424242;">@log.Date?.ToString("dd MMM yyyy")</MudText>
-                    <MudText Typo="Typo.caption" Style="color: #A6AABA;">@log.Date?.ToString("hh:mm tt")</MudText>
+                    <MudText Typo="Typo.caption" Style="color: #A6AABA;">@log.Date?.ToString("hh:m   tt")</MudText>
                 </div>
             </MudTd>
         </RowTemplate>
@@ -82,10 +79,11 @@ else
             <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
         </PagerContent>
     </MudTable>
+    }
 </div>
-}
 
 @code {
+    #nullable disable
     [Parameter]
     public int? Id { get; set; }
     AuditlogsT _auditlogs = new();
@@ -115,9 +113,8 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        logsList = AuditlogService.AuditlogsTs.Where(log => log.EmployeeUserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End).OrderByDescending(log => log.Date).ToList();
         await Task.Delay(100);
-
+        logsList = AuditlogService.AuditlogsTs.Where(log => log.EmployeeUserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End).OrderByDescending(log => log.Date).ToList();
     }
 
     public void DateRangeChange(DateRange? dateRange)

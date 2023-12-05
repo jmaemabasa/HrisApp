@@ -21,28 +21,8 @@
         </AuthorizeView>
     </div>
 </div>
-@if (positionList == null || positionList.Count == 0)
- {
-    <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
-    <MudCardContent>
-        <MudSkeleton Width="30%" Height="42px;" />
-        <MudSkeleton Width="80%" />
-        <MudSkeleton Width="100%" />
-    </MudCardContent>
-    <MudCardActions>
-        <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
-        <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
-    </MudCardActions>
-    <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
-        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
-    </MudOverlay>
-}
-else
-{
+
 <div class="box w-auto">
-    <MudTable Class="stable" Items="positionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<PositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-        <ToolBarContent>
             <div class="d-flex flex-grow-1 mb-3">
                 <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
                     <div class="d-flex gap-3 flex-grow-1 flex-wrap">
@@ -86,9 +66,27 @@ else
                         <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
                      </MudItem>
                  </div>
-             </div>
-
-        </ToolBarContent>
+    </div>
+    @if (positionList == null || positionList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
+    <MudTable Class="stable" Items="positionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<PositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <HeaderContent>
              <MudTh  Style="background: #e9ecef; font-size: 16px;">
                 <div class="d-flex justify-content-between">
@@ -216,5 +214,5 @@ else
             <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
         </PagerContent>
     </MudTable>
+    }
 </div>
-}

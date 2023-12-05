@@ -32,6 +32,15 @@
         transform: scale(1.1);
     }
 
+.btnExport {
+    border: 2px solid #F1BC3A;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    color: #424242;
+    padding-bottom: 4px;
+    transition: all .5s ease;
+}
+
 /*POSITION*/
 .btnsmallsapos {
     background-color: #E38D4D;
