@@ -3,6 +3,7 @@
 @inject SweetAlertService Swal
 @inject IJSRuntime JSRuntime
 @inject EmployeeVM _employeeVM
+@inject DTOEmployeeExport _crrExport
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
 
@@ -12,7 +13,22 @@
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Employee List</span>
         <AuthorizeView Roles="HR, System Administrator">
             <Authorized>
-                <MudButton OnClick="@_employeeVM.CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
+                <div class="d-flex gap-3">
+                     <button class="Btn" @onclick="OnExporttoExcel">
+                          @if (!_processing)
+                            {
+                               <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.ImportExport"></MudIcon></div>
+                               <div class="text">Export to Excel</div>
+                            }
+                            else
+                            {
+                                <div class="sign"> <MudProgressCircular Color="Color.Warning" Class="ms-n1" Size="Size.Small" Indeterminate="true" /></div>
+                                <div class="text">Exporting</div>
+                            }
+                                            
+                                        </button>
+                    <MudButton OnClick="@_employeeVM.CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd">Add Employee</MudButton>
+                </div>
             </Authorized>
         </AuthorizeView>
     </div>
@@ -23,7 +39,7 @@
             <MudItem xs="12" sm="9">
                 <div class="d-flex align-items-center gap-3">                
                     <div>
-                        <MudMenu FullWidth="true">
+                        <MudMenu PopoverClass="popMenu" FullWidth="true">
                             <ActivatorContent>
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@_employeeVM.CmbStatusText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
@@ -37,7 +53,7 @@
                         </MudMenu>
                     </div>
                     <div>
-                        <MudMenu FullWidth="true">
+                        <MudMenu PopoverClass="popMenu" FullWidth="true">
                             <ActivatorContent>
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@_employeeVM.CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
@@ -52,29 +68,24 @@
                     </div>
                     <MudSpacer />
                     <div>
-                        <MudMenu Label="Open Menu" ActivationEvent="MouseEvent.MouseOver" Variant="Variant.Filled" Color="Color.Primary" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.TopLeft" Dense>
-                            <MudMenuItem>Hired This Month</MudMenuItem>
-                            <MudMenuItem>Hired Last 7 Days</MudMenuItem>
-                            <MudMenuItem>Hired Today</MudMenuItem>
-                            <MudMenuItem>
-                               <MudMenu ActivationEvent="MouseEvent.LeftClick" AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.TopLeft" Dense>
-                                    <ActivatorContent>
-                                        <MudMenuItem>Custom Date Range</MudMenuItem>
-                                    </ActivatorContent>
-
-                                    <ChildContent>
-                                        <div> <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />        </div>
-                                    </ChildContent>
-                                </MudMenu>
-                            </MudMenuItem>
+                        <MudMenu PopoverClass="popMenu" IsOpenChanged="@_employeeVM.ToggleOpenMenu" FullWidth="true">
+                             <ActivatorContent>
+                                <div style="width: 251px;" class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@_employeeVM.CmbDaateHiredText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                            </ActivatorContent>
+                             <ChildContent>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("all"))">All</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("month"))">This Month</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("last7days"))">Last 7 Days</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("today"))">Today</MudMenuItem>
+                                  <MudMenuItem OnClick="@_employeeVM.ToggleOpen" AutoClose=false><div class="d-flex justify-content-between align-items-center">Custom Date Range <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight"></MudIcon></div>
+                                     <MudPopover Class="popoverDateHired" Open="@_employeeVM._isOpen">
+                                              <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />                                
+	                                  </MudPopover>
+                                  </MudMenuItem>
+                             </ChildContent>
                         </MudMenu>
-                        <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
-                         <MudPopover Open="@_isOpen" AnchorOrigin="Origin.TopLeft" TransformOrigin="Origin.TopRight">
-		                    <div class="d-flex flex-column">
-                                <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />                                
-                                <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-                            </div>
-	                    </MudPopover>
+                        @*<MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />*@
+
                     </div>
                    
                 </div>
@@ -87,45 +98,22 @@
      </div>
     @if (_employeeVM._employeeList == null || _employeeVM._employeeList.Count == 0)
     {
-        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-       
-        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
-        <MudCardContent>
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_employeeVM._isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_employeeVM._isVisible" />
+        <MudCardContent hidden="@_employeeVM._isVisible">
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
-            <MudSkeleton Width="100%" />
+            <MudSkeleton Width= "100%" />
         </MudCardContent>
-        <MudCardActions>
+        <MudCardActions hidden="@_employeeVM._isVisible" >
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
-        </MudCardActions>
-        <MudOverlay Visible="@_employeeVM._isVisible" DarkBackground="true" Absolute="true">
-            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
-        </MudOverlay> 
+        </MudCardActions  Visible="@_employeeVM._isVisible">
     }
     else
     {
         <MudTable Class="stable" Items="@_employeeVM._employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(_employeeVM.FilterFunc1)" @bind-SelectedItem="@_employeeVM._selectedItem1" Virtualize="true">
-            <ToolBarContent>
-                <div class="d-flex flex-grow-1 mt-3 mb-3">
-                    <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
-                        <div class="d-flex gap-3 flex-grow-1 flex-wrap">
-                            <MudItem xs="12" lg="3">
-                                <MudSelect class="dddiv" T="int" ValueChanged="@_employeeVM.SearchStatus" Margin="Margin.Dense" DisableUnderLine>
-                                    <MudSelectItem Value=0>All Status</MudSelectItem>
-                                 @foreach (var item in _employeeVM.StatusL)
-                                    {
-                                    <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
-                                    }
-                                    </MudSelect>
-                            </MudItem>
-                        </div>                        
-                        <MudItem xs="12" lg="4">
-                            <MudTextField DisableUnderLine @bind-Value="@_employeeVM._searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-                         </MudItem>
-                     </div>
-                 </div>
-             </ToolBarContent>
              <HeaderContent>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
                      <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
@@ -214,19 +202,35 @@
 </div>
 
 @code {
-
     private bool _processing = false;
-        public bool _isOpen;
-        public void ToggleOpen()
-    {
-        if (_isOpen)
-            _isOpen = false;
-        else
-            _isOpen = true;
-    }
+        
 
     protected override async Task OnInitializedAsync()
     {
         await _employeeVM.OnRefreshPage();
+    }
+
+    public async Task OnExporttoExcel()
+    {
+        try
+        {
+
+            _processing = true;
+            await Task.Delay(2000);
+            var fileBytes = await _crrExport.createExcelPackage(_employeeVM._employeeList);
+            var fileName = $"EMPLOYEEList{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
+            await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+            _processing = false;
+
+        }
+        catch (Exception ex)
+        {
+            _processing = false;
+            Console.WriteLine(ex.Message);
+            //NavigateError();
+        }
+
+
+
     }
 }

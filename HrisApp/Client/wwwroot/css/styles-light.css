@@ -123,7 +123,6 @@
     width: 207px;
     font-size: 16px;
     padding: 14px 15px 10px 15px;
-    margin-bottom: 10px;
     box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
     transition: all .5s;
 }
@@ -138,4 +137,21 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.daterangepicker {
+    background-color: #F1BC3A !important;
+    border-radius: 8px;
+    padding: 0px 10px;
+}
+
+.popoverDateHired {
+    background-color: #F1BC3A;
+    border-radius: 8px;
+    width: 18rem;
+    transition: all .5s ease;
+}
+
+.popMenu {
+    border-radius: 10px;
 }
