@@ -7,6 +7,9 @@
     padding: 25px 50px 25px 50px;
     margin-top: 30px;
 }
+body::-webkit-scrollbar {
+    width: 1em;
+}
 
 :root {
     --primary-color: var(--mud-primary);

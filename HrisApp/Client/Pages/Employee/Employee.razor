@@ -85,7 +85,6 @@
                                   </MudMenuItem>
                              </ChildContent>
                         </MudMenu>
-                        @*<MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />*@
 
                     </div>
                    
@@ -114,7 +113,8 @@
     }
     else
     {
-        <MudTable Class="stable" Items="@_employeeVM._employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(_employeeVM.FilterFunc1)" @bind-SelectedItem="@_employeeVM._selectedItem1" Virtualize="true">
+        <div style="height: calc(100% - 64px)">
+             <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="@_employeeVM._employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(_employeeVM.FilterFunc1)" @bind-SelectedItem="@_employeeVM._selectedItem1" Virtualize="true">
              <HeaderContent>
                  <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
                      <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
@@ -159,23 +159,6 @@
                  <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
                  <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
                  <MudTd DataLabel="Division">@employeeee.Division?.Name
-                     @* |
-                     @if (employeeee.SectionId == 0)
-                    {
-                        <MudChip Class="statusChip">No Section</MudChip>
-                    }
-                    else
-                    {
-                        @foreach (var item in SectionsL)
-                        {
-                            @if (item.Id == employeeee.SectionId)
-                            {
-                                <MudChip Class="statusChip">@item.Name</MudChip>
-                            }
-                        }
-                    } *@
-                    
-                        
              </MudTd>
                  <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
                  <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
@@ -199,6 +182,8 @@
                  <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {@_employeeVM._infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
              </PagerContent>
          </MudTable>
+
+        </div>
     } 
 </div>
 

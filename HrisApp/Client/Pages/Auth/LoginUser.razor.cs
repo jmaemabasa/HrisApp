@@ -67,7 +67,7 @@
                         await LocalStorage.SetItemAsync("token", result.Data);
                         await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-                        await Task.Delay(1500);
+                        await Task.Delay(500);
 
                         //var iduser = GlobalConfigService.Fullname;
                         var iduser = Convert.ToInt32(result.Message);

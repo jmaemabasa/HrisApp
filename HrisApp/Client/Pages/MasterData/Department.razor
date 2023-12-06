@@ -53,59 +53,62 @@
     }
     else
     {
-        <MudTable Class="stable" Items="departmentList" Context="Departments" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-            <HeaderContent>
-                <MudTh Class="col-4" Style="background: #e9ecef; font-size: 16px;">
-                    <div class="d-flex justify-content-between">
-                        <div class="">Division</div>
-                        <div class="">
-                            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" />
+        <div style="height: calc(100% - 64px)">
+            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="departmentList" Context="Departments" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DepartmentT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+                <HeaderContent>
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-size: 16px;">
+                        <div class="d-flex justify-content-between">
+                            <div class="">Division</div>
+                            <div class="">
+                                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" />
+                            </div>
                         </div>
-                    </div>
-                </MudTh>
-                <MudTh Class="col-4" Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
-                    <MudTableSortLabel SortBy="new Func<DepartmentT, object>(x=>x.Name)">
-                        Department
-                    </MudTableSortLabel>
-                </MudTh>
-                <MudTh Style="background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
-            </HeaderContent>
-            <RowTemplate>
+                    </MudTh>
+                    <MudTh Class="col-4" Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                        <MudTableSortLabel SortBy="new Func<DepartmentT, object>(x=>x.Name)">
+                            Department
+                        </MudTableSortLabel>
+                    </MudTh>
+                    <MudTh Style="background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
+                </HeaderContent>
+                <RowTemplate>
 
-                <MudTd DataLabel="Division">
-                    <div class="d-flex justify-content-between">
-                        @foreach (var div in Divisions)
-                        {
-                            if (div.Id == Departments.DivisionId)
+                    <MudTd DataLabel="Division">
+                        <div class="d-flex justify-content-between">
+                            @foreach (var div in Divisions)
                             {
-                                <div class="">@div.Name</div>
+                                if (div.Id == Departments.DivisionId)
+                                {
+                                    <div class="">@div.Name</div>
+                                }
                             }
-                        }
-                        <div class="">
-                            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
+                            <div class="">
+                                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
+                            </div>
                         </div>
-                    </div>
-                </MudTd>
-                <MudTd DataLabel="Department" Style="font-weight: bold; background-color: rgb(197,207,210, 0.2);">@Departments.Name</MudTd>
+                    </MudTd>
+                    <MudTd DataLabel="Department" Style="font-weight: bold; background-color: rgb(197,207,210, 0.2);">@Departments.Name</MudTd>
 
-                <MudTd Style="text-align: center;">
-                    <AuthorizeView Roles="System Administrator">
-                        <Authorized>
-                            <MudTooltip Text="Update">
-                                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                            </MudTooltip>
-                        </Authorized>
-                        <NotAuthorized>
-                            <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                        </NotAuthorized>
-                        </AuthorizeView>
-                        </MudTd>
+                    <MudTd Style="text-align: center;">
+                        <AuthorizeView Roles="System Administrator">
+                            <Authorized>
+                                <MudTooltip Text="Update">
+                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                </MudTooltip>
+                            </Authorized>
+                            <NotAuthorized>
+                                <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDepartment(Departments.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            </NotAuthorized>
+                            </AuthorizeView>
+                            </MudTd>
 
-                    </RowTemplate>
-                    <PagerContent>
-                        <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-                    </PagerContent>
-                    </MudTable>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                        </PagerContent>
+                        </MudTable>
+
+        </div>
                     }
                 </div>
 

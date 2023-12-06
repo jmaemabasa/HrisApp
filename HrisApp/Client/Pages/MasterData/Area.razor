@@ -44,33 +44,36 @@
     }
     else
     {
-        <MudTable Class="stable" Items="areaList" Context="area" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AreaT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-             <HeaderContent>
-                 <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
-                     <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<AreaT, object>(x=>x.Name)">
-                         Areas
-                     </MudTableSortLabel>
-                 </MudTh>
-                 <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
-             </HeaderContent>
-             <RowTemplate>
-                 <MudTd DataLabel="">@area.Name</MudTd>
-                 <MudTd>
-                     <AuthorizeView Roles="System Administrator">
-                         <Authorized>
-                             <MudTooltip Text="Update">
-                                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                             </MudTooltip>
-                         </Authorized>
-                         <NotAuthorized>
-                             <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                         </NotAuthorized>
-                     </AuthorizeView>
-                 </MudTd>
-             </RowTemplate>
-             <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-             </PagerContent>
-         </MudTable>
-         }
+        <div style="height: calc(100% - 64px)">
+            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="areaList" Context="area" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AreaT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+                <HeaderContent>
+                    <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                        <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<AreaT, object>(x=>x.Name)">
+                            Areas
+                        </MudTableSortLabel>
+                    </MudTh>
+                    <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="">@area.Name</MudTd>
+                    <MudTd>
+                        <AuthorizeView Roles="System Administrator">
+                            <Authorized>
+                                <MudTooltip Text="Update">
+                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                </MudTooltip>
+                            </Authorized>
+                            <NotAuthorized>
+                                <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            </NotAuthorized>
+                            </AuthorizeView>
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                        </PagerContent>
+                        </MudTable>
+
+        </div>
+    }
      </div>

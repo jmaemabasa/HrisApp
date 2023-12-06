@@ -1,13 +1,4 @@
-﻿.box {
-    background: #e9ecef;
-    border: none;
-    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-    border-radius: 20px;
-    height: 780px;
-    padding: 25px 50px 25px 50px;
-}
-
-/*TOP BUTTONS*/
+﻿/*TOP BUTTONS*/
 .topnav {
     position: absolute;
     top: 30px;

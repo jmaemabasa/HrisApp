@@ -50,16 +50,16 @@
                 {
                     if (CmbDateActiveText == "Yesterday")
                     {
-                        daterange = startdate;
+                        daterange = "AS OF " + startdate;
                     }
                     else
                     {
-                        daterange = startdate + " — " + enddate;
+                        daterange = "FROM " + startdate + " — " + enddate;
                     }
                 }
                 _processing = true;
                 await Task.Delay(2000);
-                var fileBytes = await _crrExport.createExcelPackage(_employeeList, "", daterange);
+                var fileBytes = await _crrExport.createExcelHeadcount(_employeeList, daterange);
                 var fileName = $"SSDIEmployees{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
                 await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
                 _processing = false;
