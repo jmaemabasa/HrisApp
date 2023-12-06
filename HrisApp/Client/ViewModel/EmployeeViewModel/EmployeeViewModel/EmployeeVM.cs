@@ -39,23 +39,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 await DivisionService.GetDivision();
                 DivisionsL = DivisionService.DivisionTs;
 
-                #region for DASHBOARD
-                var uri = new Uri(_navigationManager.Uri);
-                var statusFilterString = uri.Query.Split('=').LastOrDefault();
-                if (statusFilterString?.ToLower() == "inactive")
-                {
-                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId != 1).ToList();
-                }
-                else if (statusFilterString?.ToLower() == "active")
-                {
-                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).ToList();
-                }
-                else if (statusFilterString?.ToLower() == "inactive5yearsago")
-                {
-                    DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
-                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId != 1 && e.DateInactiveStatus <= fiveYearsAgo).ToList();
-                }
-                #endregion
             }
             catch (Exception ex)
             {
@@ -68,7 +51,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         #region COMBOBOX FILTERS
         public bool _isOpen;
-
         public void ToggleOpen()
         {
             if (_isOpen)
@@ -76,7 +58,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             else
                 _isOpen = true;
         }
-
         public void ToggleOpenMenu(bool test)
         {
             if (test)
@@ -94,37 +75,139 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
             switch (type)
             {
-                case "month":
-                    CmbDaateHiredText = "This Month";
+                case "lastmonth":
+                    CmbDaateHiredText = "Last Month";
                     _isOpen = false;
-                    DateTime startOfMonth = new DateTime(today.Year, today.Month, 1);
-                    DateTime endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
-                    _dateRange.Start = startOfMonth;
-                    _dateRange.End = endOfMonth;
-                    _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
+                    DateTime startOfLastMonth = new DateTime(today.Year, today.Month, 1).AddMonths(-1);
+                    DateTime endOfLastMonth = new DateTime(today.Year, today.Month, 1).AddDays(-1);
+                    _dateRange.Start = startOfLastMonth;
+                    _dateRange.End = endOfLastMonth;
+
+                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                         .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
+                         .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
                         .ToList();
+                    }
+                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
+                            .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
+                            .ToList();
+                    }
                     break;
 
-                case "last7days":
-                    CmbDaateHiredText = "Last 7 Days";
+                case "lastyear":
+                    CmbDaateHiredText = "Last Year";
                     _isOpen = false;
-                    DateTime lastWeekStart = today.AddDays(-7);
+                    DateTime startOfLastYear = new DateTime(today.Year - 1, 1, 1);
+                    DateTime endOfLastYear = startOfLastYear.AddYears(1).AddDays(-1);
+                    _dateRange.Start = startOfLastYear;
+                    _dateRange.End = endOfLastYear;
+
+                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                         .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
+                         .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
+                        .ToList();
+                    }
+                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
+                            .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
+                            .ToList();
+                    }
+                    break;
+
+                case "lastweek":
+                    CmbDaateHiredText = "Last Week";
+                    _isOpen = false;
+                    DateTime lastWeekStart = today.AddDays(-(int)today.DayOfWeek - 6);
+                    DateTime lastWeekEnd = lastWeekStart.AddDays(6);
                     _dateRange.Start = lastWeekStart;
-                    _dateRange.End = today;
-                    _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
+                    _dateRange.End = lastWeekEnd;
+
+                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                         .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
+                         .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
                         .ToList();
+                    }
+                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
+                            .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
+                            .ToList();
+                    }
                     break;
 
-                case "today":
-                    CmbDaateHiredText = "Today";
+                case "yesterday":
+                    CmbDaateHiredText = "Yesterday";
                     _isOpen = false;
-                    _dateRange.Start = today;
-                    _dateRange.End = today.AddDays(1).AddTicks(-1);
-                    _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
+                    DateTime yesterday = today.AddDays(-1);
+                    _dateRange.Start = yesterday;
+                    _dateRange.End = yesterday.AddDays(1).AddTicks(-1);
+
+                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                         .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
+                         .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
                         .ToList();
+                    }
+                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
+                            .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
+                            .ToList();
+                    }
                     break;
 
                 default:
@@ -132,7 +215,28 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     _isOpen = false;
                     _dateRange.Start = null;
                     _dateRange.End = null;
-                    _employeeList = EmployeeService.EmployeeTs;
+                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs;
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.Status?.Name == CmbStatusText)
+                            .ToList();
+                    }
+                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.Division?.Name == CmbDivText)
+                            .ToList();
+                    }
+                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
+                    {
+                        _employeeList = EmployeeService.EmployeeTs
+                            .Where(e => e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
+                            .ToList();
+                    }
                     break;
             }
         }
@@ -324,9 +428,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                         .ToList();
                 }
             }
-
-
-
         }
 
         #endregion

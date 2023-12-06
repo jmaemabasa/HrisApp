@@ -1,11 +1,10 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 
 namespace HrisApp.Client.ViewModel
 {
     public class DTOEmployeeExport
     {
-        public async Task<byte[]> createExcelPackage(List<EmployeeT> crr)
+        public async Task<byte[]> createExcelPackage(List<EmployeeT> crr, string cmbStatus, string cmbRangeDate)
         {
             await Task.Delay(1);
             List<EmployeeT> Denomination = crr;
@@ -17,7 +16,24 @@ namespace HrisApp.Client.ViewModel
 
             var worksheet = package.Workbook.Worksheets.Add("EMPLOYEES");
 
-            worksheet.Cells[1, 1].Value = "EMPLOYEES AS OF " + DateTime.Now.ToString("MM/dd/yyyy");
+            if (cmbStatus != "All Status" && cmbRangeDate != null)
+            {
+                worksheet.Cells[1, 1].Value = cmbStatus.ToUpper() + " EMPLOYEES HIRED FROM " + cmbRangeDate.ToUpper();
+            }
+            else if (cmbStatus != "All Status" && cmbRangeDate == null)
+            {
+                worksheet.Cells[1, 1].Value = "ALL " + cmbStatus.ToUpper() + " EMPLOYEES AS OF TODAY - " + DateTime.Now.ToString("MMM dd, yyyy").ToUpper();
+            }
+            else if (cmbStatus == "All Status" && cmbRangeDate != null)
+            {
+                worksheet.Cells[1, 1].Value = "EMPLOYEES HIRED FROM " + cmbRangeDate.ToUpper();
+            }
+            else
+            {
+                worksheet.Cells[1, 1].Value = "ALL EMPLOYEES AS OF TODAY - " + DateTime.Now.ToString("MMM dd, yyyy").ToUpper();
+            }
+
+            worksheet.Cells[1, 9].Value = "TOTAL EMPLOYEES: " + crr.Count();
 
             //First add the headers
             worksheet.Cells[2, 1].Value = "#";
@@ -29,6 +45,7 @@ namespace HrisApp.Client.ViewModel
             worksheet.Cells[2, 7].Value = "AREA OF DESIGNATION";
             worksheet.Cells[2, 8].Value = "DATE OF BIRTH";
             worksheet.Cells[2, 9].Value = "CONTACT NUMBER";
+            worksheet.Cells[2, 9].Value = "GENDER";
             worksheet.Cells[2, 10].Value = "DATE HIRED";
             worksheet.Cells[2, 11].Value = "STATUS";
             //add Value
@@ -52,12 +69,45 @@ namespace HrisApp.Client.ViewModel
                 worksheet.Cells[c, 9].Value = r.MobileNumber;
                 worksheet.Cells[c, 10].Value = r.DateHired.ToString("MM-dd-yyyy");
                 worksheet.Cells[c, 11].Value = r.Status?.Name;
+
+                // Color the STATUS COLUMN based on the status
+                if (r.Status?.Name == "Active")
+                {
+                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#AAC8A7")); 
+                }
+                else if (r.Status?.Name == "Awol")
+                {
+                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#888C4D"));
+                }
+                else if (r.Status?.Name == "Inactive")
+                {
+                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#B7B7B7"));
+                }
+                else if (r.Status?.Name == "Terminated")
+                {
+                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#E97777"));
+                }
+                else if (r.Status?.Name == "Retired")
+                {
+                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#e0dfdc"));
+                }
+                else if (r.Status?.Name == "Resigned")
+                {
+                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#ebc878"));
+                }
                 i++;
                 c++;
             }
 
             //Merge
-            worksheet.Cells["A1:K1"].Merge = true;
+            worksheet.Cells["A1:H1"].Merge = true;
+            worksheet.Cells["I1:K1"].Merge = true;
 
             //Alignment
             worksheet.Row(1).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
@@ -65,6 +115,9 @@ namespace HrisApp.Client.ViewModel
             // Add background color to the cell
             worksheet.Cells[1, 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
             worksheet.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(OfficeOpenXml.Drawing.eThemeSchemeColor.Accent1);
+
+            worksheet.Cells[1, 9].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+            worksheet.Cells[1, 9].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
 
             //Font
             worksheet.Row(1).Style.Font.Size = 13;

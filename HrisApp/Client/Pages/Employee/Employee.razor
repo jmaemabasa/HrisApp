@@ -39,7 +39,7 @@
             <MudItem xs="12" sm="9">
                 <div class="d-flex align-items-center gap-3">                
                     <div>
-                        <MudMenu PopoverClass="popMenu" FullWidth="true">
+                        <MudMenu PopoverClass="popMenu" FullWidth="true"  Dense="true">
                             <ActivatorContent>
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@_employeeVM.CmbStatusText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
@@ -53,7 +53,7 @@
                         </MudMenu>
                     </div>
                     <div>
-                        <MudMenu PopoverClass="popMenu" FullWidth="true">
+                        <MudMenu PopoverClass="popMenu" FullWidth="true"  Dense="true">
                             <ActivatorContent>
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@_employeeVM.CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
@@ -68,15 +68,16 @@
                     </div>
                     <MudSpacer />
                     <div>
-                        <MudMenu PopoverClass="popMenu" IsOpenChanged="@_employeeVM.ToggleOpenMenu" FullWidth="true">
+                        <MudMenu PopoverClass="popMenu" IsOpenChanged="@_employeeVM.ToggleOpenMenu" FullWidth="true"  Dense="true">
                              <ActivatorContent>
                                 <div style="width: 251px;" class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@_employeeVM.CmbDaateHiredText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                              <ChildContent>
                                   <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("all"))">All</MudMenuItem>
-                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("month"))">This Month</MudMenuItem>
-                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("last7days"))">Last 7 Days</MudMenuItem>
-                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("today"))">Today</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("yesterday"))">Yesterday</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("lastweek"))">Last Week</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("lastmonth"))">Last Month</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => _employeeVM.CmbDateHired("lastyear"))">Last Year</MudMenuItem>
                                   <MudMenuItem OnClick="@_employeeVM.ToggleOpen" AutoClose=false><div class="d-flex justify-content-between align-items-center">Custom Date Range <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight"></MudIcon></div>
                                      <MudPopover Class="popoverDateHired" Open="@_employeeVM._isOpen">
                                               <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />                                
@@ -202,8 +203,9 @@
 </div>
 
 @code {
+    #nullable disable
     private bool _processing = false;
-        
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -214,11 +216,27 @@
     {
         try
         {
-
+            string startdate = _employeeVM._dateRange?.Start?.ToString("MMM dd, yyyy");
+            string enddate = _employeeVM._dateRange?.End?.ToString("MMM dd, yyyy");
+            string daterange;
+            if (startdate == null && enddate == null)
+            {
+                daterange = null;
+            }else
+            {
+                if (_employeeVM.CmbDaateHiredText == "Yesterday")
+                {
+                    daterange = startdate;
+                }
+                else
+                {
+                    daterange = startdate + " — " + enddate;
+                }
+            }
             _processing = true;
             await Task.Delay(2000);
-            var fileBytes = await _crrExport.createExcelPackage(_employeeVM._employeeList);
-            var fileName = $"EMPLOYEEList{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
+            var fileBytes = await _crrExport.createExcelPackage(_employeeVM._employeeList, _employeeVM.CmbStatusText, daterange);
+            var fileName = $"EmployeesHired{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
             await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
             _processing = false;
 

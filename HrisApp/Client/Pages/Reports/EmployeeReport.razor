@@ -1,0 +1,193 @@
+﻿@page "/employeeReport"
+@inject IToastService _toastService
+@inject SweetAlertService Swal
+@inject IJSRuntime JSRuntime
+@inject DTOEmployeeExport _crrExport
+@inject IEmployeeService EmployeeService
+@inject IStaticService StaticService
+@inject IDivisionService DivisionService
+@inject NavigationManager _navigationManager
+
+@attribute [Authorize(Roles = "System Administrator, HR, User")]
+
+<PageTitle>Employees Headcount</PageTitle>
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <div class="d-flex flex-column">
+            <div><span style="font-size: x-large;font-weight: 600;color: #424242;">Employee Headcount</span></div>
+            <div><span style="font-weight: normal; font-size: 16px">@TitleCountText</span> <span style="font-weight: 600;font-size: 16px"> : @_employeeList.Count()</span></div>
+        </div>
+        <AuthorizeView Roles="HR, System Administrator">
+            <Authorized>
+                <div class="d-flex gap-3">
+                    @if (!_processing)
+                            {
+                               <MudButton OnClick="@OnExporttoExcel" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.ImportExport" Class="btnadd">Export to Excel</MudButton>
+                            }
+                            else
+                            {
+                                <MudButton OnClick="@OnExporttoExcel" Variant="Variant.Filled" Size="Size.Medium" Class="btnadd"><MudProgressCircular Color="Color.Default" Class="ms-n1" Size="Size.Small" Indeterminate="true" /> Exporting</MudButton>
+                            }     
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+<div class="box w-auto">
+    <div class="d-flex flex-grow-1 mt-3 mb-3">
+        <MudGrid Class="d-flex align-items-center">
+            <MudItem xs="12" sm="9">
+                <div class="d-flex align-items-center gap-3">       
+                    <div>
+                        <MudMenu PopoverClass="popMenu" FullWidth="true"  Dense="true">
+                            <ActivatorContent>
+                                <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                                @foreach (var item in DivisionsL)
+                                {
+                                    <MudMenuItem OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                                }
+                            </ChildContent>
+                        </MudMenu>
+                    </div>
+                    <MudSpacer />
+                    <div>
+                        <MudMenu PopoverClass="popMenu" IsOpenChanged="@ToggleOpenMenu" FullWidth="true"  Dense="true">
+                             <ActivatorContent>
+                                <div style="width: 251px;" class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDateActiveText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                            </ActivatorContent>
+                             <ChildContent>
+                                  <MudMenuItem OnClick="@(() => CmbDateAllActive("all"))">All</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => CmbDateAllActive("yesterday"))">Yesterday</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => CmbDateAllActive("lastweek"))">Last Week</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => CmbDateAllActive("lastmonth"))">Last Month</MudMenuItem>
+                                  <MudMenuItem OnClick="@(() => CmbDateAllActive("lastyear"))">Last Year</MudMenuItem>
+                                  <MudMenuItem OnClick="@ToggleOpen" AutoClose=false><div class="d-flex justify-content-between align-items-center">Custom Date Range <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight"></MudIcon></div>
+                                     <MudPopover Class="popoverDateHired" Open="@_isOpen">
+                                              <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />                                
+	                                  </MudPopover>
+                                  </MudMenuItem>
+                             </ChildContent>
+                        </MudMenu>
+                        @*<MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@_employeeVM.EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />*@
+
+                    </div>
+                   
+                </div>
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                 <MudTextField DisableUnderLine @bind-Value="@_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+            </MudItem>
+        </MudGrid>
+        
+     </div>
+    @if (_employeeList == null || _employeeList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width= "100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible" >
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions  Visible="@_isVisible">
+    }
+    else
+    {
+        <MudTable Class="stable" Items="@_employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1" Virtualize="true">
+             <HeaderContent>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
+                         Full Name
+                     </MudTableSortLabel>
+                 </MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
+                         ID No.
+                     </MudTableSortLabel>
+                 </MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
+                         Date Hired
+                     </MudTableSortLabel>
+                 </MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">
+                     <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<EmployeeT, object>(x=>x.StatusId)">
+                         Status
+                     </MudTableSortLabel>
+                 </MudTh>
+                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+             </HeaderContent>
+             <RowTemplate>
+             <MudTd DataLabel="Full Name">
+                     <div class="d-flex flex-row align-items-center gap-3">
+                         <div class="d-flex align-items-center">
+                            <EmployeeAvatar verify="@employeeee.Verify_Id" />
+                        </div>
+                     <div>
+                         <div class="flex-column">
+                                 <div>@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
+                                 <div style="font-weight: bold;">@employeeee.Email</div> 
+                         </div>
+                     </div>
+                 </div>
+
+             </MudTd>
+                 <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
+                 <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
+                 <MudTd DataLabel="Division">@employeeee.Division?.Name
+                     @* |
+                     @if (employeeee.SectionId == 0)
+                    {
+                        <MudChip Class="statusChip">No Section</MudChip>
+                    }
+                    else
+                    {
+                        @foreach (var item in SectionsL)
+                        {
+                            @if (item.Id == employeeee.SectionId)
+                            {
+                                <MudChip Class="statusChip">@item.Name</MudChip>
+                            }
+                        }
+                    } *@
+                    
+                        
+             </MudTd>
+                 <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
+                 <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
+                 <MudTd DataLabel="Status" Style="text-align: center;">
+                     <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
+             </MudTd>
+                 <MudTd>
+                     <AuthorizeView Roles="HR, System Administrator">
+                         <Authorized>
+                             <MudTooltip Text="View Details">
+                                <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
+                             </MudTooltip>
+                         </Authorized>
+                         <NotAuthorized>
+                            <MudIconButton Disabled Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
+                         </NotAuthorized>
+                     </AuthorizeView>
+                 </MudTd>
+             </RowTemplate>
+             <PagerContent>
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+             </PagerContent>
+         </MudTable>
+    } 
+</div>
+
+@code {
+
+}
