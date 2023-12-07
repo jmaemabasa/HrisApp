@@ -26,7 +26,13 @@
                             }
                             else
                             {
-                                <MudButton OnClick="@OnExporttoExcel" Variant="Variant.Filled" Size="Size.Medium" Class="btnadd"><MudProgressCircular Color="Color.Default" Class="ms-n1" Size="Size.Small" Indeterminate="true" /> Exporting</MudButton>
+                                <MudButton OnClick="@OnExporttoExcel" Variant="Variant.Filled" Size="Size.Medium" Class="btnadd">
+                                    <div class="d-flex justify-content-between gap-3">
+                                        <MudProgressCircular Color="Color.Info" Class="ms-n1" Size="Size.Small" Indeterminate="true" /> 
+                                        <span>Exporting</span>
+                                    </div>
+                                    
+                                </MudButton>
                             }     
                 </div>
             </Authorized>

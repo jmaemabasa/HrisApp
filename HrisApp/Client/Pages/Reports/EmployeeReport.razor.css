@@ -1,4 +1,8 @@
 ﻿/*select SEARCH*/
+.box {
+    margin-top: 18px;
+}
+
 ::deep .dddiv {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;

@@ -45,9 +45,9 @@ namespace HrisApp.Client.ViewModel
             worksheet.Cells[2, 7].Value = "AREA OF DESIGNATION";
             worksheet.Cells[2, 8].Value = "DATE OF BIRTH";
             worksheet.Cells[2, 9].Value = "CONTACT NUMBER";
-            worksheet.Cells[2, 9].Value = "GENDER";
-            worksheet.Cells[2, 10].Value = "DATE HIRED";
-            worksheet.Cells[2, 11].Value = "STATUS";
+            worksheet.Cells[2, 10].Value = "GENDER";
+            worksheet.Cells[2, 11].Value = "DATE HIRED";
+            worksheet.Cells[2, 12].Value = "STATUS";
             //add Value
             var numberFomat = "#,##0.00";
             var dataCellStyleName = "TableNumber";
@@ -67,39 +67,40 @@ namespace HrisApp.Client.ViewModel
                 worksheet.Cells[c, 7].Value = r.Area?.Name;
                 worksheet.Cells[c, 8].Value = r.Birthdate.ToString("MM-dd-yyyy");
                 worksheet.Cells[c, 9].Value = r.MobileNumber;
-                worksheet.Cells[c, 10].Value = r.DateHired.ToString("MM-dd-yyyy");
-                worksheet.Cells[c, 11].Value = r.Status?.Name;
+                worksheet.Cells[c, 10].Value = r.Gender?.Name;
+                worksheet.Cells[c, 11].Value = r.DateHired.ToString("MM-dd-yyyy");
+                worksheet.Cells[c, 12].Value = r.Status?.Name;
 
                 // Color the STATUS COLUMN based on the status
                 if (r.Status?.Name == "Active")
                 {
-                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#AAC8A7")); 
+                    worksheet.Cells[c, 12].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 12].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#AAC8A7")); 
                 }
                 else if (r.Status?.Name == "Awol")
                 {
-                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#888C4D"));
+                    worksheet.Cells[c, 12].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 12].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#888C4D"));
                 }
                 else if (r.Status?.Name == "Inactive")
                 {
-                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#B7B7B7"));
+                    worksheet.Cells[c, 12].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 12].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#B7B7B7"));
                 }
                 else if (r.Status?.Name == "Terminated")
                 {
-                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#E97777"));
+                    worksheet.Cells[c, 12].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 12].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#E97777"));
                 }
                 else if (r.Status?.Name == "Retired")
                 {
-                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#e0dfdc"));
+                    worksheet.Cells[c, 12].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 12].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#e0dfdc"));
                 }
                 else if (r.Status?.Name == "Resigned")
                 {
-                    worksheet.Cells[c, 11].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    worksheet.Cells[c, 11].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#ebc878"));
+                    worksheet.Cells[c, 12].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[c, 12].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#ebc878"));
                 }
                 i++;
                 c++;
@@ -107,7 +108,7 @@ namespace HrisApp.Client.ViewModel
 
             //Merge
             worksheet.Cells["A1:H1"].Merge = true;
-            worksheet.Cells["I1:K1"].Merge = true;
+            worksheet.Cells["I1:L1"].Merge = true;
 
             //Alignment
             worksheet.Row(1).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
@@ -127,7 +128,7 @@ namespace HrisApp.Client.ViewModel
 
             //add to table / add summary row
             var maxrow = crr.Count() + 2;
-            var crrTbl = worksheet.Tables.Add(new ExcelAddressBase(fromRow: 2, fromCol: 1, toRow: maxrow, toColumn: 11), "data");
+            var crrTbl = worksheet.Tables.Add(new ExcelAddressBase(fromRow: 2, fromCol: 1, toRow: maxrow, toColumn: 12), "data");
             crrTbl.ShowHeader = true;
             crrTbl.TableStyle = OfficeOpenXml.Table.TableStyles.Light16;
             //crrTbl.ShowTotal = true;
