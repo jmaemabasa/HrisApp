@@ -29,13 +29,13 @@
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 20px;
-    padding: 0px 0px 0px 10px !important;
+    padding: 12px 0px 4px 10px !important;
 }
 
 
 .evalpanel {
     /* height: 9rem; */
-    height: 12rem;
+    height: 13rem;
     border-radius: 10px;
     /*background: #e9ecef;*/
     /*background-color: var(--BackgroundGrey);*/
@@ -64,16 +64,6 @@
     }
 
 
-.linepanel {
-    border-radius: 10px;
-    /*background: #e9ecef;*/
-    background-color: var(--BackgroundGrey);
-    border: none;
-    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-    border-radius: 20px;
-    padding: 10px 15px 10px 15px;
-}
-
 .bdaypanel {
     height: 24rem;
     border-radius: 10px;
@@ -86,6 +76,30 @@
     overflow: auto;
 }
 
+/*GRAPH*/
+.bargraph {
+    border-radius: 10px;
+    /*background: #e9ecef;*/
+    background-color: var(--BackgroundGrey);
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+    height: 24rem;
+    width: 100%;
+}
+
+canvas {
+    width: 100% !important;
+}
+
+.divbarchart {
+    height: 19rem;
+}
+
+.barchart {
+
+}
 /*Table*/
 .stable {
     background: #e9ecef;

@@ -16,9 +16,10 @@
 @inject SweetAlertService Swal
 @inject IToastService _toastService
 @inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
 @inject GlobalConfigService GlobalConfigService
-@inject AuditlogGlobal AuditlogGlobal
+@inject JMColors jmcolors
+
+@using ChartJs.Blazor.BarChart
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
 
@@ -82,16 +83,30 @@
             </MudCardContent>
         </MudCard>
     </MudItem>
-    
-    @* <MudItem xs="12" sm="12">
-        <MudCard Class="linepanel">
-            <MudCardContent>
-                <div style="width: 100%">
-                    <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Ch_Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+
+    <MudItem xs="12" sm="9">
+        <MudCard Class="bargraph">
+            <MudCardContent Style="">
+                <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Count by Division</span>
+                <div class="divbarchart" style="margin-top: 10px">
+                    <Chart Config="_config"></Chart>
                 </div>
-                <MudText Typo="Typo.h6">Selected portion of the chart: @Ch_Index</MudText>
             </MudCardContent>
         </MudCard>
-    </MudItem> *@
+    </MudItem>
+    
+
+    <MudItem xs="12" sm="12">
+        <MudCard Class="bdaypanel">
+            <MudCardContent>
+                <span style="color: #424242;font-size: 16px;font-weight: bold;"></span>
+                <div class="divbarchart" style="margin-top: 10px">
+                    <Chart Config="_lineconfig"></Chart>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    
 
 </MudGrid>

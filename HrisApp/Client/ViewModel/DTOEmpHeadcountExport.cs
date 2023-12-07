@@ -25,7 +25,7 @@ namespace HrisApp.Client.ViewModel
                 worksheet.Cells[1, 1].Value = " ACTIVE EMPLOYEE HEADCOUNT AS OF TODAY - " + DateTime.Now.ToString("MMM dd, yyyy").ToUpper();
             }
 
-            worksheet.Cells[1, 9].Value = "TOTAL EMPLOYEES: " + crr.Count();
+            worksheet.Cells[1, 8].Value = "TOTAL EMPLOYEES: " + crr.Count();
 
             //First add the headers
             worksheet.Cells[2, 1].Value = "#";
@@ -35,11 +35,10 @@ namespace HrisApp.Client.ViewModel
             worksheet.Cells[2, 5].Value = "DEPARTMENT";
             worksheet.Cells[2, 6].Value = "POSITION";
             worksheet.Cells[2, 7].Value = "AREA OF DESIGNATION";
-            worksheet.Cells[2, 8].Value = "DATE OF BIRTH";
-            worksheet.Cells[2, 9].Value = "CONTACT NUMBER";
-            worksheet.Cells[2, 10].Value = "GENDER";
-            worksheet.Cells[2, 11].Value = "DATE HIRED";
-            //worksheet.Cells[2, 12].Value = "STATUS";
+            worksheet.Cells[2, 8].Value = "GENDER";
+            worksheet.Cells[2, 9].Value = "DATE HIRED";
+            //worksheet.Cells[2, 10].Value = "STATUS";
+
             //add Value
             var numberFomat = "#,##0.00";
             var dataCellStyleName = "TableNumber";
@@ -57,11 +56,9 @@ namespace HrisApp.Client.ViewModel
                 worksheet.Cells[c, 5].Value = r.Department?.Name;
                 worksheet.Cells[c, 6].Value = r.Position?.Name;
                 worksheet.Cells[c, 7].Value = r.Area?.Name;
-                worksheet.Cells[c, 8].Value = r.Birthdate.ToString("MM-dd-yyyy");
-                worksheet.Cells[c, 9].Value = r.MobileNumber;
-                worksheet.Cells[c, 10].Value = r.Gender.Name;
-                worksheet.Cells[c, 11].Value = r.DateHired.ToString("MM-dd-yyyy");
-                //worksheet.Cells[c, 12].Value = r.Status?.Name;
+                worksheet.Cells[c, 8].Value = r.Gender?.Name;
+                worksheet.Cells[c, 9].Value = r.DateHired.ToString("MM-dd-yyyy");
+                //worksheet.Cells[c, 10].Value = r.Status?.Name;
 
                 // Color the STATUS COLUMN based on the status
                 //if (r.Status?.Name == "Active")
@@ -99,8 +96,8 @@ namespace HrisApp.Client.ViewModel
             }
 
             //Merge
-            worksheet.Cells["A1:H1"].Merge = true;
-            worksheet.Cells["I1:K1"].Merge = true;
+            worksheet.Cells["A1:G1"].Merge = true;
+            worksheet.Cells["H1:I1"].Merge = true;
 
             //Alignment
             worksheet.Row(1).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
@@ -109,8 +106,8 @@ namespace HrisApp.Client.ViewModel
             worksheet.Cells[1, 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
             worksheet.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(OfficeOpenXml.Drawing.eThemeSchemeColor.Accent1);
 
-            worksheet.Cells[1, 9].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-            worksheet.Cells[1, 9].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
+            worksheet.Cells[1, 8].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+            worksheet.Cells[1, 8].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
 
             //Font
             worksheet.Row(1).Style.Font.Size = 13;
@@ -120,7 +117,7 @@ namespace HrisApp.Client.ViewModel
 
             //add to table / add summary row
             var maxrow = crr.Count() + 2;
-            var crrTbl = worksheet.Tables.Add(new ExcelAddressBase(fromRow: 2, fromCol: 1, toRow: maxrow, toColumn: 11), "data");
+            var crrTbl = worksheet.Tables.Add(new ExcelAddressBase(fromRow: 2, fromCol: 1, toRow: maxrow, toColumn: 9), "data");
             crrTbl.ShowHeader = true;
             crrTbl.TableStyle = OfficeOpenXml.Table.TableStyles.Light16;
             //crrTbl.ShowTotal = true;

@@ -64,7 +64,7 @@
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; ">Position</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">No. of Personnel Required
                 </MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">Employee Count Per Position</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">Active Employees</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd>
@@ -89,7 +89,17 @@
 
                 <MudTd>@pos.Name</MudTd>
                 <MudTd Style="text-align: center;">@pos.Plantilla</MudTd>
-                <MudTd Style="text-align: center;">@allEmployee.Where(e => e.PositionId == pos.Id).Count()</MudTd>
+                <MudTd Style="text-align: center;">
+                    @if (allEmployee.Where(e => e.PositionId == pos.Id).Count() == pos.Plantilla)
+                    {
+                        <span style="color: green; font-weight: bold"> @allEmployee.Where(e => e.PositionId == pos.Id).Count()</span>
+                    }
+                    else
+                    {
+                        <span style="color: red; font-weight: bold"> @allEmployee.Where(e => e.PositionId == pos.Id).Count()</span>
+                    }
+                   
+                </MudTd>
             </RowTemplate>
         </MudTable>
     }

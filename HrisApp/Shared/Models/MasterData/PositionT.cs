@@ -25,6 +25,12 @@ namespace HrisApp.Shared.Models.MasterData
         public string OtherCompetencies { get; set; } = string.Empty;
         public string Restrictions { get; set; } = string.Empty;
         public int Plantilla { get; set; } //FK
+        public string PositionType { get; set; } = string.Empty;
+        public string TemporaryDuration { get; set; } = string.Empty;
+        //public ManpowerInternalT? ManpowerInternal {  get; set; }
+        //public int ManpowerInternalId { get; set; }
+        //public ManpowerExternalT? ManpowerExternal { get; set; }
+        //public int ManpowerExternalId { get; set; }
         public string VerifyId { get; set; } = string.Empty;
     }
 }

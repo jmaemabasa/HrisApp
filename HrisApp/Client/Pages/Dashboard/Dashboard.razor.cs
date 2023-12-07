@@ -1,4 +1,14 @@
-﻿namespace HrisApp.Client.Pages.Dashboard
+﻿using ChartJs.Blazor;
+using ChartJs.Blazor.BarChart;
+using ChartJs.Blazor.Common;
+using ChartJs.Blazor.Common.Enums;
+using ChartJs.Blazor.LineChart;
+using ChartJs.Blazor.Util;
+using Microsoft.AspNetCore.Http;
+using System.Data;
+using System.Globalization;
+
+namespace HrisApp.Client.Pages.Dashboard
 {
     public partial class Dashboard : ComponentBase
     {
@@ -19,10 +29,12 @@
 
         public List<string> departmentArr = new List<string>();
         public List<string> divisionArr = new List<string>();
-        private List<double> depEmptArr = new List<double>();
 
-        private int EmployeeCount = 0;
-        private double[] EmployeeCountPerDivision;
+        private System.Drawing.Color[] colorsrand;
+
+        private int[] EmployeeCountPerDivision;
+        private int[] EmployeeCountActual;
+        private int[] EmployeeCountPlantilla;
 
         private int _totalVacancy = 0;
         private int _totalPlantilla = 0;
@@ -35,8 +47,10 @@
                 await EmployeeService.GetEmployee();
                 await DepartmentService.GetDepartment();
                 await DivisionService.GetDivision();
+                await PositionService.GetPosition();
 
                 allDepartments = DepartmentService.DepartmentTs;
+                allDivisions = DivisionService.DivisionTs;
                 employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate.Day).ToList();
 
                 #region Plantilla
@@ -72,24 +86,253 @@
                 }
                 #endregion
 
-                
-
                 departmentArr = await DepartmentService.GetAllDepartmentName();
                 divisionArr = await DivisionService.GetAllDivisionName();
-                //DepartmentCount = await DepartmentService.GetCountDepartment();
-                EmployeeCount = await EmployeeService.GetCountEmployee();
 
-                await FilterEmployee();
-                RandomizeData();
+
+
+                FilterEmployee();
+                ConfigureBarConfig();
+
+                dataforline = GetLast15DaysLabels();
+                FilterLineEmployeeActual();
+                FilterLineEmployeePlantilla();
+                ConfigureLineConfig();
+
             }
             catch (Exception ex)
             {
 
                 Console.WriteLine(ex.Message);
             }
-            
+
         }
 
+
+        #region BAR CHART BDUDY
+        public BarConfig _config = new BarConfig
+        {
+            Options = new BarOptions
+            {
+                Responsive = true,
+                Title = new OptionsTitle
+                {
+                    Display = false,
+                    Text = "Employee Count by Department",
+                },
+                Legend = new Legend
+                {
+                    Display = false
+                },
+                MaintainAspectRatio = false,
+            }
+        };
+        private void ConfigureBarConfig()
+        {
+            foreach (string _item in divisionArr)
+            {
+                _config.Data.Labels.Add(_item);
+            }
+
+            int countcolor = 24;
+
+            BarDataset<int> dataset = new BarDataset<int>(EmployeeCountPerDivision)
+            {
+                BackgroundColor = new[]
+                    {
+                        ColorUtil.ColorHexString(149, 125, 173),//
+                        ColorUtil.ColorHexString(224, 202, 34), //
+                        ColorUtil.ColorHexString(50, 124, 161), //
+                        ColorUtil.ColorHexString(152, 138, 207),//
+                        ColorUtil.ColorHexString(224, 145, 250),//
+                        ColorUtil.ColorHexString(105, 191, 190), //
+                        ColorUtil.ColorHexString(188, 191, 105),//
+                        ColorUtil.ColorHexString(219, 189, 79), //
+                        ColorUtil.ColorHexString(79, 158, 219), //
+                        ColorUtil.ColorHexString(33, 79, 115), //
+                        ColorUtil.ColorHexString(179, 125, 199), //
+                        ColorUtil.ColorHexString(125, 199, 161), //
+                        ColorUtil.ColorHexString(181, 110, 120), //
+                        ColorUtil.ColorHexString(179, 45, 63), //
+                        ColorUtil.ColorHexString(148, 135, 171), //
+                        ColorUtil.ColorHexString(66, 103, 150), //
+                        ColorUtil.ColorHexString(75, 125, 110), //
+                        ColorUtil.ColorHexString(31, 128, 98), //
+                        ColorUtil.ColorHexString(126, 186, 123),
+                        ColorUtil.ColorHexString(196, 196, 151), //
+                        ColorUtil.ColorHexString(117, 117, 35), //
+                        ColorUtil.ColorHexString(94, 102, 195), //
+                        ColorUtil.ColorHexString(35, 152, 140), //
+                        ColorUtil.ColorHexString(175, 74, 215), //
+                        ColorUtil.ColorHexString(199, 119, 90),//
+                        ColorUtil.ColorHexString(115, 59, 38),
+                        ColorUtil.ColorHexString(33, 120, 67),
+                        ColorUtil.ColorHexString(139, 113, 244),
+                        ColorUtil.ColorHexString(111, 249, 108),
+                        ColorUtil.ColorHexString(122, 133, 129),
+                        ColorUtil.ColorHexString(171, 92, 84),
+                        ColorUtil.ColorHexString(223, 90, 233),
+                        ColorUtil.ColorHexString(240, 102, 49),
+                        ColorUtil.ColorHexString(149, 60, 161),
+                        ColorUtil.ColorHexString(7, 55, 214),
+                        ColorUtil.ColorHexString(125, 67, 61),
+                        ColorUtil.ColorHexString(90, 97, 94),
+                        ColorUtil.ColorHexString(243, 125, 80),
+                        ColorUtil.ColorHexString(74, 114, 249),
+                        ColorUtil.ColorHexString(8, 63, 247),
+                        ColorUtil.ColorHexString(223, 90, 233),
+                        ColorUtil.ColorHexString(199, 255, 199),
+                        ColorUtil.ColorHexString(7, 55, 214),
+                        ColorUtil.ColorHexString(149, 60, 161),
+                        ColorUtil.ColorHexString(74, 114, 249),
+                        ColorUtil.ColorHexString(255, 199, 158),
+                        ColorUtil.ColorHexString(255, 166, 255),
+                        ColorUtil.ColorHexString(118, 238, 118),
+                        ColorUtil.ColorHexString(255, 99, 71),
+                        ColorUtil.ColorHexString(255, 176, 181),
+                        ColorUtil.ColorHexString(255, 224, 158),
+                        ColorUtil.ColorHexString(143, 235, 191),
+                        ColorUtil.ColorHexString(210, 145, 188)
+                    },
+               
+            };
+
+
+            _config.Data.Datasets.Add(dataset);
+        }
+
+
+        private void FilterEmployee()
+        {
+            List<int> empCountperDiv = new List<int>();
+
+            foreach (var item in allDivisions)
+            {
+                var countEmployee = EmployeeService.EmployeeTs.Where(s => s.DivisionId == item.Id).Count();
+                //if (countEmployee != 0)
+                //{
+                //}
+                empCountperDiv.Add(countEmployee);
+
+            }
+            EmployeeCountPerDivision = empCountperDiv.ToArray();
+        }
+        #endregion
+
+
+        #region LINE CHART 
+        public LineConfig _lineconfig = new LineConfig
+        {
+            Options = new LineOptions
+            {
+                Responsive = true,
+                Title = new OptionsTitle
+                {
+                    Display = false,
+                    Text = "Employee Count by Department",
+                },
+                Legend = new Legend
+                {
+                    Display = false
+                },
+                MaintainAspectRatio = false,
+            }
+        };
+
+        private void ConfigureLineConfig()
+        {
+            foreach (var item in dataforline)
+            {
+                _lineconfig.Data.Labels.Add(item);
+            }
+
+            int countcolor = 24;
+
+            LineDataset<int> dataset = new LineDataset<int>(EmployeeCountActual)
+            {
+                Label = "Employee Count",
+                BackgroundColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Red),
+                BorderColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Red),
+                Fill = FillingMode.Disabled
+            };
+
+            LineDataset<int> dataset2 = new LineDataset<int>(EmployeeCountPlantilla)
+            {
+                Label = "Plantilla",
+                BackgroundColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Blue),
+                BorderColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Blue),
+                Fill = FillingMode.Disabled
+            };
+
+
+            _lineconfig.Data.Datasets.Add(dataset);
+            _lineconfig.Data.Datasets.Add(dataset2);
+        }
+
+        //employee count daily vs plantilla 
+
+        private void FilterLineEmployeeActual()
+        {
+            List<int> empCountActual = new List<int>();
+
+            foreach (var item in dataforline)
+            {
+                string format = "yyyy-MM-dd";
+                DateTime dateTime = DateTime.ParseExact(item, format, CultureInfo.InvariantCulture);
+                var countEmployee = EmployeeService.EmployeeTs.Where(s => s.DateHired <= dateTime && s.StatusId == 1).Count();
+                empCountActual.Add(countEmployee);
+
+            }
+            EmployeeCountActual = empCountActual.ToArray();
+        }
+
+        private void FilterLineEmployeePlantilla()
+        {
+            List<int> empCountPlantilla = new List<int>();
+
+            int totalPlantilla = 0;
+
+            foreach (var item in allPositions)
+            {
+                totalPlantilla += item.Plantilla;
+            }
+
+
+
+            foreach (var item in dataforline)
+            {
+                empCountPlantilla.Add(totalPlantilla);
+
+            }
+            EmployeeCountPlantilla = empCountPlantilla.ToArray();
+        }
+
+        private List<string> dataforline = new List<string>();
+        private List<string> GetLast15DaysLabels()
+        {
+            List<string> labels = new List<string>();
+
+            // Get the current date
+            DateTime currentDate = DateTime.Now;
+
+            // Loop through the last 15 days
+            for (int i = 0; i < 15; i++)
+            {
+                // Add the formatted date to the labels list
+                labels.Add(currentDate.ToString("yyyy-MM-dd"));
+
+                // Move to the previous day
+                currentDate = currentDate.AddDays(-1);
+            }
+
+            // Reverse the list to have the dates in chronological order
+            labels.Reverse();
+
+            return labels;
+        }
+        #endregion
+
+        #region FUNCTIONS
         public void BdayThisDay()
         {
             cmbBdyTitle = "Today";
@@ -101,52 +344,6 @@
             cmbBdyTitle = "This Month";
             employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate.Day).ToList();
         }
-
-
-        #region Chart area
-        private int Ch_Index = -1; //default value cannot be 0 -> first selectedindex is 0.
-
-        public List<ChartSeries> Series = new List<ChartSeries>()
-        {
-        new ChartSeries() { Name = "Series 1", Data = new double[] { 90, 79, 72, 69, 62, 62, 55, 65, 70 } }
-        };
-
-        public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
-
-        Random random = new Random();
-        public void RandomizeData()
-        {
-            var new_series = new List<ChartSeries>()
-            {
-                new ChartSeries() { Name = "Series 1", Data = EmployeeCountPerDivision }
-            };
-            for (int i = 0; i < EmployeeCount; i++)
-            {
-                new_series[0].Data[i] = random.NextDouble() * EmployeeCount;
-            }
-            XAxisLabels = divisionArr.ToArray();
-            Series = new_series;
-            StateHasChanged();
-        }
-
-        #endregion
-
-
-        private async Task FilterEmployee()
-        {
-            await Task.Delay(1);
-            List<double> empCountperDiv = new List<double>();
-            foreach (var item in DivisionService.DivisionTs)
-            {
-                //Console.WriteLine(item.Name);
-                var countEmployee = EmployeeService.EmployeeTs.Where(s => s.DivisionId == item.Id).Count();
-                empCountperDiv.Add(countEmployee);
-            }
-            EmployeeCountPerDivision = empCountperDiv.ToArray();
-
-        }
-
-
 
         public void NavForEval() => NavigationManager.NavigateTo("/evaluation");
 
@@ -165,7 +362,7 @@
                     break;
                 case "5yearsinactive":
                     NavigationManager.NavigateTo("/employee?allInStatus=inactive5yearsago");
-                    break; 
+                    break;
                 case "totalPlantilla":
                     NavigationManager.NavigateTo("/totalPlantilla");
                     break;
@@ -181,7 +378,12 @@
 
             }
         }
+        #endregion
 
-        
+
+
+
+
+
     }
 }

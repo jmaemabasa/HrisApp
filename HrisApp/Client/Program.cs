@@ -105,6 +105,7 @@ builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();
 builder.Services.AddTransient<BackUpDeletion>();
+builder.Services.AddTransient<JMColors>();
 
 builder.Services.AddTransient<DTOEmployeeExport>();
 builder.Services.AddTransient<DTOEmpHeadcountExport>();

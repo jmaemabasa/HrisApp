@@ -81,7 +81,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
         public async Task<string> Getname(int id)
         {
-            Console.WriteLine($"Global ni dri {id}");
             var returnlist = await _httpClient.GetFromJsonAsync<List<EmployeeT>>($"api/Employee/GetEmpName/{id}");
 
 
