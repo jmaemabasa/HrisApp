@@ -1,0 +1,71 @@
+﻿@inject IManpowerService ManpowerService
+@inject SweetAlertService Swal
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+@inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+@inject StateService StateService
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField Label="Name" @bind-Value="newObj" Variant="Variant.Outlined"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" @onclick="ConfirmCreateObj">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+#nullable disable
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private string newObj = "";
+
+
+
+    void Cancel() => MudDialog.Cancel();
+
+    private async Task ConfirmCreateObj()
+    {
+        MudDialog.Close();
+
+        if (string.IsNullOrWhiteSpace(newObj))
+        {
+            await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Warning",
+                    Text = "Please fill up the division name!",
+                    Icon = SweetAlertIcon.Warning
+                });
+        }
+        else
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to add " + newObj + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+            if (confirmResult.IsConfirmed)
+            {
+                var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+
+                await ManpowerService.CreateInternal(newObj, verifyCode);
+
+                _toastService.ShowSuccess(newObj + " Created Successfully!");
+
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+                await ManpowerService.GetInternal();
+                var newList = ManpowerService.PosMPInternalTs;
+                StateService.SetState("InternalList", newList);
+
+            }
+        }
+    }
+}

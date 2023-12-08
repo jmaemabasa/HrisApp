@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace HrisApp.Shared.Models.MasterData
 {
-    public class ManpowerInternalT
+    public class PosMPExternalT
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-        public string Internal_Name { get; set; } = string.Empty;
-        public string Internal_VerifyId { get; set; } = string.Empty;
+        public string External_Name { get; set; } = string.Empty;
+        public string External_VerifyId { get; set; } = string.Empty;
     }
 }

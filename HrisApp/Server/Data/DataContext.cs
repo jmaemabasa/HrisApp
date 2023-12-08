@@ -242,7 +242,9 @@ namespace HrisApp.Server.Data
         public DbSet<PositionComAppT> PositionComAppT { get; set; }
         public DbSet<PositionWorkExpT> PositionWorkExpT { get; set; }
         public DbSet<PositionEducT> PositionEducT { get; set; }
-        
+        public DbSet<PosMPExternalT> PosMPExternalT { get; set; }
+        public DbSet<PosMPInternalT> PosMPInternalT { get; set; }
+
 
 
         //Employee Data

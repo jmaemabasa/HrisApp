@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Dummy\**" />
+    <EmbeddedResource Remove="Models\Dummy\**" />
+    <None Remove="Models\Dummy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.Toast" Version="4.1.0" />
     <PackageReference Include="EPPlus" Version="6.0.8" />
     <PackageReference Include="NPOI" Version="2.5.6" />
@@ -14,9 +20,5 @@
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Dummy\" />
   </ItemGroup>
 </Project>

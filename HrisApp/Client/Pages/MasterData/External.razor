@@ -1,0 +1,78 @@
+﻿@page "/external"
+
+@inject IManpowerService ManpowerService
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+@inject StateService StateService
+@attribute [Authorize(Roles = "System Administrator")]
+
+<PageTitle>External Manpower Management</PageTitle>
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">External Manpower Management</span>
+        <AuthorizeView Roles="System Administrator">
+            <Authorized>
+                <MudButton OnClick="OpenAddExternal" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add External</MudButton>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+        </div>
+    </div>
+    @if (externalList == null || externalList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
+        <div style="height: calc(100% - 64px)">
+            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="externalList" Context="divisions" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<PosMPExternalT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+                <HeaderContent>
+                    <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                        <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<PosMPExternalT, object>(x=>x.External_Name)">
+                            Name
+                        </MudTableSortLabel>
+                    </MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="">@divisions.External_Name</MudTd>
+                    <MudTd>
+                        <AuthorizeView Roles="System Administrator">
+                            <Authorized>
+                                <MudTooltip Text="Update">
+                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateExternal(divisions.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                </MudTooltip>
+                            </Authorized>
+                            <NotAuthorized>
+                                <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateExternal(divisions.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            </NotAuthorized>
+                            </AuthorizeView>
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                        </PagerContent>
+                        </MudTable>
+
+                    </div>
+    }
+</div>

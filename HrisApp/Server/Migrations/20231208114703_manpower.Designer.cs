@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231208114703_manpower")]
+    partial class manpower
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1914,20 +1916,12 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PositionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Restrictions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TemporaryDuration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VerifyId")
                         .IsRequired()
@@ -1954,10 +1948,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S101",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -1973,10 +1965,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 9,
                             PosCode = "S102",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -1992,10 +1982,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 2,
                             PosCode = "S103",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2011,10 +1999,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3K01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2030,10 +2016,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3K02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2049,10 +2033,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3K03",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2068,10 +2050,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3K04",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2087,10 +2067,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "S3K05",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2106,10 +2084,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3K06",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2125,10 +2101,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3C01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2144,10 +2118,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 2,
                             PosCode = "S3C02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2163,10 +2135,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3C03",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2182,10 +2152,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "S3C04",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2201,10 +2169,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "S3C05",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2220,10 +2186,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "URIC01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2239,10 +2203,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "URICHAP01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 4,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2258,10 +2220,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 4,
                             PosCode = "URICHAP02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 4,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2277,10 +2237,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "URICSER01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2296,10 +2254,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "URICSER02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2315,10 +2271,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 5,
                             PosCode = "URICSER03",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2334,10 +2288,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 11,
                             PosCode = "URICSER04",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2353,10 +2305,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "URICEXP01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2372,10 +2322,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 2,
                             PosCode = "URICEXP02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2391,10 +2339,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 4,
                             PosCode = "URICEXP02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2410,10 +2356,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "URICDTE01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 7,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2429,10 +2373,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "URICDTE02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 7,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2448,10 +2390,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "GCASH01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2467,10 +2407,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "GCASH02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2486,10 +2424,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "GCASHSER01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2505,10 +2441,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 4,
                             PosCode = "GCASHSER02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2524,10 +2458,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 6,
                             PosCode = "GCASHSER03",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2543,10 +2475,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 2,
                             PosCode = "GCASHEXP01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 9,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2562,10 +2492,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "GCASHMER01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 10,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2581,10 +2509,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "GCASHSCA01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 11,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2600,10 +2526,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "GAINV01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2619,10 +2543,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 2,
                             PosCode = "GAINV02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2638,10 +2560,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "GAINV03",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2657,10 +2577,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "GAGEN01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 13,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2676,10 +2594,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "GAGEN02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 13,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2695,10 +2611,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "GATAX01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 14,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2714,10 +2628,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "GATAX02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 14,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2733,10 +2645,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "SAACC01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 15,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2752,10 +2662,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 4,
                             PosCode = "SAACC02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 15,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2771,10 +2679,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 6,
                             PosCode = "SACRE01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 16,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2790,10 +2696,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "SACRE02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 16,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2809,10 +2713,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "SABIL01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 17,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2828,10 +2730,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "IT01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2847,10 +2747,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 2,
                             PosCode = "IT02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2866,10 +2764,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "IT03",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2885,10 +2781,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "TREASURYCAS01",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2904,10 +2798,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 3,
                             PosCode = "TREASURYCAS02",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2923,10 +2815,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "TREASURYCAS03",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2942,10 +2832,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "TREASURYCAS04",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         },
@@ -2961,10 +2849,8 @@ namespace HrisApp.Server.Migrations
                             Plantilla = 1,
                             PosCode = "TREASURYCAS05",
                             PosEducation = "",
-                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
                         });

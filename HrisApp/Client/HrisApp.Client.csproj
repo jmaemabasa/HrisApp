@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModel\AuthViewModel\**" />
     <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="ViewModel\AuthViewModel\**" />
     <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="ViewModel\AuthViewModel\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="ViewModel\AuthViewModel\**" />
     <None Remove="wwwroot\lib\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\joche\.nuget\packages\chartjs.blazor.fork\2.0.2\contentFiles\any\netstandard2.1\wwwroot\ChartJsBlazorInterop.js" />
     <Content Remove="C:\Users\Lirba Labos\.nuget\packages\chartjs.blazor.fork\2.0.2\contentFiles\any\netstandard2.1\wwwroot\ChartJsBlazorInterop.js" />
   </ItemGroup>
 
@@ -39,10 +44,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\HrisApp.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModel\AuthViewModel\" />
   </ItemGroup>
 
 </Project>

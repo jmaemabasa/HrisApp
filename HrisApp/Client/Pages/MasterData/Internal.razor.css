@@ -1,0 +1,88 @@
+﻿/*TOP BUTTONS*/
+.topnav {
+    position: absolute;
+    top: 30px;
+    width: -webkit-fill-available;
+    padding-right: 35px;
+}
+
+.ttitle {
+    font-weight: bold;
+}
+
+.form-select {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #adbbc9;
+    color: #27374D;
+    font-weight: bold;
+    height: 45px;
+    margin-bottom: 15px;
+}
+
+::deep .stable {
+    background: #e9ecef;
+    border-radius: 20px;
+}
+
+::deep .tsearch {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+
+.ssize {
+    width: 617px;
+}
+
+
+::deep .btnedit {
+    color: #27374D;
+}
+
+    ::deep .btnedit:hover {
+        transform: scale(1.1);
+    }
+
+
+::deep .btnadd {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    background-color: #F1BC3A;
+    color: #424242;
+    padding-bottom: 4px;
+}
+
+    ::deep .btnadd:hover {
+        background-color: #E38D0F;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+@media (max-width: 576px) {
+    ::deep .dddiv {
+        width: 223px;
+    }
+
+    .box {
+        height: auto;
+        margin-bottom: 15px;
+        padding: 35px 25px 15px 25px;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    /*TOP BUTTONS*/
+    .topnav {
+        position: absolute;
+        top: 28px;
+        width: -webkit-fill-available;
+        padding-right: 35px;
+    }
+}

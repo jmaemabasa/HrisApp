@@ -1,0 +1,69 @@
+﻿@inject IManpowerService ManpowerService
+@inject SweetAlertService Swal
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+@inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+@inject StateService StateService
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField Label="Name" @bind-Value="obj.External_Name" Variant="Variant.Outlined"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="UpdateObj">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+#nullable disable
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public int Id { get; set; }
+
+
+    private PosMPExternalT obj = new();
+
+
+    void Cancel() => MudDialog.Cancel();
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //division = DivisionService.DivisionTs.Find(d => d.Id == Id);
+        obj = await ManpowerService.GetSingleExternal(Id);
+    }
+
+    async Task UpdateObj()
+    {
+        if (obj == null)
+            return;
+
+        MudDialog.Close();
+
+        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure you want to update the " + obj.External_Name + "?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+        if (confirmResult.IsConfirmed)
+        {
+            await ManpowerService.UpdateExternal(obj);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+
+            _toastService.ShowSuccess(obj.External_Name + " Updated Successfully!");
+
+            await ManpowerService.GetExternal();
+            var newList = ManpowerService.PosMPExternalTs;
+            StateService.SetState("ExternalList", newList);
+        }
+    }
+}
