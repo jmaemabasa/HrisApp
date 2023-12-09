@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using MudBlazor;
+using System.Data;
 using System.Globalization;
 
 namespace HrisApp.Client.Pages.Dashboard
@@ -284,9 +285,8 @@ namespace HrisApp.Client.Pages.Dashboard
             {
                 string format = "yyyy-MM-dd";
                 DateTime dateTime = DateTime.ParseExact(item, format, CultureInfo.InvariantCulture);
-                var countEmployee = EmployeeService.EmployeeTs.Where(s => s.DateHired <= dateTime && s.StatusId == 1).Count();
+                var countEmployee = EmployeeService.EmployeeTs.Where(e => (e.DateHired <= dateTime) && (e.DateInactiveStatus == null || e.DateInactiveStatus > dateTime)).Count();
                 empCountActual.Add(countEmployee);
-
             }
             EmployeeCountActual = empCountActual.ToArray();
         }
