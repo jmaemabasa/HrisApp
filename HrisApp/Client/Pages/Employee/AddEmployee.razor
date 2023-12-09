@@ -4,7 +4,7 @@
 @inject IJSRuntime JSRuntime
 @inject AddEmployeeVM _addEmployeeVM
 
-@attribute [Authorize(Roles = "System Administrator, HR")]
+@*@attribute [Authorize(Roles = "System Administrator, HR")]*@
 <PageTitle>Add Employee</PageTitle>
 <div class="topnav d-flex justify-content-end align-items-center z-60">
     <MudButton OnClick="@_addEmployeeVM.backbtn" Size="Size.Medium">Back</MudButton>

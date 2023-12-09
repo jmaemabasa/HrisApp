@@ -12,6 +12,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private List<SectionT> Sections = new();
         private List<PositionT> Positions = new();
         private List<AreaT> Areas = new();
+        private List<PosMPInternalT> Internals = new();
+        private List<PosMPExternalT> Externals = new();
 
         //Skills
         public List<PositionTechSkillT> listOfTechSkills = new();
@@ -24,6 +26,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private int selectedDepartment = 0;
         private int selectedSection = 0;
         private int selectedArea = 0;
+        private int selectedInternal = 0;
+        private int selectedExternal = 0;
         private string newPosition = "";
         private string newPosCode = "";
         private string newSummary = "";
@@ -34,7 +38,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private string newComApp = "";
         private string newOtherComp = "";
         private string newRestrict = "";
+        private string newPosType = "";
+        private string newDuration = "";
+        private string newDurationCMB = "Month/s";
         private int newPlantilla;
+
+        private string newPosTypeHolder = "";
 
         void Cancel() => MudDialog.Cancel();
 
@@ -54,6 +63,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             await AreaService.GetArea();
             Areas = AreaService.AreaTs;
+
+            await ManpowerService.GetExternal();
+            Externals = ManpowerService.PosMPExternalTs;
+
+            await ManpowerService.GetInternal();
+            Internals = ManpowerService.PosMPInternalTs;
         }
 
         private async Task ConfirmCreatePositionAsync()
@@ -112,8 +127,17 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             if (departmentHasSections)
             {
+                if (newPosType == "Permanent")
+                {
+                    newDurationCMB = "";
+                }
+                else
+                {
+                    newDuration = newDuration + " " + newDurationCMB;
+                }
+
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode);
+                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, selectedInternal, selectedExternal);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
@@ -122,9 +146,17 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             }
             else
             {
+                if (newPosType == "Permanent")
+                {
+                    newDurationCMB = "";
+                }
+                else
+                {
+                    newDuration = newDuration + " " + newDurationCMB;
+                }
 
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode);
+                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, selectedInternal, selectedExternal);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
@@ -176,7 +208,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newTechSkill))
                 listOfTechSkills.Add(new PositionTechSkillT { PosCode = code, SkillName = newSkill, VerifyId = verifyCode });
-                newTechSkill = "";
+            newTechSkill = "";
             Console.WriteLine(verifyCode);
         }
         public void CloseTechSkill(MudChip chip)
@@ -226,7 +258,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newKnowledge))
                 listOfKnowledge.Add(new PositionKnowledgeT { PosCode = code, KnowName = newSkill, VerifyId = verifyCode });
-                newKnowledge = "";
+            newKnowledge = "";
         }
         public void CloseKnowledge(MudChip chip)
         {
@@ -275,7 +307,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newComApp))
                 listOfComApp.Add(new PositionComAppT { PosCode = code, ComName = newSkill, VerifyId = verifyCode });
-                newComApp = "";
+            newComApp = "";
         }
         public void CloseComApp(MudChip chip)
         {
@@ -324,7 +356,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newWorkExp))
                 listOfWorkExp.Add(new PositionWorkExpT { PosCode = code, ExpName = newSkill, VerifyId = verifyCode });
-                newWorkExp = "";
+            newWorkExp = "";
         }
         public void CloseWorkExp(MudChip chip)
         {
@@ -373,7 +405,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newEduc))
                 listOfEduc.Add(new PositionEducT { PosCode = code, EducName = newSkill, VerifyId = verifyCode });
-                newEduc = "";
+            newEduc = "";
         }
         public void CloseEduc(MudChip chip)
         {

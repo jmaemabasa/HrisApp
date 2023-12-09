@@ -55,6 +55,7 @@ namespace HrisApp.Client.Services.MasterData.ManpowerService
 
 
 
+
         public List<PosMPExternalT> PosMPExternalTs { get; set; } = new List<PosMPExternalT>();
 
         public async Task<List<PosMPExternalT>> GetExternalList()

@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Services.MasterData.PositionService
+﻿using HrisApp.Shared.Models.Dashboard;
+
+namespace HrisApp.Client.Services.MasterData.PositionService
 {
     public interface IPositionService
     {
@@ -13,10 +15,15 @@
         Task GetPosition();
         Task<PositionT> GetSinglePosition(int id);
 
-        Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode);
-        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode);
+        Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, int mpinternal, int mpexternal);
+        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, int mpinternal, int mpexternal);
         Task UpdatePosition(PositionT position);
 
+        //PLANTILLA
+        List<DailyTotalPlantillaT> DailyTotalPlantillaTs { get; set; }
+        Task<int> GetTotalPlantilla();
+        Task CreateTotalPlantilla(int tootal, DateTime date);
+        Task GetDbTotalPlantilla();
 
 
         List<PositionTechSkillT> PositionTechSkillTs { get; set; }

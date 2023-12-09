@@ -6,6 +6,7 @@
 @inject IDepartmentService DepartmentService
 @inject IPositionService PositionService
 @inject IAreaService AreaService
+@inject IManpowerService ManpowerService
 @inject IToastService _toastService
 @inject GlobalConfigService GlobalConfigService
 @inject IAuditlogService AuditlogService
@@ -13,14 +14,14 @@
 
 <style>
     .mud-input.mud-input-outlined.mud-input-adorned-end {
-/*         width: 300px;
- */        padding-right: 14px;
+        /*         width: 300px;
+     */ padding-right: 14px;
         padding-inline-end: 14px;
         padding-inline-start: unset;
     }
 </style>
 
-<MudDialog >
+<MudDialog>
     <DialogContent>
         @* Select Division *@
         <div class="d-flex flex-column divcont">
@@ -96,6 +97,46 @@
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Job Summary</MudText>
                             <MudTextField @bind-Value="newSummary" Variant="Variant.Outlined" Margin="Margin.Dense" Lines="3" Style="margin-bottom: 5px;" />
+                        </div>
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Position Type</MudText>
+                            <MudSelect @bind-Value="newPosType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="@newPosTypeHolder">---Select---</MudSelectItem>
+                                <MudSelectItem Value="@("Temporary")" />
+                                <MudSelectItem Value="@("Permanent")" />
+                            </MudSelect>
+                        </div>
+                        @if (newPosType == "Temporary")
+                        {
+                            <MudText Typo="Typo.body2">Temporary Duration</MudText>
+                            <div class="d-flex flex-row gap-2">
+                                <MudTextField @bind-Value="newDuration" Mask="@(new PatternMask("000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                <MudSelect @bind-Value="newDurationCMB" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                    <MudSelectItem Value="@("Month/s")">Month/s</MudSelectItem>
+                                    <MudSelectItem Value="@("Year/s")">Year/s</MudSelectItem>
+                                </MudSelect>
+                            </div>
+                        }
+                        <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Internal</MudText>
+                            <MudSelect @bind-Value="selectedInternal" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Value="0">N/A</MudSelectItem>
+                                @foreach (var item in Internals)
+                                {
+                                    <MudSelectItem Value="@item.Id">@item.Internal_Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">External</MudText>
+                            <MudSelect @bind-Value="selectedExternal" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Value="0">N/A</MudSelectItem>
+                                @foreach (var item in Externals)
+                                {
+                                    <MudSelectItem Value="@item.Id">@item.External_Name</MudSelectItem>
+                                }
+                            </MudSelect>
                         </div>
                         <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
                         <div class="d-flex flex-column" style="margin-bottom: 10px;">
@@ -218,6 +259,46 @@
                             <MudText Typo="Typo.body2">Job Summary</MudText>
                             <MudTextField @bind-Value="newSummary" Variant="Variant.Outlined" Margin="Margin.Dense" Lines="3" Style="margin-bottom: 5px;" />
                         </div>
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Position Type</MudText>
+                            <MudSelect @bind-Value="newPosType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="@newPosTypeHolder">---Select---</MudSelectItem>
+                                <MudSelectItem Value="@("Temporary")" />
+                                <MudSelectItem Value="@("Permanent")" />
+                            </MudSelect>
+                        </div>
+                        @if (newPosType == "Temporary")
+                        {
+                            <MudText Typo="Typo.body2">Temporary Duration</MudText>
+                            <div class="d-flex flex-row gap-2">
+                                <MudTextField @bind-Value="newDuration" Mask="@(new PatternMask("000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                <MudSelect @bind-Value="newDurationCMB" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                    <MudSelectItem Value="@("Month/s")">Month/s</MudSelectItem>
+                                    <MudSelectItem Value="@("Year/s")">Year/s</MudSelectItem>
+                                </MudSelect>
+                            </div>
+                        }
+                        <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Internal</MudText>
+                            <MudSelect @bind-Value="selectedInternal" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="0">N/A</MudSelectItem>
+                                @foreach (var item in Internals)
+                                {
+                                    <MudSelectItem Value="@item.Id">@item.Internal_Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">External</MudText>
+                            <MudSelect @bind-Value="selectedExternal" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="0">N/A</MudSelectItem>
+                                @foreach (var item in Externals)
+                                {
+                                    <MudSelectItem Value="@item.Id">@item.External_Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
                         <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
                         <div class="d-flex flex-column" style="margin-bottom: 10px;">
                             <div class="flex-grow-1">
@@ -307,11 +388,11 @@
                         </div>
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Other Competencies:</MudText>
-                            <MudTextField @bind-Value="newOtherComp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;"/>
+                            <MudTextField @bind-Value="newOtherComp" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                         </div>
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Restrictions (if there is any)</MudText>
-                            <MudTextField @bind-Value="newRestrict" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;"/>
+                            <MudTextField @bind-Value="newRestrict" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                         </div>
                     }
                 }

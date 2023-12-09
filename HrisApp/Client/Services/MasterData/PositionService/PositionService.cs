@@ -1,4 +1,5 @@
-﻿using HrisApp.Shared.Models.Employee;
+﻿using HrisApp.Shared.Models.Dashboard;
+using HrisApp.Shared.Models.Employee;
 using System.Reflection.Emit;
 
 namespace HrisApp.Client.Services.MasterData.PositionService
@@ -72,7 +73,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         }
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode,int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode)
+        public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, int mpinternal, int mpexternal)
         {
             PositionT newPosition = new()
             {
@@ -87,7 +88,11 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 OtherCompetencies = othercom,
                 Restrictions = restrict,
                 Plantilla = plantilla,
-                VerifyId = verifyCode
+                VerifyId = verifyCode,
+                PositionType = posType,
+                TemporaryDuration = tempDur,
+                PosMPInternalId = mpinternal,
+                PosMPExternalId = mpexternal,
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
@@ -97,7 +102,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 Console.WriteLine("Error: " + errorMessage);
             }
         }
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary,string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, int mpinternal, int mpexternal)
         {
             PositionT newPosition = new()
             {
@@ -113,8 +118,11 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 OtherCompetencies = othercom,
                 Restrictions = restrict,
                 Plantilla = plantilla,
-                VerifyId = verifyCode
-                
+                VerifyId = verifyCode,
+                PositionType = posType,
+                TemporaryDuration = tempDur,
+                PosMPInternalId = mpinternal,
+                PosMPExternalId = mpexternal,
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
@@ -140,6 +148,38 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             {
 
                 Console.WriteLine(ex.Message + "daot ang services");
+            }
+        }
+
+
+
+        //PLANTILLA
+        public List<DailyTotalPlantillaT> DailyTotalPlantillaTs { get; set; }
+        public async Task<int> GetTotalPlantilla()
+        {
+            return await _httpClient.GetFromJsonAsync<int>("api/Position/GetTotalPlantilla");
+        }
+        public async Task CreateTotalPlantilla(int tootal, DateTime date)
+        {
+            DailyTotalPlantillaT obj = new DailyTotalPlantillaT()
+            {
+                TotalPlantilla = tootal,
+                Date = date
+            };
+
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreateTotalPlantilla", obj);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Error: " + errorMessage);
+            }
+        }
+        public async Task GetDbTotalPlantilla()
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<DailyTotalPlantillaT>>("api/Position/GetDbTotalPlantilla");
+            if (result != null)
+            {
+                DailyTotalPlantillaTs = result;
             }
         }
 

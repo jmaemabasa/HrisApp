@@ -68,13 +68,13 @@
                 { x => x.Id, id }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<UpdateInternalDialog>("Update", parameters, options);
         }
 
         private void OpenAddInternal()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddInternalDialog>("New", options);
         }
         #endregion

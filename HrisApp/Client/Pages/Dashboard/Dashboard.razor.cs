@@ -1,11 +1,4 @@
-﻿using ChartJs.Blazor;
-using ChartJs.Blazor.BarChart;
-using ChartJs.Blazor.Common;
-using ChartJs.Blazor.Common.Enums;
-using ChartJs.Blazor.LineChart;
-using ChartJs.Blazor.Util;
-using Microsoft.AspNetCore.Http;
-using System.Data;
+﻿using System.Data;
 using System.Globalization;
 
 namespace HrisApp.Client.Pages.Dashboard
@@ -48,6 +41,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 await DepartmentService.GetDepartment();
                 await DivisionService.GetDivision();
                 await PositionService.GetPosition();
+                await PositionService.GetDbTotalPlantilla();
 
                 allDepartments = DepartmentService.DepartmentTs;
                 allDivisions = DivisionService.DivisionTs;
@@ -89,15 +83,16 @@ namespace HrisApp.Client.Pages.Dashboard
                 departmentArr = await DepartmentService.GetAllDepartmentName();
                 divisionArr = await DivisionService.GetAllDivisionName();
 
-
-
                 FilterEmployee();
                 ConfigureBarConfig();
 
-                dataforline = GetLast15DaysLabels();
+                dataforline = GetLast10DaysLabels();
                 FilterLineEmployeeActual();
                 FilterLineEmployeePlantilla();
                 ConfigureLineConfig();
+
+                ConfigurePieConfig();
+                FilterPieEmployee();
 
             }
             catch (Exception ex)
@@ -125,6 +120,7 @@ namespace HrisApp.Client.Pages.Dashboard
                     Display = false
                 },
                 MaintainAspectRatio = false,
+
             }
         };
         private void ConfigureBarConfig()
@@ -194,7 +190,6 @@ namespace HrisApp.Client.Pages.Dashboard
                         ColorUtil.ColorHexString(143, 235, 191),
                         ColorUtil.ColorHexString(210, 145, 188)
                     },
-               
             };
 
 
@@ -219,7 +214,6 @@ namespace HrisApp.Client.Pages.Dashboard
         }
         #endregion
 
-
         #region LINE CHART 
         public LineConfig _lineconfig = new LineConfig
         {
@@ -233,9 +227,20 @@ namespace HrisApp.Client.Pages.Dashboard
                 },
                 Legend = new Legend
                 {
-                    Display = false
+                    Display = true,
+                    Position = ChartJs.Blazor.Common.Enums.Position.Top
                 },
                 MaintainAspectRatio = false,
+                Tooltips = new Tooltips
+                {
+                    Mode = InteractionMode.Nearest,
+                    Intersect = true
+                },
+                Hover = new Hover
+                {
+                    Mode = InteractionMode.Nearest,
+                    Intersect = true
+                },
             }
         };
 
@@ -250,17 +255,17 @@ namespace HrisApp.Client.Pages.Dashboard
 
             LineDataset<int> dataset = new LineDataset<int>(EmployeeCountActual)
             {
-                Label = "Employee Count",
-                BackgroundColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Red),
-                BorderColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Red),
+                Label = "Employee Headcount",
+                BackgroundColor = "#966c03",
+                BorderColor = "#d19c1b",
                 Fill = FillingMode.Disabled
             };
 
             LineDataset<int> dataset2 = new LineDataset<int>(EmployeeCountPlantilla)
             {
                 Label = "Plantilla",
-                BackgroundColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Blue),
-                BorderColor = ColorUtil.FromDrawingColor(System.Drawing.Color.Blue),
+                BackgroundColor = "#8b5694",
+                BorderColor = "#BB9CC0",
                 Fill = FillingMode.Disabled
             };
 
@@ -290,45 +295,100 @@ namespace HrisApp.Client.Pages.Dashboard
         {
             List<int> empCountPlantilla = new List<int>();
 
-            int totalPlantilla = 0;
-
-            foreach (var item in allPositions)
-            {
-                totalPlantilla += item.Plantilla;
-            }
-
-
-
             foreach (var item in dataforline)
             {
-                empCountPlantilla.Add(totalPlantilla);
+                string format = "yyyy-MM-dd";
+                DateTime dateTime = DateTime.ParseExact(item, format, CultureInfo.InvariantCulture);
 
+                // Find the total plantilla count for the specified date
+                var dailyTotal = PositionService.DailyTotalPlantillaTs
+                    .Where(s => s.Date <= dateTime)
+                    .OrderByDescending(s => s.Date)
+                    .FirstOrDefault()?.TotalPlantilla ?? 0;
+
+                Console.WriteLine(dailyTotal);
+                empCountPlantilla.Add(dailyTotal);
             }
+
             EmployeeCountPlantilla = empCountPlantilla.ToArray();
         }
 
         private List<string> dataforline = new List<string>();
-        private List<string> GetLast15DaysLabels()
+        private List<string> GetLast10DaysLabels()
         {
             List<string> labels = new List<string>();
 
-            // Get the current date
             DateTime currentDate = DateTime.Now;
 
-            // Loop through the last 15 days
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 10; i++)
             {
-                // Add the formatted date to the labels list
                 labels.Add(currentDate.ToString("yyyy-MM-dd"));
-
-                // Move to the previous day
                 currentDate = currentDate.AddDays(-1);
             }
-
-            // Reverse the list to have the dates in chronological order
             labels.Reverse();
-
             return labels;
+        }
+        #endregion
+
+        #region PIE CHART
+        public PieConfig _configPie = new PieConfig
+        {
+            Options = new PieOptions
+            {
+                Responsive = true,
+                Title = new OptionsTitle
+                {
+                    Display = false,
+                    Text = "Employee Count by Division",
+                },
+                Legend = new Legend
+                {
+                    Display = true,
+                    Position = ChartJs.Blazor.Common.Enums.Position.Right
+                },
+                MaintainAspectRatio = false,
+            }
+        };
+
+        private void ConfigurePieConfig()
+        {
+            foreach (string _item in divisionArr)
+            {
+                _configPie.Data.Labels.Add(_item);
+            }
+
+            int countcolor = 24;
+
+            PieDataset<int> dataset = new PieDataset<int>(EmployeeCountPerDivision)
+            {
+                BackgroundColor = new[]
+                    {
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
+                    },
+            };
+
+            _configPie.Data.Datasets.Add(dataset);
+        }
+
+        private void FilterPieEmployee()
+        {
+            List<int> empCountperDiv = new List<int>();
+
+            foreach (var item in allDivisions)
+            {
+                var countEmployee = EmployeeService.EmployeeTs.Where(s => s.DivisionId == item.Id).Count();
+                empCountperDiv.Add(countEmployee);
+            }
+
+            EmployeeCountPerDivision = empCountperDiv.ToArray();
         }
         #endregion
 

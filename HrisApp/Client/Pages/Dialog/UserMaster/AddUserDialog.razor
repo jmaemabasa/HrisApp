@@ -35,25 +35,24 @@
             </div>
             <div class="flex-grow-1 mb-2">
                 <MudText Typo="Typo.body2">Department</MudText>
-                 @if (divvar != 0)
+                @if (divvar != 0)
                 {
                     <MudSelect @bind-Value="deptvar" Variant="Variant.Outlined" Margin="Margin.Dense">
-                        <MudSelectItem Value=0 
-                        Disabled
-                         >---Select Department---</MudSelectItem>
+                        <MudSelectItem Value=0
+                                                      Disabled>---Select Department---</MudSelectItem>
 
-                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == divvar))
+                    @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == divvar))
                         {
                             <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                         }
-                    
+
                     </MudSelect>
                 }
                 else
                 {
                     <MudSelect @bind-Value="deptvar" Disabled Variant="Variant.Outlined" Margin="Margin.Dense">
-                        <MudSelectItem Value=0 Disabled>---Select Department---</MudSelectItem>
-                    </MudSelect>
+                    <MudSelectItem Value=0 Disabled>---Select Department---</MudSelectItem>
+                </MudSelect>
                 }
             </div>
             <div class="flex-grow-1 mb-2">
@@ -61,11 +60,10 @@
                 @if (divvar != 0 && deptvar != 0)
                 {
                     <MudSelect Class="" @bind-Value="reg.EmployeeId" Variant="Variant.Outlined" Margin="Margin.Dense">
-                        <MudSelectItem Value="0"   
-                        Disabled
-                         >---Select Employee---</MudSelectItem>
+                        <MudSelectItem Value="0"
+                                                      Disabled>---Select Employee---</MudSelectItem>
 
-                         @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar))
+                    @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar && d.StatusId == 1))
                         {
                             <MudSelectItem Value="@emp.Id">@emp.FirstName @emp.LastName</MudSelectItem>
                         }
@@ -84,7 +82,7 @@
                     <MudSelectItem Value="@roleholder" Disabled>---Select Role---</MudSelectItem>
                     @foreach (var roles in UserRolesL)
                     {
-                        <MudSelectItem Value="@roles.RoleCode">@roles.Name</MudSelectItem>
+                        <MudSelectItem Value="@roles.Name">@roles.Name</MudSelectItem>
                     }
                 </MudSelect>
             </div>
@@ -93,11 +91,12 @@
                 @if (readonlyvar)
                 {
                     <MudTextField T="string" Value="@GetFormattedUsername()" ReadOnly="@readonlyvar" Variant="Variant.Outlined" Margin="Margin.Dense" />
-                }else
+                }
+                else
                 {
                     <MudTextField @bind-Value="reg.Username" Immediate="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
                 }
-                
+
             </div>
         </div>
         <div class="d-flex flex-column flex-grow-1">
@@ -182,11 +181,21 @@
 
     async Task HandleRegistration()
     {
-        if (string.IsNullOrWhiteSpace(reg.Role))
+        if (divvar == 0)
         {
             showAlert = true;
-            message = "Please select a Role.";
+            message = "Please select Division.";
             _severity = Severity.Error;
+            _processing = false;
+            readonlyvar = false;
+        }
+        else if (deptvar == 0)
+        {
+            showAlert = true;
+            message = "Please select Department.";
+            _severity = Severity.Error;
+            _processing = false;
+            readonlyvar = false;
         }
         else if (reg.EmployeeId == 0)
         {
@@ -195,6 +204,18 @@
             _severity = Severity.Error;
             _processing = false;
             readonlyvar = false;
+        }
+        else if (string.IsNullOrWhiteSpace(reg.Role))
+        {
+            showAlert = true;
+            message = "Please select a Role.";
+            _severity = Severity.Error;
+        }
+        else if (string.IsNullOrWhiteSpace(reg.Username))
+        {
+            showAlert = true;
+            message = "Please enter Username.";
+            _severity = Severity.Error;
         }
         else
         {
@@ -221,10 +242,9 @@
                     reg.Password = "p@ssw0rd";
                     reg.LoginStatus = "Inactive";
                     var result = await AuthService.Register(reg);
-                    _toastService.ShowSuccess(reg.Username + " Registered Successfully!");
+                    _toastService.ShowSuccess("Registered Successfully!");
 
                     _processing = false;
-                   
 
                     // Update the List using the StateService
                     await AuthService.GetUsers();

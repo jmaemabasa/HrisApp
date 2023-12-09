@@ -64,7 +64,7 @@
 
         private void OpenAddDepartment()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddDepartmentDialog>("New Department", options);
         }
 
@@ -75,7 +75,7 @@
                 { x => x.Id, id }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<UpdateDepartmentDialog>("Update Department", parameters, options);
         }
         #endregion

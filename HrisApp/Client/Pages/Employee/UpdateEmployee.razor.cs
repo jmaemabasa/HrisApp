@@ -14,6 +14,7 @@ namespace HrisApp.Client.Pages.Employee
         EmployeeT employee = new();
         Emp_AddressT _address = new();
         Emp_PayrollT _payroll = new();
+        PositionT _position = new();
         //EmpPictureT _empPicture = new();
         Emp_EmploymentDateT _employmentDate = new();
         Emp_PosHistoryT _updateposHistory = new();
@@ -30,6 +31,8 @@ namespace HrisApp.Client.Pages.Employee
         private List<DepartmentT> DepartmentsL = new();
         //private List<SectionT> SectionsL = new();
         private List<PositionT> PositionsL = new();
+        private List<PosMPExternalT> ExternalsL = new();
+        private List<PosMPInternalT> InternalsL = new();
 
         private List<GenderT> GendersL = new();
         private List<CivilStatusT> CivilStatusL = new();
@@ -88,6 +91,7 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         string VerifyCode;
+        private string Manpower = "";
 
         private string ImageData { get; set; }
         private List<string> PDFDataList = new();
@@ -124,6 +128,10 @@ namespace HrisApp.Client.Pages.Employee
             CashbondL = StaticService.CashBondTs;
             await StaticService.GetRestDay();
             RestDayL = StaticService.RestDayTs;
+            await ManpowerService.GetExternal();
+            ExternalsL = ManpowerService.PosMPExternalTs;
+            await ManpowerService.GetInternal();
+            InternalsL = ManpowerService.PosMPInternalTs;
         }
 
         protected override async Task OnParametersSetAsync()
@@ -131,6 +139,7 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee(id);
             _address = await AddressService.GetSingleAddress(id);
             _payroll = await PayrollService.GetSinglePayroll(id);
+            _position = await PositionService.GetSinglePosition(employee.PositionId);
 
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(id);
 
@@ -152,6 +161,62 @@ namespace HrisApp.Client.Pages.Employee
 
             bday = employee.Birthdate;
             DateHired = employee.DateHired;
+
+            if (_position.PosMPExternalId != 0 && _position.PosMPInternalId != 0)
+            {
+                Console.WriteLine("test if 1");
+                foreach (var item in InternalsL)
+                {
+                    if (item.Id == _position.PosMPInternalId)
+                    {
+                        Manpower = item.Internal_Name;
+                        Console.WriteLine("test 1");
+                    }
+                }
+
+                foreach (var item in ExternalsL)
+                {
+                    if (item.Id == _position.PosMPExternalId)
+                    {
+                        Manpower = Manpower + ", " + item.External_Name;
+                        Console.WriteLine("test 2");
+                    }
+                }
+            }
+            else if (_position.PosMPExternalId != 0 && _position.PosMPInternalId == 0)
+            {
+                Console.WriteLine("test if 2");
+
+                foreach (var item in ExternalsL)
+                {
+                    if (item.Id == _position.PosMPExternalId)
+                    {
+                        Manpower = item.External_Name;
+                        Console.WriteLine("test 3");
+                    }
+                }
+            }
+            else if (_position.PosMPExternalId == 0 && _position.PosMPInternalId != 0)
+            {
+                Console.WriteLine("test if 3");
+                foreach (var item in InternalsL)
+                {
+                    Console.WriteLine("id " + item.Id + "pos id " + _position.PosMPInternalId);
+
+                    if (item.Id == _position.PosMPInternalId)
+                    {
+                        Manpower = item.Internal_Name;
+                        Console.WriteLine("test 4");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("test if 4");
+
+                Manpower = "No Information.";
+                Console.WriteLine("test 5");
+            }
         }
 
         protected async Task SaveUpdateEmployee()
@@ -287,7 +352,7 @@ namespace HrisApp.Client.Pages.Employee
                     empHistory.NewPositionId = employee.PositionId;
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
-                    
+
                     var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
                     StateService.SetState("HistoryPosList", newList);
                 }

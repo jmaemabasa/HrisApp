@@ -41,7 +41,7 @@
 
         private void OpenAddSection()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddSectionDialog>("New Section", options);
         }
 
@@ -52,7 +52,7 @@
                 { x => x.Id, id }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<UpdateSectionDialog>("Update Section", parameters, options);
         }
 

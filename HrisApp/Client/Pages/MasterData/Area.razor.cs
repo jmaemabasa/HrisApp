@@ -56,13 +56,13 @@
             var parameters = new DialogParameters<UpdateAreaDialog>();
             parameters.Add(x => x.Id, id);
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<UpdateAreaDialog>("Update Area", parameters, options);
         }
 
         private void OpenAddArea()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddAreaDialog>("New Area", options);
         }
         #endregion

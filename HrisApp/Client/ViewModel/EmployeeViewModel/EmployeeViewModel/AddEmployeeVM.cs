@@ -187,7 +187,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public string userRole;
 
-        
+
 
         public string slectClasssRT = "frmselect";
         public string slectClasssCB = "frmselect";
@@ -274,7 +274,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
                     //CREATE EMP EVAL
-                    var generateEval = await ForEvalService.GenerateStatus(verifyId, employee.DateHired, "Pending");
+                    var generateEval = await ForEvalService.GenerateStatus(verifyCode, employee.DateHired, "Pending");
                     var saveeval = await ForEvalService.CreateForEval(generateEval);
 
                     //CREATE FILES AND IMAGE
@@ -638,7 +638,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string _txfieldClasssEA = "txf1";
         public string _txfieldClasssEMN = "txf";
 
-        
+
         #endregion
 
         #region EDUCATION

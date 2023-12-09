@@ -40,7 +40,7 @@
             }
         }
 
-        
+
         public void CloseMe()
         {
             _showAlert = false;
@@ -72,7 +72,10 @@
                         //var iduser = GlobalConfigService.Fullname;
                         var iduser = Convert.ToInt32(result.Message);
                         await AuditlogService.CreateLog(iduser, "LOGGED IN", "Site", DateTime.Now);
-                        Console.WriteLine(iduser.ToString());
+
+
+                        int totalPlantilla = await PositionService.GetTotalPlantilla();
+                        await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
                         NavigationManager.NavigateTo("/dashboard");
                         _toastService.ShowSuccess("Successfully Login.");

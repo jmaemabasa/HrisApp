@@ -84,22 +84,10 @@
         </MudCard>
     </MudItem>
 
-    <MudItem xs="12" sm="9">
+    <MudItem xs="12" sm="8">
         <MudCard Class="bargraph">
             <MudCardContent Style="">
-                <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Count by Division</span>
-                <div class="divbarchart" style="margin-top: 10px">
-                    <Chart Config="_config"></Chart>
-                </div>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-    
-
-    <MudItem xs="12" sm="12">
-        <MudCard Class="bdaypanel">
-            <MudCardContent>
-                <span style="color: #424242;font-size: 16px;font-weight: bold;"></span>
+                <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Headcount vs Plantilla</span>
                 <div class="divbarchart" style="margin-top: 10px">
                     <Chart Config="_lineconfig"></Chart>
                 </div>
@@ -107,6 +95,14 @@
         </MudCard>
     </MudItem>
 
-    
-
+    <MudItem xs="12" sm="4">
+        <MudCard Class="bargraph">
+            <MudCardContent Style="">
+                <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Count by Division</span>
+                <div class="divbarchart" style="margin-top: 10px">
+                    <Chart Config="_configPie"></Chart>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 </MudGrid>

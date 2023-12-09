@@ -10,6 +10,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         public int Id { get; set; }
 
         private List<AreaT> Areas = new();
+        private List<PosMPInternalT> Internals = new();
+        private List<PosMPExternalT> Externals = new();
         public List<PositionTechSkillT> listOfTechSkills = new();
         public List<PositionKnowledgeT> listOfKnowledge = new();
         public List<PositionComAppT> listOfComApp = new();
@@ -21,12 +23,23 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private string newWorkExp;
         private string newEduc;
 
+        private string newPosTypeHolder = "";
+        private string newDurationCMB = "Month/s";
+
+
         private PositionT position = new();
         void Cancel() => MudDialog.Cancel();
         protected override async Task OnInitializedAsync()
         {
             await AreaService.GetArea();
             Areas = AreaService.AreaTs;
+
+            await ManpowerService.GetExternal();
+            Externals = ManpowerService.PosMPExternalTs;
+
+            await ManpowerService.GetInternal();
+            Internals = ManpowerService.PosMPInternalTs;
+
         }
 
         protected override async Task OnParametersSetAsync()
@@ -69,6 +82,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
                 if (confirmResult.IsConfirmed)
                 {
+                    if (position.PositionType == "Temporary")
+                    {
+                        position.TemporaryDuration = position.TemporaryDuration + " " + newDurationCMB;
+
+                    }
+
                     await PositionService.UpdatePosition(position);
                     await SaveNewTechSkills(position.PosCode);
                     await SaveNewKnowledge(position.PosCode);
@@ -110,7 +129,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             foreach (var pays in listApi)
             {
                 var P = listtechskills.Where(p => p.VerifyId == pays.VerifyId).Count();
-                
+
                 if (P == 0)
                 {
                     await PositionService.DeleteTechSkills(pays.VerifyId);
@@ -209,7 +228,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newKnowledge))
                 listOfKnowledge.Add(new PositionKnowledgeT { PosCode = code, KnowName = newSkill, VerifyId = verifyCode });
-                newKnowledge = "";
+            newKnowledge = "";
             //Console.WriteLine(verifyCode);
         }
         public void CloseKnowledge(MudChip chip)
@@ -278,7 +297,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newComApp))
                 listOfComApp.Add(new PositionComAppT { PosCode = code, ComName = newSkill, VerifyId = verifyCode });
-                newComApp = "";
+            newComApp = "";
             //Console.WriteLine(verifyCode);
         }
         public void CloseComApp(MudChip chip)
@@ -347,7 +366,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
             if (!string.IsNullOrEmpty(newWorkExp))
                 listOfWorkExp.Add(new PositionWorkExpT { PosCode = code, ExpName = newSkill, VerifyId = verifyCode });
-                newWorkExp = "";
+            newWorkExp = "";
             //Console.WriteLine(verifyCode);
         }
         public void CloseWorkExp(MudChip chip)

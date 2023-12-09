@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HrisApp.Shared.Models.Dashboard;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.MasterData
@@ -106,15 +107,78 @@ namespace HrisApp.Server.Controllers.MasterData
 
             dbpos.Name = pos.Name;
             dbpos.JobSummary = pos.JobSummary;
-            dbpos.PosEducation = pos.PosEducation;
-            dbpos.WorkExperience = pos.WorkExperience;
             dbpos.OtherCompetencies = pos.OtherCompetencies;
             dbpos.Restrictions = pos.Restrictions;
             dbpos.Plantilla = pos.Plantilla;
+            dbpos.PositionType = pos.PositionType;
+            dbpos.TemporaryDuration = pos.TemporaryDuration;
+            dbpos.PosMPExternalId = pos.PosMPExternalId;
+            dbpos.PosMPInternalId = pos.PosMPInternalId;
 
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBPosition());
+        }
+
+        //PLANTILLA
+        [HttpGet("GetTotalPlantilla")]
+        public async Task<ActionResult<int>> GetTotalPlantilla()
+        {
+            var totalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla);
+            return Ok(totalPlantilla);
+        }
+        [HttpPost("CreateTotalPlantilla")]
+        public async Task<ActionResult<DailyTotalPlantillaT>> CreateTotalPlantilla(DailyTotalPlantillaT obj)
+        {
+            DateTime today = DateTime.Today;
+
+            // Check if a record already exists for today
+            var existingRecord = await _context.DailyTotalPlantillaT
+                .FirstOrDefaultAsync(d => d.Date == today);
+
+            if (existingRecord != null)
+            {
+                // If a record already exists, return conflict or handle it based on your requirements
+                //return Conflict("Total plantilla record for today already exists.");
+                return NoContent();
+            }
+
+            // Create a new record for today
+            DailyTotalPlantillaT newRecord = new DailyTotalPlantillaT
+            {
+                Date = today,
+                TotalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla)
+            };
+
+            _context.DailyTotalPlantillaT.Add(newRecord);
+            await _context.SaveChangesAsync();
+
+            return Ok(newRecord);
+        }
+        [HttpGet("GetDbTotalPlantilla")]
+        public async Task<ActionResult<List<DailyTotalPlantillaT>>> GetDbTotalPlantilla()
+        {
+            // Define the cutoff date (11 days ago from today)
+            DateTime cutoffDate = DateTime.Today.AddDays(-11);
+
+            // Get records from the database
+            var pos = await _context.DailyTotalPlantillaT
+                .Where(d => d.Date >= cutoffDate)
+                .ToListAsync();
+
+            // Delete records older than 11 days
+            var recordsToDelete = await _context.DailyTotalPlantillaT
+                .Where(d => d.Date < cutoffDate)
+                .ToListAsync();
+
+            foreach (var record in recordsToDelete)
+            {
+                _context.DailyTotalPlantillaT.Remove(record);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(pos);
         }
 
         //SKILLS

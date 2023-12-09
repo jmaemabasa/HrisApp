@@ -55,11 +55,21 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         [HttpPost("CreateForEval")]
         public async Task<ActionResult<List<Emp_EvaluationT>>> CreateForEval(Emp_EvaluationT eval)
         {
+            // Delete rows where eval status is "done"
+            var evaluationsToDelete = _context.Emp_EvaluationT
+                .Where(e => e.EvalStatus == "done")
+                .ToList();
+
+            _context.Emp_EvaluationT.RemoveRange(evaluationsToDelete);
+
+            // Add the new evaluation
             _context.Emp_EvaluationT.Add(eval);
+
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBEval());
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Emp_EvaluationT>>> UpdateForEval(Emp_EvaluationT emphistory, int id)
