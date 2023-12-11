@@ -84,7 +84,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 {
                     if (position.PositionType == "Temporary")
                     {
-                        position.TemporaryDuration = position.TemporaryDuration + " " + newDurationCMB;
+                        position.TemporaryDuration = position.TemporaryDuration + " Month/s";
 
                     }
 

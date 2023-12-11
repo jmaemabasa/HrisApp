@@ -109,15 +109,13 @@
                         @if (newPosType == "Temporary")
                         {
                             <MudText Typo="Typo.body2">Temporary Duration</MudText>
-                            <div class="d-flex flex-row gap-2">
+                            <div class="d-flex flex-row gap-2 align-items-center">
                                 <MudTextField @bind-Value="newDuration" Mask="@(new PatternMask("000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                <MudSelect @bind-Value="newDurationCMB" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
-                                    <MudSelectItem Value="@("Month/s")">Month/s</MudSelectItem>
-                                    <MudSelectItem Value="@("Year/s")">Year/s</MudSelectItem>
-                                </MudSelect>
+                                <MudText Typo="Typo.body2">Month/s</MudText>
                             </div>
                         }
-                        <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
+                        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+                        <span style="font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Internal</MudText>
                             <MudSelect @bind-Value="selectedInternal" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
@@ -138,7 +136,8 @@
                                 }
                             </MudSelect>
                         </div>
-                        <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
+                        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+                        <span style="font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
                         <div class="d-flex flex-column" style="margin-bottom: 10px;">
                             <div class="flex-grow-1">
                                 <MudText Typo="Typo.body2">Education</MudText>
@@ -151,7 +150,7 @@
                                 <MudChipSet AllClosable="true" OnClose="CloseEduc">
                                     @foreach (var item in listOfEduc)
                                     {
-                                        <MudChip Color="Color.Tertiary" Text="@item.EducName"></MudChip>
+                                        <MudChip Style="color: #fafaf5; background-color: #424242;" Text="@item.EducName"></MudChip>
                                     }
                                 </MudChipSet>
                             </div>
@@ -168,7 +167,7 @@
                                 <MudChipSet AllClosable="true" OnClose="CloseWorkExp">
                                     @foreach (var item in listOfWorkExp)
                                     {
-                                        <MudChip Color="Color.Tertiary" Text="@item.ExpName"></MudChip>
+                                        <MudChip Style="color: #fafaf5; background-color: #424242;" Text="@item.ExpName"></MudChip>
                                     }
                                 </MudChipSet>
                             </div>
@@ -270,19 +269,17 @@
                         @if (newPosType == "Temporary")
                         {
                             <MudText Typo="Typo.body2">Temporary Duration</MudText>
-                            <div class="d-flex flex-row gap-2">
+                            <div class="d-flex flex-row gap-2 align-items-center">
                                 <MudTextField @bind-Value="newDuration" Mask="@(new PatternMask("000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                <MudSelect @bind-Value="newDurationCMB" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
-                                    <MudSelectItem Value="@("Month/s")">Month/s</MudSelectItem>
-                                    <MudSelectItem Value="@("Year/s")">Year/s</MudSelectItem>
-                                </MudSelect>
+                                <MudText Typo="Typo.body2">Month/s</MudText>
                             </div>
                         }
-                        <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
+                        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+                        <span style="font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Internal</MudText>
                             <MudSelect @bind-Value="selectedInternal" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
-                                <MudSelectItem Disabled="true" Value="0">N/A</MudSelectItem>
+                                <MudSelectItem Value="0">N/A</MudSelectItem>
                                 @foreach (var item in Internals)
                                 {
                                     <MudSelectItem Value="@item.Id">@item.Internal_Name</MudSelectItem>
@@ -292,14 +289,15 @@
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">External</MudText>
                             <MudSelect @bind-Value="selectedExternal" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
-                                <MudSelectItem Disabled="true" Value="0">N/A</MudSelectItem>
+                                <MudSelectItem Value="0">N/A</MudSelectItem>
                                 @foreach (var item in Externals)
                                 {
                                     <MudSelectItem Value="@item.Id">@item.External_Name</MudSelectItem>
                                 }
                             </MudSelect>
                         </div>
-                        <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
+                        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+                        <span style="font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
                         <div class="d-flex flex-column" style="margin-bottom: 10px;">
                             <div class="flex-grow-1">
                                 <MudText Typo="Typo.body2">Education</MudText>
@@ -312,7 +310,7 @@
                                 <MudChipSet AllClosable="true" OnClose="CloseEduc">
                                     @foreach (var item in listOfEduc)
                                     {
-                                        <MudChip Color="Color.Tertiary" Text="@item.EducName"></MudChip>
+                                        <MudChip Style="color: #fafaf5; background-color: #424242;" Text="@item.EducName"></MudChip>
                                     }
                                 </MudChipSet>
                             </div>
@@ -329,7 +327,7 @@
                                 <MudChipSet AllClosable="true" OnClose="CloseComApp">
                                     @foreach (var item in listOfWorkExp)
                                     {
-                                        <MudChip Color="Color.Tertiary" Text="@item.ExpName"></MudChip>
+                                        <MudChip Style="color: #fafaf5; background-color: #424242;" Text="@item.ExpName"></MudChip>
                                     }
                                 </MudChipSet>
                             </div>

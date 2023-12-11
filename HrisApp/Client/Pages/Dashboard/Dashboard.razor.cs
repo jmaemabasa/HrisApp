@@ -1,4 +1,4 @@
-﻿using MudBlazor;
+﻿using ChartJs.Blazor.Common.Axes.Ticks;
 using System.Data;
 using System.Globalization;
 
@@ -23,8 +23,6 @@ namespace HrisApp.Client.Pages.Dashboard
 
         public List<string> departmentArr = new List<string>();
         public List<string> divisionArr = new List<string>();
-
-        private System.Drawing.Color[] colorsrand;
 
         private int[] EmployeeCountPerDivision;
         private int[] EmployeeCountActual;
@@ -235,12 +233,36 @@ namespace HrisApp.Client.Pages.Dashboard
                 Tooltips = new Tooltips
                 {
                     Mode = InteractionMode.Nearest,
-                    Intersect = true
+                    Intersect = false
                 },
                 Hover = new Hover
                 {
                     Mode = InteractionMode.Nearest,
-                    Intersect = true
+                    Intersect = false
+                },
+                Scales = new Scales
+                {
+                    XAxes = new List<CartesianAxis>
+                    {
+                        new CategoryAxis
+                        {
+                            ScaleLabel = new ScaleLabel
+                            {
+                                LabelString = "Last 10 Days",
+                                Display = true,
+                            },
+                        }
+                    },
+                    YAxes = new List<CartesianAxis>
+                    {
+                        new LinearCartesianAxis
+                        {
+                            Ticks = new LinearCartesianTicks
+                            {
+                                BeginAtZero = true,
+                            }
+                        }
+                    }
                 },
             }
         };
@@ -249,10 +271,22 @@ namespace HrisApp.Client.Pages.Dashboard
         {
             foreach (var item in dataforline)
             {
-                _lineconfig.Data.Labels.Add(item);
+                if (DateTime.TryParse(item, out DateTime date))
+                {
+                    if (item == DateTime.Today.ToString("yyyy-MM-dd"))
+                    {
+                        _lineconfig.Data.Labels.Add("Today");
+
+                    }
+                    else
+                    {
+                        _lineconfig.Data.Labels.Add(date.ToString("MMM dd"));
+                    }
+                }
             }
 
-            int countcolor = 24;
+            Random rd = new Random();
+            var color = String.Format("#{0:X6}", rd.Next(0x1000000));
 
             LineDataset<int> dataset = new LineDataset<int>(EmployeeCountActual)
             {
@@ -306,7 +340,6 @@ namespace HrisApp.Client.Pages.Dashboard
                     .OrderByDescending(s => s.Date)
                     .FirstOrDefault()?.TotalPlantilla ?? 0;
 
-                Console.WriteLine(dailyTotal);
                 empCountPlantilla.Add(dailyTotal);
             }
 
@@ -357,12 +390,12 @@ namespace HrisApp.Client.Pages.Dashboard
                 _configPie.Data.Labels.Add(_item);
             }
 
-            int countcolor = 24;
-
             PieDataset<int> dataset = new PieDataset<int>(EmployeeCountPerDivision)
             {
                 BackgroundColor = new[]
                     {
+                        ColorUtil.RandomColorString(),
+                        ColorUtil.RandomColorString(),
                         ColorUtil.RandomColorString(),
                         ColorUtil.RandomColorString(),
                         ColorUtil.RandomColorString(),

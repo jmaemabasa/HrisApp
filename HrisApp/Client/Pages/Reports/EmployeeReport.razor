@@ -131,7 +131,7 @@
                          Status
                      </MudTableSortLabel>
                  </MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                 @* <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh> *@
              </HeaderContent>
              <RowTemplate>
              <MudTd DataLabel="Full Name">
@@ -173,8 +173,8 @@
                  <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
                  <MudTd DataLabel="Status" Style="text-align: center;">
                      <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
-             </MudTd>
-                 <MudTd>
+                </MudTd>
+                @*<MudTd>
                      <AuthorizeView Roles="HR, System Administrator">
                          <Authorized>
                              <MudTooltip Text="View Details">
@@ -185,7 +185,7 @@
                             <MudIconButton Disabled Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
                          </NotAuthorized>
                      </AuthorizeView>
-                 </MudTd>
+                 </MudTd> *@
              </RowTemplate>
              <PagerContent>
                  <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />

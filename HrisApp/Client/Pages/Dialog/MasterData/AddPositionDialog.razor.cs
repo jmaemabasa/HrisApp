@@ -133,7 +133,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 }
                 else
                 {
-                    newDuration = newDuration + " " + newDurationCMB;
+                    newDuration = newDuration + " Month/s";
                 }
 
                 // Create a position in the section
@@ -152,7 +152,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 }
                 else
                 {
-                    newDuration = newDuration + " " + newDurationCMB;
+                    newDuration = newDuration + " Month/s";
                 }
 
                 // Create a position in the department

@@ -138,8 +138,17 @@ namespace HrisApp.Server.Controllers.MasterData
 
             if (existingRecord != null)
             {
-                // If a record already exists, return conflict or handle it based on your requirements
                 //return Conflict("Total plantilla record for today already exists.");
+                // Check if the new total plantilla is different from the existing one
+                int newTotalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla);
+
+                if (existingRecord.TotalPlantilla != newTotalPlantilla)
+                {
+                    // Update the existing record with the new total plantilla
+                    existingRecord.TotalPlantilla = newTotalPlantilla;
+                    await _context.SaveChangesAsync();
+                    return Ok(existingRecord);
+                }
                 return NoContent();
             }
 

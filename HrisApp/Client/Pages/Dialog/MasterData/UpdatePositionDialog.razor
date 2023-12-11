@@ -43,14 +43,12 @@
         @if (position.PositionType == "Temporary")
         {
             <MudText Typo="Typo.body2">Temporary Duration</MudText>
-            <div class="d-flex flex-row gap-2">
+            <div class="d-flex flex-row gap-2 align-items-center">
                 <MudTextField @bind-Value="position.TemporaryDuration" Mask="@(new PatternMask("000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                <MudSelect @bind-Value="newDurationCMB" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
-                    <MudSelectItem Value="@("Month/s")">Month/s</MudSelectItem>
-                    <MudSelectItem Value="@("Year/s")">Year/s</MudSelectItem>
-                </MudSelect>
+                <MudText Typo="Typo.body2">Month/s</MudText>
             </div>
         }
+        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
         <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
         <div class="flex-grow-1">
             <MudText Typo="Typo.body2">Internal</MudText>
@@ -72,6 +70,7 @@
                 }
             </MudSelect>
         </div>
+        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
         <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>
         <div class="d-flex flex-column" style="margin-bottom: 10px;">
             <div class="flex-grow-1">
