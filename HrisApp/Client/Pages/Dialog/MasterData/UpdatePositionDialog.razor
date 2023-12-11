@@ -8,6 +8,7 @@
 @inject IAuditlogService AuditlogService
 @inject StateService StateService
 @inject IManpowerService ManpowerService
+@inject IDialogService _dialogService
 
 <MudDialog>
     <DialogContent>
@@ -50,25 +51,26 @@
         }
         <MudDivider DividerType="DividerType.Middle" Class="my-6" />
         <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
-        <div class="flex-grow-1">
-            <MudText Typo="Typo.body2">Internal</MudText>
-            <MudSelect @bind-Value="position.PosMPInternalId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
-                <MudSelectItem Value="0">N/A</MudSelectItem>
-                @foreach (var item in Internals)
-                {
-                    <MudSelectItem Value="@item.Id">@item.Internal_Name</MudSelectItem>
-                }
-            </MudSelect>
+        <div class="flex-grow-1 d-flex justify-content-center">
+            <div class="col6">
+                <MudRadioGroup @bind-SelectedOption="position.Manpower">
+                    <MudRadio Option="@("Internal")" Color="Color.Secondary">Internal</MudRadio>
+                    <MudRadio Option="@("External")" Color="Color.Secondary">External</MudRadio>
+                </MudRadioGroup>
+            </div>
         </div>
         <div class="flex-grow-1">
-            <MudText Typo="Typo.body2">External</MudText>
-            <MudSelect @bind-Value="position.PosMPExternalId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
-                <MudSelectItem Value="0">N/A</MudSelectItem>
-                @foreach (var item in Externals)
-                {
-                    <MudSelectItem Value="@item.Id">@item.External_Name</MudSelectItem>
-                }
-            </MudSelect>
+            @if (position.Manpower == "External")
+            {
+                <MudText Typo="Typo.body2">External Source</MudText>
+                <MudSelect @bind-Value="position.PosMPExternalId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                    <MudSelectItem Value="0">N/A</MudSelectItem>
+                    @foreach (var item in Externals)
+                    {
+                        <MudSelectItem Value="@item.Id">@item.External_Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
         </div>
         <MudDivider DividerType="DividerType.Middle" Class="my-6" />
         <span style="margin-bottom: 5px; font-size: 16px; color: #E38D0F"><b>Qualication Requirements</b></span>

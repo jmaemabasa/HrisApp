@@ -10,6 +10,31 @@ namespace HrisApp.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "App_AddressT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentAdd = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentBrgy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentProvince = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentCountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentAdd = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentBrgy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentProvince = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PermanentZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentCountry = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_App_AddressT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "App_ChildrenT",
                 columns: table => new
                 {
@@ -153,8 +178,8 @@ namespace HrisApp.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     App_VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    App_DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    App_DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    App_DateFrom = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    App_DateTo = table.Column<DateTime>(type: "datetime2", nullable: true),
                     App_CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_BasicSalary = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -267,6 +292,20 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CivilStatusT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DailyTotalPlantillaT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TotalPlantilla = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DailyTotalPlantillaT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -395,6 +434,29 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Emp_EvaluationT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval1Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval2Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval3Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval4Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval5Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Eval6Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EvalStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateHired = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateEvaluate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TimesEvaluate = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emp_EvaluationT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Emp_LicenseT",
                 columns: table => new
                 {
@@ -449,6 +511,28 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Emp_PosHistoryT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    NewAreaId = table.Column<int>(type: "int", nullable: false),
+                    NewDivisionId = table.Column<int>(type: "int", nullable: false),
+                    NewDepartmentId = table.Column<int>(type: "int", nullable: false),
+                    NewSectionId = table.Column<int>(type: "int", nullable: false),
+                    NewPositionId = table.Column<int>(type: "int", nullable: false),
+                    DateStarted = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateEnded = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emp_PosHistoryT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Emp_PrimaryT",
                 columns: table => new
                 {
@@ -463,6 +547,25 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Emp_PrimaryT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Emp_ProfBackgroundT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BasicSalary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RSLeaving = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emp_ProfBackgroundT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -555,6 +658,51 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PositionComAppT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ComName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PositionComAppT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PositionEducT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EducName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PositionEducT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PositionKnowledgeT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KnowName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PositionKnowledgeT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PositionT",
                 columns: table => new
                 {
@@ -562,14 +710,83 @@ namespace HrisApp.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DivisionId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     SectionId = table.Column<int>(type: "int", nullable: false),
-                    Plantilla = table.Column<int>(type: "int", nullable: false)
+                    AreaId = table.Column<int>(type: "int", nullable: false),
+                    JobSummary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PosEducation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WorkExperience = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OtherCompetencies = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Restrictions = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Plantilla = table.Column<int>(type: "int", nullable: false),
+                    PositionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TemporaryDuration = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Manpower = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PosMPExternalId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PositionT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PositionTechSkillT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SkillName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PositionTechSkillT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PositionWorkExpT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PositionWorkExpT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PosMPExternalT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    External_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    External_VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PosMPExternalT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PosMPInternalT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Internal_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Internal_VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PosMPInternalT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -743,14 +960,16 @@ namespace HrisApp.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     App_VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    App_PosApplied = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    App_PosApplied1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    App_PosApplied2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_PresSalary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    App_ExpSalary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    App_SourceApp = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_Suffix = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    App_ContactNo1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    App_ContactNo2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    App_ContactNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
                     App_Age = table.Column<int>(type: "int", nullable: false),
@@ -889,8 +1108,7 @@ namespace HrisApp.Server.Migrations
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     SectionId = table.Column<int>(type: "int", nullable: false),
                     PositionId = table.Column<int>(type: "int", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
-                    InactiveStatusId = table.Column<int>(type: "int", nullable: false)
+                    StatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -938,12 +1156,6 @@ namespace HrisApp.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EmployeeT_InactiveStatusT_InactiveStatusId",
-                        column: x => x.InactiveStatusId,
-                        principalTable: "InactiveStatusT",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_EmployeeT_PositionT_PositionId",
                         column: x => x.PositionId,
                         principalTable: "PositionT",
@@ -959,6 +1171,28 @@ namespace HrisApp.Server.Migrations
                         name: "FK_EmployeeT_StatusT_StatusId",
                         column: x => x.StatusId,
                         principalTable: "StatusT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuditlogsT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeUserId = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditlogsT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditlogsT_EmployeeT_EmployeeUserId",
+                        column: x => x.EmployeeUserId,
+                        principalTable: "EmployeeT",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -986,28 +1220,6 @@ namespace HrisApp.Server.Migrations
                         name: "FK_UserMasterT_EmployeeT_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "EmployeeT",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AuditlogsT",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuditlogsT", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AuditlogsT_UserMasterT_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UserMasterT",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1131,70 +1343,70 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "PositionT",
-                columns: new[] { "Id", "DepartmentId", "DivisionId", "Name", "Plantilla", "PosCode", "SectionId" },
+                columns: new[] { "Id", "AreaId", "DepartmentId", "DivisionId", "JobSummary", "Manpower", "Name", "OtherCompetencies", "Plantilla", "PosCode", "PosEducation", "PosMPExternalId", "PositionType", "Restrictions", "SectionId", "TemporaryDuration", "VerifyId", "WorkExperience" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "FSS", 1, "S101", 0 },
-                    { 2, 1, 1, "Feeder", 9, "S102", 0 },
-                    { 3, 1, 1, "FCCR", 2, "S103", 0 },
-                    { 4, 4, 1, "FSS", 1, "S3K01", 0 },
-                    { 5, 4, 1, "DT Booking/ GT Booking", 1, "S3K02", 0 },
-                    { 6, 4, 1, "DSS", 1, "S3K03", 0 },
-                    { 7, 4, 1, "PM Salesman", 1, "S3K04", 0 },
-                    { 8, 4, 1, "OMNI Feeder", 3, "S3K05", 0 },
-                    { 9, 4, 1, "FCCR", 1, "S3K06", 0 },
-                    { 10, 5, 1, "FSS", 1, "S3C01", 0 },
-                    { 11, 5, 1, "DT Booking/ GT Booking", 2, "S3C02", 0 },
-                    { 12, 5, 1, "DSS", 1, "S3C03", 0 },
-                    { 13, 5, 1, "OMNI Feeder", 3, "S3C04", 0 },
-                    { 14, 5, 1, "FCCR", 1, "S3C05", 0 },
-                    { 15, 6, 1, "Operations Manager", 1, "URIC01", 0 },
-                    { 16, 6, 1, "HAPI Supervisor", 1, "URICHAP01", 4 },
-                    { 17, 6, 1, "HAPI Dealer Coor", 4, "URICHAP02", 4 },
-                    { 18, 6, 1, "Field Sales Supervisor", 1, "URICSER01", 5 },
-                    { 19, 6, 1, "MAG Supervisor", 1, "URICSER02", 5 },
-                    { 20, 6, 1, "GTAS", 5, "URICSER03", 5 },
-                    { 21, 6, 1, "SMS", 11, "URICSER04", 5 },
-                    { 22, 6, 1, "NAO Supervisor", 1, "URICEXP01", 6 },
-                    { 23, 6, 1, "NAO", 2, "URICEXP02", 6 },
-                    { 24, 6, 1, "HAPI NAO", 4, "URICEXP02", 6 },
-                    { 25, 6, 1, "IT & Support Services Staff", 1, "URICDTE01", 7 },
-                    { 26, 6, 1, "Teleservices Support Staff / Online Coor", 1, "URICDTE02", 7 },
-                    { 27, 8, 1, "Field Sales Manager", 1, "GCASH01", 0 },
-                    { 28, 8, 1, "Field Sales Supervisor", 1, "GCASH02", 0 },
-                    { 29, 8, 1, "Field Sales Supervisor", 1, "GCASHSER01", 8 },
-                    { 30, 8, 1, "Sonic DSP", 4, "GCASHSER02", 8 }
+                    { 1, 1, 1, 1, "", "", "FSS", "", 1, "S101", "", 0, "", "", 0, "", "", "" },
+                    { 2, 1, 1, 1, "", "", "Feeder", "", 9, "S102", "", 0, "", "", 0, "", "", "" },
+                    { 3, 1, 1, 1, "", "", "FCCR", "", 2, "S103", "", 0, "", "", 0, "", "", "" },
+                    { 4, 1, 4, 1, "", "", "FSS", "", 1, "S3K01", "", 0, "", "", 0, "", "", "" },
+                    { 5, 1, 4, 1, "", "", "DT Booking/ GT Booking", "", 1, "S3K02", "", 0, "", "", 0, "", "", "" },
+                    { 6, 1, 4, 1, "", "", "DSS", "", 1, "S3K03", "", 0, "", "", 0, "", "", "" },
+                    { 7, 1, 4, 1, "", "", "PM Salesman", "", 1, "S3K04", "", 0, "", "", 0, "", "", "" },
+                    { 8, 1, 4, 1, "", "", "OMNI Feeder", "", 3, "S3K05", "", 0, "", "", 0, "", "", "" },
+                    { 9, 1, 4, 1, "", "", "FCCR", "", 1, "S3K06", "", 0, "", "", 0, "", "", "" },
+                    { 10, 1, 5, 1, "", "", "FSS", "", 1, "S3C01", "", 0, "", "", 0, "", "", "" },
+                    { 11, 1, 5, 1, "", "", "DT Booking/ GT Booking", "", 2, "S3C02", "", 0, "", "", 0, "", "", "" },
+                    { 12, 1, 5, 1, "", "", "DSS", "", 1, "S3C03", "", 0, "", "", 0, "", "", "" },
+                    { 13, 1, 5, 1, "", "", "OMNI Feeder", "", 3, "S3C04", "", 0, "", "", 0, "", "", "" },
+                    { 14, 1, 5, 1, "", "", "FCCR", "", 1, "S3C05", "", 0, "", "", 0, "", "", "" },
+                    { 15, 1, 6, 1, "", "", "Operations Manager", "", 1, "URIC01", "", 0, "", "", 0, "", "", "" },
+                    { 16, 1, 6, 1, "", "", "HAPI Supervisor", "", 1, "URICHAP01", "", 0, "", "", 4, "", "", "" },
+                    { 17, 1, 6, 1, "", "", "HAPI Dealer Coor", "", 4, "URICHAP02", "", 0, "", "", 4, "", "", "" },
+                    { 18, 1, 6, 1, "", "", "Field Sales Supervisor", "", 1, "URICSER01", "", 0, "", "", 5, "", "", "" },
+                    { 19, 1, 6, 1, "", "", "MAG Supervisor", "", 1, "URICSER02", "", 0, "", "", 5, "", "", "" },
+                    { 20, 1, 6, 1, "", "", "GTAS", "", 5, "URICSER03", "", 0, "", "", 5, "", "", "" },
+                    { 21, 1, 6, 1, "", "", "SMS", "", 11, "URICSER04", "", 0, "", "", 5, "", "", "" },
+                    { 22, 1, 6, 1, "", "", "NAO Supervisor", "", 1, "URICEXP01", "", 0, "", "", 6, "", "", "" },
+                    { 23, 1, 6, 1, "", "", "NAO", "", 2, "URICEXP02", "", 0, "", "", 6, "", "", "" },
+                    { 24, 1, 6, 1, "", "", "HAPI NAO", "", 4, "URICEXP02", "", 0, "", "", 6, "", "", "" },
+                    { 25, 1, 6, 1, "", "", "IT & Support Services Staff", "", 1, "URICDTE01", "", 0, "", "", 7, "", "", "" },
+                    { 26, 1, 6, 1, "", "", "Teleservices Support Staff / Online Coor", "", 1, "URICDTE02", "", 0, "", "", 7, "", "", "" },
+                    { 27, 1, 8, 1, "", "", "Field Sales Manager", "", 1, "GCASH01", "", 0, "", "", 0, "", "", "" },
+                    { 28, 1, 8, 1, "", "", "Field Sales Supervisor", "", 1, "GCASH02", "", 0, "", "", 0, "", "", "" },
+                    { 29, 1, 8, 1, "", "", "Field Sales Supervisor", "", 1, "GCASHSER01", "", 0, "", "", 8, "", "", "" },
+                    { 30, 1, 8, 1, "", "", "Sonic DSP", "", 4, "GCASHSER02", "", 0, "", "", 8, "", "", "" }
                 });
 
             migrationBuilder.InsertData(
                 table: "PositionT",
-                columns: new[] { "Id", "DepartmentId", "DivisionId", "Name", "Plantilla", "PosCode", "SectionId" },
+                columns: new[] { "Id", "AreaId", "DepartmentId", "DivisionId", "JobSummary", "Manpower", "Name", "OtherCompetencies", "Plantilla", "PosCode", "PosEducation", "PosMPExternalId", "PositionType", "Restrictions", "SectionId", "TemporaryDuration", "VerifyId", "WorkExperience" },
                 values: new object[,]
                 {
-                    { 31, 8, 1, "DSP (Commando/Incubator)", 6, "GCASHSER03", 8 },
-                    { 32, 8, 1, "Ambassador", 2, "GCASHEXP01", 9 },
-                    { 33, 8, 1, "Merchandiser", 3, "GCASHMER01", 10 },
-                    { 34, 8, 1, "Scan to Pay", 3, "GCASHSCA01", 11 },
-                    { 35, 9, 2, "Team Leader/Supervisor", 1, "GAINV01", 12 },
-                    { 36, 9, 2, "Trade Payable Staff", 2, "GAINV02", 12 },
-                    { 37, 9, 2, "Non Trade Payable Staff", 1, "GAINV03", 12 },
-                    { 38, 9, 2, "Team Leader/Supervisor", 1, "GAGEN01", 13 },
-                    { 39, 9, 2, "Gen Accounting Staff", 3, "GAGEN02", 13 },
-                    { 40, 9, 2, "Team Leader/Supervisor", 1, "GATAX01", 14 },
-                    { 41, 9, 2, "Tax and Compliance Staff", 3, "GATAX02", 14 },
-                    { 42, 10, 2, "Team Leader", 1, "SAACC01", 15 },
-                    { 43, 10, 2, "Accounts Receivable Staff", 4, "SAACC02", 15 },
-                    { 44, 10, 2, "Credit and Collection Staff", 6, "SACRE01", 16 },
-                    { 45, 10, 2, "C&C - Billings to Customer", 1, "SACRE02", 16 },
-                    { 46, 10, 2, "Billing to Cash Settlement Staff", 1, "SABIL01", 17 },
-                    { 47, 11, 2, "Manager", 1, "IT01", 0 },
-                    { 48, 11, 2, "IT Associate", 2, "IT02", 0 },
-                    { 49, 11, 2, "IT Staff", 3, "IT03", 0 },
-                    { 50, 12, 2, "Cash Operations Head", 1, "TREASURYCAS01", 18 },
-                    { 51, 12, 2, "Davao Cashier", 3, "TREASURYCAS02", 18 },
-                    { 52, 12, 2, "Cotabato Cashier", 1, "TREASURYCAS03", 18 },
-                    { 53, 12, 2, "Kidapawan Cashier", 1, "TREASURYCAS04", 18 },
-                    { 54, 12, 2, "Digos Cashier", 1, "TREASURYCAS05", 18 }
+                    { 31, 1, 8, 1, "", "", "DSP (Commando/Incubator)", "", 6, "GCASHSER03", "", 0, "", "", 8, "", "", "" },
+                    { 32, 1, 8, 1, "", "", "Ambassador", "", 2, "GCASHEXP01", "", 0, "", "", 9, "", "", "" },
+                    { 33, 1, 8, 1, "", "", "Merchandiser", "", 3, "GCASHMER01", "", 0, "", "", 10, "", "", "" },
+                    { 34, 1, 8, 1, "", "", "Scan to Pay", "", 3, "GCASHSCA01", "", 0, "", "", 11, "", "", "" },
+                    { 35, 1, 9, 2, "", "", "Team Leader/Supervisor", "", 1, "GAINV01", "", 0, "", "", 12, "", "", "" },
+                    { 36, 1, 9, 2, "", "", "Trade Payable Staff", "", 2, "GAINV02", "", 0, "", "", 12, "", "", "" },
+                    { 37, 1, 9, 2, "", "", "Non Trade Payable Staff", "", 1, "GAINV03", "", 0, "", "", 12, "", "", "" },
+                    { 38, 1, 9, 2, "", "", "Team Leader/Supervisor", "", 1, "GAGEN01", "", 0, "", "", 13, "", "", "" },
+                    { 39, 1, 9, 2, "", "", "Gen Accounting Staff", "", 3, "GAGEN02", "", 0, "", "", 13, "", "", "" },
+                    { 40, 1, 9, 2, "", "", "Team Leader/Supervisor", "", 1, "GATAX01", "", 0, "", "", 14, "", "", "" },
+                    { 41, 1, 9, 2, "", "", "Tax and Compliance Staff", "", 3, "GATAX02", "", 0, "", "", 14, "", "", "" },
+                    { 42, 1, 10, 2, "", "", "Team Leader", "", 1, "SAACC01", "", 0, "", "", 15, "", "", "" },
+                    { 43, 1, 10, 2, "", "", "Accounts Receivable Staff", "", 4, "SAACC02", "", 0, "", "", 15, "", "", "" },
+                    { 44, 1, 10, 2, "", "", "Credit and Collection Staff", "", 6, "SACRE01", "", 0, "", "", 16, "", "", "" },
+                    { 45, 1, 10, 2, "", "", "C&C - Billings to Customer", "", 1, "SACRE02", "", 0, "", "", 16, "", "", "" },
+                    { 46, 1, 10, 2, "", "", "Billing to Cash Settlement Staff", "", 1, "SABIL01", "", 0, "", "", 17, "", "", "" },
+                    { 47, 1, 11, 2, "", "", "Manager", "", 1, "IT01", "", 0, "", "", 0, "", "", "" },
+                    { 48, 1, 11, 2, "", "", "IT Associate", "", 2, "IT02", "", 0, "", "", 0, "", "", "" },
+                    { 49, 1, 11, 2, "", "", "IT Staff", "", 3, "IT03", "", 0, "", "", 0, "", "", "" },
+                    { 50, 1, 12, 2, "", "", "Cash Operations Head", "", 1, "TREASURYCAS01", "", 0, "", "", 18, "", "", "" },
+                    { 51, 1, 12, 2, "", "", "Davao Cashier", "", 3, "TREASURYCAS02", "", 0, "", "", 18, "", "", "" },
+                    { 52, 1, 12, 2, "", "", "Cotabato Cashier", "", 1, "TREASURYCAS03", "", 0, "", "", 18, "", "", "" },
+                    { 53, 1, 12, 2, "", "", "Kidapawan Cashier", "", 1, "TREASURYCAS04", "", 0, "", "", 18, "", "", "" },
+                    { 54, 1, 12, 2, "", "", "Digos Cashier", "", 1, "TREASURYCAS05", "", 0, "", "", 18, "", "", "" }
                 });
 
             migrationBuilder.InsertData(
@@ -1291,7 +1503,7 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "Name", "RoleCode" },
                 values: new object[,]
                 {
-                    { 1, "Administrator", "Admin" },
+                    { 1, "System Administrator", "Admin" },
                     { 2, "User", "User" },
                     { 3, "HR", "HR" }
                 });
@@ -1317,9 +1529,9 @@ namespace HrisApp.Server.Migrations
                 column: "App_ReligionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuditlogsT_UserId",
+                name: "IX_AuditlogsT_EmployeeUserId",
                 table: "AuditlogsT",
-                column: "UserId");
+                column: "EmployeeUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentT_DepartmentId",
@@ -1387,11 +1599,6 @@ namespace HrisApp.Server.Migrations
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeT_InactiveStatusId",
-                table: "EmployeeT",
-                column: "InactiveStatusId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeT_PositionId",
                 table: "EmployeeT",
                 column: "PositionId");
@@ -1424,6 +1631,9 @@ namespace HrisApp.Server.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "App_AddressT");
+
             migrationBuilder.DropTable(
                 name: "App_ChildrenT");
 
@@ -1470,6 +1680,9 @@ namespace HrisApp.Server.Migrations
                 name: "AuditlogsT");
 
             migrationBuilder.DropTable(
+                name: "DailyTotalPlantillaT");
+
+            migrationBuilder.DropTable(
                 name: "DocumentT");
 
             migrationBuilder.DropTable(
@@ -1485,6 +1698,9 @@ namespace HrisApp.Server.Migrations
                 name: "Emp_EmploymentDateT");
 
             migrationBuilder.DropTable(
+                name: "Emp_EvaluationT");
+
+            migrationBuilder.DropTable(
                 name: "Emp_LicenseT");
 
             migrationBuilder.DropTable(
@@ -1497,7 +1713,13 @@ namespace HrisApp.Server.Migrations
                 name: "Emp_PayrollT");
 
             migrationBuilder.DropTable(
+                name: "Emp_PosHistoryT");
+
+            migrationBuilder.DropTable(
                 name: "Emp_PrimaryT");
+
+            migrationBuilder.DropTable(
+                name: "Emp_ProfBackgroundT");
 
             migrationBuilder.DropTable(
                 name: "Emp_SecondaryT");
@@ -1512,13 +1734,37 @@ namespace HrisApp.Server.Migrations
                 name: "EmpPictureT");
 
             migrationBuilder.DropTable(
+                name: "InactiveStatusT");
+
+            migrationBuilder.DropTable(
+                name: "PositionComAppT");
+
+            migrationBuilder.DropTable(
+                name: "PositionEducT");
+
+            migrationBuilder.DropTable(
+                name: "PositionKnowledgeT");
+
+            migrationBuilder.DropTable(
+                name: "PositionTechSkillT");
+
+            migrationBuilder.DropTable(
+                name: "PositionWorkExpT");
+
+            migrationBuilder.DropTable(
+                name: "PosMPExternalT");
+
+            migrationBuilder.DropTable(
+                name: "PosMPInternalT");
+
+            migrationBuilder.DropTable(
                 name: "SectionT");
 
             migrationBuilder.DropTable(
-                name: "UserRoleT");
+                name: "UserMasterT");
 
             migrationBuilder.DropTable(
-                name: "UserMasterT");
+                name: "UserRoleT");
 
             migrationBuilder.DropTable(
                 name: "CashBondT");
@@ -1555,9 +1801,6 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "GenderT");
-
-            migrationBuilder.DropTable(
-                name: "InactiveStatusT");
 
             migrationBuilder.DropTable(
                 name: "PositionT");

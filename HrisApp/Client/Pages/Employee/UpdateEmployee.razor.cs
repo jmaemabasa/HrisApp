@@ -161,62 +161,7 @@ namespace HrisApp.Client.Pages.Employee
 
             bday = employee.Birthdate;
             DateHired = employee.DateHired;
-
-            if (_position.PosMPExternalId != 0 && _position.PosMPInternalId != 0)
-            {
-                Console.WriteLine("test if 1");
-                foreach (var item in InternalsL)
-                {
-                    if (item.Id == _position.PosMPInternalId)
-                    {
-                        Manpower = item.Internal_Name;
-                        Console.WriteLine("test 1");
-                    }
-                }
-
-                foreach (var item in ExternalsL)
-                {
-                    if (item.Id == _position.PosMPExternalId)
-                    {
-                        Manpower = Manpower + ", " + item.External_Name;
-                        Console.WriteLine("test 2");
-                    }
-                }
-            }
-            else if (_position.PosMPExternalId != 0 && _position.PosMPInternalId == 0)
-            {
-                Console.WriteLine("test if 2");
-
-                foreach (var item in ExternalsL)
-                {
-                    if (item.Id == _position.PosMPExternalId)
-                    {
-                        Manpower = item.External_Name;
-                        Console.WriteLine("test 3");
-                    }
-                }
-            }
-            else if (_position.PosMPExternalId == 0 && _position.PosMPInternalId != 0)
-            {
-                Console.WriteLine("test if 3");
-                foreach (var item in InternalsL)
-                {
-                    Console.WriteLine("id " + item.Id + "pos id " + _position.PosMPInternalId);
-
-                    if (item.Id == _position.PosMPInternalId)
-                    {
-                        Manpower = item.Internal_Name;
-                        Console.WriteLine("test 4");
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("test if 4");
-
-                Manpower = "No Information.";
-                Console.WriteLine("test 5");
-            }
+            
         }
 
         protected async Task SaveUpdateEmployee()

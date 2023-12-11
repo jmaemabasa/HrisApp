@@ -162,7 +162,6 @@
         if (readonlyvar)
         {
             var employee = EmployeesL.FirstOrDefault(e => e.Id == reg.EmployeeId);
-
             if (employee != null)
             {
                 reg.Username = !string.IsNullOrEmpty(employee.FirstName) && !string.IsNullOrEmpty(employee.LastName)
@@ -188,7 +187,7 @@
             message = "Please select Division.";
             _severity = Severity.Error;
             _processing = false;
-            readonlyvar = false;
+            readonlyvar = true;
         }
         else if (deptvar == 0)
         {
@@ -196,7 +195,7 @@
             message = "Please select Department.";
             _severity = Severity.Error;
             _processing = false;
-            readonlyvar = false;
+            readonlyvar = true;
         }
         else if (reg.EmployeeId == 0)
         {
@@ -204,19 +203,21 @@
             message = "Please select an Employee.";
             _severity = Severity.Error;
             _processing = false;
-            readonlyvar = false;
+            readonlyvar = true;
         }
         else if (string.IsNullOrWhiteSpace(reg.Role))
         {
             showAlert = true;
             message = "Please select a Role.";
             _severity = Severity.Error;
+            readonlyvar = true;
         }
         else if (string.IsNullOrWhiteSpace(reg.Username))
         {
             showAlert = true;
             message = "Please enter Username.";
             _severity = Severity.Error;
+            readonlyvar = true;
         }
         else
         {

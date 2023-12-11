@@ -157,7 +157,7 @@
     private async Task LoadList()
     {
         await ForEvalService.GetForEval();
-        StateService.SetState("EvalList", ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done").ToList());
+        StateService.SetState("EvalList", ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done" && e.EvalStatus != "Inactive").ToList());
     }
 
     private void OnStateChanged()

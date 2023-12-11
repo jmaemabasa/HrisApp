@@ -26,13 +26,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
         private async Task ConfirmCreateSectionAsync()
         {
-            MudDialog.Close();
             if (notApplicableChecked)
             {
                 newSection = "No Section";
             }
             if (notApplicableChecked)
             {
+                MudDialog.Close();
                 var result = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Are you sure this department has no section?",
@@ -57,15 +57,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             }
             else if (string.IsNullOrWhiteSpace(newSection))
             {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Warning",
-                    Text = "Please enter a valid section!",
-                    Icon = SweetAlertIcon.Warning
-                });
+                await ShowErrorMessageBox("Please enter a valid section!");
             }
             else
             {
+                MudDialog.Close();
                 var result = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Do you want to create " + newSection + "?",
@@ -88,6 +84,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     StateService.SetState("SectionList", newList);
                 }
             }
+        }
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
         }
     }
 }

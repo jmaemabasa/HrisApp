@@ -8,25 +8,17 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
         private string newDivision = "";
 
-
-
         void Cancel() => MudDialog.Cancel();
 
         private async Task ConfirmCreateDivision()
         {
-            MudDialog.Close();
-
             if (string.IsNullOrWhiteSpace(newDivision))
             {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Warning",
-                    Text = "Please fill up the division name!",
-                    Icon = SweetAlertIcon.Warning
-                });
+                await ShowErrorMessageBox("Please fill up the division name!");
             }
             else
             {
+                MudDialog.Close();
                 var confirmResult = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Confirmation",
@@ -52,6 +44,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 }
             }
         }
-
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
+        }
     }
 }

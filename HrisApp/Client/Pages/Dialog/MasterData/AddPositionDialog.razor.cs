@@ -40,10 +40,16 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private string newRestrict = "";
         private string newPosType = "";
         private string newDuration = "";
-        private string newDurationCMB = "Month/s";
+        private string newManpower = "";
         private int newPlantilla;
 
         private string newPosTypeHolder = "";
+
+        public PatternMask mask2 = new PatternMask("XX Month/s")
+        {
+            MaskChars = new[] { new MaskChar('X', @"[0-9]") },
+            CleanDelimiters = true,
+        };
 
         void Cancel() => MudDialog.Cancel();
 
@@ -73,28 +79,19 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
         private async Task ConfirmCreatePositionAsync()
         {
-            MudDialog.Close();
+            //MudDialog.Close();
 
             if (selectedArea == 0)
             {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Warning",
-                    Text = "Please select an Area!",
-                    Icon = SweetAlertIcon.Warning
-                });
+                await ShowErrorMessageBox("Please select an Area!");
             }
             else if (string.IsNullOrWhiteSpace(newPosition))
             {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Warning",
-                    Text = "Please enter a valid position!",
-                    Icon = SweetAlertIcon.Warning
-                });
+                await ShowErrorMessageBox("Please enter a valid position!");
             }
             else
             {
+                MudDialog.Close();
                 var result = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Do you want to create " + newPosition + "?",
@@ -122,22 +119,23 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var plantillacount = newPlantilla;
             newPosCode = generateposcode(divisionId, departmentId, sectionId);
 
+            if (newPosType != "Permanent")
+            {
+                newDuration = newDuration + " Month/s";
+            }
+
+            if (newManpower == "Internal")
+            {
+                selectedExternal = 0;
+            }
+
             // Check if the selected department has sections
             var departmentHasSections = Sections.Any(s => s.DepartmentId == selectedDepartment);
 
             if (departmentHasSections)
             {
-                if (newPosType == "Permanent")
-                {
-                    newDurationCMB = "";
-                }
-                else
-                {
-                    newDuration = newDuration + " Month/s";
-                }
-
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, selectedInternal, selectedExternal);
+                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
@@ -146,17 +144,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             }
             else
             {
-                if (newPosType == "Permanent")
-                {
-                    newDurationCMB = "";
-                }
-                else
-                {
-                    newDuration = newDuration + " Month/s";
-                }
-
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, selectedInternal, selectedExternal);
+                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
@@ -171,6 +160,15 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var newList = PositionService.PositionTs;
             StateService.SetState("PositionList", newList);
         }
+
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
+        }
+
 
         #region TECH SKILLS
         public async Task SaveNewTechSkills(string posCode)

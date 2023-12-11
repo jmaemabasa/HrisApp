@@ -113,7 +113,7 @@ namespace HrisApp.Server.Controllers.MasterData
             dbpos.PositionType = pos.PositionType;
             dbpos.TemporaryDuration = pos.TemporaryDuration;
             dbpos.PosMPExternalId = pos.PosMPExternalId;
-            dbpos.PosMPInternalId = pos.PosMPInternalId;
+            dbpos.Manpower = pos.Manpower;
 
             await _context.SaveChangesAsync();
 

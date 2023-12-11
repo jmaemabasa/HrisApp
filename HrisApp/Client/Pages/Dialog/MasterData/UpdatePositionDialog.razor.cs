@@ -1,6 +1,4 @@
-﻿using static MudBlazor.CategoryTypes;
-
-namespace HrisApp.Client.Pages.Dialog.MasterData
+﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
     public partial class UpdatePositionDialog : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -24,7 +22,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private string newEduc;
 
         private string newPosTypeHolder = "";
-        private string newDurationCMB = "Month/s";
 
 
         private PositionT position = new();
@@ -57,19 +54,19 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (position == null)
                 return;
 
-            MudDialog.Close();
-
             if (string.IsNullOrWhiteSpace(position.Name))
             {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Warning",
-                    Text = "Please enter a valid position!",
-                    Icon = SweetAlertIcon.Warning
-                });
+                //await Swal.FireAsync(new SweetAlertOptions
+                //{
+                //    Title = "Warning",
+                //    Text = "Please enter a valid position!",
+                //    Icon = SweetAlertIcon.Warning
+                //});
+                await ShowErrorMessageBox("Please enter a valid position!");
             }
             else
             {
+                MudDialog.Close();
                 var confirmResult = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Confirmation",
@@ -85,7 +82,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     if (position.PositionType == "Temporary")
                     {
                         position.TemporaryDuration = position.TemporaryDuration + " Month/s";
+                    }
 
+                    if (position.Manpower == "Internal")
+                    {
+                        position.PosMPExternalId = 0;
                     }
 
                     await PositionService.UpdatePosition(position);
@@ -103,6 +104,14 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     StateService.SetState("PositionList", newList);
                 }
             }
+        }
+
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
         }
 
         #region TECH SKILLS

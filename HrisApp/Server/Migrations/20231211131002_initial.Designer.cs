@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231122035410_user")]
-    partial class user
+    [Migration("20231211131002_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -328,6 +328,71 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("App_TrainingT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Application.App_AddressT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CurrentAdd")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentBrgy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentCountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentProvince")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermanentAdd")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermanentBrgy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermanentCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermanentCountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermanentProvince")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermanentZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("App_AddressT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Application.App_Family.App_ChildrenT", b =>
                 {
                     b.Property<int>("Id")
@@ -416,10 +481,10 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("App_DateFrom")
+                    b.Property<DateTime?>("App_DateFrom")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("App_DateTo")
+                    b.Property<DateTime?>("App_DateTo")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("App_Position")
@@ -457,15 +522,12 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("App_CivilStatusId")
                         .HasColumnType("int");
 
-                    b.Property<string>("App_ContactNo1")
+                    b.Property<string>("App_ContactNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("App_ContactNo2")
+                    b.Property<DateTime?>("App_DOB")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("App_DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("App_Email")
@@ -486,6 +548,10 @@ namespace HrisApp.Server.Migrations
 
                     b.Property<int>("App_EmerRelationshipId")
                         .HasColumnType("int");
+
+                    b.Property<string>("App_ExpSalary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("App_FatherName")
                         .IsRequired()
@@ -529,7 +595,11 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("App_PosApplied")
+                    b.Property<string>("App_PosApplied1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("App_PosApplied2")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -541,6 +611,10 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("App_SSS")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("App_SourceApp")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -607,6 +681,25 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("EmployeeUserId");
 
                     b.ToTable("AuditlogsT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Dashboard.DailyTotalPlantillaT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TotalPlantilla")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DailyTotalPlantillaT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Emp_Education.Emp_CollegeT", b =>
@@ -1105,6 +1198,143 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("Emp_EmploymentDateT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_EvaluationT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("DateEvaluate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateHired")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Eval1Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval2Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval3Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval4Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval5Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Eval6Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvalStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TimesEvaluate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emp_EvaluationT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_PosHistoryT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("DateEnded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateStarted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewAreaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewDepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewDivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewPositionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewSectionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emp_PosHistoryT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_ProfBackgroundT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BasicSalary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RSLeaving")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emp_ProfBackgroundT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmployeeT", b =>
                 {
                     b.Property<int>("Id")
@@ -1590,6 +1820,81 @@ namespace HrisApp.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionComAppT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ComName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PositionComAppT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionEducT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("EducName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PositionEducT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionKnowledgeT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("KnowName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PositionKnowledgeT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionT", b =>
                 {
                     b.Property<int>("Id")
@@ -1601,10 +1906,6 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ComputerApp")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
@@ -1615,7 +1916,7 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("KnowledgeOf")
+                    b.Property<string>("Manpower")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1638,6 +1939,13 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PosMPExternalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PositionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Restrictions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1645,7 +1953,11 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TechnicalSkills")
+                    b.Property<string>("TemporaryDuration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1662,1028 +1974,1228 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 1,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S101",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 2,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Feeder",
                             OtherCompetencies = "",
                             Plantilla = 9,
                             PosCode = "S102",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 3,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "S103",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 4,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 5,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "DT Booking/ GT Booking",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 6,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "DSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K03",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 7,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "PM Salesman",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K04",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 8,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "OMNI Feeder",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "S3K05",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 9,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3K06",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 10,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3C01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 11,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "DT Booking/ GT Booking",
                             OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "S3C02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 12,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "DSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3C03",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 13,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "OMNI Feeder",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "S3C04",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 14,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "S3C05",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 15,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Operations Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URIC01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 16,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "HAPI Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICHAP01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 4,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 17,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "HAPI Dealer Coor",
                             OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "URICHAP02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 4,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 18,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICSER01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 19,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "MAG Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICSER02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 20,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "GTAS",
                             OtherCompetencies = "",
                             Plantilla = 5,
                             PosCode = "URICSER03",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 21,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "SMS",
                             OtherCompetencies = "",
                             Plantilla = 11,
                             PosCode = "URICSER04",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 22,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "NAO Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICEXP01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 23,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "NAO",
                             OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "URICEXP02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 24,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "HAPI NAO",
                             OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "URICEXP02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 25,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "IT & Support Services Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICDTE01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 7,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 26,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Teleservices Support Staff / Online Coor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "URICDTE02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 7,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 27,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Field Sales Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GCASH01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 28,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GCASH02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 29,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GCASHSER01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 30,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Sonic DSP",
                             OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "GCASHSER02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 31,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "DSP (Commando/Incubator)",
                             OtherCompetencies = "",
                             Plantilla = 6,
                             PosCode = "GCASHSER03",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 32,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Ambassador",
                             OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "GCASHEXP01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 9,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 33,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Merchandiser",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GCASHMER01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 10,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 34,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Scan to Pay",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GCASHSCA01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 11,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 35,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GAINV01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 36,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Trade Payable Staff",
                             OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "GAINV02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 37,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Non Trade Payable Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GAINV03",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 38,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GAGEN01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 13,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 39,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Gen Accounting Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GAGEN02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 13,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 40,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "GATAX01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 14,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 41,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Tax and Compliance Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "GATAX02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 14,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 42,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Team Leader",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "SAACC01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 15,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 43,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Accounts Receivable Staff",
                             OtherCompetencies = "",
                             Plantilla = 4,
                             PosCode = "SAACC02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 15,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 44,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Credit and Collection Staff",
                             OtherCompetencies = "",
                             Plantilla = 6,
                             PosCode = "SACRE01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 16,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 45,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "C&C - Billings to Customer",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "SACRE02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 16,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 46,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Billing to Cash Settlement Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "SABIL01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 17,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 47,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "IT01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 48,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "IT Associate",
                             OtherCompetencies = "",
                             Plantilla = 2,
                             PosCode = "IT02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 49,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "IT Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "IT03",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 50,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Cash Operations Head",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS01",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 51,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Davao Cashier",
                             OtherCompetencies = "",
                             Plantilla = 3,
                             PosCode = "TREASURYCAS02",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 52,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Cotabato Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS03",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 53,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Kidapawan Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS04",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         },
                         new
                         {
                             Id = 54,
                             AreaId = 1,
-                            ComputerApp = "",
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            KnowledgeOf = "",
+                            Manpower = "",
                             Name = "Digos Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
                             PosCode = "TREASURYCAS05",
                             PosEducation = "",
+                            PosMPExternalId = 0,
+                            PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
-                            TechnicalSkills = "",
+                            TemporaryDuration = "",
+                            VerifyId = "",
                             WorkExperience = ""
                         });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionTechSkillT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PositionTechSkillT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionWorkExpT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ExpName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PositionWorkExpT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PosMPExternalT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("External_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("External_VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PosMPExternalT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PosMPInternalT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Internal_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Internal_VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PosMPInternalT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.MasterData.ScheduleTypeT", b =>
@@ -3352,7 +3864,7 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Administrator",
+                            Name = "System Administrator",
                             RoleCode = "Admin"
                         },
                         new

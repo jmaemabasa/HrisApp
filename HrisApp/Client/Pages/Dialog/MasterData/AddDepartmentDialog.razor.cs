@@ -19,18 +19,13 @@
 
         public async Task ConfirmCreateDepartment()
         {
-            MudDialog.Close();
             if (string.IsNullOrWhiteSpace(newDepartment))
             {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Warning",
-                    Text = "Please enter a valid department!",
-                    Icon = SweetAlertIcon.Warning
-                });
+                await ShowErrorMessageBox("Please enter a valid department!");
             }
             else
             {
+                MudDialog.Close();
                 var result = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Do you want to create " + newDepartment + "?",
@@ -55,6 +50,13 @@
 
                 }
             }
+        }
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
         }
     }
 }

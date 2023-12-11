@@ -52,43 +52,41 @@
                     </div>
             }
             <span style="font-size: 16px; color: #424242"><b>Manpower Sourcing</b></span>
-            <div class="d-flex gap-2">
-                <div class="divsingledetails col-6">
-                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Internal</MudText>
-                    @if (position.PosMPInternalId == 0)
-                    {
-                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">No Information.</MudText>
-                    }
-                    else
-                    {
-                        @foreach (var item in InternalsL)
-                        {
-                            if (item.Id == position.PosMPInternalId)
+            
+                @if (position.Manpower == "Internal")
+                {
+                    <div class="divsingledetails">
+                        <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Manpower Source</MudText>
+                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.Manpower</MudText>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex gap-2">
+                        <div class="divsingledetails col-6">
+                            <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Manpower Source</MudText>
+                            <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@position.Manpower</MudText>
+                        </div>
+                        <div class="divsingledetails col-6">
+                            <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Agency</MudText>
+                            @if (position.PosMPExternalId == 0)
                             {
-                                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.Internal_Name</MudText>
+                                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">No Information.</MudText>
                             }
-                        }
-                    }
-                </div>
-                <div class="divsingledetails col-6">
-                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">External</MudText>
-                    @if (position.PosMPExternalId == 0)
-                    {
-                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">No Information.</MudText>
-                    }
-                    else
-                    {
-                        @foreach (var item in ExternalsL)
-                        {
-                            if (item.Id == position.PosMPExternalId)
+                            else
                             {
-                                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.External_Name</MudText>
+                                @foreach (var item in ExternalsL)
+                                {
+                                    if (item.Id == position.PosMPExternalId)
+                                    {
+                                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.External_Name</MudText>
+                                    }
+                                }
                             }
-                        }
-                    }
-                </div>
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
         <div class="d-flex flex-column gap-2 cont">
             <span style="font-size: 16px; color: #424242"><b>Qualication Requirements</b></span>
             <div class="divsingledetails">

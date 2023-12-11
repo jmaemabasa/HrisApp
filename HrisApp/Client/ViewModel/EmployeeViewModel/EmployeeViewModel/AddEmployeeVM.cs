@@ -48,6 +48,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public Emp_PosHistoryT empHistory = new();
         public Emp_EvaluationT empEvaluation = new();
 
+        public IMask emailMask = RegexMask.Email();
+
         public async Task OnRefreshPage()
         {
             await AreaService.GetArea();
@@ -443,7 +445,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public void HandleDateHiredChanged(DateTime? newDate)
         {
             DateHired = newDate;
-            Console.WriteLine(DateHired.ToString());
             if (DateHired.HasValue)
             {
                 // Calculate the regularization date, which is 6 months after the DateHired.

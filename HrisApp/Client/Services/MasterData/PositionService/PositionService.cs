@@ -73,7 +73,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         }
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, int mpinternal, int mpexternal)
+        public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal)
         {
             PositionT newPosition = new()
             {
@@ -91,7 +91,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 VerifyId = verifyCode,
                 PositionType = posType,
                 TemporaryDuration = tempDur,
-                PosMPInternalId = mpinternal,
+                Manpower = manpower,
                 PosMPExternalId = mpexternal,
             };
 
@@ -102,7 +102,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 Console.WriteLine("Error: " + errorMessage);
             }
         }
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, int mpinternal, int mpexternal)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal)
         {
             PositionT newPosition = new()
             {
@@ -121,7 +121,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 VerifyId = verifyCode,
                 PositionType = posType,
                 TemporaryDuration = tempDur,
-                PosMPInternalId = mpinternal,
+                Manpower = manpower,
                 PosMPExternalId = mpexternal,
             };
 

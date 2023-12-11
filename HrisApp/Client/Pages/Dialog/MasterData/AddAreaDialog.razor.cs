@@ -11,19 +11,18 @@
 
         private async Task ConfirmCreateArea()
         {
-            MudDialog.Close();
-
             if (string.IsNullOrWhiteSpace(newArea))
             {
                 await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Warning",
                     Text = "Please fill up the division name!",
-                    Icon = SweetAlertIcon.Warning
+                    Icon = SweetAlertIcon.Warning,
                 });
             }
             else
             {
+                MudDialog.Close();
                 var confirmResult = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Confirmation",
@@ -48,6 +47,13 @@
                     StateService.SetState("AreaList", newAreaList);
                 }
             }
+        }
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
         }
 
     }
