@@ -1,4 +1,5 @@
-﻿using HrisApp.Shared.Models.Employee;
+﻿using HrisApp.Client.Pages.Employee;
+using HrisApp.Shared.Models.Employee;
 
 namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
 {
@@ -75,8 +76,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
             if (calculateMonth < 0)
             {
                 calculateMonth += totalMonth;
-                Console.WriteLine("calmonth + 12 " + calculateMonth);
-
             }
             else if (calculateMonth > 0)
             {
@@ -87,55 +86,116 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
             switch (calculateMonth)
             {
                 case 0 :
-                    Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                    if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Verify_Id = verifyId,
-                        Eval1Status = "Pending",
-                        Eval2Status = "Pending",
-                        Eval3Status = "Pending",
-                        Eval4Status = "Pending",
-                        Eval5Status = "Pending",
-                        Eval6Status = "Pending",
-                        EvalStatus = "Pending",
-                        DateHired = datehired,
-                        DateEvaluate = todayDate,
-                        TimesEvaluate =+ 1
-                    };
-                    return case0eval;
-
+                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = "Done",
+                            Eval6Status = "Done",
+                            EvalStatus = "Done",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case0eval;
+                    }
+                    else
+                    {
+                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Pending",
+                            Eval2Status = "Pending",
+                            Eval3Status = "Pending",
+                            Eval4Status = "Pending",
+                            Eval5Status = "Pending",
+                            Eval6Status = "Pending",
+                            EvalStatus = "Pending",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case0eval;
+                    }
                 case 1:
-                    Emp_EvaluationT case1eval = new Emp_EvaluationT() {
-                        Verify_Id = verifyId,
-                        Eval1Status = _evalStatus,
-                        Eval2Status = "Pending",
-                        Eval3Status = "Pending",
-                        Eval4Status = "Pending",
-                        Eval5Status = "Pending",
-                        Eval6Status = "Pending",
-                        EvalStatus = "Pending",
-                        DateHired = datehired,
-                        DateEvaluate = todayDate,
-                        TimesEvaluate =+ 1
-                    };
-                    return case1eval;
-
-                case 2:
-                    Emp_EvaluationT case2eval = new Emp_EvaluationT()
+                    if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Verify_Id = verifyId,
-                        Eval1Status = "Done",
-                        Eval2Status = _evalStatus,
-                        Eval3Status = "Pending",
-                        Eval4Status = "Pending",
-                        Eval5Status = "Pending",
-                        Eval6Status = "Pending",
-                        EvalStatus = "Pending",
-                        DateHired = datehired,
-                        DateEvaluate = todayDate,
-                        TimesEvaluate = +1
-                    };
-                    return case2eval;
-
+                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = "Done",
+                            Eval6Status = "Done",
+                            EvalStatus = "Done",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case0eval;
+                    }
+                    else
+                    {
+                        Emp_EvaluationT case1eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = _evalStatus,
+                            Eval2Status = "Pending",
+                            Eval3Status = "Pending",
+                            Eval4Status = "Pending",
+                            Eval5Status = "Pending",
+                            Eval6Status = "Pending",
+                            EvalStatus = "Pending",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case1eval;
+                    }
+                case 2:
+                    if (datehired.Year < DateTime.Now.Year - 1)
+                    {
+                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = "Done",
+                            Eval6Status = "Done",
+                            EvalStatus = "Done",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case0eval;
+                    }
+                    else
+                    {
+                        Emp_EvaluationT case2eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = _evalStatus,
+                            Eval3Status = "Pending",
+                            Eval4Status = "Pending",
+                            Eval5Status = "Pending",
+                            Eval6Status = "Pending",
+                            EvalStatus = "Pending",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case2eval;
+                    }
                 case 3:
                     Emp_EvaluationT case3eval = new Emp_EvaluationT()
                     {
@@ -154,56 +214,117 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                     return case3eval;
 
                 case 4:
-                    Emp_EvaluationT case4eval = new Emp_EvaluationT()
+                    if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Verify_Id = verifyId,
-                        Eval1Status = "Done",
-                        Eval2Status = "Done",
-                        Eval3Status = "Done",
-                        Eval4Status = _evalStatus,
-                        Eval5Status = "Pending",
-                        Eval6Status = "Pending",
-                        EvalStatus = "Pending",
-                        DateHired = datehired,
-                        DateEvaluate = todayDate,
-                        TimesEvaluate = +1
-                    };
-                    return case4eval;
-
+                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = "Done",
+                            Eval6Status = "Done",
+                            EvalStatus = "Done",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case0eval;
+                    }
+                    else
+                    {
+                        Emp_EvaluationT case4eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = _evalStatus,
+                            Eval5Status = "Pending",
+                            Eval6Status = "Pending",
+                            EvalStatus = "Pending",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case4eval;
+                    }
                 case 5:
-                    Emp_EvaluationT case5eval = new Emp_EvaluationT()
+                    if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Verify_Id = verifyId,
-                        Eval1Status = "Done",
-                        Eval2Status = "Done",
-                        Eval3Status = "Done",
-                        Eval4Status = "Done",
-                        Eval5Status = _evalStatus,
-                        Eval6Status = "Pending",
-                        EvalStatus = "Pending",
-                        DateHired = datehired,
-                        DateEvaluate = todayDate,
-                        TimesEvaluate = +1
-                    };
-                    return case5eval;
+                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = "Done",
+                            Eval6Status = "Done",
+                            EvalStatus = "Done",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case0eval;
+                    }
+                    else
+                    {
 
+                        Emp_EvaluationT case5eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = _evalStatus,
+                            Eval6Status = "Pending",
+                            EvalStatus = "Pending",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case5eval;
+                    }
                 case 6:
-                    Emp_EvaluationT case6eval = new Emp_EvaluationT()
+                    if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Verify_Id = verifyId,
-                        Eval1Status = "Done",
-                        Eval2Status = "Done",
-                        Eval3Status = "Done",
-                        Eval4Status = "Done",
-                        Eval5Status = "Done",
-                        Eval6Status = _evalStatus,
-                        EvalStatus = "Pending",
-                        DateHired = datehired,
-                        DateEvaluate = todayDate,
-                        TimesEvaluate = +1
-                    };
-                    return case6eval;
-
+                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = "Done",
+                            Eval6Status = "Done",
+                            EvalStatus = "Done",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case0eval;
+                    }
+                    else
+                    {
+                        Emp_EvaluationT case6eval = new Emp_EvaluationT()
+                        {
+                            Verify_Id = verifyId,
+                            Eval1Status = "Done",
+                            Eval2Status = "Done",
+                            Eval3Status = "Done",
+                            Eval4Status = "Done",
+                            Eval5Status = "Done",
+                            Eval6Status = _evalStatus,
+                            EvalStatus = "Pending",
+                            DateHired = datehired,
+                            DateEvaluate = todayDate,
+                            TimesEvaluate = +1
+                        };
+                        return case6eval;
+                    }
                 default:
                     Emp_EvaluationT defaulteval = new Emp_EvaluationT()
                     {

@@ -39,6 +39,19 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 await DivisionService.GetDivision();
                 DivisionsL = DivisionService.DivisionTs;
 
+
+                #region for DASHBOARD
+                var uri = new Uri(_navigationManager.Uri);
+                var statusFilterString = uri.Query.Split('=').LastOrDefault();
+                if (statusFilterString?.ToLower() == "inactive")
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId != 1).ToList();
+                }
+                else if (statusFilterString?.ToLower() == "active")
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).ToList();
+                }
+                #endregion
             }
             catch (Exception ex)
             {

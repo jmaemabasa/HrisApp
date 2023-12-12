@@ -56,12 +56,6 @@
 
             if (string.IsNullOrWhiteSpace(position.Name))
             {
-                //await Swal.FireAsync(new SweetAlertOptions
-                //{
-                //    Title = "Warning",
-                //    Text = "Please enter a valid position!",
-                //    Icon = SweetAlertIcon.Warning
-                //});
                 await ShowErrorMessageBox("Please enter a valid position!");
             }
             else

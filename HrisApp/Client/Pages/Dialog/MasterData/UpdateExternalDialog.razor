@@ -20,7 +20,7 @@
 
 
 @code {
-#nullable disable
+    #nullable disable
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Parameter]
     public int Id { get; set; }
@@ -43,28 +43,42 @@
         if (obj == null)
             return;
 
-        MudDialog.Close();
-
-        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
-            {
-                Title = "Confirmation",
-                Text = "Are you sure you want to update the " + obj.External_Name + "?",
-                Icon = SweetAlertIcon.Question,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Yes",
-                CancelButtonText = "No"
-            });
-
-        if (confirmResult.IsConfirmed)
+        if (string.IsNullOrWhiteSpace(obj.External_Name))
         {
-            await ManpowerService.UpdateExternal(obj);
-            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-
-            _toastService.ShowSuccess(obj.External_Name + " Updated Successfully!");
-
-            await ManpowerService.GetExternal();
-            var newList = ManpowerService.PosMPExternalTs;
-            StateService.SetState("ExternalList", newList);
+            await ShowErrorMessageBox("Please enter a valid name!");
         }
+        else
+        {
+            MudDialog.Close();
+
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to update the " + obj.External_Name + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+            if (confirmResult.IsConfirmed)
+            {
+                await ManpowerService.UpdateExternal(obj);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+
+                _toastService.ShowSuccess(obj.External_Name + " Updated Successfully!");
+
+                await ManpowerService.GetExternal();
+                var newList = ManpowerService.PosMPExternalTs;
+                StateService.SetState("ExternalList", newList);
+            }
+        }
+    }
+    private async Task ShowErrorMessageBox(string mess)
+    {
+        bool? result = await _dialogService.ShowMessageBox(
+        "Warning",
+        mess,
+        yesText: "Ok");
     }
 }

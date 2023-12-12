@@ -113,19 +113,19 @@
                             <MudText Typo="Typo.body2">Temporary Duration</MudText>
                             <div class="d-flex flex-row gap-2 align-items-center col-6">
                                 <MudTextField @bind-Value="newDuration" Mask="@(new PatternMask("000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                <MudText Typo="Typo.body2">Month/s</MudText>
+                                <MudText Typo="Typo.body2"><b>Month/s</b></MudText>
                             </div>
                         }
                         <MudDivider DividerType="DividerType.Middle" Class="my-6" />
                         <span style="font-size: 16px; color: #E38D0F"><b>Manpower Sourcing</b></span>
                         <div class="flex-grow-1 d-flex justify-content-center">
                             <div class="col6">
-                            <MudRadioGroup @bind-SelectedOption="@newManpower">
-                                <MudRadio Option="@("Internal")" Color="Color.Secondary">Internal</MudRadio>
-                                <MudRadio Option="@("External")" Color="Color.Secondary">External</MudRadio>
-                            </MudRadioGroup>
+                                <MudRadioGroup @bind-SelectedOption="@newManpower">
+                                    <MudRadio Option="@("Internal")" Color="Color.Secondary"><b>Internal</b></MudRadio>
+                                    <MudRadio Option="@("External")" Color="Color.Secondary"><b>External</b></MudRadio>
+                                </MudRadioGroup>
                             </div>
-                            
+
                         </div>
                         <div class="flex-grow-1">
                             @if (newManpower == "External")
@@ -273,9 +273,9 @@
                         @if (newPosType == "Temporary")
                         {
                             <MudText Typo="Typo.body2">Temporary Duration</MudText>
-                            <div class="d-flex flex-row gap-2 align-items-center">
+                            <div class="d-flex flex-row gap-2 align-items-center col-6">
                                 <MudTextField @bind-Value="newDuration" Mask="@(new PatternMask("000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                                <MudText Typo="Typo.body2">Month/s</MudText>
+                                <MudText Typo="Typo.body2"><b>Month/s</b></MudText>
                             </div>
                         }
                         <MudDivider DividerType="DividerType.Middle" Class="my-6" />
@@ -283,8 +283,8 @@
                         <div class="flex-grow-1 d-flex justify-content-center">
                             <div class="col6">
                                 <MudRadioGroup @bind-SelectedOption="@newManpower">
-                                    <MudRadio Option="@("Internal")" Color="Color.Secondary">Internal</MudRadio>
-                                    <MudRadio Option="@("External")" Color="Color.Secondary">External</MudRadio>
+                                    <MudRadio Option="@("Internal")" Color="Color.Secondary"><b>Internal</b></MudRadio>
+                                    <MudRadio Option="@("External")" Color="Color.Secondary"><b>External</b></MudRadio>
                                 </MudRadioGroup>
                             </div>
 

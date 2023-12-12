@@ -357,7 +357,19 @@
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Agency</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@Manpower</MudText>
+                                        @if (_position.Manpower == "Internal")
+                                        {
+                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">No Information.</MudText>
+                                        }
+                                        else {
+                                            @foreach (var item in ExternalsL)
+                                            {
+                                                if (item.Id == _position.PosMPExternalId)
+                                                {
+                                                   <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.External_Name</MudText>
+                                                }
+                                            }
+                                        } 
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Status</MudText>

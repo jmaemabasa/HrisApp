@@ -24,30 +24,43 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (area == null)
                 return;
 
-            MudDialog.Close();
-
-            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            if (string.IsNullOrWhiteSpace(area.Name))
             {
-                Title = "Confirmation",
-                Text = "Are you sure you want to update the " + area.Name + "?",
-                Icon = SweetAlertIcon.Question,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Yes",
-                CancelButtonText = "No"
-            });
-
-            if (confirmResult.IsConfirmed)
-            {
-                await AreaService.UpdateArea(area);
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-
-                _toastService.ShowSuccess(area.Name + " Updated Successfully!");
-
-                // Update the areaList using the StateService
-                await AreaService.GetArea();
-                var newAreaList = AreaService.AreaTs;
-                StateService.SetState("AreaList", newAreaList);
+                await ShowErrorMessageBox("Please fill up the area name!");
             }
+            else
+            {
+                MudDialog.Close();
+                var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to update the " + area.Name + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+                if (confirmResult.IsConfirmed)
+                {
+                    await AreaService.UpdateArea(area);
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+
+                    _toastService.ShowSuccess(area.Name + " Updated Successfully!");
+
+                    // Update the areaList using the StateService
+                    await AreaService.GetArea();
+                    var newAreaList = AreaService.AreaTs;
+                    StateService.SetState("AreaList", newAreaList);
+                }
+            }
+        }
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
         }
     }
 }

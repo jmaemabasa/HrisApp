@@ -13,12 +13,7 @@
         {
             if (string.IsNullOrWhiteSpace(newArea))
             {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Warning",
-                    Text = "Please fill up the division name!",
-                    Icon = SweetAlertIcon.Warning,
-                });
+                await ShowErrorMessageBox("Please fill up the area name!");
             }
             else
             {

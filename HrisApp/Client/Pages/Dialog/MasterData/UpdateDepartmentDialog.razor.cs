@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HrisApp.Client.Pages.MasterData;
+using Newtonsoft.Json;
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
@@ -26,29 +27,43 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (department == null)
                 return;
 
-            MudDialog.Close();
-
-            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            if (string.IsNullOrWhiteSpace(department.Name))
             {
-                Title = "Confirmation",
-                Text = "Are you sure you want to update the " + department.Name + "?",
-                Icon = SweetAlertIcon.Question,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Yes",
-                CancelButtonText = "No"
-            });
-
-            if (confirmResult.IsConfirmed)
-            {
-                await DepartmentService.UpdateDepartment(department);
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
-
-                _toastService.ShowSuccess(department.Name + " Updated Successfully!");
-
-                await DepartmentService.GetDepartment();
-                var newList = DepartmentService.DepartmentTs;
-                StateService.SetState("DepartmentList", newList);
+                await ShowErrorMessageBox("Please fill up the department name!");
             }
+            else
+            {
+                MudDialog.Close();
+
+                var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to update the " + department.Name + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+                if (confirmResult.IsConfirmed)
+                {
+                    await DepartmentService.UpdateDepartment(department);
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+                    _toastService.ShowSuccess(department.Name + " Updated Successfully!");
+
+                    await DepartmentService.GetDepartment();
+                    var newList = DepartmentService.DepartmentTs;
+                    StateService.SetState("DepartmentList", newList);
+                }
+            }
+        }
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            bool? result = await _dialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
         }
     }
 }

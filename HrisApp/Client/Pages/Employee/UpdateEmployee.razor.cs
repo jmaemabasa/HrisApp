@@ -91,7 +91,7 @@ namespace HrisApp.Client.Pages.Employee
         #endregion
 
         string VerifyCode;
-        private string Manpower = "";
+        private string NoInformation = "No Information.";
 
         private string ImageData { get; set; }
         private List<string> PDFDataList = new();
@@ -130,8 +130,6 @@ namespace HrisApp.Client.Pages.Employee
             RestDayL = StaticService.RestDayTs;
             await ManpowerService.GetExternal();
             ExternalsL = ManpowerService.PosMPExternalTs;
-            await ManpowerService.GetInternal();
-            InternalsL = ManpowerService.PosMPInternalTs;
         }
 
         protected override async Task OnParametersSetAsync()
@@ -197,6 +195,7 @@ namespace HrisApp.Client.Pages.Employee
                 {
                     employee.Birthdate = Convert.ToDateTime(bday);
                     employee.DateHired = Convert.ToDateTime(DateHired);
+
 
                     await EmployeeService.UpdateEmployee(employee);
                     await AddressService.UpdateAddress(_address);
