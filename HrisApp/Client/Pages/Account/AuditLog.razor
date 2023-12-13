@@ -1,6 +1,8 @@
 ﻿@page "/auditlog"
 @inject IAuditlogService AuditlogService
-@inject AuditlogVM _auditlogVM
+@* @inject AuditlogVM _auditlogVM *@
+@inject IEmployeeService EmployeeService
+@inject IAuthService AuthService
 
 @attribute [Authorize(Roles = "System Administrator")]
 
@@ -18,27 +20,27 @@
 
     <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between" style="padding: 0px 50px 0px 50px;">
             <div class="w-25" >
-                <MudTextField DisableUnderLine @bind-Value="@_auditlogVM.searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+                <MudTextField DisableUnderLine @bind-Value="@searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
              </div>
              <div class="d-flex justify-content-end">
-                 <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@_auditlogVM.DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
+                 <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
              </div>
          </div>
-     @if (_auditlogVM.logsList == null || _auditlogVM.logsList.Count == 0)
+     @if (logsList == null || logsList.Count == 0)
     {
-        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_auditlogVM.isVisible" />
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
 
-        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_auditlogVM.isVisible" />
-        <MudCardContent hidden="@_auditlogVM.isVisible">
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@isVisible" />
+        <MudCardContent hidden="@isVisible">
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
             <MudSkeleton Width="100%" />
         </MudCardContent>
-        <MudCardActions hidden="@_auditlogVM.isVisible">
+        <MudCardActions hidden="@isVisible">
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
         </MudCardActions>
-        @if (_auditlogVM.isVisible == true)
+        @if (isVisible == true)
         {
             <div class="divnodata">
                 <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
@@ -48,7 +50,7 @@
     }
     else
     {
-    <MudTable Class="stable" Items="@_auditlogVM.logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(_auditlogVM.FilterFunc1)">
+    <MudTable Class="stable" Items="@logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(FilterFunc1)">
          <HeaderContent>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
              <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
@@ -59,10 +61,10 @@
              <MudTd>
                      <div class="d-flex flex-column">
                          <MudText Typo="Typo.body2" Style="font-weight: bold; color: #424242;">@log.EmployeeUSer?.FirstName @log.EmployeeUSer?.LastName</MudText>
-                         <MudText Typo="Typo.caption" Style="color: #A6AABA;">@_auditlogVM.GetRole(log.EmployeeUserId)</MudText>
+                         <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.EmployeeUserId)</MudText>
                      </div>
              </MudTd>
-            <MudTd Style=""><span class="@_auditlogVM.ActionColor(log.Action)">@log.Action</span></MudTd>
+            <MudTd Style=""><span class="@ActionColor(log.Action)">@log.Action</span></MudTd>
              <MudTd>@log.Type</MudTd>
              <MudTd>
                 <div class="d-flex flex-column">
@@ -72,23 +74,16 @@
              </MudTd>
         </RowTemplate>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {@_auditlogVM.infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {@infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
         </PagerContent>
     </MudTable>
     }
 </div>
 
 @code {
-    protected override async Task OnInitializedAsync()
-    {
-       await _auditlogVM.OnRefreshPage();
-    }
-
-    public async void OpenOverlay()
-    {
-        _auditlogVM.isVisible = false;
-        await Task.Delay(2000);
-        _auditlogVM.isVisible = true;
-    }
+    // protected override async Task OnInitializedAsync()
+    // {
+    //    await OnRefreshPage();
+    // }
     
 }

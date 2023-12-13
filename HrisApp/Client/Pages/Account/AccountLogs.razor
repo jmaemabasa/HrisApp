@@ -131,6 +131,7 @@
             .OrderByDescending(log => log.Date)
             .ToList();
 
+        Console.WriteLine(_dateRange.Start + " " + _dateRange.End);
         if (logsList == null || logsList.Count() == 0)
         {
             OpenOverlay();

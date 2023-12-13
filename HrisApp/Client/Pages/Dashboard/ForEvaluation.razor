@@ -5,14 +5,14 @@
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
 
-<PageTitle>Evaluation</PageTitle>
+<PageTitle>Performance Evaluation</PageTitle>
 
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <div class="d-flex align-items-center">    
             <MudIcon Icon="@Icons.Material.TwoTone.ContentPasteSearch" Style="font-size: 2.2em;margin-right: 10px;color: #E38D0F;" />
-            <span style="font-size: x-large;font-weight: 600;color: #424242;">Employees For Evaluation : <span style="color: #E38D0F">@_totalCountEval</span></span>
+            <span style="font-size: x-large;font-weight: 600;color: #424242;">Employees For Performance Evaluation : <span style="color: #E38D0F">@_totalCountEval</span></span>
         </div>
         <span style="font-size: x-large; color: #424242;">@DateTime.Now.ToString("dddd, dd MMMM yyyy")</span>
     </div>
@@ -23,11 +23,11 @@
         <MudItem xs="12">
             <div>
                 <fieldset class="p-3">
-                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 1st Month</legend>
+                    <legend class="float-none w-auto p-2 mb-0">For Performance Evaluation | 1st Month</legend>
                     @* <span class="evaltitle">Evaluations for First Month</span> *@
                     @if (EmpFirstEval == null || EmpFirstEval.Count == 0)
                     {
-                        <span class="evaltitle">No Employees for Evaluation.</span>
+                        <span class="evaltitle">No employees for performance evaluation.</span>
                     }
                     else
                     {
@@ -89,11 +89,11 @@
         <MudItem xs="12">
             <div>
                 <fieldset class="p-3">
-                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 2nd Month</legend>
+                    <legend class="float-none w-auto p-2 mb-0">For Performance Evaluation | 2nd Month</legend>
                     @* <span class="evaltitle">Evaluations for First Month</span> *@
                     @if (EmpSecondEval == null || EmpSecondEval.Count == 0)
                     {
-                        <span class="evaltitle">No Employees for Evaluation.</span>
+                        <span class="evaltitle">No employees for performance evaluation.</span>
                     }
                     else
                     {
@@ -154,11 +154,11 @@
         <MudItem xs="12">
             <div>
                 <fieldset class="p-3">
-                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 3rd Month</legend>
+                    <legend class="float-none w-auto p-2 mb-0">For Performance Evaluation | 3rd Month</legend>
                     @* <span class="evaltitle">Evaluations for First Month</span> *@
                     @if (EmpThirdEval == null || EmpThirdEval.Count == 0)
                     {
-                        <span class="evaltitle">No Employees for Evaluation.</span>
+                        <span class="evaltitle">No employees for performance evaluation.</span>
                     }
                     else
                     {
@@ -219,11 +219,11 @@
         <MudItem xs="12">
             <div>
                 <fieldset class="p-3">
-                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 4th Month</legend>
+                    <legend class="float-none w-auto p-2 mb-0">For Performance Evaluation | 4th Month</legend>
                     @* <span class="evaltitle">Evaluations for First Month</span> *@
                     @if (EmpFourthEval == null || EmpFourthEval.Count == 0)
                     {
-                        <span class="evaltitle">No Employees for Evaluation.</span>
+                        <span class="evaltitle">No employees for performance evaluation.</span>
                     }
                     else
                     {
@@ -284,11 +284,11 @@
         <MudItem xs="12">
             <div>
                 <fieldset class="p-3">
-                    <legend class="float-none w-auto p-2 mb-0">Evaluations for 5th Month</legend>
+                    <legend class="float-none w-auto p-2 mb-0">For Performance Evaluation | 5th Month</legend>
                     @* <span class="evaltitle">Evaluations for First Month</span> *@
                     @if (EmpFifthEval == null || EmpFifthEval.Count == 0)
                     {
-                        <span class="evaltitle">No Employees for Evaluation.</span>
+                        <span class="evaltitle">No employees for performance evaluation.</span>
                     }
                     else
                     {
@@ -349,11 +349,11 @@
         <MudItem xs="12">
             <div>
                 <fieldset class="p-3">
-                    <legend class="float-none w-auto p-2 mb-0">For Evaluations | 6th Month</legend>
+                    <legend class="float-none w-auto p-2 mb-0">For Performance Evaluation | 6th Month</legend>
                     @* <span class="evaltitle">Evaluations for First Month</span> *@
                     @if (EmpSixEval == null || EmpSixEval.Count == 0)
                     {
-                        <span class="evaltitle">No Employees for Evaluation.</span>
+                        <span class="evaltitle">No employees for performance evaluation.</span>
                     }
                     else
                     {
