@@ -28,7 +28,7 @@ namespace HrisApp.Server.Controllers.ImageC
                 if (model == null)
                 {
                     //not found dapat ni
-                    return Ok("No image available");
+                    return NoContent();
                 }
 
                 var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);

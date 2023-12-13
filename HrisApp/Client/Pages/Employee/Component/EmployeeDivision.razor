@@ -1,0 +1,22 @@
+﻿@inject IEmployeeService EmployeeService
+
+<div>@employee.Division?.Name</div>
+
+@code {
+    [Parameter]
+    public string verify { get; set; }
+
+    EmployeeT employee = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("");
+        }
+    }
+}

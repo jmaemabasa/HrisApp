@@ -34,7 +34,6 @@ namespace HrisApp.Client.Services.ImageService
         public async Task AttachFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify)
         {
             Console.WriteLine($"Multipart={formdata.Count()}, EmployId={EmployeeId}, DivisionId={division}, Department={department},Lastname={lastname}, VerifyId={verify}");
-            Console.WriteLine(formdata);
             try
             {
                 var response = await _httpClient.PostAsync($"/api/Image/PostUploadImage?EmployeeId={EmployeeId}&division={division}&department={department}&lastname={lastname}&verify={verify}", formdata);
@@ -81,11 +80,11 @@ namespace HrisApp.Client.Services.ImageService
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception occurred while fetching PDF data: {ex.Message}");
-                foreach (var area in DocumentTs)
-                {
-                    Console.WriteLine($"verify Id: {area.Verify_Id}, Name: {area.EmployeeNo}");
-                }
+                ////Console.WriteLine($"Exception occurred while fetching PDF data: {ex.Message}");
+                //foreach (var area in DocumentTs)
+                //{
+                //    Console.WriteLine($"verify Id: {area.Verify_Id}, Name: {area.EmployeeNo}");
+                //}
                 return null;
             }
         }

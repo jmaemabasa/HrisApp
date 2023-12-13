@@ -95,7 +95,7 @@ namespace HrisApp.Server.Controllers.ImageC
 
             if (models.Count == 0)
             {
-                return NotFound("No PDFs available");
+                return NoContent();
             }
 
             var pdfList = new List<byte[]>();

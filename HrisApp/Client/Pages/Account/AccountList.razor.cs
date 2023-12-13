@@ -69,6 +69,9 @@ namespace HrisApp.Client.Pages.Account
                 return true;
             if (user.LoginStatus.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if (user.Username.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            
             return false;
         }
 
