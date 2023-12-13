@@ -78,13 +78,14 @@
         private bool isVisible;
         public async void OpenOverlay()
         {
-            isVisible = true;
-            await Task.Delay(3000);
             isVisible = false;
+            await Task.Delay(2000);
+            isVisible = true;
             StateHasChanged();
         }
 
         //TABLEEES
+        #region Tables
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
         List<PositionT> positionList = new();
@@ -103,6 +104,7 @@
             return false;
         }
         //END FOR TABLES
+        #endregion
 
         //DROPDOWN SEARCH LIST
         private int divdd;
@@ -111,7 +113,6 @@
 
         private async Task searchh(int div)
         {
-            await Task.Delay(10);
             if (div == 0)
             {
                 await PositionService.GetPosition();
@@ -127,13 +128,14 @@
                 await PositionService.GetPosByDivision(div);
                 positionList = PositionService.PositionTs.Where(d => d.DivisionId == divdd).ToList();
             }
-
+            if (positionList == null || positionList.Count == 0)
+            {
+                OpenOverlay();
+            }
         }
-
 
         private async Task searchh1(int dep)
         {
-            await Task.Delay(10);
             if (divdd != 0)
             {
                 if (dep == 0)
@@ -150,11 +152,15 @@
                     depdd = dep;
                 }
             }
+
+            if (positionList == null || positionList.Count == 0)
+            {
+                OpenOverlay();
+            }
         }
 
         private async Task searchh2(int sec)
         {
-            await Task.Delay(10);
             //if ang value sa section na dd kay dli 0, then i display tanan section sa department id
             if (sec == 0)
             {
@@ -168,6 +174,10 @@
                 positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
 
                 secdd = sec;
+            }
+            if (positionList == null || positionList.Count == 0)
+            {
+                OpenOverlay();
             }
         }
         //END DROPDOWN SEARCH   

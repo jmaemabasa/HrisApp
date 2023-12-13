@@ -79,11 +79,6 @@
         }
 
         public bool isVisible;
-        public async void OpenOverlay()
-        {
-            isVisible = true;
-            await Task.Delay(3000);
-            isVisible = false;
-        }
+        
     }
 }

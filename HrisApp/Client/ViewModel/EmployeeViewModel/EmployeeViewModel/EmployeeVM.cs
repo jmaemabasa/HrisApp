@@ -82,7 +82,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string CmbDivText = "All Division";
         public string CmbStatusText = "All Status";
         public string CmbDaateHiredText = "All";
-        public void CmbDateHired(string type)
+        public async void CmbDateHired(string type)
         {
             DateTime today = DateTime.Today;
 
@@ -470,7 +470,12 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         //LOADING
         public bool _isVisible;
-
+        public async void OpenOverlay()
+        {
+            _isVisible = true;
+            await Task.Delay(3000);
+            _isVisible = false;
+        }
         public string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))

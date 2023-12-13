@@ -166,3 +166,18 @@ canvas {
 .popMenu {
     border-radius: 10px;
 }
+
+
+
+/*NO DATA*/
+.divnodata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.nodataspan {
+    font-weight: bold;
+    font-size: 2em;
+    color: #465C8D;
+}

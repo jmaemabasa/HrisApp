@@ -55,20 +55,25 @@
      </div>
     @if (sectionList == null || sectionList.Count == 0)
     {
-        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
-        <MudCardContent>
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@isVisible" />
+        <MudCardContent hidden="@isVisible">
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
             <MudSkeleton Width="100%" />
         </MudCardContent>
-        <MudCardActions>
+        <MudCardActions hidden="@isVisible">
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
         </MudCardActions>
-        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
-            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
-        </MudOverlay>
+        @if (isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
     }
     else
     {

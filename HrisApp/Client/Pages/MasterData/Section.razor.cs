@@ -59,9 +59,9 @@
         private bool isVisible;
         public async void OpenOverlay()
         {
-            isVisible = true;
-            await Task.Delay(3000);
             isVisible = false;
+            await Task.Delay(2000);
+            isVisible = true;
             StateHasChanged();
         }
 
@@ -103,7 +103,10 @@
                 sectionList = SectionService.SectionTs;
                 divdd = div;
             }
-
+            if (sectionList == null || sectionList.Count == 0)
+            {
+                OpenOverlay();
+            }
         }
         private async Task searchh1(int dep)
         {
@@ -118,7 +121,10 @@
                 await SectionService.GetSectByDepartment(dep);
                 sectionList = SectionService.SectionTs.Where(d => d.DivisionId == divdd).ToList();
             }
-
+            if (sectionList == null || sectionList.Count == 0)
+            {
+                OpenOverlay();
+            }
         }
 
         //END DROPDOWN SEARCH LIST

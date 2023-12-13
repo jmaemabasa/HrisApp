@@ -394,6 +394,11 @@ namespace HrisApp.Client.Pages.Dashboard
             {
                 BackgroundColor = new[]
                     {
+                        ColorUtil.ColorHexString(66, 125, 157),
+                        ColorUtil.ColorHexString(255, 152, 0),
+                        ColorUtil.ColorHexString(154, 152, 227),
+                        ColorUtil.ColorHexString(233, 119, 119),
+                        ColorUtil.ColorHexString(209, 128, 196),
                         ColorUtil.RandomColorString(),
                         ColorUtil.RandomColorString(),
                         ColorUtil.RandomColorString(),

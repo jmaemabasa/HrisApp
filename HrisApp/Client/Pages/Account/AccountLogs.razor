@@ -35,20 +35,25 @@
          </div>
      @if (logsList == null || logsList.Count() == 0)
     {
-        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
-        <MudCardContent>
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@isVisible" />
+        <MudCardContent hidden="@isVisible">
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
             <MudSkeleton Width="100%" />
         </MudCardContent>
-        <MudCardActions>
+        <MudCardActions hidden="@isVisible">
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
         </MudCardActions>
-        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
-            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
-        </MudOverlay>
+        @if (isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
     }
     else
     {
@@ -125,6 +130,11 @@
             .Where(log => log.EmployeeUserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
             .OrderByDescending(log => log.Date)
             .ToList();
+
+        if (logsList == null || logsList.Count() == 0)
+        {
+            OpenOverlay();
+        }
     }
 
     public void BackBtn() => _navigationManager.NavigateTo("/accounts");
@@ -166,9 +176,10 @@
     private bool isVisible;
     public async void OpenOverlay()
     {
-        isVisible = true;
-        await Task.Delay(3000);
         isVisible = false;
+        await Task.Delay(2000);
+        isVisible = true;
+        Console.WriteLine(isVisible);
         StateHasChanged();
     }
 }
