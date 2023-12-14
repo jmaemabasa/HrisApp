@@ -205,6 +205,11 @@
             }
 
             TitleCountText = _dateRange.Start == null && _dateRange.End == null ? "As of " + DateTime.Now.ToString("dddd, dd MMMM yyyy") : type == "yesterday" ? "Yesterday, " + _dateRange?.Start?.ToString("dddd, dd MMMM yyyy") : (_dateRange?.Start?.ToString("MMM dd, yyyy") + " - " + _dateRange?.End?.ToString("MMM dd, yyyy"));
+
+            if (_employeeList == null || _employeeList.Count == 0)
+            {
+                OpenOverlay();
+            }
         }
 
         public void CmbDivision(int div)
@@ -241,6 +246,11 @@
                     {
                         _employeeList = EmployeeService.EmployeeTs.Where(e => e.DivisionId == div && (e.DateHired <= _dateRange.End) && (e.DateInactiveStatus == null || e.DateInactiveStatus >= _dateRange.End)).ToList();
                     }
+            }
+
+            if (_employeeList == null || _employeeList.Count == 0)
+            {
+                OpenOverlay();
             }
         }
 
@@ -281,6 +291,10 @@
 
             TitleCountText = (_dateRange?.Start?.ToString("MMM dd, yyyy") + " - " + _dateRange?.End?.ToString("MMM dd, yyyy"));
 
+            if (_employeeList == null || _employeeList.Count == 0)
+            {
+                OpenOverlay();
+            }
         }
 
         #endregion
@@ -310,7 +324,13 @@
 
         //LOADING
         public bool _isVisible;
-
+        public async void OpenOverlay()
+        {
+            _isVisible = false;
+            await Task.Delay(2000);
+            _isVisible = true;
+            StateHasChanged();
+        }
         public string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))

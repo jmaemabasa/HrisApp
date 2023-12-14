@@ -5,9 +5,9 @@
         <EmployeeAvatar verify="@verify" />
     </div>
     <div>
-        <div class="flex-column">
-            <div>@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
-            <div style="font-weight: bold;">@employee.Position?.Name</div>
+        <div class="flex-column" >
+            <div style="font-weight: bold;">@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
+            <div >@employee.Position?.Name</div>
         </div>
     </div>
 </div>

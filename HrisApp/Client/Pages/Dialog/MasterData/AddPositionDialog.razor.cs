@@ -100,7 +100,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     ConfirmButtonText = "Yes",
                     CancelButtonText = "No"
                 });
-
                 if (result.IsConfirmed)
                 {
                     await CreatePositionPerDepOrSect();

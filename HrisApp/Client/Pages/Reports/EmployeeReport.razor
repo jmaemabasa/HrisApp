@@ -97,12 +97,19 @@
         <MudCardContent hidden="@_isVisible">
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
-            <MudSkeleton Width= "100%" />
+            <MudSkeleton Width="100%" />
         </MudCardContent>
-        <MudCardActions hidden="@_isVisible" >
+        <MudCardActions hidden="@_isVisible">
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
-        </MudCardActions  Visible="@_isVisible">
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
     }
     else
     {
@@ -188,7 +195,7 @@
                  </MudTd> *@
              </RowTemplate>
              <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
              </PagerContent>
          </MudTable>
     } 

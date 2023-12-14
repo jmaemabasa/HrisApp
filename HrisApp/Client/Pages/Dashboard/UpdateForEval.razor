@@ -3,6 +3,7 @@
 @inject IForEvalService ForEvalService
 @inject StateService StateService
 @inject NavigationManager NavManager
+@inject IDivisionService DivisionService
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
 
@@ -19,6 +20,20 @@
 </div>
 
 <div class="box w-auto">
+    <div class="d-flex align-items-center gap-3 mb-2">
+        <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
+            <ActivatorContent>
+                <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                @foreach (var item in DivisionsL)
+                {
+                    <MudMenuItem OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                }
+            </ChildContent>
+        </MudMenu>
+    </div>
     @if (EvalList.Count() == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
@@ -43,7 +58,7 @@
     }
     else
     {
-        <MudTable Class="stable" Items="@EvalList" Context="employe1" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="739px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+        <MudTable Class="stable" Items="@EvalList" Context="employe1" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="690px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
             <HeaderContent>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Full Name</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
@@ -61,7 +76,7 @@
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Full Name" Class="col-2">
-                    <EmployeeName verify="@employe1.Verify_Id" />
+                    <EmployeeNamePosition verify="@employe1.Verify_Id" />
                 </MudTd>
                 <MudTd DataLabel="">@employe1.DateHired.ToString("MM/dd/yyyy")</MudTd>
                 <MudTd DataLabel="" Class="" Style="text-align: center;">
@@ -144,6 +159,8 @@
 @code {
     public List<Emp_EvaluationT> EvalList = new();
     Emp_EvaluationT UpdateEval = new();
+    public List<DivisionT> DivisionsL = new();
+    public List<EmployeeT> EmployeesL = new();
 
     bool isUpdate { get; set; }
     public string searchString = "";
@@ -157,6 +174,11 @@
         {
             OpenOverlay();
         }
+
+        await DivisionService.GetDivision();
+        DivisionsL = DivisionService.DivisionTs;
+
+        await EmployeeService.GetEmployee();
     }
 
     private async Task LoadList()
@@ -209,5 +231,49 @@
         await Task.Delay(2000);
         isVisible = true;
         StateHasChanged();
+    }
+
+
+    public string CmbDivText = "All Division";
+    public void CmbDivision(int div)
+    {
+        //    _dateRange.Start = null;
+        //    _dateRange.End = null;
+
+        if (div == 0)
+        {
+            CmbDivText = "All Division";
+            EvalList = ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done" && e.EvalStatus != "Inactive").ToList();
+        }
+        else
+        {
+            foreach (var e in DivisionsL)
+            {
+                if (e.Id == div)
+                {
+                    CmbDivText = e.Name;
+                }
+            }
+
+            EmployeesL = EmployeeService.EmployeeTs.Where(x => x.Division?.Name == CmbDivText).ToList();
+
+            List<Emp_EvaluationT> dummy = new();
+            foreach (var item in EmployeesL)
+            {
+                foreach (var val in ForEvalService.Emp_EvaluationTs)
+                {
+                    if (val.Verify_Id == item.Verify_Id)
+                    {
+                        dummy.Add(val);
+                    }
+                }
+            }
+            EvalList = dummy.Where(e => e.EvalStatus != "Done" && e.EvalStatus != "Inactive").ToList();
+        }
+
+        if (EvalList == null || EvalList.Count == 0)
+        {
+            OpenOverlay();
+        }
     }
 }
