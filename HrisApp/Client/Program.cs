@@ -118,6 +118,7 @@ builder.Services.AddTransient<JMColors>();
 
 builder.Services.AddTransient<DTOEmployeeExport>();
 builder.Services.AddTransient<DTOEmpHeadcountExport>();
+builder.Services.AddTransient<DTOEmployeeData>();
 
 
 //VIEWMODEL

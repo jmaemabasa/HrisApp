@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using MudBlazor;
+using Newtonsoft.Json;
+using NPOI.HPSF;
 
 namespace HrisApp.Client.Pages.Employee
 {
@@ -159,7 +161,32 @@ namespace HrisApp.Client.Pages.Employee
 
             bday = employee.Birthdate;
             DateHired = employee.DateHired;
-            
+
+           
+        }
+
+        public async Task OnExporttoPDF()
+        {
+            try
+            {
+                //var fileBytes = await EmployeeService.EmpDetailsPrint(employee.Verify_Id);
+                //Console.WriteLine(fileBytes);
+                //if (fileBytes.ReasonPhrase == "OK")
+                //{
+                //    var jsScript = $"openPdfInNewTab('{employee.Verify_Id}')";
+
+                //    // Invoke the JavaScript function using JSRuntime
+                //    await JSRuntime.InvokeVoidAsync("eval", jsScript);
+                //}
+
+                string url = await EmployeeService.EmpDetailsGenerate(employee.Verify_Id);
+                await JSRuntime.InvokeAsync<object>("open", url, "_blank");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //NavigateError();
+            }
         }
 
         protected async Task SaveUpdateEmployee()

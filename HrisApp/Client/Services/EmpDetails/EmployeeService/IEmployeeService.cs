@@ -15,6 +15,7 @@
 
         Task<int> GetCountEmployee();
 
-
+        Task<HttpResponseMessage> EmpDetailsPrint(string verid);
+        Task<string> EmpDetailsGenerate(string verid);
     }
 }

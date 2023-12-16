@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HrisApp.Client", "HrisApp\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HrisApp.Shared", "HrisApp\Shared\HrisApp.Shared.csproj", "{ADEE8653-DA5A-4E07-97B0-E0DFFA8EA3A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormForRDLCDesign", "WindowsFormForRDLCDesign\WindowsFormForRDLCDesign.csproj", "{585387CE-3493-43E5-837E-C34955D252CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{ADEE8653-DA5A-4E07-97B0-E0DFFA8EA3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADEE8653-DA5A-4E07-97B0-E0DFFA8EA3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADEE8653-DA5A-4E07-97B0-E0DFFA8EA3A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{585387CE-3493-43E5-837E-C34955D252CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{585387CE-3493-43E5-837E-C34955D252CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{585387CE-3493-43E5-837E-C34955D252CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{585387CE-3493-43E5-837E-C34955D252CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

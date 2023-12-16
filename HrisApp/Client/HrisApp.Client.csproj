@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <None Remove="Pages\Employee\AddEmployee.razor~RF10a0ef54.TMP" />
+    <None Remove="Pages\Employee\UpdateEmployee.razor~RFfd9481.TMP" />
   </ItemGroup>
 
   <ItemGroup>

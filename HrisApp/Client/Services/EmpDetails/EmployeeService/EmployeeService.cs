@@ -105,5 +105,40 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             return response;
         }
 
+
+        public async Task<HttpResponseMessage> EmpDetailsPrint(string verid)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Report/GetReport?verid={verid}");
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"HttpResponse : {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<string> EmpDetailsGenerate(string verid)
+        {
+            try
+            {
+                var result = await EmpDetailsPrint(verid);
+                var url = result.RequestMessage.RequestUri.ToString();
+                return url;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"String Response : {ex.Message}");
+                return null;
+            }
+        }
+
+
+
+
     }
 }
