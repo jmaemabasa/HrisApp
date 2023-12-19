@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_OtherEducT" targetNamespace="http://tempuri.org/dsEmp_OtherEducT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_OtherEducT.xsd" xmlns="http://tempuri.org/dsEmp_OtherEducT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_OtherEducT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsEmp_OtherEducT" msprop:Generator_DataSetName="dsEmp_OtherEducT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_OtherEducT" msprop:Generator_RowEvHandlerName="dsEmp_OtherEducTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_OtherEducTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_OtherEducTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_OtherEducTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_OtherEducT" msprop:Generator_RowChangedName="dsEmp_OtherEducTRowChanged" msprop:Generator_RowChangingName="dsEmp_OtherEducTRowChanging" msprop:Generator_TableClassName="dsEmp_OtherEducTDataTable" msprop:Generator_RowClassName="dsEmp_OtherEducTRow" msprop:Generator_TableVarName="tabledsEmp_OtherEducT" msprop:Generator_UserTableName="dsEmp_OtherEducT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="OthersSchoolType" msprop:Generator_ColumnPropNameInRow="OthersSchoolType" msprop:Generator_ColumnPropNameInTable="OthersSchoolTypeColumn" msprop:Generator_ColumnVarNameInTable="columnOthersSchoolType" msprop:Generator_UserColumnName="OthersSchoolType" type="xs:string" minOccurs="0" />
+              <xs:element name="OthersSchoolName" msprop:Generator_ColumnPropNameInRow="OthersSchoolName" msprop:Generator_ColumnPropNameInTable="OthersSchoolNameColumn" msprop:Generator_ColumnVarNameInTable="columnOthersSchoolName" msprop:Generator_UserColumnName="OthersSchoolName" type="xs:string" minOccurs="0" />
+              <xs:element name="OthersSchoolLoc" msprop:Generator_ColumnPropNameInRow="OthersSchoolLoc" msprop:Generator_ColumnPropNameInTable="OthersSchoolLocColumn" msprop:Generator_ColumnVarNameInTable="columnOthersSchoolLoc" msprop:Generator_UserColumnName="OthersSchoolLoc" type="xs:string" minOccurs="0" />
+              <xs:element name="OthersAward" msprop:Generator_ColumnPropNameInRow="OthersAward" msprop:Generator_ColumnPropNameInTable="OthersAwardColumn" msprop:Generator_ColumnVarNameInTable="columnOthersAward" msprop:Generator_UserColumnName="OthersAward" type="xs:string" minOccurs="0" />
+              <xs:element name="OthersSchoolYear" msprop:Generator_ColumnPropNameInRow="OthersSchoolYear" msprop:Generator_ColumnPropNameInTable="OthersSchoolYearColumn" msprop:Generator_ColumnVarNameInTable="columnOthersSchoolYear" msprop:Generator_UserColumnName="OthersSchoolYear" type="xs:string" minOccurs="0" />
+              <xs:element name="OthersCourse" msprop:Generator_ColumnPropNameInRow="OthersCourse" msprop:Generator_ColumnPropNameInTable="OthersCourseColumn" msprop:Generator_ColumnVarNameInTable="columnOthersCourse" msprop:Generator_UserColumnName="OthersCourse" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

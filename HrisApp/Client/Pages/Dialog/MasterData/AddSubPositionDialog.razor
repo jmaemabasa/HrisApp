@@ -1,0 +1,209 @@
+﻿@inject ISectionService SectionService
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+@inject IPositionService PositionService
+@inject IAreaService AreaService
+@inject IToastService _toastService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+@inject StateService StateService
+@inject IDialogService _dialogService
+
+<MudDialog>
+    <DialogContent>
+        @* Select Division *@
+        <div class="d-flex flex-column divcont">
+            <div class="d-flex flex-column">
+                <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">Division</MudText>
+                    <MudSelect @bind-Value="selectedDivision" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                        <MudSelectItem Disabled="true" Value="0">---Select Division---</MudSelectItem>
+                        @foreach (var div in Division)
+                        {
+                            <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+                @if (selectedDivision != 0)
+                {
+                    var selectedCategoryObject = Division.FirstOrDefault(c => c.Id == selectedDivision);
+                    if (selectedCategoryObject != null)
+                    {
+                        var departments = Department.Where(d => d.DivisionId == selectedCategoryObject.Id).ToList();
+                        @* Select Department *@
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Department</MudText>
+                            <MudSelect @bind-Value="selectedDepartment" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="0">---Select Department---</MudSelectItem>
+                                @foreach (var department in departments)
+                                {
+                                    <MudSelectItem Value="@department.Id">@department.Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
+                    }
+                }
+
+                @if (selectedDepartment != 0)
+                {
+                var departmentHasSections = Sections.Any(s => s.DepartmentId == selectedDepartment);
+                    if (departmentHasSections)
+                    {
+                        var departmentSections = Sections.Where(s => s.DepartmentId == selectedDepartment).ToList();
+                        @* Select Section *@
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Section</MudText>
+                            <MudSelect @bind-Value="selectedSection" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                <MudSelectItem Disabled="true" Value="0">---Select Section---</MudSelectItem>
+                                @foreach (var sec in departmentSections)
+                                {
+                                    <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
+
+                        if (selectedSection != 0)
+                        {
+                            <div class="flex-grow-1">
+                                <MudText Typo="Typo.body2">Position</MudText>
+                                <MudSelect @bind-Value="selectedPos" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                    <MudSelectItem Disabled="true" Value="0">---Select Position---</MudSelectItem>
+                                    @foreach (var div in Positions.Where(x => x.DivisionId == selectedDivision && x.DepartmentId == selectedDepartment && x.SectionId == selectedSection))
+                                    {
+                                        <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </div>
+                            <div class="flex-grow-1">
+                                <MudText Typo="Typo.body2">No. of Personnel Required</MudText>
+                                <MudTextField @bind-Value="Roles_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Position</MudText>
+                            <MudSelect T="int" ValueChanged="PosChange" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="0">---Select Position---</MudSelectItem>
+                                @foreach (var div in Positions.Where(x => x.DivisionId == selectedDivision && x.DepartmentId == selectedDepartment))
+                                {
+                                    <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">No. of Personnel Required</MudText>
+                            <MudTextField @bind-Value="Roles_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                        </div>
+                    }
+                }
+
+               
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Class="btnadd" @onclick="ConfirmCreatePositionAsync">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private int selectedPos = 0;
+    private int selectedDivision = 0;
+    private int selectedDepartment = 0;
+    private int selectedSection = 0;
+    private int selectedArea = 0;
+
+
+
+    private List<DepartmentT> Department = new();
+    private List<DivisionT> Division = new();
+    private List<SectionT> Sections = new();
+    private List<PositionT> Positions = new();
+    private List<AreaT> Areas = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await DivisionService.GetDivision();
+        Division = DivisionService.DivisionTs;
+
+        await DepartmentService.GetDepartment();
+        Department = DepartmentService.DepartmentTs;
+
+        await SectionService.GetSection();
+        Sections = SectionService.SectionTs;
+
+        await PositionService.GetPosition();
+        Positions = PositionService.PositionTs;
+
+        await AreaService.GetArea();
+        Areas = AreaService.AreaTs;
+
+    }
+    void Cancel() => MudDialog.Cancel();
+
+    private async Task ConfirmCreatePositionAsync()
+    {
+        //MudDialog.Close();
+        MudDialog.Close();
+        await PositionService.CreateSubPosition(Roles_Code, Roles_Desc, "Use");
+
+        _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
+        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+    }
+
+
+    string Roles_Code = "";
+    string Roles_Desc = "";
+    private async Task OnGenerateCode()
+    {
+        await Task.Delay(10);
+        string _rolesCode = string.Empty;
+        var selectedposcode = Positions.Where(x => x.Id == selectedPos).Select(x => x.PosCode).FirstOrDefault();
+        int _existCount = await PositionService.GetExistingSubPos(selectedposcode);
+        var _rolesubcode = selectedposcode = Positions.Where(x => x.Id == selectedPos).Select(x => x.PosCode).FirstOrDefault();
+        Roles_Code = Convert.ToString(_existCount);
+        Roles_Desc = Positions.Where(x => x.Id == selectedPos).Select(x => x.Name).FirstOrDefault();
+        var _countLenght = _existCount.ToString().Length;
+
+        if (_existCount.Equals(0))
+        {
+            var ifCounts = _existCount + 1;
+            _rolesCode = $"{_rolesubcode}00{ifCounts}";
+        }
+        else
+        {
+            switch (_countLenght)
+            {
+                default:
+                    var _countDefault = _existCount + 1;
+                    _rolesCode = $"{_rolesubcode}{_countDefault}";
+                    break;
+
+                case 1:
+                    var _countOne = _existCount + 1;
+                    _rolesCode = $"{_rolesubcode}00{_countOne}";
+                    break;
+
+                case 2:
+                    var _countTwo = _existCount + 1;
+                    _rolesCode = $"{_rolesubcode}0{_countTwo}";
+                    break;
+            }
+        }
+
+        Roles_Code = _rolesCode;
+    }
+
+    private async Task PosChange(int id)
+    {
+        await Task.Delay(10);
+        selectedPos = id;
+        await OnGenerateCode();
+    }
+}

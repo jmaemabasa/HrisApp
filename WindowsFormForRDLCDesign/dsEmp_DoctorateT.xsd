@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_DoctorateT" targetNamespace="http://tempuri.org/dsEmp_DoctorateT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_DoctorateT.xsd" xmlns="http://tempuri.org/dsEmp_DoctorateT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_DoctorateT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsEmp_DoctorateT" msprop:Generator_DataSetName="dsEmp_DoctorateT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_DoctorateT" msprop:Generator_RowEvHandlerName="dsEmp_DoctorateTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_DoctorateTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_DoctorateTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_DoctorateTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_DoctorateT" msprop:Generator_RowChangedName="dsEmp_DoctorateTRowChanged" msprop:Generator_RowChangingName="dsEmp_DoctorateTRowChanging" msprop:Generator_TableClassName="dsEmp_DoctorateTDataTable" msprop:Generator_RowClassName="dsEmp_DoctorateTRow" msprop:Generator_TableVarName="tabledsEmp_DoctorateT" msprop:Generator_UserTableName="dsEmp_DoctorateT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DocSchoolName" msprop:Generator_ColumnPropNameInRow="DocSchoolName" msprop:Generator_ColumnPropNameInTable="DocSchoolNameColumn" msprop:Generator_ColumnVarNameInTable="columnDocSchoolName" msprop:Generator_UserColumnName="DocSchoolName" type="xs:string" minOccurs="0" />
+              <xs:element name="DocSchoolLoc" msprop:Generator_ColumnPropNameInRow="DocSchoolLoc" msprop:Generator_ColumnPropNameInTable="DocSchoolLocColumn" msprop:Generator_ColumnVarNameInTable="columnDocSchoolLoc" msprop:Generator_UserColumnName="DocSchoolLoc" type="xs:string" minOccurs="0" />
+              <xs:element name="DocAward" msprop:Generator_ColumnPropNameInRow="DocAward" msprop:Generator_ColumnPropNameInTable="DocAwardColumn" msprop:Generator_ColumnVarNameInTable="columnDocAward" msprop:Generator_UserColumnName="DocAward" type="xs:string" minOccurs="0" />
+              <xs:element name="DocSchoolYear" msprop:Generator_ColumnPropNameInRow="DocSchoolYear" msprop:Generator_ColumnPropNameInTable="DocSchoolYearColumn" msprop:Generator_ColumnVarNameInTable="columnDocSchoolYear" msprop:Generator_UserColumnName="DocSchoolYear" type="xs:string" minOccurs="0" />
+              <xs:element name="DocCourse" msprop:Generator_ColumnPropNameInRow="DocCourse" msprop:Generator_ColumnPropNameInTable="DocCourseColumn" msprop:Generator_ColumnVarNameInTable="columnDocCourse" msprop:Generator_UserColumnName="DocCourse" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

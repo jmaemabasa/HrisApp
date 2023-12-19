@@ -362,5 +362,33 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             var response = await result.Content.ReadFromJsonAsync<List<PositionEducT>>();
             PositionEducTs = response;
         }
+
+        public async Task<int> GetExistingPos(int divid, int depid, int secid)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingPos/{divid}/{depid}/{secid}");
+            return result;
+        }
+        public async Task<int> GetExistingSubPos(string poscode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingSubPos/{poscode}");
+            return result;
+        }
+
+        public async Task CreateSubPosition(string subposcode, string desc,string status)
+        {
+            SubPositionT newPosition = new()
+            {
+                SubPosCode = subposcode,
+                Description = desc,
+                Status = status
+            };
+
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreateSubPosition", newPosition);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Error: " + errorMessage);
+            }
+        }
     }
 }

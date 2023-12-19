@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsAddressT" targetNamespace="http://tempuri.org/dsAddressT.xsd" xmlns:mstns="http://tempuri.org/dsAddressT.xsd" xmlns="http://tempuri.org/dsAddressT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsAddressT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsAddressT" msprop:Generator_DataSetName="dsAddressT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsAddressT" msprop:Generator_RowEvHandlerName="dsAddressTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsAddressTRowDeleted" msprop:Generator_RowDeletingName="dsAddressTRowDeleting" msprop:Generator_RowEvArgName="dsAddressTRowChangeEvent" msprop:Generator_TablePropName="_dsAddressT" msprop:Generator_RowChangedName="dsAddressTRowChanged" msprop:Generator_RowChangingName="dsAddressTRowChanging" msprop:Generator_TableClassName="dsAddressTDataTable" msprop:Generator_RowClassName="dsAddressTRow" msprop:Generator_TableVarName="tabledsAddressT" msprop:Generator_UserTableName="dsAddressT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CurrentAdd" msprop:Generator_ColumnPropNameInRow="CurrentAdd" msprop:Generator_ColumnPropNameInTable="CurrentAddColumn" msprop:Generator_ColumnVarNameInTable="columnCurrentAdd" msprop:Generator_UserColumnName="CurrentAdd" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentCity" msprop:Generator_ColumnPropNameInRow="CurrentCity" msprop:Generator_ColumnPropNameInTable="CurrentCityColumn" msprop:Generator_ColumnVarNameInTable="columnCurrentCity" msprop:Generator_UserColumnName="CurrentCity" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentProvince" msprop:Generator_ColumnPropNameInRow="CurrentProvince" msprop:Generator_ColumnPropNameInTable="CurrentProvinceColumn" msprop:Generator_ColumnVarNameInTable="columnCurrentProvince" msprop:Generator_UserColumnName="CurrentProvince" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentZipCode" msprop:Generator_ColumnPropNameInRow="CurrentZipCode" msprop:Generator_ColumnPropNameInTable="CurrentZipCodeColumn" msprop:Generator_ColumnVarNameInTable="columnCurrentZipCode" msprop:Generator_UserColumnName="CurrentZipCode" type="xs:string" minOccurs="0" />
+              <xs:element name="PermanentCountry" msprop:Generator_ColumnPropNameInRow="PermanentCountry" msprop:Generator_ColumnPropNameInTable="PermanentCountryColumn" msprop:Generator_ColumnVarNameInTable="columnPermanentCountry" msprop:Generator_UserColumnName="PermanentCountry" type="xs:string" minOccurs="0" />
+              <xs:element name="PermanentAdd" msprop:Generator_ColumnPropNameInRow="PermanentAdd" msprop:Generator_ColumnPropNameInTable="PermanentAddColumn" msprop:Generator_ColumnVarNameInTable="columnPermanentAdd" msprop:Generator_UserColumnName="PermanentAdd" type="xs:string" minOccurs="0" />
+              <xs:element name="PermanentCity" msprop:Generator_ColumnPropNameInRow="PermanentCity" msprop:Generator_ColumnPropNameInTable="PermanentCityColumn" msprop:Generator_ColumnVarNameInTable="columnPermanentCity" msprop:Generator_UserColumnName="PermanentCity" type="xs:string" minOccurs="0" />
+              <xs:element name="PermanentProvince" msprop:Generator_ColumnPropNameInRow="PermanentProvince" msprop:Generator_ColumnPropNameInTable="PermanentProvinceColumn" msprop:Generator_ColumnVarNameInTable="columnPermanentProvince" msprop:Generator_UserColumnName="PermanentProvince" type="xs:string" minOccurs="0" />
+              <xs:element name="PermanentZipCode" msprop:Generator_ColumnPropNameInRow="PermanentZipCode" msprop:Generator_ColumnPropNameInTable="PermanentZipCodeColumn" msprop:Generator_ColumnVarNameInTable="columnPermanentZipCode" msprop:Generator_UserColumnName="PermanentZipCode" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentCountry" msprop:Generator_ColumnPropNameInRow="CurrentCountry" msprop:Generator_ColumnPropNameInTable="CurrentCountryColumn" msprop:Generator_ColumnVarNameInTable="columnCurrentCountry" msprop:Generator_UserColumnName="CurrentCountry" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

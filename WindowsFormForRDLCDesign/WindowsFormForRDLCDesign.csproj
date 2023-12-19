@@ -46,10 +46,68 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dsAddressT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAddressT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmployeeT.cs">
+      <DependentUpon>dsEmployeeT.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dsEmployeeT.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsEmployeeT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_CollegeT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_CollegeT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_DoctorateT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_DoctorateT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_LicenseT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_LicenseT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_MasteralT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_MasteralT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_OtherEducT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_OtherEducT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_PrimaryT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_PrimaryT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_ProfBackgroundT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_ProfBackgroundT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_SecondaryT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_SecondaryT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_SeniorHST.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_SeniorHST.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_TrainingT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_TrainingT.xsd</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -69,6 +127,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="dsAddressT.xsc">
+      <DependentUpon>dsAddressT.xsd</DependentUpon>
+    </None>
+    <None Include="dsAddressT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAddressT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsAddressT.xss">
+      <DependentUpon>dsAddressT.xsd</DependentUpon>
+    </None>
     <None Include="dsEmployeeT.xsc">
       <DependentUpon>dsEmployeeT.xsd</DependentUpon>
     </None>
@@ -79,6 +148,116 @@
     </None>
     <None Include="dsEmployeeT.xss">
       <DependentUpon>dsEmployeeT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_CollegeT.xsc">
+      <DependentUpon>dsEmp_CollegeT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_CollegeT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_CollegeT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_CollegeT.xss">
+      <DependentUpon>dsEmp_CollegeT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_DoctorateT.xsc">
+      <DependentUpon>dsEmp_DoctorateT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_DoctorateT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_DoctorateT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_DoctorateT.xss">
+      <DependentUpon>dsEmp_DoctorateT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_LicenseT.xsc">
+      <DependentUpon>dsEmp_LicenseT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_LicenseT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_LicenseT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_LicenseT.xss">
+      <DependentUpon>dsEmp_LicenseT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_MasteralT.xsc">
+      <DependentUpon>dsEmp_MasteralT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_MasteralT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_MasteralT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_MasteralT.xss">
+      <DependentUpon>dsEmp_MasteralT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_OtherEducT.xsc">
+      <DependentUpon>dsEmp_OtherEducT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_OtherEducT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_OtherEducT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_OtherEducT.xss">
+      <DependentUpon>dsEmp_OtherEducT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_PrimaryT.xsc">
+      <DependentUpon>dsEmp_PrimaryT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_PrimaryT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_PrimaryT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_PrimaryT.xss">
+      <DependentUpon>dsEmp_PrimaryT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_ProfBackgroundT.xsc">
+      <DependentUpon>dsEmp_ProfBackgroundT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_ProfBackgroundT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_ProfBackgroundT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_ProfBackgroundT.xss">
+      <DependentUpon>dsEmp_ProfBackgroundT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_SecondaryT.xsc">
+      <DependentUpon>dsEmp_SecondaryT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_SecondaryT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_SecondaryT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_SecondaryT.xss">
+      <DependentUpon>dsEmp_SecondaryT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_SeniorHST.xsc">
+      <DependentUpon>dsEmp_SeniorHST.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_SeniorHST.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_SeniorHST.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_SeniorHST.xss">
+      <DependentUpon>dsEmp_SeniorHST.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_TrainingT.xsc">
+      <DependentUpon>dsEmp_TrainingT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_TrainingT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_TrainingT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_TrainingT.xss">
+      <DependentUpon>dsEmp_TrainingT.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

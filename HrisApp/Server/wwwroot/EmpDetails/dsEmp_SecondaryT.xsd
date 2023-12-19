@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_SecondaryT" targetNamespace="http://tempuri.org/dsEmp_SecondaryT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_SecondaryT.xsd" xmlns="http://tempuri.org/dsEmp_SecondaryT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_SecondaryT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsEmp_SecondaryT" msprop:Generator_DataSetName="dsEmp_SecondaryT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_SecondaryT" msprop:Generator_RowEvHandlerName="dsEmp_SecondaryTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_SecondaryTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_SecondaryTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_SecondaryTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_SecondaryT" msprop:Generator_RowChangedName="dsEmp_SecondaryTRowChanged" msprop:Generator_RowChangingName="dsEmp_SecondaryTRowChanging" msprop:Generator_TableClassName="dsEmp_SecondaryTDataTable" msprop:Generator_RowClassName="dsEmp_SecondaryTRow" msprop:Generator_TableVarName="tabledsEmp_SecondaryT" msprop:Generator_UserTableName="dsEmp_SecondaryT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SecSchoolName" msprop:Generator_ColumnPropNameInRow="SecSchoolName" msprop:Generator_ColumnPropNameInTable="SecSchoolNameColumn" msprop:Generator_ColumnVarNameInTable="columnSecSchoolName" msprop:Generator_UserColumnName="SecSchoolName" type="xs:string" minOccurs="0" />
+              <xs:element name="SecSchoolLoc" msprop:Generator_ColumnPropNameInRow="SecSchoolLoc" msprop:Generator_ColumnPropNameInTable="SecSchoolLocColumn" msprop:Generator_ColumnVarNameInTable="columnSecSchoolLoc" msprop:Generator_UserColumnName="SecSchoolLoc" type="xs:string" minOccurs="0" />
+              <xs:element name="SecAward" msprop:Generator_ColumnPropNameInRow="SecAward" msprop:Generator_ColumnPropNameInTable="SecAwardColumn" msprop:Generator_ColumnVarNameInTable="columnSecAward" msprop:Generator_UserColumnName="SecAward" type="xs:string" minOccurs="0" />
+              <xs:element name="SecSchoolYear" msprop:Generator_ColumnPropNameInRow="SecSchoolYear" msprop:Generator_ColumnPropNameInTable="SecSchoolYearColumn" msprop:Generator_ColumnVarNameInTable="columnSecSchoolYear" msprop:Generator_UserColumnName="SecSchoolYear" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

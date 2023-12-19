@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_ProfBackgroundT" targetNamespace="http://tempuri.org/dsEmp_ProfBackgroundT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_ProfBackgroundT.xsd" xmlns="http://tempuri.org/dsEmp_ProfBackgroundT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_ProfBackgroundT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsEmp_ProfBackgroundT" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsEmp_ProfBackgroundT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_ProfBackgroundT" msprop:Generator_RowClassName="dsEmp_ProfBackgroundTRow" msprop:Generator_RowEvHandlerName="dsEmp_ProfBackgroundTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_ProfBackgroundTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_ProfBackgroundTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_ProfBackgroundTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_ProfBackgroundT" msprop:Generator_RowChangedName="dsEmp_ProfBackgroundTRowChanged" msprop:Generator_UserTableName="dsEmp_ProfBackgroundT" msprop:Generator_RowChangingName="dsEmp_ProfBackgroundTRowChanging" msprop:Generator_TableClassName="dsEmp_ProfBackgroundTDataTable" msprop:Generator_TableVarName="tabledsEmp_ProfBackgroundT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DateFrom" msprop:Generator_UserColumnName="DateFrom" msprop:Generator_ColumnPropNameInTable="DateFromColumn" msprop:Generator_ColumnPropNameInRow="DateFrom" msprop:Generator_ColumnVarNameInTable="columnDateFrom" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DateTo" msprop:Generator_UserColumnName="DateTo" msprop:Generator_ColumnPropNameInTable="DateToColumn" msprop:Generator_ColumnPropNameInRow="DateTo" msprop:Generator_ColumnVarNameInTable="columnDateTo" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CompanyName" msprop:Generator_UserColumnName="CompanyName" msprop:Generator_ColumnPropNameInTable="CompanyNameColumn" msprop:Generator_ColumnPropNameInRow="CompanyName" msprop:Generator_ColumnVarNameInTable="columnCompanyName" type="xs:string" minOccurs="0" />
+              <xs:element name="Position" msprop:Generator_UserColumnName="Position" msprop:Generator_ColumnPropNameInTable="PositionColumn" msprop:Generator_ColumnPropNameInRow="Position" msprop:Generator_ColumnVarNameInTable="columnPosition" type="xs:string" minOccurs="0" />
+              <xs:element name="BasicSalary" msprop:Generator_UserColumnName="BasicSalary" msprop:Generator_ColumnPropNameInTable="BasicSalaryColumn" msprop:Generator_ColumnPropNameInRow="BasicSalary" msprop:Generator_ColumnVarNameInTable="columnBasicSalary" type="xs:string" minOccurs="0" />
+              <xs:element name="RSLeaving" msprop:Generator_UserColumnName="RSLeaving" msprop:Generator_ColumnPropNameInTable="RSLeavingColumn" msprop:Generator_ColumnPropNameInRow="RSLeaving" msprop:Generator_ColumnVarNameInTable="columnRSLeaving" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

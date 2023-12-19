@@ -19,6 +19,12 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal);
         Task UpdatePosition(PositionT position);
 
+
+        Task<int> GetExistingPos(int divid, int depid, int secid);
+        Task<int> GetExistingSubPos(string poscode);
+        Task CreateSubPosition(string subposcode, string desc, string status);
+
+
         //PLANTILLA
         List<DailyTotalPlantillaT> DailyTotalPlantillaTs { get; set; }
         Task<int> GetTotalPlantilla();

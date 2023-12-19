@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_TrainingT" targetNamespace="http://tempuri.org/dsEmp_TrainingT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_TrainingT.xsd" xmlns="http://tempuri.org/dsEmp_TrainingT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_TrainingT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsEmp_TrainingT" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsEmp_TrainingT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_TrainingT" msprop:Generator_RowClassName="dsEmp_TrainingTRow" msprop:Generator_RowEvHandlerName="dsEmp_TrainingTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_TrainingTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_TrainingTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_TrainingTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_TrainingT" msprop:Generator_RowChangedName="dsEmp_TrainingTRowChanged" msprop:Generator_UserTableName="dsEmp_TrainingT" msprop:Generator_RowChangingName="dsEmp_TrainingTRowChanging" msprop:Generator_TableClassName="dsEmp_TrainingTDataTable" msprop:Generator_TableVarName="tabledsEmp_TrainingT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TrainingName" msprop:Generator_UserColumnName="TrainingName" msprop:Generator_ColumnPropNameInTable="TrainingNameColumn" msprop:Generator_ColumnPropNameInRow="TrainingName" msprop:Generator_ColumnVarNameInTable="columnTrainingName" type="xs:string" minOccurs="0" />
+              <xs:element name="SponsorSpeaker" msprop:Generator_UserColumnName="SponsorSpeaker" msprop:Generator_ColumnPropNameInTable="SponsorSpeakerColumn" msprop:Generator_ColumnPropNameInRow="SponsorSpeaker" msprop:Generator_ColumnVarNameInTable="columnSponsorSpeaker" type="xs:string" minOccurs="0" />
+              <xs:element name="TrainingDate" msprop:Generator_UserColumnName="TrainingDate" msprop:Generator_ColumnPropNameInTable="TrainingDateColumn" msprop:Generator_ColumnPropNameInRow="TrainingDate" msprop:Generator_ColumnVarNameInTable="columnTrainingDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

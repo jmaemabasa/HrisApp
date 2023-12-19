@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_PrimaryT" targetNamespace="http://tempuri.org/dsEmp_PrimaryT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_PrimaryT.xsd" xmlns="http://tempuri.org/dsEmp_PrimaryT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_PrimaryT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsEmp_PrimaryT" msprop:Generator_DataSetName="dsEmp_PrimaryT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_PrimaryT" msprop:Generator_RowEvHandlerName="dsEmp_PrimaryTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_PrimaryTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_PrimaryTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_PrimaryTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_PrimaryT" msprop:Generator_RowChangedName="dsEmp_PrimaryTRowChanged" msprop:Generator_RowChangingName="dsEmp_PrimaryTRowChanging" msprop:Generator_TableClassName="dsEmp_PrimaryTDataTable" msprop:Generator_RowClassName="dsEmp_PrimaryTRow" msprop:Generator_TableVarName="tabledsEmp_PrimaryT" msprop:Generator_UserTableName="dsEmp_PrimaryT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PriSchoolName" msprop:Generator_ColumnPropNameInRow="PriSchoolName" msprop:Generator_ColumnPropNameInTable="PriSchoolNameColumn" msprop:Generator_ColumnVarNameInTable="columnPriSchoolName" msprop:Generator_UserColumnName="PriSchoolName" type="xs:string" minOccurs="0" />
+              <xs:element name="PriSchoolLoc" msprop:Generator_ColumnPropNameInRow="PriSchoolLoc" msprop:Generator_ColumnPropNameInTable="PriSchoolLocColumn" msprop:Generator_ColumnVarNameInTable="columnPriSchoolLoc" msprop:Generator_UserColumnName="PriSchoolLoc" type="xs:string" minOccurs="0" />
+              <xs:element name="PriAward" msprop:Generator_ColumnPropNameInRow="PriAward" msprop:Generator_ColumnPropNameInTable="PriAwardColumn" msprop:Generator_ColumnVarNameInTable="columnPriAward" msprop:Generator_UserColumnName="PriAward" type="xs:string" minOccurs="0" />
+              <xs:element name="PriSchoolYear" msprop:Generator_ColumnPropNameInRow="PriSchoolYear" msprop:Generator_ColumnPropNameInTable="PriSchoolYearColumn" msprop:Generator_ColumnVarNameInTable="columnPriSchoolYear" msprop:Generator_UserColumnName="PriSchoolYear" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -7,18 +7,119 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\EmpDetails\dsAddressT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsAddressT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsAddressT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsAddressT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmployeeT.cs" />
     <Content Remove="wwwroot\EmpDetails\dsEmployeeT.Designer.cs" />
     <Content Remove="wwwroot\EmpDetails\dsEmployeeT.xsc" />
     <Content Remove="wwwroot\EmpDetails\dsEmployeeT.xsd" />
     <Content Remove="wwwroot\EmpDetails\dsEmployeeT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_CollegeT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_CollegeT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_CollegeT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_CollegeT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_DoctorateT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_DoctorateT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_DoctorateT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_DoctorateT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_LicenseT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_LicenseT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_LicenseT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_LicenseT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_MasteralT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_MasteralT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_MasteralT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_MasteralT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_OtherEducT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_OtherEducT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_OtherEducT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_OtherEducT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PrimaryT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PrimaryT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PrimaryT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PrimaryT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SecondaryT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SecondaryT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SecondaryT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SecondaryT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SeniorHST.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SeniorHST.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SeniorHST.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_SeniorHST.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_TrainingT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_TrainingT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_TrainingT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_TrainingT.xss" />
     <Content Remove="wwwroot\EmpDetails\EmpDetails1.rdlc" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="wwwroot\EmpDetails\dsAddressT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsAddressT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmployeeT.cs" />
     <Compile Include="wwwroot\EmpDetails\dsEmployeeT.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>dsEmployeeT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_CollegeT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_CollegeT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_DoctorateT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_DoctorateT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_LicenseT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_LicenseT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_MasteralT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_MasteralT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_OtherEducT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_OtherEducT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_PrimaryT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_PrimaryT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_ProfBackgroundT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_SecondaryT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_SecondaryT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_SeniorHST.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_SeniorHST.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_TrainingT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_TrainingT.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -55,6 +156,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\EmpDetails\dsAddressT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsAddressT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsAddressT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsAddressT.xss" />
     <None Include="wwwroot\EmpDetails\dsEmployeeT.xsc" />
     <None Include="wwwroot\EmpDetails\dsEmployeeT.xsd">
       <SubType>Designer</SubType>
@@ -62,6 +170,76 @@
       <Generator>MSDataSetGenerator</Generator>
     </None>
     <None Include="wwwroot\EmpDetails\dsEmployeeT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_CollegeT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_CollegeT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_CollegeT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_CollegeT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_DoctorateT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_DoctorateT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_DoctorateT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_DoctorateT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_LicenseT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_LicenseT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_LicenseT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_LicenseT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_MasteralT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_MasteralT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_MasteralT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_MasteralT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_OtherEducT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_OtherEducT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_OtherEducT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_OtherEducT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_PrimaryT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_PrimaryT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_PrimaryT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_PrimaryT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_ProfBackgroundT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_ProfBackgroundT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_SecondaryT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_SecondaryT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_SecondaryT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_SecondaryT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_SeniorHST.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_SeniorHST.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_SeniorHST.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_SeniorHST.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_TrainingT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_TrainingT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_TrainingT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_TrainingT.xss" />
   </ItemGroup>
 
 

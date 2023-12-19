@@ -190,127 +190,176 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string userRole;
 
 
-
         public string slectClasssRT = "frmselect";
         public string slectClasssCB = "frmselect";
         public string slectClasssST = "frmselect";
         public string slectClasssRD = "frmselect";
         public async Task<string> CreateEmployee()
         {
-            payroll.ScheduleTypeId = 1;
-            payroll.RestDayId = 1;
-            if (bday.HasValue)
+            await OnGenerateCode();
+            Console.WriteLine(Roles_Code);
+            string message = "Successfully Created.";
+            return $"{TokenConst.AlertSuccess}xxx{message}";
+            //payroll.ScheduleTypeId = 1;
+            //payroll.RestDayId = 1;
+            //if (bday.HasValue)
+            //{
+            //    DateTime currentDate = DateTime.Today;
+            //    int age = currentDate.Year - bday.Value.Year;
+
+            //    if (bday.Value > currentDate.AddYears(-age))
+            //        age--;
+
+            //    employee.Age = age;
+            //}
+
+            //slectClasssRT = (payroll.RateTypeId == 0) ? "frmselecterror" : "frmselect";
+            //slectClasssCB = (payroll.CashbondId == 0) ? "frmselecterror" : "frmselect";
+            //slectClasssST = (payroll.ScheduleTypeId == 0) ? "frmselecterror" : "frmselect";
+            //slectClasssRD = (payroll.RestDayId == 0) ? "frmselecterror" : "frmselect";
+            //if (payroll.RateTypeId == 0 || payroll.CashbondId == 0 || payroll.ScheduleTypeId == 0 || payroll.RestDayId == 0)
+            //{
+            //    string message = "Fill out all fields.";
+            //    return $"{TokenConst.AlertError}xxx{message}";
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        Console.WriteLine("Saving Page");
+            //        var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+
+            //        //CREATE EMPLOYEE
+            //        employee.Verify_Id = verifyCode;
+            //        employee.Birthdate = Convert.ToDateTime(bday);
+            //        employee.DateHired = Convert.ToDateTime(DateHired);
+            //        //employee.InactiveStatusId = 1;
+            //        license.Date = Convert.ToDateTime(Date);
+            //        var verifyId = await EmployeeService.CreateEmployee(employee);
+
+            //        //CREATE ADDRESS
+            //        address.Verify_Id = verifyId;
+            //        var adres = await AddressService.CreateAddress(address);
+
+            //        //CREATE EMPLOYMENT DATE
+            //        employmentDate.Verify_Id = verifyId;
+            //        employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
+
+            //        employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
+            //        employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
+
+            //        employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
+            //        employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
+
+            //        employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
+            //        employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
+
+            //        employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
+            //        employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
+
+            //        employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
+            //        employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
+            //        var empDate = await EmploymentDateService.CreateEmploymentDate(employmentDate);
+
+            //        //CREATE PAYROLL
+            //        payroll.Salary = "";
+            //        payroll.Paytype = "";
+            //        payroll.Verify_Id = verifyId;
+            //        var savepayroll = await PayrollService.CreatePayroll(payroll);
+
+            //        //CREATE EMPLOYEE HISTORY
+            //        empHistory.Verify_Id = verifyId;
+            //        empHistory.EmployeeId = employee.Id;
+            //        empHistory.DateStarted = employee.DateHired;
+            //        empHistory.NewAreaId = employee.AreaId;
+            //        empHistory.NewDivisionId = employee.DivisionId;
+            //        empHistory.NewDepartmentId = employee.DepartmentId;
+            //        empHistory.NewSectionId = employee.SectionId;
+            //        empHistory.NewPositionId = employee.PositionId;
+            //        var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
+
+            //        //CREATE EMP EVAL
+            //        var generateEval = await ForEvalService.GenerateStatus(verifyCode, employee.DateHired, "Pending");
+            //        var saveeval = await ForEvalService.CreateForEval(generateEval);
+
+            //        //CREATE FILES AND IMAGE
+            //        var divisionString = employee.DivisionId;
+            //        var departmentString = employee.DepartmentId;
+
+            //        await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
+            //        await OnPDFSaving(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
+
+            //        //CREATE EDUCATIONS
+            //        await CreatePrimaryRecords(verifyCode);
+            //        await CreateSecondaryRecords(verifyCode);
+            //        await CreateSeniorHSRecords(verifyCode);
+            //        await CreateCollegeRecords(verifyCode);
+            //        await CreateMasteralRecords(verifyCode);
+            //        await CreateDoctorateRecords(verifyCode);
+            //        await CreateOtherEducRecords(verifyCode);
+            //        await CreateLicenses(verifyCode);
+            //        await CreateTrainings(verifyCode);
+            //        await CreateProfBg(verifyCode);
+
+            //        await OnGenerateCode();
+            //        Console.WriteLine(Roles_Code);
+
+            //        var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
+            //        await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);
+            //        //_navigationManager.NavigateTo("employee");
+
+            //        string message = "Successfully Created.";
+            //        return $"{TokenConst.AlertSuccess}xxx{message}";
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return $"{TokenConst.AlertError}xxx{ex.Message}";
+            //    }
+            //}
+        }
+
+        string Roles_Code = "";
+        private async Task OnGenerateCode()
+        {
+            await Task.Delay(10);
+            string _rolesCode = string.Empty;
+            Console.WriteLine(employee.DivisionId+ " " + employee.DepartmentId + " " + employee.SectionId);
+            int _existCount = await PositionService.GetExistingPos(employee.DivisionId, employee.DepartmentId, employee.SectionId);
+            Console.WriteLine("exist count: " + _existCount);
+            var _roledesc = employee.Position.Name;
+            var _rolesubcode = employee.Position.PosCode;
+            Roles_Code = Convert.ToString(_existCount);
+
+            var _countLenght = _existCount.ToString().Length;
+
+            if (_existCount.Equals(0))
             {
-                DateTime currentDate = DateTime.Today;
-                int age = currentDate.Year - bday.Value.Year;
-
-                if (bday.Value > currentDate.AddYears(-age))
-                    age--;
-
-                employee.Age = age;
-            }
-
-            slectClasssRT = (payroll.RateTypeId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssCB = (payroll.CashbondId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssST = (payroll.ScheduleTypeId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssRD = (payroll.RestDayId == 0) ? "frmselecterror" : "frmselect";
-            if (payroll.RateTypeId == 0 || payroll.CashbondId == 0 || payroll.ScheduleTypeId == 0 || payroll.RestDayId == 0)
-            {
-                string message = "Fill out all fields.";
-                return $"{TokenConst.AlertError}xxx{message}";
+                var ifCounts = _existCount + 1;
+                _rolesCode = $"{_roledesc}{_rolesubcode}00{ifCounts}";
             }
             else
             {
-                try
+                switch (_countLenght)
                 {
-                    Console.WriteLine("Saving Page");
-                    var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+                    default:
+                        var _countDefault = _existCount + 1;
+                        _rolesCode = $"{_roledesc}{_rolesubcode}{_countDefault}";
+                        break;
 
-                    //CREATE EMPLOYEE
-                    employee.Verify_Id = verifyCode;
-                    employee.Birthdate = Convert.ToDateTime(bday);
-                    employee.DateHired = Convert.ToDateTime(DateHired);
-                    //employee.InactiveStatusId = 1;
-                    license.Date = Convert.ToDateTime(Date);
-                    var verifyId = await EmployeeService.CreateEmployee(employee);
+                    case 1:
+                        var _countOne = _existCount + 1;
+                        _rolesCode = $"{_roledesc}{_rolesubcode}00{_countOne}";
+                        break;
 
-                    //CREATE ADDRESS
-                    address.Verify_Id = verifyId;
-                    var adres = await AddressService.CreateAddress(address);
-
-                    //CREATE EMPLOYMENT DATE
-                    employmentDate.Verify_Id = verifyId;
-                    employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
-
-                    employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
-                    employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
-
-                    employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
-                    employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
-
-                    employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
-                    employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
-
-                    employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
-                    employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
-
-                    employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
-                    employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
-                    var empDate = await EmploymentDateService.CreateEmploymentDate(employmentDate);
-
-                    //CREATE PAYROLL
-                    payroll.Salary = "";
-                    payroll.Paytype = "";
-                    payroll.Verify_Id = verifyId;
-                    var savepayroll = await PayrollService.CreatePayroll(payroll);
-
-                    //CREATE EMPLOYEE HISTORY
-                    empHistory.Verify_Id = verifyId;
-                    empHistory.EmployeeId = employee.Id;
-                    empHistory.DateStarted = employee.DateHired;
-                    empHistory.NewAreaId = employee.AreaId;
-                    empHistory.NewDivisionId = employee.DivisionId;
-                    empHistory.NewDepartmentId = employee.DepartmentId;
-                    empHistory.NewSectionId = employee.SectionId;
-                    empHistory.NewPositionId = employee.PositionId;
-                    var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
-
-                    //CREATE EMP EVAL
-                    var generateEval = await ForEvalService.GenerateStatus(verifyCode, employee.DateHired, "Pending");
-                    var saveeval = await ForEvalService.CreateForEval(generateEval);
-
-                    //CREATE FILES AND IMAGE
-                    var divisionString = employee.DivisionId;
-                    var departmentString = employee.DepartmentId;
-
-                    await OnsavingImg(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
-                    await OnPDFSaving(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
-
-                    //CREATE EDUCATIONS
-                    await CreatePrimaryRecords(verifyCode);
-                    await CreateSecondaryRecords(verifyCode);
-                    await CreateSeniorHSRecords(verifyCode);
-                    await CreateCollegeRecords(verifyCode);
-                    await CreateMasteralRecords(verifyCode);
-                    await CreateDoctorateRecords(verifyCode);
-                    await CreateOtherEducRecords(verifyCode);
-                    await CreateLicenses(verifyCode);
-                    await CreateTrainings(verifyCode);
-                    await CreateProfBg(verifyCode);
-
-                    var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
-                    await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);
-                    _navigationManager.NavigateTo("employee");
-
-                    string message = "Successfully Created.";
-                    return $"{TokenConst.AlertSuccess}xxx{message}";
-
-                }
-                catch (Exception ex)
-                {
-                    return $"{TokenConst.AlertError}xxx{ex.Message}";
+                    case 2:
+                        var _countTwo = _existCount + 1;
+                        _rolesCode = $"{_roledesc}{_rolesubcode}0{_countTwo}";
+                        break;
                 }
             }
+
+            Roles_Code = _rolesCode;
         }
 
         #region IMAGE

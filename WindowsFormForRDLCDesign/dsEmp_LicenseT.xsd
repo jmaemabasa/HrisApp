@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_LicenseT" targetNamespace="http://tempuri.org/dsEmp_LicenseT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_LicenseT.xsd" xmlns="http://tempuri.org/dsEmp_LicenseT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_LicenseT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsEmp_LicenseT" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsEmp_LicenseT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_LicenseT" msprop:Generator_RowClassName="dsEmp_LicenseTRow" msprop:Generator_RowEvHandlerName="dsEmp_LicenseTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_LicenseTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_LicenseTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_LicenseTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_LicenseT" msprop:Generator_RowChangedName="dsEmp_LicenseTRowChanged" msprop:Generator_UserTableName="dsEmp_LicenseT" msprop:Generator_RowChangingName="dsEmp_LicenseTRowChanging" msprop:Generator_TableClassName="dsEmp_LicenseTDataTable" msprop:Generator_TableVarName="tabledsEmp_LicenseT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Examination" msprop:Generator_UserColumnName="Examination" msprop:Generator_ColumnPropNameInTable="ExaminationColumn" msprop:Generator_ColumnPropNameInRow="Examination" msprop:Generator_ColumnVarNameInTable="columnExamination" type="xs:string" minOccurs="0" />
+              <xs:element name="LicenseNo" msprop:Generator_UserColumnName="LicenseNo" msprop:Generator_ColumnPropNameInTable="LicenseNoColumn" msprop:Generator_ColumnPropNameInRow="LicenseNo" msprop:Generator_ColumnVarNameInTable="columnLicenseNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Rating" msprop:Generator_UserColumnName="Rating" msprop:Generator_ColumnPropNameInTable="RatingColumn" msprop:Generator_ColumnPropNameInRow="Rating" msprop:Generator_ColumnVarNameInTable="columnRating" type="xs:string" minOccurs="0" />
+              <xs:element name="Date" msprop:Generator_UserColumnName="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnVarNameInTable="columnDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

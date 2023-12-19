@@ -1,6 +1,7 @@
 ﻿using HrisApp.Shared.Models.Dashboard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NPOI.SS.Formula.Functions;
 
 namespace HrisApp.Server.Controllers.MasterData
 {
@@ -490,6 +491,60 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok();
         }
 
+        //[HttpGet("GeneratePosCode")]
+        //public async Task<ActionResult<int>> GetExistingEduc([FromQuery] string verifyCode)
+        //{
+        //    var allimage = await _context.PositionEducT.ToListAsync();
+        //    var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
+        //    return image;
+        //}
 
+        //[HttpGet("GetExistingSubPos")]
+        //public async Task<ActionResult<int>> GetExistingSubPos([FromQuery] string posCode)
+        //{
+        //    var obj = await _context.SubPositionT.ToListAsync();
+        //    var count = obj.Where(h => h.PosCode == posCode).Count();
+        //    return count;
+        //}
+
+        [HttpGet("GetExistingPos/{divid}/{depid}/{secid}")]
+        public async Task<ActionResult<int>> GetExistingPos(int divid, int depid, int secid)
+        {
+            var obj = await _context.PositionT.ToListAsync();
+            var divList = obj.Where(h => h.DivisionId == divid).ToList();
+            var depList = obj.Where(h => h.DepartmentId == depid).ToList();
+
+            if (secid == 0)
+            {
+                return depList.Count();
+            }else
+            {
+                var secList = obj.Where(h => h.SectionId == secid).ToList();
+                return secList.Count();
+            }
+        }
+
+        [HttpGet("GetExistingSubPos/{poscode}")]
+        public async Task<ActionResult<int>> GetExistingSubPos(string poscode)
+        {
+            var obj = await _context.SubPositionT.ToListAsync();
+            var poslist = obj.Where(h => h.PosCode == poscode).ToList();
+
+            return poslist.Count();
+        }
+
+        [HttpPost("CreateSubPosition")]
+        public async Task<ActionResult<PositionT>> CreateSubPosition(SubPositionT pos)
+        {
+            _context.SubPositionT.Add(pos);
+            await _context.SaveChangesAsync();
+
+            return Ok(await GetDBSubPosition());
+        }
+        private async Task<List<SubPositionT>> GetDBSubPosition()
+        {
+            return await _context.SubPositionT
+                .ToListAsync();
+        }
     }
 }
