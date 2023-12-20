@@ -363,6 +363,21 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             PositionEducTs = response;
         }
 
+
+
+
+
+
+
+        public List<SubPositionT> SubPositionTs { get; set; } = new List<SubPositionT>();
+        public async Task GetSubPosition()
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<SubPositionT>>("api/Position/GetSubPosition");
+            if (result != null)
+            {
+                SubPositionTs = result;
+            }
+        }
         public async Task<int> GetExistingPos(int divid, int depid, int secid)
         {
             var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingPos/{divid}/{depid}/{secid}");
@@ -374,13 +389,18 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             return result;
         }
 
-        public async Task CreateSubPosition(string subposcode, string desc,string status)
+        public async Task CreateSubPosition(string subposcode, string poscode, string desc,string status, int divid, int depid, int secid, int areaid)
         {
             SubPositionT newPosition = new()
             {
                 SubPosCode = subposcode,
+                PosCode = poscode,
                 Description = desc,
-                Status = status
+                Status = status,
+                DivisionId = divid,
+                DepartmentId = depid,
+                SectionId = secid,
+                AreaId = areaid
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreateSubPosition", newPosition);
@@ -388,6 +408,24 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("Error: " + errorMessage);
+            }
+        }
+        public async Task UpdateSubPosition(SubPositionT position)
+        {
+            try
+            {
+                var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateSubPosition", position);
+                result.EnsureSuccessStatusCode();
+                var index = SubPositionTs.FindIndex(s => s.Id == position.Id);
+                if (index >= 0)
+                {
+                    SubPositionTs[index] = position;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + "daot ang services");
             }
         }
     }

@@ -150,16 +150,20 @@
     {
         //MudDialog.Close();
         MudDialog.Close();
-        await PositionService.CreateSubPosition(Roles_Code, Roles_Desc, "Use");
+        await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Inactive", selectedDivision, selectedDepartment, selectedSection, selectedArea);
 
         _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
         await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
+        await PositionService.GetSubPosition();
+        var newList = PositionService.SubPositionTs;
+        StateService.SetState("SubPositionList", newList);
     }
 
 
     string Roles_Code = "";
     string Roles_Desc = "";
+    string PosCode = "";
     private async Task OnGenerateCode()
     {
         await Task.Delay(10);
@@ -169,6 +173,8 @@
         var _rolesubcode = selectedposcode = Positions.Where(x => x.Id == selectedPos).Select(x => x.PosCode).FirstOrDefault();
         Roles_Code = Convert.ToString(_existCount);
         Roles_Desc = Positions.Where(x => x.Id == selectedPos).Select(x => x.Name).FirstOrDefault();
+        PosCode = selectedposcode;
+        selectedArea = Positions.Where(x => x.Id == selectedPos).Select(x => x.AreaId).FirstOrDefault();
         var _countLenght = _existCount.ToString().Length;
 
         if (_existCount.Equals(0))
@@ -206,4 +212,6 @@
         selectedPos = id;
         await OnGenerateCode();
     }
+
+    
 }

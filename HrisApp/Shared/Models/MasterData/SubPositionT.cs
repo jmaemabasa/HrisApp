@@ -20,5 +20,9 @@ namespace HrisApp.Shared.Models.MasterData
         public string Status { get; set; } = string.Empty;
         public DateTime? ActiveDate { get; set; } //kanus a nagamit
         public DateTime? InActiveDate { get; set; } //kanus a na inactive
+        public int DivisionId { get; set; }
+        public int DepartmentId { get; set; }
+        public int SectionId { get; set; }
+        public int AreaId { get; set; }
     }
 }

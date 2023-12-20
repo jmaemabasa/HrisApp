@@ -524,6 +524,14 @@ namespace HrisApp.Server.Controllers.MasterData
             }
         }
 
+
+        [HttpGet("GetSubPosition")]
+        public async Task<ActionResult<List<SubPositionT>>> GetSubPosition()
+        {
+            var pos = await _context.SubPositionT
+                .ToListAsync();
+            return Ok(pos);
+        }
         [HttpGet("GetExistingSubPos/{poscode}")]
         public async Task<ActionResult<int>> GetExistingSubPos(string poscode)
         {
@@ -545,6 +553,20 @@ namespace HrisApp.Server.Controllers.MasterData
         {
             return await _context.SubPositionT
                 .ToListAsync();
+        }
+        [HttpPut("UpdateSubPosition")]
+        public async Task<ActionResult> UpdateSubPosition(SubPositionT pos)
+        {
+            var dbpos = await _context.SubPositionT.FirstOrDefaultAsync(d => d.Id == pos.Id);
+
+            dbpos.Emp_VerifyId = pos.Emp_VerifyId;
+            dbpos.Status = pos.Status;
+            dbpos.ActiveDate = pos.ActiveDate;
+            dbpos.InActiveDate = pos.InActiveDate;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(await GetDBSubPosition());
         }
     }
 }

@@ -872,6 +872,29 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubPositionT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubPosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PosCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Emp_VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActiveDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InActiveDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DivisionId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    SectionId = table.Column<int>(type: "int", nullable: false),
+                    AreaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubPositionT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserRoleT",
                 columns: table => new
                 {
@@ -1346,36 +1369,36 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "AreaId", "DepartmentId", "DivisionId", "JobSummary", "Manpower", "Name", "OtherCompetencies", "Plantilla", "PosCode", "PosEducation", "PosMPExternalId", "PositionType", "Restrictions", "SectionId", "TemporaryDuration", "VerifyId", "WorkExperience" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, 1, "", "", "FSS", "", 1, "S101", "", 0, "", "", 0, "", "", "" },
-                    { 2, 1, 1, 1, "", "", "Feeder", "", 9, "S102", "", 0, "", "", 0, "", "", "" },
-                    { 3, 1, 1, 1, "", "", "FCCR", "", 2, "S103", "", 0, "", "", 0, "", "", "" },
-                    { 4, 1, 4, 1, "", "", "FSS", "", 1, "S3K01", "", 0, "", "", 0, "", "", "" },
-                    { 5, 1, 4, 1, "", "", "DT Booking/ GT Booking", "", 1, "S3K02", "", 0, "", "", 0, "", "", "" },
-                    { 6, 1, 4, 1, "", "", "DSS", "", 1, "S3K03", "", 0, "", "", 0, "", "", "" },
-                    { 7, 1, 4, 1, "", "", "PM Salesman", "", 1, "S3K04", "", 0, "", "", 0, "", "", "" },
-                    { 8, 1, 4, 1, "", "", "OMNI Feeder", "", 3, "S3K05", "", 0, "", "", 0, "", "", "" },
-                    { 9, 1, 4, 1, "", "", "FCCR", "", 1, "S3K06", "", 0, "", "", 0, "", "", "" },
-                    { 10, 1, 5, 1, "", "", "FSS", "", 1, "S3C01", "", 0, "", "", 0, "", "", "" },
-                    { 11, 1, 5, 1, "", "", "DT Booking/ GT Booking", "", 2, "S3C02", "", 0, "", "", 0, "", "", "" },
-                    { 12, 1, 5, 1, "", "", "DSS", "", 1, "S3C03", "", 0, "", "", 0, "", "", "" },
-                    { 13, 1, 5, 1, "", "", "OMNI Feeder", "", 3, "S3C04", "", 0, "", "", 0, "", "", "" },
-                    { 14, 1, 5, 1, "", "", "FCCR", "", 1, "S3C05", "", 0, "", "", 0, "", "", "" },
-                    { 15, 1, 6, 1, "", "", "Operations Manager", "", 1, "URIC01", "", 0, "", "", 0, "", "", "" },
-                    { 16, 1, 6, 1, "", "", "HAPI Supervisor", "", 1, "URICHAP01", "", 0, "", "", 4, "", "", "" },
-                    { 17, 1, 6, 1, "", "", "HAPI Dealer Coor", "", 4, "URICHAP02", "", 0, "", "", 4, "", "", "" },
-                    { 18, 1, 6, 1, "", "", "Field Sales Supervisor", "", 1, "URICSER01", "", 0, "", "", 5, "", "", "" },
-                    { 19, 1, 6, 1, "", "", "MAG Supervisor", "", 1, "URICSER02", "", 0, "", "", 5, "", "", "" },
-                    { 20, 1, 6, 1, "", "", "GTAS", "", 5, "URICSER03", "", 0, "", "", 5, "", "", "" },
-                    { 21, 1, 6, 1, "", "", "SMS", "", 11, "URICSER04", "", 0, "", "", 5, "", "", "" },
-                    { 22, 1, 6, 1, "", "", "NAO Supervisor", "", 1, "URICEXP01", "", 0, "", "", 6, "", "", "" },
-                    { 23, 1, 6, 1, "", "", "NAO", "", 2, "URICEXP02", "", 0, "", "", 6, "", "", "" },
-                    { 24, 1, 6, 1, "", "", "HAPI NAO", "", 4, "URICEXP02", "", 0, "", "", 6, "", "", "" },
-                    { 25, 1, 6, 1, "", "", "IT & Support Services Staff", "", 1, "URICDTE01", "", 0, "", "", 7, "", "", "" },
-                    { 26, 1, 6, 1, "", "", "Teleservices Support Staff / Online Coor", "", 1, "URICDTE02", "", 0, "", "", 7, "", "", "" },
-                    { 27, 1, 8, 1, "", "", "Field Sales Manager", "", 1, "GCASH01", "", 0, "", "", 0, "", "", "" },
-                    { 28, 1, 8, 1, "", "", "Field Sales Supervisor", "", 1, "GCASH02", "", 0, "", "", 0, "", "", "" },
-                    { 29, 1, 8, 1, "", "", "Field Sales Supervisor", "", 1, "GCASHSER01", "", 0, "", "", 8, "", "", "" },
-                    { 30, 1, 8, 1, "", "", "Sonic DSP", "", 4, "GCASHSER02", "", 0, "", "", 8, "", "", "" }
+                    { 1, 1, 1, 1, "", "Internal", "FSS", "", 1, "S101", "", 0, "", "", 0, "", "", "" },
+                    { 2, 1, 1, 1, "", "Internal", "Feeder", "", 9, "S102", "", 0, "", "", 0, "", "", "" },
+                    { 3, 1, 1, 1, "", "Internal", "FCCR", "", 2, "S103", "", 0, "", "", 0, "", "", "" },
+                    { 4, 1, 4, 1, "", "Internal", "FSS", "", 1, "S3K01", "", 0, "", "", 0, "", "", "" },
+                    { 5, 1, 4, 1, "", "Internal", "DT Booking/ GT Booking", "", 1, "S3K02", "", 0, "", "", 0, "", "", "" },
+                    { 6, 1, 4, 1, "", "Internal", "DSS", "", 1, "S3K03", "", 0, "", "", 0, "", "", "" },
+                    { 7, 1, 4, 1, "", "Internal", "PM Salesman", "", 1, "S3K04", "", 0, "", "", 0, "", "", "" },
+                    { 8, 1, 4, 1, "", "Internal", "OMNI Feeder", "", 3, "S3K05", "", 0, "", "", 0, "", "", "" },
+                    { 9, 1, 4, 1, "", "Internal", "FCCR", "", 1, "S3K06", "", 0, "", "", 0, "", "", "" },
+                    { 10, 1, 5, 1, "", "Internal", "FSS", "", 1, "S3C01", "", 0, "", "", 0, "", "", "" },
+                    { 11, 1, 5, 1, "", "Internal", "DT Booking/ GT Booking", "", 2, "S3C02", "", 0, "", "", 0, "", "", "" },
+                    { 12, 1, 5, 1, "", "Internal", "DSS", "", 1, "S3C03", "", 0, "", "", 0, "", "", "" },
+                    { 13, 1, 5, 1, "", "Internal", "OMNI Feeder", "", 3, "S3C04", "", 0, "", "", 0, "", "", "" },
+                    { 14, 1, 5, 1, "", "Internal", "FCCR", "", 1, "S3C05", "", 0, "", "", 0, "", "", "" },
+                    { 15, 1, 6, 1, "", "Internal", "Operations Manager", "", 1, "URIC01", "", 0, "", "", 0, "", "", "" },
+                    { 16, 1, 6, 1, "", "Internal", "HAPI Supervisor", "", 1, "URICHAP01", "", 0, "", "", 4, "", "", "" },
+                    { 17, 1, 6, 1, "", "Internal", "HAPI Dealer Coor", "", 4, "URICHAP02", "", 0, "", "", 4, "", "", "" },
+                    { 18, 1, 6, 1, "", "Internal", "Field Sales Supervisor", "", 1, "URICSER01", "", 0, "", "", 5, "", "", "" },
+                    { 19, 1, 6, 1, "", "Internal", "MAG Supervisor", "", 1, "URICSER02", "", 0, "", "", 5, "", "", "" },
+                    { 20, 1, 6, 1, "", "Internal", "GTAS", "", 5, "URICSER03", "", 0, "", "", 5, "", "", "" },
+                    { 21, 1, 6, 1, "", "Internal", "SMS", "", 11, "URICSER04", "", 0, "", "", 5, "", "", "" },
+                    { 22, 1, 6, 1, "", "Internal", "NAO Supervisor", "", 1, "URICEXP01", "", 0, "", "", 6, "", "", "" },
+                    { 23, 1, 6, 1, "", "Internal", "NAO", "", 2, "URICEXP02", "", 0, "", "", 6, "", "", "" },
+                    { 24, 1, 6, 1, "", "Internal", "HAPI NAO", "", 4, "URICEXP02", "", 0, "", "", 6, "", "", "" },
+                    { 25, 1, 6, 1, "", "Internal", "IT & Support Services Staff", "", 1, "URICDTE01", "", 0, "", "", 7, "", "", "" },
+                    { 26, 1, 6, 1, "", "Internal", "Teleservices Support Staff / Online Coor", "", 1, "URICDTE02", "", 0, "", "", 7, "", "", "" },
+                    { 27, 1, 8, 1, "", "Internal", "Field Sales Manager", "", 1, "GCASH01", "", 0, "", "", 0, "", "", "" },
+                    { 28, 1, 8, 1, "", "Internal", "Field Sales Supervisor", "", 1, "GCASH02", "", 0, "", "", 0, "", "", "" },
+                    { 29, 1, 8, 1, "", "Internal", "Field Sales Supervisor", "", 1, "GCASHSER01", "", 0, "", "", 8, "", "", "" },
+                    { 30, 1, 8, 1, "", "Internal", "Sonic DSP", "", 4, "GCASHSER02", "", 0, "", "", 8, "", "", "" }
                 });
 
             migrationBuilder.InsertData(
@@ -1383,30 +1406,30 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "AreaId", "DepartmentId", "DivisionId", "JobSummary", "Manpower", "Name", "OtherCompetencies", "Plantilla", "PosCode", "PosEducation", "PosMPExternalId", "PositionType", "Restrictions", "SectionId", "TemporaryDuration", "VerifyId", "WorkExperience" },
                 values: new object[,]
                 {
-                    { 31, 1, 8, 1, "", "", "DSP (Commando/Incubator)", "", 6, "GCASHSER03", "", 0, "", "", 8, "", "", "" },
-                    { 32, 1, 8, 1, "", "", "Ambassador", "", 2, "GCASHEXP01", "", 0, "", "", 9, "", "", "" },
-                    { 33, 1, 8, 1, "", "", "Merchandiser", "", 3, "GCASHMER01", "", 0, "", "", 10, "", "", "" },
-                    { 34, 1, 8, 1, "", "", "Scan to Pay", "", 3, "GCASHSCA01", "", 0, "", "", 11, "", "", "" },
-                    { 35, 1, 9, 2, "", "", "Team Leader/Supervisor", "", 1, "GAINV01", "", 0, "", "", 12, "", "", "" },
-                    { 36, 1, 9, 2, "", "", "Trade Payable Staff", "", 2, "GAINV02", "", 0, "", "", 12, "", "", "" },
-                    { 37, 1, 9, 2, "", "", "Non Trade Payable Staff", "", 1, "GAINV03", "", 0, "", "", 12, "", "", "" },
-                    { 38, 1, 9, 2, "", "", "Team Leader/Supervisor", "", 1, "GAGEN01", "", 0, "", "", 13, "", "", "" },
-                    { 39, 1, 9, 2, "", "", "Gen Accounting Staff", "", 3, "GAGEN02", "", 0, "", "", 13, "", "", "" },
-                    { 40, 1, 9, 2, "", "", "Team Leader/Supervisor", "", 1, "GATAX01", "", 0, "", "", 14, "", "", "" },
-                    { 41, 1, 9, 2, "", "", "Tax and Compliance Staff", "", 3, "GATAX02", "", 0, "", "", 14, "", "", "" },
-                    { 42, 1, 10, 2, "", "", "Team Leader", "", 1, "SAACC01", "", 0, "", "", 15, "", "", "" },
-                    { 43, 1, 10, 2, "", "", "Accounts Receivable Staff", "", 4, "SAACC02", "", 0, "", "", 15, "", "", "" },
-                    { 44, 1, 10, 2, "", "", "Credit and Collection Staff", "", 6, "SACRE01", "", 0, "", "", 16, "", "", "" },
-                    { 45, 1, 10, 2, "", "", "C&C - Billings to Customer", "", 1, "SACRE02", "", 0, "", "", 16, "", "", "" },
-                    { 46, 1, 10, 2, "", "", "Billing to Cash Settlement Staff", "", 1, "SABIL01", "", 0, "", "", 17, "", "", "" },
-                    { 47, 1, 11, 2, "", "", "Manager", "", 1, "IT01", "", 0, "", "", 0, "", "", "" },
-                    { 48, 1, 11, 2, "", "", "IT Associate", "", 2, "IT02", "", 0, "", "", 0, "", "", "" },
-                    { 49, 1, 11, 2, "", "", "IT Staff", "", 3, "IT03", "", 0, "", "", 0, "", "", "" },
-                    { 50, 1, 12, 2, "", "", "Cash Operations Head", "", 1, "TREASURYCAS01", "", 0, "", "", 18, "", "", "" },
-                    { 51, 1, 12, 2, "", "", "Davao Cashier", "", 3, "TREASURYCAS02", "", 0, "", "", 18, "", "", "" },
-                    { 52, 1, 12, 2, "", "", "Cotabato Cashier", "", 1, "TREASURYCAS03", "", 0, "", "", 18, "", "", "" },
-                    { 53, 1, 12, 2, "", "", "Kidapawan Cashier", "", 1, "TREASURYCAS04", "", 0, "", "", 18, "", "", "" },
-                    { 54, 1, 12, 2, "", "", "Digos Cashier", "", 1, "TREASURYCAS05", "", 0, "", "", 18, "", "", "" }
+                    { 31, 1, 8, 1, "", "Internal", "DSP (Commando/Incubator)", "", 6, "GCASHSER03", "", 0, "", "", 8, "", "", "" },
+                    { 32, 1, 8, 1, "", "Internal", "Ambassador", "", 2, "GCASHEXP01", "", 0, "", "", 9, "", "", "" },
+                    { 33, 1, 8, 1, "", "Internal", "Merchandiser", "", 3, "GCASHMER01", "", 0, "", "", 10, "", "", "" },
+                    { 34, 1, 8, 1, "", "Internal", "Scan to Pay", "", 3, "GCASHSCA01", "", 0, "", "", 11, "", "", "" },
+                    { 35, 1, 9, 2, "", "Internal", "Team Leader/Supervisor", "", 1, "GAINV01", "", 0, "", "", 12, "", "", "" },
+                    { 36, 1, 9, 2, "", "Internal", "Trade Payable Staff", "", 2, "GAINV02", "", 0, "", "", 12, "", "", "" },
+                    { 37, 1, 9, 2, "", "Internal", "Non Trade Payable Staff", "", 1, "GAINV03", "", 0, "", "", 12, "", "", "" },
+                    { 38, 1, 9, 2, "", "Internal", "Team Leader/Supervisor", "", 1, "GAGEN01", "", 0, "", "", 13, "", "", "" },
+                    { 39, 1, 9, 2, "", "Internal", "Gen Accounting Staff", "", 3, "GAGEN02", "", 0, "", "", 13, "", "", "" },
+                    { 40, 1, 9, 2, "", "Internal", "Team Leader/Supervisor", "", 1, "GATAX01", "", 0, "", "", 14, "", "", "" },
+                    { 41, 1, 9, 2, "", "Internal", "Tax and Compliance Staff", "", 3, "GATAX02", "", 0, "", "", 14, "", "", "" },
+                    { 42, 1, 10, 2, "", "Internal", "Team Leader", "", 1, "SAACC01", "", 0, "", "", 15, "", "", "" },
+                    { 43, 1, 10, 2, "", "Internal", "Accounts Receivable Staff", "", 4, "SAACC02", "", 0, "", "", 15, "", "", "" },
+                    { 44, 1, 10, 2, "", "Internal", "Credit and Collection Staff", "", 6, "SACRE01", "", 0, "", "", 16, "", "", "" },
+                    { 45, 1, 10, 2, "", "Internal", "C&C - Billings to Customer", "", 1, "SACRE02", "", 0, "", "", 16, "", "", "" },
+                    { 46, 1, 10, 2, "", "Internal", "Billing to Cash Settlement Staff", "", 1, "SABIL01", "", 0, "", "", 17, "", "", "" },
+                    { 47, 1, 11, 2, "", "Internal", "Manager", "", 1, "IT01", "", 0, "", "", 0, "", "", "" },
+                    { 48, 1, 11, 2, "", "Internal", "IT Associate", "", 2, "IT02", "", 0, "", "", 0, "", "", "" },
+                    { 49, 1, 11, 2, "", "Internal", "IT Staff", "", 3, "IT03", "", 0, "", "", 0, "", "", "" },
+                    { 50, 1, 12, 2, "", "Internal", "Cash Operations Head", "", 1, "TREASURYCAS01", "", 0, "", "", 18, "", "", "" },
+                    { 51, 1, 12, 2, "", "Internal", "Davao Cashier", "", 3, "TREASURYCAS02", "", 0, "", "", 18, "", "", "" },
+                    { 52, 1, 12, 2, "", "Internal", "Cotabato Cashier", "", 1, "TREASURYCAS03", "", 0, "", "", 18, "", "", "" },
+                    { 53, 1, 12, 2, "", "Internal", "Kidapawan Cashier", "", 1, "TREASURYCAS04", "", 0, "", "", 18, "", "", "" },
+                    { 54, 1, 12, 2, "", "Internal", "Digos Cashier", "", 1, "TREASURYCAS05", "", 0, "", "", 18, "", "", "" }
                 });
 
             migrationBuilder.InsertData(
@@ -1759,6 +1782,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "SectionT");
+
+            migrationBuilder.DropTable(
+                name: "SubPositionT");
 
             migrationBuilder.DropTable(
                 name: "UserMasterT");

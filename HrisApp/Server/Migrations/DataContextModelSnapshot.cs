@@ -3371,9 +3371,18 @@ namespace HrisApp.Server.Migrations
                     b.Property<DateTime?>("ActiveDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("AreaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Emp_VerifyId")
                         .IsRequired()
@@ -3385,6 +3394,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<string>("PosCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SectionId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231211131002_initial")]
+    [Migration("20231220021345_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1977,7 +1977,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -1998,7 +1998,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Feeder",
                             OtherCompetencies = "",
                             Plantilla = 9,
@@ -2019,7 +2019,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 1,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2040,7 +2040,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2061,7 +2061,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "DT Booking/ GT Booking",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2082,7 +2082,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "DSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2103,7 +2103,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "PM Salesman",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2124,7 +2124,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "OMNI Feeder",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2145,7 +2145,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 4,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2166,7 +2166,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "FSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2187,7 +2187,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "DT Booking/ GT Booking",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2208,7 +2208,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "DSS",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2229,7 +2229,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "OMNI Feeder",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2250,7 +2250,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 5,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "FCCR",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2271,7 +2271,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Operations Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2292,7 +2292,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "HAPI Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2313,7 +2313,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "HAPI Dealer Coor",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2334,7 +2334,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2355,7 +2355,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "MAG Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2376,7 +2376,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "GTAS",
                             OtherCompetencies = "",
                             Plantilla = 5,
@@ -2397,7 +2397,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "SMS",
                             OtherCompetencies = "",
                             Plantilla = 11,
@@ -2418,7 +2418,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "NAO Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2439,7 +2439,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "NAO",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2460,7 +2460,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "HAPI NAO",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2481,7 +2481,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "IT & Support Services Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2502,7 +2502,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 6,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Teleservices Support Staff / Online Coor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2523,7 +2523,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Field Sales Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2544,7 +2544,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2565,7 +2565,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Field Sales Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2586,7 +2586,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Sonic DSP",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2607,7 +2607,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "DSP (Commando/Incubator)",
                             OtherCompetencies = "",
                             Plantilla = 6,
@@ -2628,7 +2628,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Ambassador",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2649,7 +2649,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Merchandiser",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2670,7 +2670,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 8,
                             DivisionId = 1,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Scan to Pay",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2691,7 +2691,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2712,7 +2712,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Trade Payable Staff",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2733,7 +2733,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Non Trade Payable Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2754,7 +2754,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2775,7 +2775,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Gen Accounting Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2796,7 +2796,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Team Leader/Supervisor",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2817,7 +2817,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 9,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Tax and Compliance Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -2838,7 +2838,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Team Leader",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2859,7 +2859,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Accounts Receivable Staff",
                             OtherCompetencies = "",
                             Plantilla = 4,
@@ -2880,7 +2880,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Credit and Collection Staff",
                             OtherCompetencies = "",
                             Plantilla = 6,
@@ -2901,7 +2901,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "C&C - Billings to Customer",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2922,7 +2922,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Billing to Cash Settlement Staff",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2943,7 +2943,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Manager",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -2964,7 +2964,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "IT Associate",
                             OtherCompetencies = "",
                             Plantilla = 2,
@@ -2985,7 +2985,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 11,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "IT Staff",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -3006,7 +3006,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Cash Operations Head",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -3027,7 +3027,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Davao Cashier",
                             OtherCompetencies = "",
                             Plantilla = 3,
@@ -3048,7 +3048,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Cotabato Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -3069,7 +3069,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Kidapawan Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -3090,7 +3090,7 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 12,
                             DivisionId = 2,
                             JobSummary = "",
-                            Manpower = "",
+                            Manpower = "Internal",
                             Name = "Digos Cashier",
                             OtherCompetencies = "",
                             Plantilla = 1,
@@ -3360,6 +3360,57 @@ namespace HrisApp.Server.Migrations
                             DivisionId = 1,
                             Name = "Cash Operations"
                         });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.SubPositionT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("ActiveDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AreaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Emp_VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InActiveDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SectionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubPosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubPositionT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.StaticData.CashBondT", b =>

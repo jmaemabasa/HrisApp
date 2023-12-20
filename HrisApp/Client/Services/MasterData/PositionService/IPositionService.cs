@@ -20,9 +20,12 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task UpdatePosition(PositionT position);
 
 
+        List<SubPositionT> SubPositionTs { get; set; }
+        Task GetSubPosition();
         Task<int> GetExistingPos(int divid, int depid, int secid);
         Task<int> GetExistingSubPos(string poscode);
-        Task CreateSubPosition(string subposcode, string desc, string status);
+        Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid);
+        Task UpdateSubPosition(SubPositionT position);
 
 
         //PLANTILLA
