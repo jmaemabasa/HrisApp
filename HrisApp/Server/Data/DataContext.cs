@@ -68,7 +68,7 @@ namespace HrisApp.Server.Data
 
             modelBuilder.Entity<PositionT>().HasData(
                 new PositionT { Id = 1, PosCode = "S101", Name = "FSS", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 1, Manpower="Internal"}, //No Section Sonic 1
-                new PositionT { Id = 2, PosCode = "S102", Name = "Feeder", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 9, Manpower = "Internal" },
+                new PositionT { Id = 2, PosCode = "S102", Name = "Feeder", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
                 new PositionT { Id = 3, PosCode = "S103", Name = "FCCR", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 2, Manpower="Internal" },
 
                 new PositionT { Id = 4, PosCode = "S3K01", Name = "FSS", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //No Section Sonic 3 Kidapawan

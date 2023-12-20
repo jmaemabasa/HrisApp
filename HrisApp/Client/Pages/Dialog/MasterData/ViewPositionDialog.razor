@@ -8,6 +8,7 @@
 @inject IAuditlogService AuditlogService
 @inject StateService StateService
 @inject IManpowerService ManpowerService
+@inject IEmployeeService EmployeeService
 
 <style>
     .divsingledetails {
@@ -23,6 +24,14 @@
 
     .mud-chip-outlined {
         color: #fafaf5 !important;
+    }
+
+    .clsemployee{
+        cursor: pointer;
+    }
+
+    .clsemployee:hover {
+        background-color: rgba(250, 250, 245, .1);
     }
 </style>
 
@@ -92,9 +101,42 @@
                     <div class="d-flex flex-column gap-2">
                         @foreach (var item in SubPositionsL)
                         {
-                            <div class="divsingledetails">
-                                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">@item.Description</MudText>
-                                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.SubPosCode</MudText>
+                            <div class="divsingledetails d-flex gap-2">
+                                <div class="col-3 border border-info border-start-0 border-top-0 border-bottom-0">
+                                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">@item.Description</MudText>
+                                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.SubPosCode</MudText>
+                                </div>
+                                <div class="col-2 border border-info border-start-0 border-top-0 border-bottom-0">
+                                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Status</MudText>
+                                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">
+                                        @if (item.Status == "Active")
+                                        {
+                                            <span style="color: #00C853">@item.Status</span>
+                                        }else
+                                        {
+                                            <span style="color: #F44336">@item.Status</span>
+                                        }
+                                    </MudText>
+                                </div>
+
+                                @if (item.Status == "Active" || (item.Status == "Inactive" && item.Emp_VerifyId != ""))
+                                {
+                                    <div class="col-2 border border-info border-start-0 border-top-0 border-bottom-0">
+                                        <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Active Date</MudText>
+                                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.ActiveDate?.ToString("MM/dd/yyyy")</MudText>
+                                    </div>
+                                    <div class="col-3 clsemployee border border-info border-start-0 border-top-0 border-bottom-0" @onclick="@(() => GoToEmployee(item.Emp_VerifyId))">
+                                        <EmployeeinPosition verify="@item.Emp_VerifyId" />
+                                    </div>
+                                }
+                               
+                                @if (item.InActiveDate != null)
+                                {
+                                    <div class="">
+                                        <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Inactive Date</MudText>
+                                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.InActiveDate?.ToString("MM/dd/yyyy")</MudText>
+                                    </div>
+                                }
                             </div>
                         }
                     </div>
@@ -210,6 +252,8 @@
     private List<PositionComAppT> ComAppsL = new();
     private List<PositionWorkExpT> WorkExpL = new();
     private List<SubPositionT> SubPositionsL = new();
+    private List<EmployeeT> EmployeesL = new();
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -223,6 +267,9 @@
         ExternalsL = ManpowerService.PosMPExternalTs;
 
         await PositionService.GetSubPosition();
+
+        await EmployeeService.GetEmployee();
+        EmployeesL = EmployeeService.EmployeeTs;
 
     }
 
@@ -239,4 +286,15 @@
 
 
     void Close() => MudDialog.Close(DialogResult.Ok(true));
+    void GoToEmployee(string verid)
+    {
+        foreach (var item in EmployeesL)
+        {
+            if (item.Verify_Id == verid)
+            {
+                navigationManager.NavigateTo($"/employee/edit/{item.Id}");
+            }
+        }
+       
+    }
 }

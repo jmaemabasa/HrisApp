@@ -1,4 +1,5 @@
 ﻿@inject IEmployeeService EmployeeService
+@inject IPositionService PositionService
 
 <div class="d-flex flex-row align-items-center gap-3">
     <div class="d-flex align-items-center">
@@ -7,23 +8,25 @@
     <div>
         <div class="flex-column" >
             <div style="font-weight: bold;">@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
-            <div >@employee.Position?.Name</div>
+            <div>@subpos.Description</div>
         </div>
     </div>
 </div>
 
 @code {
-#nullable disable
+    #nullable disable
     [Parameter]
     public string verify { get; set; }
 
     EmployeeT employee = new();
+    SubPositionT subpos = new();
 
     protected override async Task OnParametersSetAsync()
     {
         try
         {
             employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
+            subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
         }
         catch (Exception)
         {

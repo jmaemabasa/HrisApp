@@ -33,7 +33,7 @@ namespace HrisApp.Server.Controllers.ReportsC
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 .Where(x => x.Verify_Id == verid).ToListAsync();
 
             var sortedPayroll = await _context.Emp_PayrollT
@@ -194,7 +194,7 @@ namespace HrisApp.Server.Controllers.ReportsC
                 myDataRow["Division"] = emp.Division?.Name;
                 myDataRow["Department"] = emp.Department?.Name;
                 myDataRow["Section"] = sectionc;
-                myDataRow["Position"] = emp.Position?.Name;
+                //myDataRow["Position"] = emp.Position?.Name;
                 myDataRow["Status"] = emp.Status?.Name;
 
                 dt.Rows.Add(myDataRow);

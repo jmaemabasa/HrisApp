@@ -84,6 +84,7 @@
                     }
 
                     await PositionService.UpdatePosition(position);
+                    await PositionService.UpdateDescSubPosition(position.PosCode, position.Name);
                     await SaveNewTechSkills(position.PosCode);
                     await SaveNewKnowledge(position.PosCode);
                     await SaveNewComApp(position.PosCode);

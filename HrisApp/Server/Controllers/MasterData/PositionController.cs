@@ -1,7 +1,5 @@
 ﻿using HrisApp.Shared.Models.Dashboard;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NPOI.SS.Formula.Functions;
 
 namespace HrisApp.Server.Controllers.MasterData
 {
@@ -517,7 +515,8 @@ namespace HrisApp.Server.Controllers.MasterData
             if (secid == 0)
             {
                 return depList.Count();
-            }else
+            }
+            else
             {
                 var secList = obj.Where(h => h.SectionId == secid).ToList();
                 return secList.Count();
@@ -567,6 +566,34 @@ namespace HrisApp.Server.Controllers.MasterData
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBSubPosition());
+        }
+
+
+        [HttpPut("UpdateDescSubPosition/{poscode}/{desc}")]
+        public async Task<ActionResult> UpdateDescSubPosition(string poscode, string desc)
+        {
+            var masterlist = await _context.SubPositionT.Where(d => d.PosCode == poscode).ToListAsync();
+
+            foreach (var item in masterlist)
+            {
+                item.Description = desc;
+                await _context.SaveChangesAsync();
+            }
+            return Ok(await GetDBSubPosition());
+        }
+
+
+        [HttpGet("GetSingleSubPosition/{id}")]
+        public async Task<ActionResult<SubPositionT>> GetSingleSubPosition(int id)
+        {
+            var pos = await _context.SubPositionT.FindAsync(id);
+
+            if (pos == null)
+            {
+                return NotFound();
+            }
+
+            return pos;
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231220021345_initial")]
+    [Migration("20231220084904_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1457,8 +1457,6 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("EmploymentStatusId");
 
                     b.HasIndex("GenderId");
-
-                    b.HasIndex("PositionId");
 
                     b.HasIndex("ReligionId");
 
@@ -4057,12 +4055,6 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.MasterData.PositionT", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HrisApp.Shared.Models.StaticData.ReligionT", "Religion")
                         .WithMany()
                         .HasForeignKey("ReligionId")
@@ -4088,8 +4080,6 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("EmploymentStatus");
 
                     b.Navigation("Gender");
-
-                    b.Navigation("Position");
 
                     b.Navigation("Religion");
 

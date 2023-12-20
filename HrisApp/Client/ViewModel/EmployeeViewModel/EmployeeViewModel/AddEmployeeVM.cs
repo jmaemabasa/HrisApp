@@ -301,6 +301,13 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     await CreateTrainings(verifyCode);
                     await CreateProfBg(verifyCode);
 
+                    //UPDATE SUBPOSITION
+                    subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
+                    subPosition.Emp_VerifyId = verifyCode;
+                    subPosition.Status = "Active";
+                    subPosition.ActiveDate = DateTime.Now;
+                    await PositionService.UpdateSubPosition(subPosition);
+
                     var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
                     await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);
                     _navigationManager.NavigateTo("employee");

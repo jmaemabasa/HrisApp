@@ -1456,8 +1456,6 @@ namespace HrisApp.Server.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.HasIndex("PositionId");
-
                     b.HasIndex("ReligionId");
 
                     b.HasIndex("StatusId");
@@ -4055,12 +4053,6 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.MasterData.PositionT", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HrisApp.Shared.Models.StaticData.ReligionT", "Religion")
                         .WithMany()
                         .HasForeignKey("ReligionId")
@@ -4086,8 +4078,6 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("EmploymentStatus");
 
                     b.Navigation("Gender");
-
-                    b.Navigation("Position");
 
                     b.Navigation("Religion");
 

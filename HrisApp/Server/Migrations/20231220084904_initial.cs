@@ -1179,12 +1179,6 @@ namespace HrisApp.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EmployeeT_PositionT_PositionId",
-                        column: x => x.PositionId,
-                        principalTable: "PositionT",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_EmployeeT_ReligionT_ReligionId",
                         column: x => x.ReligionId,
                         principalTable: "ReligionT",
@@ -1622,11 +1616,6 @@ namespace HrisApp.Server.Migrations
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeT_PositionId",
-                table: "EmployeeT",
-                column: "PositionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeT_ReligionId",
                 table: "EmployeeT",
                 column: "ReligionId");
@@ -1769,6 +1758,9 @@ namespace HrisApp.Server.Migrations
                 name: "PositionKnowledgeT");
 
             migrationBuilder.DropTable(
+                name: "PositionT");
+
+            migrationBuilder.DropTable(
                 name: "PositionTechSkillT");
 
             migrationBuilder.DropTable(
@@ -1827,9 +1819,6 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "GenderT");
-
-            migrationBuilder.DropTable(
-                name: "PositionT");
 
             migrationBuilder.DropTable(
                 name: "ReligionT");

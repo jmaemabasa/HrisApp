@@ -32,7 +32,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
@@ -51,7 +51,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
@@ -71,7 +71,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (user == null)
@@ -94,7 +94,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
                 .FirstOrDefaultAsync(h => h.Verify_Id == verId);
             if (user == null)
@@ -116,7 +116,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
         }
@@ -145,7 +145,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
                 
                 .FirstOrDefaultAsync(e => e.Id == employee.Id);
@@ -358,7 +358,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                .Include(em => em.Position)
+                //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
 

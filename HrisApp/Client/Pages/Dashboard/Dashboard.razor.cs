@@ -1,4 +1,5 @@
 ﻿using ChartJs.Blazor.Common.Axes.Ticks;
+using NPOI.HSSF.Record.Chart;
 using System.Data;
 using System.Globalization;
 
@@ -41,6 +42,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 await DivisionService.GetDivision();
                 await PositionService.GetPosition();
                 await PositionService.GetDbTotalPlantilla();
+                await PositionService.GetSubPosition();
 
                 allDepartments = DepartmentService.DepartmentTs;
                 allDivisions = DivisionService.DivisionTs;
@@ -51,7 +53,8 @@ namespace HrisApp.Client.Pages.Dashboard
                 foreach (var position in allPositions)
                 {
                     int positionId = position.Id;
-                    int count = EmployeeService.EmployeeTs.Count(e => e.StatusId == 1 && e.PositionId == positionId);
+                    string positionCode = position.PosCode;
+                    int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.PosCode == positionCode);
                     positionCounts[positionId] = count;
                 }
                 _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);

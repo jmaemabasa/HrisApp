@@ -1,6 +1,5 @@
 ﻿@inject IEmployeeService EmployeeService
 @inject IImageService ImageService
-@inject IPositionService PositionService
 
 <div class="d-flex flex-row align-items-center gap-3">
     <div class="d-flex align-items-center">
@@ -10,26 +9,24 @@
     </div>
     <div>
         <div class="flex-column">
-            <div><b>@CapitalizeFirstLetter(employee.FirstName) @CapitalizeFirstLetter(employee.LastName)</b></div>
-            <div>@subpos.Description</div>
+            <div style="color: #fafaf5;"><b>@CapitalizeFirstLetter(employee.FirstName) @CapitalizeFirstLetter(employee.LastName)</b></div>
+            <div style="color: #fafaf5;">@employee.EmployeeNo</div>
         </div>
     </div>
 </div>
 
 @code {
-    #nullable disable
+#nullable disable
     [Parameter]
     public string verify { get; set; }
 
     EmployeeT employee = new();
-    SubPositionT subpos = new();
 
     protected override async Task OnParametersSetAsync()
     {
         try
         {
             employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
-            subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
             await EmployeeImg(verify);//image
         }
         catch (Exception)

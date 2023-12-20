@@ -506,8 +506,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 return true;
             if (emp.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (emp.Position.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
             if (emp.DateHired.ToString("MM/dd/yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
 

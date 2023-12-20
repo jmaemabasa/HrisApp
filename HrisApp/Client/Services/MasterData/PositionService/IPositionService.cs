@@ -26,7 +26,8 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task<int> GetExistingSubPos(string poscode);
         Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid);
         Task UpdateSubPosition(SubPositionT position);
-
+        Task UpdateDescSubPosition(string poscode, string desc);
+        Task<SubPositionT> GetSingleSubPosition(int id);
 
         //PLANTILLA
         List<DailyTotalPlantillaT> DailyTotalPlantillaTs { get; set; }

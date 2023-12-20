@@ -8,6 +8,7 @@
         public EmployeeT _selectedItem1 = null;
         public List<StatusT> StatusL = new();
         public List<DivisionT> DivisionsL = new();
+        public List<SubPositionT> SubPositionsL = new();
 
         public MudDateRangePicker _picker;
         public DateRange _dateRange = new();
@@ -24,6 +25,9 @@
 
                 await DivisionService.GetDivision();
                 DivisionsL = DivisionService.DivisionTs;
+
+                await PositionService.GetSubPosition();
+                SubPositionsL = PositionService.SubPositionTs;
 
 
                 #region for DASHBOARD
@@ -509,8 +513,6 @@
             if (emp.Division.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (emp.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (emp.Position.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (emp.DateHired.ToString("MM/dd/yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;

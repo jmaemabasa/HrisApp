@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HrisApp.Shared.Models.MasterData;
-using System.ComponentModel;
+﻿using HrisApp.Shared.Models.MasterData;
 using HrisApp.Shared.Models.StaticData;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrisApp.Shared.Models.Employee
 {
@@ -48,11 +42,11 @@ namespace HrisApp.Shared.Models.Employee
         public string Email { get; set; } = string.Empty;
 
         //EMERGENCY CONTACT
-        public string EmerName {  get; set; } = string.Empty;
+        public string EmerName { get; set; } = string.Empty;
         public EmerRelationshipT? EmerRelationship { get; set; }
-        public int EmerRelationshipId {  get; set; } //FK
-        public string EmerAddress {  get; set; } = string.Empty;
-        public string EmerMobNum {  get; set; } = string.Empty;
+        public int EmerRelationshipId { get; set; } //FK
+        public string EmerAddress { get; set; } = string.Empty;
+        public string EmerMobNum { get; set; } = string.Empty;
 
         //JOB DETAILS & MASTER DATA
         //[Required]
@@ -74,7 +68,7 @@ namespace HrisApp.Shared.Models.Employee
 
         public int SectionId { get; set; } //NOT FK
 
-        public PositionT? Position { get; set; }
+        //public PositionT? Position { get; set; }
         public int PositionId { get; set; } //FK
 
         public StatusT? Status { get; set; }

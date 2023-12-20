@@ -4,7 +4,7 @@ namespace HrisApp.Client.ViewModel
 {
     public class DTOEmpHeadcountExport
     {
-        public async Task<byte[]> createExcelHeadcount(List<EmployeeT> crr, string cmbRangeDate)
+        public async Task<byte[]> createExcelHeadcount(List<EmployeeT> crr, string cmbRangeDate, List<SubPositionT> subpos)
         {
             await Task.Delay(1);
             List<EmployeeT> Denomination = crr;
@@ -46,15 +46,23 @@ namespace HrisApp.Client.ViewModel
             numStyle.Style.Numberformat.Format = numberFomat;
             int c = 3;
             int i = 1;
+            var position = "";
 
             foreach (var r in crr)
             {
+                foreach (var item in subpos)
+                {
+                    if (item.Id == r.PositionId)
+                    {
+                        position = item.Description;
+                    }
+                }
                 worksheet.Cells[c, 1].Value = i;
                 worksheet.Cells[c, 2].Value = r.FirstName + " " + r.MiddleName + " " + r.LastName;
                 worksheet.Cells[c, 3].Value = r.EmployeeNo;
                 worksheet.Cells[c, 4].Value = r.Division?.Name;
                 worksheet.Cells[c, 5].Value = r.Department?.Name;
-                worksheet.Cells[c, 6].Value = r.Position?.Name;
+                worksheet.Cells[c, 6].Value = position;
                 worksheet.Cells[c, 7].Value = r.Area?.Name;
                 worksheet.Cells[c, 8].Value = r.Gender?.Name;
                 worksheet.Cells[c, 9].Value = r.DateHired.ToString("MM-dd-yyyy");

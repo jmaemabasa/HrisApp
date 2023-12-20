@@ -428,5 +428,41 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 Console.WriteLine(ex.Message + "daot ang services");
             }
         }
+
+        public async Task UpdateDescSubPosition(string poscode, string desc)
+        {
+            try
+            {
+                SubPositionT subPositionT = new SubPositionT() { 
+                    PosCode = poscode,
+                    Description= desc
+                };
+
+                var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateDescSubPosition/{poscode}/{desc}", subPositionT);
+                await SetSubPosition(result);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + "daot ang services");
+            }
+        }
+
+        public async Task<SubPositionT> GetSingleSubPosition(int id)
+        {
+            var result = await _httpClient.GetFromJsonAsync<SubPositionT>($"api/Position/GetSingleSubPosition/{id}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
+
+        public async Task SetSubPosition(HttpResponseMessage result)
+        {
+            var response = await result.Content.ReadFromJsonAsync<List<SubPositionT>>();
+            SubPositionTs = response;
+        }
+
     }
 }

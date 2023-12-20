@@ -23,6 +23,20 @@
 </div>
 
 <div class="box w-auto">
+    <div class="d-flex align-items-center gap-3 mb-2">
+        <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
+            <ActivatorContent>
+                <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                @foreach (var item in Divisions)
+                {
+                    <MudMenuItem OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                }
+            </ChildContent>
+        </MudMenu>
+    </div>
      @if (subpositionList == null || subpositionList.Count == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
@@ -58,7 +72,15 @@
                 <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@pos.SubPosCode</MudTd>
                 <MudTd DataLabel="">@pos.PosCode</MudTd>
                 <MudTd DataLabel="">@pos.Description</MudTd>
-                <MudTd DataLabel="" Style="text-align: center">@pos.Status
+                <MudTd DataLabel="" Style="text-align: center">
+                    @if (pos.Status == "Active")
+                    {
+                        <MudChip Variant="Variant.Outlined" Color="Color.Success">@pos.Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Variant="Variant.Outlined" Color="Color.Dark">@pos.Status</MudChip>
+                    }
                     @* <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton> *@
                 </MudTd>
                 <MudTd Style="text-align: center">
@@ -76,7 +98,7 @@
 
              </RowTemplate>
              <PagerContent>
-                 @* <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" /> *@
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
              </PagerContent>
          </MudTable>
     }
@@ -155,5 +177,48 @@
         await Task.Delay(2000);
         isVisible = true;
         StateHasChanged();
+    }
+
+    public string CmbDivText = "All Division";
+    public void CmbDivision(int div)
+    {
+        //    _dateRange.Start = null;
+        //    _dateRange.End = null;
+
+        if (div == 0)
+        {
+            CmbDivText = "All Division";
+            subpositionList = PositionService.SubPositionTs;
+        }
+        else
+        {
+            foreach (var e in Divisions)
+            {
+                if (e.Id == div)
+                {
+                    CmbDivText = e.Name;
+                }
+            }
+
+            subpositionList = PositionService.SubPositionTs.Where(x => x.DivisionId == div).ToList();
+
+            // List<Emp_EvaluationT> dummy = new();
+            // foreach (var item in EmployeesL)
+            // {
+            //     foreach (var val in ForEvalService.Emp_EvaluationTs)
+            //     {
+            //         if (val.Verify_Id == item.Verify_Id)
+            //         {
+            //             dummy.Add(val);
+            //         }
+            //     }
+            // }
+            // EvalList = dummy.Where(e => e.EvalStatus != "Done" && e.EvalStatus != "Inactive").ToList();
+        }
+
+        if (subpositionList == null || subpositionList.Count == 0)
+        {
+            OpenOverlay();
+        }
     }
 }

@@ -9,6 +9,12 @@
                 await Task.Delay(500);
                 StateService.OnChange += OnStateChanged;
                 await LoadList();
+
+                if (externalList == null || externalList.Count == 0)
+                {
+                    OpenOverlay();
+                }
+
             }
             catch (Exception ex)
             {
@@ -35,9 +41,9 @@
         private bool isVisible;
         public async void OpenOverlay()
         {
-            isVisible = true;
-            await Task.Delay(3000);
             isVisible = false;
+            await Task.Delay(2000);
+            isVisible = true;
             StateHasChanged();
         }
 

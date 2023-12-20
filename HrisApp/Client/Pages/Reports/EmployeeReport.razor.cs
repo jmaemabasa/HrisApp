@@ -8,6 +8,7 @@
         public EmployeeT _selectedItem1 = null;
         public List<StatusT> StatusL = new();
         public List<DivisionT> DivisionsL = new();
+        public List<SubPositionT> SubPositionsL = new();
 
         public MudDateRangePicker _picker;
         public DateRange _dateRange = new();
@@ -28,6 +29,9 @@
 
                 await DivisionService.GetDivision();
                 DivisionsL = DivisionService.DivisionTs;
+
+                await PositionService.GetSubPosition();
+                SubPositionsL = PositionService.SubPositionTs;
             }
             catch (Exception ex)
             {
@@ -59,7 +63,7 @@
                 }
                 _processing = true;
                 await Task.Delay(2000);
-                var fileBytes = await _crrExport.createExcelHeadcount(_employeeList, daterange);
+                var fileBytes = await _crrExport.createExcelHeadcount(_employeeList, daterange, SubPositionsL);
                 var fileName = $"SSDIEmployees{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
                 await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
                 _processing = false;
@@ -360,8 +364,6 @@
             if (emp.Division.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (emp.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (emp.Position.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (emp.DateHired.ToString("MM/dd/yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;

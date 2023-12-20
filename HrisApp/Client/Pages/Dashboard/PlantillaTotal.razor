@@ -90,13 +90,13 @@
                 <MudTd>@pos.Name</MudTd>
                 <MudTd Style="text-align: center;">@pos.Plantilla</MudTd>
                 <MudTd Style="text-align: center;">
-                    @if (allEmployee.Where(e => e.PositionId == pos.Id).Count() == pos.Plantilla)
+                    @if (allSubPositions.Where(e => e.PosCode == pos.PosCode).Count() == pos.Plantilla)
                     {
-                        <span style="color: green; font-weight: bold"> @allEmployee.Where(e => e.PositionId == pos.Id).Count()</span>
+                        <span style="color: green; font-weight: bold"> @allSubPositions.Where(e => e.PosCode == pos.PosCode).Count()</span>
                     }
                     else
                     {
-                        <span style="color: red; font-weight: bold"> @allEmployee.Where(e => e.PositionId == pos.Id).Count()</span>
+                        <span style="color: red; font-weight: bold">@allSubPositions.Where(e => e.PosCode == pos.PosCode).Count()</span>
                     }
                    
                 </MudTd>
@@ -107,6 +107,7 @@
 
 @code {
     private List<PositionT> allPositions = new();
+    private List<SubPositionT> allSubPositions = new();
     private List<DivisionT> allDivisions = new();
     private List<DepartmentT> allDepartments = new();
     private List<EmployeeT> allEmployee = new();
@@ -121,10 +122,12 @@
         {
             await EmployeeService.GetEmployee();
             await PositionService.GetPosition();
+            await PositionService.GetSubPosition();
             allPositions = await PositionService.GetPositionList();
             allDivisions = await DivisionService.GetDivisionList();
             allDepartments = await DepartmentService.GetDepartmentList();
             allEmployee = EmployeeService.EmployeeTs;
+            allSubPositions = PositionService.SubPositionTs;
 
 
             foreach (var item in allPositions)

@@ -17,6 +17,8 @@ namespace HrisApp.Client.Pages.Employee
         Emp_AddressT _address = new();
         Emp_PayrollT _payroll = new();
         PositionT _position = new();
+        SubPositionT _subposition = new();
+        SubPositionT _newsubposition = new();
         //EmpPictureT _empPicture = new();
         Emp_EmploymentDateT _employmentDate = new();
         Emp_PosHistoryT _updateposHistory = new();
@@ -33,6 +35,7 @@ namespace HrisApp.Client.Pages.Employee
         private List<DepartmentT> DepartmentsL = new();
         //private List<SectionT> SectionsL = new();
         private List<PositionT> PositionsL = new();
+        private List<SubPositionT> SubPositionsL = new();
         private List<PosMPExternalT> ExternalsL = new();
         private List<PosMPInternalT> InternalsL = new();
 
@@ -114,6 +117,8 @@ namespace HrisApp.Client.Pages.Employee
             //SectionsL = SectionService.SectionTs;
             await PositionService.GetPosition();
             PositionsL = PositionService.PositionTs;
+            await PositionService.GetSubPosition();
+            SubPositionsL = PositionService.SubPositionTs;
             await StaticService.GetGenderList();
             GendersL = StaticService.GenderTs;
             await StaticService.GetCivilStatusList();
@@ -140,6 +145,7 @@ namespace HrisApp.Client.Pages.Employee
             _address = await AddressService.GetSingleAddress(id);
             _payroll = await PayrollService.GetSinglePayroll(id);
             _position = await PositionService.GetSinglePosition(employee.PositionId);
+            _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
 
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(id);
 
@@ -251,6 +257,14 @@ namespace HrisApp.Client.Pages.Employee
                         var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
                     }
 
+                    //UPDATE SUB POSITION INACTIVE EMPLOYEE
+                    _subposition.Status = "Inactive";
+                    _subposition.InActiveDate = employee.DateInactiveStatus;
+                    await PositionService.UpdateSubPosition(_subposition);
+
+
+
+
                     await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                     _toastService.ShowSuccess("Information updated successfully!");
 
@@ -317,6 +331,29 @@ namespace HrisApp.Client.Pages.Employee
                     var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
                     StateService.SetState("HistoryPosList", newList);
                 }
+
+                //UPDATE SUB POSITION
+                if (employee.PositionId == _subposition.Id)
+                {
+                    
+                }
+                else
+                {
+                    _subposition.Status = "Inactive";
+                    _subposition.Emp_VerifyId = string.Empty;
+                    _subposition.ActiveDate = null;
+                    await PositionService.UpdateSubPosition(_subposition);
+
+                    _newsubposition = await PositionService.GetSingleSubPosition(employee.PositionId);
+                    _newsubposition.Status = "Active";
+                    _newsubposition.Emp_VerifyId = employee.Verify_Id;
+                    _newsubposition.ActiveDate = DateTime.Now;
+                    await PositionService.UpdateSubPosition(_newsubposition);
+                    _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
+                    await PositionService.GetSubPosition();
+                    SubPositionsL = PositionService.SubPositionTs;
+                }
+               
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                 _toastService.ShowSuccess("Information updated successfully!");

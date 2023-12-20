@@ -6,6 +6,7 @@
 @inject IEmployeeService EmployeeService
 @inject IStaticService StaticService
 @inject IDivisionService DivisionService
+@inject IPositionService PositionService
 @inject NavigationManager _navigationManager
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
@@ -156,26 +157,16 @@
 
              </MudTd>
                  <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
-                 <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
-                 <MudTd DataLabel="Division">@employeeee.Division?.Name
-                     @* |
-                     @if (employeeee.SectionId == 0)
+                 <MudTd DataLabel="Position">
+                     @foreach (var item in SubPositionsL)
                     {
-                        <MudChip Class="statusChip">No Section</MudChip>
-                    }
-                    else
-                    {
-                        @foreach (var item in SectionsL)
+                        if (item.Id == employeeee.PositionId)
                         {
-                            @if (item.Id == employeeee.SectionId)
-                            {
-                                <MudChip Class="statusChip">@item.Name</MudChip>
-                            }
+                            @item.Description
                         }
-                    } *@
-                    
-                        
-             </MudTd>
+                    }
+                 </MudTd>
+                 <MudTd DataLabel="Division">@employeeee.Division?.Name</MudTd>
                  <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
                  <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
                  <MudTd DataLabel="Status" Style="text-align: center;">

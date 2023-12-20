@@ -7,6 +7,7 @@
 @inject IEmployeeService EmployeeService
 @inject IStaticService StaticService
 @inject IDivisionService DivisionService 
+@inject IPositionService PositionService
 @inject NavigationManager _navigationManager
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
@@ -168,7 +169,15 @@
 
              </MudTd>
                  <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
-                 <MudTd DataLabel="Position">@employeeee.Position?.Name</MudTd>
+                 <MudTd DataLabel="Position">
+                    @foreach (var item in SubPositionsL)
+                    {
+                        if (item.Id == employeeee.PositionId)
+                        {
+                           @item.Description
+                        }
+                    }
+                 </MudTd>
                  <MudTd DataLabel="Division">@employeeee.Division?.Name
              </MudTd>
                  <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
@@ -231,7 +240,7 @@
             }
             _processing = true;
             await Task.Delay(2000);
-            var fileBytes = await _crrExport.createExcelPackage(_employeeList, CmbStatusText, daterange);
+            var fileBytes = await _crrExport.createExcelPackage(_employeeList, CmbStatusText, daterange, SubPositionsL);
             var fileName = $"EmployeesHired{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
             await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
             _processing = false;
