@@ -33,7 +33,6 @@ namespace HrisApp.Server.Controllers.ReportsC
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
                 .Where(x => x.Verify_Id == verid).ToListAsync();
 
             var sortedPayroll = await _context.Emp_PayrollT
@@ -52,21 +51,30 @@ namespace HrisApp.Server.Controllers.ReportsC
             var sortedOtherEduc = await _context.Emp_OtherEducT.Where(x => x.Verify_Id == verid).ToListAsync();
             var sortedLicense = await _context.Emp_LicenseT.Where(x => x.Verify_Id == verid).OrderByDescending(x => x.Date).ToListAsync();
             var sortedTraining = await _context.Emp_TrainingT.Where(x => x.Verify_Id == verid).OrderByDescending(x => x.TrainingDate).ToListAsync();
+            var sortedPosHistory = await _context.Emp_PosHistoryT.Where(x => x.Verify_Id == verid).OrderByDescending(x => x.DateEnded).ToListAsync();
 
             string agency = "";
+            string biometricid = "";
 
             foreach (var item in sortedList)
             {
+                string subposcode = await _context.SubPositionT
+                    .Where(x => x.Id == item.PositionId).Select(x => x.PosCode).FirstOrDefaultAsync();
+
                 int posMPExternalId = await _context.PositionT
-                   .Where(x => x.Id == item.PositionId)
+                   .Where(x => x.PosCode == subposcode)
                    .Select(x => x.PosMPExternalId)
                    .FirstOrDefaultAsync();
 
                 if (posMPExternalId != null)
                 {
-
                     agency = await _context.PosMPExternalT.Where(x => x.Id == posMPExternalId).Select(x => x.External_Name).FirstOrDefaultAsync();
                 }
+            }
+
+            foreach (var item in sortedPayroll)
+            {
+                biometricid = item.BiometricID;
             }
 
             DataTable dt = await CreateDataTable(sortedList);
@@ -82,6 +90,7 @@ namespace HrisApp.Server.Controllers.ReportsC
             DataTable dtOtherEduc = CreateDataTableOtherEduc(sortedOtherEduc);
             DataTable dtLicense = CreateDataTableLicense(sortedLicense);
             DataTable dtTraining = CreateDataTableTraining(sortedTraining);
+            DataTable dtPosHistory = await CreateDataTablePosHistory(sortedPosHistory);
             int extension = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{this._webHostEnvironment.WebRootPath}\\EmpDetails\\EmpDetails1.rdlc";
 
@@ -104,11 +113,13 @@ namespace HrisApp.Server.Controllers.ReportsC
             localReport.DataSources.Add(new ReportDataSource("dsEmp_OtherEducT", dtOtherEduc));
             localReport.DataSources.Add(new ReportDataSource("dsEmp_LicenseT", dtLicense));
             localReport.DataSources.Add(new ReportDataSource("dsEmp_TrainingT", dtTraining));
+            localReport.DataSources.Add(new ReportDataSource("dsEmp_PosHistoryT", dtPosHistory));
             localReport.SetParameters(new[]
             {
                 new ReportParameter("param", "dfdfsd"),
                 new ReportParameter("datenow", DateTime.Now.ToString("dddd, MMM dd, yyyy")),
-                new ReportParameter("agency", agency)
+                new ReportParameter("agency", agency),
+                new ReportParameter("biometricid", biometricid),
             });
             byte[] pdf = localReport.Render("PDF");
             return File(pdf, "application/pdf");
@@ -150,6 +161,9 @@ namespace HrisApp.Server.Controllers.ReportsC
             var sec = await _context.SectionT.ToListAsync();
             string sectionc = "";
 
+            var pos = await _context.SubPositionT.ToListAsync();
+            string position = "";
+
             foreach (var emp in listEMPDetails)
             {
                 DateTime currentDate = DateTime.Today;
@@ -166,6 +180,13 @@ namespace HrisApp.Server.Controllers.ReportsC
                     if (emp.SectionId == item.Id)
                     {
                         sectionc = item.Name;
+                    }
+                }
+                foreach (var item in pos)
+                {
+                    if (item.Id == emp.PositionId)
+                    {
+                        position = item.Description;
                     }
                 }
 
@@ -188,13 +209,13 @@ namespace HrisApp.Server.Controllers.ReportsC
                 myDataRow["EmerAddress"] = emp.EmerAddress;
                 myDataRow["EmerMobNum"] = emp.EmerMobNum;
                 myDataRow["EmployeeNo"] = emp.EmployeeNo;
-                myDataRow["DateHired"] = emp.DateHired;
+                myDataRow["DateHired"] = emp.DateHired.ToString("MM/dd/yyyy");
                 myDataRow["EmploymentStatus"] = emp.EmploymentStatus?.Name;
                 myDataRow["Area"] = emp.Area?.Name;
                 myDataRow["Division"] = emp.Division?.Name;
                 myDataRow["Department"] = emp.Department?.Name;
                 myDataRow["Section"] = sectionc;
-                //myDataRow["Position"] = emp.Position?.Name;
+                myDataRow["Position"] = position;
                 myDataRow["Status"] = emp.Status?.Name;
 
                 dt.Rows.Add(myDataRow);
@@ -521,6 +542,65 @@ namespace HrisApp.Server.Controllers.ReportsC
                 myDataRow["TrainingName"] = emp.TrainingName;
                 myDataRow["SponsorSpeaker"] = emp.SponsorSpeaker;
                 myDataRow["TrainingDate"] = emp.TrainingDate?.ToString("MM/dd/yyyy");
+
+                dt.Rows.Add(myDataRow);
+            }
+
+            return dt;
+        }
+        public async Task<DataTable> CreateDataTablePosHistory(List<Emp_PosHistoryT> obj)
+        {
+            DataTable dt = new DataTable();
+            //DataColumn dtColumn;
+            DataRow myDataRow;
+
+            var emarea = "";
+            var emdep = "";
+            var emsubpos = "";
+
+            var departmentList = await _context.DepartmentT.ToListAsync();
+            var areaList = await _context.AreaT.ToListAsync();
+            var subposList = await _context.SubPositionT.ToListAsync();
+
+            dt.Columns.Add("NewArea");
+            dt.Columns.Add("NewDepartment");
+            dt.Columns.Add("NewPosition");
+            dt.Columns.Add("DateStarted");
+            dt.Columns.Add("DateEnded");
+
+            foreach (var emp in obj.Where(x => x.DateEnded != null))
+            {
+
+                foreach (var item in areaList)
+                {
+                    if (item.Id == emp.NewAreaId)
+                    {
+                        emarea = item.Name;
+                    }
+                }
+
+                foreach (var item in departmentList)
+                {
+                    if (item.Id == emp.NewDepartmentId)
+                    {
+                        emdep = item.Name;
+                    }
+                }
+
+                foreach (var item in subposList)
+                {
+                    if (item.Id == emp.NewPositionId)
+                    {
+                        emsubpos = item.Description;
+                    }
+                }
+
+                myDataRow = dt.NewRow();
+                myDataRow["NewArea"] = emarea;
+                myDataRow["NewDepartment"] = emdep;
+                myDataRow["NewPosition"] = emsubpos;
+                myDataRow["DateStarted"] = emp.DateStarted?.ToString("MM/dd/yyyy");
+                myDataRow["DateEnded"] = emp.DateEnded?.ToString("MM/dd/yyyy");
 
                 dt.Rows.Add(myDataRow);
             }

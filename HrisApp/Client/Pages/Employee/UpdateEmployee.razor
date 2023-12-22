@@ -44,10 +44,17 @@
                                 </MudTooltip>
                                 <span class="spantitle">Employee Details</span>
                             </div>
+                            <div>
                             @if (employee.DateInactiveStatus <= fiveYearsAgo)
                             {
-                                <MudButton StartIcon="@Icons.Material.Rounded.Delete" Class="btnDelete" OnClick="@(() => DeleteEmployee(id))">DELETE</MudButton>
+                                    <MudTooltip Text="Delete" Arrow="true" Color="Color.Error">
+                                <MudIconButton Icon="@Icons.Material.Rounded.Delete"  Color="Color.Error" OnClick="@(() => DeleteEmployee(id))"></MudIconButton>
+                                </MudTooltip>
                             }
+                                <MudTooltip Text="Print" Color="Color.Tertiary" Arrow="true">
+                                <MudIconButton Icon="@Icons.Material.Rounded.Print" Color="Color.Tertiary" aria-label="print" OnClick="@OnExporttoPDF"></MudIconButton>
+                                </MudTooltip>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <MudAvatar Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
@@ -110,7 +117,7 @@
                                         {
                                             if (item.Id == employee.PositionId)
                                             {
-                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.Description - @item.SubPosCode </MudText>
+                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.Description</MudText>
                                             }
                                         }
                                    
@@ -121,7 +128,6 @@
                                 </div>
                             </div>
                         </div>
-                     <MudButton OnClick="@OnExporttoPDF">Print</MudButton>
                         </MudCardContent>
                         </MudCard>
         </MudItem>

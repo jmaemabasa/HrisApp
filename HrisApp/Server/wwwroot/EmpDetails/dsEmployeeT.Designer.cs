@@ -340,6 +340,32 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
             
             private global::System.Data.DataColumn columnContactNo;
             
+            private global::System.Data.DataColumn columnEmerName;
+            
+            private global::System.Data.DataColumn columnEmerRelationship;
+            
+            private global::System.Data.DataColumn columnEmerAddress;
+            
+            private global::System.Data.DataColumn columnEmerMobNum;
+            
+            private global::System.Data.DataColumn columnEmployeeNo;
+            
+            private global::System.Data.DataColumn columnDateHired;
+            
+            private global::System.Data.DataColumn columnEmploymentStatus;
+            
+            private global::System.Data.DataColumn columnArea;
+            
+            private global::System.Data.DataColumn columnDivision;
+            
+            private global::System.Data.DataColumn columnDepartment;
+            
+            private global::System.Data.DataColumn columnSection;
+            
+            private global::System.Data.DataColumn columnPosition;
+            
+            private global::System.Data.DataColumn columnStatus;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public dsEmployeeTDataTable() {
@@ -479,6 +505,110 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn EmerNameColumn {
+                get {
+                    return this.columnEmerName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn EmerRelationshipColumn {
+                get {
+                    return this.columnEmerRelationship;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn EmerAddressColumn {
+                get {
+                    return this.columnEmerAddress;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn EmerMobNumColumn {
+                get {
+                    return this.columnEmerMobNum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn EmployeeNoColumn {
+                get {
+                    return this.columnEmployeeNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn DateHiredColumn {
+                get {
+                    return this.columnDateHired;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn EmploymentStatusColumn {
+                get {
+                    return this.columnEmploymentStatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn AreaColumn {
+                get {
+                    return this.columnArea;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn DivisionColumn {
+                get {
+                    return this.columnDivision;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn DepartmentColumn {
+                get {
+                    return this.columnDepartment;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn SectionColumn {
+                get {
+                    return this.columnSection;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn PositionColumn {
+                get {
+                    return this.columnPosition;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn StatusColumn {
+                get {
+                    return this.columnStatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -514,7 +644,33 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public dsEmployeeTRow AdddsEmployeeTRow(string FirstName, string LastName, string MiddleName, string Extension, string Height, string Weight, System.DateTime Birthdate, string Age, string Nationality, string Gender, string CivilStatus, string Religion, string ContactNo) {
+            public dsEmployeeTRow AdddsEmployeeTRow(
+                        string FirstName, 
+                        string LastName, 
+                        string MiddleName, 
+                        string Extension, 
+                        string Height, 
+                        string Weight, 
+                        System.DateTime Birthdate, 
+                        string Age, 
+                        string Nationality, 
+                        string Gender, 
+                        string CivilStatus, 
+                        string Religion, 
+                        string ContactNo, 
+                        string EmerName, 
+                        string EmerRelationship, 
+                        string EmerAddress, 
+                        string EmerMobNum, 
+                        string EmployeeNo, 
+                        string DateHired, 
+                        string EmploymentStatus, 
+                        string Area, 
+                        string Division, 
+                        string Department, 
+                        string Section, 
+                        string Position, 
+                        string Status) {
                 dsEmployeeTRow rowdsEmployeeTRow = ((dsEmployeeTRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FirstName,
@@ -529,7 +685,20 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
                         Gender,
                         CivilStatus,
                         Religion,
-                        ContactNo};
+                        ContactNo,
+                        EmerName,
+                        EmerRelationship,
+                        EmerAddress,
+                        EmerMobNum,
+                        EmployeeNo,
+                        DateHired,
+                        EmploymentStatus,
+                        Area,
+                        Division,
+                        Department,
+                        Section,
+                        Position,
+                        Status};
                 rowdsEmployeeTRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdsEmployeeTRow);
                 return rowdsEmployeeTRow;
@@ -565,6 +734,19 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
                 this.columnCivilStatus = base.Columns["CivilStatus"];
                 this.columnReligion = base.Columns["Religion"];
                 this.columnContactNo = base.Columns["ContactNo"];
+                this.columnEmerName = base.Columns["EmerName"];
+                this.columnEmerRelationship = base.Columns["EmerRelationship"];
+                this.columnEmerAddress = base.Columns["EmerAddress"];
+                this.columnEmerMobNum = base.Columns["EmerMobNum"];
+                this.columnEmployeeNo = base.Columns["EmployeeNo"];
+                this.columnDateHired = base.Columns["DateHired"];
+                this.columnEmploymentStatus = base.Columns["EmploymentStatus"];
+                this.columnArea = base.Columns["Area"];
+                this.columnDivision = base.Columns["Division"];
+                this.columnDepartment = base.Columns["Department"];
+                this.columnSection = base.Columns["Section"];
+                this.columnPosition = base.Columns["Position"];
+                this.columnStatus = base.Columns["Status"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -596,6 +778,32 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
                 base.Columns.Add(this.columnReligion);
                 this.columnContactNo = new global::System.Data.DataColumn("ContactNo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnContactNo);
+                this.columnEmerName = new global::System.Data.DataColumn("EmerName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmerName);
+                this.columnEmerRelationship = new global::System.Data.DataColumn("EmerRelationship", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmerRelationship);
+                this.columnEmerAddress = new global::System.Data.DataColumn("EmerAddress", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmerAddress);
+                this.columnEmerMobNum = new global::System.Data.DataColumn("EmerMobNum", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmerMobNum);
+                this.columnEmployeeNo = new global::System.Data.DataColumn("EmployeeNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmployeeNo);
+                this.columnDateHired = new global::System.Data.DataColumn("DateHired", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDateHired);
+                this.columnEmploymentStatus = new global::System.Data.DataColumn("EmploymentStatus", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmploymentStatus);
+                this.columnArea = new global::System.Data.DataColumn("Area", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnArea);
+                this.columnDivision = new global::System.Data.DataColumn("Division", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDivision);
+                this.columnDepartment = new global::System.Data.DataColumn("Department", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepartment);
+                this.columnSection = new global::System.Data.DataColumn("Section", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSection);
+                this.columnPosition = new global::System.Data.DataColumn("Position", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPosition);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
                 this.ExtendedProperties.Add("Generator_TablePropName", "_dsEmployeeT");
                 this.ExtendedProperties.Add("Generator_UserTableName", "dsEmployeeT");
             }
@@ -1321,6 +1529,214 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string EmerName {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.EmerNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'EmerName\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.EmerNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string EmerRelationship {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.EmerRelationshipColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'EmerRelationship\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.EmerRelationshipColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string EmerAddress {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.EmerAddressColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'EmerAddress\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.EmerAddressColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string EmerMobNum {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.EmerMobNumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'EmerMobNum\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.EmerMobNumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string EmployeeNo {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.EmployeeNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'EmployeeNo\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.EmployeeNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string DateHired {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.DateHiredColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DateHired\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.DateHiredColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string EmploymentStatus {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.EmploymentStatusColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'EmploymentStatus\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.EmploymentStatusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Area {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.AreaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Area\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.AreaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Division {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.DivisionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Division\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.DivisionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Department {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.DepartmentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Department\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.DepartmentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Section {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.SectionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Section\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.SectionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Position {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.PositionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Position\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.PositionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Status {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsEmployeeT.StatusColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Status\' in table \'dsEmployeeT\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsEmployeeT.StatusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsFirstNameNull() {
                 return this.IsNull(this.tabledsEmployeeT.FirstNameColumn);
             }
@@ -1473,6 +1889,162 @@ namespace HrisApp.Server.wwwroot.EmpDetails {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetContactNoNull() {
                 this[this.tabledsEmployeeT.ContactNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsEmerNameNull() {
+                return this.IsNull(this.tabledsEmployeeT.EmerNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetEmerNameNull() {
+                this[this.tabledsEmployeeT.EmerNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsEmerRelationshipNull() {
+                return this.IsNull(this.tabledsEmployeeT.EmerRelationshipColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetEmerRelationshipNull() {
+                this[this.tabledsEmployeeT.EmerRelationshipColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsEmerAddressNull() {
+                return this.IsNull(this.tabledsEmployeeT.EmerAddressColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetEmerAddressNull() {
+                this[this.tabledsEmployeeT.EmerAddressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsEmerMobNumNull() {
+                return this.IsNull(this.tabledsEmployeeT.EmerMobNumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetEmerMobNumNull() {
+                this[this.tabledsEmployeeT.EmerMobNumColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsEmployeeNoNull() {
+                return this.IsNull(this.tabledsEmployeeT.EmployeeNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetEmployeeNoNull() {
+                this[this.tabledsEmployeeT.EmployeeNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsDateHiredNull() {
+                return this.IsNull(this.tabledsEmployeeT.DateHiredColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetDateHiredNull() {
+                this[this.tabledsEmployeeT.DateHiredColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsEmploymentStatusNull() {
+                return this.IsNull(this.tabledsEmployeeT.EmploymentStatusColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetEmploymentStatusNull() {
+                this[this.tabledsEmployeeT.EmploymentStatusColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsAreaNull() {
+                return this.IsNull(this.tabledsEmployeeT.AreaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetAreaNull() {
+                this[this.tabledsEmployeeT.AreaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsDivisionNull() {
+                return this.IsNull(this.tabledsEmployeeT.DivisionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetDivisionNull() {
+                this[this.tabledsEmployeeT.DivisionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsDepartmentNull() {
+                return this.IsNull(this.tabledsEmployeeT.DepartmentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetDepartmentNull() {
+                this[this.tabledsEmployeeT.DepartmentColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsSectionNull() {
+                return this.IsNull(this.tabledsEmployeeT.SectionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetSectionNull() {
+                this[this.tabledsEmployeeT.SectionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsPositionNull() {
+                return this.IsNull(this.tabledsEmployeeT.PositionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetPositionNull() {
+                this[this.tabledsEmployeeT.PositionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsStatusNull() {
+                return this.IsNull(this.tabledsEmployeeT.StatusColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetStatusNull() {
+                this[this.tabledsEmployeeT.StatusColumn] = global::System.Convert.DBNull;
             }
         }
         

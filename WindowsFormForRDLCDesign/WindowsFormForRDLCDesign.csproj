@@ -84,6 +84,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsEmp_OtherEducT.xsd</DependentUpon>
     </Compile>
+    <Compile Include="dsEmp_PosHistoryT.cs">
+      <DependentUpon>dsEmp_PosHistoryT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEmp_PosHistoryT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEmp_PosHistoryT.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dsEmp_PrimaryT.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -203,6 +211,17 @@
     </None>
     <None Include="dsEmp_OtherEducT.xss">
       <DependentUpon>dsEmp_OtherEducT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_PosHistoryT.xsc">
+      <DependentUpon>dsEmp_PosHistoryT.xsd</DependentUpon>
+    </None>
+    <None Include="dsEmp_PosHistoryT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEmp_PosHistoryT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsEmp_PosHistoryT.xss">
+      <DependentUpon>dsEmp_PosHistoryT.xsd</DependentUpon>
     </None>
     <None Include="dsEmp_PrimaryT.xsc">
       <DependentUpon>dsEmp_PrimaryT.xsd</DependentUpon>

@@ -36,6 +36,11 @@
     <Content Remove="wwwroot\EmpDetails\dsEmp_OtherEducT.xsc" />
     <Content Remove="wwwroot\EmpDetails\dsEmp_OtherEducT.xsd" />
     <Content Remove="wwwroot\EmpDetails\dsEmp_OtherEducT.xss" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PosHistoryT.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PosHistoryT.Designer.cs" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PosHistoryT.xsc" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PosHistoryT.xsd" />
+    <Content Remove="wwwroot\EmpDetails\dsEmp_PosHistoryT.xss" />
     <Content Remove="wwwroot\EmpDetails\dsEmp_PrimaryT.Designer.cs" />
     <Content Remove="wwwroot\EmpDetails\dsEmp_PrimaryT.xsc" />
     <Content Remove="wwwroot\EmpDetails\dsEmp_PrimaryT.xsd" />
@@ -95,6 +100,12 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>dsEmp_OtherEducT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\EmpDetails\dsEmp_PosHistoryT.cs" />
+    <Compile Include="wwwroot\EmpDetails\dsEmp_PosHistoryT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsEmp_PosHistoryT.xsd</DependentUpon>
     </Compile>
     <Compile Include="wwwroot\EmpDetails\dsEmp_PrimaryT.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -205,6 +216,13 @@
       <Generator>MSDataSetGenerator</Generator>
     </None>
     <None Include="wwwroot\EmpDetails\dsEmp_OtherEducT.xss" />
+    <None Include="wwwroot\EmpDetails\dsEmp_PosHistoryT.xsc" />
+    <None Include="wwwroot\EmpDetails\dsEmp_PosHistoryT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsEmp_PosHistoryT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\EmpDetails\dsEmp_PosHistoryT.xss" />
     <None Include="wwwroot\EmpDetails\dsEmp_PrimaryT.xsc" />
     <None Include="wwwroot\EmpDetails\dsEmp_PrimaryT.xsd">
       <SubType>Designer</SubType>

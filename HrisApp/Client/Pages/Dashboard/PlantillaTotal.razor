@@ -92,11 +92,11 @@
                 <MudTd Style="text-align: center;">
                     @if (allSubPositions.Where(e => e.PosCode == pos.PosCode).Count() == pos.Plantilla)
                     {
-                        <span style="color: green; font-weight: bold"> @allSubPositions.Where(e => e.PosCode == pos.PosCode).Count()</span>
+                        <span style="color: green; font-weight: bold"> @allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count()</span>
                     }
                     else
                     {
-                        <span style="color: red; font-weight: bold">@allSubPositions.Where(e => e.PosCode == pos.PosCode).Count()</span>
+                        <span style="color: red; font-weight: bold">@allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count()</span>
                     }
                    
                 </MudTd>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEmp_PosHistoryT" targetNamespace="http://tempuri.org/dsEmp_PosHistoryT.xsd" xmlns:mstns="http://tempuri.org/dsEmp_PosHistoryT.xsd" xmlns="http://tempuri.org/dsEmp_PosHistoryT.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEmp_PosHistoryT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsEmp_PosHistoryT" msprop:Generator_DataSetName="dsEmp_PosHistoryT">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsEmp_PosHistoryT" msprop:Generator_RowEvHandlerName="dsEmp_PosHistoryTRowChangeEventHandler" msprop:Generator_RowDeletedName="dsEmp_PosHistoryTRowDeleted" msprop:Generator_RowDeletingName="dsEmp_PosHistoryTRowDeleting" msprop:Generator_RowEvArgName="dsEmp_PosHistoryTRowChangeEvent" msprop:Generator_TablePropName="_dsEmp_PosHistoryT" msprop:Generator_RowChangedName="dsEmp_PosHistoryTRowChanged" msprop:Generator_RowChangingName="dsEmp_PosHistoryTRowChanging" msprop:Generator_TableClassName="dsEmp_PosHistoryTDataTable" msprop:Generator_RowClassName="dsEmp_PosHistoryTRow" msprop:Generator_TableVarName="tabledsEmp_PosHistoryT" msprop:Generator_UserTableName="dsEmp_PosHistoryT">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NewArea" msprop:Generator_ColumnPropNameInRow="NewArea" msprop:Generator_ColumnPropNameInTable="NewAreaColumn" msprop:Generator_ColumnVarNameInTable="columnNewArea" msprop:Generator_UserColumnName="NewArea" type="xs:string" minOccurs="0" />
+              <xs:element name="NewDepartment" msprop:Generator_ColumnPropNameInRow="NewDepartment" msprop:Generator_ColumnPropNameInTable="NewDepartmentColumn" msprop:Generator_ColumnVarNameInTable="columnNewDepartment" msprop:Generator_UserColumnName="NewDepartment" type="xs:string" minOccurs="0" />
+              <xs:element name="NewPosition" msprop:Generator_ColumnPropNameInRow="NewPosition" msprop:Generator_ColumnPropNameInTable="NewPositionColumn" msprop:Generator_ColumnVarNameInTable="columnNewPosition" msprop:Generator_UserColumnName="NewPosition" type="xs:string" minOccurs="0" />
+              <xs:element name="DateStarted" msprop:Generator_ColumnPropNameInRow="DateStarted" msprop:Generator_ColumnPropNameInTable="DateStartedColumn" msprop:Generator_ColumnVarNameInTable="columnDateStarted" msprop:Generator_UserColumnName="DateStarted" type="xs:string" minOccurs="0" />
+              <xs:element name="DateEnded" msprop:Generator_ColumnPropNameInRow="DateEnded" msprop:Generator_ColumnPropNameInTable="DateEndedColumn" msprop:Generator_ColumnVarNameInTable="columnDateEnded" msprop:Generator_UserColumnName="DateEnded" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
