@@ -16,7 +16,7 @@
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
-        <span style="font-size: x-large;font-weight: 600;color: #424242;">Sub Position Management</span>
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Position Management</span>
         <AuthorizeView Roles="System Administrator">
             <Authorized>
                 <MudButton OnClick="OpenAddPosition" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Position</MudButton>
@@ -167,6 +167,10 @@
         foreach (var item in pos)
         {
             if (item.Status == "Active")
+            {
+                await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+            }
+            if (item.Status == "Inactive" && item.Emp_VerifyId != "")
             {
                 await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
             }

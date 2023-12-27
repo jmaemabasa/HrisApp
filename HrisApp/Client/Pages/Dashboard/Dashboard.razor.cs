@@ -33,6 +33,11 @@ namespace HrisApp.Client.Pages.Dashboard
         private int _totalPlantilla = 0;
         private string cmbBdyTitle = "This Month";
 
+
+        private int totalLeave = 12;
+        private int availableLeave = 8;
+        private string availableLeavetext = "";
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -95,6 +100,9 @@ namespace HrisApp.Client.Pages.Dashboard
 
                 ConfigurePieConfig();
                 FilterPieEmployee();
+
+
+                availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) *100).ToString() + "%";
 
             }
             catch (Exception ex)

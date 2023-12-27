@@ -225,6 +225,15 @@ namespace HrisApp.Server.Data
              new UserRoleT { Id = 2, Name = "User", RoleCode = "User" },
              new UserRoleT { Id = 3, Name = "HR", RoleCode = "HR" }
             );
+
+            modelBuilder.Entity<LeaveTypesT>().HasData(
+                new LeaveTypesT { Id = 1, Name = "Emergency", Unit = 1, Description = "Day" },
+                new LeaveTypesT { Id = 2, Name = "Maternity", Unit = 1, Description = "Day" },
+                new LeaveTypesT { Id = 3, Name = "Paternity", Unit = 1, Description = "Day" },
+                new LeaveTypesT { Id = 4, Name = "Sick", Unit = 1, Description = "Day" },
+                new LeaveTypesT { Id = 5, Name = "Vacation", Unit = 1, Description = "Day" },
+                new LeaveTypesT { Id = 6, Name = "Other", Unit = 1, Description = "Day" }
+            );
         }
 
         public DbSet<UserMasterT> UserMasterT { get; set; }
@@ -247,6 +256,7 @@ namespace HrisApp.Server.Data
         public DbSet<PosMPExternalT> PosMPExternalT { get; set; }
         public DbSet<PosMPInternalT> PosMPInternalT { get; set; }
         public DbSet<DailyTotalPlantillaT> DailyTotalPlantillaT { get; set; }
+        public DbSet<LeaveTypesT> LeaveTypesT { get; set; }
 
 
 

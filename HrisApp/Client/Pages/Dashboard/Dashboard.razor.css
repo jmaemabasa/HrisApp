@@ -9,3 +9,33 @@
 .bdaytitle {
     font-size: 16px;
 }
+
+
+
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#FD7E14 var(--sl), #FFC107 0);
+}
+
+.progress-text {
+    color: #0C0048;
+}
+
+.progress-title {
+    font-size: 12px;
+}
+
+.progress-count {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.progress-total {
+    color: #6A707D;
+    font-size: 12px;
+}
