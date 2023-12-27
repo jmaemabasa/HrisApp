@@ -595,5 +595,20 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return pos;
         }
+        [HttpDelete("DeleteSubPosition/{id}")]
+        public async Task<ActionResult<List<SubPositionT>>> DeleteSubPosition(int id)
+        {
+            var obj = await _context.SubPositionT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (obj == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.SubPositionT.Remove(obj);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(obj);
+        }
+
     }
 }

@@ -35,10 +35,10 @@
                 positionCounts[positionId] = count;
             }
 
-            foreach (var item in positionCounts)
-            {
-                Console.WriteLine(item.Key + " " + item.Value);
-            }
+            //foreach (var item in positionCounts)
+            //{
+            //    Console.WriteLine(item.Key + " " + item.Value);
+            //}
 
             //foreach (var department in DepartmentService.DepartmentTs)
             //{

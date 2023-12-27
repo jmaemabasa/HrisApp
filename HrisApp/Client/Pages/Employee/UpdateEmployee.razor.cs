@@ -254,6 +254,13 @@ namespace HrisApp.Client.Pages.Employee
                         empHistory.NewDepartmentId = employee.DepartmentId;
                         empHistory.NewSectionId = employee.SectionId;
                         empHistory.NewPositionId = employee.PositionId;
+                        foreach (var item in SubPositionsL)
+                        {
+                            if (item.Id == employee.PositionId)
+                            {
+                                empHistory.newPositionCode = item.PosCode;
+                            }
+                        }
                         var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
                     }
 
@@ -325,6 +332,13 @@ namespace HrisApp.Client.Pages.Employee
                     empHistory.NewDepartmentId = employee.DepartmentId;
                     empHistory.NewSectionId = employee.SectionId;
                     empHistory.NewPositionId = employee.PositionId;
+                    foreach (var item in SubPositionsL)
+                    {
+                        if (item.Id == employee.PositionId)
+                        {
+                            empHistory.newPositionCode = item.PosCode;
+                        }
+                    }
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231220084904_initial")]
+    [Migration("20231227003959_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1291,6 +1291,10 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("newPositionCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Emp_PosHistoryT");
@@ -1999,7 +2003,7 @@ namespace HrisApp.Server.Migrations
                             Manpower = "Internal",
                             Name = "Feeder",
                             OtherCompetencies = "",
-                            Plantilla = 9,
+                            Plantilla = 2,
                             PosCode = "S102",
                             PosEducation = "",
                             PosMPExternalId = 0,

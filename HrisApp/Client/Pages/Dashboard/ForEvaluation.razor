@@ -314,7 +314,7 @@
         // EmpSixEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-7) && e.DateHired <= DateTime.Now.AddMonths(-6)).ToList().ToList();
 
 
-        foreach (var item in ForEvalService.Emp_EvaluationTs)
+        foreach (var item in ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done"))
         {
             int calculateMonth = 0;
             int totalMonth = 12;

@@ -66,7 +66,7 @@
                         {
                             <div class="flex-grow-1">
                                 <MudText Typo="Typo.body2">Position</MudText>
-                                <MudSelect @bind-Value="selectedPos" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelect T="int" ValueChanged="PosChange" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
                                     <MudSelectItem Disabled="true" Value="0">---Select Position---</MudSelectItem>
                                     @foreach (var div in Positions.Where(x => x.DivisionId == selectedDivision && x.DepartmentId == selectedDepartment && x.SectionId == selectedSection))
                                     {
@@ -75,8 +75,8 @@
                                 </MudSelect>
                             </div>
                             <div class="flex-grow-1">
-                                <MudText Typo="Typo.body2">No. of Personnel Required</MudText>
-                                <MudTextField @bind-Value="Roles_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                <MudText Typo="Typo.body2">Code</MudText>
+                                <MudTextField @bind-Value="Roles_Code" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                             </div>
 
                         }
@@ -94,8 +94,8 @@
                             </MudSelect>
                         </div>
                         <div class="flex-grow-1">
-                            <MudText Typo="Typo.body2">No. of Personnel Required</MudText>
-                            <MudTextField @bind-Value="Roles_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            <MudText Typo="Typo.body2">Code</MudText>
+                            <MudTextField @bind-Value="Roles_Code" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                         </div>
                     }
                 }
@@ -148,16 +148,32 @@
 
     private async Task ConfirmCreatePositionAsync()
     {
-        //MudDialog.Close();
-        MudDialog.Close();
-        await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Inactive", selectedDivision, selectedDepartment, selectedSection, selectedArea);
+        if (selectedDivision == 0)
+        {
+            await ShowErrorMessageBox("Please select a division.");
+        }
+        else if (selectedDepartment == 0)
+        {
+            await ShowErrorMessageBox("Please select a department.");
+        }
+        else if (selectedPos == 0)
+        {
+            await ShowErrorMessageBox("Please select a position.");
+        }
+        else
+        {
+            MudDialog.Close();
+            await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Inactive", selectedDivision, selectedDepartment, selectedSection, selectedArea);
 
-        _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
-        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+            _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
-        await PositionService.GetSubPosition();
-        var newList = PositionService.SubPositionTs;
-        StateService.SetState("SubPositionList", newList);
+            await PositionService.GetSubPosition();
+            var newList = PositionService.SubPositionTs;
+            StateService.SetState("SubPositionList", newList);
+        }
+
+
     }
 
 
@@ -213,5 +229,12 @@
         await OnGenerateCode();
     }
 
+    private async Task ShowErrorMessageBox(string mess)
+    {
+        bool? result = await _dialogService.ShowMessageBox(
+        "Warning",
+        mess,
+        yesText: "Ok");
+    }
     
 }

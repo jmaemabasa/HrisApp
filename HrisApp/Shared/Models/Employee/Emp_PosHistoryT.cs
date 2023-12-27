@@ -19,6 +19,7 @@ namespace HrisApp.Shared.Models.Employee
         public int NewDepartmentId {  get; set; }
         public int NewSectionId {  get; set; }
         public int NewPositionId {  get; set; }
+        public string newPositionCode { get; set; } = string.Empty;
         public DateTime? DateStarted { get; set; }
         public DateTime? DateEnded { get; set; }
         public DateTime? DateModified { get; set; }

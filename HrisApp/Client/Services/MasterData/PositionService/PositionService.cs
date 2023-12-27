@@ -463,6 +463,9 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             var response = await result.Content.ReadFromJsonAsync<List<SubPositionT>>();
             SubPositionTs = response;
         }
-
+        public async Task DeleteSubPosition(int id)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Position/DeleteSubPosition/{id}");
+        }
     }
 }

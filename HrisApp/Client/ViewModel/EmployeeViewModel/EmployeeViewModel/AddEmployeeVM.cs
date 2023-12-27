@@ -276,6 +276,13 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     empHistory.NewDepartmentId = employee.DepartmentId;
                     empHistory.NewSectionId = employee.SectionId;
                     empHistory.NewPositionId = employee.PositionId;
+                    foreach (var item in SubPositionsL)
+                    {
+                        if (item.Id == employee.PositionId)
+                        {
+                            empHistory.newPositionCode = item.PosCode;
+                        }
+                    }
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
                     //CREATE EMP EVAL
@@ -305,7 +312,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
                     subPosition.Emp_VerifyId = verifyCode;
                     subPosition.Status = "Active";
-                    subPosition.ActiveDate = DateTime.Now;
+                    subPosition.ActiveDate = employee.DateHired;
                     await PositionService.UpdateSubPosition(subPosition);
 
                     var user_id = Convert.ToInt32(GlobalConfigService.User_Id);

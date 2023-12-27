@@ -145,13 +145,25 @@
             <MudTabPanel Text="Qualification Requirements">
                 <div class="d-flex flex-column gap-2 cont">
                     <span style="font-size: 16px; color: #424242"><b>Qualication Requirements</b></span>
-                    <div class="divsingledetails">
-                        <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Job Summary</MudText>
-                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.JobSummary) ? "No Information." : position.JobSummary)</MudText>
-                        </div>
                         <div class="divsingledetails">
+                            <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Job Summary</MudText>
+                            <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.JobSummary) ? "No Information." : position.JobSummary)</MudText>
+                        </div>
+                        <div class="divsingledetails d-flex flex-column">
                             <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Education</MudText>
-                            <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.PosEducation) ? "No Information." : position.PosEducation)</MudText>
+                            <div class="d-flex flex-wrap">
+                                @if (EducL.Count != 0)
+                                {
+                                @foreach (var item in EducL)
+                                    {
+                                        <MudChip Text="orange" Variant="Variant.Filled" Style="color: #424242; background-color: #fafaf5;">@item.EducName</MudChip>
+                                    }
+                                }
+                                else
+                                {
+                                    <span style="font-weight: bold;color: #fafaf5">No Information</span>
+                                }
+                            </div>
                         </div>
                         <div class="divsingledetails d-flex flex-column">
                             <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Work Experience</MudText>
@@ -167,8 +179,8 @@
                             {
                                 <span style="font-weight: bold;color: #fafaf5">No Information</span>
                             }
+                            </div>
                         </div>
-                    </div>
                     <div class="divsingledetails d-flex flex-column">
                         <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Technical Skills</MudText>
                         <div class="d-flex flex-wrap">
@@ -251,6 +263,7 @@
     private List<PositionKnowledgeT> KnowledgesL = new();
     private List<PositionComAppT> ComAppsL = new();
     private List<PositionWorkExpT> WorkExpL = new();
+    private List<PositionEducT> EducL = new();
     private List<SubPositionT> SubPositionsL = new();
     private List<EmployeeT> EmployeesL = new();
 
@@ -280,6 +293,7 @@
         KnowledgesL = await PositionService.GetKnowledge(position.PosCode);
         ComAppsL = await PositionService.GetComApp(position.PosCode);
         WorkExpL = await PositionService.GetWorkExp(position.PosCode);
+        EducL = await PositionService.GetEduc(position.PosCode);
 
         SubPositionsL = PositionService.SubPositionTs.Where(x => x.PosCode == position.PosCode).ToList();
     }

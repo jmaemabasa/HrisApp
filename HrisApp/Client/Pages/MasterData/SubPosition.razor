@@ -7,6 +7,9 @@
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject StateService StateService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+@inject IToastService _toastService
 @attribute [Authorize(Roles = "System Administrator")]
 
 <PageTitle>Sub Position Management</PageTitle>
@@ -67,6 +70,7 @@
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Position Code</MudTh>
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Description</MudTh>
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Status</MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@pos.SubPosCode</MudTd>
@@ -84,16 +88,16 @@
                     @* <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton> *@
                 </MudTd>
                 <MudTd Style="text-align: center">
-                   @*  <AuthorizeView Roles="System Administrator">
+                   <AuthorizeView Roles="System Administrator">
                         <Authorized>
-                            <MudTooltip Text="Update">
-                                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdatePosition(pos.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            <MudTooltip Text="Delete" Arrow=true>
+                                <MudIconButton Color="Color.Error" OnClick="(() => DeletePosition(pos.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
                             </MudTooltip>
                         </Authorized>
                         <NotAuthorized>
-                            <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdatePosition(pos.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            <MudIconButton Disabled Color="Color.Error" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
                          </NotAuthorized>
-                     </AuthorizeView> *@
+                     </AuthorizeView>
                  </MudTd>
 
              </RowTemplate>
@@ -157,6 +161,27 @@
         DialogService.Show<AddSubPositionDialog>("New Position", options);
     }
 
+    async Task DeletePosition(int id)
+    {
+        var pos = PositionService.SubPositionTs.Where(x=> x.Id == id);
+        foreach (var item in pos)
+        {
+            if (item.Status == "Active")
+            {
+                await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+            }
+            else
+            {
+                await PositionService.DeleteSubPosition(id);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+                await PositionService.GetSubPosition();
+                var newList = PositionService.SubPositionTs;
+                StateService.SetState("SubPositionList", newList);
+                _toastService.ShowSuccess("Deleted Successfully!");
+            }
+        }
+    }
+
     private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
     private string searchString1 = "";
     private bool FilterFunc1(SubPositionT pos) => FilterFunc(pos, searchString1);
@@ -201,19 +226,6 @@
             }
 
             subpositionList = PositionService.SubPositionTs.Where(x => x.DivisionId == div).ToList();
-
-            // List<Emp_EvaluationT> dummy = new();
-            // foreach (var item in EmployeesL)
-            // {
-            //     foreach (var val in ForEvalService.Emp_EvaluationTs)
-            //     {
-            //         if (val.Verify_Id == item.Verify_Id)
-            //         {
-            //             dummy.Add(val);
-            //         }
-            //     }
-            // }
-            // EvalList = dummy.Where(e => e.EvalStatus != "Done" && e.EvalStatus != "Inactive").ToList();
         }
 
         if (subpositionList == null || subpositionList.Count == 0)
@@ -221,4 +233,12 @@
             OpenOverlay();
         }
     }
+    private async Task ShowErrorMessageBox(string mess)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+        "Error",
+        mess,
+        yesText: "Ok");
+    }
+
 }

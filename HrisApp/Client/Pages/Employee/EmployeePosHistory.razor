@@ -43,11 +43,11 @@ else
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="">
-                @foreach (var item in SubPositionsL)
+                @foreach (var item in PositionsL)
                 {
-                    if (item.Id == history.NewPositionId)
+                    if (item.PosCode == history.newPositionCode)
                     {
-                        @item.Description
+                        @item.Name
                     }
                 }
             </MudTd>
@@ -83,6 +83,7 @@ else
     private List<AreaT> AreasL = new();
     private List<DepartmentT> DepartmentsL = new();
     private List<SubPositionT> SubPositionsL = new();
+    private List<PositionT> PositionsL = new();
 
     private readonly Emp_PosHistoryT college = new();
     [Parameter]
@@ -95,7 +96,9 @@ else
         await DepartmentService.GetDepartment();
         DepartmentsL = DepartmentService.DepartmentTs;
         await PositionService.GetSubPosition();
+        await PositionService.GetPosition();
         SubPositionsL = PositionService.SubPositionTs;
+        PositionsL = PositionService.PositionTs;
     }
 
     private async Task LoadList()

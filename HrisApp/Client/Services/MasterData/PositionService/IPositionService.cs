@@ -28,6 +28,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task UpdateSubPosition(SubPositionT position);
         Task UpdateDescSubPosition(string poscode, string desc);
         Task<SubPositionT> GetSingleSubPosition(int id);
+        Task DeleteSubPosition(int id);
 
         //PLANTILLA
         List<DailyTotalPlantillaT> DailyTotalPlantillaTs { get; set; }

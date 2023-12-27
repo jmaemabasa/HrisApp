@@ -522,6 +522,7 @@ namespace HrisApp.Server.Migrations
                     NewDepartmentId = table.Column<int>(type: "int", nullable: false),
                     NewSectionId = table.Column<int>(type: "int", nullable: false),
                     NewPositionId = table.Column<int>(type: "int", nullable: false),
+                    newPositionCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateStarted = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateEnded = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -1364,7 +1365,7 @@ namespace HrisApp.Server.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 1, 1, "", "Internal", "FSS", "", 1, "S101", "", 0, "", "", 0, "", "", "" },
-                    { 2, 1, 1, 1, "", "Internal", "Feeder", "", 9, "S102", "", 0, "", "", 0, "", "", "" },
+                    { 2, 1, 1, 1, "", "Internal", "Feeder", "", 2, "S102", "", 0, "", "", 0, "", "", "" },
                     { 3, 1, 1, 1, "", "Internal", "FCCR", "", 2, "S103", "", 0, "", "", 0, "", "", "" },
                     { 4, 1, 4, 1, "", "Internal", "FSS", "", 1, "S3K01", "", 0, "", "", 0, "", "", "" },
                     { 5, 1, 4, 1, "", "Internal", "DT Booking/ GT Booking", "", 1, "S3K02", "", 0, "", "", 0, "", "", "" },
