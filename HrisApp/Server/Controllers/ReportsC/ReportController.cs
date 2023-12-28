@@ -19,8 +19,7 @@ namespace HrisApp.Server.Controllers.ReportsC
             System.Text.Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
-        [HttpGet]
-        [Route("GetReport")]
+        [HttpGet("GetReport")]
         public async Task<IActionResult> GetReport([FromQuery] string verid)
         {
             var sortedList = await _context.EmployeeT

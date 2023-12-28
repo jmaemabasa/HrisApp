@@ -11,5 +11,6 @@ namespace HrisApp.Shared.Models.MasterData
         public string Name { get; set; } = string.Empty;
         public double Unit { get; set; }
         public string Description { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
     }
 }

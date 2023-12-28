@@ -170,7 +170,7 @@
             {
                 await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
             }
-            if (item.Status == "Inactive" && item.Emp_VerifyId != "")
+            else if (item.Status == "Inactive" && item.Emp_VerifyId != "")
             {
                 await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
             }

@@ -61,7 +61,6 @@
     <Content Remove="wwwroot\EmpDetails\dsEmp_TrainingT.xsc" />
     <Content Remove="wwwroot\EmpDetails\dsEmp_TrainingT.xsd" />
     <Content Remove="wwwroot\EmpDetails\dsEmp_TrainingT.xss" />
-    <Content Remove="wwwroot\EmpDetails\EmpDetails1.rdlc" />
   </ItemGroup>
 
   <ItemGroup>
@@ -132,10 +131,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>dsEmp_TrainingT.xsd</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="wwwroot\EmpDetails\EmpDetails1.rdlc" />
   </ItemGroup>
 
   <ItemGroup>

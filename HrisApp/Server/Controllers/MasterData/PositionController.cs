@@ -81,6 +81,19 @@ namespace HrisApp.Server.Controllers.MasterData
             return pos;
         }
 
+        [HttpGet("ByCode/{code}")]
+        public async Task<ActionResult<PositionT>> GetSinglePositionByCode(string code)
+        {
+            var pos = await _context.PositionT.Where(d => d.PosCode == code).FirstOrDefaultAsync();
+
+            if (pos == null)
+            {
+                return NotFound();
+            }
+
+            return pos;
+        }
+
         //Get all list
         private async Task<List<PositionT>> GetDBPosition()
         {

@@ -72,6 +72,16 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             throw new Exception("employee not found");
         }
 
+        public async Task<PositionT> GetSinglePositionByCode(string code)
+        {
+            var result = await _httpClient.GetFromJsonAsync<PositionT>($"api/Position/ByCode/{code}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
+
         //CREATE AND UPDATEEEEEE
         public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal)
         {

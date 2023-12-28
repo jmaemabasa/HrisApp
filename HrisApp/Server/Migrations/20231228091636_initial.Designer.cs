@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231227003959_initial")]
+    [Migration("20231228091636_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1252,6 +1252,59 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("Emp_EvaluationT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_LeaveCreditT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("EL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Left_EL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Left_ML")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Left_OL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Left_PL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Left_SL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Left_VL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ML")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VL")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Verify_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emp_LeaveCreditT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_PosHistoryT", b =>
                 {
                     b.Property<int>("Id")
@@ -1819,6 +1872,84 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 5,
                             Name = "Agro Industrial"
+                        });
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.LeaveTypesT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Unit")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeaveTypesT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "EL",
+                            Description = "Day",
+                            Name = "Emergency",
+                            Unit = 1.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "ML",
+                            Description = "Day",
+                            Name = "Maternity",
+                            Unit = 1.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "PL",
+                            Description = "Day",
+                            Name = "Paternity",
+                            Unit = 1.0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "SL",
+                            Description = "Day",
+                            Name = "Sick",
+                            Unit = 1.0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "VL",
+                            Description = "Day",
+                            Name = "Vacation",
+                            Unit = 1.0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "OL",
+                            Description = "Day",
+                            Name = "Other",
+                            Unit = 1.0
                         });
                 });
 

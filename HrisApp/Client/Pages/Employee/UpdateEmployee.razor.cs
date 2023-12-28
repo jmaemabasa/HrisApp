@@ -144,8 +144,11 @@ namespace HrisApp.Client.Pages.Employee
             employee = await EmployeeService.GetSingleEmployee(id);
             _address = await AddressService.GetSingleAddress(id);
             _payroll = await PayrollService.GetSinglePayroll(id);
-            _position = await PositionService.GetSinglePosition(employee.PositionId);
             _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
+
+            //_position = await PositionService.GetSinglePosition(employee.PositionId);
+            _position = await PositionService.GetSinglePositionByCode(_subposition.PosCode);
+
 
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(id);
 
@@ -562,6 +565,17 @@ namespace HrisApp.Client.Pages.Employee
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(4));
                     builder.AddContent(6, "Attachment");
+                    builder.CloseComponent();
+                }
+                else if (tabId == 5)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(5));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(5));
+                    builder.AddContent(6, "Attendance");
                     builder.CloseComponent();
                 }
             };

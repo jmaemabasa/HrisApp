@@ -101,13 +101,11 @@ namespace HrisApp.Client.Pages.Dashboard
                 ConfigurePieConfig();
                 FilterPieEmployee();
 
-
                 availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) *100).ToString() + "%";
 
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.Message);
             }
 

@@ -1,0 +1,53 @@
+﻿@inject ILeaveCredService LeaveCredService
+@inject IDialogService DialogService
+
+<MudCard Class="empdmain">
+    <MudCardContent>
+        <div class="d-flex justify-content-between">
+            <span class="maintitlespan">Leave Balance</span>
+
+            <button class="Btn" onclick="OpenUpdateCred">
+
+                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+
+                <div class="text">Update</div>
+            </button>
+        </div>
+        <div class="progress-bar sl" style="--sl: @availableLeavetext">
+            <progress value="@empLeaveCred.Left_SL" min="0" max="@empLeaveCred.SL" style="visibility:hidden;height:0;width:0;"></progress>
+            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@empLeaveCred.Left_SL</span><span class="progress-total">/@empLeaveCred.SL</span></div>
+        </div>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public string verify { get; set; }
+
+    Emp_LeaveCreditT empLeaveCred = new();
+
+    private string availableLeavetext = "";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            empLeaveCred = await LeaveCredService.GetSingleLeaveCredByVerId(verify);
+
+            availableLeavetext = ((Convert.ToDouble(empLeaveCred.Left_SL) / Convert.ToDouble(empLeaveCred.SL)) * 100).ToString() + "%";
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("");
+        }
+    }
+
+    private void OpenUpdateCred(int id)
+    {
+        var parameters = new DialogParameters<UpdateLeaveDialog>();
+        parameters.Add(x => x.Id, id);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        DialogService.Show<UpdateLeaveCreditDialog>("Update Leave", parameters, options);
+    }
+}

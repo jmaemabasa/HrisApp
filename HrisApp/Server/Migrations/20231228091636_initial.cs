@@ -457,6 +457,31 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Emp_LeaveCreditT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EL = table.Column<int>(type: "int", nullable: false),
+                    Left_EL = table.Column<int>(type: "int", nullable: false),
+                    ML = table.Column<int>(type: "int", nullable: false),
+                    Left_ML = table.Column<int>(type: "int", nullable: false),
+                    PL = table.Column<int>(type: "int", nullable: false),
+                    Left_PL = table.Column<int>(type: "int", nullable: false),
+                    SL = table.Column<int>(type: "int", nullable: false),
+                    Left_SL = table.Column<int>(type: "int", nullable: false),
+                    VL = table.Column<int>(type: "int", nullable: false),
+                    Left_VL = table.Column<int>(type: "int", nullable: false),
+                    OL = table.Column<int>(type: "int", nullable: false),
+                    Left_OL = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emp_LeaveCreditT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Emp_LicenseT",
                 columns: table => new
                 {
@@ -656,6 +681,22 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InactiveStatusT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LeaveTypesT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unit = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeaveTypesT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1360,6 +1401,19 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "LeaveTypesT",
+                columns: new[] { "Id", "Code", "Description", "Name", "Unit" },
+                values: new object[,]
+                {
+                    { 1, "EL", "Day", "Emergency", 1.0 },
+                    { 2, "ML", "Day", "Maternity", 1.0 },
+                    { 3, "PL", "Day", "Paternity", 1.0 },
+                    { 4, "SL", "Day", "Sick", 1.0 },
+                    { 5, "VL", "Day", "Vacation", 1.0 },
+                    { 6, "OL", "Day", "Other", 1.0 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "PositionT",
                 columns: new[] { "Id", "AreaId", "DepartmentId", "DivisionId", "JobSummary", "Manpower", "Name", "OtherCompetencies", "Plantilla", "PosCode", "PosEducation", "PosMPExternalId", "PositionType", "Restrictions", "SectionId", "TemporaryDuration", "VerifyId", "WorkExperience" },
                 values: new object[,]
@@ -1387,13 +1441,7 @@ namespace HrisApp.Server.Migrations
                     { 21, 1, 6, 1, "", "Internal", "SMS", "", 11, "URICSER04", "", 0, "", "", 5, "", "", "" },
                     { 22, 1, 6, 1, "", "Internal", "NAO Supervisor", "", 1, "URICEXP01", "", 0, "", "", 6, "", "", "" },
                     { 23, 1, 6, 1, "", "Internal", "NAO", "", 2, "URICEXP02", "", 0, "", "", 6, "", "", "" },
-                    { 24, 1, 6, 1, "", "Internal", "HAPI NAO", "", 4, "URICEXP02", "", 0, "", "", 6, "", "", "" },
-                    { 25, 1, 6, 1, "", "Internal", "IT & Support Services Staff", "", 1, "URICDTE01", "", 0, "", "", 7, "", "", "" },
-                    { 26, 1, 6, 1, "", "Internal", "Teleservices Support Staff / Online Coor", "", 1, "URICDTE02", "", 0, "", "", 7, "", "", "" },
-                    { 27, 1, 8, 1, "", "Internal", "Field Sales Manager", "", 1, "GCASH01", "", 0, "", "", 0, "", "", "" },
-                    { 28, 1, 8, 1, "", "Internal", "Field Sales Supervisor", "", 1, "GCASH02", "", 0, "", "", 0, "", "", "" },
-                    { 29, 1, 8, 1, "", "Internal", "Field Sales Supervisor", "", 1, "GCASHSER01", "", 0, "", "", 8, "", "", "" },
-                    { 30, 1, 8, 1, "", "Internal", "Sonic DSP", "", 4, "GCASHSER02", "", 0, "", "", 8, "", "", "" }
+                    { 24, 1, 6, 1, "", "Internal", "HAPI NAO", "", 4, "URICEXP02", "", 0, "", "", 6, "", "", "" }
                 });
 
             migrationBuilder.InsertData(
@@ -1401,6 +1449,12 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "AreaId", "DepartmentId", "DivisionId", "JobSummary", "Manpower", "Name", "OtherCompetencies", "Plantilla", "PosCode", "PosEducation", "PosMPExternalId", "PositionType", "Restrictions", "SectionId", "TemporaryDuration", "VerifyId", "WorkExperience" },
                 values: new object[,]
                 {
+                    { 25, 1, 6, 1, "", "Internal", "IT & Support Services Staff", "", 1, "URICDTE01", "", 0, "", "", 7, "", "", "" },
+                    { 26, 1, 6, 1, "", "Internal", "Teleservices Support Staff / Online Coor", "", 1, "URICDTE02", "", 0, "", "", 7, "", "", "" },
+                    { 27, 1, 8, 1, "", "Internal", "Field Sales Manager", "", 1, "GCASH01", "", 0, "", "", 0, "", "", "" },
+                    { 28, 1, 8, 1, "", "Internal", "Field Sales Supervisor", "", 1, "GCASH02", "", 0, "", "", 0, "", "", "" },
+                    { 29, 1, 8, 1, "", "Internal", "Field Sales Supervisor", "", 1, "GCASHSER01", "", 0, "", "", 8, "", "", "" },
+                    { 30, 1, 8, 1, "", "Internal", "Sonic DSP", "", 4, "GCASHSER02", "", 0, "", "", 8, "", "", "" },
                     { 31, 1, 8, 1, "", "Internal", "DSP (Commando/Incubator)", "", 6, "GCASHSER03", "", 0, "", "", 8, "", "", "" },
                     { 32, 1, 8, 1, "", "Internal", "Ambassador", "", 2, "GCASHEXP01", "", 0, "", "", 9, "", "", "" },
                     { 33, 1, 8, 1, "", "Internal", "Merchandiser", "", 3, "GCASHMER01", "", 0, "", "", 10, "", "", "" },
@@ -1450,7 +1504,14 @@ namespace HrisApp.Server.Migrations
                     { 7, "Seventh-day Adventist" },
                     { 8, "Bible Baptist Church" },
                     { 9, "United Church of Christ in the Philippines" },
-                    { 10, "Jehovah's Witnesses" },
+                    { 10, "Jehovah's Witnesses" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReligionT",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
                     { 11, "None" },
                     { 12, "Others" }
                 });
@@ -1463,14 +1524,7 @@ namespace HrisApp.Server.Migrations
                     { 1, "Sunday" },
                     { 2, "Monday" },
                     { 3, "Tuesday" },
-                    { 4, "Wednesday" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RestDayT",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
+                    { 4, "Wednesday" },
                     { 5, "Thursday" },
                     { 6, "Friday" },
                     { 7, "Saturday" }
@@ -1714,6 +1768,9 @@ namespace HrisApp.Server.Migrations
                 name: "Emp_EvaluationT");
 
             migrationBuilder.DropTable(
+                name: "Emp_LeaveCreditT");
+
+            migrationBuilder.DropTable(
                 name: "Emp_LicenseT");
 
             migrationBuilder.DropTable(
@@ -1748,6 +1805,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "InactiveStatusT");
+
+            migrationBuilder.DropTable(
+                name: "LeaveTypesT");
 
             migrationBuilder.DropTable(
                 name: "PositionComAppT");

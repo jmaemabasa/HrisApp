@@ -227,12 +227,12 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<LeaveTypesT>().HasData(
-                new LeaveTypesT { Id = 1, Name = "Emergency", Unit = 1, Description = "Day" },
-                new LeaveTypesT { Id = 2, Name = "Maternity", Unit = 1, Description = "Day" },
-                new LeaveTypesT { Id = 3, Name = "Paternity", Unit = 1, Description = "Day" },
-                new LeaveTypesT { Id = 4, Name = "Sick", Unit = 1, Description = "Day" },
-                new LeaveTypesT { Id = 5, Name = "Vacation", Unit = 1, Description = "Day" },
-                new LeaveTypesT { Id = 6, Name = "Other", Unit = 1, Description = "Day" }
+                new LeaveTypesT { Id = 1, Name = "Emergency", Unit = 1, Description = "Day", Code ="EL" },
+                new LeaveTypesT { Id = 2, Name = "Maternity", Unit = 1, Description = "Day", Code ="ML" },
+                new LeaveTypesT { Id = 3, Name = "Paternity", Unit = 1, Description = "Day", Code ="PL" },
+                new LeaveTypesT { Id = 4, Name = "Sick", Unit = 1, Description = "Day", Code ="SL" },
+                new LeaveTypesT { Id = 5, Name = "Vacation", Unit = 1, Description = "Day", Code ="VL" },
+                new LeaveTypesT { Id = 6, Name = "Other", Unit = 1, Description = "Day", Code ="OL" }
             );
         }
 
@@ -256,8 +256,9 @@ namespace HrisApp.Server.Data
         public DbSet<PosMPExternalT> PosMPExternalT { get; set; }
         public DbSet<PosMPInternalT> PosMPInternalT { get; set; }
         public DbSet<DailyTotalPlantillaT> DailyTotalPlantillaT { get; set; }
-        public DbSet<LeaveTypesT> LeaveTypesT { get; set; }
 
+        public DbSet<LeaveTypesT> LeaveTypesT { get; set; }
+        public DbSet<Emp_LeaveCreditT> Emp_LeaveCreditT { get; set; }
 
 
         //Employee Data

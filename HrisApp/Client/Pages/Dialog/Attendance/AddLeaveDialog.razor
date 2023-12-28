@@ -1,0 +1,88 @@
+﻿@inject IDialogService _dialogService
+@inject SweetAlertService Swal
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+@inject ILeaveService LeaveService
+@inject IToastService _toastService
+@inject StateService StateService
+
+<MudDialog>
+    <DialogContent>
+        <div class="d-flex flex-column">
+            <div>
+                <MudText Typo="Typo.body2">Leave Name</MudText>
+                <MudTextField @bind-Value="newLeaveType" Variant="Variant.Outlined" Style="margin-bottom:10px;" Margin="Margin.Dense"></MudTextField>
+            </div>
+
+            <span style="font-size: 16px; color: #E38D0F"><b>Statistical Rule</b></span>
+
+            <div class="d-flex gap-2">
+                <div class="col-6">
+                    <MudText Typo="Typo.body2">Min. unit</MudText>
+                    <MudNumericField @bind-Value="newUnit" Variant="Variant.Outlined" Min="1" Style="margin-bottom:10px;" Margin="Margin.Dense" />
+                </div>
+                <div class="col-6">
+                    <MudText Typo="Typo.body2">-</MudText>
+                    <MudSelect Margin="Margin.Dense" @bind-Value="newDesc" T="string" Variant="Variant.Outlined">
+                        <MudSelectItem Value="@("Day")" />
+                    </MudSelect>
+                </div>
+            </div>
+        </div>    
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" @onclick="ConfirmCreateArea">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private string newLeaveType = "";
+    private int newUnit = 1;
+    private string newDesc = "Day";
+
+    void Cancel() => MudDialog.Cancel();
+
+    private async Task ConfirmCreateArea()
+    {
+        if (string.IsNullOrWhiteSpace(newLeaveType))
+        {
+            await ShowErrorMessageBox("Please fill up the name!");
+        }
+        else
+        {
+            MudDialog.Close();
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to add " + newLeaveType + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+            if (confirmResult.IsConfirmed)
+            {
+                await LeaveService.CreateLeave(newLeaveType, newUnit, newDesc);
+
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+                _toastService.ShowSuccess(newLeaveType + " Created Successfully!");
+
+                // Update the areaList using the StateService
+                await LeaveService.GetLeave();
+                var newList = LeaveService.LeaveTypesTs;
+                StateService.SetState("LeaveList", newList);
+            }
+        }
+    }
+    private async Task ShowErrorMessageBox(string mess)
+    {
+        bool? result = await _dialogService.ShowMessageBox(
+        "Warning",
+        mess,
+        yesText: "Ok");
+    }
+}

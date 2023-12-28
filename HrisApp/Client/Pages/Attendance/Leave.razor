@@ -1,5 +1,9 @@
 ﻿@page "/leave"
 @inject ILeaveService LeaveService
+@inject IDialogService DialogService
+@inject StateService StateService
+
+
 <PageTitle>Leave Management</PageTitle>
 
 
@@ -8,7 +12,7 @@
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Leave Management</span>
         <AuthorizeView Roles="HR, System Administrator">
             <Authorized>
-                    <MudButton Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Leave Type</MudButton>
+                <MudButton OnClick="OpenAddLeave" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Leave Type</MudButton>
             </Authorized>
         </AuthorizeView>
     </div>
@@ -36,18 +40,20 @@
     {
         <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="_leaveTypesList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
             <HeaderContent>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Code</MudTh>
                 <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Name</MudTh>
                 <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Statistical Rule</MudTh>
                 <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
+                <MudTd DataLabel="">@obj.Code</MudTd>
                 <MudTd DataLabel="">@obj.Name</MudTd>
                 <MudTd DataLabel="">@obj.Unit @obj.Description</MudTd>
                 <MudTd>
                     <AuthorizeView Roles="System Administrator">
                         <Authorized>
                             <MudTooltip Text="Update">
-                                <MudIconButton Class="btnedit" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateLeave(obj.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                             </MudTooltip>
                         </Authorized>
                         <NotAuthorized>
@@ -69,9 +75,22 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LeaveService.GetLeave();
+        await Task.Delay(300);
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+    }
 
-        _leaveTypesList = LeaveService.LeaveTypesTs;
+    private async Task LoadList()
+    {
+        await LeaveService.GetLeave();
+        StateService.SetState("LeaveList", LeaveService.LeaveTypesTs);
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        _leaveTypesList = StateService.GetState<List<LeaveTypesT>>("LeaveList");
+        StateHasChanged();
     }
 
     private bool isVisible;
@@ -81,5 +100,21 @@
         await Task.Delay(3000);
         isVisible = false;
         StateHasChanged();
+    }
+
+
+    private void OpenUpdateLeave(int id)
+    {
+        var parameters = new DialogParameters<UpdateLeaveDialog>();
+        parameters.Add(x => x.Id, id);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        DialogService.Show<UpdateLeaveDialog>("Update Leave", parameters, options);
+    }
+
+    private void OpenAddLeave()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        DialogService.Show<AddLeaveDialog>("New Leave Type", options);
     }
 }

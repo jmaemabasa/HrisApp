@@ -22,6 +22,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         IStaticService StaticService = new StaticService();
         IEmpHistoryService EmpHistoryService = new EmpHistoryService();
         IForEvalService ForEvalService = new ForEvalService();
+        ILeaveCredService LeaveCredService = new LeaveCredService();
 
         public SweetAlertService Swal { get; set; }
 
@@ -48,6 +49,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public Emp_PosHistoryT empHistory = new();
         public Emp_EvaluationT empEvaluation = new();
         public SubPositionT subPosition = new();
+        public Emp_LeaveCreditT empLeaveCredit = new();
 
         public IMask emailMask = RegexMask.Email();
 
@@ -314,6 +316,10 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     subPosition.Status = "Active";
                     subPosition.ActiveDate = employee.DateHired;
                     await PositionService.UpdateSubPosition(subPosition);
+
+
+                    //CREATE LEAVE CREDITS
+                    await LeaveCredService.CreateLeaveCred(verifyId, 0, 0, 0, 0, 0, 0);
 
                     var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
                     await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);

@@ -22,7 +22,7 @@
     <AuthorizeView Roles="System Administrator, HR">
         <Authorized>
             <MudNavGroup Class="navlinktitle" Title="Attendance" Expanded="false" Icon="@Icons.Material.Rounded.CalendarMonth" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SensorOccupied" IconColor="Color.Inherit">Leave</MudNavLink>
+                <MudNavLink Class="navlinktitle" Href="/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SensorOccupied" IconColor="Color.Inherit">Leave Types</MudNavLink>
             </MudNavGroup>
         </Authorized>
     </AuthorizeView>
@@ -36,7 +36,6 @@
                 <MudNavLink Class="navlinktitle" Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Job Position</MudNavLink>
                 <MudNavLink Class="navlinktitle" Href="/subposition" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
                 <MudNavLink Class="navlinktitle" Href="/external" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">External Manpower</MudNavLink>
-
                 @* <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink> *@
                 @* <MudNavGroup Class="navlinktitle" Title="Manpower" Expanded="false" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">
                     <MudNavLink Class="navlinktitle" Href="/internal" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">Internal</MudNavLink>
@@ -70,7 +69,6 @@
             _toastService.ShowError(ex.Message);
             return;
         }
-        
     }
 
     private void OpenChangePass()
