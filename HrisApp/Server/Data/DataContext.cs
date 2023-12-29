@@ -259,6 +259,7 @@ namespace HrisApp.Server.Data
 
         public DbSet<LeaveTypesT> LeaveTypesT { get; set; }
         public DbSet<Emp_LeaveCreditT> Emp_LeaveCreditT { get; set; }
+        public DbSet<Emp_LeaveHistoryT> Emp_LeaveHistoryT { get; set; }
 
 
         //Employee Data

@@ -1,11 +1,73 @@
-﻿.progress-bar {
+﻿/*SL*/
+.progress-bar-sl {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#FD7E14 var(--sl), #FFC107 0);
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#e4e670 var(--sl), #eef0a8 0);
+}
+
+/*EL*/
+.progress-bar-el {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#FD7E14 var(--el), #FFC107 0);
+}
+
+/*ML*/
+.progress-bar-ml {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#93F0E6 var(--ml), #9ad6d0 0);
+}
+
+/*PL*/
+.progress-bar-pl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#e890e2 var(--pl), #dbbad9 0);
+}
+
+/*VL*/
+.progress-bar-vl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#789cd6 var(--vl), #a1b3cf 0);
+}
+
+/*OL*/
+.progress-bar-ol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#71d995 var(--ol), #94e3af 0);
 }
 
 .progress-text {
@@ -26,6 +88,11 @@
     font-size: 12px;
 }
 
+.slash {
+    color: #6A707D;
+    font-size: 18px;
+}
+
 .maintitlespan {
     font-size: 20px;
     font-weight: bold;
@@ -33,7 +100,14 @@
 }
 
 
-
+.credtitle {
+    text-align: center;
+    color: #6A707D;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+}
 
 
 
