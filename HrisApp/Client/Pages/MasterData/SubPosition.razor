@@ -66,9 +66,21 @@
     {
         <MudTable Class="stable" Items="subpositionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<SubPositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
             <HeaderContent>
-                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Code</MudTh>
-                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Position Code</MudTh>
-                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Description</MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.SubPosCode)">
+                        Code
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.PosCode)">
+                        Position Code
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Description)">
+                        Description
+                    </MudTableSortLabel>
+                </MudTh>
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Status</MudTh>
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
             </HeaderContent>
@@ -79,11 +91,11 @@
                 <MudTd DataLabel="" Style="text-align: center">
                     @if (pos.Status == "Active")
                     {
-                        <MudChip Variant="Variant.Outlined" Color="Color.Success">@pos.Status</MudChip>
+                        <MudChip Style="font-family: 'Poppins', sans-serif; background-color: #C1D4CD; color: #397763;">@pos.Status</MudChip>
                     }
                     else
                     {
-                        <MudChip Variant="Variant.Outlined" Color="Color.Dark">@pos.Status</MudChip>
+                        <MudChip Style="font-family: 'Poppins', sans-serif; background-color: #d1d0cf; color: #424140;">@pos.Status</MudChip>
                     }
                     @* <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton> *@
                 </MudTd>

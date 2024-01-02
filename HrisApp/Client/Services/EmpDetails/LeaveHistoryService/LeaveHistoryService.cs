@@ -42,7 +42,7 @@ namespace HrisApp.Client.Services.EmpDetails.LeaveHistoryService
             }
             throw new Exception("employee not found");
         }
-        public async Task CreateLeaveHistory(string verid, string leavetype, DateTime? from, DateTime? to, int noofdays, string purpose)
+        public async Task CreateLeaveHistory(string verid, string leavetype, DateTime? from, DateTime? to, string noofdays, string purpose, string status)
         {
             Emp_LeaveHistoryT obj = new()
             {
@@ -51,7 +51,8 @@ namespace HrisApp.Client.Services.EmpDetails.LeaveHistoryService
                 From = from,
                 To = to,
                 NoOfDays = noofdays,
-                Purpose = purpose
+                Purpose = purpose,
+                Status = status
             };
             var result = await _httpClient.PostAsJsonAsync("api/LeaveHistory/CreateLeaveHistory", obj);
         }

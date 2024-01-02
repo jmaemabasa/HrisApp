@@ -13,6 +13,7 @@
     font-weight: bold;
     color: #26446e;
     font-size: 14px;
+    font-family: 'Poppins', sans-serif;
 }
 
 ::deep .validation-message, ::deep .me-auto {

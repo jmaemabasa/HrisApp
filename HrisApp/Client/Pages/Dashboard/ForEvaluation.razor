@@ -313,7 +313,7 @@
         // EmpFifthEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-6) && e.DateHired <= DateTime.Now.AddMonths(-5)).ToList().ToList();
         // EmpSixEval = EmployeeService.EmployeeTs.Where(e => e.DateHired >= DateTime.Now.AddMonths(-7) && e.DateHired <= DateTime.Now.AddMonths(-6)).ToList().ToList();
 
-
+        Console.WriteLine("list count" + ForEvalService.Emp_EvaluationTs.Count());
         foreach (var item in ForEvalService.Emp_EvaluationTs.Where(e => e.EvalStatus != "Done"))
         {
             int calculateMonth = 0;
@@ -326,15 +326,24 @@
             {
                 item.TimesEvaluate += 1;
                 calculateMonth += totalMonth;
+                Console.WriteLine("calmonth " + calculateMonth);
+
             }
-            else if (calculateMonth > 0){}
+            else if (calculateMonth > 0)
+            {
+                item.TimesEvaluate += 1;
+                Console.WriteLine("calmonth " + calculateMonth);
+            }
 
             switch (calculateMonth)
             {
                 case 0:
 
                 case 1:
-                    if (item.TimesEvaluate > 1){}
+                    if (item.TimesEvaluate > 1)
+                    {
+                        EmpFirstEval.Add(item);
+                    }
                     else
                     {
                         EmpFirstEval.Add(item);
@@ -342,36 +351,51 @@
                     break;
 
                 case 2:
-                    if (item.TimesEvaluate > 1){}
+                    if (item.TimesEvaluate > 1)
+                    {
+                        EmpSecondEval.Add(item);
+                    }
                     else
                     {
                         EmpSecondEval.Add(item);
-                        Console.WriteLine(item.Verify_Id);
                     }
                     break;
                 case 3:
-                    if (item.TimesEvaluate > 1){}
+                    if (item.TimesEvaluate > 1)
+                    {
+
+                        EmpThirdEval.Add(item);
+                    }
                     else
                     {
                         EmpThirdEval.Add(item);
                     }
                     break;
                 case 4:
-                    if (item.TimesEvaluate > 1){}
+                    if (item.TimesEvaluate > 1)
+                    {
+
+                        EmpFourthEval.Add(item);
+                    }
                     else
                     {
                         EmpFourthEval.Add(item);
                     }
                     break;
                 case 5:
-                    if (item.TimesEvaluate > 1){}
+                    if (item.TimesEvaluate > 1)
+                    {
+                        EmpFifthEval.Add(item);
+                    }
                     else
                     {
                         EmpFifthEval.Add(item);
                     }
                     break;
                 case 6:
-                    if (item.TimesEvaluate > 1){}
+                    if (item.TimesEvaluate > 1)
+                    {
+                        EmpSixEval.Add(item);}
                     else
                     {
                         EmpSixEval.Add(item);
@@ -383,9 +407,8 @@
             }
         }
 
-        DateTime sevenMonthsAgo = DateTime.Now.AddMonths(-7);
-        _totalCountEval = EmployeeService.EmployeeTs
-            .Count(e => e.DateHired > sevenMonthsAgo)
+        _totalCountEval = ForEvalService.Emp_EvaluationTs
+            .Count(e => e.EvalStatus != "Done")
             .ToString();
     }
 

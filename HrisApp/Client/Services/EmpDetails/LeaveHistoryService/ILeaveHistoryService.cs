@@ -7,7 +7,7 @@
         Task GetLeaveHistory();
         Task<Emp_LeaveHistoryT> GetSingleLeaveHistory(int id);
         Task<Emp_LeaveHistoryT> GetSingleLeaveHistoryByVerId(string verid);
-        Task CreateLeaveHistory(string verid, string leavetype, DateTime? from, DateTime? to, int noofdays, string purpose);
+        Task CreateLeaveHistory(string verid, string leavetype, DateTime? from, DateTime? to, string noofdays, string purpose, string status);
         Task UpdateLeaveHistory(Emp_LeaveHistoryT obj);
     }
 }

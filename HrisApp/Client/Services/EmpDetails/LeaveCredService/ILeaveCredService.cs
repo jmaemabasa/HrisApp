@@ -9,5 +9,6 @@
         Task<Emp_LeaveCreditT> GetSingleLeaveCredByVerId(string verid);
         Task CreateLeaveCred(string verid, int el, int ml, int pl, int sl, int vl, int ol);
         Task UpdateLeaveCred(Emp_LeaveCreditT obj);
+        Task<double> GetCountExistCredits(string verid, string type);
     }
 }

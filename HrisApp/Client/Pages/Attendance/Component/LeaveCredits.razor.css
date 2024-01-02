@@ -7,7 +7,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#e4e670 var(--sl), #eef0a8 0);
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#a6a842 var(--sl), #d5d6a5 0);
 }
 
 /*EL*/
@@ -31,7 +31,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#93F0E6 var(--ml), #9ad6d0 0);
+    background: radial-gradient(closest-side, #E9ECEF 79%, transparent 80% 100%), conic-gradient(#51b5ab var(--ml), #9cd9d2 0);
 }
 
 /*PL*/
@@ -97,6 +97,7 @@
     font-size: 20px;
     font-weight: bold;
     color: #264487;
+    font-family: 'Poppins', sans-serif !important;
 }
 
 
@@ -108,7 +109,6 @@
     margin-top: 10px;
     font-family: 'Poppins', sans-serif;
 }
-
 
 
 

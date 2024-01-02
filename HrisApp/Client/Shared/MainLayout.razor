@@ -170,6 +170,11 @@
 
     private bool _isDarkMode;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
+    }
+
     private async Task ToggleTheme()
     {
         _isDarkMode = !_isDarkMode;
@@ -203,7 +208,8 @@
 
         };
 
-    async Task Logout()
+    [JSInvokable]
+    public async Task Logout()
     {
         try
         {
@@ -220,7 +226,6 @@
             _toastService.ShowError(ex.Message);
             return;
         }
-
     }
 
     private void OpenChangePass()

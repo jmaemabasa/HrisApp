@@ -1,0 +1,54 @@
+﻿@inject ILeaveHistoryService LeaveHistoryService
+
+<style>
+    .divsingledetails {
+        background-color: #424242;
+        padding: 7px 15px 7px 15px;
+        border-radius: 10px;
+    }
+</style>
+
+<MudDialog>
+    <DialogContent>
+        <div class="d-flex flex-column">
+            <span style="margin-bottom: 5px; margin-top:10px;font-size: 16px; color: #424242"><b>Details</b></span>
+            <div class="divsingledetails mb-2">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Leave Type</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.LeaveType</MudText>
+            </div>
+            <div class="d-flex gap-2 mb-2">
+                <div class="divsingledetails flex-grow-1">
+                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">From</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.From?.ToString("MMM dd, yyyy")</MudText>
+                </div>
+                <div class="divsingledetails flex-grow-1">
+                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">To</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.To?.ToString("MMM dd, yyyy")</MudText>
+                </div>
+            </div>
+            <div class="divsingledetails mb-2">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">No of Days</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.NoOfDays Days</MudText>
+            </div>
+            <div class="divsingledetails mb-2">
+                <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Purpose</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.Purpose</MudText>
+            </div>
+        </div>
+    </DialogContent>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public int Id { get; set; }
+
+    Emp_LeaveHistoryT obj = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //area = AreaService.AreaTs.Find(d => d.Id == Id);
+        obj = await LeaveHistoryService.GetSingleLeaveHistory((int)Id);
+    }
+}

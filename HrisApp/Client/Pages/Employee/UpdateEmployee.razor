@@ -31,7 +31,7 @@
 <div class="topnav d-flex justify-content-end align-items-center z-60">
     <MudButton OnClick="Backbtn" Size="Size.Medium">Back</MudButton>
 </div>
-<div class="@*tabdiv*@ ps-5 pt-2">
+<div class="@*tabdiv*@ pt-2">
     <MudGrid Spacing="3">
         <MudItem xs="12" lg="3">
             <MudCard Class="empdleft" Elevation="0">
@@ -42,7 +42,7 @@
                                 <MudTooltip Text="Back">
                                     <MudIconButton OnClick="Backbtn" Icon="@Icons.Material.Rounded.KeyboardArrowLeft" aria-label="back" Size="Size.Small"></MudIconButton>
                                 </MudTooltip>
-                                <span class="spantitle">Employee Details</span>
+                                <span class="spantitle" style="font-family: 'Poppins', sans-serif !important">Employee Details</span>
                             </div>
                             <div>
                             @if (employee.DateInactiveStatus <= fiveYearsAgo)
@@ -51,9 +51,9 @@
                                 <MudIconButton Icon="@Icons.Material.Rounded.Delete"  Color="Color.Error" OnClick="@(() => DeleteEmployee(id))"></MudIconButton>
                                 </MudTooltip>
                             }
-                                <MudTooltip Text="Print" Color="Color.Tertiary" Arrow="true">
+                               @*  <MudTooltip Text="Print" Color="Color.Tertiary" Arrow="true">
                                 <MudIconButton Icon="@Icons.Material.Rounded.Print" Color="Color.Tertiary" aria-label="print" OnClick="@OnExporttoPDF"></MudIconButton>
-                                </MudTooltip>
+                                </MudTooltip> *@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -69,11 +69,11 @@
                                 </div>
                             </div>
                             <div>
-                                <MudText Align="Align.Center" Style="font-weight: bold; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@FUpper(employee.FirstName) @FUpper(employee.LastName)</MudText>
+                             <MudText Align="Align.Center" Style="font-family: 'Poppins', sans-serif !important;font-weight: bold; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@FUpper(employee.FirstName) @FUpper(employee.LastName)</MudText>
                             </div>
                             <div class="d-flex flex-grow-1 justify-content-center mt-1">
                                 <div class="@StatusChipColor(employee.Status?.Name)">
-                                    <MudText Align="Align.Center" Style="font-size: 0.9em">@FUpper(employee.Status?.Name)</MudText>
+                                 <MudText Align="Align.Center" Style="font-family: 'Poppins', sans-serif !important;font-size: 0.9em">@FUpper(employee.Status?.Name)</MudText>
                                 </div>
                             </div>
                             <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
@@ -131,7 +131,7 @@
                         </MudCardContent>
                         </MudCard>
         </MudItem>
-                <MudItem Class="empdmainbox" xs="12" lg="9" Style="margin-top: 1rem;">
+        <MudItem Class="empdmainbox" xs="12" lg="9" Style="margin-top: 1rem;">
                 <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex">
                 <MudTabPanel TabContent="tabHeader(0)">
                         <MudCard Class="empdmain">
@@ -1076,7 +1076,7 @@
                     </MudItem>
                     </MudDrawer>
 
-                    <MudDrawer Class="drawerdetails" @bind-Open="@addressOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <MudDrawer Class="drawerdetails" @bind-Open="@addressOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
                     <span class="spantitle mb-3">Address</span>
                     <MudItem xs="12">
                     <EditForm Model="_address" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
@@ -1148,7 +1148,7 @@
                     </MudItem>
                     </MudDrawer>
 
-                    <MudDrawer Class="drawerdetails" @bind-Open="@documentsOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <MudDrawer Class="drawerdetails" @bind-Open="@documentsOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
                     <span class="spantitle mb-3">Compensation Package</span>
                     <MudItem xs="12">
                     <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">

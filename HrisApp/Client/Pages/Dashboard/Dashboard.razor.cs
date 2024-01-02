@@ -1,5 +1,4 @@
 ﻿using ChartJs.Blazor.Common.Axes.Ticks;
-using NPOI.HSSF.Record.Chart;
 using System.Data;
 using System.Globalization;
 
@@ -48,6 +47,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 await PositionService.GetPosition();
                 await PositionService.GetDbTotalPlantilla();
                 await PositionService.GetSubPosition();
+                await ForEvalService.GetForEval();
 
                 allDepartments = DepartmentService.DepartmentTs;
                 allDivisions = DivisionService.DivisionTs;
@@ -76,10 +76,9 @@ namespace HrisApp.Client.Pages.Dashboard
                 //    .Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId) && e.DateInactiveStatus <= fiveYearsAgo)
                 //    .Count().ToString();
 
-                DateTime sevenMonthsAgo = DateTime.Now.AddMonths(-7);
-                _countForEval = EmployeeService.EmployeeTs
-                    .Count(e => e.DateHired > sevenMonthsAgo)
-                    .ToString();
+                _countForEval = ForEvalService.Emp_EvaluationTs
+                .Count(e => e.EvalStatus != "Done")
+                .ToString();
 
                 foreach (var item in allPositions)
                 {
@@ -101,7 +100,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 ConfigurePieConfig();
                 FilterPieEmployee();
 
-                availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) *100).ToString() + "%";
+                availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) * 100).ToString() + "%";
 
             }
             catch (Exception ex)

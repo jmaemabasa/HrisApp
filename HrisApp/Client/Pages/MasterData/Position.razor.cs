@@ -55,7 +55,7 @@
 
         private void OpenViewPosition(int id)
         {
-            var parameters = new DialogParameters<UpdatePositionDialog>
+            var parameters = new DialogParameters<ViewPositionDialog>
             {
                 { x => x.Id, id }
             };

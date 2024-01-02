@@ -8,13 +8,13 @@
 }
 
 ::deep .chipPending {
-    background-color: #D885A3;
-    color: #fafaf5;
+    background-color: #D8D5E8;
+    color: #7567B8;
     font-weight: bold;
 }
 
 ::deep .chipDone {
-    background-color: #7EAA92;
-    color: #fafaf5;
+    background-color: #C1D4CD;
+    color: #397763;
     font-weight: bold;
 }

@@ -60,5 +60,11 @@
         {
             var result = await _httpClient.PutAsJsonAsync("api/LeaveCredit/UpdateLeaveCredit", obj);
         }
+        public async Task<double> GetCountExistCredits(string verid, string type)
+        {
+            var result = await _httpClient.GetFromJsonAsync<double>($"api/LeaveCredit/GetCountExistCredits/{verid}/{type}");
+            return result;
+        }
+
     }
 }

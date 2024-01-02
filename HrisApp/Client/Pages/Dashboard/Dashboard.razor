@@ -17,6 +17,7 @@
 @inject IToastService _toastService
 @inject NavigationManager NavigationManager
 @inject GlobalConfigService GlobalConfigService
+@inject IForEvalService ForEvalService
 @inject IJSRuntime jsRuntime
 @using ChartJs.Blazor.BarChart
 
@@ -110,9 +111,9 @@
 }
 else
 {
-    <div class="progress-bar sl" style="--sl: @availableLeavetext">
+    @* <div class="progress-bar sl" style="--sl: @availableLeavetext">
         <progress value="@availableLeave" min="0" max="@totalLeave" style="visibility:hidden;height:0;width:0;"></progress>
         <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@availableLeave</span><span class="progress-total">/@totalLeave</span></div>
-    </div>
+    </div> *@
 }
 

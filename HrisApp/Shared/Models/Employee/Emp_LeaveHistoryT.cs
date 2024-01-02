@@ -12,7 +12,8 @@ namespace HrisApp.Shared.Models.Employee
         public string LeaveType { get; set; } = string.Empty;
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
-        public int NoOfDays { get; set; }
+        public string NoOfDays { get; set; } = string.Empty;
         public string Purpose { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
     }
 }
