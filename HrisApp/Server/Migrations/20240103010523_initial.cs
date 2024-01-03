@@ -464,21 +464,34 @@ namespace HrisApp.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EL = table.Column<int>(type: "int", nullable: false),
-                    Left_EL = table.Column<int>(type: "int", nullable: false),
                     ML = table.Column<int>(type: "int", nullable: false),
-                    Left_ML = table.Column<int>(type: "int", nullable: false),
                     PL = table.Column<int>(type: "int", nullable: false),
-                    Left_PL = table.Column<int>(type: "int", nullable: false),
                     SL = table.Column<int>(type: "int", nullable: false),
-                    Left_SL = table.Column<int>(type: "int", nullable: false),
                     VL = table.Column<int>(type: "int", nullable: false),
-                    Left_VL = table.Column<int>(type: "int", nullable: false),
-                    OL = table.Column<int>(type: "int", nullable: false),
-                    Left_OL = table.Column<int>(type: "int", nullable: false)
+                    OL = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Emp_LeaveCreditT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Emp_LeaveHistoryT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verify_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LeaveType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    From = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    To = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    NoOfDays = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emp_LeaveHistoryT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1769,6 +1782,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Emp_LeaveCreditT");
+
+            migrationBuilder.DropTable(
+                name: "Emp_LeaveHistoryT");
 
             migrationBuilder.DropTable(
                 name: "Emp_LicenseT");

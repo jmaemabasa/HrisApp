@@ -16,11 +16,14 @@ function dotnetInstanceInvocation(dotnetHelper) {
 function initializeInactivityTimer(dotnetHelper) {
     var timers;
     document.onmousemove = resetTimer;
+    document.onmousedown = resetTimer;
     document.onkeypress = resetTimer;
+    document.onkeydown = resetTimer;
 
     function resetTimer() {
         clearTimeout(timers);
-        timers = setTimeout(logout, 300000);
+        //timers = setTimeout(logout, 300000);
+        timers = setTimeout(logout, 60000);
     }
 
     function logout() {

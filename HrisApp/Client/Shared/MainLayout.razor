@@ -170,10 +170,10 @@
 
     private bool _isDarkMode;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
-    }
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
+    // }
 
     private async Task ToggleTheme()
     {
@@ -208,18 +208,17 @@
 
         };
 
-    [JSInvokable]
+    // [JSInvokable]
     public async Task Logout()
     {
         try
         {
             var id = Convert.ToInt32(GlobalConfigService.User_Id);
             await AuthService.UpdateLoginStatus(id);
-
             await LocalStorage.RemoveItemAsync("token");
             await AuthStateProvider.GetAuthenticationStateAsync();
-            NavigationManager.NavigateTo("/", true);
 
+            NavigationManager.NavigateTo("/");
         }
         catch (Exception ex)
         {
