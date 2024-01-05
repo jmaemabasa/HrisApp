@@ -92,5 +92,17 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(await GetDBSection());
         }
+
+
+        [HttpGet("GetSectionId/{name}")]
+        public async Task<ActionResult<int>> GetSectionId(string name)
+        {
+            var Masterlist = await _context.SectionT
+                .ToListAsync();
+
+            var _returnId = Masterlist.Where(d => d.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            return Ok(_returnId.Id);
+        }
     }
 }

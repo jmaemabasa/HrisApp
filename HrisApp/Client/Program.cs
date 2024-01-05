@@ -46,6 +46,7 @@ global using HrisApp.Client.Services.EmpDetails.LeaveHistoryService;
 global using HrisApp.Client.HelperToken;
 global using HrisApp.Client.Pages.Dialog;
 global using HrisApp.Client.ViewModel;
+global using HrisApp.Client.Pages.Dialog.Employee;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Authorization;

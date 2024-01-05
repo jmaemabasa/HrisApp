@@ -8,7 +8,9 @@
 @inject IStaticService StaticService
 @inject IDivisionService DivisionService 
 @inject IPositionService PositionService
+@inject IDialogService DialogService
 @inject NavigationManager _navigationManager
+@inject StateService StateService
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]
 
@@ -31,8 +33,13 @@
                                 <div class="text">Exporting</div>
                             }
                                             
-                                        </button>
+                     </button>
+                    <button class="Btn" @onclick="OpenUploadDialog">
+                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Upload"></MudIcon></div>
+                        <div class="text">Upload File</div>
+                    </button>
                     <MudButton OnClick="@CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd"> Employee</MudButton>
+                    
                 </div>
             </Authorized>
         </AuthorizeView>

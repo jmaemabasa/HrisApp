@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Services.EmpDetails.EmployeeService
+﻿using System.Data;
+
+namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {
     public interface IEmployeeService
     {
@@ -14,8 +16,12 @@
 
 
         Task<int> GetCountEmployee();
-
+        
         Task<HttpResponseMessage> EmpDetailsPrint(string verid);
         Task<string> EmpDetailsGenerate(string verid);
+
+
+        Task<string> QueryEmployeeForUpload(DataTable dtable, string filename);
+        Task<int> GetEmployeeExist(string companyId);
     }
 }

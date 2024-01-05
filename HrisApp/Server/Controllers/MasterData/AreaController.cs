@@ -67,5 +67,16 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(await GetDBArea());
         }
+
+        [HttpGet("GetAreaId/{name}")]
+        public async Task<ActionResult<int>> GetAreaId(string name)
+        {
+            var Masterlist = await _context.AreaT
+                .ToListAsync();
+
+            var _returnId = Masterlist.Where(d => d.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            return Ok(_returnId.Id);
+        }
     }
 }

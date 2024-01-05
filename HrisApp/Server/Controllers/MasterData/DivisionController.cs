@@ -78,5 +78,16 @@ namespace HrisApp.Server.Controllers.MasterData
             var returnCount = Masterlist.Count();
             return Ok(returnCount);
         }
+
+        [HttpGet("GetDivisionId/{name}")]
+        public async Task<ActionResult<int>> GetDivisionId(string name)
+        {
+            var Masterlist = await _context.DivisionT
+                .ToListAsync();
+
+            var _returnId = Masterlist.Where(d => d.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            return Ok(_returnId.Id);
+        }
     }
 }

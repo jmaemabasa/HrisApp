@@ -1,0 +1,59 @@
+﻿span {
+    font-size: 25px;
+    text-align: center;
+    color: #164DA4;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+}
+
+::deep .btnUplaod {
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    transition: all .5s ease;
+}
+
+    ::deep .btnUplaod:hover {
+        transform: scale(1.1);
+    }
+
+::deep .file {
+    background-color: #90c8f5;
+    color: #115f9e;
+}
+    ::deep .file:hover {
+        background-color: #115f9e;
+        color: #fafaf5;
+    }
+
+
+::deep .template {
+    background-color: #d8ccfc;
+    color: #594AE2;
+}
+    ::deep .template:hover {
+        background-color: #594AE2;
+        color: #fafaf5;
+    }
+
+::deep .clear {
+    background-color: #EABCBB;
+    color: #BE1313;
+}
+    ::deep .clear:hover {
+        background-color: #BE1313;
+        color: #fafaf5;
+    }
+
+.divtitle {
+    display: flex;
+    justify-content: center;
+    background-color: #cde2f7;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.divbtns {
+    margin-bottom: 20px;
+}
+

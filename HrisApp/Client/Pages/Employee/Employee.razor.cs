@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Employee
+﻿using System.Collections;
+
+namespace HrisApp.Client.Pages.Employee
 {
     public partial class Employee : ComponentBase
     {
@@ -18,8 +20,10 @@
             try
             {
                 await Task.Delay(1000);
-                await EmployeeService.GetEmployee();
-                _employeeList = EmployeeService.EmployeeTs;
+                StateService.OnChange += OnStateChanged;
+                await LoadList();
+                //await EmployeeService.GetEmployee();
+                //_employeeList = EmployeeService.EmployeeTs;
                 await StaticService.GetStatusList();
                 StatusL = StaticService.StatusTs;
 
@@ -47,6 +51,18 @@
             {
                 Console.WriteLine(ex.Message.ToString());
             }
+        }
+        private async Task LoadList()
+        {
+            await EmployeeService.GetEmployee();
+            StateService.SetState("EmployeeList", EmployeeService.EmployeeTs);
+        }
+
+        private void OnStateChanged()
+        {
+            // Handle state changes, e.g., update the areaList
+            _employeeList = StateService.GetState<List<EmployeeT>>("EmployeeList");
+            StateHasChanged();
         }
 
         #region COMBOBOX FILTERS
@@ -455,6 +471,11 @@
         #region FUNCTIONS / METHODS
         public void CreateNewEmployee() => _navigationManager.NavigateTo("/employee/add");
         public void ShowEmployee(int id) => _navigationManager.NavigateTo($"/employee/edit/{id}");
+        private void OpenUploadDialog()
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+            DialogService.Show<UploadFileDialog>("", options);
+        }
 
         public async Task DeleteEmployee(int id)
         {

@@ -1,0 +1,68 @@
+﻿@using System.Data;
+@using NPOI.SS.UserModel;
+@using NPOI.XSSF.UserModel;
+@inject IJSRuntime JSRuntime
+@inject DTOEmployeeExport _export
+@inject IToastService _toastService
+@inject IEmployeeService EmployeeService
+@inject NavigationManager Navigate
+@inject IDepartmentService DepartmentService
+@inject IDivisionService DivisionService
+@inject ISectionService SectionService
+@inject IPositionService PositionService
+@inject IAreaService AreaService
+@inject IStaticService StaticService
+@inject StateService StateService
+
+<MudDialog>
+    <DialogContent>
+        <div class="d-flex flex-column gap-2">
+            <div class="divtitle"><span>EMPLOYEE DATA MASS UPLOAD</span></div>
+            
+            <div>
+                <MudList Style="width:500px;" Dense="true" Class="mt-0">
+                    <MudListItem Icon="@Icons.Material.Filled.AttachFile" Style="font-weight:bold">
+                        Selected File: @Filename
+                    </MudListItem>
+
+                </MudList>
+            </div>
+            <div class="d-flex gap-3 justify-content-center divbtns ">
+                <InputFile id="fileInput" hidden OnChange="OnImportExcel" />
+                <MudButton HtmlTag="label" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.UploadFile" for="fileInput" Class="btnUplaod file">Choose File</MudButton>
+                <MudButton OnClick="OnDownloadTem" Variant="Variant.Filled" Size="Size.Medium" Class="btnUplaod template"> 
+                    @if (!_processing)
+                    {
+                        <div><MudIcon Icon="@Icons.Material.Rounded.SimCardDownload"></MudIcon></div>
+                        <div class="ms-1">Download Template</div>
+                    }
+                    else
+                    {
+                        <div><MudProgressCircular Color="Color.Warning" Size="Size.Small" Indeterminate="true" /></div>
+                        <div class="ms-1">Downloading</div>
+                    }
+                </MudButton>
+                <MudButton OnClick="OnClearfile" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.DeleteSweep" Class="btnUplaod clear"> Clear</MudButton>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div style="margin: 8px 16px;" class="d-flex gap-2">
+            <MudButton Class="btnactions cancel" OnClick="Cancel">Cancel</MudButton>
+            <MudButton Class="btnactions save" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" @onclick="OnUploadFile">
+                @if (!_processingSave)
+                {
+                    <div class="d-flex align-items-center">
+                        <div><MudIcon Size="Size.Small" Icon="@Icons.Material.Rounded.Save"></MudIcon></div>
+                        <div class="ms-1 mt-1">Upload</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-1"><MudProgressCircular Color="Color.Warning" Size="Size.Small" Indeterminate="true" /></div>
+                    <div class="ms-1">Uploading</div>
+                }
+            </MudButton>
+        </div>
+    </DialogActions>
+</MudDialog>

@@ -623,5 +623,17 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(obj);
         }
 
+
+        [HttpGet("GetSubPositionId/{name}")]
+        public async Task<ActionResult<int>> GetSubPositionId(string name)
+        {
+            var Masterlist = await _context.SubPositionT
+                .ToListAsync();
+
+            var _returnId = Masterlist.Where(d => d.SubPosCode.Contains(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            return Ok(_returnId.Id);
+        }
+
     }
 }

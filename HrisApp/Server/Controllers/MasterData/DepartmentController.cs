@@ -93,5 +93,15 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(returnCount);
         }
 
+        [HttpGet("GetDepartmentId/{depname}")]
+        public async Task<ActionResult<int>> GetDepartmentId(string depname)
+        {
+            var Masterlist = await _context.DepartmentT
+                .ToListAsync();
+
+            var _returnId = Masterlist.Where(d => d.Name.Contains(depname, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            return Ok(_returnId.Id);
+        }
     }
 }

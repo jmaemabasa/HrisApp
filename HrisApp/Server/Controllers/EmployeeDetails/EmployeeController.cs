@@ -1,9 +1,4 @@
-﻿using HrisApp.Client.Pages.Employee;
-using HrisApp.Client.Services.EmpDetails.EmpEvaluationService;
-using HrisApp.Shared.Models.StaticData;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.EmployeeDetails
 {
@@ -147,7 +142,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.Area)
                 //.Include(em => em.Position)
                 //.Include(em => em.InactiveStatus)
-                
+
                 .FirstOrDefaultAsync(e => e.Id == employee.Id);
 
             if (dbEmployee != null)
@@ -289,7 +284,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
 
                     if (evaluation != null)
                     {
-                        evaluation.DateHired = employee.DateHired;                        
+                        evaluation.DateHired = employee.DateHired;
                     }
                 }
 
@@ -376,6 +371,15 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
             return Ok(returnCount);
         }
 
+        [HttpGet("GetEmployeeExist/{companyId}")]
+        public async Task<ActionResult<int>> GetEmployeeExist(string companyId)
+        {
+            var Masterlist = await _context.EmployeeT
+                .ToListAsync();
+            var _isexist = Masterlist.Where(d => d.EmployeeNo == companyId).Count();
+
+            return Ok(_isexist);
+        }
 
     }
 }

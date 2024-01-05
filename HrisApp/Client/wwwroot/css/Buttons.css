@@ -93,3 +93,19 @@
         background-color: #C1C4C7;
         color: #fff;
     }
+
+/*UPLOAD FILEDIALOG RAZOR BUTTONS*/
+.btnactions {
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    transition: all .5s ease;
+}
+
+    .btnactions:hover {
+        transform: scale(1.1);
+    }
+
+    .btnactions.cancel:hover {
+        color: #BE1313;
+        background-color: #fff;
+    }
