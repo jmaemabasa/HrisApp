@@ -110,39 +110,24 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.divsingledetails {
-    background-color: #424242;
-    padding: 7px 23px 7px 15px;
+::deep .btnnext {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 10px;
-    font-family: 'Poppins', sans-serif;
-}
-
-::deep .selectLeaveStatus {
-    background-color: #D8D5E8;
-    border-radius: 5px;
-    font-family: 'Poppins', sans-serif;
-    transition: all .5s ease;
-}
-
-    ::deep .selectLeaveStatus:hover {
-        background-color: #c4bfe3;
-        color: #fafaf5 !important;
-    }
-
-::deep .btnSaveStatus {
+    background-color: #F1BC3A;
     color: #424242;
-    background-color: #C1D4CD;
-    font-family: 'Poppins', sans-serif;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-weight: bold;
+    width: 200px;
     transition: all .5s ease;
 }
 
-    ::deep .btnSaveStatus:hover {
-        color: #fafaf5;
-        background-color: #397763;
+    ::deep .btnnext:hover {
+        background-color: #E38D0F;
+        color: #FAFAF5;
+        transform: scale(1.1);
     }
-
-
-
 
 
 

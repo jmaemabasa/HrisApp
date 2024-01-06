@@ -97,7 +97,7 @@ else
             <MudTd DataLabel="">@training.BasicSalary</MudTd>
             <MudTd DataLabel="">@training.RSLeaving</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="HR, System Administrator, User">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteProfbg(training.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

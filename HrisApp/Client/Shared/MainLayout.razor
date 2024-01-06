@@ -9,6 +9,8 @@
 @inject IToastService _toastService
 @inject IDialogService DialogService
 @inject IJSRuntime JSRuntime
+@inject IImageService ImageService
+@inject IEmployeeService EmployeeService
 
 <style>
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
@@ -56,12 +58,11 @@
     .btnburger {
         /*background: #e9ecef;*/
         border: none;
-        box-shadow: -5px -5px 23px #ffffff, 5px 5px 12px #cacdcf;
-        border-radius: 10px;
+        box-shadow: -2px 1px 6px #ffffff, 3px 4px 9px #b3b4b5;
+        border-radius: 50%;
+        transition: all .5s ease;
+        height: 40px;
     }
-
-
-    
 </style>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
@@ -87,12 +88,42 @@
             <MudSpacer />
             @* <button class="btn btn-primary" @onclick="ToggleTheme">Toggle Theme</button>
             <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" /> *@
-            <MudTooltip Text="Settings">
-                <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.TopLeft">
-                    <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                    <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+            @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
+            {
+                <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText>
+                <MudMenu Class="btnburger" AnchorOrigin="Origin.TopLeft">
+                    <ActivatorContent>
+                        <MudTooltip Text="Account">
+                            <MudAvatar>
+                                <MudImage Src="@ImageData"></MudImage>
+                            </MudAvatar>
+                        </MudTooltip>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                        <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                    </ChildContent>
                 </MudMenu>
-            </MudTooltip>
+            }
+            else
+            {
+                <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText>
+                <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.TopLeft">
+                    <ActivatorContent>
+                        <MudTooltip Text="Account">
+                            <MudAvatar>
+                                <MudImage Src="@ImageData"></MudImage>
+                            </MudAvatar>
+                        </MudTooltip>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
+                        <MudDivider DividerType="DividerType.Middle" Class="my-2" />
+                        <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                        <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                    </ChildContent>
+                </MudMenu>
+            }
         </MudAppBar>
     </MudHidden>
 
@@ -169,11 +200,26 @@
     }
 
     private bool _isDarkMode;
+    private string VERIFY = "";
+    private string USERNAME = "";
+    private string FULLNAME = "";
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
-    // }
+    protected override async Task OnInitializedAsync()
+    {
+        // await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
+        try
+        {
+            await Task.Delay(1);
+            VERIFY = GlobalConfigService.VerifyId;
+            USERNAME = GlobalConfigService.Username;
+            FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
+            await EmployeeImg(VERIFY);//image
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/imgholder.jpg");
+        }
+    }
 
     private async Task ToggleTheme()
     {
@@ -231,5 +277,19 @@
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true, NoHeader = true };
         DialogService.Show<ChangePassDialog>("", options);
+    }
+
+    private void ViewProfile() => NavigationManager.NavigateTo($"/profile/{USERNAME}");
+
+    private string ImageData { get; set; }
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+        }
     }
 }

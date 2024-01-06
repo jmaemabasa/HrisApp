@@ -25,13 +25,15 @@ namespace HrisApp.Server.Controllers.Auth
         [HttpPost("register")]
         public async Task<ActionResult<ServiceResponse>> Register(UserLoginDto request)
         {
+            var verid = await _context.EmployeeT.Where(d => d.Id == request.EmployeeId).FirstOrDefaultAsync();
             var response = await _userService.Register(
                 new UserMasterT
                 {
                     EmployeeId = request.EmployeeId,
                     Username = request.Username,
                     Role = request.Role,
-                    LoginStatus = request.LoginStatus
+                    LoginStatus = request.LoginStatus,
+                    Emp_VerifyId = verid.Verify_Id
                 },
                 request.Password);
 

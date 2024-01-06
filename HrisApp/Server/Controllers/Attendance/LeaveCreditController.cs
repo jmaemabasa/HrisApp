@@ -88,7 +88,7 @@ namespace HrisApp.Server.Controllers.Attendance
         public async Task<ActionResult<double>> GetCountExistCredits(string verid, string type)
         {
             var obj = await _context.Emp_LeaveHistoryT.ToListAsync();
-            var list = obj.Where(h => h.Verify_Id == verid && h.LeaveType == type && h.From?.Year == DateTime.Now.Year && h.To?.Year == DateTime.Now.Year).ToList();
+            var list = obj.Where(h => h.Verify_Id == verid && h.LeaveType == type && h.Status == "Approved" && h.From?.Year == DateTime.Now.Year && h.To?.Year == DateTime.Now.Year).ToList();
 
             double sum =0;
             foreach (var item in list)

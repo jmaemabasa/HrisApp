@@ -75,6 +75,7 @@
     color: #424242;
 }
 
+
 /*GRAPH*/
 .bargraph {
     border-radius: 10px;
@@ -180,3 +181,8 @@ canvas {
     font-size: 2em;
     color: #465C8D;
 }
+
+.mud-popover {
+    border-radius: 10px;
+}
+

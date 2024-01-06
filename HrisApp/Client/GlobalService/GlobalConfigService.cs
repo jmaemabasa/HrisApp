@@ -46,6 +46,16 @@ namespace HrisApp.Client.GlobalService
             }
         }
 
+        private string _verid = string.Empty;
+        public string VerifyId
+        {
+            get => _verid;
+            set
+            {
+                _verid = value;
+            }
+        }
+
         private string _id;
         public string User_Id
         {
@@ -92,6 +102,7 @@ namespace HrisApp.Client.GlobalService
             User_Id = _authState.User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Sid)?.Value;
             Username = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
             Role = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            VerifyId = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.StreetAddress)?.Value;
             Fullname = _authState.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
         }
 

@@ -77,6 +77,7 @@ namespace HrisApp.Server.Controllers.Attendance
             dbobj.To = obj.To;
             dbobj.NoOfDays = obj.NoOfDays;
             dbobj.Purpose = obj.Purpose;
+            dbobj.Status = obj.Status;
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBLeaveHistory());

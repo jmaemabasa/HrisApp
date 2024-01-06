@@ -1,4 +1,33 @@
-﻿/*SL*/
+﻿.btnavatar {
+    transition: all .5s ease;
+}
+    .btnavatar:hover {
+        transform: scale(1.0);
+    }
+
+.Welcomepanel {
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(241,188,58,1) 0%, rgba(249,212,79,1) 46%, rgba(249,212,79,0.4430147058823529) 100%);
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+    color: #424242;
+}
+
+.leavebalancepanel {
+    height: 14rem;
+    border-radius: 10px;
+    border: none;
+    background: #e9ecef;
+    background-color: var(--BackgroundGrey);
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+    color: #424242;
+}
+
+/*SL*/
 .progress-bar-sl {
     display: flex;
     justify-content: center;
@@ -110,105 +139,21 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.divsingledetails {
-    background-color: #424242;
-    padding: 7px 23px 7px 15px;
+
+.fullnameappbar {
+    font-family: 'Poppins', sans-serif !important;
+    margin-right: 8px;
+    font-size: 14px;
+    color: #6A707D;
+}
+
+.userleavehistorypanel {
+    height: 29rem;
     border-radius: 10px;
-    font-family: 'Poppins', sans-serif;
-}
-
-::deep .selectLeaveStatus {
-    background-color: #D8D5E8;
-    border-radius: 5px;
-    font-family: 'Poppins', sans-serif;
-    transition: all .5s ease;
-}
-
-    ::deep .selectLeaveStatus:hover {
-        background-color: #c4bfe3;
-        color: #fafaf5 !important;
-    }
-
-::deep .btnSaveStatus {
-    color: #424242;
-    background-color: #C1D4CD;
-    font-family: 'Poppins', sans-serif;
-    transition: all .5s ease;
-}
-
-    ::deep .btnSaveStatus:hover {
-        color: #fafaf5;
-        background-color: #397763;
-    }
-
-
-
-
-
-
-.Btn {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 40px;
-    height: 40px;
+    background: #e9ecef;
     border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition-duration: .3s;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-    background-color: #27374D;
-}
-
-/* plus sign */
-.sign {
-    width: 100%;
-    transition-duration: .3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-::deep .sign svg {
-    width: 17px;
-}
-
-    ::deep .sign svg path {
-        color: white;
-    }
-/* text */
-.text {
-    position: absolute;
-    right: 0%;
-    width: 0%;
-    opacity: 0;
-    color: white;
-    font-size: 1.1em;
-    font-weight: 600;
-    transition-duration: .3s;
-}
-/* hover effect on button width */
-.Btn:hover {
-    width: 125px;
-    border-radius: 40px;
-    transition-duration: .3s;
-}
-
-    .Btn:hover .sign {
-        width: 30%;
-        transition-duration: .3s;
-        padding-left: 20px;
-    }
-    /* hover effect button's text */
-    .Btn:hover .text {
-        opacity: 1;
-        width: 70%;
-        transition-duration: .3s;
-        padding-right: 10px;
-    }
-/* button click effect*/
-.Btn:active {
-    transform: translate(2px,2px);
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+    color: #424242;
 }

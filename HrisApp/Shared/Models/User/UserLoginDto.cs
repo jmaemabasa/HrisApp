@@ -1,10 +1,4 @@
 ﻿using HrisApp.Shared.Models.Employee;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HrisApp.Shared.Models.User
 {
@@ -13,6 +7,7 @@ namespace HrisApp.Shared.Models.User
         public int Id { get; set; }
         public EmployeeT? Employee { get; set; }
         public int EmployeeId { get; set; }
+        public string Emp_VerifyId { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         //[Required, StringLength(100, MinimumLength = 6)]
         public string Password { get; set; } = string.Empty;

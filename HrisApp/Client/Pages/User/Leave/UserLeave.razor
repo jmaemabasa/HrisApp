@@ -1,0 +1,196 @@
+﻿@page "/user/leave"
+@inject GlobalConfigService GlobalConfigService
+@inject IJSRuntime jsRuntime
+@inject IEmployeeService EmployeeService
+@inject ILeaveCredService LeaveCredService
+@inject ILeaveService LeaveService
+@inject ILeaveHistoryService LeaveHistoryService
+@inject IDialogService DialogService
+@inject StateService StateService
+@inject SweetAlertService Swal
+@inject NavigationManager navmanager
+@inject IAuditlogService AuditlogService
+@inject IToastService _toastService
+
+<PageTitle>Leave Management</PageTitle>
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-end align-items-center">
+        <AuthorizeView Roles="HR, System Administrator, User">
+            <Authorized>
+                <div class="d-flex gap-3">
+                    <MudButton OnClick="@(() => OpenDrawer(Anchor.End, "AddHistoryOpen"))" Variant="Variant.Filled" Size="Size.Medium" Style="background-color: #264494; color: #fafaf5;font-family: 'Poppins', sans-serif !important;" Class="btnadd">Request a Leave</MudButton>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+<MudGrid Spacing="4">
+    <MudItem xs="12">
+        <MudCard Class="leavebalancepanel">
+            <MudCardContent>
+                <div class="d-flex justify-content-between mb-3 align-items-center">
+                    <span class="maintitlespan">Leave Balance</span>
+                </div>
+
+                <div class="d-flex justify-content-around">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div class="progress-bar-el el" style="--el: @availableLeavetextEL">
+                            <progress value="@empLeaveCred.EL" min="0" max="@empLeaveCred.EL" style="visibility:hidden;height:0;width:0;"></progress>
+                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.EL - countEl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.EL</span></div>
+                        </div>
+                        <div class="credtitle">Emergency Leave</div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div class="progress-bar-ml ml" style="--ml: @availableLeavetextML">
+                            <progress value="@empLeaveCred.ML" min="0" max="@empLeaveCred.ML" style="visibility:hidden;height:0;width:0;"></progress>
+                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.ML - countMl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.ML</span></div>
+                        </div>
+                        <div class="credtitle">Maternity Leave</div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div class="progress-bar-pl pl" style="--pl: @availableLeavetextPL">
+                            <progress value="@empLeaveCred.PL" min="0" max="@empLeaveCred.PL" style="visibility:hidden;height:0;width:0;"></progress>
+                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.PL - countPl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.PL</span></div>
+                        </div>
+                        <div class="credtitle">Paternity Leave</div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div class="progress-bar-sl sl" style="--sl: @availableLeavetext">
+                            <progress value="@empLeaveCred.SL" min="0" max="@empLeaveCred.SL" style="visibility:hidden;height:0;width:0;"></progress>
+                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.SL - countSl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.SL</span></div>
+                        </div>
+                        <div class="credtitle">Sick Leave</div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div class="progress-bar-vl vl" style="--vl: @availableLeavetextVL">
+                            <progress value="@empLeaveCred.VL" min="0" max="@empLeaveCred.VL" style="visibility:hidden;height:0;width:0;"></progress>
+                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.VL - countVl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.VL</span></div>
+                        </div>
+                        <div class="credtitle">Vacation Leave</div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div class="progress-bar-ol sl" style="--ol: @availableLeavetextOL">
+                            <progress value="@empLeaveCred.OL" min="0" max="@empLeaveCred.OL" style="visibility:hidden;height:0;width:0;"></progress>
+                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.OL - countOl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.OL</span></div>
+                        </div>
+                        <div class="credtitle">Other</div>
+                    </div>
+
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12">
+        <MudCard Class="userleavehistorypanel">
+            <MudCardContent>
+                <div class="d-flex justify-content-between mb-3 align-items-center">
+                    <span class="maintitlespan">Leave History</span>
+                </div>
+
+                @if (leaveHistoryList == null || leaveHistoryList.Count == 0)
+                {
+                    <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
+
+                    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@isVisible" />
+                    <MudCardContent hidden="@isVisible">
+                        <MudSkeleton Width="30%" Height="42px;" />
+                        <MudSkeleton Width="80%" />
+                        <MudSkeleton Width="100%" />
+                    </MudCardContent>
+                    <MudCardActions hidden="@isVisible">
+                        <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+                        <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+                    </MudCardActions>
+                    @if (isVisible == true)
+                    {
+                        <div class="divnodata">
+                            <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                            <span class="nodataspan">No Data Available</span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <MudTable Class="stable" Height="310px" Items="leaveHistoryList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+                        <RowTemplate>
+                            <MudTd Style="font-family: 'Poppins', sans-serif; font-weight: bold; color: #264487;" DataLabel="">@obj.LeaveType</MudTd>
+                            <MudTd Style="font-family: 'Poppins', sans-serif; color: #6A707D;" DataLabel="">@obj.From?.ToString("MMM dd") - @obj.To?.ToString("MMM dd")</MudTd>
+                            <MudTd Style="font-family: 'Poppins', sans-serif; color: #6A707D;" DataLabel="">@obj.NoOfDays Days</MudTd>
+                            <MudTd DataLabel="">
+                                @if (@obj.Status == "Approved")
+                                {
+                                    <MudChip Label="true" Style="font-family: 'Poppins', sans-serif; background-color: #C1D4CD; color: #397763;">@obj.Status <MudIcon Icon="@Icons.Material.Rounded.CheckCircle" Size="Size.Small" Style="margin-left: 2px" /></MudChip>
+                                }
+                                else if (@obj.Status == "Pending")
+                                {
+                                    <MudChip Label="true" Style="font-family: 'Poppins', sans-serif; background-color: #D8D5E8; color: #7567B8;">@obj.Status <MudIcon Icon="@Icons.Material.Rounded.AccessTimeFilled" Size="Size.Small" Style="margin-left: 13px" /></MudChip>
+                                }
+                                else
+                                {
+                                    <MudChip Label="true" Style="font-family: 'Poppins', sans-serif; background-color: #EABCBB; color: #BE1313;">@obj.Status <MudIcon Icon="@Icons.Material.Rounded.Cancel" Size="Size.Small" Style="margin-left: 9px" /></MudChip>
+                                }
+
+                            </MudTd>
+                            <MudTd>
+                                <AuthorizeView Roles="System Administrator, HR, User">
+                                    <Authorized>
+                                        <MudTooltip Text="Details">
+                                            <MudIconButton Class="btnedit" OnClick="@(() => OpenViewLeaveDetails(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
+                                        </MudTooltip>
+                                    </Authorized>
+                                    <NotAuthorized>
+                                        <MudIconButton Disabled Class="btnedit" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
+                                     </NotAuthorized>
+                                 </AuthorizeView>
+                             </MudTd>
+                         </RowTemplate>
+                         <PagerContent>
+                             <MudTablePager PageSizeOptions="new int[] { 5 }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                         </PagerContent>
+                     </MudTable>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+
+<MudDrawer Class="drawerdetails" @bind-Open="@AddHistoryOpen" Width="@_width" Height="@_height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <div class="d-flex flex-column px-4 pt-5">
+        <span style="font-size: 16px; color: #E38D0F; margin-bottom: 10px;"><b>Leave Form</b></span>
+        <div>
+            <MudText Typo="Typo.body2">Leave Type</MudText>
+            <MudSelect @bind-Value="newLeaveType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:10px;">
+                @foreach (var item in leavelist)
+                {
+                    <MudSelectItem Value="@item.Name">@item.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div>
+            <MudText Typo="Typo.body2">From:</MudText>
+            <MudDatePicker DateChanged="HandleDateToChangedFrom" Date="newfrom" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:10px;" />
+        </div>
+        <div>
+            <MudText Typo="Typo.body2">To:</MudText>
+            <MudDatePicker DateChanged="HandleDateToChanged" Date="newto" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:10px;" />
+        </div>
+        <div>
+            <MudText Typo="Typo.body2">No. of Days:</MudText>
+            <MudTextField @bind-Value="noofdays" Variant="Variant.Outlined" Style="margin-bottom:10px;" Margin="Margin.Dense" />
+        </div>
+        <div>
+            <MudText Typo="Typo.body2">Purpose</MudText>
+            <MudTextField @bind-Value="newpurpose" Variant="Variant.Outlined" Style="margin-bottom:10px;" Lines=2 Margin="Margin.Dense"></MudTextField>
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+            <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" OnClick="ConfirmCreateLeave" ButtonType="ButtonType.Submit">SAVE</MudButton>
+        </div>
+    </div>
+</MudDrawer>
+
+@code {
+   
+
+
+}

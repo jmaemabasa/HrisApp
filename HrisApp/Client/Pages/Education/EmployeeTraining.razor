@@ -91,7 +91,7 @@ else
             <MudTd DataLabel="">@training.SponsorSpeaker</MudTd>
             <MudTd DataLabel="">@training.TrainingDate?.ToString("MM/dd/yyyy")</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="HR, System Administrator, User">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteTraining(training.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

@@ -1,17 +1,12 @@
 ﻿using HrisApp.Client.Pages.Dialog.Attendance;
+using System.Collections;
 
-namespace HrisApp.Client.Pages.Attendance.Component
+namespace HrisApp.Client.Pages.User.Leave
 {
-    public partial class LeaveCredits : ComponentBase
+#nullable disable
+    public partial class UserLeave : ComponentBase
     {
-        [Parameter]
-        public string verify { get; set; }
-
         Emp_LeaveCreditT empLeaveCred = new();
-        Emp_LeaveHistoryT obj = new();
-        private bool isUpdateStatus = false;
-        private bool visibleView;
-        private DialogOptions dialogOptions = new() { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, NoHeader = true };
 
         List<Emp_LeaveHistoryT> leaveHistoryList = new();
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
@@ -24,42 +19,34 @@ namespace HrisApp.Client.Pages.Attendance.Component
         private string availableLeavetextPL = "";
         private string availableLeavetextVL = "";
         private string availableLeavetextOL = "";
-
         private double countSl, countEl, countMl, countPl, countVl, countOl;
+        private string VERIFY {get;set;}
 
         protected override async Task OnInitializedAsync()
         {
             await LeaveService.GetLeave();
             leavelist = LeaveService.LeaveTypesTs;
-        }
+            await Task.Delay(1);
+            VERIFY = GlobalConfigService.VerifyId;
+            empLeaveCred = await LeaveCredService.GetSingleLeaveCredByVerId(VERIFY);
 
-        protected override async Task OnParametersSetAsync()
-        {
-            try
+            //await LeaveHistoryService.GetLeaveHistory();
+            //leaveHistoryList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == VERIFY && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
+            StateService.OnChange += OnStateChanged;
+            await LoadList();
+
+            if (leaveHistoryList == null || leaveHistoryList.Count == 0)
             {
-                empLeaveCred = await LeaveCredService.GetSingleLeaveCredByVerId(verify);
+                OpenOverlay();
+            };
 
-                StateService.OnChange += OnStateChanged;
-                await LoadList();
-
-                if (leaveHistoryList == null || leaveHistoryList.Count == 0)
-                {
-                    OpenOverlay();
-                };
-
-                await SetValues();
-
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("");
-            }
+            await SetValues();
         }
 
         private async Task LoadList()
         {
             await LeaveHistoryService.GetLeaveHistory();
-            StateService.SetState("UserLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == empLeaveCred.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList());
+            StateService.SetState("UserLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == VERIFY && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList());
         }
 
         private void OnStateChanged()
@@ -93,16 +80,22 @@ namespace HrisApp.Client.Pages.Attendance.Component
             }
             else
             {
-                await LeaveHistoryService.CreateLeaveHistory(verify, newLeaveType, newfrom, newto, noofdays, newpurpose, "Approved");
+                if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator") {
+                    await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Approved");
+                }
+                else
+                {
+                    await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Pending");
+                }
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
-                _toastService.ShowSuccess(newLeaveType + " Created Successfully!");
+                _toastService.ShowSuccess(newLeaveType + " Leave Created Successfully!");
 
                 AddHistoryOpen = false;
 
                 await LeaveHistoryService.GetLeaveHistory();
-                var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == empLeaveCred.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
+                var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == VERIFY && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
                 StateService.SetState("UserLeaveHistoryList", newList);
 
                 await SetValues();
@@ -146,22 +139,24 @@ namespace HrisApp.Client.Pages.Attendance.Component
         #endregion
 
         #region FUNCTIONS
-        private async Task OpenViewLeaveDetails(int id)
+        private void OpenViewLeaveDetails(int id)
         {
-            obj = await LeaveHistoryService.GetSingleLeaveHistory((int)id);
-            visibleView = true;
+            var parameters = new DialogParameters<ViewLeaveDetailsDialog>
+            {
+                { x => x.Id, id }
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, NoHeader = true };
+            DialogService.Show<ViewLeaveDetailsDialog>("", parameters, options);
         }
-
-        void Cancel() => visibleView = false;
-
         async Task SetValues()
         {
-            countSl = await LeaveCredService.GetCountExistCredits(verify, "Sick");
-            countEl = await LeaveCredService.GetCountExistCredits(verify, "Emergency");
-            countMl = await LeaveCredService.GetCountExistCredits(verify, "Maternity");
-            countPl = await LeaveCredService.GetCountExistCredits(verify, "Paternity");
-            countVl = await LeaveCredService.GetCountExistCredits(verify, "Vacation");
-            countOl = await LeaveCredService.GetCountExistCredits(verify, "Other");
+            countSl = await LeaveCredService.GetCountExistCredits(VERIFY, "Sick");
+            countEl = await LeaveCredService.GetCountExistCredits(VERIFY, "Emergency");
+            countMl = await LeaveCredService.GetCountExistCredits(VERIFY, "Maternity");
+            countPl = await LeaveCredService.GetCountExistCredits(VERIFY, "Paternity");
+            countVl = await LeaveCredService.GetCountExistCredits(VERIFY, "Vacation");
+            countOl = await LeaveCredService.GetCountExistCredits(VERIFY, "Other");
 
             availableLeavetext = (((Convert.ToDouble(empLeaveCred.SL) - countSl) / Convert.ToDouble(empLeaveCred.SL)) * 100).ToString() + "%";
             availableLeavetextEL = (((Convert.ToDouble(empLeaveCred.EL) - countEl) / Convert.ToDouble(empLeaveCred.EL)) * 100).ToString() + "%";
@@ -220,28 +215,9 @@ namespace HrisApp.Client.Pages.Attendance.Component
         public async void OpenOverlay()
         {
             isVisible = false;
-            await Task.Delay(2000);
+            await Task.Delay(1000);
             isVisible = true;
             StateHasChanged();
-        }
-        #endregion
-
-        #region VIEWLEAVE DIALOG
-        private void OpenDropDownlist()
-        {
-            isUpdateStatus = !isUpdateStatus;
-        }
-
-        async Task SaveUpdateStatus()
-        {
-            await LeaveHistoryService.UpdateLeaveHistory(obj);
-
-            await LeaveHistoryService.GetLeaveHistory();
-            var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == obj.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
-            StateService.SetState("UserLeaveHistoryList", newList);
-
-            await SetValues();
-            OpenDropDownlist();
         }
         #endregion
     }

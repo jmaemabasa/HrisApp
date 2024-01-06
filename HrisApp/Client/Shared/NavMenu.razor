@@ -50,6 +50,12 @@
             </MudNavGroup>
         </Authorized>
     </AuthorizeView>
+     <AuthorizeView Roles="User">
+          <Authorized>
+            <MudNavLink Class="navlinktitle" Href="/user/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave</MudNavLink>
+           
+          </Authorized>
+     </AuthorizeView>
 </MudNavMenu>
 
 @code {

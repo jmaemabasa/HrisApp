@@ -1,0 +1,540 @@
+﻿.tabdiv {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: auto;
+    padding: 25px 50px 25px 50px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+::deep .diveditimg {
+    position: absolute;
+    margin-inline-start: 10rem;
+}
+
+::deep .btnupdateimg {
+    border-radius: 30px;
+    background-color: #FAFAF5;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+    transition: all .5s ease;
+}
+
+    ::deep .btnupdateimg:hover {
+        background-color: #FFC107;
+        color: #fff;
+        transform: scale(1.1);
+        box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+    }
+
+::deep .empdleft, ::deep .empdmain {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: auto;
+    padding: 10px 10px 10px 10px;
+}
+
+::deep .empdmainbox {
+    height: 54rem;
+    overflow: auto !important;
+}
+
+::deep .mud-typography {
+    font-family: 'Nunito Sans' !important;
+}
+
+.divsingledetails, ::deep .divsingledetails {
+    background-color: #F7F8FF;
+    padding: 7px 15px 7px 15px;
+    border-radius: 10px;
+}
+
+::deep .mud-avatar.mud-avatar-medium {
+    width: 230px;
+    height: 230px;
+}
+
+.spantitle {
+    font-weight: bold;
+    color: #26446e;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+::deep .validation-message, ::deep .me-auto {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+    margin-top: 2px;
+}
+
+::deep .paddingitem {
+    margin-left: 50px;
+}
+
+/*TOP BUTTONS*/
+.topnav {
+    position: fixed;
+    top: 0;
+    padding-top: 30px;
+    width: -webkit-fill-available;
+    padding-right: 35px;
+    background-color: #e9ecef;
+}
+
+/*BUTTONS*/
+::deep .filebtn {
+    text-transform: none;
+    border: 2px solid #DDE0E3;
+    background-color: #F7F8FF;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 10px;
+    transition: all .5s ease;
+}
+
+    ::deep .filebtn:hover {
+        border: 2px solid #146ebe;
+        background-color: #D6E5FA;
+    }
+
+::deep .btnnext {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #F1BC3A;
+    color: #424242;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-weight: bold;
+    width: 200px;
+    transition: all .5s ease;
+}
+
+    ::deep .btnnext:hover {
+        background-color: #E38D0F;
+        color: #FAFAF5;
+        transform: scale(1.1);
+    }
+
+::deep .btnedit {
+    color: #27374D;
+    transition: all .5s ease;
+}
+
+    ::deep .btnedit:hover {
+        transform: scale(1.1);
+    }
+
+/*IMAGE*/
+::deep .btnimage {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+
+::deep .btnimagewithimage {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding-bottom: 4px;
+}
+
+/*DRAWERS*/
+
+::deep .drawerdetails {
+    background: #e9ecef;
+    padding: 20px;
+}
+/*TEXTFIELD*/
+::deep .txf > .mud-input-control-input-container {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+
+::deep .txf1 {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    background: #e9ecef;
+    padding-top: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+::deep .txf1error {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 1px solid red;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    background: #e9ecef;
+    padding-top: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+
+::deep .txf:focus-within {
+    border: 2px solid black !important;
+    border-radius: 10px;
+}
+
+::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
+    margin-top: 7px;
+    margin-left: 5px;
+    width: 100%;
+}
+
+/*DROP DOWN LIST*/
+::deep .frmselect {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    padding: 0px 15px 4px 15px;
+    background: #e8e1e1;
+    height: 45px;
+}
+
+::deep .frmselecterror {
+    border: 1px solid red;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    padding: 0px 15px 4px 15px;
+    background: #e8e1e1;
+    height: 45px;
+}
+
+::deep .frmselectvalid {
+    border: 1px solid green;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    padding: 0px 15px 4px 15px;
+    background: #e8e1e1;
+    height: 45px;
+}
+
+
+/*DATE TIME*/
+::deep .mud-picker.mud-picker-inline.mud-picker-input-button.txf, ::deep .mud-picker.mud-picker-inline.mud-picker-input-text.txf {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 15px 10px 15px;
+    margin-top: 0;
+}
+
+/*INPUT CARD*/
+::deep .mdcard1 {
+    background: #e9ecef;
+}
+
+    ::deep .mdcard1.lfmargin {
+        margin-left: 20px;
+    }
+
+/*School DIV*/
+.divSchool {
+    padding: 16px;
+    border: 1px ridge #f5f5f5;
+    /*background: #f5f5f5;*/
+    border-radius: 10px;
+}
+
+::deep .addminbtn {
+    color: #26446e;
+}
+
+
+/*TABPANELS*/
+
+::deep .mud-tabs-toolbar {
+    margin-left: 26px;
+}
+
+::deep .mud-tab.mud-tab-active {
+    color: #EEB12F;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-toolbar-content {
+    background: #e9ecef;
+    color: #78909C;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    /*    border-bottom: 2px solid #D8DADC;
+*/ /*pointer-events: none;*/
+}
+
+::deep .mud-tabs-scroll-button {
+    background: #e9ecef;
+}
+
+
+::deep .mud-tabs-defaultindex {
+    color: #78909C;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-afterindex {
+    color: #79AC78;
+    font-weight: bold;
+    border-bottom: 2px solid #79AC78;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-active {
+    font-weight: bold;
+    color: white;
+    background-color: #EEB12F;
+    margin-right: 15px;
+}
+
+::deep .mud-chip-after0 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.1;
+}
+
+::deep .mud-chip-after1 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.2;
+}
+
+::deep .mud-chip-after2 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.3;
+}
+
+::deep .mud-chip-after3 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.4;
+}
+
+::deep .mud-chip-after {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-default {
+    font-weight: bold;
+    color: white;
+    background-color: #C5CFD2;
+    margin-right: 15px;
+}
+
+::deep .mud-text-after {
+    color: #0A86C2;
+    font-weight: bold;
+    opacity: 0.2;
+}
+
+::deep .mud-text-default {
+    font-weight: bold;
+}
+
+/*EMPLOYMENT AVATAR CLASS*/
+::deep .statusRegular {
+    border: 5px solid #9BB67C;
+}
+
+::deep .statusProbationary {
+    border: 5px solid #ebc878;
+}
+
+::deep .statusCasual {
+    border: 5px solid #6096B4;
+}
+
+::deep .statusFixedTerm {
+    border: 5px solid #7F669D;
+}
+
+::deep .statusProjectBased {
+    border: 5px solid #6B240C;
+}
+
+/*EMPLOYMENT Text CLASS*/
+::deep .statusTextRegular {
+    color: #9BB67C;
+}
+
+::deep .statusTextProbationary {
+    color: #ebc878;
+}
+
+::deep .statusTextCasual {
+    color: #6096B4;
+}
+
+::deep .statusTextFixedTerm {
+    color: #7F669D;
+}
+
+::deep .statusTextProjectBased {
+    color: #6B240C;
+}
+
+/*STATUSCHIP LEFT BAR*/
+::deep .statusActiveChip {
+    background-color: #AAC8A7;
+    border-radius: 16px;
+    padding: 2px 15px 2px 15px;
+}
+
+::deep .statusAwolChip {
+    background-color: #888C4D;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusInactiveChip {
+    background-color: #B7B7B7;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusResignedChip {
+    background-color: #ebc878;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusTerminatedChip {
+    background-color: #E97777;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+::deep .statusRetiredChip {
+    background-color: #e0dfdc;
+    border-radius: 16px;
+    padding: 5px 15px 5px 15px;
+}
+
+@media (max-width: 576px) {
+    ::deep .mdcard1.lfmargin {
+        margin-left: 0px;
+    }
+
+    ::deep .paddingitem {
+        margin-left: 0px;
+    }
+
+    ::deep .frmselect {
+        width: 223px;
+    }
+
+    .tabdiv {
+        padding: 15px 0px 15px 0px;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    /*TOP BUTTONS*/
+    .topnav {
+        position: absolute;
+        top: 28px;
+        width: -webkit-fill-available;
+        padding-right: 35px;
+    }
+}
+
+
+.Btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background-color: #27374D;
+}
+
+/* plus sign */
+.sign {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::deep .sign svg {
+    width: 17px;
+}
+
+    ::deep .sign svg path {
+        color: white;
+    }
+/* text */
+.text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition-duration: .3s;
+}
+/* hover effect on button width */
+.Btn:hover {
+    width: 125px;
+    border-radius: 40px;
+    transition-duration: .3s;
+}
+
+    .Btn:hover .sign {
+        width: 30%;
+        transition-duration: .3s;
+        padding-left: 20px;
+    }
+    /* hover effect button's text */
+    .Btn:hover .text {
+        opacity: 1;
+        width: 70%;
+        transition-duration: .3s;
+        padding-right: 10px;
+    }
+/* button click effect*/
+.Btn:active {
+    transform: translate(2px,2px);
+}

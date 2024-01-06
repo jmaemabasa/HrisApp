@@ -50,6 +50,7 @@ namespace HrisApp.Server.Services.UserService
                 new Claim(ClaimTypes.Sid, user.EmployeeId.ToString()),
                 new Claim(ClaimTypes.Name,  user.Username),
                 new Claim(ClaimTypes.Role, user.Role),
+                new Claim(ClaimTypes.StreetAddress, user.Emp_VerifyId),
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8

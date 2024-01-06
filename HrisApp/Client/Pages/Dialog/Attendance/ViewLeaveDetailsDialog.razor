@@ -1,4 +1,5 @@
 ﻿@inject ILeaveHistoryService LeaveHistoryService
+@inject StateService StateService
 
 <style>
     .divsingledetails {
@@ -11,7 +12,12 @@
 <MudDialog>
     <DialogContent>
         <div class="d-flex flex-column">
-            <span style="margin-bottom: 5px; margin-top:10px;font-size: 16px; color: #424242"><b>Details</b></span>
+            <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 10px; margin-top:10px;">
+                <span style="font-size: 16px; color: #424242"><b>Details</b></span>
+                <MudTooltip Text="Close">
+                    <MudIconButton Style="color: #BE1313; background-color: #EABCBB" OnClick="Cancel" Icon="@Icons.Material.Filled.Close" Size="Size.Small" aria-label="Edit"></MudIconButton>
+                </MudTooltip>
+            </div>
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Leave Type</MudText>
                 <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.LeaveType</MudText>
@@ -34,15 +40,78 @@
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Purpose</MudText>
                 <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.Purpose</MudText>
             </div>
+            <AuthorizeView Roles="User">
+                <Authorized>
+                    <div class="divsingledetails mb-2">
+                        <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Status</MudText>
+                        @if (obj.Status == "Approved")
+                        {
+                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                        }
+                        else if (obj.Status == "Pending")
+                        {
+                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                        }
+                        else
+                        {
+                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                        }
+                    </div>
+                </Authorized>
+             </AuthorizeView>
+            <AuthorizeView Roles="System Administrator">
+                <Authorized>
+                    <div class="divsingledetails mb-2" style="background-color: #C1D4CD">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Status</MudText>
+                            @if (obj.Status == "Pending")
+                            {
+                                <MudIconButton Style="color: #fafaf5" OnClick="OpenDropDownlist" hidden="@(isUpdateStatus ? true : false)" Icon="@Icons.Material.Rounded.Edit" Size="Size.Small" aria-label="Edit"></MudIconButton>
+                            }
+                        </div>
+                        
+                        @if (isUpdateStatus)
+                        {
+                            <div class="d-flex gap-2">
+                                <div class="col col-8  flex-grow-1">
+                                    <MudSelect Margin="Margin.Dense" T="string" @bind-Value="@obj.Status" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("Approved")">Approve</MudSelectItem>
+                                        <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                                        <MudSelectItem Value="@("Rejected")">Reject</MudSelectItem>
+                                    </MudSelect>
+                                </div>
+                                <div class="col col-5 flex-grow-1">
+                                    <MudButton Variant="Variant.Filled" OnClick="@SaveUpdateStatus" Size="Size.Medium">Save</MudButton>
+                                </div>
+                            </div>
+                        }
+                        else if (obj.Status == "Approved")
+                        {
+                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                        }
+                        else if (obj.Status == "Pending")
+                        {
+                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                        }
+                        else
+                        {
+                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                        }
+                    </div>
+                </Authorized>
+            </AuthorizeView>
         </div>
     </DialogContent>
 </MudDialog>
 
 
 @code {
+    #nullable disable
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Parameter]
     public int Id { get; set; }
+
+    private bool isUpdateStatus = false;
 
     Emp_LeaveHistoryT obj = new();
 
@@ -51,4 +120,23 @@
         //area = AreaService.AreaTs.Find(d => d.Id == Id);
         obj = await LeaveHistoryService.GetSingleLeaveHistory((int)Id);
     }
+
+    private void OpenDropDownlist()
+    {
+        isUpdateStatus = !isUpdateStatus;
+    }
+
+    async Task SaveUpdateStatus()
+    {
+        await LeaveHistoryService.UpdateLeaveHistory(obj);
+
+        await LeaveHistoryService.GetLeaveHistory();
+        var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == obj.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
+        StateService.SetState("UserLeaveHistoryList", newList);
+
+        obj = await LeaveHistoryService.GetSingleLeaveHistory((int)Id);
+
+        OpenDropDownlist();
+    }
+    void Cancel() => MudDialog.Close();
 }

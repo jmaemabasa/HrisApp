@@ -95,7 +95,7 @@ else
             <MudTd DataLabel="">@masteral.MasAward</MudTd>
             <MudTd DataLabel="">@masteral.MasSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="HR, System Administrator, User">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteMasteral(masteral.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
