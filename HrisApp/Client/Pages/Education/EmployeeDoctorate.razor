@@ -64,9 +64,14 @@
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No Doctorate Information.</span>
-        <MudTooltip Text="Add">
-            <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "DoctorateOpen"))" Size="Size.Small">Add Information</MudButton>
-        </MudTooltip>
+       
+        <AuthorizeView Roles="HR, System Administrator">
+            <Authorized>
+                <MudTooltip Text="Add">
+                    <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "DoctorateOpen"))" Size="Size.Small">Add Information</MudButton>
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
     </div>
 }
 else
@@ -75,9 +80,14 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Doctorate Education</span>
-                <MudTooltip Text="Add">
-                    <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "DoctorateOpen"))" Size="Size.Small">Add Information</MudButton>
-                </MudTooltip>
+                
+                <AuthorizeView Roles="HR, System Administrator">
+                    <Authorized>
+                        <MudTooltip Text="Add">
+                            <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "DoctorateOpen"))" Size="Size.Small">Add Information</MudButton>
+                        </MudTooltip>
+                    </Authorized>
+                </AuthorizeView>
             </div>
         </ToolBarContent>
         <HeaderContent>
@@ -95,12 +105,15 @@ else
             <MudTd DataLabel="">@doctorate.DocAward</MudTd>
             <MudTd DataLabel="">@doctorate.DocSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator, User">
+                <AuthorizeView Roles="HR, System Administrator">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteDoc(doctorate.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
                         </MudTooltip>
                     </Authorized>
+                    <NotAuthorized>
+                        <MudIconButton Class="btnedit" Disabled Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                     </NotAuthorized>
                 </AuthorizeView>
             </MudTd>
         </RowTemplate>

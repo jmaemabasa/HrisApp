@@ -34,8 +34,8 @@
                     <MudCard Class="evalpanel">
                         <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
                             <div class="d-flex flex-column gap-2">
-                                <span style="font-size: 24px;">Welcome, <b>@FULLNAME</b>!</span>
-                                <span style="font-size: 20px;">You have @_countForEval employees pending for performance evaluation!</span>
+                                <span style="font-size: 24px;font-family: 'Poppins', sans-serif;">Welcome, <b>@FULLNAME</b>!</span>
+                                <span style="font-size: 20px;font-family: 'Poppins', sans-serif;">You have @_countForEval employees pending for performance evaluation!</span>
                             </div>
                             <div class="">
                                 <MudButton id="evalpanelbtn" OnClick="NavForEval" Class="btnadd">Check Now</MudButton>
@@ -78,7 +78,7 @@
                         {
                             <div class="d-flex justify-content-between" style="margin-bottom:15px;">
                                 <EmployeeBdyComponent verify="@item.Verify_Id" />
-                                <span style="color: #757A90">@item.Birthdate.ToString("MM/dd/")@DateTime.Now.Year</span>
+                                <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
                             </div>
                         }
                     </div>
@@ -115,6 +115,12 @@ else
         <progress value="@availableLeave" min="0" max="@totalLeave" style="visibility:hidden;height:0;width:0;"></progress>
         <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@availableLeave</span><span class="progress-total">/@totalLeave</span></div>
     </div> *@
-    <UserDashboard/>
+    <AuthorizeView Roles="User">
+        <Authorized>
+            <UserDashboard />
+        </Authorized>
+    </AuthorizeView>
+                            
+
 }
 

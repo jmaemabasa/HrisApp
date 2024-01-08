@@ -17,7 +17,7 @@
 <PageTitle>Employee Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
-        <span style="font-size: x-large;font-weight: 600;color: #424242;">Employee List</span>
+        <span style="font-size: x-large;font-weight: 600;color: #424242; font-family: 'Poppins', sans-serif;">Employee List</span>
         <AuthorizeView Roles="HR, System Administrator">
             <Authorized>
                 <div class="d-flex gap-3">
@@ -164,13 +164,13 @@
              <MudTd DataLabel="Full Name">
                      <div class="d-flex flex-row align-items-center gap-3">
                          <div class="d-flex align-items-center">
-                            <EmployeeAvatar verify="@employeeee.Verify_Id" />
+                                <EmployeeNameEmailsaListEmployee verify="@employeeee.Verify_Id" />
                         </div>
                      <div>
                          <div class="flex-column">
-                                 <div>@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
-                                 <div style="font-weight: bold;">@employeeee.Email</div> 
-                         </div>
+                                    <div style="font-weight: bold;">@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
+                                    <div style="font-size: 13px !important;">@employeeee.Email</div>
+                                </div>
                      </div>
                  </div>
 
@@ -206,7 +206,7 @@
                  </MudTd>
              </RowTemplate>
              <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {@_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                 <MudTablePager PageSizeOptions="new int[] { 9, 25, int.MaxValue }" InfoFormat="@($"Right {@_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
              </PagerContent>
          </MudTable>
 

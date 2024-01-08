@@ -74,7 +74,7 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <span class="maintitlespan">Leave History</span>
 
-            <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "AddHistoryOpen"))">
+            <button class="Btn btnaddleave" onclick="@(() => OpenDrawer(Anchor.End, "AddHistoryOpen"))">
 
                 <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
 
@@ -129,7 +129,7 @@
                     <MudTd>
                         <AuthorizeView Roles="System Administrator">
                             <Authorized>
-                                <MudTooltip Text="Details">
+                                <MudTooltip Text="Check">
                                     <MudIconButton Class="btnedit" OnClick="@(() => OpenViewLeaveDetails(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
                                 </MudTooltip>
                             </Authorized>
@@ -182,7 +182,11 @@
 
 <MudDrawer Class="drawerdetails" @bind-Open="@AddHistoryOpen" Width="@_width" Height="@_height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <div class="d-flex flex-column">
-        <span style="font-size: 16px; color: #E38D0F; margin-bottom: 10px;"><b>Leave Form</b></span>
+        <div class="mb-3">
+            <span style="font-size: 16px; color: #E38D0F; margin-bottom: 10px;"><b>Leave Form</b></span>
+            <MudText Typo="Typo.body2" Style="color: #6A707D">Please fill up the form</MudText>
+        </div>
+        
         <div>
             <MudText Typo="Typo.body2">Leave Type</MudText>
             <MudSelect @bind-Value="newLeaveType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:10px;">

@@ -1,0 +1,77 @@
+﻿@page "/employeeimagewithborder"
+@inherits MudComponentBase
+@inject IImageService ImageService
+@inject IEmployeeService EmployeeService
+<style>
+    /*EMPLOYMENT AVATAR CLASS*/
+    .statusRegular {
+        border: 2px solid #9BB67C;
+    }
+
+    .statusProbationary {
+        border: 2px solid #ebc878;
+    }
+
+    .statusCasual {
+        border: 2px solid #6096B4;
+    }
+
+    .statusFixedTerm {
+        border: 2px solid #7F669D;
+    }
+
+    .statusProjectBased {
+        border: 2px solid #6B240C;
+    }
+</style>
+
+<MudAvatar Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
+    <MudImage Src="@ImageData"></MudImage>
+</MudAvatar>
+
+@code {
+#nullable disable
+    [Parameter]
+    public string verify { get; set; }
+    EmployeeT employee = new();
+
+    private string ImageData;
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+            // Console.WriteLine($"2nd Test: {verifyCode}");
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            await EmployeeImg(verify);//image
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/imgholder.jpg");
+        }
+    }
+
+    private static string StatusAvatarColor(string status)
+    {
+        return status switch
+        {
+            "Regular" => "statusRegular",
+            "Probationary" => "statusProbationary",
+            "Casual" => "statusCasual",
+            "Fixed Term" => "statusFixedTerm",
+            "Project Based" => "statusProjectBased",
+            _ => "",
+        };
+    }
+}
+

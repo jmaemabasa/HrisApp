@@ -1,6 +1,4 @@
-﻿using HrisApp.Client.Pages.Dialog.Attendance;
-
-namespace HrisApp.Client.Pages.Attendance.Component
+﻿namespace HrisApp.Client.Pages.Attendance.Component
 {
     public partial class LeaveCredits : ComponentBase
     {

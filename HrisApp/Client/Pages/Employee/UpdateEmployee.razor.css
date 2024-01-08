@@ -43,7 +43,7 @@
 }
 
 ::deep .mud-typography {
-    font-family: 'Nunito Sans' !important;
+    /*font-family: 'Nunito Sans' !important;*/
 }
 
 .divsingledetails, ::deep .divsingledetails {

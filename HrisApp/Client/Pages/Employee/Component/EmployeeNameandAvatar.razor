@@ -1,0 +1,41 @@
+﻿@page "/employeenameandavatar"
+@inject IEmployeeService EmployeeService
+
+<div class="d-flex flex-row align-items-center gap-3">
+    <div class="d-flex align-items-center">
+        <EmployeeAvatar verify="@verify" />
+    </div>
+    <div>
+        <div>@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
+    </div>
+</div>
+
+@code {
+#nullable disable
+    [Parameter]
+    public string verify { get; set; }
+
+    EmployeeT employee = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("");
+        }
+    }
+
+    private string CapitalizeFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        return char.ToUpper(input[0]) + input[1..];
+    }
+}

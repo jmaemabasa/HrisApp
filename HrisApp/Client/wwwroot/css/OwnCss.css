@@ -24,7 +24,7 @@ body::-webkit-scrollbar {
 }
 
 .menutitle {
-    margin: 0px 13px 0px 14px;
+    margin: 0px 0px 0px 14px;
     color: rgb(66, 66, 66);
     font-size: 14px;
     font-weight: bold;
@@ -38,4 +38,3 @@ body::-webkit-scrollbar {
 .mud-dialog {
     border-radius: 20px;
 }
-

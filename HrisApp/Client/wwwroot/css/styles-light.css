@@ -95,12 +95,14 @@ canvas {
 
 .divbarchart {
     height: 19rem;
+    font-family: 'Poppins', sans-serif;
 }
 
 /*Table*/
 .stable {
     background: #e9ecef;
     border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .mud-table-head {
