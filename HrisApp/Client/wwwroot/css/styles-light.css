@@ -17,6 +17,87 @@
     width: 4rem;
 }
 
+/*APP BAR*/
+/*NOTIF*/
+.notifcontainer {
+    /*background-color: #f5f7fa;*/
+}
+.notifbox {
+    margin: 15px;
+}
+
+.eachnotifbox {
+    border-radius: 8px;
+    padding: 5px 8px;
+    cursor: pointer;
+}
+
+    .eachnotifbox:hover, .seemorebutton:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+.notificationbadge {
+    /* circle shape, size and position */
+    position: absolute;
+    right: -0.3em;
+    bottom: -0.3em;
+    min-width: 1.3em; /* or width, explained below. */
+    height: 1.3em;
+    border-radius: 0.8em; /* or 50%, explained below. */
+    border: 0.08em solid #f2f5f7;
+    background-color: #78bfa5;
+    /* number size and position */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+    color: white;
+}
+
+.notifbadgecount {
+    right: -0.2em;
+    top: -0.2em;
+    background-color: #E41E3F;
+    min-width: 1.6em; /* or width, explained below. */
+    height: 1.6em;
+    border: 0.08em solid #e9ecef;
+    font-size: 0.9em;
+    line-height:10px;
+}
+
+.seemorebutton {
+    font-size: 15px;
+    border-radius: 0px 0px 0px 8px;
+    padding: 10px 8px;
+    cursor: pointer;
+    background-color: #dee1e3;
+    text-align: center;
+    margin-top: 10px;
+    color: #164DA4;
+    font-weight: bold;
+    transition: all .5s ease;
+}
+
+    .seemorebutton:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+.dot {
+    height: 13px;
+    width: 13px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
+    background-color: #2196F3;
+}
+
+.mud-popover.mud-popover-open.mud-popover-top-right.mud-popover-anchor-bottom-right.mud-popover-overflow-flip-onopen.mud-paper.mud-elevation-8 {
+    background-color: #f2f5f7 !important;
+}
+
+
+
 .topcards.mud-card-content {
     height: 100%;
     color: #424242;
@@ -188,3 +269,6 @@ canvas {
     border-radius: 10px;
 }
 
+.notifbadge {
+    cursor: pointer;
+}

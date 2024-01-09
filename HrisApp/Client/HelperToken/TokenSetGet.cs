@@ -16,5 +16,19 @@ namespace HrisApp.Client.HelperToken
         {
             return _Employeemodel;
         }
+
+
+        private static int PendingCount;
+
+        public static void SetPendingCount(int pendingcount)
+        {
+            PendingCount = pendingcount;
+        }
+        public static int GetPendingCount()
+        {
+            return PendingCount;
+        }
+
+        
     }
 }

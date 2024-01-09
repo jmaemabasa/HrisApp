@@ -1,10 +1,12 @@
-﻿@inject NavigationManager NavigationManager
+﻿@using System.Timers;
+@inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IAuthService AuthService
 @inject GlobalConfigService GlobalConfigService
 @inject IToastService _toastService
 @inject IDialogService DialogService
+@inject ILeaveHistoryService LeaveHistoryService
 
 <MudNavMenu Rounded="true" Margin="Margin.Normal" Bordered="true" Style="height: 100%">
     <span class="menutitle">Menu</span>
@@ -57,9 +59,11 @@
            
           </Authorized>
      </AuthorizeView>
+     
 </MudNavMenu>
 
 @code {
+    #nullable disable
     async Task Logout()
     {
         try

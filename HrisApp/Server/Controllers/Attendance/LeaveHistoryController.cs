@@ -78,8 +78,32 @@ namespace HrisApp.Server.Controllers.Attendance
             dbobj.NoOfDays = obj.NoOfDays;
             dbobj.Purpose = obj.Purpose;
             dbobj.Status = obj.Status;
+            dbobj.ReadStatus = obj.ReadStatus;
+
             await _context.SaveChangesAsync();
 
+            return Ok(await GetDBLeaveHistory());
+        }
+
+        [HttpGet("Getpendinglist")]
+        public async Task<ActionResult<List<Emp_LeaveHistoryT>>> Getpendinglist()
+        {
+            var pending = "Pending";
+            var header = await _context.Emp_LeaveHistoryT.Where(p => p.Status == pending).ToListAsync();
+            return Ok(header);
+        }
+
+
+        [HttpPut("UpdateAllReadStatus/{status}/{newstatus}")]
+        public async Task<ActionResult> UpdateAllReadStatus(string status, string newstatus)
+        {
+            var masterlist = await _context.Emp_LeaveHistoryT.Where(d => d.ReadStatus == status).ToListAsync();
+
+            foreach (var item in masterlist)
+            {
+                item.ReadStatus = newstatus;
+                await _context.SaveChangesAsync();
+            }
             return Ok(await GetDBLeaveHistory());
         }
     }

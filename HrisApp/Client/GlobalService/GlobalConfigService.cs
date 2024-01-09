@@ -116,5 +116,15 @@ namespace HrisApp.Client.GlobalService
 
             Fullname = $"{returnmodel.FirstName} {returnmodel.LastName}";
         }
+
+        public string CapitalizeFirstLetter(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            return char.ToUpper(input[0]) + input[1..];
+        }
     }
 }

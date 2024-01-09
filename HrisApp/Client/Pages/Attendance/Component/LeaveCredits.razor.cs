@@ -91,7 +91,7 @@
             }
             else
             {
-                await LeaveHistoryService.CreateLeaveHistory(verify, newLeaveType, newfrom, newto, noofdays, newpurpose, "Approved");
+                await LeaveHistoryService.CreateLeaveHistory(verify, newLeaveType, newfrom, newto, noofdays, newpurpose, "Approved", DateTime.Now, "Read");
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 

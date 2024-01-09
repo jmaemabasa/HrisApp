@@ -1,0 +1,40 @@
+﻿@page "/employeeimagesize"
+@inherits MudComponentBase
+@inject IImageService ImageService
+
+<MudAvatar Size="Size.Large" Style="overflow: visible; margin-bottom: 8px;margin-top: 8px;margin-right: 12px;">
+    <MudImage Src="@ImageData" Style="border-radius: 50%;"></MudImage>
+    <div class="notificationbadge" role="status"><MudIcon Size="Size.Small" Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+</MudAvatar>
+
+
+@code {
+#nullable disable
+    [Parameter]
+    public string verify { get; set; }
+
+    private string ImageData;
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+            // Console.WriteLine($"2nd Test: {verifyCode}");
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            await EmployeeImg(verify);//image
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/imgholder.jpg");
+        }
+    }
+}

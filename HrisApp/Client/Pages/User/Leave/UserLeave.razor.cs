@@ -81,11 +81,15 @@ namespace HrisApp.Client.Pages.User.Leave
             else
             {
                 if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator") {
-                    await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Approved");
+                    await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Approved", DateTime.Now, "Read");
                 }
                 else
                 {
-                    await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Pending");
+                    await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Pending", DateTime.Now, "Unread");
+                    if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
+                    {
+                        await jsRuntime.InitializeNotif(DotNetObjectReference.Create(this));
+                    }
                 }
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);

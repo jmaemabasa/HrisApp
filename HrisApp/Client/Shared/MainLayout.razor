@@ -1,4 +1,5 @@
 ﻿@using Blazored.Toast.Configuration;
+@using System.Timers;
 @inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
@@ -11,6 +12,7 @@
 @inject IJSRuntime JSRuntime
 @inject IImageService ImageService
 @inject IEmployeeService EmployeeService
+@inject ILeaveHistoryService LeaveHistoryService
 
 <style>
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
@@ -64,6 +66,7 @@
         transition: all .5s ease;
         height: 40px;
     }
+
 </style>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
@@ -89,10 +92,111 @@
             <MudSpacer />
             @* <button class="btn btn-primary" @onclick="ToggleTheme">Toggle Theme</button>
             <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" /> *@
+            @html
+            <MudMenu Class="notifmenu" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                <ActivatorContent>
+                    <MudTooltip Text="Notifications">
+                        @* <MudBadge Content="@badgeCount" Color="Color.Error" Overlap="true" Bordered="true" Class="me-4 notifbadge">
+                            <MudIcon Icon="@Icons.Material.Rounded.CircleNotifications" Size="Size.Large" Color="Color.Default" />
+                        </MudBadge> *@
+                        <button class="notifbadge me-3">
+                            <MudIcon Style="font-size: 3rem;" Icon="@Icons.Material.Rounded.CircleNotifications"></MudIcon>
+                            <div class="notificationbadge notifbadgecount">@badgeCount</div>
+                        </button>
+                    </MudTooltip>
+                </ActivatorContent>
+                <ChildContent>
+                    <div class="notifcontainer" style="height:800px; width: 360px">
+                        <div style="margin-left: 15px;font-size: 24px;font-weight: 700;line-height:28.0008px;margin-top: 10px;" class="d-flex justify-content-between align-items-center">
+                            <span>Notifications</span>
+                            <MudIconButton OnClick="MarkAllasRead" Icon="@Icons.Material.Filled.MarkAsUnread" Style="margin-right: 10px"></MudIconButton>
+                        </div>
+                        <div class="notifbox">
+                            <span style="font-size:17px;line-height:20.0005px;font-weight:bold;">New</span>
+                            @foreach (var item in PendingCount.OrderByDescending(d => d.InsertedTime).Take(limitDisplayNotif))
+                            {
+                                @if (DateTime.Now - item.InsertedTime < TimeSpan.FromMinutes(60))
+                                {
+                                    <MudMenuItem class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <EmployeeAvatarSize verify="@item.Verify_Id" />
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                @foreach (var emp in EmployeeList)
+                                                {
+                                                    if (emp.Verify_Id == item.Verify_Id)
+                                                    {
+                                                        <span style="font-size: 15px;line-height:19.9995px"><b>@GlobalConfigService.CapitalizeFirstLetter(emp.FirstName) @GlobalConfigService.CapitalizeFirstLetter(emp.LastName)</b> requested a leave.</span>
+                                                    }
+                                                }
+
+                                                <div>
+                                                    <span style="font-size: 13px;line-height:16.0004px">@GetTimeAgo(item.InsertedTime)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            @if (item.ReadStatus != "Read")
+                                            {
+                                                <span class="dot"></span>
+                                            }
+                                        </div>
+                                    </MudMenuItem>
+                                }
+                            }
+                        </div>
+
+                        <div class="notifbox mb-0">
+                            <span style="font-size:17px;line-height:20.0005px;font-weight:bold;">Earlier</span>
+                            @foreach (var item in PendingCount.OrderByDescending(d => d.InsertedTime).Take(limitDisplayNotif))
+                            {
+                                @if (DateTime.Now - item.InsertedTime > TimeSpan.FromMinutes(60))
+                                {
+                                    <MudMenuItem class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <EmployeeAvatarSize verify="@item.Verify_Id" />
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                @foreach (var emp in EmployeeList)
+                                                {
+                                                    if (emp.Verify_Id == item.Verify_Id)
+                                                    {
+                                                        <span style="font-size: 15px;line-height:19.9995px"><b>@GlobalConfigService.CapitalizeFirstLetter(emp.FirstName) @GlobalConfigService.CapitalizeFirstLetter(emp.LastName)</b> requested a leave.</span>
+                                                    }
+                                                }
+
+                                                <div>
+                                                    <span style="font-size: 13px;line-height:16.0004px">@GetTimeAgo(item.InsertedTime)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            @if (item.ReadStatus != "Read")
+                                            {
+                                                <span class="dot"></span>
+                                            }
+                                        </div>
+                                    </MudMenuItem>
+                                }
+                            }
+                        </div>
+                        @if (PendingCount.Count() !> 10)
+                        {
+                            <div class="seemorebutton" @onclick="UpdateLimitNotif">
+                                See More
+                            </div>
+                        }
+                    </div>                
+                    </ChildContent>
+            </MudMenu>
             @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
             {
-                <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText>
-                <MudMenu Class="btnburger" AnchorOrigin="Origin.TopLeft">
+                @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
+                <MudMenu Class="btnburger" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                     <ActivatorContent>
                         <MudTooltip Text="Account">
                             <MudAvatar>
@@ -108,8 +212,8 @@
             }
             else
             {
-                <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText>
-                <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.TopLeft">
+                @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
+                <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                     <ActivatorContent>
                         <MudTooltip Text="Account">
                             <MudAvatar>
@@ -199,11 +303,30 @@
             _drawerOpen = !_drawerOpen;
 
     }
+    private int limitDisplayNotif = 10;
+    private void UpdateLimitNotif()
+    {
+        limitDisplayNotif += 10;
+    }
 
     private bool _isDarkMode;
     private string VERIFY = "";
     private string USERNAME = "";
     private string FULLNAME = "";
+
+    public RenderFragment html;
+    private Timer timer;
+
+    private static int Count1 { get; set; }
+    private string Userrole = string.Empty;
+    private string Playstring { get; set; } = "muted";
+
+    private List<Emp_LeaveHistoryT> PendingCount = new();
+    private List<EmployeeT> EmployeeList = new();
+    private int newRequest;
+    private int badgeCount =0;
+    private int countSnack = 0;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -215,6 +338,20 @@
             USERNAME = GlobalConfigService.Username;
             FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
             await EmployeeImg(VERIFY);//image
+
+            await EmployeeService.GetEmployee();
+            EmployeeList = EmployeeService.EmployeeTs;
+
+
+            Userrole = GlobalConfigService.Role;
+
+            if (Userrole == "System Administrator" || Userrole == "HR")
+            {
+                timer = new Timer();
+                timer.Interval = 3000;
+                timer.Elapsed += OnTimerElapsed;
+                timer.Enabled = true;
+            }
         }
         catch (Exception)
         {
@@ -293,4 +430,105 @@
             ImageData = string.Format("data:image/png;base64,{0}", base642);
         }
     }
+
+    private string GetTimeAgo(DateTime? insertedTime)
+    {
+        if (insertedTime.HasValue)
+        {
+            var timeDifference = DateTime.Now - insertedTime.Value;
+
+            if (timeDifference.TotalDays >= 1)
+            {
+                return $"{(int)timeDifference.TotalDays} {((int)timeDifference.TotalDays == 1 ? " day" : " days")} ago";
+            }
+            else if (timeDifference.TotalHours >= 1)
+            {
+                return $"{(int)timeDifference.TotalHours} {((int)timeDifference.TotalHours == 1 ? " hour" : " hours")} ago";
+            }
+            else
+            {
+                return $"{(int)timeDifference.TotalMinutes} {((int)timeDifference.TotalMinutes == 1 ? " minute" : " minutes")} ago";
+            }
+        }
+        else
+        {
+            return "Invalid time";
+        }
+    }
+
+    private async Task ReadNotif(int id)
+    {
+        Emp_LeaveHistoryT obj = new();
+        obj = await LeaveHistoryService.GetSingleLeaveHistory(id);
+        obj.ReadStatus = "Read";
+        await LeaveHistoryService.UpdateLeaveHistory(obj);
+
+        NavigationManager.NavigateTo("/leaveApprovals");
+    }
+
+    private async Task MarkAllasRead()
+    {
+        await LeaveHistoryService.UpdateAllReadStatus("Unread", "Read");
+    }
+
+    #region NOTIF
+    private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
+    {
+        await Task.Delay(1);
+        PendingCount = await LeaveHistoryService.Getpendingcount();
+        newRequest = PendingCount.Count();
+        await LeaveHistoryService.GetLeaveHistory();
+        badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
+        countSnack = newRequest;
+        if (countSnack != 0)
+        {
+            OnVal(newRequest);
+        }
+        else
+        {
+            countSnack = 0;
+            OnTuneOff();
+        }
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+    [JSInvokable]
+    private void OnVal(int valset)
+    {
+        if (valset != Count1)
+        {
+            _toastService.ShowSuccess("New Leave Request.");
+            OnTuneOn();
+            Count1 = valset;
+        }
+        else
+        {
+            OnTuneOff();
+        }
+    }
+
+    public void OnTuneOn()
+    {
+        RenderFragment CreateDynamicComponent() => builder =>
+        {
+            builder.OpenComponent(0, typeof(TuneOn));
+            builder.CloseComponent();
+        };
+        html = CreateDynamicComponent();
+    }
+
+    public void OnTuneOff()
+    {
+        RenderFragment CreateDynamicComponent() => builder =>
+        {
+            builder.OpenComponent(0, typeof(TuneOff));
+            builder.CloseComponent();
+        };
+        html = CreateDynamicComponent();
+    }
+
+    #endregion
 }

@@ -15,5 +15,7 @@ namespace HrisApp.Shared.Models.Employee
         public string NoOfDays { get; set; } = string.Empty;
         public string Purpose { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
+        public DateTime? InsertedTime { get; set; }
+        public string ReadStatus { get; set; } = string.Empty;
     }
 }

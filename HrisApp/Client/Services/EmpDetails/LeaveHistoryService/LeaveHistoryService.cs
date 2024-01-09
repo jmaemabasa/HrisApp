@@ -1,5 +1,6 @@
 ﻿using HrisApp.Shared.Models.Employee;
 using System.Net.Http;
+using static System.Net.WebRequestMethods;
 
 namespace HrisApp.Client.Services.EmpDetails.LeaveHistoryService
 {
@@ -42,7 +43,7 @@ namespace HrisApp.Client.Services.EmpDetails.LeaveHistoryService
             }
             throw new Exception("employee not found");
         }
-        public async Task CreateLeaveHistory(string verid, string leavetype, DateTime? from, DateTime? to, string noofdays, string purpose, string status)
+        public async Task CreateLeaveHistory(string verid, string leavetype, DateTime? from, DateTime? to, string noofdays, string purpose, string status, DateTime? inserted, string readstatus)
         {
             Emp_LeaveHistoryT obj = new()
             {
@@ -52,13 +53,40 @@ namespace HrisApp.Client.Services.EmpDetails.LeaveHistoryService
                 To = to,
                 NoOfDays = noofdays,
                 Purpose = purpose,
-                Status = status
+                Status = status,
+                InsertedTime = inserted,
+                ReadStatus = readstatus
             };
             var result = await _httpClient.PostAsJsonAsync("api/LeaveHistory/CreateLeaveHistory", obj);
         }
         public async Task UpdateLeaveHistory(Emp_LeaveHistoryT obj)
         {
             var result = await _httpClient.PutAsJsonAsync("api/LeaveHistory/UpdateLeaveHistory", obj);
+        }
+
+
+        public async Task<List<Emp_LeaveHistoryT>> Getpendingcount()
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<Emp_LeaveHistoryT>>($"api/LeaveHistory/Getpendinglist");
+            return result;
+        }
+
+        public async Task UpdateAllReadStatus(string status, string newstatus)
+        {
+            try
+            {
+                Emp_LeaveHistoryT objT = new()
+                {
+                    ReadStatus = newstatus,
+                };
+
+                var result = await _httpClient.PutAsJsonAsync($"api/LeaveHistory/UpdateAllReadStatus/{status}/{newstatus}", objT);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message + "daot ang services");
+            }
         }
     }
 }
