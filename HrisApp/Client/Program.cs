@@ -69,6 +69,11 @@ global using HrisApp.Client.GlobalService;
 global using HrisApp.Client.ViewModel.AdminViewModel.AuditlogViewModel;
 global using HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel;
 global using HrisApp.Client.ViewModel.MasterDataViewModel;
+global using HrisApp.Client.Services.ApplicantDetails.AppAddressService;
+global using HrisApp.Client.Services.ApplicantDetails.AppEducService;
+global using HrisApp.Client.Services.ApplicantDetails.AppLicTrainingService;
+global using HrisApp.Client.Services.ApplicantDetails.AppSibChildService;
+
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -123,6 +128,8 @@ builder.Services.AddSingleton<StateService>();
 builder.Services.AddTransient<BackUpDeletion>();
 builder.Services.AddTransient<JMColors>();
 
+
+
 builder.Services.AddTransient<DTOEmployeeExport>();
 builder.Services.AddTransient<DTOEmpHeadcountExport>();
 builder.Services.AddTransient<DTOEmployeeData>();
@@ -135,8 +142,12 @@ builder.Services.AddTransient<AddEmployeeVM>();
 builder.Services.AddTransient<AreaVM>();
 builder.Services.AddTransient<DepartmentVM>();
 
-
+//APPLICANT
 builder.Services.AddScoped<IApplicantService, ApplicantService>();
+builder.Services.AddScoped<IAppAddressService, AppAddressService>();
+builder.Services.AddScoped<IAppEducService, AppEducService>();
+builder.Services.AddScoped<IAppLicenseTrainingService, AppLicenseTrainingService>();
+builder.Services.AddScoped<IAppSibChildService, AppSibChildService>();
 
 
 

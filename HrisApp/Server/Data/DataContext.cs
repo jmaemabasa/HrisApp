@@ -323,6 +323,8 @@ namespace HrisApp.Server.Data
         public DbSet<App_LicenseT> App_LicenseT { get; set; }
         public DbSet<App_TrainingT> App_TrainingT { get; set; }
         public DbSet<App_OtherAwardsT> App_OtherAwardsT { get; set; }
+        //app Self Declaration
+        public DbSet<App_SelfDeclarationT> App_SelfDeclarationT { get; set; }
 
 
     }
