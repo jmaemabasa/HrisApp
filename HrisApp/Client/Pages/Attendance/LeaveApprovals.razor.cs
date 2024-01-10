@@ -33,7 +33,7 @@
         private async Task LoadList()
         {
             await LeaveHistoryService.GetLeaveHistory();
-            StateService.SetState("ApprovalLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList());
+            StateService.SetState("ApprovalLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList());
         }
 
         private void OnStateChanged()
@@ -85,7 +85,7 @@
             await LeaveHistoryService.UpdateLeaveHistory(obj);
 
             await LeaveHistoryService.GetLeaveHistory();
-            var newList = LeaveHistoryService.Emp_LeaveHistoryTs.OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList();
+            var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList();
             StateService.SetState("ApprovalLeaveHistoryList", newList);
 
             OpenDropDownlist();

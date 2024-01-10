@@ -26,7 +26,8 @@
 </style>
 
 <MudAvatar Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
-    <MudImage Src="@ImageData"></MudImage>
+    @* <MudImage Src="@ImageData"></MudImage> *@
+    <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
 </MudAvatar>
 
 @code {

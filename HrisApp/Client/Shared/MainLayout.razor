@@ -118,30 +118,31 @@
                                 @if (DateTime.Now - item.InsertedTime < TimeSpan.FromMinutes(60))
                                 {
                                     <MudMenuItem class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <EmployeeAvatarSize verify="@item.Verify_Id" />
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                @foreach (var emp in EmployeeList)
-                                                {
-                                                    if (emp.Verify_Id == item.Verify_Id)
-                                                    {
-                                                        <span style="font-size: 15px;line-height:19.9995px"><b>@GlobalConfigService.CapitalizeFirstLetter(emp.FirstName) @GlobalConfigService.CapitalizeFirstLetter(emp.LastName)</b> requested a leave.</span>
-                                                    }
-                                                }
-
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
                                                 <div>
-                                                    <span style="font-size: 13px;line-height:16.0004px">@GetTimeAgo(item.InsertedTime)</span>
+                                                    <EmployeeAvatarSize verify="@item.Verify_Id" />
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    @foreach (var emp in EmployeeList)
+                                                    {
+                                                        if (emp.Verify_Id == item.Verify_Id)
+                                                        {
+                                                            <span style="font-size: 15px;line-height:19.9995px"><b>@GlobalConfigService.CapitalizeFirstLetter(emp.FirstName) @GlobalConfigService.CapitalizeFirstLetter(emp.LastName)</b> requested a leave.</span>
+                                                        }
+                                                    }
+
+                                                    <div>
+                                                        <span style="font-size: 13px;line-height:16.0004px">@GetTimeAgo(item.InsertedTime)</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div>
-                                            @if (item.ReadStatus != "Read")
-                                            {
-                                                <span class="dot"></span>
-                                            }
+                                            <div>
+                                                @if (item.ReadStatus != "Read")
+                                                {
+                                                    <span class="dot"></span>
+                                                }
+                                            </div>
                                         </div>
                                     </MudMenuItem>
                                 }
@@ -155,30 +156,31 @@
                                 @if (DateTime.Now - item.InsertedTime > TimeSpan.FromMinutes(60))
                                 {
                                     <MudMenuItem class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <EmployeeAvatarSize verify="@item.Verify_Id" />
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                @foreach (var emp in EmployeeList)
-                                                {
-                                                    if (emp.Verify_Id == item.Verify_Id)
-                                                    {
-                                                        <span style="font-size: 15px;line-height:19.9995px"><b>@GlobalConfigService.CapitalizeFirstLetter(emp.FirstName) @GlobalConfigService.CapitalizeFirstLetter(emp.LastName)</b> requested a leave.</span>
-                                                    }
-                                                }
-
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
                                                 <div>
-                                                    <span style="font-size: 13px;line-height:16.0004px">@GetTimeAgo(item.InsertedTime)</span>
+                                                    <EmployeeAvatarSize verify="@item.Verify_Id" />
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    @foreach (var emp in EmployeeList)
+                                                    {
+                                                        if (emp.Verify_Id == item.Verify_Id)
+                                                        {
+                                                            <span style="font-size: 15px;line-height:19.9995px"><b>@GlobalConfigService.CapitalizeFirstLetter(emp.FirstName) @GlobalConfigService.CapitalizeFirstLetter(emp.LastName)</b> requested a leave.</span>
+                                                        }
+                                                    }
+
+                                                    <div>
+                                                        <span style="font-size: 13px;line-height:16.0004px">@GetTimeAgo(item.InsertedTime)</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                        <div>
-                                            @if (item.ReadStatus != "Read")
-                                            {
-                                                <span class="dot"></span>
-                                            }
+                                            <div>
+                                                @if (item.ReadStatus != "Read")
+                                                {
+                                                    <span class="dot"></span>
+                                                }
+                                            </div>
                                         </div>
                                     </MudMenuItem>
                                 }
@@ -316,6 +318,7 @@
 
     public RenderFragment html;
     private Timer timer;
+    private Timer timeruser;
 
     private static int Count1 { get; set; }
     private string Userrole = string.Empty;
@@ -352,6 +355,7 @@
                 timer.Elapsed += OnTimerElapsed;
                 timer.Enabled = true;
             }
+
         }
         catch (Exception)
         {
@@ -471,18 +475,19 @@
         await LeaveHistoryService.UpdateAllReadStatus("Unread", "Read");
     }
 
-    #region NOTIF
+    #region NOTIF ADMIN
     private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        await Task.Delay(1);
-        PendingCount = await LeaveHistoryService.Getpendingcount();
-        newRequest = PendingCount.Count();
         await LeaveHistoryService.GetLeaveHistory();
         badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
+
+        PendingCount = await LeaveHistoryService.Getpendingcount();
+        newRequest = PendingCount.Count();
+
         countSnack = newRequest;
         if (countSnack != 0)
         {
-            OnVal(newRequest);
+           OnVal(newRequest);
         }
         else
         {

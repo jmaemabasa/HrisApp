@@ -57,7 +57,7 @@
         private async Task LoadList()
         {
             await LeaveHistoryService.GetLeaveHistory();
-            StateService.SetState("UserLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == empLeaveCred.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList());
+            StateService.SetState("UserLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == empLeaveCred.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList());
         }
 
         private void OnStateChanged()
@@ -100,7 +100,7 @@
                 AddHistoryOpen = false;
 
                 await LeaveHistoryService.GetLeaveHistory();
-                var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == empLeaveCred.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
+                var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == empLeaveCred.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList();
                 StateService.SetState("UserLeaveHistoryList", newList);
 
                 await SetValues();
@@ -235,12 +235,28 @@
             await LeaveHistoryService.UpdateLeaveHistory(obj);
 
             await LeaveHistoryService.GetLeaveHistory();
-            var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == obj.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
+            var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == obj.Verify_Id && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList();
             StateService.SetState("UserLeaveHistoryList", newList);
 
             await SetValues();
             OpenDropDownlist();
         }
         #endregion
+
+        private int GetStatusOrder(string status)
+        {
+            switch (status.ToLowerInvariant())
+            {
+                case "pending":
+                    return 1;
+                case "approved":
+                    return 2;
+                case "rejected":
+                    return 3;
+                // Add more cases if needed
+                default:
+                    return int.MaxValue; // Any other status is placed at the end
+            }
+        }
     }
 }

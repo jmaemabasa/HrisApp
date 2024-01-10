@@ -38,3 +38,13 @@ body::-webkit-scrollbar {
 .mud-dialog {
     border-radius: 20px;
 }
+
+img, .imgavatar {
+    image-resolution: 72dpi;
+}
+
+@media print {
+    img, .imgavatar {
+        image-resolution: 72dpi;
+    }
+}

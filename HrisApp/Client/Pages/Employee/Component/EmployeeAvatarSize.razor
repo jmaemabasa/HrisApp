@@ -3,7 +3,8 @@
 @inject IImageService ImageService
 
 <MudAvatar Size="Size.Large" Style="overflow: visible; margin-bottom: 8px;margin-top: 8px;margin-right: 12px;">
-    <MudImage Src="@ImageData" Style="border-radius: 50%;"></MudImage>
+    @* <MudImage Src="@ImageData" Style="border-radius: 50%;image-resolution: from-image 72dpi"></MudImage> *@
+    <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
     <div class="notificationbadge" role="status"><MudIcon Size="Size.Small" Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
 </MudAvatar>
 

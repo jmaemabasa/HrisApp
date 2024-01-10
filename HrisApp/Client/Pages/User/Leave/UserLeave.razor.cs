@@ -46,7 +46,7 @@ namespace HrisApp.Client.Pages.User.Leave
         private async Task LoadList()
         {
             await LeaveHistoryService.GetLeaveHistory();
-            StateService.SetState("UserLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == VERIFY && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList());
+            StateService.SetState("UserLeaveHistoryList", LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == VERIFY && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList());
         }
 
         private void OnStateChanged()
@@ -86,10 +86,10 @@ namespace HrisApp.Client.Pages.User.Leave
                 else
                 {
                     await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Pending", DateTime.Now, "Unread");
-                    if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
-                    {
-                        await jsRuntime.InitializeNotif(DotNetObjectReference.Create(this));
-                    }
+                    //if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
+                    //{
+                    //    //await jsRuntime.InitializeNotif(DotNetObjectReference.Create(this));
+                    //}
                 }
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
@@ -99,33 +99,13 @@ namespace HrisApp.Client.Pages.User.Leave
                 AddHistoryOpen = false;
 
                 await LeaveHistoryService.GetLeaveHistory();
-                var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == VERIFY && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderByDescending(d => d.To).ToList();
+                var newList = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.Verify_Id == VERIFY && d.From?.Year == DateTime.Now.Year && d.To?.Year == DateTime.Now.Year).OrderBy(d => GetStatusOrder(d.Status)).ThenByDescending(d => d.To).ToList();
                 StateService.SetState("UserLeaveHistoryList", newList);
 
                 await SetValues();
             }
         }
 
-        async Task UpdateLeave()
-        {
-            if (empLeaveCred == null)
-                return;
-
-            if (string.IsNullOrWhiteSpace(empLeaveCred.Verify_Id))
-            {
-                await ShowErrorMessageBox("Please fill up the name!");
-            }
-            else
-            {
-                await LeaveCredService.UpdateLeaveCred(empLeaveCred);
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-
-                _toastService.ShowSuccess("Updated Successfully!");
-                UpdateLeaveBalOpen = false;
-
-                await SetValues();
-            }
-        }
         #endregion
 
         #region OPEN DRAWERS FUNCTIONS
@@ -222,6 +202,22 @@ namespace HrisApp.Client.Pages.User.Leave
             await Task.Delay(1000);
             isVisible = true;
             StateHasChanged();
+        }
+
+        private int GetStatusOrder(string status)
+        {
+            switch (status.ToLowerInvariant())
+            {
+                case "pending":
+                    return 1;
+                case "approved":
+                    return 2;
+                case "rejected":
+                    return 3;
+                // Add more cases if needed
+                default:
+                    return int.MaxValue; // Any other status is placed at the end
+            }
         }
         #endregion
     }
