@@ -73,30 +73,32 @@ namespace HrisApp.Client.Pages.Applicant
                 applicant.App_Age = age;
             }
 
+            applicant.DateApplied = DateTime.Now;
+            selfdec.Q1Ans = (YesCB1 == true) ? "true" : (NoCB1 == true) ? "false" : string.Empty;
+            selfdec.Q2Ans = (YesCB2 == true) ? "true" : (NoCB2 == true) ? "false" : string.Empty;
+            selfdec.Q3Ans = (YesCB3 == true) ? "true" : (NoCB3 == true) ? "false" : string.Empty;
+            selfdec.Q4Ans = (YesCB4 == true) ? "true" : (NoCB4 == true) ? "false" : string.Empty;
+            selfdec.Q5Ans = (YesCB5 == true) ? "true" : (NoCB5 == true) ? "false" : string.Empty;
+            selfdec.Q6Ans = (YesCB6 == true) ? "true" : (NoCB6 == true) ? "false" : string.Empty;
+            selfdec.Q7Ans = (YesCB7 == true) ? "true" : (NoCB7 == true) ? "false" : string.Empty;
             try
             {
-                if (!string.IsNullOrWhiteSpace(applicant.App_EmerName) && !string.IsNullOrWhiteSpace(applicant.App_EmerAddress) && !string.IsNullOrWhiteSpace(applicant.App_ContactNo) && applicant.App_EmerRelationshipId != 0 && !string.IsNullOrWhiteSpace(selfdec.Q1Ans) && !string.IsNullOrWhiteSpace(selfdec.Q2Ans) && !string.IsNullOrWhiteSpace(selfdec.Q3Ans) && !string.IsNullOrWhiteSpace(selfdec.Q4Ans) && !string.IsNullOrWhiteSpace(selfdec.Q5Ans) && !string.IsNullOrWhiteSpace(selfdec.Q6Ans) && !string.IsNullOrWhiteSpace(selfdec.Q7Ans))
+                if (!string.IsNullOrWhiteSpace(applicant.App_EmerName) && !string.IsNullOrWhiteSpace(applicant.App_EmerAddress) && !string.IsNullOrWhiteSpace(applicant.App_EmerMobNum) && applicant.App_EmerRelationshipId != 0 && !string.IsNullOrWhiteSpace(selfdec.Q1Ans) && !string.IsNullOrWhiteSpace(selfdec.Q2Ans) && !string.IsNullOrWhiteSpace(selfdec.Q3Ans) && !string.IsNullOrWhiteSpace(selfdec.Q4Ans) && !string.IsNullOrWhiteSpace(selfdec.Q5Ans) && !string.IsNullOrWhiteSpace(selfdec.Q6Ans) && !string.IsNullOrWhiteSpace(selfdec.Q7Ans))
                 {
-                    var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+                    var verdate = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+                    var verifyCode = "App"+verdate;
 
                     //CREATE APPLICANT
                     applicant.App_VerifyId = verifyCode;
-                    //var verifyId = await ApplicantService.CreateApplicant(applicant);
+                    var verifyId = await ApplicantService.CreateApplicant(applicant);
 
                     //CREATE ADDRESS
                     address.Verify_Id = verifyCode;
-                    //var adres = await AppAddressService.CreateAddress(address);
+                    var adres = await AppAddressService.CreateAddress(address);
 
                     //CREATE Self Dec
                     selfdec.App_VerifyId = verifyCode;
-                    selfdec.Q1Ans = (YesCB1 == true) ? "Yes" : "No";
-                    selfdec.Q2Ans = (YesCB2 == true) ? "Yes" : "No";
-                    selfdec.Q3Ans = (YesCB3 == true) ? "Yes" : "No";
-                    selfdec.Q4Ans = (YesCB4 == true) ? "Yes" : "No";
-                    selfdec.Q5Ans = (YesCB5 == true) ? "Yes" : "No";
-                    selfdec.Q6Ans = (YesCB6 == true) ? "Yes" : "No";
-                    selfdec.Q7Ans = (YesCB7 == true) ? "Yes" : "No";
-                    //var sd = await AppLicenseTrainingService.CreateSelfDeclaration(selfdec);
+                    var sd = await AppLicenseTrainingService.CreateSelfDeclaration(selfdec);
 
 
                     ////CREATE EDUCATIONS
@@ -121,6 +123,7 @@ namespace HrisApp.Client.Pages.Applicant
 
                     clsQ1 = clsQ2 = clsQ3 = clsQ4 = clsQ5 = clsQ6 = clsQ7 = "";
 
+                    _navigationManager.NavigateTo("/application", true);
                 }
                 else
                 {
@@ -134,18 +137,14 @@ namespace HrisApp.Client.Pages.Applicant
                     clsEmerRel = applicant.App_EmerRelationshipId == 0 ? "mud-input-error" : string.Empty;
                     mesEmerRel = applicant.App_EmerRelationshipId == 0 ? "Please select." : string.Empty;
 
-                    clsQ1 = string.IsNullOrWhiteSpace(selfdec.Q1Ans) ? "text-error" : string.Empty;
-                    clsQ2 = string.IsNullOrWhiteSpace(selfdec.Q2Ans) ? "text-error" : string.Empty;
-                    clsQ3 = string.IsNullOrWhiteSpace(selfdec.Q3Ans) ? "text-error" : string.Empty;
-                    clsQ4 = string.IsNullOrWhiteSpace(selfdec.Q4Ans) ? "text-error" : string.Empty;
-                    clsQ5 = string.IsNullOrWhiteSpace(selfdec.Q5Ans) ? "text-error" : string.Empty;
-                    clsQ6 = string.IsNullOrWhiteSpace(selfdec.Q6Ans) ? "text-error" : string.Empty;
-                    clsQ7 = string.IsNullOrWhiteSpace(selfdec.Q7Ans) ? "text-error" : string.Empty;
-
+                    clsQ1 = selfdec.Q1Ans == "" ? "cberror" : string.Empty;
+                    clsQ2 = selfdec.Q2Ans == "" ? "cberror" : string.Empty;
+                    clsQ3 = selfdec.Q3Ans == "" ? "cberror" : string.Empty;
+                    clsQ4 = selfdec.Q4Ans == "" ? "cberror" : string.Empty;
+                    clsQ5 = selfdec.Q5Ans == "" ? "cberror" : string.Empty;
+                    clsQ6 = selfdec.Q6Ans == "" ? "cberror" : string.Empty;
+                    clsQ7 = selfdec.Q7Ans == "" ? "cberror" : string.Empty;
                 }
-
-
-
             }
             catch (Exception ex)
             {

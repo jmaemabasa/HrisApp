@@ -1,0 +1,148 @@
+﻿@page "/appprimary"
+@inject IAppEducService EducationService
+@inject NavigationManager NavigationManager
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+
+<style>
+    .stable {
+        background: #e9ecef;
+        border-radius: 20px;
+    }
+
+    .txf1 {
+        height: 45px;
+        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+        border-radius: 10px;
+        border: 0;
+        padding: 0 0 10px 15px;
+        margin-top: 0;
+        background: #e9ecef;
+        padding-top: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+
+    .btnnext {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 10px;
+        background-color: #F1BC3A;
+        color: #424242;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        width: 200px;
+    }
+
+    .btnnext:hover {
+        background-color: #E38D0F;
+        color: #fff;
+    }
+
+    .btnadd {
+        border-radius: 15px;
+        background-color: #26446e;
+        color: #FAFAF5;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+        .btnadd:hover {
+            background-color: #E38D0F;
+            transform: scale(1.1);
+        }
+</style>
+@if (primaryList.Count == 0 || primaryList == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No Primary Information.</span>
+        @* <AuthorizeView Roles="HR, System Administrator">
+            <Authorized>
+                <MudTooltip Text="Add">
+                    <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "PrimaryOpen"))" Size="Size.Small">Add Information</MudButton>
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView> *@
+    </div>
+}
+else
+{
+    <MudTable Class="stable" Items="primaryList" Context="primary" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                <span class="spantitle mb-3">Primary Education</span>
+                @* <AuthorizeView Roles="HR, System Administrator">
+                    <Authorized>
+                        <MudTooltip Text="Add">
+                            <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "PrimaryOpen"))" Size="Size.Small">Add Information</MudButton>
+                        </MudTooltip>
+                    </Authorized>
+                </AuthorizeView> *@
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">School Name</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Location</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Honors Received / Earned Units</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Inclusive Years</MudTh>
+            @* <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh> *@
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="">@primary.PriSchoolName</MudTd>
+            <MudTd DataLabel="">@primary.PriSchoolLoc</MudTd>
+            <MudTd DataLabel="">@primary.PriAward</MudTd>
+            <MudTd DataLabel="">@primary.PriSchoolYear</MudTd>
+            @* <MudTd>
+                <AuthorizeView Roles="HR, System Administrator">
+                    <Authorized>
+                        <MudTooltip Text="Remove">
+                            <MudIconButton Class="btnedit" OnClick="@(() => DeletePrimary(primary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                        </MudTooltip>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudIconButton Class="btnedit" Disabled Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </MudTd> *@
+        </RowTemplate>
+    </MudTable>
+}
+@* <MudDrawer Class="drawerdetails" @bind-Open="@_primaryOpen" Width="@_width" Height="@height" Anchor="@_anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <span class="spantitle mb-3">Primary Education</span>
+    <MudItem xs="12">
+        <EditForm Model="_pri" OnValidSubmit="SavePrimary" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Name of School</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="_pri.PriSchoolName" />
+                <ValidationMessage For="@(() => _pri.PriSchoolName)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>School Location</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="_pri.PriSchoolLoc" />
+                <ValidationMessage For="@(() => _pri.PriSchoolLoc)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Honors Received / Earned Units</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="_pri.PriAward" />
+                <ValidationMessage For="@(() => _pri.PriAward)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Inclusive Years</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="_pri.PriSchoolYear" />
+                <ValidationMessage For="@(() => _pri.PriSchoolYear)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer> *@
+

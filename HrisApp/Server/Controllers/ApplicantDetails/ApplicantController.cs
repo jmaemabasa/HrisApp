@@ -27,7 +27,7 @@ namespace HrisApp.Server.Controllers.ApplicantDetails
             return Ok(app);
         }
 
-        [HttpGet("GetEmployee")]
+        [HttpGet("GetApplicant")]
         public async Task<ActionResult<List<ApplicantT>>> GetApplicant()
         {
             var app = await _context.ApplicantT

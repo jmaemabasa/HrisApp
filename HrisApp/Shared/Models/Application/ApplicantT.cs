@@ -21,6 +21,7 @@ namespace HrisApp.Shared.Models.Application
         public string App_PresSalary { get; set; } = string.Empty;
         public string App_ExpSalary { get; set; } = string.Empty;
         public string App_SourceApp { get; set; } = string.Empty;
+        public DateTime DateApplied { get; set; }
 
 
         //PERSONAL BACKGROUND

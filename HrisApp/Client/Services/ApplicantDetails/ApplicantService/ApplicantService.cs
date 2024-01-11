@@ -10,7 +10,7 @@
             _http = http;
         }
 
-        public List<ApplicantT> ApplicantTs { get; set; } = new List<ApplicantT>();
+        public List<ApplicantT> ApplicantTs { get; set; } = new();
         public async Task<List<ApplicantT>> GetApplicantList()
         {
             return await _http.GetFromJsonAsync<List<ApplicantT>>("api/Applicant");
@@ -18,7 +18,7 @@
 
         public async Task GetApplicant()
         {
-            var result = await _http.GetFromJsonAsync<List<ApplicantT>>("api/Applicant/GetApplicant");
+            var result = await _http.GetFromJsonAsync<List<ApplicantT>>("api/Applicant");
             if (result != null)
             {
                 ApplicantTs = result;

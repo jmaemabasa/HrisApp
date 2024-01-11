@@ -28,7 +28,8 @@
                 @* <ValidationSummary/> *@
                 <MudCard Class="py-3 px-3" Elevation="0">
                     <MudCardContent>
-                        <div class="row mb-2">
+                        <span class="spantitle" style="color:#6A707D">Please fill out the form</span>
+                        <div class="row mt-3 mb-2">
                             <div class="col-md-6 ">
                                 <MudText Typo="Typo.body2">Position Applied for 1 </MudText>
                                 <MudTextField @bind-Value="applicant.App_PosApplied1" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
@@ -48,7 +49,7 @@
                                 <MudTextField @bind-Value="applicant.App_ExpSalary" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                             </div>
                         </div>
-                        <div class="col mb-2">
+                        <div class="col">
                             <MudText Typo="Typo.body2">Source of Application</MudText>
                             <MudTextField @bind-Value="applicant.App_SourceApp" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
@@ -848,99 +849,99 @@
             <MudCard Class="py-3 px-3 pb-2" Elevation="0">
                 <MudCardContent>
                     <span class="spantitle">Self-Declaration</span>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row mt-3 mb-2">
+                        <div class="col-sm col-md-4 text-center border-bottom">
                             <MudText Typo="Typo.body2"><b>Check Applicable Box</b></MudText>
                         </div>
-                        <div class="col-sm col-md-4 text-center">
+                        <div class="col-sm col-md-4 text-center border-bottom">
                             <MudText Typo="Typo.body2"><b>Yes or No</b></MudText>
                         </div>
-                        <div class="col-sm col-md-4 ">
+                        <div class="col-sm col-md-4 text-center border-bottom">
                             <MudText Typo="Typo.body2"><b>If YES, please give details</b></MudText>
                         </div>
                     </div>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row mt-3 mb-2">
+                        <div class="col-sm col-md-4  border-bottom">
                             <MudText Typo="Typo.body2">Do you have any pending application for immigrant or working visa to settle abroad?</MudText>
                         </div>
-                        <div class="col-sm col-md-4 d-flex justify-content-center">
+                        <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
                             <MudCheckBox Class="@clsQ1" @bind-Checked="@YesCB1">Yes</MudCheckBox>
                             <MudCheckBox Class="@clsQ1" @bind-Checked="@NoCB1">No</MudCheckBox>
                         </div>
-                        <div class="col-sm col-md-4 ">
-                            <MudTextField Disabled="@(!YesCB1)" @bind-Value="selfdec.Q1Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <div class="col-sm col-md-4  border-bottom">
+                            <MudTextField @bind-Value="selfdec.Q1Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
                     </div>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row mt-3 mb-2 ">
+                        <div class="col-sm col-md-4  border-bottom">
                             <MudText Typo="Typo.body2">Have you ever been seriously injured or ill?</MudText>
                         </div>
-                        <div class="col-sm col-md-4 d-flex justify-content-center">
+                        <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
                             <MudCheckBox Class="@clsQ2" @bind-Checked="@YesCB2">Yes</MudCheckBox>
                             <MudCheckBox Class="@clsQ2" @bind-Checked="@NoCB2">No</MudCheckBox>
                         </div>
-                        <div class="col-sm col-md-4 ">
-                            <MudTextField Disabled="@(!YesCB2)" @bind-Value="selfdec.Q2Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <div class="col-sm col-md-4 border-bottom ">
+                            <MudTextField @bind-Value="selfdec.Q2Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
                     </div>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row mt-3 mb-2 ">
+                        <div class="col-sm col-md-4 border-bottom ">
                             <MudText Typo="Typo.body2">Have you ever been terminated or dismissed by any of your previous employer/s?</MudText>
                         </div>
-                        <div class="col-sm col-md-4 d-flex justify-content-center">
+                        <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
                             <MudCheckBox Class="@clsQ3" @bind-Checked="@YesCB3">Yes</MudCheckBox>
                             <MudCheckBox Class="@clsQ3" @bind-Checked="@NoCB3">No</MudCheckBox>
                         </div>
-                        <div class="col-sm col-md-4 ">
-                            <MudTextField Disabled="@(!YesCB3)" @bind-Value="selfdec.Q3Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <div class="col-sm col-md-4 border-bottom ">
+                            <MudTextField @bind-Value="selfdec.Q3Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
                     </div>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row mt-3 mb-2 ">
+                        <div class="col-sm col-md-4 border-bottom ">
                             <MudText Typo="Typo.body2">Do you have pending criminal, civil, labor or administrative case filed against you/ and/ or you filed against other parties?</MudText>
                         </div>
-                        <div class="col-sm col-md-4 d-flex justify-content-center">
+                        <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
                             <MudCheckBox Class="@clsQ4" @bind-Checked="@YesCB4">Yes</MudCheckBox>
                             <MudCheckBox Class="@clsQ4" @bind-Checked="@NoCB4">No</MudCheckBox>
                         </div>
-                        <div class="col-sm col-md-4 ">
-                            <MudTextField Disabled="@(!YesCB4)" @bind-Value="selfdec.Q4Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <div class="col-sm col-md-4  border-bottom">
+                            <MudTextField @bind-Value="selfdec.Q4Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
                     </div>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row mt-3 mb-2 ">
+                        <div class="col-sm col-md-4 border-bottom ">
                             <MudText Typo="Typo.body2">Are you willing to work on shifting, overtime and holidays?</MudText>
                         </div>
-                        <div class="col-sm col-md-4 d-flex justify-content-center">
+                        <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
                             <MudCheckBox Class="@clsQ5" @bind-Checked="@YesCB5">Yes</MudCheckBox>
                             <MudCheckBox Class="@clsQ5" @bind-Checked="@NoCB5">No</MudCheckBox>
                         </div>
-                        <div class="col-sm col-md-4 ">
-                            <MudTextField Disabled="@(!YesCB5)" @bind-Value="selfdec.Q5Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <div class="col-sm col-md-4 border-bottom ">
+                            <MudTextField @bind-Value="selfdec.Q5Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
                     </div>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row  mt-3 mb-2 ">
+                        <div class="col-sm col-md-4  border-bottom">
                             <MudText Typo="Typo.body2">Are you willing to be assigned in any of the Company's Satellite Offices?</MudText>
                         </div>
-                        <div class="col-sm col-md-4 d-flex justify-content-center">
+                        <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
                             <MudCheckBox Class="@clsQ6" @bind-Checked="@YesCB6">Yes</MudCheckBox>
                             <MudCheckBox Class="@clsQ6" @bind-Checked="@NoCB6">No</MudCheckBox>
                         </div>
-                        <div class="col-sm col-md-4 ">
-                            <MudTextField Disabled="@(!YesCB6)" @bind-Value="selfdec.Q6Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <div class="col-sm col-md-4 border-bottom ">
+                            <MudTextField @bind-Value="selfdec.Q6Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
                     </div>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-sm col-md-4 ">
+                    <div class="row mt-3 mb-2">
+                        <div class="col-sm col-md-4 border-bottom ">
                             <MudText Typo="Typo.body2">Do you have tattoo in any part of your body?</MudText>
                         </div>
-                        <div class="col-sm col-md-4 d-flex justify-content-center">
+                        <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
                             <MudCheckBox Class="@clsQ7" @bind-Checked="@YesCB7">Yes</MudCheckBox>
                             <MudCheckBox Class="@clsQ7" @bind-Checked="@NoCB7">No</MudCheckBox>
                         </div>
-                        <div class="col-sm col-md-4 ">
-                            <MudTextField Disabled="@(!YesCB7)" @bind-Value="selfdec.Q7Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <div class="col-sm col-md-4  border-bottom">
+                            <MudTextField @bind-Value="selfdec.Q7Dtls" Class="mdtextfield" Variant="Variant.Outlined" Margin="Margin.Dense" />
                         </div>
                     </div>
                 </MudCardContent>
