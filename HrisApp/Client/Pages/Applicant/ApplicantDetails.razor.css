@@ -39,7 +39,7 @@
 
 ::deep .empdmainbox {
     height: 54rem;
-    overflow: auto !important;
+    overflow: initial !important;
 }
 
 ::deep .mud-typography {

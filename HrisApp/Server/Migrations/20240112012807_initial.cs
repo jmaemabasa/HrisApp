@@ -208,6 +208,35 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "App_SelfDeclarationT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    App_VerifyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q1Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q1Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q2Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q2Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q3Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q3Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q4Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q4Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q5Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q5Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q6Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q6Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q7Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q7Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q8Ans = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q8Dtls = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_App_SelfDeclarationT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "App_SeniorHST",
                 columns: table => new
                 {
@@ -487,7 +516,9 @@ namespace HrisApp.Server.Migrations
                     To = table.Column<DateTime>(type: "datetime2", nullable: true),
                     NoOfDays = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsertedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReadStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1043,6 +1074,7 @@ namespace HrisApp.Server.Migrations
                     App_PresSalary = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_ExpSalary = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_SourceApp = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateApplied = table.Column<DateTime>(type: "datetime2", nullable: false),
                     App_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     App_MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -1744,6 +1776,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "App_SecondaryT");
+
+            migrationBuilder.DropTable(
+                name: "App_SelfDeclarationT");
 
             migrationBuilder.DropTable(
                 name: "App_SeniorHST");

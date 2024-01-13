@@ -3,7 +3,7 @@
 @inject IDialogService DialogService
 @inject StateService StateService
 
-
+@attribute [Authorize(Roles = "System Administrator, HR")]
 <PageTitle>Leave Management</PageTitle>
 
 

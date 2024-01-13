@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240110054957_applicant")]
-    partial class applicant
+    [Migration("20240112012807_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -721,6 +721,9 @@ namespace HrisApp.Server.Migrations
 
                     b.Property<int?>("App_Weight")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("DateApplied")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

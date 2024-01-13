@@ -8,7 +8,7 @@
 @inject IAuditlogService AuditlogService
 @inject IToastService _toastService
 @inject ILeaveService LeaveService
-
+@attribute [Authorize(Roles = "System Administrator, HR")]
 <PageTitle>Leave Approvals</PageTitle>
 
 

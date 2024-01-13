@@ -12,6 +12,7 @@
 @inject IAuditlogService AuditlogService
 @inject IToastService _toastService
 
+@attribute [Authorize(Roles = "System Administrator, HR, User")]
 <PageTitle>Leave Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-end align-items-center">

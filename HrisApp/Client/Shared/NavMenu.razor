@@ -19,10 +19,10 @@
                 <MudNavLink Class="navlinktitle" Href="/evaluationlist" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Assignment" IconColor="Color.Inherit">Evaluation</MudNavLink>
                 <MudNavLink Class="navlinktitle" Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
             </MudNavGroup>
-            <MudNavGroup Class="navlinktitle" Title="Applicant" Expanded="false" Icon="@Icons.Material.Filled.GroupAdd" IconColor="Color.Inherit">
+            @* <MudNavGroup Class="navlinktitle" Title="Applicant" Expanded="false" Icon="@Icons.Material.Filled.GroupAdd" IconColor="Color.Inherit">
                 <MudNavLink Class="navlinktitle" Href="/applicants" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Applicants</MudNavLink>
                 <MudNavLink Class="navlinktitle" Href="/applicantstracker" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ElectricBolt" IconColor="Color.Inherit">Applicants Tracker</MudNavLink>
-            </MudNavGroup>
+            </MudNavGroup> *@
         </Authorized>
     </AuthorizeView>
     <AuthorizeView Roles="System Administrator, HR">

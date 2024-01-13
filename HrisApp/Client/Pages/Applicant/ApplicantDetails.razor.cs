@@ -16,6 +16,23 @@
         private List<CivilStatusT> CivilStatusL = new();
         private List<ReligionT> ReligionsL = new();
         private List<EmerRelationshipT> EmerRelationshipsL = new();
+
+        #region self dec variables
+        public bool YesCB1 { get; set; } = false;
+        public bool NoCB1 { get; set; } = false;
+        public bool YesCB2 { get; set; } = false;
+        public bool NoCB2 { get; set; } = false;
+        public bool YesCB3 { get; set; } = false;
+        public bool NoCB3 { get; set; } = false;
+        public bool YesCB4 { get; set; } = false;
+        public bool NoCB4 { get; set; } = false;
+        public bool YesCB5 { get; set; } = false;
+        public bool NoCB5 { get; set; } = false;
+        public bool YesCB6 { get; set; } = false;
+        public bool NoCB6 { get; set; } = false;
+        public bool YesCB7 { get; set; } = false;
+        public bool NoCB7 { get; set; } = false;
+        #endregion
         #endregion
 
         protected override async Task OnInitializedAsync()
@@ -35,6 +52,24 @@
             employee = await AppService.GetSingleApplicant(id);
             _address = await AppAddressService.GetSingleAddress(id);
             _selfdec = await AppLicenseTrainingService.GetSingleSelfDeclaration(id);
+
+            YesCB1 = _selfdec.Q1Ans == "true";
+            NoCB1 = !YesCB1;
+            YesCB2 = _selfdec.Q2Ans == "true";
+            NoCB2 = !YesCB1;
+            YesCB3 = _selfdec.Q3Ans == "true";
+            NoCB3 = !YesCB1;
+            YesCB4 = _selfdec.Q4Ans == "true";
+            NoCB4 = !YesCB1;
+            YesCB5 = _selfdec.Q5Ans == "true";
+            NoCB5 = !YesCB1;
+            YesCB6 = _selfdec.Q6Ans == "true";
+            NoCB6 = !YesCB1;
+            YesCB7 = _selfdec.Q7Ans == "true";
+            NoCB7 = !YesCB1;
+
+
+
 
             VerifyCode = employee.App_VerifyId;
         }

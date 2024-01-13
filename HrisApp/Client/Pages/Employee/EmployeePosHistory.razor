@@ -1,7 +1,9 @@
 ﻿@page "/employeehistory"
 @inject IEmpHistoryService EmpHistoryService
 @inject IDepartmentService DepartmentService
+@inject IDivisionService DivisionService
 @inject IPositionService PositionService
+@inject ISectionService SectionService
 @inject IAreaService AreaService
 @inject StateService StateService
 @inject NavigationManager NavigationManager
@@ -24,6 +26,16 @@
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No History.</span>
+        <AuthorizeView Roles="HR, System Administrator">
+            <Authorized>
+                <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
+
+                    <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+
+                    <div class="text">Add</div>
+                </button>
+            </Authorized>
+        </AuthorizeView>
     </div>
 }
 else
@@ -32,6 +44,16 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Employee Position History</span>
+                <AuthorizeView Roles="HR, System Administrator">
+                    <Authorized>
+                        <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
+
+                            <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+
+                            <div class="text">Add</div>
+                        </button>
+                    </Authorized>
+                </AuthorizeView>
             </div>
         </ToolBarContent>
         <HeaderContent>
@@ -75,12 +97,114 @@ else
     </MudTable>
 }
 
-@code {
+<MudDrawer Class="drawerdetails" @bind-Open="@AddOpenDrawer" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <span class="spantitle mb-3">Position History</span>
+    <MudItem xs="12">
+        <EditForm Model="college" OnValidSubmit="SaveAdd" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+            <DataAnnotationsValidator />
+            <MudItem xs="12" Class="mb-2">
+                <MudText Typo="Typo.body2">Area</MudText>
+                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewAreaId" Margin="Margin.Dense">
+                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                    @foreach (var sched in AreasL)
+                    {
+                        <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudText Typo="Typo.body2">Division</MudText>
+                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewDivisionId" Margin="Margin.Dense">
+                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                    @foreach (var sched in DivisionL)
+                    {
+                        <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudText Typo="Typo.body2">Department</MudText>
+                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewDepartmentId" Margin="Margin.Dense">
+                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                    @foreach (var item in DepartmentsL.Where(d => d.DivisionId == college.NewDivisionId))
+                    {
+                        <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            @{
+                var departmentHasSection = college.NewDepartmentId != 0 && SectionsL.Any(s => s.DepartmentId == college.NewDepartmentId);
+            }
+            @if (departmentHasSection)
+            {
+                var sections = college.NewDepartmentId != 0 ? SectionsL.Where(s => s.DepartmentId == college.NewDepartmentId) : Enumerable.Empty<SectionT>();
+                <MudItem xs="12" Class="mb-2">
+                    <MudText Typo="Typo.body2">Section</MudText>
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewSectionId" Margin="Margin.Dense">
+                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                     @if (sections.Any())
+                        {
+                            @foreach (var sect in sections)
+                            {
+                                <MudSelectItem Value="@sect.Id">@sect.Name</MudSelectItem>
+                            }
+                        }
+                        else
+                        {
+                            <MudSelectItem Value="0">&nbsp;</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" Class="mb-2">
+                    <MudText Typo="Typo.body2">Position</MudText>
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewPositionId" Margin="Margin.Dense">
+                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                     @foreach (var sched in PositionsL.Where(d => d.DivisionId == college.NewDivisionId && d.DepartmentId == college.NewDepartmentId && d.SectionId == college.NewSectionId))
+                        {
+                            <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            }
+            else
+            {
+                <MudItem xs="12" Class="mb-2">
+                    <MudText Typo="Typo.body2">Position</MudText>
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewPositionId" Margin="Margin.Dense">
+                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                         @foreach (var sched in PositionsL.Where(d => d.DivisionId == college.NewDivisionId && d.DepartmentId == college.NewDepartmentId))
+                            {
+                                <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                </MudItem>
+            }
+
+            
+            <MudItem xs="12" Class="mb-2">
+                <MudText Typo="Typo.body2">Date Started</MudText>
+                <MudDatePicker Class="txf" @bind-Date="college.DateStarted" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+             <MudItem xs="12" Class="mb-2">
+                 <MudText Typo="Typo.body2">Date Ended</MudText>
+                 <MudDatePicker Class="txf" @bind-Date="college.DateEnded" DisableUnderLine Margin="Margin.Dense" />
+             </MudItem>
+
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer>
+
+ @code {
     //TABLEEES
     List<Emp_PosHistoryT> empHistoryList = new();
     private Emp_PosHistoryT selectedItem1 = null;
 
     private List<AreaT> AreasL = new();
+    private List<DivisionT> DivisionL = new();
+    private List<SectionT> SectionsL = new();
     private List<DepartmentT> DepartmentsL = new();
     private List<SubPositionT> SubPositionsL = new();
     private List<PositionT> PositionsL = new();
@@ -89,12 +213,30 @@ else
     [Parameter]
     public string VerifyCode { get; set; }
 
+    #region DRAWER VARIBALES AND FUNCTIONS
+    private string slectClasssRela = "frmselect";
+
+    bool AddOpenDrawer;
+    Anchor anchor;
+    string width = "500px", height = "100%";
+
+    void OpenDrawer(Anchor anchor, string drawerx)
+    {
+        AddOpenDrawer = (drawerx == "personalandjobOpen");
+        this.anchor = anchor;
+    }
+    #endregion
+
     protected override async Task OnInitializedAsync()
     {
         await AreaService.GetArea();
         AreasL = AreaService.AreaTs;
         await DepartmentService.GetDepartment();
         DepartmentsL = DepartmentService.DepartmentTs;
+        await DivisionService.GetDivision();
+        DivisionL = DivisionService.DivisionTs;
+        await SectionService.GetSection();
+        SectionsL = SectionService.SectionTs;
         await PositionService.GetSubPosition();
         await PositionService.GetPosition();
         SubPositionsL = PositionService.SubPositionTs;
@@ -111,6 +253,24 @@ else
     {
         empHistoryList = StateService.GetState<List<Emp_PosHistoryT>>("HistoryPosList");
         StateHasChanged();
+    }
+
+    private async Task SaveAdd()
+    {
+        college.Verify_Id = VerifyCode;
+        college.DateModified = DateTime.Now;
+        foreach (var item in PositionsL)
+        {
+            if (item.Id == college.NewPositionId)
+            {
+                college.newPositionCode = item.PosCode;
+            }
+        }
+        await EmpHistoryService.CreateEmpHistory(college);
+
+
+        empHistoryList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
+        AddOpenDrawer = false;
     }
 
     protected override async Task OnParametersSetAsync()

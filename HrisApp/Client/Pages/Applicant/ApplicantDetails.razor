@@ -257,7 +257,108 @@
                     </MudCard>
                 </MudTabPanel>
                 <MudTabPanel TabContent="tabHeader(4)">
-
+                    <MudCard Class="empdmain">
+                        <MudCardContent>
+                            <div class="mb-3">
+                                <span class="spantitle">Self-Declaration</span>
+                                <div class="row mt-3 mb-2">
+                                    <div class="col-sm col-md-4 text-center border-bottom">
+                                        <MudText Typo="Typo.body2"><b>Check Applicable Box</b></MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 text-center border-bottom">
+                                        <MudText Typo="Typo.body2"><b>Yes or No</b></MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 text-center border-bottom">
+                                        <MudText Typo="Typo.body2"><b>If YES, please give details</b></MudText>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-2">
+                                    <div class="col-sm col-md-4  border-bottom">
+                                        <MudText Typo="Typo.body2">Do you have any pending application for immigrant or working visa to settle abroad?</MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
+                                        <MudCheckBox ReadOnly @bind-Checked="@YesCB1">Yes</MudCheckBox>
+                                         <MudCheckBox ReadOnly @bind-Checked="@NoCB1">No</MudCheckBox>
+                                    </div>
+                                    <div class="col-sm col-md-4  border-bottom">
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_selfdec.Q1Dtls</MudText>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-2 ">
+                                    <div class="col-sm col-md-4  border-bottom">
+                                        <MudText Typo="Typo.body2">Have you ever been seriously injured or ill?</MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
+                                        <MudCheckBox ReadOnly @bind-Checked="@YesCB2">Yes</MudCheckBox>
+                                         <MudCheckBox ReadOnly @bind-Checked="@NoCB2">No</MudCheckBox>
+                                    </div>
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_selfdec.Q2Dtls</MudText>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-2 ">
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Typo="Typo.body2">Have you ever been terminated or dismissed by any of your previous employer/s?</MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
+                                        <MudCheckBox ReadOnly @bind-Checked="@YesCB3">Yes</MudCheckBox>
+                                         <MudCheckBox ReadOnly @bind-Checked="@NoCB3">No</MudCheckBox>
+                                    </div>
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_selfdec.Q3Dtls</MudText>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-2 ">
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Typo="Typo.body2">Do you have pending criminal, civil, labor or administrative case filed against you/ and/ or you filed against other parties?</MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
+                                        <MudCheckBox ReadOnly @bind-Checked="@YesCB4">Yes</MudCheckBox>
+                                        <MudCheckBox ReadOnly @bind-Checked="@NoCB4">No</MudCheckBox>
+                                    </div>
+                                    <div class="col-sm col-md-4  border-bottom">
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_selfdec.Q4Dtls</MudText>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-2 ">
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Typo="Typo.body2">Are you willing to work on shifting, overtime and holidays?</MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
+                                        <MudCheckBox ReadOnly @bind-Checked="@YesCB5">Yes</MudCheckBox>
+                                         <MudCheckBox ReadOnly @bind-Checked="@NoCB5">No</MudCheckBox>
+                                    </div>
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_selfdec.Q5Dtls</MudText>
+                                    </div>
+                                </div>
+                                <div class="row  mt-3 mb-2 ">
+                                    <div class="col-sm col-md-4  border-bottom">
+                                        <MudText Typo="Typo.body2">Are you willing to be assigned in any of the Company's Satellite Offices?</MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
+                                        <MudCheckBox ReadOnly @bind-Checked="@YesCB6">Yes</MudCheckBox>
+                                        <MudCheckBox ReadOnly @bind-Checked="@NoCB6">No</MudCheckBox>
+                                    </div>
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_selfdec.Q6Dtls</MudText>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-2">
+                                    <div class="col-sm col-md-4 border-bottom ">
+                                        <MudText Typo="Typo.body2">Do you have tattoo in any part of your body?</MudText>
+                                    </div>
+                                    <div class="col-sm col-md-4 d-flex justify-content-center border-bottom">
+                                        <MudCheckBox ReadOnly @bind-Checked="@YesCB7">Yes</MudCheckBox>
+                                         <MudCheckBox ReadOnly @bind-Checked="@NoCB7">No</MudCheckBox>
+                                    </div>
+                                    <div class="col-sm col-md-4  border-bottom">
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_selfdec.Q7Dtls</MudText>
+                                    </div>
+                                </div>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
                 </MudTabPanel>
             </MudTabs>
         </MudItem>
