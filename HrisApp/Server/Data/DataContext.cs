@@ -202,8 +202,8 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<RateTypeT>().HasData(
-             new RateTypeT { Id = 1, Name = "Monthly Rate" },
-             new RateTypeT { Id = 2, Name = "Daily Rate" }
+             new RateTypeT { Id = 1, Name = "Monthly" },
+             new RateTypeT { Id = 2, Name = "Daily" }
             );
 
             modelBuilder.Entity<ScheduleTypeT>().HasData(

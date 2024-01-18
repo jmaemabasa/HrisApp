@@ -539,7 +539,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <MudText Typo="Typo.body2">Rate</MudText>
-                                                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.Rate" />
+                                        <InputText Class="@txtClassRate" @bind-Value="_addEmployeeVM.payroll.Rate" />
                                                      <ValidationMessage For="@(() => _addEmployeeVM.payroll.Rate)" class="mb-2 valmessage" />
                                     </div>
                                     <div class="col-md-4">
@@ -1317,6 +1317,7 @@
 
     public string slectClasssAA = "frmselect", slectClasssSS = "frmselect", slectClasssES = "frmselect", slectClasssD = "frmselect", slectClasssDT = "frmselect", slectClasssPS = "frmselect", slectClasssRT = "frmselect", slectClasssCB = "frmselect";
     public string txtClassCID = "txf1 mt-1";
+    public string txtClassRate = "txf1 mt-1";
 
     public void Activate(int index)
     {
@@ -1342,6 +1343,7 @@
         }
         else if (index == 2) {
             txtClassCID = (_addEmployeeVM.employee.EmployeeNo == "") ? "txf1error" : "txf1 mt-1";
+            txtClassRate = (_addEmployeeVM.payroll.Rate == "") ? "txf1error" : "txf1 mt-1";
             slectClasssAA = (_addEmployeeVM.employee.AreaId == 0) ? "frmselecterror" : "frmselect";
             slectClasssSS = (_addEmployeeVM.employee.StatusId == 0) ? "frmselecterror" : "frmselect";
             slectClasssES = (_addEmployeeVM.employee.EmploymentStatusId == 0) ? "frmselecterror" : "frmselect";
@@ -1350,7 +1352,7 @@
             slectClasssPS = (_addEmployeeVM.employee.PositionId == 0) ? "frmselecterror" : "frmselect";
             slectClasssRT = (_addEmployeeVM.payroll.RateTypeId == 0) ? "frmselecterror" : "frmselect";
             slectClasssCB = (_addEmployeeVM.payroll.CashbondId == 0) ? "frmselecterror" : "frmselect";
-            if (_addEmployeeVM.employee.EmployeeNo == "" || _addEmployeeVM.employee.AreaId == 0 || _addEmployeeVM.employee.StatusId == 0 || _addEmployeeVM.employee.EmploymentStatusId == 0 || _addEmployeeVM.employee.DivisionId == 0 || _addEmployeeVM.employee.DepartmentId == 0 || _addEmployeeVM.employee.PositionId == 0 || _addEmployeeVM.payroll.RateTypeId == 0 || _addEmployeeVM.payroll.CashbondId == 0)
+            if (_addEmployeeVM.payroll.Rate == "" || _addEmployeeVM.employee.EmployeeNo == "" || _addEmployeeVM.employee.AreaId == 0 || _addEmployeeVM.employee.StatusId == 0 || _addEmployeeVM.employee.EmploymentStatusId == 0 || _addEmployeeVM.employee.DivisionId == 0 || _addEmployeeVM.employee.DepartmentId == 0 || _addEmployeeVM.employee.PositionId == 0 || _addEmployeeVM.payroll.RateTypeId == 0 || _addEmployeeVM.payroll.CashbondId == 0)
             {
                 _toastService.ShowError("Fill out all fields.");
             }

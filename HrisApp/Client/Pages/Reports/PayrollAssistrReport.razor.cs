@@ -66,7 +66,7 @@ namespace HrisApp.Client.Pages.Reports
                 }
                 _processing = true;
                 await Task.Delay(2000);
-                var fileBytes = await _crrExport.createExcelPayrollAssists(_employeeList, SubPositionsL);
+                var fileBytes = await _crrExport.createExcelPayrollAssists(SubPositionsL);
                 var fileName = $"201FileForPayrollAssists{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
                 await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
                 _processing = false;

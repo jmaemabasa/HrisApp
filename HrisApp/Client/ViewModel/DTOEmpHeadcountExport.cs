@@ -1,14 +1,26 @@
-﻿using NPOI.OpenXmlFormats.Wordprocessing;
+﻿using HrisApp.Shared.Models.DummyModel;
+using NPOI.OpenXmlFormats.Wordprocessing;
 using OfficeOpenXml;
+using System.Net.Http;
 
 namespace HrisApp.Client.ViewModel
 {
+#nullable disable
     public class DTOEmpHeadcountExport
     {
-        public async Task<byte[]> createExcelHeadcount(List<EmployeeT> crr, string cmbRangeDate, List<SubPositionT> subpos)
+        private readonly HttpClient httpClient;
+
+        public DTOEmpHeadcountExport(HttpClient _httpClient)
+        {
+            httpClient = _httpClient;
+        }
+
+        private static decimal bsicsalary { get; set; } = 0;
+        private List<PayrollDummy> payrollDummyList { get; set; } = new();
+        public async Task<byte[]> createExcelHeadcount(List<EmployeeT> emp, string cmbRangeDate, List<SubPositionT> subpos)
         {
             await Task.Delay(1);
-            List<EmployeeT> Denomination = crr;
+            List<EmployeeT> Denomination = emp;
             var package = new ExcelPackage();
             package.Workbook.Properties.Title = "EMPLOYEES";
             package.Workbook.Properties.Author = "SSDI";
@@ -26,7 +38,7 @@ namespace HrisApp.Client.ViewModel
                 worksheet.Cells[1, 1].Value = " ACTIVE EMPLOYEE HEADCOUNT AS OF TODAY - " + DateTime.Now.ToString("MMM dd, yyyy").ToUpper();
             }
 
-            worksheet.Cells[1, 8].Value = "TOTAL EMPLOYEES: " + crr.Count();
+            worksheet.Cells[1, 8].Value = "TOTAL EMPLOYEES: " + emp.Count();
 
             //First add the headers
             worksheet.Cells[2, 1].Value = "#";
@@ -49,7 +61,7 @@ namespace HrisApp.Client.ViewModel
             int i = 1;
             var position = "";
 
-            foreach (var r in crr)
+            foreach (var r in emp)
             {
                 foreach (var item in subpos)
                 {
@@ -125,7 +137,7 @@ namespace HrisApp.Client.ViewModel
             worksheet.Row(2).Style.Font.Bold = true;
 
             //add to table / add summary row
-            var maxrow = crr.Count() + 2;
+            var maxrow = emp.Count() + 2;
             var crrTbl = worksheet.Tables.Add(new ExcelAddressBase(fromRow: 2, fromCol: 1, toRow: maxrow, toColumn: 9), "data");
             crrTbl.ShowHeader = true;
             crrTbl.TableStyle = OfficeOpenXml.Table.TableStyles.Light16;
@@ -137,10 +149,29 @@ namespace HrisApp.Client.ViewModel
             return package.GetAsByteArray();
         }
 
-
-        public async Task<byte[]> createExcelPayrollAssists(List<EmployeeT> crr, List<SubPositionT> subpos)
+        private async Task PayrollConvert(List<Emp_PayrollT> payroll)
         {
             await Task.Delay(1);
+            payrollDummyList.Clear();
+            foreach (var item in payroll)
+            {
+                PayrollDummy payrollDummy = new PayrollDummy()
+                {
+                    Verify_Id = item.Verify_Id,
+                    Rate = Convert.ToDecimal(item.Rate),
+                    BiometricID = item.BiometricID
+                };
+
+                payrollDummyList.Add(payrollDummy);
+            }
+        }
+        public async Task<byte[]> createExcelPayrollAssists(List<SubPositionT> subpos)
+        {
+            var crr = await httpClient.GetFromJsonAsync<List<EmployeeT>>("api/Employee");
+            var payroll = await httpClient.GetFromJsonAsync<List<Emp_PayrollT>>("api/Payroll/GetOPayrollList");
+            await PayrollConvert(payroll);
+            var employmentdate = await httpClient.GetFromJsonAsync<List<Emp_EmploymentDateT>>("api/EmploymentDate/GetEmploymentDate");
+
             List<EmployeeT> empList = crr;
             var package = new ExcelPackage();
             package.Workbook.Properties.Title = "EMPLOYEES";
@@ -150,7 +181,50 @@ namespace HrisApp.Client.ViewModel
 
             var worksheet = package.Workbook.Worksheets.Add("WORK_INFORMATION");
 
+            //add Value
+            #region ADDING DATA
+            var numberFomat = "#,##0.00";
+            var dataCellStyleName = "TableNumber";
+            var numStyle = package.Workbook.Styles.CreateNamedStyle(dataCellStyleName);
+            numStyle.Style.Numberformat.Format = numberFomat;
+            int c = 8;
+            int i = 1;
 
+            foreach (var r in crr)
+            {
+                //worksheet.Cells[c, 1].Value = i;
+                worksheet.Cells[c, 2].Value = r.EmployeeNo;
+                worksheet.Cells[c, 3].Value = r.LastName;
+                worksheet.Cells[c, 4].Value = r.FirstName;
+                worksheet.Cells[c, 5].Value = r.MiddleName;
+                worksheet.Cells[c, 6].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().BiometricID;
+                worksheet.Cells[c, 7].Value = r.StatusId != 1 ? "NO" : "YES";
+                worksheet.Cells[c, 8].Value = r.EmploymentStatus.Name;
+
+                worksheet.Cells[c, 13].Value = Convert.ToDecimal(payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().Rate);
+                worksheet.Cells[c, 13].Style.Numberformat.Format = "#.0000";
+
+                worksheet.Cells[c, 13].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().RateType.Name;
+
+                worksheet.Cells[c, 16].Value = subpos.Where(d => d.Id == r.PositionId).FirstOrDefault().Description;
+                worksheet.Cells[c, 19].Value = r.DateHired.ToString("MM/dd/yyyy");
+                worksheet.Cells[c, 20].Value = employmentdate.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().RegularizationDate?.ToString("MM/dd/yyyy");
+                worksheet.Cells[c, 21].Value = r.DateInactiveStatus?.ToString("MM/dd/yyyy");
+                worksheet.Cells[c, 24].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().SSSNum;
+                worksheet.Cells[c, 26].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().PhilHealthNum;
+                worksheet.Cells[c, 29].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().HDMFNum;
+                worksheet.Cells[c, 31].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().TINNum;
+                worksheet.Cells[c, 40].Value = r.Department.Name;
+
+                
+
+                i++;
+                c++;
+            }
+            #endregion
+
+            worksheet.View.FreezePanes(2, 6); // freeze row 1 and columns A to E
+            #region EXCEL DESIGN
             //Merge
             #region MERGE CELLS
             worksheet.Cells["A1:AR1"].Merge = true;
@@ -585,6 +659,7 @@ namespace HrisApp.Client.ViewModel
             worksheet.Column(11).Width = 15;
             worksheet.Column(12).Width = 15;
             worksheet.Column(13).Width = 10;
+            worksheet.Column(13).AutoFit();
             worksheet.Column(14).Width = 10;
             worksheet.Column(15).Width = 10;
             worksheet.Column(16).Width = 41;
@@ -618,7 +693,9 @@ namespace HrisApp.Client.ViewModel
             worksheet.Column(38).Width = 9;
             //worksheet.Column(38).AutoFit(); ;
             worksheet.Column(39).Width = 16;
+            worksheet.Column(39).AutoFit();
             worksheet.Column(40).Width = 16;
+            worksheet.Column(40).AutoFit();
             worksheet.Column(41).Width = 16;
             worksheet.Column(42).Width = 16;
             worksheet.Column(43).Width = 16;
@@ -628,6 +705,24 @@ namespace HrisApp.Client.ViewModel
 
             #region ALIGNMENTS
             //Alignments
+            worksheet.Column(6).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(7).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(10).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(11).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(19).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+            worksheet.Column(20).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+            worksheet.Column(21).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+            worksheet.Column(22).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(23).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(25).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(27).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(30).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(32).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(35).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(36).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(38).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(43).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Column(44).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             worksheet.Row(1).Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             worksheet.Row(7).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             worksheet.Row(4).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
@@ -691,7 +786,7 @@ namespace HrisApp.Client.ViewModel
             worksheet.Cells["AP4:AP7"].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
             worksheet.Cells["AQ4:AQ7"].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
             #endregion
-
+            #endregion
             return package.GetAsByteArray();
         }
     }
