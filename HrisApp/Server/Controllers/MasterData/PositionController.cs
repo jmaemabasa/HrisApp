@@ -1,4 +1,5 @@
 ﻿using HrisApp.Shared.Models.Dashboard;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.MasterData
@@ -51,6 +52,7 @@ namespace HrisApp.Server.Controllers.MasterData
         }
 
         //Get ALL Position List without Filter
+        [EnableCors("MyPolicy")]
         [HttpGet]
         public async Task<ActionResult<List<PositionT>>> GetPositionList()
         {

@@ -83,11 +83,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();
+app.UseCors("MyPolicy");
 
 
 app.MapRazorPages();
 app.MapControllers();
-app.UseCors("MyPolicy");
 app.MapFallbackToFile("index.html");
 
 app.Run();
