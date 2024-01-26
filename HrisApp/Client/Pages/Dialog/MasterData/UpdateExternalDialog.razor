@@ -45,7 +45,8 @@
 
         if (string.IsNullOrWhiteSpace(obj.External_Name))
         {
-            await ShowErrorMessageBox("Please enter a valid name!");
+            // await ShowErrorMessageBox("Please enter a valid name!");
+            GlobalConfigService.OpenWarningDialog("Please enter a valid name.");
         }
         else
         {

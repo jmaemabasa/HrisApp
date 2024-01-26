@@ -5,6 +5,8 @@
     background-color: #F1BC3A;
     color: #424242;
     padding-bottom: 4px;
+    padding-right: 25px;
+    padding-left: 25px;
     transition: all .5s ease;
 }
 

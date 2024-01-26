@@ -83,11 +83,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             if (selectedArea == 0)
             {
-                await ShowErrorMessageBox("Please select an Area!");
+                //await ShowErrorMessageBox("Please select an Area!");
+                GlobalConfigService.OpenWarningDialog("Please select an Area.");
             }
             else if (string.IsNullOrWhiteSpace(newPosition))
             {
-                await ShowErrorMessageBox("Please enter a valid position!");
+                GlobalConfigService.OpenWarningDialog("Please enter a valid position.");
+                //await ShowErrorMessageBox("Please enter a valid position!");
             }
             else
             {

@@ -76,6 +76,7 @@ namespace HrisApp.Client.Pages.Reports
             {
                 _processing = false;
                 Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
         }
 

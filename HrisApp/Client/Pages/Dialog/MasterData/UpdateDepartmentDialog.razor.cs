@@ -29,7 +29,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             if (string.IsNullOrWhiteSpace(department.Name))
             {
-                await ShowErrorMessageBox("Please fill up the department name!");
+                GlobalConfigService.OpenWarningDialog("Please enter a valid department.");
             }
             else
             {

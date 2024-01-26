@@ -30,7 +30,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             if (string.IsNullOrWhiteSpace(division.Name))
             {
-                await ShowErrorMessageBox("Please fill up the division name!");
+                //await ShowErrorMessageBox("Please fill up the division name!");
+                GlobalConfigService.OpenWarningDialog("Please fill up the division name.");
             }
             else
             {

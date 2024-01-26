@@ -21,7 +21,8 @@
         {
             if (string.IsNullOrWhiteSpace(newDepartment))
             {
-                await ShowErrorMessageBox("Please enter a valid department!");
+                //await ShowErrorMessageBox("Please enter a valid department!");
+                GlobalConfigService.OpenWarningDialog("Please enter a valid department.");
             }
             else
             {

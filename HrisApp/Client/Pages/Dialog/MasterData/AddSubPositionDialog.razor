@@ -150,15 +150,18 @@
     {
         if (selectedDivision == 0)
         {
-            await ShowErrorMessageBox("Please select a division.");
+            // await ShowErrorMessageBox("Please select a division.");
+            GlobalConfigService.OpenWarningDialog("Please select a division.");
         }
         else if (selectedDepartment == 0)
         {
-            await ShowErrorMessageBox("Please select a department.");
+            // await ShowErrorMessageBox("Please select a department.");
+            GlobalConfigService.OpenWarningDialog("Please select a department.");
         }
         else if (selectedPos == 0)
         {
-            await ShowErrorMessageBox("Please select a position.");
+            // await ShowErrorMessageBox("Please select a position.");
+            GlobalConfigService.OpenWarningDialog("Please select a position.");
         }
         else
         {

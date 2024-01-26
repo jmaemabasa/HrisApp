@@ -29,7 +29,8 @@
         {
             if (string.IsNullOrWhiteSpace(newObj))
             {
-                await ShowErrorMessageBox("Please fill up the name!");
+                // await ShowErrorMessageBox("Please fill up the name!");
+            GlobalConfigService.OpenWarningDialog("Please enter a valid name.");
             }
             else
             {

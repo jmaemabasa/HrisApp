@@ -282,6 +282,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
                                 Emp_PayrollT PayrollModel = new()
                                 {
+                                    Rate = basicsalary,
                                     RateTypeId = ratetypeid,
                                     CashbondId = cbid,
                                     SSSNum = sss,

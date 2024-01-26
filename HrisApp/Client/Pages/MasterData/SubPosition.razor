@@ -173,6 +173,7 @@
         DialogService.Show<AddSubPositionDialog>("New Position", options);
     }
 
+
     async Task DeletePosition(int id)
     {
         var pos = PositionService.SubPositionTs.Where(x=> x.Id == id);
@@ -180,11 +181,13 @@
         {
             if (item.Status == "Active")
             {
-                await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
             }
             else if (item.Status == "Inactive" && item.Emp_VerifyId != "")
             {
-                await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
             }
             else
             {

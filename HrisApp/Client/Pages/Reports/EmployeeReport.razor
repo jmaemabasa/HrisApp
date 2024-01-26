@@ -16,7 +16,7 @@
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <div class="d-flex flex-column">
             <div><span style="font-size: x-large;font-weight: 600;color: #424242;">Employee Headcount</span></div>
-            <div><span style="font-weight: normal; font-size: 16px">@TitleCountText</span> <span style="font-weight: 600;font-size: 16px"> : @_employeeList.Count()</span></div>
+            <div><span style="font-weight: normal; font-size: 16px;color: #757A90;">@TitleCountText</span> <span style="font-weight: 600;font-size: 16px;color: #757A90;"> : @_employeeList.Count()</span></div>
         </div>
         <AuthorizeView Roles="HR, System Administrator">
             <Authorized>
@@ -149,8 +149,8 @@
                         </div>
                      <div>
                          <div class="flex-column">
-                                 <div>@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
-                                 <div style="font-weight: bold;">@employeeee.Email</div> 
+                                <div style="font-weight: bold;">@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
+                                <div style="font-size: 13px !important;">@employeeee.Email</div>
                          </div>
                      </div>
                  </div>

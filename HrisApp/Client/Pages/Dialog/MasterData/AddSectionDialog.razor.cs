@@ -57,7 +57,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             }
             else if (string.IsNullOrWhiteSpace(newSection))
             {
-                await ShowErrorMessageBox("Please enter a valid section!");
+                //await ShowErrorMessageBox("Please enter a valid section!");
+                GlobalConfigService.OpenWarningDialog("Please enter a valid section.");
             }
             else
             {

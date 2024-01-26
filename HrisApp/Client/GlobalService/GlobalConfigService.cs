@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using HrisApp.Client.Pages.Dialog.AlertDialogs;
+using System.Data;
 
 namespace HrisApp.Client.GlobalService
 {
@@ -8,10 +9,12 @@ namespace HrisApp.Client.GlobalService
         private readonly HttpClient httpClient;
 
         private readonly AuthenticationStateProvider _authenticationStateProvider;
-        public GlobalConfigService(AuthenticationStateProvider authenticationStateProvider, HttpClient _httpClient)
+        private readonly IDialogService DialogService;
+        public GlobalConfigService(AuthenticationStateProvider authenticationStateProvider, HttpClient _httpClient, IDialogService _DialogService)
         {
             _authenticationStateProvider = authenticationStateProvider;
             httpClient = _httpClient;
+            DialogService = _DialogService;
             OnLoadAuth();
             //OnName();
         }
@@ -125,6 +128,25 @@ namespace HrisApp.Client.GlobalService
             }
 
             return char.ToUpper(input[0]) + input[1..];
+        }
+
+
+        public void OpenErrorDialog(string mess)
+        {
+            var parameters = new DialogParameters<ErrorDialog>();
+            parameters.Add(x => x.Mess, mess);
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+            DialogService.Show<ErrorDialog>("", parameters, options);
+        }
+
+        public void OpenWarningDialog(string mess)
+        {
+            var parameters = new DialogParameters<WarningDialog>();
+            parameters.Add(x => x.Mess, mess);
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+            DialogService.Show<WarningDialog>("", parameters, options);
         }
     }
 }

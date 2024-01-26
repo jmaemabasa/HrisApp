@@ -13,7 +13,8 @@
         {
             if (string.IsNullOrWhiteSpace(newArea))
             {
-                await ShowErrorMessageBox("Please fill up the area name!");
+                //await ShowErrorMessageBox("Please fill up the area name!");
+                GlobalConfigService.OpenWarningDialog("Please fill up the area name.");
             }
             else
             {

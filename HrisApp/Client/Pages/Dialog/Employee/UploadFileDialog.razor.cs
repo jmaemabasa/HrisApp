@@ -13,9 +13,6 @@ namespace HrisApp.Client.Pages.Dialog.Employee
         private bool _processing = false;
         private bool _processingSave = false;
 
-        private bool IsHidemain;
-        private bool IsHideprogress;
-
         List<EmployeeT> EmployeeList = new List<EmployeeT>();
         List<DepartmentT> DepartmentList = new List<DepartmentT>();
         List<AreaT> AreaList = new();
@@ -37,8 +34,6 @@ namespace HrisApp.Client.Pages.Dialog.Employee
         protected override async Task OnInitializedAsync()
         {
             await Task.Delay(10);
-            IsHidemain = false;
-            IsHideprogress = true;
 
             DepartmentList = await DepartmentService.GetDepartmentList();
             AreaList = await AreaService.GetAreaList();
@@ -71,42 +66,30 @@ namespace HrisApp.Client.Pages.Dialog.Employee
             try
             {
                 _processingSave = true;
-                IsHidemain = true;
-                IsHideprogress = false;
                 var response = await EmployeeService.QueryEmployeeForUpload(dtable, Filename);
                 switch (response)
                 {
                     case TokenCons.INVALIDFILE:
                         _toastService.ShowError("Your file is not valid, Please select a valid xlsx extension file.");
-                        IsHidemain = false;
-                        IsHideprogress = true;
                         _processingSave = false;
                         break;
 
                     case TokenCons.INVALIDFORMAT:
                         _toastService.ShowError("Your file format is not valid, Please use the download template.");
-                        IsHidemain = false;
-                        IsHideprogress = true;
                         _processingSave = false;
                         break;
 
                     case TokenCons.MISSINGFIELD:
                         _toastService.ShowError("Missing field, Please check your file.");
-                        IsHidemain = false;
-                        IsHideprogress = true;
                         _processingSave = false;
                         break;
 
                     case TokenCons.IsError:
                         _toastService.ShowError("Error, Please check your file.");
-                        IsHidemain = false;
-                        IsHideprogress = true;
                         _processingSave = false;
                         break;
 
                     case TokenCons.IsSuccess:
-                        IsHidemain = false;
-                        IsHideprogress = true;
                         await Task.Delay(2500);
                         MudDialog.Cancel();
                         await EmployeeService.GetEmployee();
@@ -117,9 +100,6 @@ namespace HrisApp.Client.Pages.Dialog.Employee
                         break;
 
                     case TokenCons.IsUpdated:
-
-                        IsHidemain = false;
-                        IsHideprogress = true;
                         await Task.Delay(2500);
                         MudDialog.Cancel();
                         _toastService.ShowSuccess("Employee updated successfully");
@@ -132,7 +112,6 @@ namespace HrisApp.Client.Pages.Dialog.Employee
                 Console.WriteLine(ex.Message.ToString());
                 return;
             }
-
         }
 
 

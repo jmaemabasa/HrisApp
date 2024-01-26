@@ -26,7 +26,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             if (string.IsNullOrWhiteSpace(area.Name))
             {
-                await ShowErrorMessageBox("Please fill up the area name!");
+                GlobalConfigService.OpenWarningDialog("Please fill up the area name.");
             }
             else
             {
