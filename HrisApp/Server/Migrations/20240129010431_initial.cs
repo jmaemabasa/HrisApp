@@ -1185,6 +1185,29 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AnnouncementT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ann_Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ann_Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ann_Desc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnnouncementT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AnnouncementT_StatusT_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "StatusT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmployeeT",
                 columns: table => new
                 {
@@ -1627,6 +1650,11 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AnnouncementT_StatusId",
+                table: "AnnouncementT",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ApplicantT_App_CivilStatusId",
                 table: "ApplicantT",
                 column: "App_CivilStatusId");
@@ -1744,6 +1772,9 @@ namespace HrisApp.Server.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AnnouncementT");
+
             migrationBuilder.DropTable(
                 name: "App_AddressT");
 

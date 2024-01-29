@@ -1,0 +1,39 @@
+﻿.title {
+    color: #757A90;
+    font-size: 15px;
+}
+
+.obj {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.desc {
+    font-size: 15px;
+    line-height: 25px;
+}
+
+
+.announceShow {
+    color: #397763;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.announceNotShow {
+    color: #BE1313;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.announcePending {
+    color: #7567B8;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+.diatitle {
+    font-size: 20px;
+    font-weight: bold;
+}

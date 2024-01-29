@@ -1,0 +1,71 @@
+﻿
+.announceDate {
+    color: #757A90;
+    font-size: 15px;
+}
+
+.announceTitle {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.announceDesc {
+    color: #757A90;
+    font-size: 15px;
+}
+
+.announceRow {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 2px 8px 8px 8px;
+}
+
+    .announceRow:hover {
+        background-color: #e1e2e5;
+    }
+
+
+.announceHeader {
+    cursor: pointer;
+}
+
+    .announceHeader:hover {
+        text-decoration: underline;
+    }
+
+.announceShow {
+    color: #397763;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.announceNotShow {
+    color: #BE1313;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.announcePending {
+    color: #7567B8;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.dotCurr, .dotSoon, .dotDone {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dotCurr {
+    background-color: #397763;
+}
+
+.dotSoon {
+    background-color: #7567B8;
+}
+
+.dotDone {
+    background-color: #BE1313;
+}

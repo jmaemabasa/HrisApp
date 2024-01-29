@@ -1,4 +1,5 @@
-﻿using HrisApp.Shared.Models.Audit;
+﻿using HrisApp.Shared.Models.Announcement;
+using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
 
 namespace HrisApp.Server.Data
@@ -236,6 +237,7 @@ namespace HrisApp.Server.Data
             );
         }
 
+        //USERS
         public DbSet<UserMasterT> UserMasterT { get; set; }
         public DbSet<UserRoleT> UserRoleT { get; set; }
         public DbSet<AuditlogsT> AuditlogsT { get; set; }
@@ -325,6 +327,9 @@ namespace HrisApp.Server.Data
         public DbSet<App_OtherAwardsT> App_OtherAwardsT { get; set; }
         //app Self Declaration
         public DbSet<App_SelfDeclarationT> App_SelfDeclarationT { get; set; }
+
+        //ANNOUNCEMENT
+        public DbSet<AnnouncementT> AnnouncementT { get; set; }
 
 
     }

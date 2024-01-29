@@ -1,0 +1,145 @@
+﻿@page "/announcement"
+
+@inject IAnnouncementService AnnouncementService
+@inject StateService StateService
+@inject IDialogService DialogService
+
+@attribute [Authorize(Roles = "System Administrator, HR")]
+
+<PageTitle>Announcement</PageTitle>
+
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Announcement</span>
+
+        <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Announcement</MudButton>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <div class="d-flex gap-4 align-items-center mb-2">
+        <div class="d-flex gap-2 align-items-center"><span class="dotCurr"></span> Current</div>
+        <div class="d-flex gap-2 align-items-center"><span class="dotSoon"></span> Soon</div>
+        <div class="d-flex gap-2 align-items-center"><span class="dotDone"></span> Done</div>
+    </div>
+    @if (_announceList == null || _announceList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="true" Bordered="false" @bind-SelectedItem="selectedItem1">
+            <RowTemplate>
+                <MudTd Class="col-1" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
+                    @if (obj.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
+                    {
+                        <div class="d-flex flex-column">
+                            <span class="announceDate">Today</span>
+                            <span class="announceDate">@obj.DateStart?.ToString("HH:mm")</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex flex-column">
+                            <span class="announceDate">@obj.DateStart?.ToString("MMM dd")</span>
+                            <span class="announceDate">@obj.DateStart?.ToString("yyyy")</span>
+                        </div>
+                    }
+                </MudTd>
+
+                <MudTd Class="col-9" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
+                    <div class="d-flex flex-column" style="text-align: justify;">
+                        <span class="announceTitle">@obj.Ann_Title</span>
+                        <span class="announceDesc">@(obj.Ann_Desc.Length > 200 ? @obj.Ann_Desc.Substring(0, 200) + "..." : @obj.Ann_Desc)</span>
+                    </div>
+                </MudTd>
+
+                <MudTd Class="col-2 text-center" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
+                    @if ((obj.DateStart.Value.Date == DateTime.Now.Date && obj.DateEnd.Value.Date >= DateTime.Now.Date)
+                || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd.Value.Date >= DateTime.Now.Date))
+                    {
+                        <span class="announceShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                    }
+                    else if (obj.DateStart.Value.Date > DateTime.Now.Date)
+                    {
+                        <span class="announcePending">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                    }
+                    else
+                    {
+                        <span class="announceNotShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                    }
+                </MudTd>
+            </RowTemplate>
+             <PagerContent>
+                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+             </PagerContent>
+         </MudTable>
+    }
+</div>
+
+@code {
+    public List<AnnouncementT> _announceList = new();
+    private AnnouncementT selectedItem1 = null;
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+
+    //LOADING
+    public bool _isVisible;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        if (_announceList == null || _announceList.Count == 0)
+        {
+            _isVisible = true;
+        }
+    }
+    private async Task LoadList()
+    {
+        StateService.SetState("AnnouncementList", await AnnouncementService.GetAnnouncementList());
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        _announceList = StateService.GetState<List<AnnouncementT>>("AnnouncementList");
+        StateHasChanged();
+    }
+
+    private void OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+        DialogService.Show<AddAnnounceDialog>("New Announcement", options);
+    }
+
+    private void OpenViewAnnoun(int id)
+    {
+        var parameters = new DialogParameters<UpdateAnnounceDialog>();
+        parameters.Add(x => x.Id, id);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader=true };
+        DialogService.Show<UpdateAnnounceDialog>("", parameters, options);
+    }
+}

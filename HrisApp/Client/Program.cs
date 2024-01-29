@@ -73,6 +73,8 @@ global using HrisApp.Client.Services.ApplicantDetails.AppAddressService;
 global using HrisApp.Client.Services.ApplicantDetails.AppEducService;
 global using HrisApp.Client.Services.ApplicantDetails.AppLicTrainingService;
 global using HrisApp.Client.Services.ApplicantDetails.AppSibChildService;
+global using HrisApp.Shared.Models.Announcement;
+global using HrisApp.Client.Services.AnnouncementS;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -122,6 +124,7 @@ builder.Services.AddScoped<IManpowerService, ManpowerService>();
 builder.Services.AddScoped<ILeaveService, LeaveService>();
 builder.Services.AddScoped<ILeaveCredService, LeaveCredService>();
 builder.Services.AddScoped<ILeaveHistoryService, LeaveHistoryService>();
+builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();

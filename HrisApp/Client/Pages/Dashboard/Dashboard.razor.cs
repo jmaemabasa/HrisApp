@@ -18,7 +18,8 @@ namespace HrisApp.Client.Pages.Dashboard
         private List<DepartmentT> allDepartments;
         private List<SectionT> allSections;
         private List<AreaT> allAreas;
-        private List<EmployeeT> employeeBdayL = new List<EmployeeT>();
+        private List<EmployeeT> employeeBdayL = new();
+        private List<AnnouncementT> announceL = new();
         private Dictionary<int, int> positionCounts = new Dictionary<int, int>();
 
         public List<string> departmentArr = new List<string>();
@@ -48,6 +49,8 @@ namespace HrisApp.Client.Pages.Dashboard
                 await PositionService.GetDbTotalPlantilla();
                 await PositionService.GetSubPosition();
                 await ForEvalService.GetForEval();
+
+                announceL = await AnnouncementService.GetFilteredAnnouncementList();
 
                 allDepartments = DepartmentService.DepartmentTs;
                 allDivisions = DivisionService.DivisionTs;
