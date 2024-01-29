@@ -1532,8 +1532,8 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Monthly Rate" },
-                    { 2, "Daily Rate" }
+                    { 1, "Monthly" },
+                    { 2, "Daily" }
                 });
 
             migrationBuilder.InsertData(

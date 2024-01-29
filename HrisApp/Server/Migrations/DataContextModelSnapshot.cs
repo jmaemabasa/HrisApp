@@ -3895,12 +3895,12 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Monthly Rate"
+                            Name = "Monthly"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Daily Rate"
+                            Name = "Daily"
                         });
                 });
 

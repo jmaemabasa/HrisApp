@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240112012807_initial")]
+    [Migration("20240127033946_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -3897,12 +3897,12 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Monthly Rate"
+                            Name = "Monthly"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Daily Rate"
+                            Name = "Daily"
                         });
                 });
 

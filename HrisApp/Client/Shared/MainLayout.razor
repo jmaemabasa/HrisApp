@@ -101,7 +101,11 @@
                         </MudBadge> *@
                         <button class="notifbadge me-3">
                             <MudIcon Style="font-size: 3rem;" Icon="@Icons.Material.Rounded.CircleNotifications"></MudIcon>
-                            <div class="notificationbadge notifbadgecount">@badgeCount</div>
+                            @if (badgeCount != 0)
+                            {
+                                <div class="notificationbadge notifbadgecount">@badgeCount</div>
+
+                            }
                         </button>
                     </MudTooltip>
                 </ActivatorContent>
@@ -340,8 +344,7 @@
             VERIFY = GlobalConfigService.VerifyId;
             USERNAME = GlobalConfigService.Username;
             FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
-            await EmployeeImg(VERIFY);//image
-
+            
             await EmployeeService.GetEmployee();
             EmployeeList = EmployeeService.EmployeeTs;
 
@@ -355,6 +358,8 @@
                 timer.Elapsed += OnTimerElapsed;
                 timer.Enabled = true;
             }
+
+            await EmployeeImg(VERIFY);//image
 
         }
         catch (Exception)
@@ -483,6 +488,8 @@
 
         PendingCount = await LeaveHistoryService.Getpendingcount();
         newRequest = PendingCount.Count();
+
+        Console.WriteLine(newRequest);
 
         countSnack = newRequest;
         if (countSnack != 0)
