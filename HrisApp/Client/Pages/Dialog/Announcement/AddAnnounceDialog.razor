@@ -1,6 +1,8 @@
 ﻿@inject IAnnouncementService AnnouncementService
 @inject StateService StateService
 @inject IDialogService DialogService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
 
 <MudDialog>
     <DialogContent>
@@ -56,6 +58,7 @@
         StateHasChanged();
 
         await ConfirmCreate();
+        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
     }
 
     private async Task ConfirmCreate()

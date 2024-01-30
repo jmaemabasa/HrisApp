@@ -1,0 +1,179 @@
+﻿@page "/attendancerecords"
+
+@inject IAttendanceRecService AttService
+@inject StateService StateService
+@inject IDialogService DialogService
+@inject IEmployeeService EmpService
+@inject IPayrollService PayService
+
+@attribute [Authorize(Roles = "System Administrator, HR")]
+
+<PageTitle>Attendance</PageTitle>
+
+<style>
+    /*UPLOAD FILE*/
+    .btnUplaod {
+        background-color: #f0f0f0 !important;
+        padding: 12px 12px;
+        color: slategrey;
+        border-left: 2px solid #ebe8e8;
+    }
+
+        .btnUplaod:hover {
+            background-color: slategrey !important;
+            padding: 12px 12px;
+            color: #f0f0f0;
+            /*transform: scale(1.1);*/
+            border: none;
+        }
+
+    .btnDiaSave {
+        color: #fafaf5;
+        background-color: #427D9D !important;
+        transition: all .5s ease;
+    }
+
+        .btnDiaSave:hover {
+            transform: scale(1.1);
+            color: #fafaf5;
+            background-color: #245e7d !important;
+        }
+
+    .btnDiaCancel {
+        padding-left: 15px;
+        padding-right: 13px;
+        color: #BE1313;
+        background-color: #EABCBB !important;
+        transition: all .5s ease;
+    }
+
+        .btnDiaCancel:hover {
+            transform: scale(1.1);
+            background-color: #BE1313 !important;
+            color: #fafaf5;
+        }
+    /*END UPLOAD FILE*/
+</style>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Attendance Records</span>
+        <AuthorizeView Roles="HR, System Administrator">
+            <Authorized>
+                <div class="d-flex gap-3">
+                    <button class="Btn" @onclick="OpenUploadDialog">
+                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Upload"></MudIcon></div>
+                        <div class="text">Upload File</div>
+                    </button>
+                    <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Record</MudButton>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+<div class="box w-auto">
+    @if (_attendanceList == null || _attendanceList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <MudTable Class="stable" Height="665px" Items="_attendanceList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+            <HeaderContent>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">AC-No.</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Name</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">State</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">New State</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Exception</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Operation</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@obj.AC_No</MudTd>
+                <MudTd>
+                    @{
+                        var verid = payList?.FirstOrDefault(d => d.BiometricID == obj.AC_No)?.Verify_Id;
+                        var emp = verid != null ? empList?.FirstOrDefault(d => d.Verify_Id == verid) : null;
+                    }
+                    @(verid == null || emp == null ? "" : $"{emp.FirstName} {emp.LastName}")
+                </MudTd>
+                <MudTd>@obj.Time?.ToString("MM/dd/yyyy hh:mm tt")</MudTd>
+                <MudTd>@obj.State</MudTd>
+                <MudTd>@obj.NewState</MudTd>
+                <MudTd>@obj.Exception</MudTd>
+                <MudTd>@obj.Operation</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 20, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    }
+</div>
+
+@code {
+    public List<AttendanceRecordT> _attendanceList = new();
+    private List<EmployeeT> empList = new();
+    private List<Emp_PayrollT> payList = new();
+    private AttendanceRecordT selectedItem1 = null;
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+        empList = await EmpService.GetEmployeeList();
+        payList = await PayService.GetPayrollList();
+
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        if (_attendanceList == null || _attendanceList.Count == 0)
+        {
+            _isVisible = true;
+        }
+    }
+    private async Task LoadList()
+    {
+        StateService.SetState("AttendanceRecList", await AttService.GetAttendanceRecList());
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        _attendanceList = StateService.GetState<List<AttendanceRecordT>>("AttendanceRecList");
+        StateHasChanged();
+    }
+
+    //LOADING
+    public bool _isVisible;
+
+    private void OpenUploadDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+        DialogService.Show<AttendanceUploadFileDialog>("", options);
+    }
+
+    private void OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        DialogService.Show<AddAttendanceRec>("New Record", options);
+    }
+}

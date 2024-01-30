@@ -75,6 +75,10 @@ global using HrisApp.Client.Services.ApplicantDetails.AppLicTrainingService;
 global using HrisApp.Client.Services.ApplicantDetails.AppSibChildService;
 global using HrisApp.Shared.Models.Announcement;
 global using HrisApp.Client.Services.AnnouncementS;
+global using HrisApp.Shared.Models.Attendance;
+global using HrisApp.Client.Services.Attendance.AttendanceRecS;
+global using HrisApp.Client.ViewModel.Templates;
+
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -125,6 +129,7 @@ builder.Services.AddScoped<ILeaveService, LeaveService>();
 builder.Services.AddScoped<ILeaveCredService, LeaveCredService>();
 builder.Services.AddScoped<ILeaveHistoryService, LeaveHistoryService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
+builder.Services.AddScoped<IAttendanceRecService, AttendanceRecService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();
@@ -137,6 +142,8 @@ builder.Services.AddTransient<DTOEmployeeExport>();
 builder.Services.AddTransient<DTOEmpHeadcountExport>();
 builder.Services.AddTransient<DTOEmployeeData>();
 
+//TEMPLATES
+builder.Services.AddTransient<AttendanceImportTemplate>();
 
 //VIEWMODEL
 builder.Services.AddTransient<AuditlogVM>();

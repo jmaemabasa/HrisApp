@@ -47,7 +47,7 @@
     }
     else
     {
-        <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="true" Bordered="false" @bind-SelectedItem="selectedItem1">
+        <MudTable Class="stable" Height="665px" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="true" Bordered="false" @bind-SelectedItem="selectedItem1">
             <RowTemplate>
                 <MudTd Class="col-1" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
                     @if (obj.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))

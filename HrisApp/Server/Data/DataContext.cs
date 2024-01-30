@@ -1,4 +1,5 @@
 ﻿using HrisApp.Shared.Models.Announcement;
+using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
 
@@ -330,6 +331,9 @@ namespace HrisApp.Server.Data
 
         //ANNOUNCEMENT
         public DbSet<AnnouncementT> AnnouncementT { get; set; }
+
+        //ATTENDANCE
+        public DbSet<AttendanceRecordT> AttendanceRecordT { get; set; }
 
 
     }

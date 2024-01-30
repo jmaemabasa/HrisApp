@@ -1,0 +1,261 @@
+﻿@using System.Data;
+@using NPOI.SS.UserModel;
+@using NPOI.XSSF.UserModel;
+@using OfficeOpenXml;
+
+@inject AttendanceImportTemplate _ExportAtt
+@inject IJSRuntime JSRuntime
+@inject IToastService _toastService
+@inject IAttendanceRecService AttService
+@inject StateService StateService
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6" Class="d-flex align-items-center diaTitle" Style="color: slategrey;">
+            <MudIcon Icon="@Icons.Material.Rounded.Upload" Class="diaIcon mr-2" Style="color: slategrey;" /> ATTENDANCE DATA MASS UPLOAD
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <div class="d-flex flex-column gap-2">
+            @* ERROR/SUCCESS ALERT *@
+            @if (_showAlert)
+            {
+                <div class="col-12 mb-2">
+                    <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
+                    </div>
+            }
+            @* EXCEL FILE DISPLAY - NAME *@
+            <div>
+                <MudList Style="width:500px;" Dense="true" Class="mt-0">
+                    <MudListItem Icon="@Icons.Material.Filled.AttachFile" Style="font-weight:bold;color: slategrey;">
+                        Selected File: @Filename
+                    </MudListItem>
+                </MudList>
+            </div>
+            @* GROUP BUTTONS FOR ACTIONS *@
+            <div style="margin-left: auto; margin-right: auto; margin-top:8px;">
+                <MudButtonGroup Class="btngrpUpload" DisableElevation Variant="Variant.Filled" OverrideStyles=true>
+                     <InputFile id="fileInput" hidden OnChange="OnImportExcel" />
+                     <div class="btn-group btngrpUpload" role="group" aria-label="Basic example">
+                         <button type="button" class="btn btnUplaod">
+                             <label for="fileInput">
+                                 <MudIcon Icon="@Icons.Material.Rounded.UploadFile"></MudIcon>
+                                 Choose File
+                             </label>
+                         </button>
+                         <button type="button" @onclick="OnDownloadTem" class="btn d-flex btnUplaod align-items-center">
+                             @if (!_processingDownload)
+                            {
+                                <div><MudIcon Icon="@Icons.Material.Rounded.SimCardDownload"></MudIcon></div>
+                                <div class="ms-1">Download Template</div>
+                            }
+                            else
+                            {
+                                <div><MudProgressCircular Class="ms-n1 mt-2" Color="Color.Inherit" Size="Size.Small" Indeterminate="true" /></div>
+                                <div class="ms-2">Downloading</div>
+                            }
+                        </button>
+                        <button type="button" @onclick="OnClearfile" class="btn btnUplaod">
+                            <MudIcon Icon="@Icons.Material.Rounded.DeleteSweep" />
+                            Clear
+                        </button>
+                    </div>
+
+                </MudButtonGroup>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        @* DIALOG BUTTONS *@
+        <div class="d-flex justify-content-end align-items-center mb-3 me-4 gap-2 mt-5">
+            <MudButton DisableElevation OnClick="OnUploadFile" Class="px-10 btnDiaSave">
+                 @if (!_processingSave)
+                {
+                    <div class="d-flex align-items-center">
+                        <div><MudIcon Size="Size.Small" Icon="@Icons.Material.Rounded.Save"></MudIcon></div>
+                        <div class="ms-1">Upload</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-1"><MudProgressCircular Class="ms-n1" Color="Color.Inherit" Size="Size.Small" Indeterminate="true" /></div>
+                    <div class="ms-2">Uploading</div>
+                }
+            </MudButton>
+            <MudButton OnClick="Cancel" Class="btnDiaCancel">Cancel</MudButton>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    #nullable disable
+    // VARIABLES
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private string Filename = string.Empty;
+    private bool _processingDownload = false;
+    private bool _processingSave = false;
+
+    public DataTable dtable = new DataTable();
+
+    // WHEN SAVE/UPLOAD BUTTON CLICK
+    private async Task OnUploadFile()
+    {
+        try
+        {
+            _processingSave = true;
+            var response = await AttService.QueryAttendanceForUpload(dtable, Filename);
+            switch (response)
+            {
+                case TokenCons.INVALIDFILE:
+                    _showAlert = true;
+                    _severity = Severity.Error;
+                    _message = TokenCons.INVALIDXLXSFILE;
+                    _processingSave = false;
+                    break;
+
+                case TokenCons.INVALIDFORMAT:
+                    _showAlert = true;
+                    _severity = Severity.Error;
+                    _message = TokenCons.INVALIDXLXSFORMAT;
+                    _processingSave = false;
+                    break;
+
+                case TokenCons.MISSINGFIELD:
+                    _showAlert = true;
+                    _severity = Severity.Error;
+                    _message = "Missing field, Please check your file.";
+                    _processingSave = false;
+                    _processingSave = false;
+                    break;
+
+                case TokenCons.IsError:
+                    _showAlert = true;
+                    _severity = Severity.Error;
+                    _message = "Error, Please check your file.";
+                    _processingSave = false;
+                    break;
+
+                case TokenCons.IsSuccess:
+                    _showAlert = false;
+                    StateService.SetState("AttendanceRecList", await AttService.GetAttendanceRecList());
+
+                    MudDialog.Close();
+                    _toastService.ShowSuccess("Imported Successfully.");
+                    break;
+
+                case TokenCons.IsUpdated:
+                    _showAlert = false;
+                    StateService.SetState("AttendanceRecList", await AttService.GetAttendanceRecList());
+                    MudDialog.Close();
+                    _toastService.ShowSuccess("Salesman/s updated successfully");
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message.ToString());
+            return;
+        }
+    }
+
+    // WHEN CHOOSE FILE BUTTON CLICK
+    private async Task OnImportExcel(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            _showAlert = false;
+
+            var entry = e.GetMultipleFiles();
+            var fileEx = entry.FirstOrDefault().Name.Split(".").Last();
+
+            if (fileEx == "xlsx")
+            {
+                dtable.Rows.Clear();
+                dtable.Columns.Clear();
+                Filename = (string)e.File.Name;
+
+                var fileStream = e.File.OpenReadStream();
+                var mstream = new MemoryStream();
+
+                await fileStream.CopyToAsync(mstream);
+                fileStream.Close();
+                mstream.Position = 0;
+
+                ISheet sheets;
+                var xworkbook = new XSSFWorkbook(mstream);
+
+                sheets = xworkbook.GetSheetAt(0);
+                IRow irows = sheets.GetRow(0);
+                var rlist = new List<string>();
+
+                int countcol = irows.LastCellNum;
+                for (var a = 0; a < countcol; a++)
+                {
+                    ICell icell = irows.GetCell(a);
+                    dtable.Columns.Add(icell.ToString());
+                }
+
+                for (var b = (sheets.FirstRowNum + 1); b <= sheets.LastRowNum; b++)
+                {
+                    var c = sheets.GetRow(b);
+                    for (var d = c.FirstCellNum; d < countcol; d++)
+                    {
+                        rlist.Add(c.GetCell(d).ToString());
+                    }
+
+                    if (rlist.Count > 0)
+                    {
+                        dtable.Rows.Add(rlist.ToArray());
+                    }
+                    rlist.Clear();
+                }
+            }
+            else
+            {
+                _showAlert = true;
+                _severity = Severity.Error;
+                _message = TokenCons.INVALIDXLXSFILE;
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return;
+        }
+    }
+
+    // WHEN DOWNLOAD TEMPLATE BUTTON CLICK
+    private async Task OnDownloadTem()
+    {
+        _processingDownload = true;
+        await Task.Delay(1);
+        var fileBytes = await _ExportAtt.DownloadAttendanceTemplate();
+        var fileName = $"Attendance_Template.xlsx";
+        await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+        _processingDownload = false;
+        _showAlert = true;
+        _severity = Severity.Success;
+        _message = "Downloaded Successfully.";
+    }
+
+    // WHEN CANCEL BUTTON CLICK
+    void Cancel() => MudDialog.Cancel();
+
+    // WHEN CLEAR BUTTON CLICK
+    private async Task OnClearfile()
+    {
+        await Task.Delay(10);
+        _showAlert = false;
+        dtable.Rows.Clear();
+        dtable.Columns.Clear();
+        Filename = string.Empty;
+    }
+
+    #region ERROR TRAPPING
+    string _message = string.Empty;
+    Severity _severity;
+    private bool _showAlert = false;
+    public void CloseMe() => _showAlert = false;
+    #endregion
+}

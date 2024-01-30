@@ -1,6 +1,8 @@
 ﻿@inject IAnnouncementService AnnouncementService
 @inject StateService StateService
 @inject IDialogService DialogService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
 
 <MudDialog>
     <DialogContent>
@@ -115,6 +117,7 @@
         obj.DateStart = obj.DateStart.Value.Date + DateTime.Now.TimeOfDay;
         await AnnouncementService.UpdateAnnouncement(obj);
 
+        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Model", DateTime.Now);
         obj = await AnnouncementService.GetSingleAnnouncement((int)Id);
 
         isShowUpdate = false;

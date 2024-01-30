@@ -29,6 +29,7 @@
     <AuthorizeView Roles="System Administrator, HR">
         <Authorized>
             <MudNavGroup Class="navlinktitle" Title="Attendance" Expanded="false" Icon="@Icons.Material.Rounded.CalendarMonth" IconColor="Color.Inherit">
+                <MudNavLink Class="navlinktitle" Href="/attendancerecords" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ViewTimeline" IconColor="Color.Inherit">Attendance Records</MudNavLink>
                 <MudNavLink Class="navlinktitle" Href="/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SensorOccupied" IconColor="Color.Inherit">Leave Types</MudNavLink>
                 <MudNavLink Class="navlinktitle" Href="/leaveApprovals" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave Approvals</MudNavLink>
             </MudNavGroup>

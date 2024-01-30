@@ -1,0 +1,69 @@
+﻿.Btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    /*background-color: rgb(255, 65, 65);*/
+    border: 2px solid #F1BC3A;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+}
+
+/* plus sign */
+::deep .sign {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    ::deep .sign svg {
+        width: 20px;
+    }
+
+        ::deep .sign svg path {
+            color: #E38D0F;
+        }
+/* text */
+.text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition-duration: .3s;
+}
+/* hover effect on button width */
+.Btn:hover {
+    width: 184px;
+    /*width: 125px;*/
+    border-radius: 40px;
+    transition-duration: .3s;
+}
+
+    .Btn:hover ::deep .sign {
+        width: 30%;
+        transition-duration: .3s;
+    }
+    /* hover effect button's text */
+    .Btn:hover .text {
+        opacity: 1;
+        width: 80%;
+        transition-duration: .3s;
+        padding-left: 0px;
+        padding-right: 10px;
+        color: #E38D0F;
+    }
+/* button click effect*/
+.Btn:active {
+    transform: translate(2px,2px);
+}
