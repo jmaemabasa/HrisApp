@@ -1,0 +1,138 @@
+﻿@page "/timetable"
+
+@inject ITimetableService TimeService
+@inject StateService StateService
+@inject IDialogService DialogService
+
+@attribute [Authorize(Roles = "System Administrator, HR")]
+
+<PageTitle>Shift Timetable</PageTitle>
+
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Shift Timetable Maintenance</span>
+        <AuthorizeView Roles="HR, System Administrator">
+            <Authorized>
+                <div class="d-flex gap-3">
+                    <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Record</MudButton>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+<div class="box w-auto">
+    @if (_shiftList == null || _shiftList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <MudTable Class="stable" Height="665px" Items="_shiftList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+            <HeaderContent>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Timetable Name</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">On-duty Time</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Off-duty Time</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Beginning C/In</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Ending C/In</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Beginning C/Out</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Ending C/Out</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Workday Count</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="font-weight: bold;cursor: pointer;">@obj.Timetable_Name</MudTd>
+                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center; cursor: pointer;">
+                        @(obj.OnDuty_Time?.Hours.ToString("00") + ":" + obj.OnDuty_Time?.Minutes.ToString("00"))
+                    </MudTd>
+                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                        @(obj.OffDuty_Time?.Hours.ToString("00") + ":" + obj.OffDuty_Time?.Minutes.ToString("00"))
+                    </MudTd>
+                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                        @(obj.Begin_C_In?.Hours.ToString("00") + ":" + obj.Begin_C_In?.Minutes.ToString("00"))
+                    </MudTd>
+                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                        @(obj.Ending_C_In?.Hours.ToString("00") + ":" + obj.Ending_C_In?.Minutes.ToString("00"))
+                    </MudTd>
+                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                        @(obj.Begin_C_Out?.Hours.ToString("00") + ":" + obj.Begin_C_Out?.Minutes.ToString("00"))
+                    </MudTd>
+                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                        @(obj.Ending_C_Out?.Hours.ToString("00") + ":" + obj.Ending_C_Out?.Minutes.ToString("00"))
+                    </MudTd>
+                    <MudTd Style="text-align: center;cursor: pointer;">@obj.Workday_Count</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 20, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    }
+</div>
+
+@code {
+    #nullable disable
+    public List<ShiftTimetableT> _shiftList = new();
+    private ShiftTimetableT selectedItem1 = null;
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+    //LOADING
+    public bool _isVisible;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        if (_shiftList == null || _shiftList.Count == 0)
+        {
+            _isVisible = true;
+        }
+    }
+    private async Task LoadList()
+    {
+        StateService.SetState("TimetableList", await TimeService.GetTimetableList());
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the List
+        _shiftList = StateService.GetState<List<ShiftTimetableT>>("TimetableList");
+        StateHasChanged();
+    }
+
+
+
+    private void OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        DialogService.Show<AddTimetableDialog>("New Record", options);
+    }
+
+    private void OpenUpdateTimetable(int id)
+    {
+        var parameters = new DialogParameters<UpdateTimetableDialog>();
+        parameters.Add(x => x.Id, id);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+        DialogService.Show<UpdateTimetableDialog>("", parameters, options);
+    }
+}

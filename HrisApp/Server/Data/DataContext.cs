@@ -334,6 +334,7 @@ namespace HrisApp.Server.Data
 
         //ATTENDANCE
         public DbSet<AttendanceRecordT> AttendanceRecordT { get; set; }
+        public DbSet<ShiftTimetableT> ShiftTimetableT { get; set; }
 
 
     }

@@ -78,6 +78,7 @@ global using HrisApp.Client.Services.AnnouncementS;
 global using HrisApp.Shared.Models.Attendance;
 global using HrisApp.Client.Services.Attendance.AttendanceRecS;
 global using HrisApp.Client.ViewModel.Templates;
+global using HrisApp.Client.Services.Attendance.TimetableS;
 
 
 using HrisApp.Client;
@@ -130,6 +131,7 @@ builder.Services.AddScoped<ILeaveCredService, LeaveCredService>();
 builder.Services.AddScoped<ILeaveHistoryService, LeaveHistoryService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddScoped<IAttendanceRecService, AttendanceRecService>();
+builder.Services.AddScoped<ITimetableService, TimetableService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();

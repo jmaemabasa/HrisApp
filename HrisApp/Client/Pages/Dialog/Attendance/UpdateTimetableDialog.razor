@@ -1,0 +1,125 @@
+﻿@inject ITimetableService TimeService
+@inject StateService StateService
+@inject IDialogService DialogService
+@inject GlobalConfigService GlobalConfigService
+@inject IAuditlogService AuditlogService
+@inject IToastService _toastService
+
+<style>
+    .diatitle {
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@obj" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="row">
+                @* ERROR/SUCCESS ALERT *@
+                <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
+                    <span class="diatitle">Announcement</span>
+                </div>
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Timetable Name</MudText>
+                    <MudTextField @bind-Value="obj.Timetable_Name" For="@(() => obj.Timetable_Name)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+                <div class="col-12 col-md-6">
+                    <MudText Typo="Typo.body2">On-duty Time</MudText>
+                    <MudTimePicker @bind-Time="obj.OnDuty_Time" For="@(() => obj.OnDuty_Time)" Mask="@(new PatternMask("00:00"))" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <MudText Typo="Typo.body2">Off-duty Time</MudText>
+                    <MudTimePicker @bind-Time="obj.OffDuty_Time" For="@(() => obj.OffDuty_Time)" Mask="@(new PatternMask("00:00"))" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Late Time(Mins)</MudText>
+                    <MudNumericField @bind-Value="obj.Late_Time" For="@(() => obj.Late_Time)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Leave Early Time(Mins)</MudText>
+                    <MudNumericField @bind-Value="obj.LeaveEarly_Time" For="@(() => obj.LeaveEarly_Time)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <MudText Typo="Typo.body2">Beginning In</MudText>
+                    <MudTimePicker @bind-Time="obj.Begin_C_In" For="@(() => obj.Begin_C_In)" Mask="@(new PatternMask("00:00"))" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <MudText Typo="Typo.body2">Ending In</MudText>
+                    <MudTimePicker @bind-Time="obj.Ending_C_In" For="@(() => obj.Ending_C_In)" Mask="@(new PatternMask("00:00"))" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <MudText Typo="Typo.body2">Beginning Out</MudText>
+                    <MudTimePicker @bind-Time="obj.Begin_C_Out" For="@(() => obj.Begin_C_Out)" Mask="@(new PatternMask("00:00"))" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <MudText Typo="Typo.body2">Ending Out</MudText>
+                    <MudTimePicker @bind-Time="obj.Ending_C_Out" For="@(() => obj.Ending_C_Out)" Mask="@(new PatternMask("00:00"))" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Count as Workday</MudText>
+                    <MudNumericField @bind-Value="obj.Workday_Count" For="@(() => obj.Workday_Count)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Count as minute(minute)</MudText>
+                    <MudNumericField @bind-Value="obj.Minute_Count" For="@(() => obj.Minute_Count)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    <MudCheckBox @bind-Checked="@obj.Must_C_In"> Must C/In</MudCheckBox>
+                    <MudCheckBox @bind-Checked="@obj.Must_C_Out">Must C/Out</MudCheckBox>
+                </div>
+
+                <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
+                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary">Save</MudButton>
+                    <MudButton OnClick="Cancel">Cancel</MudButton>
+                </div>
+            </div>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+#nullable disable
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private ShiftTimetableT obj = new();
+
+    private bool isShowUpdate;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        obj = await TimeService.GetSingleTimetable((int)Id);
+    }
+
+    bool success;
+    private async Task OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+
+        await TimeService.UpdateTimetable(obj);
+        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Model", DateTime.Now);
+        _toastService.ShowSuccess(TokenCons.UPDATESUCCESS);
+
+        MudDialog.Close();
+        StateService.SetState("TimetableList", await TimeService.GetTimetableList());
+    }
+
+
+    void Cancel() => MudDialog.Cancel();
+}
