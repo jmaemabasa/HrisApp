@@ -19,13 +19,13 @@
         </AuthorizeView>
     </div>
 </div>
-    <div class="box w-auto">
-        <div class="d-flex justify-content-end">
-            <div class="ssize">
-                <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-             </div>
+<div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
         </div>
-     @if (AreaService.AreaTs == null || AreaService.AreaTs.Count == 0)
+    </div>
+    @if (AreaService.AreaTs == null || AreaService.AreaTs.Count == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
         <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
@@ -66,14 +66,14 @@
                             <NotAuthorized>
                                 <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                             </NotAuthorized>
-                            </AuthorizeView>
-                            </MudTd>
-                        </RowTemplate>
-                        <PagerContent>
-                            <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-                        </PagerContent>
-                        </MudTable>
+                        </AuthorizeView>
+                    </MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                </PagerContent>
+            </MudTable>
 
         </div>
     }
-     </div>
+</div>

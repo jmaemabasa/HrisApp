@@ -1,10 +1,12 @@
 ﻿namespace HrisApp.Client.Services.StaticDataService.StaticService
 {
 #nullable disable
+
     public class StaticService : IStaticService
     {
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
         private readonly HttpClient _httpClient;
+
         public StaticService()
         {
             _httpClient = _mainService.Get_Http();
@@ -20,6 +22,7 @@
         public List<RateTypeT> RateTypeTs { get; set; } = new List<RateTypeT>();
         public List<CashBondT> CashBondTs { get; set; } = new List<CashBondT>();
         public List<RestDayT> RestDayTs { get; set; } = new List<RestDayT>();
+        public List<AssetStatusT> AssetStatusTs { get; set; } = new List<AssetStatusT>();
 
         public async Task GetStatusList()
         {
@@ -29,6 +32,7 @@
                 StatusTs = result;
             }
         }
+
         public async Task GetEmploymentStatusList()
         {
             var result = await _httpClient.GetFromJsonAsync<List<EmploymentStatusT>>("api/Static/GetEmploymentStatusList");
@@ -37,6 +41,7 @@
                 EmploymentStatusTs = result;
             }
         }
+
         public async Task GetEmerRelationshipList()
         {
             var result = await _httpClient.GetFromJsonAsync<List<EmerRelationshipT>>("api/Static/GetEmerRelationshipList");
@@ -45,6 +50,7 @@
                 EmerRelationshipTs = result;
             }
         }
+
         public async Task GetGenderList()
         {
             var result = await _httpClient.GetFromJsonAsync<List<GenderT>>("api/Static/GetGenderList");
@@ -53,6 +59,7 @@
                 GenderTs = result;
             }
         }
+
         public async Task GetCivilStatusList()
         {
             var result = await _httpClient.GetFromJsonAsync<List<CivilStatusT>>("api/Static/GetCivilStatusList");
@@ -61,6 +68,7 @@
                 CivilStatusTs = result;
             }
         }
+
         public async Task GetReligionList()
         {
             var result = await _httpClient.GetFromJsonAsync<List<ReligionT>>("api/Static/GetReligionList");
@@ -69,6 +77,7 @@
                 ReligionTs = result;
             }
         }
+
         public async Task GetInactiveStatusList()
         {
             var result = await _httpClient.GetFromJsonAsync<List<InactiveStatusT>>("api/Static/GetInactiveStatusList");
@@ -77,6 +86,7 @@
                 InactiveStatusTs = result;
             }
         }
+
         public async Task GetRateType()
         {
             var result = await _httpClient.GetFromJsonAsync<List<RateTypeT>>("api/Static/ratetype");
@@ -91,12 +101,18 @@
                 CashBondTs = result;
         }
 
-
         public async Task GetRestDay()
         {
             var result = await _httpClient.GetFromJsonAsync<List<RestDayT>>("api/Static/restday");
             if (result != null)
                 RestDayTs = result;
+        }
+
+        public async Task GetAssetStatus()
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<AssetStatusT>>("api/Static/assetstatus");
+            if (result != null)
+                AssetStatusTs = result;
         }
     }
 }

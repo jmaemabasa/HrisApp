@@ -1,0 +1,25 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Code</MudText>
+            <MudTextField ReadOnly @bind-Value="obj.ASubCat_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: bold;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Category</MudText>
+            <MudSelect @bind-Value="obj.CategoryId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                @foreach (var obj in CategoriesL)
+                {
+                    <MudSelectItem Value="@obj.Id">@obj.ACat_Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Name</MudText>
+            <MudTextField @bind-Value="obj.ASubCat_Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" @onclick="UpdateSave">Save</MudButton>
+    </DialogActions>
+</MudDialog>

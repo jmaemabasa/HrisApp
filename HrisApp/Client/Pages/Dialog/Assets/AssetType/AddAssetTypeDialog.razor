@@ -1,0 +1,16 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Code</MudText>
+            <MudTextField ReadOnly @bind-Value="obj.AType_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: bold;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Name</MudText>
+            <MudTextField @bind-Value="obj.AType_Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" @onclick="ConfirmCreateArea">Save</MudButton>
+    </DialogActions>
+</MudDialog>

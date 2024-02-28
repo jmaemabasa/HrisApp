@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240130091552_timetable")]
-    partial class timetable
+    [Migration("20240224092049_ASsetMain")]
+    partial class ASsetMain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -779,6 +779,277 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("ApplicantT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetAccessoryT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Asset")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AssetStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EUF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InUseStatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainAsset")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Serial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetStatusId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("AssetAccessoryT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetCategoryT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ACat_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ACat_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetCategoryT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetMasterT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Asset")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssetNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AssetStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClientIP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeviceID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InUseStatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastCheckDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MacAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordAdmin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Processor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseAmount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RAM")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Serial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Storage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StorageType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsernameAdmin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorksationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetStatusId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("AssetMasterT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetSubCategoryT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ASubCat_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ASubCat_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("AssetSubCategoryT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetTypesT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AType_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AType_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetTypesT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Attendance.AttendanceRecordT", b =>
                 {
                     b.Property<int>("Id")
@@ -829,15 +1100,19 @@ namespace HrisApp.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<TimeSpan?>("Begin_C_In")
+                        .IsRequired()
                         .HasColumnType("time");
 
                     b.Property<TimeSpan?>("Begin_C_Out")
+                        .IsRequired()
                         .HasColumnType("time");
 
                     b.Property<TimeSpan?>("Ending_C_In")
+                        .IsRequired()
                         .HasColumnType("time");
 
                     b.Property<TimeSpan?>("Ending_C_Out")
+                        .IsRequired()
                         .HasColumnType("time");
 
                     b.Property<int>("Late_Time")
@@ -856,9 +1131,11 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("bit");
 
                     b.Property<TimeSpan?>("OffDuty_Time")
+                        .IsRequired()
                         .HasColumnType("time");
 
                     b.Property<TimeSpan?>("OnDuty_Time")
+                        .IsRequired()
                         .HasColumnType("time");
 
                     b.Property<string>("Timetable_Name")
@@ -3793,6 +4070,55 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("SubPositionT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.StaticData.AssetStatusT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetStatusT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "IN USED"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "NOT USED"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "FOR REPAIR"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "IN SERVICE CENTER"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "FOR DISPOSAL"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "DISPOSED"
+                        });
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.StaticData.CashBondT", b =>
                 {
                     b.Property<int>("Id")
@@ -4038,6 +4364,11 @@ namespace HrisApp.Server.Migrations
                         {
                             Id = 2,
                             Name = "Daily"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Hourly"
                         });
                 });
 
@@ -4360,6 +4691,87 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("App_Gender");
 
                     b.Navigation("App_Religion");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetAccessoryT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.StaticData.AssetStatusT", "AssetStatus")
+                        .WithMany()
+                        .HasForeignKey("AssetStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetTypesT", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssetStatus");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetMasterT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.StaticData.AssetStatusT", "AssetStatus")
+                        .WithMany()
+                        .HasForeignKey("AssetStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetTypesT", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssetStatus");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetSubCategoryT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Audit.AuditlogsT", b =>

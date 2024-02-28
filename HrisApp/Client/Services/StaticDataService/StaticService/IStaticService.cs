@@ -12,16 +12,28 @@
         List<RateTypeT> RateTypeTs { get; set; }
         List<CashBondT> CashBondTs { get; set; }
         List<RestDayT> RestDayTs { get; set; }
+        List<AssetStatusT> AssetStatusTs { get; set; }
 
         Task GetStatusList();
+
         Task GetEmploymentStatusList();
+
         Task GetEmerRelationshipList();
+
         Task GetGenderList();
+
         Task GetCivilStatusList();
+
         Task GetReligionList();
+
         Task GetInactiveStatusList();
+
         Task GetRateType();
+
         Task GetCashbond();
+
         Task GetRestDay();
+
+        Task GetAssetStatus();
     }
 }

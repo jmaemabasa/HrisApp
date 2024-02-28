@@ -5,29 +5,30 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
     public class AddEmployeeVM : BaseViewModel
     {
 #nullable disable
-        IEmployeeService EmployeeService = new EmployeeService();
-        IEducationService EducationService = new EducationService();
-        ILicenseTrainingService LicenseTrainingService = new LicenseTrainingService();
-        IAddressService AddressService = new AddressService();
-        IPayrollService PayrollService = new PayrollService();
-        IEmploymentDateService EmploymentDateService = new EmploymentDateService();
-        IImageService ImageService = new ImageService();
-        IAuditlogService AuditlogService = new AuditlogService();
-        IToastService _toastService = new ToastService();
-        IAreaService AreaService = new AreaService();
-        IDivisionService DivisionService = new DivisionService();
-        IDepartmentService DepartmentService = new DepartmentService();
-        ISectionService SectionService = new SectionService();
-        IPositionService PositionService = new PositionService();
-        IStaticService StaticService = new StaticService();
-        IEmpHistoryService EmpHistoryService = new EmpHistoryService();
-        IForEvalService ForEvalService = new ForEvalService();
-        ILeaveCredService LeaveCredService = new LeaveCredService();
+        private IEmployeeService EmployeeService = new EmployeeService();
+        private IEducationService EducationService = new EducationService();
+        private ILicenseTrainingService LicenseTrainingService = new LicenseTrainingService();
+        private IAddressService AddressService = new AddressService();
+        private IPayrollService PayrollService = new PayrollService();
+        private IEmploymentDateService EmploymentDateService = new EmploymentDateService();
+        private IImageService ImageService = new ImageService();
+        private IAuditlogService AuditlogService = new AuditlogService();
+        private IToastService _toastService = new ToastService();
+        private IAreaService AreaService = new AreaService();
+        private IDivisionService DivisionService = new DivisionService();
+        private IDepartmentService DepartmentService = new DepartmentService();
+        private ISectionService SectionService = new SectionService();
+        private IPositionService PositionService = new PositionService();
+        private IStaticService StaticService = new StaticService();
+        private IEmpHistoryService EmpHistoryService = new EmpHistoryService();
+        private IForEvalService ForEvalService = new ForEvalService();
+        private ILeaveCredService LeaveCredService = new LeaveCredService();
 
         public SweetAlertService Swal { get; set; }
 
         private readonly GlobalConfigService GlobalConfigService;
         private readonly NavigationManager _navigationManager;
+
         public AddEmployeeVM(NavigationManager navigationManager, GlobalConfigService globalConfigService)
         {
             _navigationManager = navigationManager;
@@ -36,7 +37,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         [CascadingParameter]
         public Task<AuthenticationState> authState { get; set; }
-        string _sectionnull = string.Empty;
+
+        private string _sectionnull = string.Empty;
 
         [Parameter]
         public int? Id { get; set; }
@@ -101,12 +103,13 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             AddNewTrainings(employee.Verify_Id);
             AddNewProfBg(employee.Verify_Id);
             AddNewDocument();
-
         }
 
         #region LIST VARIABLES
+
         //FK
         public List<AreaT> AreasL = new();
+
         public List<StatusT> StatusL = new();
         public List<EmploymentStatusT> EmploymentStatusL = new();
 
@@ -123,14 +126,18 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         //PAYROLL
         public List<CashBondT> CashbondL = new();
+
         public List<ScheduleTypeT> ScheduleTypeL = new();
         public List<RateTypeT> RateTypeL = new();
         public List<RestDayT> RestDayL = new();
-        #endregion
+
+        #endregion LIST VARIABLES
 
         #region EDUCATION VARIABLE
+
         //EDUCATION
         public List<Emp_CollegeT> listOfCollege = new();
+
         public List<Emp_OtherEducT> listOfOthers = new();
         public List<Emp_SecondaryT> listOfSecondary = new();
         public List<Emp_DoctorateT> listOfDoctorate = new();
@@ -147,9 +154,11 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public bool IsListaddmas;
         public bool IsListaddothers;
         public bool IsListadddoc;
-        #endregion
+
+        #endregion EDUCATION VARIABLE
 
         #region DATE VARIBALE
+
         public DateTime? bday { get; set; }
         public DateTime? Date = DateTime.Today;
         public DateTime? ProbStart = DateTime.Today;
@@ -163,18 +172,21 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public DateTime? DateHired = DateTime.Today;
         public DateTime? RegularDate = DateTime.Today;
         public DateTime? ResignationDate = DateTime.Today;
-        #endregion
+
+        #endregion DATE VARIBALE
 
         #region IMAGE VARIABLE
+
         //attachment
         public string PDFBase64 { get; set; }
+
         public string PDFUrl { get; set; }
         public string PDFFileName { get; set; }
         public string PDFContentType { get; set; }
         public byte[] pdfData { get; set; }
         public bool pdfbool12 { get; set; }
         public bool PDFbool12 { get; set; }
-        IList<IBrowserFile> pdffile = new List<IBrowserFile>();
+        private IList<IBrowserFile> pdffile = new List<IBrowserFile>();
         public List<MultipartFormDataContent> DocuEmployees = new();
 
         public class DocumentT
@@ -184,22 +196,24 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         //image
         public string imgBase64 { get; set; }
+
         public string ImageUrl { get; set; }
         public string ImgFileName { get; set; }
         public string ImgContentType { get; set; }
         public string verifyId { get; set; }
 
-        MultipartFormDataContent EmpImage = new();
-        IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
-        #endregion
+        private MultipartFormDataContent EmpImage = new();
+        private IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
+
+        #endregion IMAGE VARIABLE
 
         public string userRole;
-
 
         public string slectClasssRT = "frmselect";
         public string slectClasssCB = "frmselect";
         public string slectClasssST = "frmselect";
         public string slectClasssRD = "frmselect";
+
         public async Task<string> CreateEmployee()
         {
             payroll.ScheduleTypeId = 1;
@@ -317,7 +331,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     subPosition.ActiveDate = employee.DateHired;
                     await PositionService.UpdateSubPosition(subPosition);
 
-
                     //CREATE LEAVE CREDITS
                     await LeaveCredService.CreateLeaveCred(verifyId, 0, 0, 0, 0, 0, 0);
 
@@ -327,7 +340,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
                     string message = "Successfully Created.";
                     return $"{TokenConst.AlertSuccess}xxx{message}";
-
                 }
                 catch (Exception ex)
                 {
@@ -336,8 +348,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             }
         }
 
-
         #region IMAGE
+
         //IMAGE
         public async Task uploadImage(InputFileChangeEventArgs e)
         {
@@ -463,9 +475,11 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 await ImageService.AttachedFile(formdata, EmployeeId, division, department, lastname, verify);
             }
         }
-        #endregion
+
+        #endregion IMAGE
 
         #region FUNCTIONS / BUTTONS
+
         public void HandleDateHiredChanged(DateTime? newDate)
         {
             DateHired = newDate;
@@ -518,9 +532,11 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         {
             _navigationManager.NavigateTo("/employee");
         }
-        #endregion
+
+        #endregion FUNCTIONS / BUTTONS
 
         #region MUDTABS
+
         public MudTabs tabs;
         public string slectClasss = "frmselect";
         public string imguploadclass = "btnimage";
@@ -528,6 +544,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string mesBday;
         public string clsGender = "frmselect";
         public string mesGender;
+
         public void Activate(int index)
         {
             clsBday = (bday.ToString() == "") ? "mud-input-error txf" : "txf";
@@ -537,14 +554,16 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             _slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
             _slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
         }
+
         public void Activate2(int index)
         {
             tabs.ActivatePanel(index);
-
         }
-        #endregion
+
+        #endregion MUDTABS
 
         #region TAB CLASS
+
         //TAB PANEL
         public int activeIndex;
 
@@ -650,9 +669,11 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 }
             };
         }
-        #endregion
+
+        #endregion TAB CLASS
 
         #region PERSONAL TAB ERROR TRAP
+
         public string _slectClasssGender = "frmselect";
         public string _slectClasssCV = "frmselect";
         public string _slectClasssReli = "frmselect";
@@ -663,10 +684,10 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string _txfieldClasssEA = "txf1";
         public string _txfieldClasssEMN = "txf";
 
-
-        #endregion
+        #endregion PERSONAL TAB ERROR TRAP
 
         #region EDUCATION
+
         public async Task CreatePrimaryRecords(string employeeVerifyId)
         {
             //primary
@@ -688,7 +709,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             listOfPrimary.Clear();
             AddNewPrimary(employeeVerifyId);
         }
-
 
         public async Task CreateSecondaryRecords(string employeeVerifyId)
         {
@@ -754,7 +774,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
             listOfCollege.Clear();
             AddNewCollege(employeeVerifyId);
-
         }
 
         public async Task CreateMasteralRecords(string employeeVerifyId)
@@ -909,6 +928,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfPrimary.RemoveAt(listOfPrimary.Count - 1);
             }
         }
+
         public void AddNewSecondary(string employeeVerifyId)
         {
             if (listOfSecondary.Count <= 3)
@@ -916,6 +936,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfSecondary.Add(new Emp_SecondaryT { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveSecondary()
         {
             if (listOfSecondary.Count <= 1) { }
@@ -932,6 +953,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfShs.Add(new Emp_SeniorHST { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveShs()
         {
             if (listOfShs.Count <= 1) { }
@@ -948,6 +970,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfCollege.Add(new Emp_CollegeT { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveCollege()
         {
             if (listOfCollege.Count <= 1) { }
@@ -964,6 +987,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfMasteral.Add(new Emp_MasteralT { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveMasteral()
         {
             if (listOfMasteral.Count <= 1) { }
@@ -980,6 +1004,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfDoctorate.Add(new Emp_DoctorateT { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveDoctorate()
         {
             if (listOfDoctorate.Count <= 1) { }
@@ -996,6 +1021,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfOthers.Add(new Emp_OtherEducT { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveOthers()
         {
             if (listOfOthers.Count <= 1) { }
@@ -1030,6 +1056,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfTrainings.Add(new Emp_TrainingT { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveTrainings()
         {
             if (listOfTrainings.Count <= 1) { }
@@ -1046,6 +1073,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listofProfbg.Add(new Emp_ProfBackgroundT { Verify_Id = employee.Verify_Id });
             }
         }
+
         public void RemoveProfBg()
         {
             if (listofProfbg.Count <= 1) { }
@@ -1062,6 +1090,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 listOfDocuments.Add(new DocumentT());
             }
         }
-        #endregion
+
+        #endregion EDUCATION
     }
 }

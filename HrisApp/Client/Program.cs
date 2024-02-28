@@ -79,7 +79,15 @@ global using HrisApp.Shared.Models.Attendance;
 global using HrisApp.Client.Services.Attendance.AttendanceRecS;
 global using HrisApp.Client.ViewModel.Templates;
 global using HrisApp.Client.Services.Attendance.TimetableS;
-
+global using HrisApp.Shared.Models.Assets;
+global using HrisApp.Client.Services.Assets.AssetTypeService;
+global using HrisApp.Client.Services.Assets.AssetCategoryService;
+global using HrisApp.Client.Pages.Dialog.Assets.AssetCat;
+global using HrisApp.Client.Pages.Dialog.Assets.AssetType;
+global using HrisApp.Client.Services.Assets.AssetSubCategoryService;
+global using HrisApp.Client.Services.Assets.AssetAccessoryService;
+global using HrisApp.Client.Services.Assets.AssetMasterService;
+global using HrisApp.Client.Services.Assets.MainAssetAccService;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -101,7 +109,6 @@ builder.Services.AddBlazoredToast();
 
 //MVVM ni sir buds
 builder.Services.AddScoped<IMainsService, MainsService>();
-
 
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -132,13 +139,17 @@ builder.Services.AddScoped<ILeaveHistoryService, LeaveHistoryService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddScoped<IAttendanceRecService, AttendanceRecService>();
 builder.Services.AddScoped<ITimetableService, TimetableService>();
+builder.Services.AddScoped<IAssetTypeService, AssetTypeService>();
+builder.Services.AddScoped<IAssetCategoryService, AssetCategoryService>();
+builder.Services.AddScoped<IAssetSubCategoryService, AssetSubCategoryService>();
+builder.Services.AddScoped<IAssetAccessoryService, AssetAccessoryService>();
+builder.Services.AddScoped<IAssetMasterService, AssetMasterService>();
+builder.Services.AddScoped<IMainAssetAccService, MainAssetAccService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();
 builder.Services.AddTransient<BackUpDeletion>();
 builder.Services.AddTransient<JMColors>();
-
-
 
 builder.Services.AddTransient<DTOEmployeeExport>();
 builder.Services.AddTransient<DTOEmpHeadcountExport>();
@@ -160,8 +171,6 @@ builder.Services.AddScoped<IAppAddressService, AppAddressService>();
 builder.Services.AddScoped<IAppEducService, AppEducService>();
 builder.Services.AddScoped<IAppLicenseTrainingService, AppLicenseTrainingService>();
 builder.Services.AddScoped<IAppSibChildService, AppSibChildService>();
-
-
 
 //===========================//////////=======================
 

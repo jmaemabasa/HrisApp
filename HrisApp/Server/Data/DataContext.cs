@@ -1,4 +1,5 @@
 ﻿using HrisApp.Shared.Models.Announcement;
+using HrisApp.Shared.Models.Assets;
 using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
@@ -6,9 +7,12 @@ using HrisApp.Shared.Models.Dashboard;
 namespace HrisApp.Server.Data
 {
 #nullable disable
+
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,65 +73,65 @@ namespace HrisApp.Server.Data
                 );
 
             modelBuilder.Entity<PositionT>().HasData(
-                new PositionT { Id = 1, PosCode = "S101", Name = "FSS", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 1, Manpower="Internal"}, //No Section Sonic 1
+                new PositionT { Id = 1, PosCode = "S101", Name = "FSS", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //No Section Sonic 1
                 new PositionT { Id = 2, PosCode = "S102", Name = "Feeder", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
-                new PositionT { Id = 3, PosCode = "S103", Name = "FCCR", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 2, Manpower="Internal" },
+                new PositionT { Id = 3, PosCode = "S103", Name = "FCCR", DivisionId = 1, DepartmentId = 1, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
 
-                new PositionT { Id = 4, PosCode = "S3K01", Name = "FSS", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //No Section Sonic 3 Kidapawan
+                new PositionT { Id = 4, PosCode = "S3K01", Name = "FSS", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //No Section Sonic 3 Kidapawan
                 new PositionT { Id = 5, PosCode = "S3K02", Name = "DT Booking/ GT Booking", DivisionId = 1, AreaId = 1, DepartmentId = 4, Plantilla = 1, Manpower = "Internal" },
                 new PositionT { Id = 6, PosCode = "S3K03", Name = "DSS", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
-                new PositionT { Id = 7, PosCode = "S3K04", Name = "PM Salesman", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower="Internal" },
-                new PositionT { Id = 8, PosCode = "S3K05", Name = "OMNI Feeder", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 3 , Manpower="Internal"},
-                new PositionT { Id = 9, PosCode = "S3K06", Name = "FCCR", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower="Internal" },
+                new PositionT { Id = 7, PosCode = "S3K04", Name = "PM Salesman", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
+                new PositionT { Id = 8, PosCode = "S3K05", Name = "OMNI Feeder", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
+                new PositionT { Id = 9, PosCode = "S3K06", Name = "FCCR", DivisionId = 1, DepartmentId = 4, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
 
                 new PositionT { Id = 10, PosCode = "S3C01", Name = "FSS", DivisionId = 1, DepartmentId = 5, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //No Section Sonic 3 Cotabato
-                new PositionT { Id = 11, PosCode = "S3C02", Name = "DT Booking/ GT Booking", DivisionId = 1, AreaId = 1, DepartmentId = 5, Plantilla = 2, Manpower="Internal" },
-                new PositionT { Id = 12, PosCode = "S3C03", Name = "DSS", DivisionId = 1, DepartmentId = 5, AreaId = 1, Plantilla = 1, Manpower="Internal" },
-                new PositionT { Id = 13, PosCode = "S3C04", Name = "OMNI Feeder", DivisionId = 1, DepartmentId = 5, AreaId = 1, Plantilla = 3, Manpower="Internal" },
-                new PositionT { Id = 14, PosCode = "S3C05", Name = "FCCR", DivisionId = 1, DepartmentId = 5, AreaId = 1, Plantilla = 1, Manpower="Internal" },
+                new PositionT { Id = 11, PosCode = "S3C02", Name = "DT Booking/ GT Booking", DivisionId = 1, AreaId = 1, DepartmentId = 5, Plantilla = 2, Manpower = "Internal" },
+                new PositionT { Id = 12, PosCode = "S3C03", Name = "DSS", DivisionId = 1, DepartmentId = 5, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
+                new PositionT { Id = 13, PosCode = "S3C04", Name = "OMNI Feeder", DivisionId = 1, DepartmentId = 5, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
+                new PositionT { Id = 14, PosCode = "S3C05", Name = "FCCR", DivisionId = 1, DepartmentId = 5, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
 
                 new PositionT { Id = 15, PosCode = "URIC01", Name = "Operations Manager", DivisionId = 1, DepartmentId = 6, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //URIC
-                new PositionT { Id = 16, PosCode = "URICHAP01", Name = "HAPI Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 4, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //URIC HAPI DEALER
-                new PositionT { Id = 17, PosCode = "URICHAP02", Name = "HAPI Dealer Coor", DivisionId = 1, DepartmentId = 6, SectionId = 4, AreaId = 1, Plantilla = 4, Manpower="Internal" },
-                new PositionT { Id = 18, PosCode = "URICSER01", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //URIC SERVICING
-                new PositionT { Id = 19, PosCode = "URICSER02", Name = "MAG Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 1, Manpower="Internal" },
-                new PositionT { Id = 20, PosCode = "URICSER03", Name = "GTAS", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 5, Manpower="Internal" },
-                new PositionT { Id = 21, PosCode = "URICSER04", Name = "SMS", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 11, Manpower="Internal" },
-                new PositionT { Id = 22, PosCode = "URICEXP01", Name = "NAO Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 6, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //URIC EXPANSION
-                new PositionT { Id = 23, PosCode = "URICEXP02", Name = "NAO", DivisionId = 1, DepartmentId = 6, SectionId = 6, AreaId = 1, Plantilla = 2, Manpower="Internal" },
-                new PositionT { Id = 24, PosCode = "URICEXP02", Name = "HAPI NAO", DivisionId = 1, DepartmentId = 6, SectionId = 6, AreaId = 1, Plantilla = 4, Manpower="Internal" },
-                new PositionT { Id = 25, PosCode = "URICDTE01", Name = "IT & Support Services Staff", DivisionId = 1, DepartmentId = 6, SectionId = 7, AreaId = 1, Plantilla = 1, Manpower="Internal" },  //URIC DTEX
+                new PositionT { Id = 16, PosCode = "URICHAP01", Name = "HAPI Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 4, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //URIC HAPI DEALER
+                new PositionT { Id = 17, PosCode = "URICHAP02", Name = "HAPI Dealer Coor", DivisionId = 1, DepartmentId = 6, SectionId = 4, AreaId = 1, Plantilla = 4, Manpower = "Internal" },
+                new PositionT { Id = 18, PosCode = "URICSER01", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //URIC SERVICING
+                new PositionT { Id = 19, PosCode = "URICSER02", Name = "MAG Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
+                new PositionT { Id = 20, PosCode = "URICSER03", Name = "GTAS", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 5, Manpower = "Internal" },
+                new PositionT { Id = 21, PosCode = "URICSER04", Name = "SMS", DivisionId = 1, DepartmentId = 6, SectionId = 5, AreaId = 1, Plantilla = 11, Manpower = "Internal" },
+                new PositionT { Id = 22, PosCode = "URICEXP01", Name = "NAO Supervisor", DivisionId = 1, DepartmentId = 6, SectionId = 6, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //URIC EXPANSION
+                new PositionT { Id = 23, PosCode = "URICEXP02", Name = "NAO", DivisionId = 1, DepartmentId = 6, SectionId = 6, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
+                new PositionT { Id = 24, PosCode = "URICEXP02", Name = "HAPI NAO", DivisionId = 1, DepartmentId = 6, SectionId = 6, AreaId = 1, Plantilla = 4, Manpower = "Internal" },
+                new PositionT { Id = 25, PosCode = "URICDTE01", Name = "IT & Support Services Staff", DivisionId = 1, DepartmentId = 6, SectionId = 7, AreaId = 1, Plantilla = 1, Manpower = "Internal" },  //URIC DTEX
                 new PositionT { Id = 26, PosCode = "URICDTE02", Name = "Teleservices Support Staff / Online Coor", DivisionId = 1, DepartmentId = 6, SectionId = 7, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
 
                 new PositionT { Id = 27, PosCode = "GCASH01", Name = "Field Sales Manager", DivisionId = 1, DepartmentId = 8, AreaId = 1, Plantilla = 1, Manpower = "Internal" },  //GCASH
-                new PositionT { Id = 28, PosCode = "GCASH02", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 8, AreaId = 1, Plantilla = 1, Manpower="Internal" },  //GCASH
-                new PositionT { Id = 29, PosCode = "GCASHSER01", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 8, AreaId = 1, SectionId = 8, Plantilla = 1, Manpower="Internal" },  //GCASH SERVICING
-                new PositionT { Id = 30, PosCode = "GCASHSER02", Name = "Sonic DSP", DivisionId = 1, DepartmentId = 8, SectionId = 8, AreaId = 1, Plantilla = 4, Manpower="Internal" },
-                new PositionT { Id = 31, PosCode = "GCASHSER03", Name = "DSP (Commando/Incubator)", DivisionId = 1, DepartmentId = 8, SectionId = 8, AreaId = 1, Plantilla = 6, Manpower="Internal" },
-                new PositionT { Id = 32, PosCode = "GCASHEXP01", Name = "Ambassador", DivisionId = 1, DepartmentId = 8, SectionId = 9, AreaId = 1, Plantilla = 2, Manpower="Internal" },  //GCASH EXPANSION
-                new PositionT { Id = 33, PosCode = "GCASHMER01", Name = "Merchandiser", DivisionId = 1, DepartmentId = 8, SectionId = 10, AreaId = 1, Plantilla = 3, Manpower="Internal" }, //GCASH MERCHANDISING
+                new PositionT { Id = 28, PosCode = "GCASH02", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 8, AreaId = 1, Plantilla = 1, Manpower = "Internal" },  //GCASH
+                new PositionT { Id = 29, PosCode = "GCASHSER01", Name = "Field Sales Supervisor", DivisionId = 1, DepartmentId = 8, AreaId = 1, SectionId = 8, Plantilla = 1, Manpower = "Internal" },  //GCASH SERVICING
+                new PositionT { Id = 30, PosCode = "GCASHSER02", Name = "Sonic DSP", DivisionId = 1, DepartmentId = 8, SectionId = 8, AreaId = 1, Plantilla = 4, Manpower = "Internal" },
+                new PositionT { Id = 31, PosCode = "GCASHSER03", Name = "DSP (Commando/Incubator)", DivisionId = 1, DepartmentId = 8, SectionId = 8, AreaId = 1, Plantilla = 6, Manpower = "Internal" },
+                new PositionT { Id = 32, PosCode = "GCASHEXP01", Name = "Ambassador", DivisionId = 1, DepartmentId = 8, SectionId = 9, AreaId = 1, Plantilla = 2, Manpower = "Internal" },  //GCASH EXPANSION
+                new PositionT { Id = 33, PosCode = "GCASHMER01", Name = "Merchandiser", DivisionId = 1, DepartmentId = 8, SectionId = 10, AreaId = 1, Plantilla = 3, Manpower = "Internal" }, //GCASH MERCHANDISING
                 new PositionT { Id = 34, PosCode = "GCASHSCA01", Name = "Scan to Pay", DivisionId = 1, DepartmentId = 8, SectionId = 11, AreaId = 1, Plantilla = 3, Manpower = "Internal" }, //GCASH SCAN TO PAY
 
                 new PositionT { Id = 35, PosCode = "GAINV01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 12, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS GA - IAP
-                new PositionT { Id = 36, PosCode = "GAINV02", Name = "Trade Payable Staff", DivisionId = 2, DepartmentId = 9, SectionId = 12, AreaId = 1, Plantilla = 2, Manpower="Internal" },
-                new PositionT { Id = 37, PosCode = "GAINV03", Name = "Non Trade Payable Staff", DivisionId = 2, DepartmentId = 9, SectionId = 12, AreaId = 1, Plantilla = 1, Manpower="Internal" },
-                new PositionT { Id = 38, PosCode = "GAGEN01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 13, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //FAMS GA - GA
+                new PositionT { Id = 36, PosCode = "GAINV02", Name = "Trade Payable Staff", DivisionId = 2, DepartmentId = 9, SectionId = 12, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
+                new PositionT { Id = 37, PosCode = "GAINV03", Name = "Non Trade Payable Staff", DivisionId = 2, DepartmentId = 9, SectionId = 12, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
+                new PositionT { Id = 38, PosCode = "GAGEN01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 13, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS GA - GA
                 new PositionT { Id = 39, PosCode = "GAGEN02", Name = "Gen Accounting Staff", DivisionId = 2, DepartmentId = 9, SectionId = 13, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
-                new PositionT { Id = 40, PosCode = "GATAX01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 14, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //FAMS GA - TC
-                new PositionT { Id = 41, PosCode = "GATAX02", Name = "Tax and Compliance Staff", DivisionId = 2, DepartmentId = 9, SectionId = 14, AreaId = 1, Plantilla = 3, Manpower="Internal" },
-                new PositionT { Id = 42, PosCode = "SAACC01", Name = "Team Leader", DivisionId = 2, DepartmentId = 10, SectionId = 15, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //FAMS SA - AR
-                new PositionT { Id = 43, PosCode = "SAACC02", Name = "Accounts Receivable Staff", DivisionId = 2, DepartmentId = 10, SectionId = 15, AreaId = 1, Plantilla = 4, Manpower="Internal" },
-                new PositionT { Id = 44, PosCode = "SACRE01", Name = "Credit and Collection Staff", DivisionId = 2, DepartmentId = 10, SectionId = 16, AreaId = 1, Plantilla = 6, Manpower="Internal" }, //FAMS SA - CC
-                new PositionT { Id = 45, PosCode = "SACRE02", Name = "C&C - Billings to Customer", DivisionId = 2, DepartmentId = 10, SectionId = 16, AreaId = 1, Plantilla = 1, Manpower="Internal" },
-                new PositionT { Id = 46, PosCode = "SABIL01", Name = "Billing to Cash Settlement Staff", DivisionId = 2, DepartmentId = 10, SectionId = 17, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //FAMS SA - BCS
+                new PositionT { Id = 40, PosCode = "GATAX01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 14, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS GA - TC
+                new PositionT { Id = 41, PosCode = "GATAX02", Name = "Tax and Compliance Staff", DivisionId = 2, DepartmentId = 9, SectionId = 14, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
+                new PositionT { Id = 42, PosCode = "SAACC01", Name = "Team Leader", DivisionId = 2, DepartmentId = 10, SectionId = 15, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS SA - AR
+                new PositionT { Id = 43, PosCode = "SAACC02", Name = "Accounts Receivable Staff", DivisionId = 2, DepartmentId = 10, SectionId = 15, AreaId = 1, Plantilla = 4, Manpower = "Internal" },
+                new PositionT { Id = 44, PosCode = "SACRE01", Name = "Credit and Collection Staff", DivisionId = 2, DepartmentId = 10, SectionId = 16, AreaId = 1, Plantilla = 6, Manpower = "Internal" }, //FAMS SA - CC
+                new PositionT { Id = 45, PosCode = "SACRE02", Name = "C&C - Billings to Customer", DivisionId = 2, DepartmentId = 10, SectionId = 16, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
+                new PositionT { Id = 46, PosCode = "SABIL01", Name = "Billing to Cash Settlement Staff", DivisionId = 2, DepartmentId = 10, SectionId = 17, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS SA - BCS
                 new PositionT { Id = 47, PosCode = "IT01", Name = "Manager", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS IT
-                new PositionT { Id = 48, PosCode = "IT02", Name = "IT Associate", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 2, Manpower="Internal" },
-                new PositionT { Id = 49, PosCode = "IT03", Name = "IT Staff", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 3, Manpower="Internal" },
-                new PositionT { Id = 50, PosCode = "TREASURYCAS01", Name = "Cash Operations Head", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower="Internal" }, //FAMS T -CO
-                new PositionT { Id = 51, PosCode = "TREASURYCAS02", Name = "Davao Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 3, Manpower="Internal" },
-                new PositionT { Id = 52, PosCode = "TREASURYCAS03", Name = "Cotabato Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower="Internal" },
-                new PositionT { Id = 53, PosCode = "TREASURYCAS04", Name = "Kidapawan Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower="Internal" },
-                new PositionT { Id = 54, PosCode = "TREASURYCAS05", Name = "Digos Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower="Internal" }
+                new PositionT { Id = 48, PosCode = "IT02", Name = "IT Associate", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
+                new PositionT { Id = 49, PosCode = "IT03", Name = "IT Staff", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
+                new PositionT { Id = 50, PosCode = "TREASURYCAS01", Name = "Cash Operations Head", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS T -CO
+                new PositionT { Id = 51, PosCode = "TREASURYCAS02", Name = "Davao Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
+                new PositionT { Id = 52, PosCode = "TREASURYCAS03", Name = "Cotabato Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
+                new PositionT { Id = 53, PosCode = "TREASURYCAS04", Name = "Kidapawan Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
+                new PositionT { Id = 54, PosCode = "TREASURYCAS05", Name = "Digos Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower = "Internal" }
                 );
 
             modelBuilder.Entity<AreaT>().HasData(
@@ -205,7 +209,8 @@ namespace HrisApp.Server.Data
 
             modelBuilder.Entity<RateTypeT>().HasData(
              new RateTypeT { Id = 1, Name = "Monthly" },
-             new RateTypeT { Id = 2, Name = "Daily" }
+             new RateTypeT { Id = 2, Name = "Daily" },
+             new RateTypeT { Id = 3, Name = "Hourly" }
             );
 
             modelBuilder.Entity<ScheduleTypeT>().HasData(
@@ -229,23 +234,33 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<LeaveTypesT>().HasData(
-                new LeaveTypesT { Id = 1, Name = "Emergency", Unit = 1, Description = "Day", Code ="EL" },
-                new LeaveTypesT { Id = 2, Name = "Maternity", Unit = 1, Description = "Day", Code ="ML" },
-                new LeaveTypesT { Id = 3, Name = "Paternity", Unit = 1, Description = "Day", Code ="PL" },
-                new LeaveTypesT { Id = 4, Name = "Sick", Unit = 1, Description = "Day", Code ="SL" },
-                new LeaveTypesT { Id = 5, Name = "Vacation", Unit = 1, Description = "Day", Code ="VL" },
-                new LeaveTypesT { Id = 6, Name = "Other", Unit = 1, Description = "Day", Code ="OL" }
+                new LeaveTypesT { Id = 1, Name = "Emergency", Unit = 1, Description = "Day", Code = "EL" },
+                new LeaveTypesT { Id = 2, Name = "Maternity", Unit = 1, Description = "Day", Code = "ML" },
+                new LeaveTypesT { Id = 3, Name = "Paternity", Unit = 1, Description = "Day", Code = "PL" },
+                new LeaveTypesT { Id = 4, Name = "Sick", Unit = 1, Description = "Day", Code = "SL" },
+                new LeaveTypesT { Id = 5, Name = "Vacation", Unit = 1, Description = "Day", Code = "VL" },
+                new LeaveTypesT { Id = 6, Name = "Other", Unit = 1, Description = "Day", Code = "OL" }
+            );
+
+            modelBuilder.Entity<AssetStatusT>().HasData(
+             new RestDayT { Id = 1, Name = "IN USED" },
+             new RestDayT { Id = 2, Name = "NOT USED" },
+             new RestDayT { Id = 3, Name = "FOR REPAIR" },
+             new RestDayT { Id = 4, Name = "IN SERVICE CENTER" },
+             new RestDayT { Id = 5, Name = "FOR DISPOSAL" },
+             new RestDayT { Id = 6, Name = "DISPOSED" }
             );
         }
 
         //USERS
         public DbSet<UserMasterT> UserMasterT { get; set; }
+
         public DbSet<UserRoleT> UserRoleT { get; set; }
         public DbSet<AuditlogsT> AuditlogsT { get; set; }
 
-
         //Master Data
         public DbSet<DivisionT> DivisionT { get; set; }
+
         public DbSet<DepartmentT> DepartmentT { get; set; }
         public DbSet<SectionT> SectionT { get; set; }
         public DbSet<PositionT> PositionT { get; set; }
@@ -264,9 +279,9 @@ namespace HrisApp.Server.Data
         public DbSet<Emp_LeaveCreditT> Emp_LeaveCreditT { get; set; }
         public DbSet<Emp_LeaveHistoryT> Emp_LeaveHistoryT { get; set; }
 
-
         //Employee Data
         public DbSet<EmployeeT> EmployeeT { get; set; }
+
         public DbSet<EmploymentStatusT> EmploymentStatusT { get; set; }
         public DbSet<InactiveStatusT> InactiveStatusT { get; set; }
         public DbSet<StatusT> StatusT { get; set; }
@@ -281,6 +296,7 @@ namespace HrisApp.Server.Data
 
         //EDUCATIONS
         public DbSet<Emp_CollegeT> Emp_CollegeT { get; set; }
+
         public DbSet<Emp_DoctorateT> Emp_DoctorateT { get; set; }
         public DbSet<Emp_MasteralT> Emp_MasteralT { get; set; }
         public DbSet<Emp_OtherEducT> Emp_OtherEducT { get; set; }
@@ -290,6 +306,7 @@ namespace HrisApp.Server.Data
 
         //LICENSE AND TRAINING
         public DbSet<Emp_LicenseT> Emp_LicenseT { get; set; }
+
         public DbSet<Emp_TrainingT> Emp_TrainingT { get; set; }
 
         //Address
@@ -297,10 +314,12 @@ namespace HrisApp.Server.Data
 
         //IMAGES AND FILES
         public DbSet<DocumentT> DocumentT { get; set; }
+
         public DbSet<EmpPictureT> EmpPictureT { get; set; }
 
         //PAYROLL
         public DbSet<CashBondT> CashBondT { get; set; }
+
         public DbSet<RateTypeT> RateTypeT { get; set; }
         public DbSet<ScheduleTypeT> ScheduleTypeT { get; set; }
         public DbSet<Emp_PayrollT> Emp_PayrollT { get; set; }
@@ -308,24 +327,33 @@ namespace HrisApp.Server.Data
 
         //APPLICANT
         public DbSet<ApplicantT> ApplicantT { get; set; }
+
         public DbSet<App_AddressT> App_AddressT { get; set; }
+
         //app Family
         public DbSet<App_ChildrenT> App_ChildrenT { get; set; }
+
         public DbSet<App_SiblingT> App_SiblingT { get; set; }
+
         //app Prof Background
         public DbSet<App_ProfBackgroundT> App_ProfBackgroundT { get; set; }
+
         //app Prof Education
         public DbSet<App_PrimaryT> App_PrimaryT { get; set; }
+
         public DbSet<App_SecondaryT> App_SecondaryT { get; set; }
         public DbSet<App_SeniorHST> App_SeniorHST { get; set; }
         public DbSet<App_CollegeT> App_CollegeT { get; set; }
         public DbSet<App_DoctorateT> App_DoctorateT { get; set; }
         public DbSet<App_MasteralT> App_MasteralT { get; set; }
         public DbSet<App_OtherEducT> App_OtherEducT { get; set; }
+
         //app LICENSE AND TRAINING
         public DbSet<App_LicenseT> App_LicenseT { get; set; }
+
         public DbSet<App_TrainingT> App_TrainingT { get; set; }
         public DbSet<App_OtherAwardsT> App_OtherAwardsT { get; set; }
+
         //app Self Declaration
         public DbSet<App_SelfDeclarationT> App_SelfDeclarationT { get; set; }
 
@@ -334,8 +362,19 @@ namespace HrisApp.Server.Data
 
         //ATTENDANCE
         public DbSet<AttendanceRecordT> AttendanceRecordT { get; set; }
+
         public DbSet<ShiftTimetableT> ShiftTimetableT { get; set; }
 
+        //ASSETS
+        public DbSet<AssetStatusT> AssetStatusT { get; set; }
 
+        public DbSet<AssetTypesT> AssetTypesT { get; set; }
+
+        public DbSet<AssetCategoryT> AssetCategoryT { get; set; }
+        public DbSet<AssetSubCategoryT> AssetSubCategoryT { get; set; }
+        public DbSet<AssetAccessoryT> AssetAccessoryT { get; set; }
+        public DbSet<AssetMasterT> AssetMasterT { get; set; }
+        public DbSet<MainAssetAccessoriesT> MainAssetAccessoriesT { get; set; }
+        //public DbSet<AssetSubAccessoryT> AssetSubAccessoryT { get; set; }
     }
 }

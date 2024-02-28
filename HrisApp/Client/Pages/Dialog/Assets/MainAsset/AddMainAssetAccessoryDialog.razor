@@ -1,0 +1,52 @@
+﻿<MudDialog Style="background-color: #e9ecef;">
+    <DialogContent>
+        <div class="modal-title">
+            Add Accessory to <span>@assetMaster.WorksationName</span>
+        </div>
+
+        <div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Category</MudText>
+                    <MudSelect T="int" ValueChanged="OnChangeCat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                        @foreach (var sec in CAT)
+                        {
+                            <MudSelectItem Value="@sec.Id">@sec.ACat_Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Sub Category</MudText>
+                    <MudSelect T="int" ValueChanged="OnChangeSCat" Disabled="disabledsubcat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                        @foreach (var sec in SUBCAT.Where(e => e.CategoryId == obj.CategoryId))
+                        {
+                            <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Accessory</MudText>
+                    <MudSelect @bind-Value="obj.AssetAccessoryId" Disabled="disabledacc" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                        @foreach (var item in AssetAccessoryList.Where(e => e.MainAssetId == null && e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
+                        {
+                            <MudSelectItem Value="@item.Id">@item.Asset</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="SaveUpdate">Save</button>
+        </div>
+    </DialogActions>
+</MudDialog>

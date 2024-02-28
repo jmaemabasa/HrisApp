@@ -1,0 +1,39 @@
+﻿.dialogbtns {
+    padding: 15px 15px 15px 10px;
+}
+
+.cancel {
+    margin-right: 10px;
+    font-weight: bold;
+    transition: all .5s ease;
+}
+
+    .cancel:hover {
+        color: #be1313;
+        font-weight: bold;
+        transform: scale(1.1);
+    }
+
+.save {
+    background-color: #27374D;
+    color: #ffffff;
+    padding: 8px 40px;
+    transition: all .5s ease;
+}
+
+    .save:hover {
+        background-color: #3a5273;
+        transform: scale(1.1);
+    }
+
+.modal-title {
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 15px;
+    margin-bottom: 10px;
+}
+
+    .modal-title span {
+        color: #27374D;
+        font-size: 23px;
+    }

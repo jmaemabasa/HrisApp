@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HrisApp.Server.Migrations
 {
-    public partial class initial : Migration
+    public partial class FirstMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -295,6 +295,66 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AreaT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetCategoryT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ACat_Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ACat_Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetCategoryT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetStatusT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetStatusT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetTypesT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AType_Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AType_Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetTypesT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AttendanceRecordT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AC_No = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NewState = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Exception = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Operation = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AttendanceRecordT", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -945,6 +1005,31 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShiftTimetableT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Timetable_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OnDuty_Time = table.Column<TimeSpan>(type: "time", nullable: false),
+                    OffDuty_Time = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Begin_C_In = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Ending_C_In = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Begin_C_Out = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Ending_C_Out = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Workday_Count = table.Column<int>(type: "int", nullable: false),
+                    Minute_Count = table.Column<int>(type: "int", nullable: false),
+                    Late_Time = table.Column<int>(type: "int", nullable: false),
+                    LeaveEarly_Time = table.Column<int>(type: "int", nullable: false),
+                    Must_C_In = table.Column<bool>(type: "bit", nullable: false),
+                    Must_C_Out = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShiftTimetableT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StatusT",
                 columns: table => new
                 {
@@ -992,6 +1077,27 @@ namespace HrisApp.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRoleT", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetSubCategoryT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ASubCat_Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ASubCat_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetSubCategoryT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssetSubCategoryT_AssetCategoryT_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "AssetCategoryT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1194,6 +1300,8 @@ namespace HrisApp.Server.Migrations
                     Ann_Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ann_Desc = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
+                    DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -1303,6 +1411,110 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AssetAccessoriesT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MainAsset = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    SubCategoryId = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Serial = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: true),
+                    AssetStatudId = table.Column<int>(type: "int", nullable: false),
+                    InUseStatusDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StatusDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EUF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Asset = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetAccessoriesT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoriesT_AssetCategoryT_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "AssetCategoryT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoriesT_AssetStatusT_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "AssetStatusT",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoriesT_AssetSubCategoryT_SubCategoryId",
+                        column: x => x.SubCategoryId,
+                        principalTable: "AssetSubCategoryT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoriesT_AssetTypesT_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "AssetTypesT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetAccessoryT",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MainAsset = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    SubCategoryId = table.Column<int>(type: "int", nullable: false),
+                    AssetStatusId = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Serial = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InUseStatusDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StatusDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EUF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Asset = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetAccessoryT", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoryT_AssetCategoryT_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "AssetCategoryT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoryT_AssetStatusT_AssetStatusId",
+                        column: x => x.AssetStatusId,
+                        principalTable: "AssetStatusT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoryT_AssetSubCategoryT_SubCategoryId",
+                        column: x => x.SubCategoryId,
+                        principalTable: "AssetSubCategoryT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_AssetAccessoryT_AssetTypesT_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "AssetTypesT",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AuditlogsT",
                 columns: table => new
                 {
@@ -1366,6 +1578,19 @@ namespace HrisApp.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AssetStatusT",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "IN USED" },
+                    { 2, "NOT USED" },
+                    { 3, "FOR REPAIR" },
+                    { 4, "IN SERVICE CENTER" },
+                    { 5, "FOR DISPOSAL" },
+                    { 6, "DISPOSED" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "CashBondT",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -1420,7 +1645,14 @@ namespace HrisApp.Server.Migrations
                 {
                     { 1, "Sales Operations" },
                     { 2, "FAMS" },
-                    { 3, "Supply Chain Management Service" },
+                    { 3, "Supply Chain Management Service" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "DivisionT",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
                     { 4, "Central Administration" },
                     { 5, "Agro Industrial" }
                 });
@@ -1504,13 +1736,7 @@ namespace HrisApp.Server.Migrations
                     { 15, 1, 6, 1, "", "Internal", "Operations Manager", "", 1, "URIC01", "", 0, "", "", 0, "", "", "" },
                     { 16, 1, 6, 1, "", "Internal", "HAPI Supervisor", "", 1, "URICHAP01", "", 0, "", "", 4, "", "", "" },
                     { 17, 1, 6, 1, "", "Internal", "HAPI Dealer Coor", "", 4, "URICHAP02", "", 0, "", "", 4, "", "", "" },
-                    { 18, 1, 6, 1, "", "Internal", "Field Sales Supervisor", "", 1, "URICSER01", "", 0, "", "", 5, "", "", "" },
-                    { 19, 1, 6, 1, "", "Internal", "MAG Supervisor", "", 1, "URICSER02", "", 0, "", "", 5, "", "", "" },
-                    { 20, 1, 6, 1, "", "Internal", "GTAS", "", 5, "URICSER03", "", 0, "", "", 5, "", "", "" },
-                    { 21, 1, 6, 1, "", "Internal", "SMS", "", 11, "URICSER04", "", 0, "", "", 5, "", "", "" },
-                    { 22, 1, 6, 1, "", "Internal", "NAO Supervisor", "", 1, "URICEXP01", "", 0, "", "", 6, "", "", "" },
-                    { 23, 1, 6, 1, "", "Internal", "NAO", "", 2, "URICEXP02", "", 0, "", "", 6, "", "", "" },
-                    { 24, 1, 6, 1, "", "Internal", "HAPI NAO", "", 4, "URICEXP02", "", 0, "", "", 6, "", "", "" }
+                    { 18, 1, 6, 1, "", "Internal", "Field Sales Supervisor", "", 1, "URICSER01", "", 0, "", "", 5, "", "", "" }
                 });
 
             migrationBuilder.InsertData(
@@ -1518,6 +1744,12 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "AreaId", "DepartmentId", "DivisionId", "JobSummary", "Manpower", "Name", "OtherCompetencies", "Plantilla", "PosCode", "PosEducation", "PosMPExternalId", "PositionType", "Restrictions", "SectionId", "TemporaryDuration", "VerifyId", "WorkExperience" },
                 values: new object[,]
                 {
+                    { 19, 1, 6, 1, "", "Internal", "MAG Supervisor", "", 1, "URICSER02", "", 0, "", "", 5, "", "", "" },
+                    { 20, 1, 6, 1, "", "Internal", "GTAS", "", 5, "URICSER03", "", 0, "", "", 5, "", "", "" },
+                    { 21, 1, 6, 1, "", "Internal", "SMS", "", 11, "URICSER04", "", 0, "", "", 5, "", "", "" },
+                    { 22, 1, 6, 1, "", "Internal", "NAO Supervisor", "", 1, "URICEXP01", "", 0, "", "", 6, "", "", "" },
+                    { 23, 1, 6, 1, "", "Internal", "NAO", "", 2, "URICEXP02", "", 0, "", "", 6, "", "", "" },
+                    { 24, 1, 6, 1, "", "Internal", "HAPI NAO", "", 4, "URICEXP02", "", 0, "", "", 6, "", "", "" },
                     { 25, 1, 6, 1, "", "Internal", "IT & Support Services Staff", "", 1, "URICDTE01", "", 0, "", "", 7, "", "", "" },
                     { 26, 1, 6, 1, "", "Internal", "Teleservices Support Staff / Online Coor", "", 1, "URICDTE02", "", 0, "", "", 7, "", "", "" },
                     { 27, 1, 8, 1, "", "Internal", "Field Sales Manager", "", 1, "GCASH01", "", 0, "", "", 0, "", "", "" },
@@ -1556,7 +1788,8 @@ namespace HrisApp.Server.Migrations
                 values: new object[,]
                 {
                     { 1, "Monthly" },
-                    { 2, "Daily" }
+                    { 2, "Daily" },
+                    { 3, "Hourly" }
                 });
 
             migrationBuilder.InsertData(
@@ -1566,14 +1799,7 @@ namespace HrisApp.Server.Migrations
                 {
                     { 1, "Roman Catholic" },
                     { 2, "Iglesia ni Cristo" },
-                    { 3, "Evangelicals (PCEC)" },
-                    { 4, "Non-Roman Catholic" },
-                    { 5, "Protestant (NCCP)" },
-                    { 6, "Aglipayan" },
-                    { 7, "Seventh-day Adventist" },
-                    { 8, "Bible Baptist Church" },
-                    { 9, "United Church of Christ in the Philippines" },
-                    { 10, "Jehovah's Witnesses" }
+                    { 3, "Evangelicals (PCEC)" }
                 });
 
             migrationBuilder.InsertData(
@@ -1581,6 +1807,13 @@ namespace HrisApp.Server.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { 4, "Non-Roman Catholic" },
+                    { 5, "Protestant (NCCP)" },
+                    { 6, "Aglipayan" },
+                    { 7, "Seventh-day Adventist" },
+                    { 8, "Bible Baptist Church" },
+                    { 9, "United Church of Christ in the Philippines" },
+                    { 10, "Jehovah's Witnesses" },
                     { 11, "None" },
                     { 12, "Others" }
                 });
@@ -1673,6 +1906,51 @@ namespace HrisApp.Server.Migrations
                 name: "IX_ApplicantT_App_ReligionId",
                 table: "ApplicantT",
                 column: "App_ReligionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoriesT_CategoryId",
+                table: "AssetAccessoriesT",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoriesT_StatusId",
+                table: "AssetAccessoriesT",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoriesT_SubCategoryId",
+                table: "AssetAccessoriesT",
+                column: "SubCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoriesT_TypeId",
+                table: "AssetAccessoriesT",
+                column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoryT_AssetStatusId",
+                table: "AssetAccessoryT",
+                column: "AssetStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoryT_CategoryId",
+                table: "AssetAccessoryT",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoryT_SubCategoryId",
+                table: "AssetAccessoryT",
+                column: "SubCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetAccessoryT_TypeId",
+                table: "AssetAccessoryT",
+                column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetSubCategoryT_CategoryId",
+                table: "AssetSubCategoryT",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditlogsT_EmployeeUserId",
@@ -1824,6 +2102,15 @@ namespace HrisApp.Server.Migrations
                 name: "ApplicantT");
 
             migrationBuilder.DropTable(
+                name: "AssetAccessoriesT");
+
+            migrationBuilder.DropTable(
+                name: "AssetAccessoryT");
+
+            migrationBuilder.DropTable(
+                name: "AttendanceRecordT");
+
+            migrationBuilder.DropTable(
                 name: "AuditlogsT");
 
             migrationBuilder.DropTable(
@@ -1920,6 +2207,9 @@ namespace HrisApp.Server.Migrations
                 name: "SectionT");
 
             migrationBuilder.DropTable(
+                name: "ShiftTimetableT");
+
+            migrationBuilder.DropTable(
                 name: "SubPositionT");
 
             migrationBuilder.DropTable(
@@ -1927,6 +2217,15 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserRoleT");
+
+            migrationBuilder.DropTable(
+                name: "AssetStatusT");
+
+            migrationBuilder.DropTable(
+                name: "AssetSubCategoryT");
+
+            migrationBuilder.DropTable(
+                name: "AssetTypesT");
 
             migrationBuilder.DropTable(
                 name: "CashBondT");
@@ -1942,6 +2241,9 @@ namespace HrisApp.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "EmployeeT");
+
+            migrationBuilder.DropTable(
+                name: "AssetCategoryT");
 
             migrationBuilder.DropTable(
                 name: "AreaT");

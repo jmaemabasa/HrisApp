@@ -28,6 +28,7 @@
 @using HrisApp.Client.Pages.Dialog.Employee;
 @using HrisApp.Client.Pages.Applicant.Education
 
+
 @using HrisApp.Client.Pages.User.Dashboard
 
 
@@ -47,5 +48,24 @@
 @using HrisApp.Client.Pages.Dialog.Announcement
 @using HrisApp.Shared.Models.Attendance
 
-
-
+@inject IAssetTypeService AssetTypeService
+@inject IAssetCategoryService AssetCatService
+@inject IAssetSubCategoryService AssetSubCatService
+@inject IAssetAccessoryService AssetAccService
+@inject IMainAssetAccService MainAssetAccService
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+@inject GlobalConfigService GlobalConfigService
+@inject StateService StateService
+@inject SweetAlertService Swal
+@inject IJSRuntime jsRuntime
+@inject IToastService _toastService
+@inject IAuditlogService AuditlogService
+@inject IStaticService StaticService
+@inject IAssetMasterService AssetMasterService
+@inject IEmployeeService EmployeeService
+@inject IDivisionService DivisionService
+@inject IDepartmentService DepartmentService
+@inject ISectionService SectionService
+@inject IPositionService PositionService
+@inject IAreaService AreaService

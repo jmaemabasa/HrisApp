@@ -45,13 +45,13 @@
                                 <span class="spantitle" style="font-family: 'Poppins', sans-serif !important">Employee Details</span>
                             </div>
                             <div>
-                            @if (employee.DateInactiveStatus <= fiveYearsAgo)
-                            {
+                                @if (employee.DateInactiveStatus <= fiveYearsAgo)
+                                {
                                     <MudTooltip Text="Delete" Arrow="true" Color="Color.Error">
-                                <MudIconButton Icon="@Icons.Material.Rounded.Delete"  Color="Color.Error" OnClick="@(() => DeleteEmployee(id))"></MudIconButton>
-                                </MudTooltip>
-                            }
-                               @*  <MudTooltip Text="Print" Color="Color.Tertiary" Arrow="true">
+                                        <MudIconButton Icon="@Icons.Material.Rounded.Delete" Color="Color.Error" OnClick="@(() => DeleteEmployee(id))"></MudIconButton>
+                                    </MudTooltip>
+                                }
+                                @*  <MudTooltip Text="Print" Color="Color.Tertiary" Arrow="true">
                                 <MudIconButton Icon="@Icons.Material.Rounded.Print" Color="Color.Tertiary" aria-label="print" OnClick="@OnExporttoPDF"></MudIconButton>
                                 </MudTooltip> *@
                             </div>
@@ -67,73 +67,73 @@
                                     </ButtonTemplate>
                                 </MudFileUpload>
                             </div>
+                        </div>
+                        <div>
+                            <MudText Align="Align.Center" Style="font-weight: bold; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@FUpper(employee.FirstName) @FUpper(employee.LastName)</MudText>
+                        </div>
+                        <div class="d-flex flex-grow-1 justify-content-center mt-1">
+                            <div class="@StatusChipColor(employee.Status?.Name)">
+                                <MudText Align="Align.Center" Style="font-size: 0.9em">@FUpper(employee.Status?.Name)</MudText>
                             </div>
-                            <div>
-                             <MudText Align="Align.Center" Style="font-weight: bold; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@FUpper(employee.FirstName) @FUpper(employee.LastName)</MudText>
+                        </div>
+                        <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Employment Status</MudText>
+                                <MudText Align="Align.Start" Class="@StatusTextColor(employee.EmploymentStatus?.Name)" Style="font-weight:bold;" Typo="Typo.body2">@employee.EmploymentStatus?.Name</MudText>
                             </div>
-                            <div class="d-flex flex-grow-1 justify-content-center mt-1">
-                                <div class="@StatusChipColor(employee.Status?.Name)">
-                                 <MudText Align="Align.Center" Style="font-size: 0.9em">@FUpper(employee.Status?.Name)</MudText>
-                                </div>
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Company ID No.</MudText>
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.EmployeeNo</MudText>
                             </div>
-                            <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
-                                <div class="divsingledetails">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Employment Status</MudText>
-                                    <MudText Align="Align.Start" Class="@StatusTextColor(employee.EmploymentStatus?.Name)" Style="font-weight:bold;" Typo="Typo.body2">@employee.EmploymentStatus?.Name</MudText>
-                                </div>
-                                <div class="divsingledetails">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Company ID No.</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.EmployeeNo</MudText>
-                                </div>
-                                <div class="divsingledetails">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date Hired</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.DateHired.ToString("MM/dd/yyyy")</MudText>
-                                </div>
-                                <div class="divsingledetails">
-                                    <div class="d-flex flex-row">
-                                        <div class="flex-grow-1">
-                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Email</MudText>
-                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Email</MudText>
-                                        </div>
-                                        @*  <div>
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date Hired</MudText>
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.DateHired.ToString("MM/dd/yyyy")</MudText>
+                            </div>
+                            <div class="divsingledetails">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-grow-1">
+                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Email</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Email</MudText>
+                                    </div>
+                                    @*  <div>
                                     <MudTooltip Text="Copy">
                                     <MudIconButton OnClick="() => CopyToClipboard(employee.Email)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton>
                                     </MudTooltip>
                                     </div> *@
-                                    </div>
-                                </div>
-                                <div class="divsingledetails">
-                                    <div class="d-flex flex-row">
-                                        <div class="flex-grow-1">
-                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Phone</MudText>
-                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">+63 @employee.MobileNumber</MudText>
-                                        </div>
-                                        @* <div><MudTooltip Text="Copy"><MudIconButton OnClick="() => CopyToClipboard(employee.MobileNumber)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton></MudTooltip></div> *@
-                                    </div>
-                                </div>
-                                <div class="divsingledetails">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Position</MudText>
-                                        @foreach (var item in SubPositionsL)
-                                        {
-                                            if (item.Id == employee.PositionId)
-                                            {
-                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.Description</MudText>
-                                            }
-                                        }
-                                </div>
-                                <div class="divsingledetails">
-                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Department?.Name</MudText>
                                 </div>
                             </div>
+                            <div class="divsingledetails">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-grow-1">
+                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Phone</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">+63 @employee.MobileNumber</MudText>
+                                    </div>
+                                    @* <div><MudTooltip Text="Copy"><MudIconButton OnClick="() => CopyToClipboard(employee.MobileNumber)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton></MudTooltip></div> *@
+                                </div>
+                            </div>
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Position</MudText>
+                                @foreach (var item in SubPositionsL)
+                                {
+                                    if (item.Id == employee.PositionId)
+                                    {
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.Description</MudText>
+                                    }
+                                }
+                            </div>
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Department?.Name</MudText>
+                            </div>
                         </div>
-                        </MudCardContent>
-                        </MudCard>
+                    </div>
+                </MudCardContent>
+            </MudCard>
         </MudItem>
         <MudItem Class="empdmainbox" xs="12" lg="9" Style="margin-top: 1rem;">
-                <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex">
+            <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex">
                 <MudTabPanel TabContent="tabHeader(0)">
-                        <MudCard Class="empdmain">
+                    <MudCard Class="empdmain">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="spantitle">Personal Data</span><AuthorizeView Roles="HR, System Administrator">
@@ -372,17 +372,18 @@
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Agency</MudText>
                                         @if (_position.Manpower == "Internal")
                                         {
-                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">No Information.</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">No Information.</MudText>
                                         }
-                                        else {
+                                        else
+                                        {
                                             @foreach (var item in ExternalsL)
                                             {
                                                 if (item.Id == _position.PosMPExternalId)
                                                 {
-                                                   <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.External_Name</MudText>
+                                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.External_Name</MudText>
                                                 }
                                             }
-                                        } 
+                                        }
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Status</MudText>
@@ -734,15 +735,15 @@
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Phone</MudText>
                         <MudNumericField HideSpinButtons="true" @bind-Value="employee.MobileNumber" Class="@txfieldClasssMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.MobileNumber)" />
-                        </MudItem>
-                        <MudItem xs="12" sm="6">
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Email</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="employee.Email" />
                         <ValidationMessage For="@(() => employee.Email)" class="mb-2 valmessage" />
 
-                        </MudItem>
-                    </div>
-                    <MudItem xs="12" Class="mb-2">
+                    </MudItem>
+                </div>
+                <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Religion</MudText>
                     <MudSelect Class="@slectClasssGender" DisableUnderLine @bind-Value="employee.ReligionId" Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
@@ -839,35 +840,35 @@
                         <MudItem xs="12">
                             <MudText Typo="Typo.body2">Inactive Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="employee.DateInactiveStatus" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.StatusId == 3)
                     {
                         <MudItem xs="12">
                             <MudText Typo="Typo.body2">Resignation Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="employee.DateInactiveStatus" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.StatusId == 4)
                     {
                         <MudItem xs="12">
                             <MudText Typo="Typo.body2">Terminated Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="employee.DateInactiveStatus" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.StatusId == 5)
                     {
                         <MudItem xs="12">
                             <MudText Typo="Typo.body2">Awol Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="employee.DateInactiveStatus" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.StatusId == 6)
                     {
                         <MudItem xs="12">
                             <MudText Typo="Typo.body2">Retired Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="employee.DateInactiveStatus" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                 </div>
                 <div class="d-flex flex-row gap-4 mb-2 align-items-center">
@@ -884,59 +885,59 @@
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                         <MudDatePicker Class="txf" DisableUnderLine Date="DateHired" DateChanged="HandleDateHiredChanged" Margin="Margin.Dense" />
-                        </MudItem>
-                    </div>
-                    <div class="d-flex flex-row gap-4 mb-2 align-items-center">
-                        @if (employee.EmploymentStatusId == 1)
+                    </MudItem>
+                </div>
+                <div class="d-flex flex-row gap-4 mb-2 align-items-center">
+                    @if (employee.EmploymentStatusId == 1)
                     {
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Regularization Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="RegularDate" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.EmploymentStatusId == 2)
                     {
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Probation Start Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="ProbStart" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Probation End Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="ProbEnd" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.EmploymentStatusId == 3)
                     {
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Casual Start Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="CasualStart" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Casual End Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="CasualEnd" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.EmploymentStatusId == 4)
                     {
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Fixed Start Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="FixedStart" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Fixed End Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="FixedEnd" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                     else if (employee.EmploymentStatusId == 5)
                     {
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Project Start Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="ProjStart" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.body2">Project End Date (m/d/yyyy)</MudText>
                             <MudDatePicker Class="txf" @bind-Date="ProjEnd" DisableUnderLine Margin="Margin.Dense" />
-                            </MudItem>
+                        </MudItem>
                     }
                 </div>
                 @{
@@ -948,7 +949,7 @@
                         <MudText Typo="Typo.body2">Division</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DivisionId" Immediate=true Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                        @foreach (var div in DivisionsL)
+                            @foreach (var div in DivisionsL)
                             {
                                 <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
                             }
@@ -958,7 +959,7 @@
                         <MudText Typo="Typo.body2">Department</MudText>
                         <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.DepartmentId" Immediate=true Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                        @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
+                            @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
                             {
                                 <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                             }
@@ -971,7 +972,7 @@
                             <MudText Typo="Typo.body2">Section</MudText>
                             <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Immediate=true Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                            @if (sections.Any())
+                                @if (sections.Any())
                                 {
                                     @foreach (var sect in sections)
                                     {
@@ -988,7 +989,7 @@
                             <MudText Typo="Typo.body2">Position</MudText>
                             <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Immediate=true Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                             @foreach (var pos in SubPositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId && d.Status == "Inactive" || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active")))
+                                @foreach (var pos in SubPositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId && d.Status == "Inactive" || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active")))
                                 {
                                     <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
                                 }
@@ -1001,8 +1002,8 @@
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Division</MudText>
                         <MudSelect @bind-Value="employee.DivisionId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
-                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                        @foreach (var div in DivisionsL)
+                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                            @foreach (var div in DivisionsL)
                             {
                                 <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
                             }
@@ -1011,8 +1012,8 @@
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Department</MudText>
                         <MudSelect @bind-Value="employee.DepartmentId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
-                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                        @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
+                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                            @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == employee.DivisionId))
                             {
                                 <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                             }
@@ -1021,11 +1022,11 @@
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Position</MudText>
                         <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
-                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                             @foreach (var pos in SubPositionsL.Where(d => d.DepartmentId == employee.DepartmentId && d.Status == "Inactive" && d.PosCode != _subposition.PosCode || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active" && d.PosCode == _subposition.PosCode)))
-                                {
-                                    <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
-                                }
+                            {
+                                <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
+                            }
                         </MudSelect>
                     </MudItem>
                 }
@@ -1066,98 +1067,98 @@
                 <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Mobile #</MudText>
                     <MudNumericField HideSpinButtons="true" @bind-Value="employee.EmerMobNum" Class="@txfieldClasssEMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => employee.EmerMobNum)" />
-                    </MudItem>
-                    <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                </MudItem>
+                <MudItem xs="12" Class="d-flex justify-content-center mt-5">
                     <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
 
-                    </MudItem>
-                    </EditForm>
-                    </MudItem>
-                    </MudDrawer>
+                </MudItem>
+            </EditForm>
+        </MudItem>
+    </MudDrawer>
 
     <MudDrawer Class="drawerdetails" @bind-Open="@addressOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
-                    <span class="spantitle mb-3">Address</span>
-                    <MudItem xs="12">
-                    <EditForm Model="_address" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
-                    <DataAnnotationsValidator />
-                    <MudItem xs="12" Class="mb-2">
+        <span class="spantitle mb-3">Address</span>
+        <MudItem xs="12">
+            <EditForm Model="_address" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+                <DataAnnotationsValidator />
+                <MudItem xs="12" Class="mb-2">
                     <span class="spantitle mb-2" style="font-size:14px">Present Address</span>
                     <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
                     <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentAdd" />
                     <ValidationMessage For="@(() => _address.CurrentAdd)" class="mb-2 valmessage" />
-                    </MudItem>
-                    <div class="d-flex flex-row gap-3 mb-2 align-items-center">
-                        <MudItem xs="12" sm="6">
+                </MudItem>
+                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">City</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCity" />
                         <ValidationMessage For="@(() => _address.CurrentCity)" class="mb-2 valmessage" />
-                        </MudItem>
-                        <MudItem xs="12" sm="6">
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Province</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentProvince" />
                         <ValidationMessage For="@(() => _address.CurrentProvince)" class="mb-2 valmessage" />
-                        </MudItem>
-                    </div>
-                    <div class="d-flex flex-row gap-3 mb-2 align-items-center">
-                        <MudItem xs="12" sm="6">
+                    </MudItem>
+                </div>
+                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">ZipCode</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentZipCode" />
                         <ValidationMessage For="@(() => _address.CurrentZipCode)" class="mb-2 valmessage" />
-                        </MudItem>
-                        <MudItem xs="12" sm="6">
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Country</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCountry" />
                         <ValidationMessage For="@(() => _address.CurrentCountry)" class="mb-2 valmessage" />
-                        </MudItem>
-                    </div>
-                    <MudItem xs="12" Class="mb-2">
+                    </MudItem>
+                </div>
+                <MudItem xs="12" Class="mb-2">
                     <span class="spantitle mb-2" style="font-size:14px">Permanent Address</span>
                     <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
                     <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentAdd" />
                     <ValidationMessage For="@(() => _address.PermanentAdd)" class="mb-2 valmessage" />
-                    </MudItem>
-                    <div class="d-flex flex-row gap-3 mb-2 align-items-center">
-                        <MudItem xs="12" sm="6">
+                </MudItem>
+                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">City</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentCity" />
                         <ValidationMessage For="@(() => _address.PermanentCity)" class="mb-2 valmessage" />
-                        </MudItem>
-                        <MudItem xs="12" sm="6">
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Province</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentProvince" />
                         <ValidationMessage For="@(() => _address.PermanentProvince)" class="mb-2 valmessage" />
-                        </MudItem>
-                    </div>
-                    <div class="d-flex flex-row gap-3 mb-2 align-items-center">
-                        <MudItem xs="12" sm="6">
+                    </MudItem>
+                </div>
+                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">ZipCode</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentZipCode" />
                         <ValidationMessage For="@(() => _address.PermanentCountry)" class="mb-2 valmessage" />
-                        </MudItem>
-                        <MudItem xs="12" sm="6">
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.body2">Country</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCountry" />
                         <ValidationMessage For="@(() => _address.PermanentCountry)" class="mb-2 valmessage" />
-                        </MudItem>
-                    </div>
-                    <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                    </MudItem>
+                </div>
+                <MudItem xs="12" Class="d-flex justify-content-center mt-5">
                     <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
-                    </MudItem>
-                    </EditForm>
-                    </MudItem>
-                    </MudDrawer>
+                </MudItem>
+            </EditForm>
+        </MudItem>
+    </MudDrawer>
 
     <MudDrawer Class="drawerdetails" @bind-Open="@documentsOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
-                    <span class="spantitle mb-3">Compensation Package</span>
-                    <MudItem xs="12">
-                    <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
-                    <DataAnnotationsValidator />
-                    <MudItem xs="12" Class="mb-2">
+        <span class="spantitle mb-3">Compensation Package</span>
+        <MudItem xs="12">
+            <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+                <DataAnnotationsValidator />
+                <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Rate</MudText>
                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.Rate" />
                     <ValidationMessage For="@(() => _payroll.Rate)" class="mb-2 valmessage" />
-                    </MudItem>
-                    <MudItem xs="12" Class="mb-2">
+                </MudItem>
+                <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Rate Type</MudText>
                     <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="_payroll.RateTypeId" Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>

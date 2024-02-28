@@ -1,0 +1,163 @@
+﻿<MudDialog Style="background-color: #e9ecef;">
+    <DialogContent>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-lg-4">
+                    <div class="addmainassetcont">
+                        <div class="row">
+                            <div class="col-12">
+                                <MudText Typo="Typo.body2">Type</MudText>
+                                <MudSelect @bind-Value="obj.TypeId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                    <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                                    @foreach (var sec in TYPES)
+                                    {
+                                        <MudSelectItem Value="@sec.Id">@sec.AType_Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <MudText Typo="Typo.body2">Category</MudText>
+                                <MudSelect @bind-Value="obj.CategoryId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                    <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                                    @foreach (var sec in CAT)
+                                    {
+                                        <MudSelectItem Value="@sec.Id">@sec.ACat_Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <MudText Typo="Typo.body2">Sub Category</MudText>
+                                <MudSelect @bind-Value="obj.SubCategoryId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                    <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                                    @foreach (var sec in SUBCAT.Where(e => e.CategoryId == obj.CategoryId))
+                                    {
+                                        <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <MudText Typo="Typo.body2">Workstation Name</MudText>
+                                <MudTextField @bind-Value="obj.WorksationName" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <MudText Typo="Typo.body2">Location</MudText>
+                                <MudTextField @bind-Value="obj.Location" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="addmainassetcont">
+                        <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="@tabs" @bind-ActivePanelIndex="@activeIndex" Centered=true>
+                            <MudTabPanel TabContent="@tabHeader(0)">
+
+                            </MudTabPanel>
+
+                        </MudTabs>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Brand</MudText>
+                                <MudTextField @bind-Value="obj.Brand" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Model</MudText>
+                                <MudTextField @bind-Value="obj.Model" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <MudText Typo="Typo.body2">Serial</MudText>
+                                <MudTextField @bind-Value="obj.Serial" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Device ID</MudText>
+                                <MudTextField @bind-Value="obj.DeviceID" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Product ID</MudText>
+                                <MudTextField @bind-Value="obj.ProductID" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Processor</MudText>
+                                <MudTextField @bind-Value="obj.Processor" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">RAM (GB) Recommended 8</MudText>
+                                <MudTextField @bind-Value="obj.RAM" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Storage (GB) Recommended 500</MudText>
+                                <MudTextField @bind-Value="obj.Storage" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Storage Type Recommended SSD</MudText>
+                                <MudSelect @bind-Value="obj.StorageType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                    <MudSelectItem Value="@("SSD")" />
+                                    <MudSelectItem Value="@("HDD")" />
+                                    <MudSelectItem Value="@("NVME")" />
+                                </MudSelect>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Mac Address</MudText>
+                                <MudTextField @bind-Value="obj.MacAddress" Mask="@MacAddMask" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Client IP</MudText>
+                                <MudTextField @bind-Value="obj.ClientIP" Mask="@ipv4Mask" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Purchase Date</MudText>
+                                <MudDatePicker Editable="true" @bind-Date="obj.PurchaseDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Purchase Amount</MudText>
+                                <MudTextField @bind-Value="obj.PurchaseAmount" Mask="@currMask" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Username Admin</MudText>
+                                <MudTextField @bind-Value="obj.UsernameAdmin" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <MudText Typo="Typo.body2">Password Admin</MudText>
+                                <MudTextField @bind-Value="obj.PasswordAdmin" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <MudText Typo="Typo.body2">Remarks</MudText>
+                                <MudTextField @bind-Value="obj.Remarks" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+        </div>
+    </DialogActions>
+</MudDialog>

@@ -1,16 +1,13 @@
-﻿using HrisApp.Client.HelperToken;
-using HrisApp.Shared.Models.StaticData;
-using System.Collections;
-
-namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
+﻿namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
     public class EmployeeVM : BaseViewModel
     {
-        IEmployeeService EmployeeService = new EmployeeService();
-        IStaticService StaticService = new StaticService();
-        IDivisionService DivisionService = new DivisionService();
+        private IEmployeeService EmployeeService = new EmployeeService();
+        private IStaticService StaticService = new StaticService();
+        private IDivisionService DivisionService = new DivisionService();
 
         private readonly NavigationManager _navigationManager;
+
         public EmployeeVM(NavigationManager navigationManager)
         {
             _navigationManager = navigationManager;
@@ -39,8 +36,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 await DivisionService.GetDivision();
                 DivisionsL = DivisionService.DivisionTs;
 
-
                 #region for DASHBOARD
+
                 var uri = new Uri(_navigationManager.Uri);
                 var statusFilterString = uri.Query.Split('=').LastOrDefault();
                 if (statusFilterString?.ToLower() == "inactive")
@@ -51,7 +48,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 {
                     _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).ToList();
                 }
-                #endregion
+
+                #endregion for DASHBOARD
             }
             catch (Exception ex)
             {
@@ -59,11 +57,10 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             }
         }
 
-
-
-
         #region COMBOBOX FILTERS
+
         public bool _isOpen;
+
         public void ToggleOpen()
         {
             if (_isOpen)
@@ -71,6 +68,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             else
                 _isOpen = true;
         }
+
         public void ToggleOpenMenu(bool test)
         {
             if (test)
@@ -82,6 +80,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string CmbDivText = "All Division";
         public string CmbStatusText = "All Status";
         public string CmbDaateHiredText = "All";
+
         public async void CmbDateHired(string type)
         {
             DateTime today = DateTime.Today;
@@ -253,6 +252,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     break;
             }
         }
+
         public void CmbDivision(int div)
         {
             //    _dateRange.Start = null;
@@ -319,6 +319,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 }
             }
         }
+
         public void SearchStatus(int status)
         {
             //_dateRange.Start = null;
@@ -382,9 +383,9 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                         _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == status && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
                     }
                 }
-
             }
         }
+
         public void EmpDateRangeChange(DateRange? dateRange)
         {
             _dateRange = dateRange;
@@ -443,10 +444,12 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             }
         }
 
-        #endregion
+        #endregion COMBOBOX FILTERS
 
         #region FUNCTIONS / METHODS
+
         public void CreateNewEmployee() => _navigationManager.NavigateTo("/employee/add");
+
         public void ShowEmployee(int id) => _navigationManager.NavigateTo($"/employee/edit/{id}");
 
         public async Task DeleteEmployee(int id)
@@ -470,12 +473,14 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         //LOADING
         public bool _isVisible;
+
         public async void OpenOverlay()
         {
             _isVisible = true;
             await Task.Delay(3000);
             _isVisible = false;
         }
+
         public string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -485,9 +490,11 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
             return char.ToUpper(input[0]) + input[1..];
         }
-        #endregion
+
+        #endregion FUNCTIONS / METHODS
 
         #region TABLE VARIABLES
+
         public bool FilterFunc1(EmployeeT emp) => FilterFunc(emp, _searchString1);
 
         private static bool FilterFunc(EmployeeT emp, string searchString)
@@ -511,9 +518,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
             return false;
         }
-        #endregion
 
-
-
+        #endregion TABLE VARIABLES
     }
 }

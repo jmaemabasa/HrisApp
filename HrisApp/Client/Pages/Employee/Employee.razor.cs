@@ -505,6 +505,7 @@ namespace HrisApp.Client.Pages.Employee
             _isVisible = true;
             StateHasChanged();
         }
+
         public string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))

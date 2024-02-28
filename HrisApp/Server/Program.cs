@@ -16,6 +16,9 @@ global using HrisApp.Shared.Models.Application.App_LiscenseAndTraining;
 global using HrisApp.Shared.Models.Application.App_ProfBackground;
 global using Microsoft.EntityFrameworkCore;
 global using MudBlazor.Services;
+global using HrisApp.Shared.Models.Assets;
+global using Microsoft.AspNetCore.Mvc;
+
 using Blazored.Toast;
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -84,7 +87,6 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseCors("MyPolicy");
-
 
 app.MapRazorPages();
 app.MapControllers();

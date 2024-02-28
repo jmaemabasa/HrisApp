@@ -21,6 +21,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
                 .ToListAsync();
             return Ok(status);
         }
+
         [HttpGet("GetStatusId/{name}")]
         public async Task<ActionResult<int>> GetStatusId(string name)
         {
@@ -40,6 +41,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
                 .ToListAsync();
             return Ok(empstatus);
         }
+
         [HttpGet("GetEmploymentStatusId/{name}")]
         public async Task<ActionResult<int>> GetEmploymentStatusId(string name)
         {
@@ -59,6 +61,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
                 .ToListAsync();
             return Ok(rel);
         }
+
         [HttpGet("GetEmerRelationshipId/{name}")]
         public async Task<ActionResult<int>> GetEmerRelationshipId(string name)
         {
@@ -78,6 +81,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
                 .ToListAsync();
             return Ok(gender);
         }
+
         [HttpGet("GetGenderId/{name}")]
         public async Task<ActionResult<int>> GetGenderId(string name)
         {
@@ -97,6 +101,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
                 .ToListAsync();
             return Ok(cs);
         }
+
         [HttpGet("GetCivilStatusId/{name}")]
         public async Task<ActionResult<int>> GetCivilStatusId(string name)
         {
@@ -116,6 +121,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
                 .ToListAsync();
             return Ok(rel);
         }
+
         [HttpGet("GetReligionId/{name}")]
         public async Task<ActionResult<int>> GetReligionId(string name)
         {
@@ -143,6 +149,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
             var Salary = await _context.RateTypeT.ToListAsync();
             return Ok(Salary);
         }
+
         [HttpGet("GetRateTypeId/{name}")]
         public async Task<ActionResult<int>> GetRateTypeId(string name)
         {
@@ -160,6 +167,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
             var cash = await _context.CashBondT.ToListAsync();
             return Ok(cash);
         }
+
         [HttpGet("GetCashbondId/{name}")]
         public async Task<ActionResult<int>> GetCashbondId(string name)
         {
@@ -175,6 +183,13 @@ namespace HrisApp.Server.Controllers.StaticDataC
         public async Task<ActionResult<List<RestDayT>>> GetRestDay()
         {
             var rest = await _context.RestDayT.ToListAsync();
+            return Ok(rest);
+        }
+
+        [HttpGet("assetstatus")]
+        public async Task<ActionResult<List<RestDayT>>> GetAssetStatus()
+        {
+            var rest = await _context.AssetStatusT.ToListAsync();
             return Ok(rest);
         }
     }
