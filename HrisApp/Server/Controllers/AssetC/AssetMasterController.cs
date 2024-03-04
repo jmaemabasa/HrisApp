@@ -21,6 +21,9 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
+                .Include(e => e.Employee!.Division)
+                .Include(e => e.Employee!.Department)
+                .Include(e => e.Area)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -34,6 +37,9 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
+                .Include(e => e.Employee!.Division)
+                .Include(e => e.Employee!.Department)
+                .Include(e => e.Area)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -47,6 +53,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
+                .Include(e => e.Area)
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
                 .FirstOrDefaultAsync(h => h.Id == id);
@@ -66,6 +73,9 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
+                .Include(e => e.Employee!.Division)
+                .Include(e => e.Employee!.Department)
+                .Include(e => e.Area)
                 .ToListAsync();
         }
 
@@ -99,7 +109,7 @@
             dbarea.ClientIP = model.ClientIP;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
-            dbarea.Location = model.Location;
+            dbarea.AreaId = model.AreaId;
             dbarea.PurchaseDate = model.PurchaseDate;
             dbarea.PurchaseAmount = model.PurchaseAmount;
             dbarea.EUF = model.EUF;
@@ -109,9 +119,13 @@
             dbarea.Asset = model.Asset;
             dbarea.Remarks = model.Remarks;
             dbarea.InUseStatusDate = model.InUseStatusDate;
+
             dbarea.StatusDate = model.StatusDate;
+
             dbarea.EmployeeId = model.EmployeeId;
             dbarea.AssignedDate = model.AssignedDate;
+            dbarea.AssignedDateReleased = model.AssignedDateReleased;
+            dbarea.AssignedDateToReturn = model.AssignedDateToReturn;
             dbarea.LastCheckDate = model.LastCheckDate;
             await _context.SaveChangesAsync();
 

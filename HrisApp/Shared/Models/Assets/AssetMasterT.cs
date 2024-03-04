@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using HrisApp.Shared.Models.StaticData;
 using HrisApp.Shared.Models.Employee;
+using HrisApp.Shared.Models.MasterData;
 
 namespace HrisApp.Shared.Models.Assets
 {
@@ -12,6 +13,7 @@ namespace HrisApp.Shared.Models.Assets
         public int Id { get; set; }
 
         public string Code { get; set; } = string.Empty;
+        public string AssetCode { get; set; } = string.Empty;
         public string WorksationName { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
@@ -25,7 +27,9 @@ namespace HrisApp.Shared.Models.Assets
         public AssetSubCategoryT? SubCategory { get; set; }
         public int SubCategoryId { get; set; }
 
-        public string Location { get; set; } = string.Empty;
+        public AreaT? Area { get; set; }
+        public int AreaId { get; set; }
+
         public string Serial { get; set; } = string.Empty;
         public string DeviceID { get; set; } = string.Empty;
         public string ProductID { get; set; } = string.Empty;
@@ -41,6 +45,8 @@ namespace HrisApp.Shared.Models.Assets
         public EmployeeT? Employee { get; set; }
         public int? EmployeeId { get; set; }
         public DateTime? AssignedDate { get; set; }
+        public DateTime? AssignedDateReleased { get; set; } = DateTime.Now;
+        public DateTime? AssignedDateToReturn { get; set; }
 
         public AssetStatusT? AssetStatus { get; set; }
         public int AssetStatusId { get; set; }

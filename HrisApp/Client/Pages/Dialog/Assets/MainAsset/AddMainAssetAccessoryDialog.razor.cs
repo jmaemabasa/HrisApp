@@ -40,6 +40,7 @@
             var asset_acc = await AssetAccService.GetSingleObj(obj.AssetAccessoryId);
             asset_acc.MainAssetId = obj.AssetMasterId;
             asset_acc.MainAssetDateUpdated = DateTime.Now;
+            asset_acc.AssetStatusId = assetMaster.AssetStatusId;
             await AssetAccService.UpdateObj(asset_acc);
 
             await MainAssetAccService.CreateObj(obj);

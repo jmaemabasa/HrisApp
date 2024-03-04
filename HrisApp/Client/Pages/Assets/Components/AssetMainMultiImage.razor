@@ -1,0 +1,133 @@
+﻿<MudItem xs="12">
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <div><span class="spantitle mb-3">PDF Files (TOR, Certificates, & etc.)</span></div>
+        <div style="margin: 0px;">
+            @for (int i = 0; i < listOfDocuments.Count; i++)
+            {
+                var index = i;
+                var docs = listOfDocuments[i];
+                @if (docs.PdfFile != null)
+                {
+                    @* <MudFileUpload T="IReadOnlyList<IBrowserFile>" OnFilesChanged="e => OnPDFSaving123(e)" Accept="image/*" capture Multiple> *@
+                    <MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles" Accept="image/*" capture Multiple>
+                        <ButtonTemplate Context="fileContext">
+                            @if (isuploading)
+                            {
+                                <MudButton HtmlTag="label" Class="btnaddfile" for="@fileContext" Style="text-transform: none;">
+                                    <MudProgressCircular Color="Color.Default" Size="Size.Small" Indeterminate="true" />
+                                    Uploading
+                                </MudButton>
+                            }
+                            else
+                            {
+
+                                <MudButton HtmlTag="label" Class="btnaddfile" StartIcon="@Icons.Material.Filled.CloudUpload" for="@fileContext" Style="text-transform: none;">
+                                    Upload Files
+                                </MudButton>
+                            }
+                        </ButtonTemplate>
+                    </MudFileUpload>
+                }
+            }
+        </div>
+
+    </div>
+</MudItem>
+
+
+@code {
+    #nullable disable
+    [Parameter] public int MainAssetId { get; set; }
+    [Parameter] public string MainAssetCode { get; set; } = string.Empty;
+    [Parameter] public string JMCode { get; set; } = string.Empty;
+    [Parameter] public int Catid { get; set; }
+    [Parameter] public int SubCatid { get; set; }
+
+    [Parameter]
+    public Action OnFileAdded { get; set; }
+
+    List<AssetImageT> listOfDocuments = new();
+    private string imgBase64 { get; set; }
+
+    bool isuploading = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(0);
+        listOfDocuments.Add(new AssetImageT());
+    }
+
+    private string PDFBase64 { get; set; }
+    private string PDFUrl { get; set; }
+    private string PDFFileName { get; set; }
+    private string PDFContentType { get; set; }
+    private byte[] pdfData { get; set; }
+    private bool pdfbool12 { get; set; }
+    private bool PDFbool12 { get; set; }
+    IList<IBrowserFile> pdffile = new List<IBrowserFile>();
+
+    private MultipartFormDataContent EmpImage = new();
+
+    private List<MultipartFormDataContent> DocuEmployees = new List<MultipartFormDataContent>();
+
+    public class AssetImageT
+    {
+        public IList<IBrowserFile> PdfFile { get; set; } = new List<IBrowserFile>();
+    }
+
+    private async Task UploadFiles(IReadOnlyList<IBrowserFile> files)
+    {
+        isuploading = true;
+        foreach (var file in files)
+        {
+            await OnPDFSaving123(file);
+        }
+        OnFileAdded?.Invoke();
+        await Task.Delay(2000);
+        isuploading = false;
+    }
+
+    private async Task OnPDFSaving123(IBrowserFile e)
+    {
+        long lngImage = long.MaxValue;
+        var brwModel = e;
+        var imgFilename = e.Name;
+        var imgContent = e.ContentType;
+        var imgBuffer = new byte[e.Size];
+        var imgURL = $"data:{imgContent};base64,{Convert.ToBase64String(imgBuffer)}";
+
+        using (var _stream = brwModel.OpenReadStream(lngImage))
+        {
+            await _stream.ReadAsync(imgBuffer);
+        }
+
+        if (e.Name is null)
+        {
+            await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Error",
+                    Text = "No image uploaded!",
+                    Icon = SweetAlertIcon.Error
+                });
+            return;
+        }
+        else
+        {
+            using var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(brwModel.OpenReadStream(lngImage));
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(imgContent);
+
+            EmpImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
+
+            var base642 = Convert.ToBase64String(imgBuffer);
+            imgBase64 = string.Format("data:image/*;base64,{0}", base642);
+
+
+            content.Add(EmpImage.LastOrDefault()!);
+            await AssetImageService.AttachFilePanel(content, MainAssetCode, Catid, SubCatid, JMCode);
+
+
+        }
+    }
+}

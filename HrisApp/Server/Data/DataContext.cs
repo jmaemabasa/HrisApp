@@ -1,5 +1,4 @@
 ﻿using HrisApp.Shared.Models.Announcement;
-using HrisApp.Shared.Models.Assets;
 using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
@@ -374,7 +373,10 @@ namespace HrisApp.Server.Data
         public DbSet<AssetSubCategoryT> AssetSubCategoryT { get; set; }
         public DbSet<AssetAccessoryT> AssetAccessoryT { get; set; }
         public DbSet<AssetMasterT> AssetMasterT { get; set; }
+        public DbSet<AssetMasterHistoryT> AssetMasterHistoryT { get; set; }
         public DbSet<MainAssetAccessoriesT> MainAssetAccessoriesT { get; set; }
+        public DbSet<AssetImageT> AssetImageT { get; set; }
+        public DbSet<AssetLastCheckT> AssetLastCheckT { get; set; }
         //public DbSet<AssetSubAccessoryT> AssetSubAccessoryT { get; set; }
     }
 }

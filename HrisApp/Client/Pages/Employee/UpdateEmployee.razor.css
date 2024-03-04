@@ -1,4 +1,4 @@
-﻿.tabdiv {
+﻿﻿.tabdiv {
     background: #e9ecef;
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
@@ -95,10 +95,11 @@
     padding: 10px 10px 10px 10px;
     transition: all .5s ease;
 }
-::deep .filebtn:hover {
-    border: 2px solid #146ebe;
-    background-color: #D6E5FA;
-}
+
+    ::deep .filebtn:hover {
+        border: 2px solid #146ebe;
+        background-color: #D6E5FA;
+    }
 
 ::deep .btnnext {
     border: none;
@@ -123,6 +124,7 @@
     color: #27374D;
     transition: all .5s ease;
 }
+
     ::deep .btnedit:hover {
         transform: scale(1.1);
     }
@@ -185,7 +187,6 @@
     width: 100%;
 }
 
-
 ::deep .txf:focus-within {
     border: 2px solid black !important;
     border-radius: 10px;
@@ -225,7 +226,6 @@
     height: 45px;
 }
 
-
 /*DATE TIME*/
 ::deep .mud-picker.mud-picker-inline.mud-picker-input-button.txf, ::deep .mud-picker.mud-picker-inline.mud-picker-input-text.txf {
     height: 45px;
@@ -257,7 +257,6 @@
     color: #26446e;
 }
 
-
 /*TABPANELS*/
 
 ::deep .mud-tabs-toolbar {
@@ -275,14 +274,13 @@
     font-size: 15px;
     font-weight: bold;
     border: none;
-/*    border-bottom: 2px solid #D8DADC;
-*/    /*pointer-events: none;*/
+    /*    border-bottom: 2px solid #D8DADC;
+*/ /*pointer-events: none;*/
 }
 
 ::deep .mud-tabs-scroll-button {
     background: #e9ecef;
 }
-
 
 ::deep .mud-tabs-defaultindex {
     color: #78909C;
@@ -469,7 +467,6 @@
     }
 }
 
-
 .Btn {
     display: flex;
     align-items: center;
@@ -495,13 +492,13 @@
     justify-content: center;
 }
 
-    ::deep .sign svg {
-        width: 17px;
-    }
+::deep .sign svg {
+    width: 17px;
+}
 
-        ::deep .sign svg path {
-            color: white;
-        }
+    ::deep .sign svg path {
+        color: white;
+    }
 /* text */
 .text {
     position: absolute;

@@ -1,13 +1,14 @@
-﻿using HrisApp.Client.Pages.Employee;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace HrisApp.Client.Services.ImageService
 {
 #nullable disable
+
     public class ImageService : IImageService
     {
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
         private readonly HttpClient _httpClient;
+
         public ImageService()
         {
             _httpClient = _mainService.Get_Http();
@@ -15,7 +16,6 @@ namespace HrisApp.Client.Services.ImageService
 
         public List<EmpPictureT> EmpPictureTs { get; set; } = new List<EmpPictureT>();
         public List<DocumentT> DocumentTs { get; set; } = new List<DocumentT>();
-
 
         public async Task UpdateDBImage(EmpPictureT img)
         {
@@ -67,7 +67,7 @@ namespace HrisApp.Client.Services.ImageService
                 return _imgs;
             throw new Exception("No Signature Found");
         }
-       
+
         public async Task<List<byte[]>> GetPDFData(string verifyCode, string EmployeeNo)
         {
             try
@@ -102,8 +102,6 @@ namespace HrisApp.Client.Services.ImageService
                 //}
             }
         }
-
-        
 
         public async Task AttachedFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify)
         {
@@ -140,6 +138,7 @@ namespace HrisApp.Client.Services.ImageService
                 return ex.Message;
             }
         }
+
         public async Task<byte[]> Getdocumentfileview(string _employeeId, string _verifyCode, string _filename)
         {
             var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/Document/Getdocumentfileview?employeeId={_employeeId}&verifyCode={_verifyCode}&filename={_filename}");
@@ -147,6 +146,7 @@ namespace HrisApp.Client.Services.ImageService
                 return _imgs;
             throw new Exception("No Signature Found");
         }
+
         public async Task<List<DocumentT>> GetDocuImagelist(string verCode)
         {
             var result = await _httpClient.GetFromJsonAsync<List<DocumentT>>($"api/Document/GetDocuImagelist?verCode={verCode}");

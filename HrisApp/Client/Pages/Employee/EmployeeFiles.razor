@@ -128,7 +128,6 @@
             await ImageService.AttachedFile(content, EmployeeId, division, department, lastname, verify);
             OnFileAdded?.Invoke();
             _toastService.ShowSuccess("File Uploaded Succesfully.");
-
         }
     }
 }

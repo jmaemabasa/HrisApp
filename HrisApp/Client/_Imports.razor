@@ -27,6 +27,7 @@
 @using HrisApp.Client.Pages.Attendance.Component
 @using HrisApp.Client.Pages.Dialog.Employee;
 @using HrisApp.Client.Pages.Applicant.Education
+@using HrisApp.Client.Pages.Assets.Components
 
 
 @using HrisApp.Client.Pages.User.Dashboard
@@ -53,6 +54,10 @@
 @inject IAssetSubCategoryService AssetSubCatService
 @inject IAssetAccessoryService AssetAccService
 @inject IMainAssetAccService MainAssetAccService
+@inject IAssetImageService AssetImageService
+@inject IAssetMasterHistoryService AssetMasHistorySvc
+@inject IAssetLastCheckService AssetLastChkSvc
+
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 @inject GlobalConfigService GlobalConfigService
@@ -69,3 +74,5 @@
 @inject ISectionService SectionService
 @inject IPositionService PositionService
 @inject IAreaService AreaService
+
+@inject IImageService EmpImgService

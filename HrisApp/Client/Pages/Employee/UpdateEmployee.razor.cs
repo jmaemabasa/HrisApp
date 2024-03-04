@@ -7,34 +7,43 @@ namespace HrisApp.Client.Pages.Employee
     public partial class UpdateEmployee : ComponentBase
     {
 #nullable disable
+
         [Parameter]
         public int id { get; set; }
 
-        DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
+        private DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
 
         #region TABLE VARIABLES
-        EmployeeT employee = new();
-        Emp_AddressT _address = new();
-        Emp_PayrollT _payroll = new();
-        PositionT _position = new();
-        SubPositionT _subposition = new();
-        SubPositionT _newsubposition = new();
+
+        private EmployeeT employee = new();
+        private Emp_AddressT _address = new();
+        private Emp_PayrollT _payroll = new();
+        private PositionT _position = new();
+        private SubPositionT _subposition = new();
+        private SubPositionT _newsubposition = new();
+
         //EmpPictureT _empPicture = new();
-        Emp_EmploymentDateT _employmentDate = new();
-        Emp_PosHistoryT _updateposHistory = new();
+        private Emp_EmploymentDateT _employmentDate = new();
+
+        private Emp_PosHistoryT _updateposHistory = new();
         public Emp_PosHistoryT empHistory = new();
-        #endregion
+
+        #endregion TABLE VARIABLES
 
         #region LIST TABLE VARIABLES
+
         //FK
         private List<AreaT> AreasL = new();
+
         private List<StatusT> StatusL = new();
         private List<EmploymentStatusT> EmploymentStatusL = new();
 
         private List<DivisionT> DivisionsL = new();
         private List<DepartmentT> DepartmentsL = new();
+
         //private List<SectionT> SectionsL = new();
         private List<PositionT> PositionsL = new();
+
         private List<SubPositionT> SubPositionsL = new();
         private List<PosMPExternalT> ExternalsL = new();
         private List<PosMPInternalT> InternalsL = new();
@@ -46,6 +55,7 @@ namespace HrisApp.Client.Pages.Employee
 
         //PAYROLL
         private List<CashBondT> CashbondL = new();
+
         private List<ScheduleTypeT> ScheduleTypeL = new();
         private List<RateTypeT> RateTypeL = new();
         private List<RestDayT> RestDayL = new();
@@ -53,9 +63,10 @@ namespace HrisApp.Client.Pages.Employee
         private List<DocumentT> pdffileList = new();
         private List<Emp_PosHistoryT> empHistoryList = new();
 
-        #endregion
+        #endregion LIST TABLE VARIABLES
 
         #region DATES VARIBALE
+
         private DateTime? bday { get; set; }
         private DateTime? Date = DateTime.Today;
         private DateTime? ResignationDate = DateTime.Today;
@@ -69,20 +80,22 @@ namespace HrisApp.Client.Pages.Employee
         private DateTime? ProjEnd = DateTime.Today;
         private DateTime? DateHired = DateTime.Today;
         private DateTime? RegularDate = DateTime.Today;
-        #endregion 
+
+        #endregion DATES VARIBALE
 
         #region DRAWER VARIBALES AND FUNCTIONS
-        bool personalandjobOpen;
-        bool workInfoOpen;
-        bool emerOpen;
-        bool addressOpen;
-        bool documentsOpen;
-        bool ScheduleOpen;
-        bool StatutoryOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
 
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool personalandjobOpen;
+        private bool workInfoOpen;
+        private bool emerOpen;
+        private bool addressOpen;
+        private bool documentsOpen;
+        private bool ScheduleOpen;
+        private bool StatutoryOpen;
+        private Anchor anchor;
+        private string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
             personalandjobOpen = (drawerx == "personalandjobOpen");
             workInfoOpen = (drawerx == "workInfoOpen");
@@ -93,9 +106,10 @@ namespace HrisApp.Client.Pages.Employee
             ScheduleOpen = (drawerx == "ScheduleOpen");
             this.anchor = anchor;
         }
-        #endregion
 
-        string VerifyCode;
+        #endregion DRAWER VARIBALES AND FUNCTIONS
+
+        private string VerifyCode;
         private string NoInformation = "No Information.";
 
         private string ImageData { get; set; }
@@ -149,7 +163,6 @@ namespace HrisApp.Client.Pages.Employee
             //_position = await PositionService.GetSinglePosition(employee.PositionId);
             _position = await PositionService.GetSinglePositionByCode(_subposition.PosCode);
 
-
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(id);
 
             await PDFImage(employee.Verify_Id, employee.EmployeeNo);
@@ -161,7 +174,6 @@ namespace HrisApp.Client.Pages.Employee
             {
                 _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                 await EmployeeImg(employee.Verify_Id);//image
-                Console.WriteLine($"{_updateposHistory.NewAreaId} {_updateposHistory.NewPositionId}");
             }
             catch (Exception)
             {
@@ -170,8 +182,6 @@ namespace HrisApp.Client.Pages.Employee
 
             bday = employee.Birthdate;
             DateHired = employee.DateHired;
-
-           
         }
 
         public async Task OnExporttoPDF()
@@ -222,7 +232,6 @@ namespace HrisApp.Client.Pages.Employee
                     employee.Birthdate = Convert.ToDateTime(bday);
                     employee.DateHired = Convert.ToDateTime(DateHired);
 
-
                     await EmployeeService.UpdateEmployee(employee);
                     await AddressService.UpdateAddress(_address);
                     await PayrollService.UpdatePayroll(_payroll);
@@ -271,9 +280,6 @@ namespace HrisApp.Client.Pages.Employee
                     _subposition.Status = "Inactive";
                     _subposition.InActiveDate = employee.DateInactiveStatus;
                     await PositionService.UpdateSubPosition(_subposition);
-
-
-
 
                     await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                     _toastService.ShowSuccess("Information updated successfully!");
@@ -344,7 +350,6 @@ namespace HrisApp.Client.Pages.Employee
                     }
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
-
                     var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
                     StateService.SetState("HistoryPosList", newList);
                 }
@@ -352,7 +357,6 @@ namespace HrisApp.Client.Pages.Employee
                 //UPDATE SUB POSITION
                 if (employee.PositionId == _subposition.Id)
                 {
-                    
                 }
                 else
                 {
@@ -370,7 +374,6 @@ namespace HrisApp.Client.Pages.Employee
                     await PositionService.GetSubPosition();
                     SubPositionsL = PositionService.SubPositionTs;
                 }
-               
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                 _toastService.ShowSuccess("Information updated successfully!");
@@ -395,13 +398,15 @@ namespace HrisApp.Client.Pages.Employee
         }
 
         #region Image Update
+
         private string imgBase64 { get; set; }
         private string ImageUrl { get; set; }
         private string ImgFileName { get; set; }
         private string ImgContentType { get; set; }
 
-        MultipartFormDataContent EmpImage = new();
-        async Task uploadImage(InputFileChangeEventArgs e)
+        private MultipartFormDataContent EmpImage = new();
+
+        private async Task uploadImage(InputFileChangeEventArgs e)
         {
             long lngImage = long.MaxValue;
             var brwModel = e.File;
@@ -440,8 +445,6 @@ namespace HrisApp.Client.Pages.Employee
                 imgBase64 = string.Format("data:image/*;base64,{0}", base642);
 
                 await OnsavingImg(employee.EmployeeNo, employee.DivisionId, employee.DepartmentId, employee.LastName, employee.Verify_Id);
-
-
             }
         }
 
@@ -454,7 +457,8 @@ namespace HrisApp.Client.Pages.Employee
             await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
             await EmployeeImg(employee.Verify_Id);//image
         }
-        #endregion
+
+        #endregion Image Update
 
         public async Task DeleteEmployee(int id)
         {
@@ -491,24 +495,29 @@ namespace HrisApp.Client.Pages.Employee
         }
 
         #region MUDTABS
-        MudTabs tabs;
+
+        private MudTabs tabs;
         private string slectClasss = "frmselect";
-        #endregion
+
+        #endregion MUDTABS
 
         #region PERSONAL TAB ERROR TRAP
+
         private string slectClasssGender = "frmselect";
         private string slectClasssRela = "frmselect";
         private string txfieldClasssMN = "txf";
         private string txfieldClasssEN = "txf1";
         private string txfieldClasssEA = "txf1";
         private string txfieldClasssEMN = "txf";
-        #endregion
+
+        #endregion PERSONAL TAB ERROR TRAP
 
         #region TAB CLASS
-        //TAB PANEL
-        int activeIndex;
 
-        RenderFragment tabHeader(int tabId)
+        //TAB PANEL
+        private int activeIndex;
+
+        private RenderFragment tabHeader(int tabId)
         {
             return builder =>
             {
@@ -581,7 +590,7 @@ namespace HrisApp.Client.Pages.Employee
             };
         }
 
-        string GetTabChipClass(int tabId)
+        private string GetTabChipClass(int tabId)
         {
             if (activeIndex > tabId)
             {
@@ -606,7 +615,7 @@ namespace HrisApp.Client.Pages.Employee
             }
         }
 
-        string GetTabTextClass(int tabId)
+        private string GetTabTextClass(int tabId)
         {
             if (activeIndex > tabId)
             {
@@ -621,9 +630,11 @@ namespace HrisApp.Client.Pages.Employee
                 return "mud-text-default";
             }
         }
-        #endregion
+
+        #endregion TAB CLASS
 
         #region FUNCTIONS / BUTTONS
+
         private void OpenPdf(string name)
         {
             TokenSetGet.Set_Employeemodel(employee);
@@ -696,6 +707,7 @@ namespace HrisApp.Client.Pages.Employee
                 _ => "",
             };
         }
+
         private static string StatusTextColor(string status)
         {
             return status switch
@@ -719,10 +731,10 @@ namespace HrisApp.Client.Pages.Employee
                 //Console.WriteLine($"2nd Test: {verifyCode}");
             }
         }
+
         private void HandleDateHiredChanged(DateTime? newDate)
         {
             DateHired = newDate;
-            Console.WriteLine(DateHired.ToString());
             if (DateHired.HasValue)
             {
                 // Calculate the regularization date, which is 6 months after the DateHired.
@@ -746,6 +758,7 @@ namespace HrisApp.Client.Pages.Employee
                 RegularDate = null;
             }
         }
+
         //bool success;
         //private void OnValidSubmit(EditContext context)
         //{
@@ -753,9 +766,8 @@ namespace HrisApp.Client.Pages.Employee
         //    StateHasChanged();
         //}
 
+        private void Backbtn() => NavigationManager.NavigateTo("/employee");
 
-        void Backbtn() => NavigationManager.NavigateTo("/employee");
-        #endregion
-
+        #endregion FUNCTIONS / BUTTONS
     }
 }

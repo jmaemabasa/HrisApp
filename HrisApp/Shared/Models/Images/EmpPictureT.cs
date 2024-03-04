@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using HrisApp.Shared.Models.MasterData;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HrisApp.Shared.Models.MasterData;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrisApp.Shared.Models.Images
 {
@@ -14,6 +9,7 @@ namespace HrisApp.Shared.Models.Images
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
+
         public string EmployeeNo { get; set; } = string.Empty;
         public string Img_Filename { get; set; } = string.Empty;
         public string Img_Contenttype { get; set; } = string.Empty;

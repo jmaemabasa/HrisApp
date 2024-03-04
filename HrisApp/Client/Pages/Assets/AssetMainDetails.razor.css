@@ -71,6 +71,157 @@
             transform: scale(1.1);
         }
 
+.asset-code {
+    font-weight: bold;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    margin-top: .5rem;
+    color: #27374D;
+}
+
+.asset-img-img {
+    /* width: 100%; */
+    border-radius: 10px;
+    object-fit: fill;
+    width: 255px;
+    height: 180px;
+}
+
+.emp-img {
+    border-radius: 10px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.btn-returned {
+    background-color: #27374D;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 6px 15px;
+    transition: all .5s ease;
+}
+
+    .btn-returned:hover {
+        background-color: #3a5273;
+        transform: scale(1.1);
+    }
+/*TABPANELS*/
+::deep .mud-tabs-toolbar {
+    margin-left: 26px;
+}
+
+::deep .mud-tab.mud-tab-active {
+    color: #26446e;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-toolbar-content {
+    background: #e9ecef;
+    color: #78909C;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    /*    border-bottom: 2px solid #D8DADC;
+*/ /*pointer-events: none;*/
+}
+
+::deep .mud-tabs-scroll-button {
+    background: #e9ecef;
+}
+
+::deep .mud-tabs-defaultindex {
+    color: #78909C;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-afterindex {
+    color: #79AC78;
+    font-weight: bold;
+    border-bottom: 2px solid #79AC78;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-active {
+    font-weight: bold;
+    color: white;
+    background-color: #26446e;
+    margin-right: 15px;
+    padding: 8px;
+    pointer-events: none;
+}
+
+::deep .mud-chip-after0 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.1;
+    padding: 8px;
+    pointer-events: none;
+}
+
+::deep .mud-chip-after1 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.2;
+    padding: 8px;
+    pointer-events: none;
+}
+
+::deep .mud-chip-after2 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.3;
+    padding: 8px;
+    pointer-events: none;
+}
+
+::deep .mud-chip-after3 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.4;
+    padding: 8px;
+    pointer-events: none;
+}
+
+::deep .mud-chip-after {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.5;
+    padding: 8px;
+    pointer-events: none;
+}
+
+::deep .mud-chip-default {
+    font-weight: bold;
+    color: white;
+    background-color: #C5CFD2;
+    margin-right: 15px;
+    padding: 8px;
+    pointer-events: none;
+}
+
+::deep .mud-text-after {
+    color: #0A86C2;
+    font-weight: bold;
+    opacity: 0.2;
+}
+
+::deep .mud-text-default {
+    font-weight: bold;
+}
+
 .Btn {
     display: flex;
     align-items: center;

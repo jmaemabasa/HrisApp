@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace HrisApp.Server.Controllers.ImageC
+﻿namespace HrisApp.Server.Controllers.ImageC
 {
 #nullable disable
+
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
@@ -71,7 +70,6 @@ namespace HrisApp.Server.Controllers.ImageC
                         var db = await _context.EmpPictureT.Where(a => a.EmployeeNo == EmployeeId && a.Verify_Id == verify && a.DepartmentId == department).FirstOrDefaultAsync();
                         if (db != null)
                         {
-
                             //delete previous image
                             var previousImagePath = Path.Combine(filePath, db.Img_Filename);
                             if (System.IO.File.Exists(previousImagePath))
