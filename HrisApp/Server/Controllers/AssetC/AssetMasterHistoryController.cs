@@ -82,13 +82,12 @@
         }
 
         [HttpPut("UpdateDateReturned")]
-        public async Task<ActionResult> UpdateDateReturned([FromQuery] int empid, [FromQuery] int mainassetid, [FromQuery] DateTime? released, [FromQuery] DateTime? toreturn, AssetMasterHistoryT model)
+        public async Task<ActionResult> UpdateDateReturned([FromQuery] int empid, [FromQuery] int mainassetid, [FromQuery] DateTime? released, AssetMasterHistoryT model)
         {
             var dbObj = await _context.AssetMasterHistoryT.Where(
                 d => d.EmployeeId == empid
                      && d.MainAssetId == mainassetid
-                     && d.AssignedDateReleased.Value.Date == released.Value.Date
-                     && d.AssignedDateToReturn.Value.Date == toreturn.Value.Date)
+                     && d.AssignedDateReleased.Value.Date == released.Value.Date)
                 .FirstOrDefaultAsync();
 
             dbObj.EndDate = model.EndDate;

@@ -115,5 +115,10 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
                 AssetImageTs = result;
             }
         }
+
+        public async Task DeleteAssetImg(string filename, string assetcode)
+        {
+            await _httpClient.DeleteAsync($"api/AssetImage/DeleteAssetImg?filename={filename}&assetcode={assetcode}");
+        }
     }
 }

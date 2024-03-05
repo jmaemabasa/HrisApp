@@ -76,10 +76,7 @@
                 {
                     foreach (var file in httpRequest.Form.Files)
                     {
-                        var divisionName = await _context.DivisionT.Where(d => d.Id == category).Select(d => d.Name).FirstOrDefaultAsync();
-                        var departmentName = await _context.DepartmentT.Where(d => d.Id == subcat).Select(d => d.Name).FirstOrDefaultAsync();
-
-                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", jmcode + "_" + jmcode);
+                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", assetcode + "_" + jmcode);
                         if (!Directory.Exists(filePath))
                             Directory.CreateDirectory(filePath);
 
@@ -148,7 +145,7 @@
                         var divisionName = await _context.DivisionT.Where(d => d.Id == category).Select(d => d.Name).FirstOrDefaultAsync();
                         var departmentName = await _context.DepartmentT.Where(d => d.Id == subcat).Select(d => d.Name).FirstOrDefaultAsync();
 
-                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", jmcode + "_" + jmcode);
+                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", assetcode + "_" + jmcode);
                         if (!Directory.Exists(filePath))
                             Directory.CreateDirectory(filePath);
 
@@ -225,6 +222,30 @@
         {
             var filteredDiv = await _context.AssetImageT.Where(x => x.JM_Code == jmcode).ToListAsync();
             return Ok(filteredDiv);
+        }
+
+        [HttpDelete("DeleteAssetImg")]
+        public async Task<ActionResult<List<AssetImageT>>> DeleteAssetImg([FromQuery] string filename, [FromQuery] string assetcode)
+        {
+            var dbcol = await _context.AssetImageT
+                .Where(h => h.Img_Filename.Equals(filename) && h.AssetCode.Equals(assetcode))
+                .FirstOrDefaultAsync();
+
+            if (dbcol == null)
+                return NotFound("Sorry, but no senior");
+
+            var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", assetcode + "_" + dbcol.JM_Code);
+            var previousImagePath = Path.Combine(filePath, dbcol.Img_Filename);
+            if (System.IO.File.Exists(previousImagePath))
+            {
+                System.IO.File.Delete(previousImagePath);
+            }
+
+            _context.AssetImageT.Remove(dbcol);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbcol);
         }
     }
 }

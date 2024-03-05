@@ -86,7 +86,7 @@ namespace HrisApp.Client.Pages.Assets
                 await AssetImageService.GetAllImagesPerAss(obj.Code);
                 assetImgList = AssetImageService.AssetImageTs;
 
-                await tstststs();
+                await ImgByAssetData();
 
                 if (obj.EmployeeId != null)
                 {
@@ -98,16 +98,16 @@ namespace HrisApp.Client.Pages.Assets
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex);
+                //Console.WriteLine(ex.Message);
                 ImageData = string.Format("images/asset-holder.jpg");
                 ImageEmployee = string.Format("images/imgholder.jpg");
             }
         }
 
-        private List<string> ts = new();
+        private List<string> ImgByAssetList = new();
 
-        private async Task tstststs()
+        private async Task ImgByAssetData()
         {
             foreach (var item in assetImgList)
             {
@@ -117,7 +117,7 @@ namespace HrisApp.Client.Pages.Assets
                     if (imagemodel != null)
                     {
                         var base642 = Convert.ToBase64String(imagemodel);
-                        ts.Add(string.Format("data:image/png;base64,{0}", base642));
+                        ImgByAssetList.Add(string.Format("data:image/png;base64,{0}", base642) + "xxJMGWAPAxx" + item.Img_Filename);
                     }
                 }
                 catch (Exception)
@@ -127,14 +127,58 @@ namespace HrisApp.Client.Pages.Assets
             }
         }
 
+        private async Task DeleteAssetImg(string filename, string assetcode)
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Pernamently delete the image? \n You can't undo this.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (confirmResult.IsConfirmed)
+            {
+                await AssetImageService.DeleteAssetImg(filename, assetcode);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+
+                await AssetImageService.GetAllImagesPerAss(obj.Code);
+                assetImgList = AssetImageService.AssetImageTs;
+
+                ImgByAssetList.Clear();
+                await ImgByAssetData();
+
+                try
+                {
+                    await AssetImg(obj.Code);//image
+                }
+                catch (Exception)
+                {
+                    ImageData = string.Format("images/asset-holder.jpg");
+                }
+
+                StateHasChanged();
+            }
+        }
+
         private async void RefreshPdfFileList()
         {
-            ts.Clear();
-            await AssetImageService.GetAllImagesPerAss(obj.Code);
-            assetImgList = AssetImageService.AssetImageTs;
+            try
+            {
+                ImgByAssetList.Clear();
+                await AssetImageService.GetAllImagesPerAss(obj.Code);
+                assetImgList = AssetImageService.AssetImageTs;
 
-            await tstststs();
-            StateHasChanged();
+                await ImgByAssetData();
+                await AssetImg(obj.Code);//image
+                StateHasChanged();
+            }
+            catch (Exception)
+            {
+                ImageData = string.Format("images/asset-holder.jpg");
+            }
         }
 
         private async Task SaveUpdate()
@@ -188,7 +232,7 @@ namespace HrisApp.Client.Pages.Assets
 
         private async Task SaveAssignDateReturned()
         {
-            await AssetMasHistorySvc.UpdateDateReturned((int)obj.EmployeeId!, obj.Id, obj.AssignedDateReleased, obj.AssignedDateToReturn, assetHistoryObj);
+            await AssetMasHistorySvc.UpdateDateReturned((int)obj.EmployeeId!, obj.Id, obj.AssignedDateReleased, assetHistoryObj);
 
             obj.EmployeeId = null;
             obj.AssetStatusId = 2;

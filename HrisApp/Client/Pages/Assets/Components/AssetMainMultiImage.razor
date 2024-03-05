@@ -1,6 +1,28 @@
-﻿<MudItem xs="12">
+﻿<style>
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+
+    .btnaddfile {
+        background-color: #27374D;
+        color: #ffffff;
+        font-weight: bold;
+        border-radius: 20px;
+        padding: 6px 15px;
+        transition: all .5s ease;
+    }
+
+        .btnaddfile:hover {
+            background-color: #3a5273;
+            transform: scale(1.1);
+        }
+</style>
+
+<MudItem xs="12">
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
-        <div><span class="spantitle mb-3">PDF Files (TOR, Certificates, & etc.)</span></div>
+        <div><span class="spantitle mb-3">Images</span></div>
         <div style="margin: 0px;">
             @for (int i = 0; i < listOfDocuments.Count; i++)
             {
@@ -14,8 +36,8 @@
                             @if (isuploading)
                             {
                                 <MudButton HtmlTag="label" Class="btnaddfile" for="@fileContext" Style="text-transform: none;">
-                                    <MudProgressCircular Color="Color.Default" Size="Size.Small" Indeterminate="true" />
-                                    Uploading
+                                    <MudProgressCircular Color="Color.Warning" Size="Size.Small" Indeterminate="true" />
+                                    <span style="margin-left: 7px">Uploading</span>
                                 </MudButton>
                             }
                             else
@@ -78,14 +100,27 @@
 
     private async Task UploadFiles(IReadOnlyList<IBrowserFile> files)
     {
-        isuploading = true;
-        foreach (var file in files)
+        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure to upload this image/s?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+        if (confirmResult.IsConfirmed)
         {
-            await OnPDFSaving123(file);
+            isuploading = true;
+            foreach (var file in files)
+            {
+                await OnPDFSaving123(file);
+            }
+            OnFileAdded?.Invoke();
+            await Task.Delay(2000);
+            isuploading = false;
         }
-        OnFileAdded?.Invoke();
-        await Task.Delay(2000);
-        isuploading = false;
     }
 
     private async Task OnPDFSaving123(IBrowserFile e)

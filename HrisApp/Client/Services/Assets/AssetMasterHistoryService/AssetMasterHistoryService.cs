@@ -48,9 +48,9 @@
             await _httpClient.PutAsJsonAsync("api/AssetMasterHistory/UpdateObj", model);
         }
 
-        public async Task UpdateDateReturned(int empid, int mainassetid, DateTime? released, DateTime? toreturn, AssetMasterHistoryT model)
+        public async Task UpdateDateReturned(int empid, int mainassetid, DateTime? released, AssetMasterHistoryT model)
         {
-            await _httpClient.PutAsJsonAsync($"api/AssetMasterHistory/UpdateDateReturned?empid={empid}&mainassetid={mainassetid}&released={released}&toreturn={toreturn}", model);
+            await _httpClient.PutAsJsonAsync($"api/AssetMasterHistory/UpdateDateReturned?empid={empid}&mainassetid={mainassetid}&released={released}", model);
         }
     }
 }

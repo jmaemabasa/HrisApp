@@ -1,15 +1,4 @@
-﻿@inject SweetAlertService Swal
-@inject IAreaService AreaService
-@inject NavigationManager NavigationManager
-@inject IJSRuntime jsRuntime
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject StateService StateService
-@inject IDialogService _dialogService
-
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <MudTextField Label="Area" @bind-Value="newArea" Variant="Variant.Outlined"></MudTextField>
     </DialogContent>

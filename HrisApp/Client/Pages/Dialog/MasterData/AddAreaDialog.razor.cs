@@ -3,17 +3,15 @@
     public partial class AddAreaDialog : ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         private string newArea = "";
 
-        void Cancel() => MudDialog.Cancel();
-
+        private void Cancel() => MudDialog.Cancel();
 
         private async Task ConfirmCreateArea()
         {
             if (string.IsNullOrWhiteSpace(newArea))
             {
-                //await ShowErrorMessageBox("Please fill up the area name!");
                 GlobalConfigService.OpenWarningDialog("Please fill up the area name.");
             }
             else
@@ -39,18 +37,10 @@
 
                     // Update the areaList using the StateService
                     await AreaService.GetArea();
-                    var newAreaList =  AreaService.AreaTs;
+                    var newAreaList = AreaService.AreaTs;
                     StateService.SetState("AreaList", newAreaList);
                 }
             }
         }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
-        }
-
     }
 }

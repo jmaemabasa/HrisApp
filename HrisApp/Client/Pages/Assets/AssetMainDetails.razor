@@ -145,16 +145,16 @@
                                             var isEuf = obj.PurchaseDate.HasValue && DateTime.Today > obj.PurchaseDate.Value.AddMonths(eufMonths);
                                             if (isEuf)
                                             {
-                                                <MudText Align="Align.Start" Style="color: #be1313; font-weight:bold;" Typo="Typo.body2">@eufMonths Months</MudText>
+                                                                            <MudText Align="Align.Start" Style="color: #be1313; font-weight:bold;" Typo="Typo.body2">@eufMonths Months</MudText>
                                             }
                                             else
                                             {
-                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@eufMonths Months</MudText>
+                                                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@eufMonths Months</MudText>
                                             }
                                         }
                                         else
                                         {
-                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">0 Months</MudText>
+                                                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">0 Months</MudText>
                                         }
                                     }
                                 </MudItem>
@@ -176,55 +176,63 @@
                                 </Authorized>
                             </AuthorizeView>
                         </div>
-                        <div class="d-flex flex-column">
-                            @foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
-                            {
-                                <div class="d-flex acc-cont" @onclick="()=>OpenAccessoriesDialog(item.Id)">
-                                    <MudItem xs="12" sm="3"><span class="asset">@item.Asset</span></MudItem>
-                                    <MudItem xs="12" sm="4"><span>@item.SubCategory?.ASubCat_Name</span></MudItem>
-                                    <MudItem xs="12" sm="2"><span>@item.PurchaseDate?.ToString("MMM dd yyyy")</span></MudItem>
 
-                                    @{
-                                        var isEuf = item.PurchaseDate.HasValue && DateTime.Today > item.PurchaseDate.Value.AddMonths(Convert.ToInt32(item.EUF));
-                                    }
+                        @if (ACCESSORIES.Where(e => e.MainAssetId == obj.Id) == null || ACCESSORIES.Where(e => e.MainAssetId == obj.Id).ToList().Count == 0)
+                        {
+                            <span style="font-style: italic;">No accessories</span>
+                        }
+                        else {
+                            <div class="d-flex flex-column">
+                                @foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
+                                {
+                                    <div class="d-flex acc-cont" @onclick="()=>OpenAccessoriesDialog(item.Id)">
+                                        <MudItem xs="12" sm="3"><span class="asset">@item.Asset</span></MudItem>
+                                        <MudItem xs="12" sm="4"><span>@item.SubCategory?.ASubCat_Name</span></MudItem>
+                                        <MudItem xs="12" sm="2"><span>@item.PurchaseDate?.ToString("MMM dd yyyy")</span></MudItem>
 
-                                    @if (isEuf)
-                                    {
-                                        <MudItem xs="12" sm="2"><span style="color: #be1313">@item.EUF Months</span></MudItem>
-                                    }
-                                    else
-                                    {
-                                        <MudItem xs="12" sm="2"><span>@item.EUF Months</span></MudItem>
-                                    }
+                                        @{
+                                            var isEuf = item.PurchaseDate.HasValue && DateTime.Today > item.PurchaseDate.Value.AddMonths(Convert.ToInt32(item.EUF));
+                                        }
 
-                                    @if (item.AssetStatusId == 2)
-                                    {
-                                        <MudItem xs="12" sm="2"><span style="color: gray;">@item.AssetStatus?.Name</span></MudItem>
-                                    }
-                                    else if (item.AssetStatusId == 3)
-                                    {
-                                        <MudItem xs="12" sm="2"><span style="color: #7567b8;">@item.AssetStatus?.Name</span></MudItem>
-                                    }
-                                    else if (item.AssetStatusId == 4)
-                                    {
-                                        <MudItem xs="12" sm="2"><span style="color: #9caac1;">@item.AssetStatus?.Name</span></MudItem>
-                                    }
-                                    else if (item.AssetStatusId == 5)
-                                    {
-                                        <MudItem xs="12" sm="2"><span style="color: #e38d0f;">@item.AssetStatus?.Name</span></MudItem>
+                                        @if (isEuf)
+                                        {
+                                            <MudItem xs="12" sm="2"><span style="color: #be1313">@item.EUF Months</span></MudItem>
+                                        }
+                                        else
+                                        {
+                                            <MudItem xs="12" sm="2"><span>@item.EUF Months</span></MudItem>
+                                        }
 
-                                    }
-                                    else if (item.AssetStatusId == 6)
-                                    {
-                                        <MudItem xs="12" sm="2"><span style="color: #be1313;">@item.AssetStatus?.Name</span></MudItem>
-                                    }
-                                    else
-                                    {
-                                        <MudItem xs="12" sm="2"><span style="color: #397763;">@item.AssetStatus?.Name</span></MudItem>
-                                    }
-                                </div>
-                            }
-                        </div>
+                                        @if (item.AssetStatusId == 2)
+                                        {
+                                            <MudItem xs="12" sm="2"><span style="color: gray;">@item.AssetStatus?.Name</span></MudItem>
+                                        }
+                                        else if (item.AssetStatusId == 3)
+                                        {
+                                            <MudItem xs="12" sm="2"><span style="color: #7567b8;">@item.AssetStatus?.Name</span></MudItem>
+                                        }
+                                        else if (item.AssetStatusId == 4)
+                                        {
+                                            <MudItem xs="12" sm="2"><span style="color: #9caac1;">@item.AssetStatus?.Name</span></MudItem>
+                                        }
+                                        else if (item.AssetStatusId == 5)
+                                        {
+                                            <MudItem xs="12" sm="2"><span style="color: #e38d0f;">@item.AssetStatus?.Name</span></MudItem>
+
+                                        }
+                                        else if (item.AssetStatusId == 6)
+                                        {
+                                            <MudItem xs="12" sm="2"><span style="color: #be1313;">@item.AssetStatus?.Name</span></MudItem>
+                                        }
+                                        else
+                                        {
+                                            <MudItem xs="12" sm="2"><span style="color: #397763;">@item.AssetStatus?.Name</span></MudItem>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                       
                     </div>
                 </MudTabPanel>
                 <MudTabPanel TabContent="tabHeader(1)">
@@ -358,7 +366,7 @@
                             <div class="row">
                                 @if (obj.EmployeeId == null)
                                 {
-                                    <span>Not used</span>
+                                    <span style="font-style: italic;">Not currently used</span>
                                 }
                                 else
                                 {
@@ -399,7 +407,7 @@
                         <div class="d-flex flex-column gap-3">
                             @if (MAINHISTORY.Where(e => e.EndDate != null && e.MainAssetId == obj.Id) == null || MAINHISTORY.Where(e => e.EndDate != null && e.MainAssetId == obj.Id).ToList().Count == 0)
                             {
-                                <span>Never been used</span>
+                                <span style="font-style: italic;">Never been used</span>
                             }
                             else
                             {
@@ -444,7 +452,7 @@
                         <div class="d-flex flex-column gap-3">
                             @if (LASTCHK.Where(e => e.MainAssetId == obj.Id) == null || LASTCHK.Where(e => e.MainAssetId == obj.Id).ToList().Count == 0)
                             {
-                                <span>No maintenance yet</span>
+                                <span style="font-style: italic;">No maintenance yet</span>
                             }
                             else
                             {
@@ -479,27 +487,53 @@
                 <MudTabPanel TabContent="tabHeader(4)">
                     <AssetMainMultiImage MainAssetId="@obj.Id" MainAssetCode="@obj.AssetCode" JMCode="@obj.Code" Catid="@obj.CategoryId" SubCatid="obj.SubCategoryId" OnFileAdded="@RefreshPdfFileList" />
                     <div class="" Style="margin-top: 1rem;">
-                        @if (ts.Any())
+                        @if (ImgByAssetList.Any())
                         {
-                            <div class="d-flex gap-2 flex-wrap">
+                            <div class="d-flex gap-3 flex-wrap">
 
-                                @foreach (var item in ts)
+                                @foreach (var item in ImgByAssetList)
                                 {
-                                    <img src="@item" height="150px" width="150px" />
+                                    var ssrcc = item.Split("xxJMGWAPAxx")[0];
+                                    var ssrccalt = item.Split("xxJMGWAPAxx")[1];
+                                    <div class="imgassetdiv">
+                                        <img id="myImg" class="imgasset" src="@ssrcc" alt="@ssrccalt" />
+                                        <div class="topright">
+                                            <MudTooltip Text="Remove">
+                                            <button type="button" class="btn assetdelteimg" onclick="@(() => DeleteAssetImg(ssrccalt, obj.AssetCode))">
+                                                 <MudIcon Icon="@Icons.Material.Rounded.Delete" />
+                                            </button>
+                                            </MudTooltip>
+                                        </div>
+                                        <div class="middle">
+                                            <div class="textsss">
+                                                <MudTooltip Text="View">
+                                                    <MudIcon Icon="@Icons.Material.Rounded.ZoomIn" Style="font-size: 4rem;" />
+                                                </MudTooltip>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                             </div>
 
                         }
                         else
                         {
-                            <MudChip Color="Color.Primary">No Files found!</MudChip>
+                            <span style="font-style: italic;">No Images found!</span>
                         }
+
                     </div>
                 </MudTabPanel>
             </MudTabs>
         </div>
     </MudItem>
 </MudGrid>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span id="closemodalimg" class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
 
 <MudDrawer @bind-Open="@leftPanelOpen" Width="500px" Height="100%" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <div class="d-flex flex-column gap-2 drawerdetails">
@@ -712,10 +746,6 @@
                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date Released</MudText>
                 <MudDatePicker Editable="true" @bind-Date="obj.AssignedDateReleased" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
             </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date To Return</MudText>
-                <MudDatePicker Editable="true" @bind-Date="obj.AssignedDateToReturn" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
         }
         else
         {
@@ -749,10 +779,6 @@
             <div class="flex-grow-1">
                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date Released</MudText>
                 <MudDatePicker Editable="true" @bind-Date="obj.AssignedDateReleased" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date To Return</MudText>
-                <MudDatePicker Editable="true" @bind-Date="obj.AssignedDateToReturn" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
             </div>
         }
         <div class="d-flex justify-content-center">
@@ -812,5 +838,33 @@
         function truncateString(value, maxLength) {
             return value.length <= maxLength ? value : value.substring(0, maxLength) + "...";
         }
+    });
+
+    $(document).ready(function () {
+        $(document).on('click', '.textsss', function () {
+            console.log("yawa");
+            $('#myModal').css("display", "block");
+            $('#myModal').css('z-index', 999999999);
+            $('#img01').attr('src', $(this).parentsUntil("imgassetdiv").children(".imgasset").attr('src'));
+            $('#caption').text($(this).parentsUntil("imgassetdiv").children(".imgasset").attr('alt'));
+        });
+
+        $(document).on('click', '.imgasset', function () {
+            console.log("yawa");
+            $('#myModal').css("display", "block");
+            $('#myModal').css('z-index', 999999999);
+            $('#img01').attr('src', $(this).attr('src'));
+            $('#caption').text($(this).attr('alt'));
+        });
+
+        $(document).on('click', '#closemodalimg', function () {
+            $('#myModal').css("display", "none");
+        });
+
+        $(document).keydown(function (event) {
+            if (event.keyCode == 27) {
+                $('#myModal').css("display", "none");
+            }
+        });
     });
 </script>

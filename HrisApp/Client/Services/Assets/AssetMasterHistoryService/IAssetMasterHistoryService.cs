@@ -14,6 +14,6 @@
 
         Task UpdateObj(AssetMasterHistoryT model);
 
-        Task UpdateDateReturned(int empid, int mainassetid, DateTime? released, DateTime? toreturn, AssetMasterHistoryT model);
+        Task UpdateDateReturned(int empid, int mainassetid, DateTime? released, AssetMasterHistoryT model);
     }
 }

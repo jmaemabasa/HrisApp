@@ -19,5 +19,7 @@
         Task<List<AssetImageT>> GetObjList();
 
         Task GetAllImagesPerAss(string jmcode);
+
+        Task DeleteAssetImg(string filename, string assetcode);
     }
 }

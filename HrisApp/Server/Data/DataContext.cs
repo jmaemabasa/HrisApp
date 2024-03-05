@@ -249,6 +249,13 @@ namespace HrisApp.Server.Data
              new RestDayT { Id = 5, Name = "FOR DISPOSAL" },
              new RestDayT { Id = 6, Name = "DISPOSED" }
             );
+
+            modelBuilder.Entity<AssetTypesT>().HasData(
+             new AssetTypesT { Id = 1, AType_Code = "001", AType_Name = "Main" },
+             new AssetTypesT { Id = 2, AType_Code = "002", AType_Name = "Accessory" },
+             new AssetTypesT { Id = 3, AType_Code = "003", AType_Name = "Licenses" },
+             new AssetTypesT { Id = 4, AType_Code = "004", AType_Name = "Consumables" }
+            );
         }
 
         //USERS
