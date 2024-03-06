@@ -1,12 +1,6 @@
-﻿using HrisApp.Shared.Models.MasterData;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using HrisApp.Shared.Models.Assets;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HrisApp.Shared.Models.Assets;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrisApp.Shared.Models.Images
 {
@@ -30,5 +24,6 @@ namespace HrisApp.Shared.Models.Images
         public byte[]? Img_Data { get; set; }
         public DateTime Img_Date { get; set; }
         public string JM_Code { get; set; } = string.Empty;
+        public string Remarks { get; set; } = string.Empty;
     }
 }

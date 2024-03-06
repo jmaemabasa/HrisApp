@@ -1,16 +1,4 @@
-﻿@inject IPositionService PositionService
-@inject IAreaService AreaService
-@inject SweetAlertService Swal
-@inject NavigationManager navigationManager
-@inject IJSRuntime jsRuntime
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject StateService StateService
-@inject IManpowerService ManpowerService
-@inject IEmployeeService EmployeeService
-
-<style>
+﻿<style>
     .divsingledetails {
         background-color: #424242;
         padding: 7px 15px 7px 15px;
@@ -306,7 +294,7 @@
         {
             if (item.Verify_Id == verid)
             {
-                navigationManager.NavigateTo($"/employee/edit/{item.Id}");
+                NavigationManager.NavigateTo($"/employee/edit/{item.Id}");
             }
         }
        

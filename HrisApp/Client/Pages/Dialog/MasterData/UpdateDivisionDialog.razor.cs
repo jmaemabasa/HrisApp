@@ -6,16 +6,14 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
     public partial class UpdateDivisionDialog : ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
-
         private DivisionT division = new();
 
-
-        void Cancel() => MudDialog.Cancel();
-
+        private void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnParametersSetAsync()
         {
@@ -23,7 +21,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             division = await DivisionService.GetSingleDivision(Id);
         }
 
-        async Task UpdateArea()
+        private async Task UpdateArea()
         {
             if (division == null)
                 return;
@@ -35,7 +33,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             }
             else
             {
-
                 MudDialog.Close();
 
                 var confirmResult = await Swal.FireAsync(new SweetAlertOptions
@@ -60,13 +57,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     StateService.SetState("DivisionList", newList);
                 }
             }
-        }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
         }
     }
 }

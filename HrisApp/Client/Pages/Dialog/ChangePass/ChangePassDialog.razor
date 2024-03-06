@@ -8,10 +8,6 @@
         <span style="font-size: x-large;">Change Password</span>
     </div>
     <MudDivider DividerType="DividerType.Middle" Class="my-6" />
-    @if (showAlert)
-    {
-        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@message</MudAlert>
-    }
     <EditForm Model="cpass" OnValidSubmit="ChangePassword">
         <DataAnnotationsValidator />
         <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">            
@@ -47,13 +43,6 @@
 
     ChangePassDTO cpass = new();
     private bool _processing = false;
-
-
-    // MudAlert properties
-    string message = string.Empty;
-    MudBlazor.Severity _severity;
-    private bool showAlert = false;
-    public void CloseMe() => showAlert = false;
 
     string roleholder = string.Empty;
 

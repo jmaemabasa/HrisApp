@@ -51,10 +51,8 @@
         obj.DateStart = DateTime.Now;
     }
 
-    bool success;
     private async void OnValidSubmit(EditContext context)
     {
-        success = true;
         StateHasChanged();
 
         await ConfirmCreate();

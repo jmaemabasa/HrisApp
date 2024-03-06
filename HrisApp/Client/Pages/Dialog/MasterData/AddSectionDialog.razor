@@ -1,16 +1,4 @@
-﻿@inject NavigationManager navigationManager
-@inject SweetAlertService Swal
-@inject IJSRuntime jsRuntime
-@inject ISectionService SectionService
-@inject IDivisionService DivisionService
-@inject IDepartmentService DepartmentService
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject StateService StateService
-@inject IDialogService _dialogService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         @if (selectedDepartment != 0)
         {

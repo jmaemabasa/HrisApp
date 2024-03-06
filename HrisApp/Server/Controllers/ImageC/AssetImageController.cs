@@ -67,7 +67,7 @@
 
         //NEW DAGDAG 4.1.23
         [HttpPost("PostUploadImage")]
-        public async Task<IActionResult> PostUploadImage([FromQuery] string assetcode, [FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode)
+        public async Task<IActionResult> PostUploadImage([FromQuery] string assetcode, [FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string Remarks)
         {
             try
             {
@@ -115,6 +115,7 @@
                                 CategoryId = category,
                                 SubCategoryId = subcat,
                                 JM_Code = jmcode,
+                                Remarks = Remarks,
                             };
                             _context.AssetImageT.Add(_Model);
                             await _context.SaveChangesAsync();
@@ -133,7 +134,7 @@
         }
 
         [HttpPost("PostUploadImagePanel")]
-        public async Task<IActionResult> PostUploadImagePanel([FromQuery] string assetcode, [FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode)
+        public async Task<IActionResult> PostUploadImagePanel([FromQuery] string assetcode, [FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string Remarks)
         {
             try
             {
@@ -167,6 +168,7 @@
                             CategoryId = category,
                             SubCategoryId = subcat,
                             JM_Code = jmcode,
+                            Remarks = Remarks,
                         };
                         _context.AssetImageT.Add(_Model);
                         await _context.SaveChangesAsync();

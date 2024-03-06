@@ -36,7 +36,7 @@
                         <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
                         @foreach (var item in AssetAccessoryList.Where(e => e.MainAssetId == null && e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
                         {
-                            <MudSelectItem Value="@item.Id">@item.Asset</MudSelectItem>
+                            <MudSelectItem Value="@item.Id">@item.AssetCode</MudSelectItem>
                         }
                     </MudSelect>
                 </div>

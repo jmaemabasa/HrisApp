@@ -5,13 +5,14 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
     public partial class UpdateAreaDialog : ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
         private AreaT area = new();
 
-        void Cancel() => MudDialog.Cancel();
+        private void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnParametersSetAsync()
         {
@@ -19,7 +20,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             area = await AreaService.GetSingleArea((int)Id);
         }
 
-        async Task UpdateArea()
+        private async Task UpdateArea()
         {
             if (area == null)
                 return;
@@ -54,13 +55,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     StateService.SetState("AreaList", newAreaList);
                 }
             }
-        }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
         }
     }
 }

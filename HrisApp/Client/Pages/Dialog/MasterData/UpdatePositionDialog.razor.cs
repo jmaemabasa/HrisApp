@@ -3,12 +3,12 @@
     public partial class UpdatePositionDialog : Microsoft.AspNetCore.Components.ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
         private List<AreaT> Areas = new();
-        private List<PosMPInternalT> Internals = new();
         private List<PosMPExternalT> Externals = new();
         public List<PositionTechSkillT> listOfTechSkills = new();
         public List<PositionKnowledgeT> listOfKnowledge = new();
@@ -23,9 +23,10 @@
 
         private string newPosTypeHolder = "";
 
-
         private PositionT position = new();
-        void Cancel() => MudDialog.Cancel();
+
+        private void Cancel() => MudDialog.Cancel();
+
         protected override async Task OnInitializedAsync()
         {
             await AreaService.GetArea();
@@ -33,10 +34,6 @@
 
             await ManpowerService.GetExternal();
             Externals = ManpowerService.PosMPExternalTs;
-
-            await ManpowerService.GetInternal();
-            Internals = ManpowerService.PosMPInternalTs;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -49,7 +46,7 @@
             listOfEduc = await PositionService.GetEduc(position.PosCode);
         }
 
-        async Task UpdateArea()
+        private async Task UpdateArea()
         {
             if (position == null)
                 return;
@@ -75,7 +72,7 @@
                 {
                     if (position.PositionType == "Temporary")
                     {
-                        position.TemporaryDuration = position.TemporaryDuration + " Month/s";
+                        position.TemporaryDuration += " Month/s";
                     }
 
                     if (position.Manpower == "Internal")
@@ -101,15 +98,8 @@
             }
         }
 
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
-        }
-
         #region TECH SKILLS
+
         public async Task SaveNewTechSkills(string posCode)
         {
             var listApi = await PositionService.GetTechSkill(posCode);
@@ -166,6 +156,7 @@
             newTechSkill = "";
             //Console.WriteLine(verifyCode);
         }
+
         public void CloseTechSkill(MudChip chip)
         {
             var skillToRemove = listOfTechSkills.FirstOrDefault(item => item.SkillName == chip.Text);
@@ -176,9 +167,18 @@
             }
         }
 
-        #endregion
+        private async Task ShowErrorMessageBox(string mess)
+        {
+            await DialogService.ShowMessageBox(
+            "Warning",
+            mess,
+            yesText: "Ok");
+        }
+
+        #endregion TECH SKILLS
 
         #region KNOWDLEGDE
+
         public async Task SaveNewKnowledge(string posCode)
         {
             var listApi = await PositionService.GetKnowledge(posCode);
@@ -235,6 +235,7 @@
             newKnowledge = "";
             //Console.WriteLine(verifyCode);
         }
+
         public void CloseKnowledge(MudChip chip)
         {
             var skillToRemove = listOfKnowledge.FirstOrDefault(item => item.KnowName == chip.Text);
@@ -245,9 +246,10 @@
             }
         }
 
-        #endregion
+        #endregion KNOWDLEGDE
 
         #region COM APP
+
         public async Task SaveNewComApp(string posCode)
         {
             var listApi = await PositionService.GetComApp(posCode);
@@ -304,6 +306,7 @@
             newComApp = "";
             //Console.WriteLine(verifyCode);
         }
+
         public void CloseComApp(MudChip chip)
         {
             var skillToRemove = listOfComApp.FirstOrDefault(item => item.ComName == chip.Text);
@@ -314,9 +317,10 @@
             }
         }
 
-        #endregion
+        #endregion COM APP
 
         #region EXP
+
         public async Task SaveNewWorkExp(string posCode)
         {
             var listApi = await PositionService.GetWorkExp(posCode);
@@ -373,6 +377,7 @@
             newWorkExp = "";
             //Console.WriteLine(verifyCode);
         }
+
         public void CloseWorkExp(MudChip chip)
         {
             var skillToRemove = listOfWorkExp.FirstOrDefault(item => item.ExpName == chip.Text);
@@ -383,9 +388,10 @@
             }
         }
 
-        #endregion
+        #endregion EXP
 
         #region EDUC
+
         public async Task SaveNewEduc(string posCode)
         {
             var listApi = await PositionService.GetEduc(posCode);
@@ -442,6 +448,7 @@
             newEduc = "";
             //Console.WriteLine(verifyCode);
         }
+
         public void CloseEduc(MudChip chip)
         {
             var skillToRemove = listOfEduc.FirstOrDefault(item => item.EducName == chip.Text);
@@ -452,6 +459,6 @@
             }
         }
 
-        #endregion
+        #endregion EDUC
     }
 }

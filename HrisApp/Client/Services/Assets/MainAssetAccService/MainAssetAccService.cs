@@ -47,5 +47,10 @@
         {
             await _httpClient.PutAsJsonAsync("api/MainAssetAcc/UpdateObj", model);
         }
+
+        public async Task DeleteAccessory(int mainid, int accid)
+        {
+            await _httpClient.DeleteAsync($"api/MainAssetAcc/DeleteAccessory?mainid={mainid}&accid={accid}");
+        }
     }
 }

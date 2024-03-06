@@ -1,22 +1,26 @@
 ﻿namespace HrisApp.Client.Pages.Applicant.Education
 {
+#nullable disable
+
     public partial class AppDoctorate : ComponentBase
     {
-        List<App_DoctorateT> doctorateList = new List<App_DoctorateT>();
+        private List<App_DoctorateT> doctorateList = new();
         private App_DoctorateT selectedItem1 = null;
 
-        private App_DoctorateT doctorate = new App_DoctorateT();
+        private App_DoctorateT doctorate = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool DoctorateOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool DoctorateOpen;
+        private Anchor anchor;
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
-            DoctorateOpen = (drawerx == "DoctorateOpen") ? true : false;
+            DoctorateOpen = (drawerx == "DoctorateOpen");
             this.anchor = anchor;
         }
+
         protected async Task SaveCollege()
         {
             doctorate.Verify_Id = VerifyCode;
@@ -29,7 +33,6 @@
             doctorate.DocSchoolYear = "";
             doctorateList = await EducationService.GetDoctoratelist(VerifyCode);
             DoctorateOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -44,7 +47,7 @@
             }
         }
 
-        async Task DeleteDoc(int id)
+        private async Task DeleteDoc(int id)
         {
             await EducationService.DeleteDoctorate(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

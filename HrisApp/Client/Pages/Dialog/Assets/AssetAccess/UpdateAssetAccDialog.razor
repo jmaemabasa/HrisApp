@@ -37,7 +37,7 @@
                             {
                                 <div class="assacc-details flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Asset Code</MudText>
-                                    <MudText Align="Align.Start" Style="color: #27374D; font-weight:bold;" Typo="Typo.body2">@obj.Asset</MudText>
+                                    <MudText Align="Align.Start" Style="color: #27374D; font-weight:bold;" Typo="Typo.body2">@obj.AssetCode</MudText>
                                 </div>
                                 <div class="assacc-details flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Type</MudText>
@@ -50,10 +50,6 @@
                                 <div class="assacc-details flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.SubCategory?.ASubCat_Name</MudText>
-                                </div>
-                                <div class="assacc-details flex-grow-1">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Location</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Location</MudText>
                                 </div>
                                 <div class="assacc-details flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Status</MudText>
@@ -87,7 +83,7 @@
                             {
                                 <div class="flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Asset Code</MudText>
-                                    <MudTextField @bind-Value="obj.Asset" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                    <MudTextField @bind-Value="obj.AssetCode" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="font-weight:bold;" />
                                 </div>
                                 <div class="flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Type</MudText>
@@ -118,10 +114,6 @@
                                             <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
                                         }
                                     </MudSelect>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Location</MudText>
-                                    <MudTextField @bind-Value="obj.Location" Variant="Variant.Outlined" Margin="Margin.Dense" />
                                 </div>
                                 <div class="flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Status</MudText>
@@ -163,26 +155,48 @@
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Model</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Model</MudText>
                                 </div>
+                                <div class="d-flex gap-2">
+                                    <MudItem xs="12" md="6">
+                                        <div class="assacc-details  flex-grow-1">
+                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Quantity</MudText>
+                                        </div>
+                                    </MudItem>
+                                    <MudItem xs="12" md="6">
+                                        <div class="assacc-details  flex-grow-1">
+                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Barcode</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Barcode</MudText>
+                                        </div>
+                                    </MudItem>
+                                </div>
                                 <div class="assacc-details flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Serial</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Serial</MudText>
                                 </div>
-                                <div class="assacc-details flex-grow-1">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PurchaseDate?.ToString("MM/dd/yyyy")</MudText>
-                                </div>
-                                <div class="assacc-details flex-grow-1">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">End of Useful Life (Months)</MudText>
-                                    @if (IsEndOfUsefulLife())
-                                    {
-                                        <MudText Align="Align.Start" Style="color: #be1313; font-weight:bold;" Typo="Typo.body2">@obj.EUF Months</MudText>
-                                    }
-                                    else
-                                    {
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.EUF Months</MudText>
-                                    }
+                                <div class="d-flex gap-2">
+                                    <MudItem xs="12" md="6">
+                                        <div class="assacc-details flex-grow-1">
+                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PurchaseDate?.ToString("MM/dd/yyyy")</MudText>
+                                        </div>
+                                    </MudItem>
+                                    <MudItem xs="12" md="6">
+                                        <div class="assacc-details flex-grow-1">
+                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">End of Useful Life (Months)</MudText>
+                                            @if (IsEndOfUsefulLife())
+                                            {
+                                                <MudText Align="Align.Start" Style="color: #be1313; font-weight:bold;" Typo="Typo.body2">@obj.EUF Months</MudText>
+                                            }
+                                            else
+                                            {
+                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.EUF Months</MudText>
+                                            }
 
+                                        </div>
+                                    </MudItem>
                                 </div>
+
+
                                 <div class="assacc-details flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Remarks</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Remarks</MudText>
@@ -197,6 +211,15 @@
                                 <div class="flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Model</MudText>
                                     <MudTextField @bind-Value="obj.Model" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+
+                                <div class="flex-grow-1">
+                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Barcode</MudText>
+                                    <MudTextField @bind-Value="obj.Barcode" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                </div>
+                                <div class="flex-grow-1">
+                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
+                                    <MudTextField @bind-Value="obj.Quantity" Mask="@(new PatternMask("00000"))" Variant="Variant.Outlined" Margin="Margin.Dense" />
                                 </div>
                                 <div class="flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Serial</MudText>

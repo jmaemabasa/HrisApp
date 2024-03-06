@@ -52,7 +52,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
             {
                 await OnGenerateCode();
                 await AssetMasterService.CreateObj(obj);
-                await OnsavingImg(obj.WorksationName, obj.CategoryId, obj.SubCategoryId, obj.Code);
+                await OnsavingImg(obj.WorksationName, obj.CategoryId, obj.SubCategoryId, obj.JMCode);
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
@@ -81,7 +81,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
             var catcode = CAT.Where(e => e.Id == obj.CategoryId).FirstOrDefault()!.ACat_Code;
             var subcode = SUBCAT.Where(e => e.Id == obj.SubCategoryId).FirstOrDefault()!.ASubCat_Code;
             string rolesCode = lastCount.ToString().PadLeft(4, '0');
-            obj.Code = $"{typecode}-{catcode}-{subcode}-{rolesCode}";
+            obj.JMCode = $"{typecode}-{catcode}-{subcode}-{rolesCode}";
         }
 
         #region TABS

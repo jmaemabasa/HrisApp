@@ -13,5 +13,7 @@
         Task CreateObj(MainAssetAccessoriesT model);
 
         Task UpdateObj(MainAssetAccessoriesT model);
+
+        Task DeleteAccessory(int mainid, int accid);
     }
 }

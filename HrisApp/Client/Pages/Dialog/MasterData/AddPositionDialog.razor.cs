@@ -5,18 +5,18 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
     public partial class AddPositionDialog : ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
         private List<DepartmentT> Department = new();
         private List<DivisionT> Division = new();
         private List<SectionT> Sections = new();
         private List<PositionT> Positions = new();
         private List<AreaT> Areas = new();
-        private List<PosMPInternalT> Internals = new();
         private List<PosMPExternalT> Externals = new();
 
         //Skills
         public List<PositionTechSkillT> listOfTechSkills = new();
+
         public List<PositionKnowledgeT> listOfKnowledge = new();
         public List<PositionComAppT> listOfComApp = new();
         public List<PositionWorkExpT> listOfWorkExp = new();
@@ -26,7 +26,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private int selectedDepartment = 0;
         private int selectedSection = 0;
         private int selectedArea = 0;
-        private int selectedInternal = 0;
         private int selectedExternal = 0;
         private string newPosition = "";
         private string newPosCode = "";
@@ -45,13 +44,13 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
         private string newPosTypeHolder = "";
 
-        public PatternMask mask2 = new PatternMask("XX Month/s")
+        public PatternMask mask2 = new("XX Month/s")
         {
             MaskChars = new[] { new MaskChar('X', @"[0-9]") },
             CleanDelimiters = true,
         };
 
-        void Cancel() => MudDialog.Cancel();
+        private void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnInitializedAsync()
         {
@@ -72,9 +71,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             await ManpowerService.GetExternal();
             Externals = ManpowerService.PosMPExternalTs;
-
-            await ManpowerService.GetInternal();
-            Internals = ManpowerService.PosMPInternalTs;
         }
 
         private async Task ConfirmCreatePositionAsync()
@@ -118,11 +114,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var areaId = selectedArea;
             var positionName = newPosition;
             var plantillacount = newPlantilla;
-            newPosCode = generateposcode(divisionId, departmentId, sectionId);
+            newPosCode = Generateposcode(divisionId, departmentId, sectionId);
 
             if (newPosType != "Permanent")
             {
-                newDuration = newDuration + " Month/s";
+                newDuration += " Month/s";
             }
 
             if (newManpower == "Internal")
@@ -162,16 +158,8 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             StateService.SetState("PositionList", newList);
         }
 
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
-        }
-
-
         #region TECH SKILLS
+
         public async Task SaveNewTechSkills(string posCode)
         {
             var validtechSkill = listOfTechSkills
@@ -210,6 +198,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             newTechSkill = "";
             Console.WriteLine(verifyCode);
         }
+
         public void CloseTechSkill(MudChip chip)
         {
             var skillToRemove = listOfTechSkills.FirstOrDefault(item => item.SkillName == chip.Text);
@@ -219,9 +208,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfTechSkills.Remove(skillToRemove);
             }
         }
-        #endregion
+
+        #endregion TECH SKILLS
 
         #region KNOWLEDGE
+
         public async Task SaveNewKnowledge(string posCode)
         {
             var validtechSkill = listOfKnowledge
@@ -259,6 +250,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfKnowledge.Add(new PositionKnowledgeT { PosCode = code, KnowName = newSkill, VerifyId = verifyCode });
             newKnowledge = "";
         }
+
         public void CloseKnowledge(MudChip chip)
         {
             var skillToRemove = listOfKnowledge.FirstOrDefault(item => item.KnowName == chip.Text);
@@ -268,9 +260,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfKnowledge.Remove(skillToRemove);
             }
         }
-        #endregion
+
+        #endregion KNOWLEDGE
 
         #region COMAPP
+
         public async Task SaveNewComApp(string posCode)
         {
             var validtechSkill = listOfComApp
@@ -308,6 +302,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfComApp.Add(new PositionComAppT { PosCode = code, ComName = newSkill, VerifyId = verifyCode });
             newComApp = "";
         }
+
         public void CloseComApp(MudChip chip)
         {
             var skillToRemove = listOfComApp.FirstOrDefault(item => item.ComName == chip.Text);
@@ -317,9 +312,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfComApp.Remove(skillToRemove);
             }
         }
-        #endregion
+
+        #endregion COMAPP
 
         #region WORKEXP
+
         public async Task SaveNewWorkExp(string posCode)
         {
             var validtechSkill = listOfWorkExp
@@ -357,6 +354,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfWorkExp.Add(new PositionWorkExpT { PosCode = code, ExpName = newSkill, VerifyId = verifyCode });
             newWorkExp = "";
         }
+
         public void CloseWorkExp(MudChip chip)
         {
             var skillToRemove = listOfWorkExp.FirstOrDefault(item => item.ExpName == chip.Text);
@@ -366,9 +364,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfWorkExp.Remove(skillToRemove);
             }
         }
-        #endregion
+
+        #endregion WORKEXP
 
         #region EDUC
+
         public async Task SaveNewEduc(string posCode)
         {
             var validtechSkill = listOfEduc
@@ -406,6 +406,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfEduc.Add(new PositionEducT { PosCode = code, EducName = newSkill, VerifyId = verifyCode });
             newEduc = "";
         }
+
         public void CloseEduc(MudChip chip)
         {
             var skillToRemove = listOfEduc.FirstOrDefault(item => item.EducName == chip.Text);
@@ -415,10 +416,12 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 listOfEduc.Remove(skillToRemove);
             }
         }
-        #endregion
+
+        #endregion EDUC
 
         #region POSITION CODE
-        private string generateposcode(int divisionId, int departmentId, int sectionId)
+
+        private string Generateposcode(int divisionId, int departmentId, int sectionId)
         {
             var lastPosCode = Positions
             .Where(s => s.DivisionId == divisionId && s.DepartmentId == departmentId && s.SectionId == sectionId)
@@ -460,12 +463,11 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     sectionName = sectionId != 0 ? item.Name : string.Empty;
             }
 
-
             // Extract the first letter of each word in department name
             string departmentCode = "";
 
             // If a section exists, add the first two letters of section name
-            string sectionCode = sectionId != 0 ? sectionName.Substring(0, Math.Min(3, sectionName.Length)) : string.Empty;
+            string sectionCode = sectionId != 0 ? sectionName[..Math.Min(3, sectionName.Length)] : string.Empty;
 
             // If the departmentName has only one word, use the whole word
             if (departmentName.Split(' ').Length == 1)
@@ -482,6 +484,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 
             return posCode;
         }
-        #endregion
+
+        #endregion POSITION CODE
     }
 }

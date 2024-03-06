@@ -1,15 +1,4 @@
-﻿@inject ISectionService SectionService
-@inject IDivisionService DivisionService
-@inject IDepartmentService DepartmentService
-@inject IPositionService PositionService
-@inject IAreaService AreaService
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject StateService StateService
-@inject IDialogService _dialogService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         @* Select Division *@
         <div class="d-flex flex-column divcont">
@@ -230,14 +219,6 @@
         await Task.Delay(10);
         selectedPos = id;
         await OnGenerateCode();
-    }
-
-    private async Task ShowErrorMessageBox(string mess)
-    {
-        bool? result = await _dialogService.ShowMessageBox(
-        "Warning",
-        mess,
-        yesText: "Ok");
     }
     
 }

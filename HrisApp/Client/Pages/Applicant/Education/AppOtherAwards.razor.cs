@@ -1,26 +1,31 @@
 ﻿namespace HrisApp.Client.Pages.Applicant.Education
 {
 #nullable disable
+
     public partial class AppOtherAwards : ComponentBase
     {
         //TABLEEES
-        List<App_OtherAwardsT> _trainingListt = new List<App_OtherAwardsT>();
+        private List<App_OtherAwardsT> _trainingListt = new List<App_OtherAwardsT>();
+
         private App_OtherAwardsT _selectedItem1 = null;
 
         //END FOR TABLES
 
         private App_OtherAwardsT training = new App_OtherAwardsT();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool TrainingOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool TrainingOpen;
+        private Anchor anchor;
+
+        //string width = "500px", height = "100%";
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
             TrainingOpen = (drawerx == "TrainingOpen") ? true : false;
             this.anchor = anchor;
         }
+
         //protected async Task SaveTraining()
         //{
         //    training.Verify_Id = VerifyCode;
@@ -46,7 +51,7 @@
             }
         }
 
-        async Task DeleteTraining(int id)
+        private async Task DeleteTraining(int id)
         {
             await LicenseTrainingService.DeleteOtherAwards(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

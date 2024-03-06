@@ -3,28 +3,34 @@
     public partial class UserViewProfile : ComponentBase
     {
 #nullable disable
+
         [Parameter]
         public string USERNAME { get; set; }
 
         private string VERIFY = "";
-        private int id { get; set; }
+        private int Id { get; set; }
         private string ImageData { get; set; }
 
         #region TABLE VARIABLES
-        EmployeeT employee = new();
-        Emp_AddressT _address = new();
-        Emp_PayrollT _payroll = new();
-        PositionT _position = new();
-        SubPositionT _subposition = new();
-        SubPositionT _newsubposition = new();
+
+        private EmployeeT employee = new();
+        private Emp_AddressT _address = new();
+        private Emp_PayrollT _payroll = new();
+        private PositionT _position = new();
+        private SubPositionT _subposition = new();
+        private SubPositionT _newsubposition = new();
+
         //EmpPictureT _empPicture = new();
-        Emp_EmploymentDateT _employmentDate = new();
-        Emp_PosHistoryT _updateposHistory = new();
+        private Emp_EmploymentDateT _employmentDate = new();
+
+        private Emp_PosHistoryT _updateposHistory = new();
         public Emp_PosHistoryT empHistory = new();
-        #endregion
+
+        #endregion TABLE VARIABLES
 
         #region DATES VARIBALE
-        private DateTime? bday { get; set; }
+
+        private DateTime? Bday { get; set; }
         private DateTime? Date = DateTime.Today;
         private DateTime? ResignationDate = DateTime.Today;
         private DateTime? ProbStart = DateTime.Today;
@@ -37,18 +43,23 @@
         private DateTime? ProjEnd = DateTime.Today;
         private DateTime? DateHired = DateTime.Today;
         private DateTime? RegularDate = DateTime.Today;
-        #endregion 
+
+        #endregion DATES VARIBALE
 
         #region LIST TABLE VARIABLES
+
         //FK
         private List<AreaT> AreasL = new();
+
         private List<StatusT> StatusL = new();
         private List<EmploymentStatusT> EmploymentStatusL = new();
 
         private List<DivisionT> DivisionsL = new();
         private List<DepartmentT> DepartmentsL = new();
+
         //private List<SectionT> SectionsL = new();
         private List<PositionT> PositionsL = new();
+
         private List<SubPositionT> SubPositionsL = new();
         private List<PosMPExternalT> ExternalsL = new();
         private List<PosMPInternalT> InternalsL = new();
@@ -60,19 +71,22 @@
 
         //PAYROLL
         private List<CashBondT> CashbondL = new();
+
         private List<ScheduleTypeT> ScheduleTypeL = new();
         private List<RateTypeT> RateTypeL = new();
         private List<RestDayT> RestDayL = new();
 
         private List<DocumentT> pdffileList = new();
         private List<Emp_PosHistoryT> empHistoryList = new();
-        #endregion
+
+        #endregion LIST TABLE VARIABLES
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 #region FKS
+
                 await AreaService.GetArea();
                 AreasL = AreaService.AreaTs;
                 await StaticService.GetStatusList();
@@ -107,20 +121,21 @@
                 RestDayL = StaticService.RestDayTs;
                 await ManpowerService.GetExternal();
                 ExternalsL = ManpowerService.PosMPExternalTs;
-                #endregion
+
+                #endregion FKS
 
                 await Task.Delay(1);
-                id = Convert.ToInt32(GlobalConfigService.User_Id);
+                Id = Convert.ToInt32(GlobalConfigService.User_Id);
 
-                employee = await EmployeeService.GetSingleEmployee(id);
-                _address = await AddressService.GetSingleAddress(id);
-                _payroll = await PayrollService.GetSinglePayroll(id);
+                employee = await EmployeeService.GetSingleEmployee(Id);
+                _address = await AddressService.GetSingleAddress(Id);
+                _payroll = await PayrollService.GetSinglePayroll(Id);
                 _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
                 _position = await PositionService.GetSinglePositionByCode(_subposition.PosCode);
-                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(id);
+                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(Id);
 
                 VERIFY = employee.Verify_Id;
-                bday = employee.Birthdate;
+                Bday = employee.Birthdate;
                 DateHired = employee.DateHired;
 
                 await EmployeeImg(employee.Verify_Id);//image
@@ -130,17 +145,16 @@
                 ImageData = string.Format("images/imgholder.jpg");
                 Console.WriteLine(ex.Message);
             }
-            
         }
 
         protected async Task SaveUpdateEmployee()
         {
-            if (bday.HasValue)
+            if (Bday.HasValue)
             {
                 DateTime currentDate = DateTime.Today;
-                int age = currentDate.Year - bday.Value.Year;
+                int age = currentDate.Year - Bday.Value.Year;
 
-                if (bday.Value > currentDate.AddYears(-age))
+                if (Bday.Value > currentDate.AddYears(-age))
                     age--;
 
                 employee.Age = age;
@@ -164,25 +178,23 @@
                 }
                 else
                 {
-                    employee.Birthdate = Convert.ToDateTime(bday);
+                    employee.Birthdate = Convert.ToDateTime(Bday);
                     employee.DateHired = Convert.ToDateTime(DateHired);
-
 
                     await EmployeeService.UpdateEmployee(employee);
                     await AddressService.UpdateAddress(_address);
                     await PayrollService.UpdatePayroll(_payroll);
 
-
                     await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                     _toastService.ShowSuccess("Information updated successfully!");
 
                     //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-                    employee = await EmployeeService.GetSingleEmployee((int)id);
-                    _address = await AddressService.GetSingleAddress((int)id);
-                    _payroll = await PayrollService.GetSinglePayroll((int)id);
+                    employee = await EmployeeService.GetSingleEmployee((int)Id);
+                    _address = await AddressService.GetSingleAddress((int)Id);
+                    _payroll = await PayrollService.GetSinglePayroll((int)Id);
                     _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VERIFY);
                     //_empPicture = await ImageService.GetSingleImage((int)id);
-                    _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
+                    _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
 
                     personalandjobOpen = false;
                     workInfoOpen = false;
@@ -196,24 +208,23 @@
             }
             else
             {
-                employee.Birthdate = Convert.ToDateTime(bday);
+                employee.Birthdate = Convert.ToDateTime(Bday);
                 employee.DateHired = Convert.ToDateTime(DateHired);
 
                 await EmployeeService.UpdateEmployee(employee);
                 await AddressService.UpdateAddress(_address);
                 await PayrollService.UpdatePayroll(_payroll);
 
-
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
                 _toastService.ShowSuccess("Information updated successfully!");
 
                 //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-                employee = await EmployeeService.GetSingleEmployee((int)id);
-                _address = await AddressService.GetSingleAddress((int)id);
-                _payroll = await PayrollService.GetSinglePayroll((int)id);
+                employee = await EmployeeService.GetSingleEmployee((int)Id);
+                _address = await AddressService.GetSingleAddress((int)Id);
+                _payroll = await PayrollService.GetSinglePayroll((int)Id);
                 _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VERIFY);
                 //_empPicture = await ImageService.GetSingleImage((int)id);
-                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
+                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
 
                 personalandjobOpen = false;
                 workInfoOpen = false;
@@ -227,6 +238,7 @@
         }
 
         #region FUNCTIONS
+
         private async Task EmployeeImg(string verifyCode)
         {
             var imagemodel = await ImageService.GetImageData(verifyCode);
@@ -246,6 +258,7 @@
 
             return char.ToUpper(input[0]) + input[1..];
         }
+
         private static string StatusChipColor(string status)
         {
             return status switch
@@ -259,6 +272,7 @@
                 _ => "statusRetiredChip",
             };
         }
+
         private static string StatusAvatarColor(string status)
         {
             return status switch
@@ -271,6 +285,7 @@
                 _ => "",
             };
         }
+
         private static string StatusTextColor(string status)
         {
             return status switch
@@ -283,16 +298,19 @@
                 _ => "",
             };
         }
-        #endregion
+
+        #endregion FUNCTIONS
 
         #region Image Update
+
         private string imgBase64 { get; set; }
         private string ImageUrl { get; set; }
         private string ImgFileName { get; set; }
         private string ImgContentType { get; set; }
 
-        MultipartFormDataContent EmpImage = new();
-        async Task uploadImage(InputFileChangeEventArgs e)
+        private MultipartFormDataContent EmpImage = new();
+
+        private async Task UploadImage(InputFileChangeEventArgs e)
         {
             long lngImage = long.MaxValue;
             var brwModel = e.File;
@@ -331,8 +349,6 @@
                 imgBase64 = string.Format("data:image/*;base64,{0}", base642);
 
                 await OnsavingImg(employee.EmployeeNo, employee.DivisionId, employee.DepartmentId, employee.LastName, employee.Verify_Id);
-
-
             }
         }
 
@@ -345,17 +361,22 @@
             await ImageService.AttachFile(_contentImg, EmployeeId, division, department, lastname, verify);
             await EmployeeImg(employee.Verify_Id);//image
         }
-        #endregion
+
+        #endregion Image Update
 
         #region MUDTABS
-        MudTabs tabs;
-        private string slectClasss = "frmselect";
-        #endregion
-        #region TAB CLASS
-        //TAB PANEL
-        int activeIndex;
 
-        RenderFragment tabHeader(int tabId)
+        private MudTabs tabs;
+        //private string slectClasss = "frmselect";
+
+        #endregion MUDTABS
+
+        #region TAB CLASS
+
+        //TAB PANEL
+        private int activeIndex;
+
+        private RenderFragment TabHeader(int tabId)
         {
             return builder =>
             {
@@ -395,7 +416,7 @@
             };
         }
 
-        string GetTabChipClass(int tabId)
+        private string GetTabChipClass(int tabId)
         {
             if (activeIndex > tabId)
             {
@@ -420,7 +441,7 @@
             }
         }
 
-        string GetTabTextClass(int tabId)
+        private string GetTabTextClass(int tabId)
         {
             if (activeIndex > tabId)
             {
@@ -435,28 +456,33 @@
                 return "mud-text-default";
             }
         }
-        #endregion
+
+        #endregion TAB CLASS
+
         #region PERSONAL TAB ERROR TRAP
+
         private string slectClasssGender = "frmselect";
         private string slectClasssRela = "frmselect";
         private string txfieldClasssMN = "txf";
         private string txfieldClasssEN = "txf1";
         private string txfieldClasssEA = "txf1";
         private string txfieldClasssEMN = "txf";
-        #endregion
+
+        #endregion PERSONAL TAB ERROR TRAP
 
         #region DRAWER VARIBALES AND FUNCTIONS
-        bool personalandjobOpen;
-        bool workInfoOpen;
-        bool emerOpen;
-        bool addressOpen;
-        bool documentsOpen;
-        bool ScheduleOpen;
-        bool StatutoryOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
 
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool personalandjobOpen;
+        private bool workInfoOpen;
+        private bool emerOpen;
+        private bool addressOpen;
+        private bool documentsOpen;
+        private bool ScheduleOpen;
+        private bool StatutoryOpen;
+        private Anchor anchor;
+        private string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
             personalandjobOpen = (drawerx == "personalandjobOpen");
             workInfoOpen = (drawerx == "workInfoOpen");
@@ -467,6 +493,7 @@
             ScheduleOpen = (drawerx == "ScheduleOpen");
             this.anchor = anchor;
         }
-        #endregion
+
+        #endregion DRAWER VARIBALES AND FUNCTIONS
     }
 }

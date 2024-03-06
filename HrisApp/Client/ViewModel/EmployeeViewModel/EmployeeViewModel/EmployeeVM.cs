@@ -1,5 +1,7 @@
 ﻿namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
+#nullable disable
+
     public class EmployeeVM : BaseViewModel
     {
         private IEmployeeService EmployeeService = new EmployeeService();
@@ -83,6 +85,7 @@
 
         public async void CmbDateHired(string type)
         {
+            await Task.Delay(0);
             DateTime today = DateTime.Today;
 
             switch (type)
@@ -124,7 +127,7 @@
                 case "lastyear":
                     CmbDaateHiredText = "Last Year";
                     _isOpen = false;
-                    DateTime startOfLastYear = new DateTime(today.Year - 1, 1, 1);
+                    DateTime startOfLastYear = new(today.Year - 1, 1, 1);
                     DateTime endOfLastYear = startOfLastYear.AddYears(1).AddDays(-1);
                     _dateRange.Start = startOfLastYear;
                     _dateRange.End = endOfLastYear;

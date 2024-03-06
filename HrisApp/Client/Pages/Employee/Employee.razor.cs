@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace HrisApp.Client.Pages.Employee
+﻿namespace HrisApp.Client.Pages.Employee
 {
     public partial class Employee : ComponentBase
     {
@@ -33,8 +31,8 @@ namespace HrisApp.Client.Pages.Employee
                 await PositionService.GetSubPosition();
                 SubPositionsL = PositionService.SubPositionTs;
 
-
                 #region for DASHBOARD
+
                 var uri = new Uri(_navigationManager.Uri);
                 var statusFilterString = uri.Query.Split('=').LastOrDefault();
                 if (statusFilterString?.ToLower() == "inactive")
@@ -45,13 +43,15 @@ namespace HrisApp.Client.Pages.Employee
                 {
                     _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).ToList();
                 }
-                #endregion
+
+                #endregion for DASHBOARD
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
             }
         }
+
         private async Task LoadList()
         {
             await EmployeeService.GetEmployee();
@@ -66,7 +66,9 @@ namespace HrisApp.Client.Pages.Employee
         }
 
         #region COMBOBOX FILTERS
+
         public bool _isOpen;
+
         public void ToggleOpen()
         {
             if (_isOpen)
@@ -74,6 +76,7 @@ namespace HrisApp.Client.Pages.Employee
             else
                 _isOpen = true;
         }
+
         public void ToggleOpenMenu(bool test)
         {
             if (test)
@@ -85,8 +88,10 @@ namespace HrisApp.Client.Pages.Employee
         public string CmbDivText = "All Division";
         public string CmbStatusText = "All Status";
         public string CmbDaateHiredText = "All";
+
         public async void CmbDateHired(string type)
         {
+            await Task.Delay(0);
             DateTime today = DateTime.Today;
 
             switch (type)
@@ -128,7 +133,7 @@ namespace HrisApp.Client.Pages.Employee
                 case "lastyear":
                     CmbDaateHiredText = "Last Year";
                     _isOpen = false;
-                    DateTime startOfLastYear = new DateTime(today.Year - 1, 1, 1);
+                    DateTime startOfLastYear = new(today.Year - 1, 1, 1);
                     DateTime endOfLastYear = startOfLastYear.AddYears(1).AddDays(-1);
                     _dateRange.Start = startOfLastYear;
                     _dateRange.End = endOfLastYear;
@@ -261,6 +266,7 @@ namespace HrisApp.Client.Pages.Employee
                 OpenOverlay();
             }
         }
+
         public void CmbDivision(int div)
         {
             //    _dateRange.Start = null;
@@ -332,6 +338,7 @@ namespace HrisApp.Client.Pages.Employee
                 OpenOverlay();
             }
         }
+
         public void SearchStatus(int status)
         {
             //_dateRange.Start = null;
@@ -395,7 +402,6 @@ namespace HrisApp.Client.Pages.Employee
                         _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == status && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
                     }
                 }
-
             }
 
             if (_employeeList == null || _employeeList.Count == 0)
@@ -403,6 +409,7 @@ namespace HrisApp.Client.Pages.Employee
                 OpenOverlay();
             }
         }
+
         public void EmpDateRangeChange(DateRange? dateRange)
         {
             _dateRange = dateRange;
@@ -466,11 +473,14 @@ namespace HrisApp.Client.Pages.Employee
             }
         }
 
-        #endregion
+        #endregion COMBOBOX FILTERS
 
         #region FUNCTIONS / METHODS
+
         public void CreateNewEmployee() => _navigationManager.NavigateTo("/employee/add");
+
         public void ShowEmployee(int id) => _navigationManager.NavigateTo($"/employee/edit/{id}");
+
         private void OpenUploadDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
@@ -498,6 +508,7 @@ namespace HrisApp.Client.Pages.Employee
 
         //LOADING
         public bool _isVisible;
+
         public async void OpenOverlay()
         {
             _isVisible = false;
@@ -515,9 +526,11 @@ namespace HrisApp.Client.Pages.Employee
 
             return char.ToUpper(input[0]) + input[1..];
         }
-        #endregion
+
+        #endregion FUNCTIONS / METHODS
 
         #region TABLE VARIABLES
+
         public bool FilterFunc1(EmployeeT emp) => FilterFunc(emp, _searchString1);
 
         private static bool FilterFunc(EmployeeT emp, string searchString)
@@ -541,6 +554,7 @@ namespace HrisApp.Client.Pages.Employee
 
             return false;
         }
-        #endregion
+
+        #endregion TABLE VARIABLES
     }
 }

@@ -381,6 +381,7 @@ namespace HrisApp.Server.Data
         public DbSet<AssetAccessoryT> AssetAccessoryT { get; set; }
         public DbSet<AssetMasterT> AssetMasterT { get; set; }
         public DbSet<AssetMasterHistoryT> AssetMasterHistoryT { get; set; }
+        public DbSet<AssetAccessHistoryT> AssetAccessHistoryT { get; set; }
         public DbSet<MainAssetAccessoriesT> MainAssetAccessoriesT { get; set; }
         public DbSet<AssetImageT> AssetImageT { get; set; }
         public DbSet<AssetLastCheckT> AssetLastCheckT { get; set; }

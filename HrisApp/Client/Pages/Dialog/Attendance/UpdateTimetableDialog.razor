@@ -99,8 +99,6 @@
 
     private ShiftTimetableT obj = new();
 
-    private bool isShowUpdate;
-
     protected override async Task OnParametersSetAsync()
     {
         obj = await TimeService.GetSingleTimetable((int)Id);

@@ -5,10 +5,10 @@ namespace HrisApp.Client.Pages.Applicant
     public partial class NewApplicant : ComponentBase
     {
 #nullable disable
-        MudTabs tabs;
-        ApplicantT applicant = new();
-        App_AddressT address = new();
-        App_SelfDeclarationT selfdec = new();
+        private MudTabs tabs;
+        private ApplicantT applicant = new();
+        private App_AddressT address = new();
+        private App_SelfDeclarationT selfdec = new();
 
         public List<GenderT> GendersL = new();
         public List<CivilStatusT> CivilStatusL = new();
@@ -16,6 +16,7 @@ namespace HrisApp.Client.Pages.Applicant
         public List<EmerRelationshipT> EmerRelationshipsL = new();
 
         #region self dec variables
+
         public bool YesCB1 { get; set; } = false;
         public bool NoCB1 { get; set; } = false;
         public bool YesCB2 { get; set; } = false;
@@ -30,9 +31,10 @@ namespace HrisApp.Client.Pages.Applicant
         public bool NoCB6 { get; set; } = false;
         public bool YesCB7 { get; set; } = false;
         public bool NoCB7 { get; set; } = false;
-        #endregion
 
-        public DateTime? bday { get; set; }
+        #endregion self dec variables
+
+        public DateTime? Bday { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -86,7 +88,7 @@ namespace HrisApp.Client.Pages.Applicant
                 if (!string.IsNullOrWhiteSpace(applicant.App_EmerName) && !string.IsNullOrWhiteSpace(applicant.App_EmerAddress) && !string.IsNullOrWhiteSpace(applicant.App_EmerMobNum) && applicant.App_EmerRelationshipId != 0 && !string.IsNullOrWhiteSpace(selfdec.Q1Ans) && !string.IsNullOrWhiteSpace(selfdec.Q2Ans) && !string.IsNullOrWhiteSpace(selfdec.Q3Ans) && !string.IsNullOrWhiteSpace(selfdec.Q4Ans) && !string.IsNullOrWhiteSpace(selfdec.Q5Ans) && !string.IsNullOrWhiteSpace(selfdec.Q6Ans) && !string.IsNullOrWhiteSpace(selfdec.Q7Ans))
                 {
                     var verdate = DateTime.Now.ToString("yyyyMMddhhmmssfff");
-                    var verifyCode = "App"+verdate;
+                    var verifyCode = "App" + verdate;
 
                     //CREATE APPLICANT
                     applicant.App_VerifyId = verifyCode;
@@ -99,7 +101,6 @@ namespace HrisApp.Client.Pages.Applicant
                     //CREATE Self Dec
                     selfdec.App_VerifyId = verifyCode;
                     var sd = await AppLicenseTrainingService.CreateSelfDeclaration(selfdec);
-
 
                     ////CREATE EDUCATIONS
                     await CreatePrimaryRecords(verifyCode);
@@ -152,8 +153,7 @@ namespace HrisApp.Client.Pages.Applicant
             }
         }
 
-
-            public void Activate(int index)
+        public void Activate(int index)
         {
             tabs.ActivatePanel(index);
         }
@@ -164,13 +164,10 @@ namespace HrisApp.Client.Pages.Applicant
             await JSRuntime.InvokeVoidAsync("scrollToDiv");
         }
 
-
-        bool success;
         private void OnValidSubmitPersonal(EditContext context)
         {
             if (context.Validate())
             {
-                success = true;
                 tabs.ActivatePanel(1);
             }
             else
@@ -204,6 +201,7 @@ namespace HrisApp.Client.Pages.Applicant
         private string clsQ7;
 
         private bool validFam = true;
+
         private void OnValidSubmitFamily()
         {
             clsMotherName = string.IsNullOrWhiteSpace(applicant.App_MotherName) ? "mud-input-error" : string.Empty;
@@ -217,7 +215,8 @@ namespace HrisApp.Client.Pages.Applicant
             }
         }
 
-        #region functions 
+        #region functions
+
         public string CalculateAge(DateTime? selectedDate)
         {
             if (selectedDate.HasValue)
@@ -233,10 +232,13 @@ namespace HrisApp.Client.Pages.Applicant
 
             return string.Empty;
         }
-        #endregion
+
+        #endregion functions
 
         #region Siblings
+
         public List<App_SiblingT> listofSiblings = new();
+
         public void AddNewSibling(string applicantVerifyId)
         {
             if (listofSiblings.Count <= 10)
@@ -294,9 +296,13 @@ namespace HrisApp.Client.Pages.Applicant
             listofChildren.Clear();
             AddNewChild(verid);
         }
-        #endregion
+
+        #endregion Siblings
+
         #region Children
+
         public List<App_ChildrenT> listofChildren = new();
+
         public void AddNewChild(string applicantVerifyId)
         {
             if (listofChildren.Count <= 10)
@@ -314,9 +320,13 @@ namespace HrisApp.Client.Pages.Applicant
                 listofChildren.RemoveAt(listofChildren.Count - 1);
             }
         }
-        #endregion
+
+        #endregion Children
+
         #region Prof Background
+
         public List<App_ProfBackgroundT> listofBgProf = new();
+
         public void AddNewBgProf(string applicantVerifyId)
         {
             if (listofBgProf.Count <= 10)
@@ -417,10 +427,14 @@ namespace HrisApp.Client.Pages.Applicant
             listOfOtherAwards.Clear();
             AddNewOtherAwards(verid);
         }
-        #endregion
+
+        #endregion Prof Background
+
         #region EDUCATION BACKGROUND
+
         //EDUCATION
         public List<App_CollegeT> listOfCollege = new();
+
         public List<App_OtherEducT> listOfOthers = new();
         public List<App_SecondaryT> listOfSecondary = new();
         public List<App_DoctorateT> listOfDoctorate = new();
@@ -439,6 +453,7 @@ namespace HrisApp.Client.Pages.Applicant
         public bool IsListadddoc;
 
         #region ADD REMOVE BUTTONS EDUC
+
         public void AddNewPrimary(string applicantVerifyId)
         {
             if (listOfPrimary.Count <= 10)
@@ -447,6 +462,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemovePrimary()
         {
             if (listOfPrimary.Count < 1) { }
@@ -464,6 +480,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveSecondary()
         {
             if (listOfSecondary.Count < 1) { }
@@ -481,6 +498,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveSHS()
         {
             if (listOfShs.Count < 1) { }
@@ -498,6 +516,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveCollege()
         {
             if (listOfCollege.Count < 1) { }
@@ -515,6 +534,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveMasteral()
         {
             if (listOfMasteral.Count < 1) { }
@@ -532,6 +552,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveDoctorate()
         {
             if (listOfDoctorate.Count < 1) { }
@@ -549,6 +570,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveOthers()
         {
             if (listOfOthers.Count < 1) { }
@@ -566,6 +588,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveTrainings()
         {
             if (listOfTrainings.Count < 1) { }
@@ -583,6 +606,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveLicense()
         {
             if (listOfLicense.Count < 1) { }
@@ -600,6 +624,7 @@ namespace HrisApp.Client.Pages.Applicant
                 StateHasChanged();
             }
         }
+
         public void RemoveOtherAwards()
         {
             if (listOfOtherAwards.Count < 1) { }
@@ -608,9 +633,11 @@ namespace HrisApp.Client.Pages.Applicant
                 listOfOtherAwards.RemoveAt(listOfOtherAwards.Count - 1);
             }
         }
-        #endregion
+
+        #endregion ADD REMOVE BUTTONS EDUC
 
         #region CREATE SAVE EDUC
+
         public async Task CreatePrimaryRecords(string verid)
         {
             //primary
@@ -632,6 +659,7 @@ namespace HrisApp.Client.Pages.Applicant
             listOfPrimary.Clear();
             AddNewPrimary(verid);
         }
+
         public async Task CreateSecondaryRecords(string verid)
         {
             //secondary
@@ -653,6 +681,7 @@ namespace HrisApp.Client.Pages.Applicant
             listOfSecondary.Clear();
             AddNewSecondary(verid);
         }
+
         public async Task CreateSeniorHSRecords(string verid)
         {  //shs
             var validShs = listOfShs
@@ -673,6 +702,7 @@ namespace HrisApp.Client.Pages.Applicant
             listOfShs.Clear();
             AddNewSHS(verid);
         }
+
         public async Task CreateCollegeRecords(string verid)
         {
             //college
@@ -694,8 +724,8 @@ namespace HrisApp.Client.Pages.Applicant
 
             listOfCollege.Clear();
             AddNewCollege(verid);
-
         }
+
         public async Task CreateMasteralRecords(string verid)
         {
             //masteral
@@ -718,6 +748,7 @@ namespace HrisApp.Client.Pages.Applicant
             listOfMasteral.Clear();
             AddNewMasteral(verid);
         }
+
         public async Task CreateDoctorateRecords(string verid)
         {
             //doctorate
@@ -740,6 +771,7 @@ namespace HrisApp.Client.Pages.Applicant
             listOfDoctorate.Clear();
             AddNewDoctorate(verid);
         }
+
         public async Task CreateOtherEducRecords(string verid)
         {
             //othereduc
@@ -762,6 +794,7 @@ namespace HrisApp.Client.Pages.Applicant
             listOfOthers.Clear();
             AddNewOthers(verid);
         }
+
         //public async Task CreateLicenses(string employeeVerifyId)
         //{
         //    //training
@@ -785,13 +818,17 @@ namespace HrisApp.Client.Pages.Applicant
         //    listOfLicense.Clear();
         //    AddNewLicense(employeeVerifyId);
         //}
-        #endregion
-        #endregion
+
+        #endregion CREATE SAVE EDUC
+
+        #endregion EDUCATION BACKGROUND
 
         #region TAB CLASS
+
         //TAB PANEL
-        int activeIndex;
-        string GetTabChipClass(int tabId)
+        private int activeIndex;
+
+        private string GetTabChipClass(int tabId)
         {
             if (activeIndex > tabId)
             {
@@ -815,7 +852,8 @@ namespace HrisApp.Client.Pages.Applicant
                 return "mud-chip-default";
             }
         }
-        string GetTabTextClass(int tabId)
+
+        private string GetTabTextClass(int tabId)
         {
             if (activeIndex > tabId)
             {
@@ -830,7 +868,8 @@ namespace HrisApp.Client.Pages.Applicant
                 return "mud-text-default";
             }
         }
-        RenderFragment tabHeader(int tabId)
+
+        private RenderFragment TabHeader(int tabId)
         {
             return builder =>
             {
@@ -891,6 +930,7 @@ namespace HrisApp.Client.Pages.Applicant
                 }
             };
         }
-        #endregion
+
+        #endregion TAB CLASS
     }
 }

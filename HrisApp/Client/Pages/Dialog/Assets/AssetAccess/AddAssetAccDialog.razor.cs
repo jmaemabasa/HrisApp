@@ -22,7 +22,6 @@
 
         private async Task ConfirmCreate()
         {
-            await OnGenerateCode();
             await AssetAccService.CreateObj(obj);
 
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
@@ -41,7 +40,29 @@
             var catcode = CAT.Where(e => e.Id == obj.CategoryId).FirstOrDefault()!.ACat_Code;
             var subcode = SUBCAT.Where(e => e.Id == obj.SubCategoryId).FirstOrDefault()!.ASubCat_Code;
             string rolesCode = lastCount.ToString().PadLeft(4, '0');
-            obj.Code = $"{catcode}-{subcode}-{rolesCode}";
+            obj.JMCode = $"{catcode}-{subcode}-{rolesCode}";
+            obj.AssetCode = $"{catcode}-{subcode}-{rolesCode}";
+        }
+
+        private bool disabledsubcat = true;
+        private bool disabledcat = true;
+
+        private void OnChangeType(int id)
+        {
+            obj.TypeId = id;
+            disabledcat = false;
+        }
+
+        private void OnChangeCat(int id)
+        {
+            obj.CategoryId = id;
+            disabledsubcat = false;
+        }
+
+        private async Task OnChangeSCat(int id)
+        {
+            obj.SubCategoryId = id;
+            await OnGenerateCode();
         }
     }
 }

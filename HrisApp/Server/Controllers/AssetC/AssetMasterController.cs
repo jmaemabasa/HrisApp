@@ -103,6 +103,8 @@
             dbarea.ProductID = model.ProductID;
             dbarea.Processor = model.Processor;
             dbarea.RAM = model.RAM;
+            dbarea.Quantity = model.Quantity;
+            dbarea.Barcode = model.Barcode;
             dbarea.StorageType = model.StorageType;
             dbarea.Storage = model.Storage;
             dbarea.MacAddress = model.MacAddress;
@@ -138,7 +140,7 @@
             var Masterlist = await _context.AssetMasterT
                 .ToListAsync();
 
-            var _returnId = Masterlist.Where(d => d.Code.Contains(code, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            var _returnId = Masterlist.Where(d => d.JMCode.Contains(code, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
             return Ok(_returnId.Id);
         }
@@ -152,7 +154,7 @@
 
             if (lastItem != null)
             {
-                string code = lastItem.Code;
+                string code = lastItem.JMCode;
 
                 string splitcode = code.Split("-")[3];
                 return Ok(Convert.ToInt32(splitcode));

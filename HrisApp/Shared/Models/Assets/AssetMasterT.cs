@@ -12,7 +12,7 @@ namespace HrisApp.Shared.Models.Assets
         [Key]
         public int Id { get; set; }
 
-        public string Code { get; set; } = string.Empty;
+        public string JMCode { get; set; } = string.Empty;
         public string AssetCode { get; set; } = string.Empty;
         public string WorksationName { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
@@ -30,6 +30,8 @@ namespace HrisApp.Shared.Models.Assets
         public AreaT? Area { get; set; }
         public int AreaId { get; set; }
 
+        public int Quantity { get; set; } = 1;
+        public string Barcode { get; set; } = string.Empty;
         public string Serial { get; set; } = string.Empty;
         public string DeviceID { get; set; } = string.Empty;
         public string ProductID { get; set; } = string.Empty;
@@ -62,6 +64,6 @@ namespace HrisApp.Shared.Models.Assets
         public string ClientIP { get; set; } = string.Empty;
         public DateTime? LastCheckDate { get; set; }
 
-        public DateTime? DateAdded { get; set; } = DateTime.Now;
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
     }
 }

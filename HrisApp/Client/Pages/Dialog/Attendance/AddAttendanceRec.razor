@@ -59,7 +59,7 @@
 
     private AttendanceRecordT obj = new();
     TimeSpan? time = DateTime.Now - DateTime.MinValue;
-    private Timer timer;
+    // private Timer timer;
 
     private List<EmployeeT> empList = new();
     private List<Emp_PayrollT> payList = new();
@@ -76,10 +76,8 @@
         // timer = new Timer(UpdateCurrentTime, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
     }
 
-    bool success;
     private async Task OnValidSubmit(EditContext context)
     {
-        success = true;
         StateHasChanged();
 
         var count = await AttService.GetExistingCount(obj.Time?.ToString("MM/dd/yyyy"), obj.AC_No, obj.State);
@@ -103,8 +101,10 @@
             }
 
             var emp = empList.FirstOrDefault(d => d.Verify_Id == verid);
-
-            obj.Name = $"{emp.LastName}";
+            if (emp != null)
+            {
+                obj.Name = $"{emp.LastName}";
+            }
 
             await AttService.CreateAttendanceRec(obj);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);

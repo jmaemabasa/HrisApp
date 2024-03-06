@@ -1,6 +1,6 @@
 ﻿using HrisApp.Client.Pages.Dialog.Assets.AssetAccess;
 using HrisApp.Client.Pages.Dialog.Assets.MainAsset;
-using HrisApp.Client.Pages.Employee;
+using HrisApp.Shared.Models.Assets;
 
 namespace HrisApp.Client.Pages.Assets
 {
@@ -81,9 +81,9 @@ namespace HrisApp.Client.Pages.Assets
             {
                 obj = await AssetMasterService.GetSingleObj((int)Id);
 
-                await AssetImg(obj.Code);//image
+                await AssetImg(obj.JMCode);//image
 
-                await AssetImageService.GetAllImagesPerAss(obj.Code);
+                await AssetImageService.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssetImageService.AssetImageTs;
 
                 await ImgByAssetData();
@@ -96,7 +96,7 @@ namespace HrisApp.Client.Pages.Assets
                     empid = (int)obj.EmployeeId;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Console.WriteLine(ex);
                 //Console.WriteLine(ex.Message);
@@ -144,7 +144,7 @@ namespace HrisApp.Client.Pages.Assets
                 await AssetImageService.DeleteAssetImg(filename, assetcode);
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
 
-                await AssetImageService.GetAllImagesPerAss(obj.Code);
+                await AssetImageService.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssetImageService.AssetImageTs;
 
                 ImgByAssetList.Clear();
@@ -152,7 +152,7 @@ namespace HrisApp.Client.Pages.Assets
 
                 try
                 {
-                    await AssetImg(obj.Code);//image
+                    await AssetImg(obj.JMCode);//image
                 }
                 catch (Exception)
                 {
@@ -168,11 +168,11 @@ namespace HrisApp.Client.Pages.Assets
             try
             {
                 ImgByAssetList.Clear();
-                await AssetImageService.GetAllImagesPerAss(obj.Code);
+                await AssetImageService.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssetImageService.AssetImageTs;
 
                 await ImgByAssetData();
-                await AssetImg(obj.Code);//image
+                await AssetImg(obj.JMCode);//image
                 StateHasChanged();
             }
             catch (Exception)
@@ -206,7 +206,7 @@ namespace HrisApp.Client.Pages.Assets
                 assetHistoryObj.AssignedDateReleased = obj.AssignedDateReleased;
                 assetHistoryObj.EmployeeId = empid;
                 assetHistoryObj.MainAssetId = obj.Id;
-                assetHistoryObj.MainAssetCode = obj.Code;
+                assetHistoryObj.MainAssetCode = obj.JMCode;
                 await AssetMasHistorySvc.CreateObj(assetHistoryObj);
 
                 foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
@@ -271,9 +271,35 @@ namespace HrisApp.Client.Pages.Assets
             StateHasChanged();
         }
 
+        private async Task RemoveAccessory(int id)
+        {
+            var asset_acc = await AssetAccService.GetSingleObj(id);
+            asset_acc.MainAssetId = null;
+            asset_acc.MainAssetDateUpdated = null;
+            asset_acc.AssetStatusId = 2;
+            await AssetAccService.UpdateObj(asset_acc);
+
+            AssetAccessHistoryT newobj = new()
+            {
+                AssetAccessoryId = id,
+                MainAssetId = obj.Id,
+                UnassignedDateMainAss = DateTime.Now
+            };
+
+            await AssetAccHistorySvc.UpdateDateUnassigned(newobj);
+
+            await MainAssetAccService.DeleteAccessory(obj.Id, id);
+
+            ACCESSORIES = await AssetAccService.GetObjList();
+            //Console.WriteLine(id.ToString());
+
+            //var hh = await AssetAccHistorySvc.GetTestConsole(12);
+            //Console.WriteLine(hh);
+        }
+
         private string TruncateString(string value, int maxLength)
         {
-            return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
+            return value.Length <= maxLength ? value : value[..maxLength] + "...";
         }
 
         private async Task RefreshTable()
@@ -294,8 +320,10 @@ namespace HrisApp.Client.Pages.Assets
 
         private void OpenAccessoriesDialog(int id)
         {
-            var parameters = new DialogParameters<UpdateAssetAccDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdateAssetAccDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
             DialogService.Show<UpdateAssetAccDialog>("", parameters, options);
@@ -393,10 +421,10 @@ namespace HrisApp.Client.Pages.Assets
 
         #region MUD TABS / TAB PANEL
 
-        private MudTabs? tabs;
+        private MudTabs? Tabs;
         private int activeIndex;
 
-        private RenderFragment tabHeader(int tabId)
+        private RenderFragment TabHeader(int tabId)
         {
             return builder =>
             {
@@ -421,7 +449,7 @@ namespace HrisApp.Client.Pages.Assets
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(1));
-                    builder.AddContent(6, "Device Info");
+                    builder.AddContent(6, "Additional Info");
                     builder.CloseComponent();
                 }
                 else if (tabId == 2)

@@ -5,25 +5,22 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
 {
     public partial class UpdateSectionDialog : ComponentBase
     {
-
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
-
         private SectionT section = new();
 
-
-        void Cancel() => MudDialog.Cancel();
-
+        private void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnParametersSetAsync()
         {
             section = await SectionService.GetSingleSection(Id);
         }
 
-        async Task UpdateArea()
+        private async Task UpdateArea()
         {
             if (section == null)
                 return;
@@ -58,13 +55,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     StateService.SetState("SectionList", newList);
                 }
             }
-        }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
         }
     }
 }

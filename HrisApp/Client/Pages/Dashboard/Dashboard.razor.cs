@@ -15,15 +15,12 @@ namespace HrisApp.Client.Pages.Dashboard
 
         private List<PositionT> allPositions;
         private List<DivisionT> allDivisions;
-        private List<DepartmentT> allDepartments;
-        private List<SectionT> allSections;
-        private List<AreaT> allAreas;
         private List<EmployeeT> employeeBdayL = new();
         private List<AnnouncementT> announceL = new();
-        private Dictionary<int, int> positionCounts = new Dictionary<int, int>();
+        private Dictionary<int, int> positionCounts = new();
 
-        public List<string> departmentArr = new List<string>();
-        public List<string> divisionArr = new List<string>();
+        public List<string> departmentArr = new();
+        public List<string> divisionArr = new();
 
         private int[] EmployeeCountPerDivision;
         private int[] EmployeeCountActual;
@@ -33,10 +30,8 @@ namespace HrisApp.Client.Pages.Dashboard
         private int _totalPlantilla = 0;
         private string cmbBdyTitle = "This Month";
 
-
-        private int totalLeave = 12;
-        private int availableLeave = 8;
-        private string availableLeavetext = "";
+        //private int totalLeave = 12;
+        //private int availableLeave = 8;
 
         protected override async Task OnInitializedAsync()
         {
@@ -52,11 +47,11 @@ namespace HrisApp.Client.Pages.Dashboard
 
                 announceL = await AnnouncementService.GetFilteredAnnouncementList();
 
-                allDepartments = DepartmentService.DepartmentTs;
                 allDivisions = DivisionService.DivisionTs;
                 employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate.Day).ToList();
 
                 #region Plantilla
+
                 allPositions = await PositionService.GetPositionList();
                 foreach (var position in allPositions)
                 {
@@ -69,9 +64,11 @@ namespace HrisApp.Client.Pages.Dashboard
 
                 var globalId = Convert.ToInt32(GlobalConfigService.User_Id);
                 FULLNAME = await EmployeeService.Getname(globalId);
-                #endregion
+
+                #endregion Plantilla
 
                 #region Top Cards
+
                 _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
                 _countInactiveEmployees = EmployeeService.EmployeeTs.Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId)).Count().ToString();
                 DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
@@ -87,7 +84,8 @@ namespace HrisApp.Client.Pages.Dashboard
                 {
                     _totalPlantilla += item.Plantilla;
                 }
-                #endregion
+
+                #endregion Top Cards
 
                 departmentArr = await DepartmentService.GetAllDepartmentName();
                 divisionArr = await DivisionService.GetAllDivisionName();
@@ -103,19 +101,17 @@ namespace HrisApp.Client.Pages.Dashboard
                 ConfigurePieConfig();
                 FilterPieEmployee();
 
-                availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) * 100).ToString() + "%";
-
+                //availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) * 100).ToString() + "%";
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
 
-
         #region BAR CHART BDUDY
-        public BarConfig _config = new BarConfig
+
+        public BarConfig _config = new()
         {
             Options = new BarOptions
             {
@@ -130,9 +126,9 @@ namespace HrisApp.Client.Pages.Dashboard
                     Display = false
                 },
                 MaintainAspectRatio = false,
-
             }
         };
+
         private void ConfigureBarConfig()
         {
             foreach (string _item in divisionArr)
@@ -140,9 +136,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 _config.Data.Labels.Add(_item);
             }
 
-            int countcolor = 24;
-
-            BarDataset<int> dataset = new BarDataset<int>(EmployeeCountPerDivision)
+            BarDataset<int> dataset = new(EmployeeCountPerDivision)
             {
                 BackgroundColor = new[]
                     {
@@ -202,14 +196,12 @@ namespace HrisApp.Client.Pages.Dashboard
                     },
             };
 
-
             _config.Data.Datasets.Add(dataset);
         }
 
-
         private void FilterEmployee()
         {
-            List<int> empCountperDiv = new List<int>();
+            List<int> empCountperDiv = new();
 
             foreach (var item in allDivisions)
             {
@@ -218,14 +210,15 @@ namespace HrisApp.Client.Pages.Dashboard
                 //{
                 //}
                 empCountperDiv.Add(countEmployee);
-
             }
             EmployeeCountPerDivision = empCountperDiv.ToArray();
         }
-        #endregion
 
-        #region LINE CHART 
-        public LineConfig _lineconfig = new LineConfig
+        #endregion BAR CHART BDUDY
+
+        #region LINE CHART
+
+        public LineConfig _lineconfig = new()
         {
             Options = new LineOptions
             {
@@ -287,7 +280,6 @@ namespace HrisApp.Client.Pages.Dashboard
                     if (item == DateTime.Today.ToString("yyyy-MM-dd"))
                     {
                         _lineconfig.Data.Labels.Add("Today");
-
                     }
                     else
                     {
@@ -296,10 +288,10 @@ namespace HrisApp.Client.Pages.Dashboard
                 }
             }
 
-            Random rd = new Random();
+            Random rd = new();
             var color = String.Format("#{0:X6}", rd.Next(0x1000000));
 
-            LineDataset<int> dataset = new LineDataset<int>(EmployeeCountActual)
+            LineDataset<int> dataset = new(EmployeeCountActual)
             {
                 Label = "Employee Headcount",
                 BackgroundColor = "#966c03",
@@ -307,7 +299,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 Fill = FillingMode.Disabled
             };
 
-            LineDataset<int> dataset2 = new LineDataset<int>(EmployeeCountPlantilla)
+            LineDataset<int> dataset2 = new(EmployeeCountPlantilla)
             {
                 Label = "Plantilla",
                 BackgroundColor = "#8b5694",
@@ -315,16 +307,14 @@ namespace HrisApp.Client.Pages.Dashboard
                 Fill = FillingMode.Disabled
             };
 
-
             _lineconfig.Data.Datasets.Add(dataset);
             _lineconfig.Data.Datasets.Add(dataset2);
         }
 
-        //employee count daily vs plantilla 
-
+        //employee count daily vs plantilla
         private void FilterLineEmployeeActual()
         {
-            List<int> empCountActual = new List<int>();
+            List<int> empCountActual = new();
 
             foreach (var item in dataforline)
             {
@@ -338,7 +328,7 @@ namespace HrisApp.Client.Pages.Dashboard
 
         private void FilterLineEmployeePlantilla()
         {
-            List<int> empCountPlantilla = new List<int>();
+            List<int> empCountPlantilla = new();
 
             foreach (var item in dataforline)
             {
@@ -357,10 +347,11 @@ namespace HrisApp.Client.Pages.Dashboard
             EmployeeCountPlantilla = empCountPlantilla.ToArray();
         }
 
-        private List<string> dataforline = new List<string>();
+        private List<string> dataforline = new();
+
         private List<string> GetLast10DaysLabels()
         {
-            List<string> labels = new List<string>();
+            List<string> labels = new();
 
             DateTime currentDate = DateTime.Now;
 
@@ -372,10 +363,12 @@ namespace HrisApp.Client.Pages.Dashboard
             labels.Reverse();
             return labels;
         }
-        #endregion
+
+        #endregion LINE CHART
 
         #region PIE CHART
-        public PieConfig _configPie = new PieConfig
+
+        public PieConfig _configPie = new()
         {
             Options = new PieOptions
             {
@@ -401,7 +394,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 _configPie.Data.Labels.Add(_item);
             }
 
-            PieDataset<int> dataset = new PieDataset<int>(EmployeeCountPerDivision)
+            PieDataset<int> dataset = new(EmployeeCountPerDivision)
             {
                 BackgroundColor = new[]
                     {
@@ -429,7 +422,7 @@ namespace HrisApp.Client.Pages.Dashboard
 
         private void FilterPieEmployee()
         {
-            List<int> empCountperDiv = new List<int>();
+            List<int> empCountperDiv = new();
 
             foreach (var item in allDivisions)
             {
@@ -439,9 +432,11 @@ namespace HrisApp.Client.Pages.Dashboard
 
             EmployeeCountPerDivision = empCountperDiv.ToArray();
         }
-        #endregion
+
+        #endregion PIE CHART
 
         #region FUNCTIONS
+
         public void BdayThisDay()
         {
             cmbBdyTitle = "Today";
@@ -463,36 +458,37 @@ namespace HrisApp.Client.Pages.Dashboard
                 case "employee":
                     NavigationManager.NavigateTo("/employee?allInStatus=active");
                     break;
+
                 case "inactiveEmployee":
                     NavigationManager.NavigateTo("/employee?allInStatus=inactive");
                     break;
+
                 case "vacancy":
                     NavigationManager.NavigateTo("/vacancy");
                     break;
+
                 case "5yearsinactive":
                     NavigationManager.NavigateTo("/employee?allInStatus=inactive5yearsago");
                     break;
+
                 case "totalPlantilla":
                     NavigationManager.NavigateTo("/totalPlantilla");
                     break;
+
                 case "department":
                     NavigationManager.NavigateTo("/department");
                     break;
+
                 case "section":
                     NavigationManager.NavigateTo("/section");
                     break;
+
                 case "area":
                     NavigationManager.NavigateTo("/area");
                     break;
-
             }
         }
-        #endregion
 
-
-
-
-
-
+        #endregion FUNCTIONS
     }
 }

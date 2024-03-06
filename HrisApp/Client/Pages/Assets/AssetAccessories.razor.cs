@@ -43,7 +43,7 @@ namespace HrisApp.Client.Pages.Assets
         #region TABLES DATA
 
         //TABLEEES
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
 
         private string searchString1 = "";
         private List<AssetAccessoryT> AssetAccessList = new();
@@ -67,11 +67,7 @@ namespace HrisApp.Client.Pages.Assets
         //OPEN DIALOGS
         private void OpenUpdateDialog(int id)
         {
-            var parameters = new DialogParameters<UpdateAssetAccDialog>();
-            parameters.Add(x => x.Id, id);
-
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
-            DialogService.Show<UpdateAssetAccDialog>("", parameters, options);
+            NavigationManager.NavigateTo($"/asset-accessories/details/{id}");
         }
 
         private void OpenAddDialog()

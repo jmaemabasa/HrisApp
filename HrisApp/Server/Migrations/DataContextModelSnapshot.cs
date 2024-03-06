@@ -777,6 +777,35 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("ApplicantT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetAccessHistoryT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AssetAccessoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AssignedDateMainAss")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MainAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UnassignedDateMainAss")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetAccessoryId");
+
+                    b.HasIndex("MainAssetId");
+
+                    b.ToTable("AssetAccessHistoryT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetAccessoryT", b =>
                 {
                     b.Property<int>("Id")
@@ -785,12 +814,16 @@ namespace HrisApp.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Asset")
+                    b.Property<string>("AssetCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("AssetStatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Brand")
                         .IsRequired()
@@ -799,11 +832,7 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DateAdded")
+                    b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EUF")
@@ -813,7 +842,7 @@ namespace HrisApp.Server.Migrations
                     b.Property<DateTime?>("InUseStatusDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("JMCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -829,6 +858,9 @@ namespace HrisApp.Server.Migrations
 
                     b.Property<DateTime?>("PurchaseDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Remarks")
                         .IsRequired()
@@ -979,6 +1011,10 @@ namespace HrisApp.Server.Migrations
                     b.Property<DateTime?>("AssignedDateToReturn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Brand")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -990,11 +1026,7 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DateAdded")
+                    b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeviceID")
@@ -1010,6 +1042,10 @@ namespace HrisApp.Server.Migrations
 
                     b.Property<DateTime?>("InUseStatusDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("JMCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastCheckDate")
                         .HasColumnType("datetime2");
@@ -1040,6 +1076,9 @@ namespace HrisApp.Server.Migrations
 
                     b.Property<DateTime?>("PurchaseDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("RAM")
                         .IsRequired()
@@ -1140,6 +1179,32 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AssetTypesT");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AType_Code = "001",
+                            AType_Name = "Main"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AType_Code = "002",
+                            AType_Name = "Accessory"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AType_Code = "003",
+                            AType_Name = "Licenses"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AType_Code = "004",
+                            AType_Name = "Consumables"
+                        });
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainAssetAccessoriesT", b =>
@@ -2218,6 +2283,10 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("JM_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -4878,6 +4947,25 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("App_Gender");
 
                     b.Navigation("App_Religion");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetAccessHistoryT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetAccessoryT", "AssetAccessory")
+                        .WithMany()
+                        .HasForeignKey("AssetAccessoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "MainAsset")
+                        .WithMany()
+                        .HasForeignKey("MainAssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssetAccessory");
+
+                    b.Navigation("MainAsset");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetAccessoryT", b =>

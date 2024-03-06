@@ -108,5 +108,22 @@
 
         //    return Ok(0);
         //}
+
+        [HttpDelete("DeleteAccessory")]
+        public async Task<ActionResult<List<MainAssetAccessoriesT>>> DeleteAccessory([FromQuery] int mainid, [FromQuery] int accid)
+        {
+            var dbcol = await _context.MainAssetAccessoriesT
+                .Where(h => h.AssetMasterId == mainid && h.AssetAccessoryId == accid)
+                .FirstOrDefaultAsync();
+
+            if (dbcol == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.MainAssetAccessoriesT.Remove(dbcol);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(dbcol);
+        }
     }
 }

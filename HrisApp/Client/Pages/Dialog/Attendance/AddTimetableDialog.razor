@@ -10,13 +10,6 @@
         <EditForm Model="@obj" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <div class="row">
-                @* ERROR/SUCCESS ALERT *@
-                @if (_showAlert)
-                {
-                    <div class="col-12 mb-2">
-                        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
-                        </div>
-                }
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Timetable Name</MudText>
                     <MudTextField @bind-Value="obj.Timetable_Name" For="@(() => obj.Timetable_Name)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
@@ -92,11 +85,8 @@
 
     private ShiftTimetableT obj = new();
 
-    bool success;
-
     private async Task OnValidSubmit(EditContext context)
     {
-        success = true;
         StateHasChanged();
 
         await TimeService.CreateTimetable(obj);
@@ -108,11 +98,4 @@
     }
 
     void Cancel() => MudDialog.Cancel();
-
-    #region ERROR TRAPPING
-    string _message = string.Empty;
-    Severity _severity;
-    private bool _showAlert = false;
-    public void CloseMe() => _showAlert = false;
-    #endregion
 }

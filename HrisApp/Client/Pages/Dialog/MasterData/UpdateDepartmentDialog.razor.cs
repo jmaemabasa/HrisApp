@@ -6,23 +6,21 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
     public partial class UpdateDepartmentDialog : ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
-
         private DepartmentT department = new();
 
-
-        void Cancel() => MudDialog.Cancel();
-
+        private void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnParametersSetAsync()
         {
             department = await DepartmentService.GetSingleDepartment(Id);
         }
 
-        async Task UpdateArea()
+        private async Task UpdateArea()
         {
             if (department == null)
                 return;
@@ -57,13 +55,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     StateService.SetState("DepartmentList", newList);
                 }
             }
-        }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
         }
     }
 }

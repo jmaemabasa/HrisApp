@@ -5,10 +5,10 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
     public partial class AddDivisionDialog : ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         private string newDivision = "";
 
-        void Cancel() => MudDialog.Cancel();
+        private void Cancel() => MudDialog.Cancel();
 
         private async Task ConfirmCreateDivision()
         {
@@ -41,16 +41,16 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     await DivisionService.GetDivision();
                     var newList = DivisionService.DivisionTs;
                     StateService.SetState("DivisionList", newList);
-
                 }
             }
         }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
-        }
+
+        //private async Task ShowErrorMessageBox(string mess)
+        //{
+        //    bool? result = await _dialogService.ShowMessageBox(
+        //    "Warning",
+        //    mess,
+        //    yesText: "Ok");
+        //}
     }
 }

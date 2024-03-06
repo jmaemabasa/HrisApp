@@ -1,14 +1,4 @@
-﻿@inject SweetAlertService Swal
-@inject IScheduleService ScheduleService
-@inject NavigationManager NavigationManager
-@inject IJSRuntime jsRuntime
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject StateService StateService
-@inject IDialogService _dialogService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <MudTextField Label="Schedule Type" @bind-Value="schedule.Name" Variant="Variant.Outlined" Style="margin-bottom:10px;" />
         <MudTextField Label="Time-in" InputType="InputType.Time" @bind-Value="schedule.TimeIn" Variant="Variant.Outlined" Style="margin-bottom:10px;" />

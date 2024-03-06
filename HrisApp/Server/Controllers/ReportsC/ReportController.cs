@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Reporting.NETCore;
+﻿using Microsoft.Reporting.NETCore;
 using System.Data;
 using System.Text;
 
@@ -93,11 +92,11 @@ namespace HrisApp.Server.Controllers.ReportsC
             int extension = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{this._webHostEnvironment.WebRootPath}\\EmpDetails\\EmpDetails1.rdlc";
 
-            Dictionary<string, string> parameter = new Dictionary<string, string>();
+            Dictionary<string, string> parameter = new();
             parameter.Add("param", "RDLC Report in Balzor");
             parameter.Add("datenow", DateTime.Now.ToString("dddd, MMM dd, yyyy"));
 
-            LocalReport localReport = new LocalReport();
+            LocalReport localReport = new();
             localReport.ReportPath = path;
             localReport.DataSources.Add(new ReportDataSource("dsEmployeeT", dt));
             localReport.DataSources.Add(new ReportDataSource("dsEmp_PayrollT", dtpayroll));
@@ -126,7 +125,7 @@ namespace HrisApp.Server.Controllers.ReportsC
 
         public async Task<DataTable> CreateDataTable(List<EmployeeT> listEMPDetails)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -172,7 +171,6 @@ namespace HrisApp.Server.Controllers.ReportsC
                     age--;
 
                 emp.Age = age;
-
 
                 foreach (var item in sec)
                 {
@@ -222,9 +220,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTablePayroll(List<Emp_PayrollT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -258,9 +257,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableAddress(List<Emp_AddressT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -294,9 +294,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableProfBg(List<Emp_ProfBackgroundT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -325,7 +326,7 @@ namespace HrisApp.Server.Controllers.ReportsC
 
         public DataTable CreateDataTablePrimary(List<Emp_PrimaryT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -347,9 +348,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableSecondary(List<Emp_SecondaryT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -371,9 +373,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableCollege(List<Emp_CollegeT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -397,9 +400,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableSenior(List<Emp_SeniorHST> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -421,9 +425,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableMasteral(List<Emp_MasteralT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -447,9 +452,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableDoctorate(List<Emp_DoctorateT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -473,9 +479,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableOtherEduc(List<Emp_OtherEducT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -501,9 +508,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableLicense(List<Emp_LicenseT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -525,9 +533,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public DataTable CreateDataTableTraining(List<Emp_TrainingT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -547,9 +556,10 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             return dt;
         }
+
         public async Task<DataTable> CreateDataTablePosHistory(List<Emp_PosHistoryT> obj)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new();
             //DataColumn dtColumn;
             DataRow myDataRow;
 
@@ -569,7 +579,6 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             foreach (var emp in obj.Where(x => x.DateEnded != null))
             {
-
                 foreach (var item in areaList)
                 {
                     if (item.Id == emp.NewAreaId)

@@ -10,7 +10,8 @@ namespace HrisApp.Shared.Models.Assets
         [Key]
         public int Id { get; set; }
 
-        public string Code { get; set; } = string.Empty;
+        public string JMCode { get; set; } = string.Empty;
+        public string AssetCode { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
 
@@ -26,17 +27,17 @@ namespace HrisApp.Shared.Models.Assets
         public AssetStatusT? AssetStatus { get; set; }
         public int AssetStatusId { get; set; } = 2;
 
-        public string Location { get; set; } = string.Empty;
+        public int Quantity { get; set; } = 1;
+        public string Barcode { get; set; } = string.Empty;
         public string Serial { get; set; } = string.Empty;
         public DateTime? PurchaseDate { get; set; }
         public DateTime? InUseStatusDate { get; set; }
         public DateTime? StatusDate { get; set; }
 
         public string EUF { get; set; } = string.Empty;
-        public string Asset { get; set; } = string.Empty;
         public string Remarks { get; set; } = string.Empty;
 
-        public DateTime? DateAdded { get; set; } = DateTime.Now;
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
 
         public AssetMasterT? MainAsset { get; set; }
         public int? MainAssetId { get; set; }

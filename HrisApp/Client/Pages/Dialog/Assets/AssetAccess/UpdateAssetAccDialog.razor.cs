@@ -38,7 +38,7 @@
             await AssetAccService.UpdateObj(obj);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
-            _toastService.ShowSuccess(obj.Asset + " Updated Successfully!");
+            _toastService.ShowSuccess(obj.AssetCode + " Updated Successfully!");
 
             // Update the List using the StateService
             StateService.SetState("AssetAccList", await AssetAccService.GetObjList());

@@ -3,6 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace HrisApp.Client.ViewModel
 {
+#nullable disable
+
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -19,11 +21,8 @@ namespace HrisApp.Client.ViewModel
             OnPropertyChanged(_propertyName);
         }
 
-
-
-
-
         public event Action OnChange;
+
         private readonly Dictionary<string, object> _stateDictionary = new();
 
         public T GetState<T>(string key)
@@ -44,5 +43,4 @@ namespace HrisApp.Client.ViewModel
 
         private void NotifyStateChanged() => OnChange?.Invoke();
     }
-
 }

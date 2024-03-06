@@ -82,19 +82,21 @@
         {
             var dbarea = await _context.AssetAccessoryT.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbarea.Asset = model.Asset;
+            dbarea.AssetCode = model.AssetCode;
             dbarea.Brand = model.Brand;
             dbarea.Model = model.Model;
             dbarea.TypeId = model.TypeId;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
-            dbarea.Location = model.Location;
+            dbarea.Quantity = model.Quantity;
+            dbarea.Barcode = model.Barcode;
             dbarea.Serial = model.Serial;
             dbarea.PurchaseDate = model.PurchaseDate;
             dbarea.AssetStatusId = model.AssetStatusId;
             dbarea.Remarks = model.Remarks;
             dbarea.InUseStatusDate = model.InUseStatusDate;
             dbarea.StatusDate = model.StatusDate;
+            dbarea.EUF = model.EUF;
 
             dbarea.MainAssetId = model.MainAssetId;
             dbarea.MainAssetDateUpdated = model.MainAssetDateUpdated;
@@ -109,7 +111,7 @@
             var Masterlist = await _context.AssetAccessoryT
                 .ToListAsync();
 
-            var _returnId = Masterlist.Where(d => d.Code.Contains(code, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            var _returnId = Masterlist.Where(d => d.JMCode.Contains(code, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
             return Ok(_returnId.Id);
         }
@@ -123,7 +125,7 @@
 
             if (lastItem != null)
             {
-                string code = lastItem.Code;
+                string code = lastItem.JMCode;
 
                 string splitcode = code.Split("-")[2];
                 return Ok(Convert.ToInt32(splitcode));

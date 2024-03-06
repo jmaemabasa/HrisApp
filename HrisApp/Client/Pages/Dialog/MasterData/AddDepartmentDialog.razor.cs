@@ -4,7 +4,6 @@
     {
 #nullable disable
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        private readonly Dictionary<string, List<DepartmentT>> Department = new();
         private List<DivisionT> Division = new();
         private int selectedDivision;
         private string newDepartment = "";

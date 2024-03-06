@@ -78,7 +78,7 @@ namespace HrisApp.Client.Services.ImageService
 
                 throw new Exception("No PDFs Found");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ////Console.WriteLine($"Exception occurred while fetching PDF data: {ex.Message}");
                 //foreach (var area in DocumentTs)

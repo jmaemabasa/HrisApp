@@ -5,7 +5,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
     public partial class AddSectionDialog : ComponentBase
     {
 #nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         private List<DepartmentT> Department = new();
         private List<DivisionT> Division = new();
         private bool notApplicableChecked = false;
@@ -13,7 +13,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private int selectedDepartment;
         private string newSection = "";
 
-        void Cancel() => MudDialog.Cancel();
+        private void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnInitializedAsync()
         {
@@ -85,13 +85,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                     StateService.SetState("SectionList", newList);
                 }
             }
-        }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
         }
     }
 }

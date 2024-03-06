@@ -51,12 +51,12 @@
                 }
             }
         }
-        private async Task ShowErrorMessageBox(string mess)
-        {
-            bool? result = await _dialogService.ShowMessageBox(
-            "Warning",
-            mess,
-            yesText: "Ok");
-        }
+        //    private async Task ShowErrorMessageBox(string mess)
+        //    {
+        //        bool? result = await _dialogService.ShowMessageBox(
+        //        "Warning",
+        //        mess,
+        //        yesText: "Ok");
+        //    }
     }
 }

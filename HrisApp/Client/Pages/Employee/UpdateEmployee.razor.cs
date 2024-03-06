@@ -1,17 +1,13 @@
-﻿using MudBlazor;
-using Newtonsoft.Json;
-using NPOI.HPSF;
-
-namespace HrisApp.Client.Pages.Employee
+﻿namespace HrisApp.Client.Pages.Employee
 {
     public partial class UpdateEmployee : ComponentBase
     {
 #nullable disable
 
         [Parameter]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        private DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
+        private readonly DateTime FiveYearsAgo = DateTime.Now.AddYears(-5);
 
         #region TABLE VARIABLES
 
@@ -41,12 +37,9 @@ namespace HrisApp.Client.Pages.Employee
         private List<DivisionT> DivisionsL = new();
         private List<DepartmentT> DepartmentsL = new();
 
-        //private List<SectionT> SectionsL = new();
         private List<PositionT> PositionsL = new();
-
         private List<SubPositionT> SubPositionsL = new();
         private List<PosMPExternalT> ExternalsL = new();
-        private List<PosMPInternalT> InternalsL = new();
 
         private List<GenderT> GendersL = new();
         private List<CivilStatusT> CivilStatusL = new();
@@ -67,8 +60,7 @@ namespace HrisApp.Client.Pages.Employee
 
         #region DATES VARIBALE
 
-        private DateTime? bday { get; set; }
-        private DateTime? Date = DateTime.Today;
+        private DateTime? Bday { get; set; }
         private DateTime? ResignationDate = DateTime.Today;
         private DateTime? ProbStart = DateTime.Today;
         private DateTime? ProbEnd = DateTime.Today;
@@ -93,7 +85,7 @@ namespace HrisApp.Client.Pages.Employee
         private bool ScheduleOpen;
         private bool StatutoryOpen;
         private Anchor anchor;
-        private string width = "500px", height = "100%";
+        private readonly string width = "500px", height = "100%";
 
         private void OpenDrawer(Anchor anchor, string drawerx)
         {
@@ -110,7 +102,6 @@ namespace HrisApp.Client.Pages.Employee
         #endregion DRAWER VARIBALES AND FUNCTIONS
 
         private string VerifyCode;
-        private string NoInformation = "No Information.";
 
         private string ImageData { get; set; }
         private List<string> PDFDataList = new();
@@ -155,15 +146,15 @@ namespace HrisApp.Client.Pages.Employee
 
         protected override async Task OnParametersSetAsync()
         {
-            employee = await EmployeeService.GetSingleEmployee(id);
-            _address = await AddressService.GetSingleAddress(id);
-            _payroll = await PayrollService.GetSinglePayroll(id);
+            employee = await EmployeeService.GetSingleEmployee(Id);
+            _address = await AddressService.GetSingleAddress(Id);
+            _payroll = await PayrollService.GetSinglePayroll(Id);
             _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
 
             //_position = await PositionService.GetSinglePosition(employee.PositionId);
             _position = await PositionService.GetSinglePositionByCode(_subposition.PosCode);
 
-            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(id);
+            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(Id);
 
             await PDFImage(employee.Verify_Id, employee.EmployeeNo);
             await ImageService.GetNewPDF(employee.Verify_Id, employee.EmployeeNo);
@@ -180,7 +171,7 @@ namespace HrisApp.Client.Pages.Employee
                 ImageData = string.Format("images/imgholder.jpg");
             }
 
-            bday = employee.Birthdate;
+            Bday = employee.Birthdate;
             DateHired = employee.DateHired;
         }
 
@@ -200,12 +191,12 @@ namespace HrisApp.Client.Pages.Employee
 
         protected async Task SaveUpdateEmployee()
         {
-            if (bday.HasValue)
+            if (Bday.HasValue)
             {
                 DateTime currentDate = DateTime.Today;
-                int age = currentDate.Year - bday.Value.Year;
+                int age = currentDate.Year - Bday.Value.Year;
 
-                if (bday.Value > currentDate.AddYears(-age))
+                if (Bday.Value > currentDate.AddYears(-age))
                     age--;
 
                 employee.Age = age;
@@ -229,7 +220,7 @@ namespace HrisApp.Client.Pages.Employee
                 }
                 else
                 {
-                    employee.Birthdate = Convert.ToDateTime(bday);
+                    employee.Birthdate = Convert.ToDateTime(Bday);
                     employee.DateHired = Convert.ToDateTime(DateHired);
 
                     await EmployeeService.UpdateEmployee(employee);
@@ -285,12 +276,12 @@ namespace HrisApp.Client.Pages.Employee
                     _toastService.ShowSuccess("Information updated successfully!");
 
                     //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-                    employee = await EmployeeService.GetSingleEmployee((int)id);
-                    _address = await AddressService.GetSingleAddress((int)id);
-                    _payroll = await PayrollService.GetSinglePayroll((int)id);
+                    employee = await EmployeeService.GetSingleEmployee((int)Id);
+                    _address = await AddressService.GetSingleAddress((int)Id);
+                    _payroll = await PayrollService.GetSinglePayroll((int)Id);
                     _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                     //_empPicture = await ImageService.GetSingleImage((int)id);
-                    _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
+                    _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
 
                     personalandjobOpen = false;
                     workInfoOpen = false;
@@ -304,7 +295,7 @@ namespace HrisApp.Client.Pages.Employee
             }
             else
             {
-                employee.Birthdate = Convert.ToDateTime(bday);
+                employee.Birthdate = Convert.ToDateTime(Bday);
                 employee.DateHired = Convert.ToDateTime(DateHired);
 
                 await EmployeeService.UpdateEmployee(employee);
@@ -379,12 +370,12 @@ namespace HrisApp.Client.Pages.Employee
                 _toastService.ShowSuccess("Information updated successfully!");
 
                 //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-                employee = await EmployeeService.GetSingleEmployee((int)id);
-                _address = await AddressService.GetSingleAddress((int)id);
-                _payroll = await PayrollService.GetSinglePayroll((int)id);
+                employee = await EmployeeService.GetSingleEmployee((int)Id);
+                _address = await AddressService.GetSingleAddress((int)Id);
+                _payroll = await PayrollService.GetSinglePayroll((int)Id);
                 _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                 //_empPicture = await ImageService.GetSingleImage((int)id);
-                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)id);
+                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
 
                 personalandjobOpen = false;
                 workInfoOpen = false;
@@ -399,14 +390,14 @@ namespace HrisApp.Client.Pages.Employee
 
         #region Image Update
 
-        private string imgBase64 { get; set; }
+        private string ImgBase64 { get; set; }
         private string ImageUrl { get; set; }
         private string ImgFileName { get; set; }
         private string ImgContentType { get; set; }
 
         private MultipartFormDataContent EmpImage = new();
 
-        private async Task uploadImage(InputFileChangeEventArgs e)
+        private async Task UploadImage(InputFileChangeEventArgs e)
         {
             long lngImage = long.MaxValue;
             var brwModel = e.File;
@@ -442,7 +433,7 @@ namespace HrisApp.Client.Pages.Employee
                 EmpImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
 
                 var base642 = Convert.ToBase64String(imgBuffer);
-                imgBase64 = string.Format("data:image/*;base64,{0}", base642);
+                ImgBase64 = string.Format("data:image/*;base64,{0}", base642);
 
                 await OnsavingImg(employee.EmployeeNo, employee.DivisionId, employee.DepartmentId, employee.LastName, employee.Verify_Id);
             }
@@ -517,7 +508,7 @@ namespace HrisApp.Client.Pages.Employee
         //TAB PANEL
         private int activeIndex;
 
-        private RenderFragment tabHeader(int tabId)
+        private RenderFragment TabHeader(int tabId)
         {
             return builder =>
             {

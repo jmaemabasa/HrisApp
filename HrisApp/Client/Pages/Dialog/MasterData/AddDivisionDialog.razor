@@ -1,14 +1,4 @@
-﻿@inject SweetAlertService Swal
-@inject IDivisionService DivisionService
-@inject NavigationManager NavigationManager
-@inject IJSRuntime jsRuntime
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject StateService StateService
-@inject IDialogService _dialogService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <MudTextField Label="Division" @bind-Value="newDivision" Variant="Variant.Outlined"></MudTextField>
     </DialogContent>

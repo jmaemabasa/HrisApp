@@ -1,16 +1,15 @@
 ﻿using HrisApp.Client.Pages.Dialog.Attendance;
-using System.Collections;
 
 namespace HrisApp.Client.Pages.User.Leave
 {
 #nullable disable
+
     public partial class UserLeave : ComponentBase
     {
-        Emp_LeaveCreditT empLeaveCred = new();
+        private Emp_LeaveCreditT empLeaveCred = new();
 
-        List<Emp_LeaveHistoryT> leaveHistoryList = new();
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
-        private string searchString1 = "";
+        private List<Emp_LeaveHistoryT> leaveHistoryList = new();
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
         private Emp_LeaveHistoryT selectedItem1 = null;
 
         private string availableLeavetext = "";
@@ -20,7 +19,7 @@ namespace HrisApp.Client.Pages.User.Leave
         private string availableLeavetextVL = "";
         private string availableLeavetextOL = "";
         private double countSl, countEl, countMl, countPl, countVl, countOl;
-        private string VERIFY {get;set;}
+        private string VERIFY { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -57,6 +56,7 @@ namespace HrisApp.Client.Pages.User.Leave
         }
 
         #region SAVE BUTTON FUNCTIONS
+
         public List<LeaveTypesT> leavelist = new();
 
         public string newLeaveType = "--Select Leave Type--";
@@ -64,6 +64,7 @@ namespace HrisApp.Client.Pages.User.Leave
         public DateTime? newfrom = DateTime.Today;
         public DateTime? newto = DateTime.Today;
         public string noofdays = "1";
+
         private async Task ConfirmCreateLeave()
         {
             if (newLeaveType == "--Select Leave Type--")
@@ -80,7 +81,8 @@ namespace HrisApp.Client.Pages.User.Leave
             }
             else
             {
-                if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator") {
+                if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
+                {
                     await LeaveHistoryService.CreateLeaveHistory(VERIFY, newLeaveType, newfrom, newto, noofdays, newpurpose, "Approved", DateTime.Now, "Read");
                 }
                 else
@@ -106,23 +108,26 @@ namespace HrisApp.Client.Pages.User.Leave
             }
         }
 
-        #endregion
+        #endregion SAVE BUTTON FUNCTIONS
 
         #region OPEN DRAWERS FUNCTIONS
-        bool UpdateLeaveBalOpen, AddHistoryOpen;
-        Anchor anchor;
+
+        private bool UpdateLeaveBalOpen, AddHistoryOpen;
+        private Anchor anchor;
         private readonly string _width = "500px";
         private readonly string _height = "100%";
 
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
             UpdateLeaveBalOpen = (drawerx == "UpdateLeaveBalOpen");
             AddHistoryOpen = (drawerx == "AddHistoryOpen");
             this.anchor = anchor;
         }
-        #endregion
+
+        #endregion OPEN DRAWERS FUNCTIONS
 
         #region FUNCTIONS
+
         private void OpenViewLeaveDetails(int id)
         {
             var parameters = new DialogParameters<ViewLeaveDetailsDialog>
@@ -133,7 +138,8 @@ namespace HrisApp.Client.Pages.User.Leave
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, NoHeader = true };
             DialogService.Show<ViewLeaveDetailsDialog>("", parameters, options);
         }
-        async Task SetValues()
+
+        private async Task SetValues()
         {
             countSl = await LeaveCredService.GetCountExistCredits(VERIFY, "Sick");
             countEl = await LeaveCredService.GetCountExistCredits(VERIFY, "Emergency");
@@ -158,7 +164,7 @@ namespace HrisApp.Client.Pages.User.Leave
 
         private async Task ShowErrorMessageBox(string mess)
         {
-            bool? result = await DialogService.ShowMessageBox(
+            await DialogService.ShowMessageBox(
             "Warning",
             mess,
             yesText: "Ok");
@@ -179,6 +185,7 @@ namespace HrisApp.Client.Pages.User.Leave
                 Console.WriteLine();
             }
         }
+
         public void HandleDateToChangedFrom(DateTime? newDate)
         {
             newfrom = newDate;
@@ -196,6 +203,7 @@ namespace HrisApp.Client.Pages.User.Leave
         }
 
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = false;
@@ -210,8 +218,10 @@ namespace HrisApp.Client.Pages.User.Leave
             {
                 case "pending":
                     return 1;
+
                 case "approved":
                     return 2;
+
                 case "rejected":
                     return 3;
                 // Add more cases if needed
@@ -219,6 +229,7 @@ namespace HrisApp.Client.Pages.User.Leave
                     return int.MaxValue; // Any other status is placed at the end
             }
         }
-        #endregion
+
+        #endregion FUNCTIONS
     }
 }
