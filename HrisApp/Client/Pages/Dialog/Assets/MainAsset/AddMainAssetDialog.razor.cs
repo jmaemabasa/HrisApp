@@ -1,4 +1,5 @@
-﻿using HrisApp.Client.Pages.MasterData;
+﻿using QRCoder;
+using System.Security.Policy;
 
 namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 {
@@ -13,6 +14,8 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         private List<AssetStatusT> ASSSTATUS = new();
         private List<AreaT> AREA = new();
 
+        private QRCodeGenerator qrGenerator = new();
+
         //image
         public string imgBase64 { get; set; } = string.Empty;
 
@@ -20,7 +23,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         public string ImgFileName { get; set; } = string.Empty;
         public string ImgContentType { get; set; } = string.Empty;
 
-        private MultipartFormDataContent EmpImage = new();
+        private MultipartFormDataContent MainAssImage = new();
         private IList<IBrowserFile> Imagesfile = new List<IBrowserFile>();
 
         public PatternMask MacAddMask = new("##:##:##:##:##:##")
@@ -50,9 +53,8 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         {
             try
             {
-                await OnGenerateCode();
                 await AssetMasterService.CreateObj(obj);
-                await OnsavingImg(obj.WorksationName, obj.CategoryId, obj.SubCategoryId, obj.JMCode);
+                await OnsavingImg(obj.CategoryId, obj.SubCategoryId, obj.JMCode, "First image uploaded.");
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
@@ -82,6 +84,29 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
             var subcode = SUBCAT.Where(e => e.Id == obj.SubCategoryId).FirstOrDefault()!.ASubCat_Code;
             string rolesCode = lastCount.ToString().PadLeft(4, '0');
             obj.JMCode = $"{typecode}-{catcode}-{subcode}-{rolesCode}";
+            obj.AssetCode = $"{typecode}-{catcode}-{subcode}-{rolesCode}";
+
+            await GenerateQR();
+        }
+
+        public string QRIMAGE { get; set; } = string.Empty;
+
+        private async Task GenerateQR()
+        {
+            await Task.Delay(0);
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+
+            Url generator = new Url("https://localhost:44397/main-asset/details/4");
+            string payload = generator.ToString();
+
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
+
+            var qrCode = new PngByteQRCode(qrCodeData);
+
+            byte[] imageByteArray = qrCode.GetGraphic(20);
+
+            var base642 = Convert.ToBase64String(imageByteArray);
+            QRIMAGE = string.Format("data:image/*;base64,{0}", base642);
         }
 
         #region TABS
@@ -166,6 +191,27 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 
         #endregion TABS
 
+        private bool disabledsubcat = true;
+        private bool disabledcat = true;
+
+        private void OnChangeType(int id)
+        {
+            obj.TypeId = id;
+            disabledcat = false;
+        }
+
+        private void OnChangeCat(int id)
+        {
+            obj.CategoryId = id;
+            disabledsubcat = false;
+        }
+
+        private async Task OnChangeSCat(int id)
+        {
+            obj.SubCategoryId = id;
+            await OnGenerateCode();
+        }
+
         public string imguploadclass = "btnimage";
 
         public async Task uploadImage(InputFileChangeEventArgs e)
@@ -201,21 +247,21 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
                 ImageUrl = imgURL;
                 ImgContentType = imgContent;
                 ImgFileName = imgFilename;
-                EmpImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
+                MainAssImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
 
                 var base642 = Convert.ToBase64String(imgBuffer);
                 imgBase64 = string.Format("data:image/*;base64,{0}", base642);
             }
         }
 
-        public async Task OnsavingImg(string assetcode, int cat, int subcat, string jmcode)
+        public async Task OnsavingImg(int cat, int subcat, string jmcode, string remarks)
         {
             using var _contentImg = new MultipartFormDataContent();
 
-            if (EmpImage.Any())
+            if (MainAssImage.Any())
             {
-                _contentImg.Add(EmpImage.LastOrDefault()!);
-                await AssetImageService.AttachFile(_contentImg, assetcode, cat, subcat, jmcode);
+                _contentImg.Add(MainAssImage.LastOrDefault()!);
+                await AssetImageService.AttachFile(_contentImg, cat, subcat, jmcode, remarks);
             }
             else
             {

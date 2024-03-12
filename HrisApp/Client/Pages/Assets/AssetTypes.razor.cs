@@ -1,8 +1,7 @@
-﻿using HrisApp.Client.Pages.Dialog.Assets.AssetType;
-
-namespace HrisApp.Client.Pages.Assets
+﻿namespace HrisApp.Client.Pages.Assets
 {
 #nullable disable
+
     public partial class AssetTypes : ComponentBase
     {
         protected override async Task OnInitializedAsync()
@@ -31,6 +30,7 @@ namespace HrisApp.Client.Pages.Assets
         }
 
         public bool _isVisible;
+
         public async void OpenOverlay()
         {
             _isVisible = false;
@@ -40,10 +40,12 @@ namespace HrisApp.Client.Pages.Assets
         }
 
         #region TABLES DATA
+
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<AssetTypesT> AssetTypeList = new();
+        private List<AssetTypesT> AssetTypeList = new();
         private AssetTypesT selectedItem1 = null;
 
         private bool FilterFunc1(AssetTypesT area) => FilterFunc(area, searchString1);
@@ -56,6 +58,7 @@ namespace HrisApp.Client.Pages.Assets
                 return true;
             return false;
         }
+
         //END FOR TABLES
 
         //OPEN DIALOGS
@@ -73,6 +76,7 @@ namespace HrisApp.Client.Pages.Assets
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddAssetTypeDialog>("New Asset Type", options);
         }
-        #endregion
+
+        #endregion TABLES DATA
     }
 }

@@ -20,6 +20,7 @@
         [HttpGet("Getattachmentview")]
         public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string verifyCode)
         {
+            try
             {
                 var _masterlist = await _context.EmpPictureT.ToListAsync();
                 var model = _masterlist.Where(a => a.Verify_Id == verifyCode).FirstOrDefault();
@@ -39,6 +40,10 @@
                 }
                 _memory.Position = 0;
                 return _memory.ToArray();
+            }
+            catch (Exception)
+            {
+                return NoContent();
             }
         }
 

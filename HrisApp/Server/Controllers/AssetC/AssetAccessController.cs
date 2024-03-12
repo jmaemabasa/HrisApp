@@ -96,6 +96,7 @@
             dbarea.Remarks = model.Remarks;
             dbarea.InUseStatusDate = model.InUseStatusDate;
             dbarea.StatusDate = model.StatusDate;
+            dbarea.LastCheckDate = model.LastCheckDate;
             dbarea.EUF = model.EUF;
 
             dbarea.MainAssetId = model.MainAssetId;

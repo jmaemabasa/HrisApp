@@ -1,5 +1,7 @@
 ﻿namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 {
+#nullable disable
+
     public partial class AddMainAssetAccessoryDialog : ComponentBase
     {
         [CascadingParameter] private MudDialogInstance? MudDialog { get; set; }
@@ -13,6 +15,8 @@
         private AssetMasterT assetMaster = new();
         private MainAssetAccessoriesT obj = new();
         private AssetAccessHistoryT accHistoryObj = new();
+
+        private string selectedACC { get; set; } = "";
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,6 +34,8 @@
 
         private async Task SaveUpdate()
         {
+            obj.AssetAccessoryId = fieldObj.Id;
+
             obj.AssetMasterId = assetMaster.Id;
             obj.AssetMasterCode = assetMaster.JMCode;
 
@@ -50,6 +56,26 @@
             MudDialog?.Close();
             _toastService.ShowSuccess("Added Successfully!");
             await OnAddSuccess.InvokeAsync();
+        }
+
+        private AssetAccessoryT fieldObj;
+
+        private async Task<IEnumerable<AssetAccessoryT>> Search1(string value)
+        {
+            await Task.Delay(5);
+            var list = AssetAccessoryList.Where(e => e.MainAssetId == null && e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId && e.AssetStatusId == 2);
+            if (string.IsNullOrEmpty(value))
+            {
+                return list;
+            }
+            else
+            {
+                var chk = list.Where(x => x.AssetCode.Contains(value, StringComparison.InvariantCultureIgnoreCase) ||
+                                            x.Brand.Contains(value, StringComparison.InvariantCultureIgnoreCase) ||
+                                            x.Model.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+
+                return chk;
+            }
         }
 
         private bool disabledsubcat = true;

@@ -229,7 +229,8 @@ namespace HrisApp.Server.Data
             modelBuilder.Entity<UserRoleT>().HasData(
              new UserRoleT { Id = 1, Name = "System Administrator", RoleCode = "Admin" },
              new UserRoleT { Id = 2, Name = "User", RoleCode = "User" },
-             new UserRoleT { Id = 3, Name = "HR", RoleCode = "HR" }
+             new UserRoleT { Id = 3, Name = "HR", RoleCode = "HR" },
+             new UserRoleT { Id = 4, Name = "AssetM", RoleCode = "AssetM" }
             );
 
             modelBuilder.Entity<LeaveTypesT>().HasData(
@@ -384,6 +385,7 @@ namespace HrisApp.Server.Data
         public DbSet<AssetAccessHistoryT> AssetAccessHistoryT { get; set; }
         public DbSet<MainAssetAccessoriesT> MainAssetAccessoriesT { get; set; }
         public DbSet<AssetImageT> AssetImageT { get; set; }
+        public DbSet<AssetAccessImageT> AssetAccessImageT { get; set; }
         public DbSet<AssetLastCheckT> AssetLastCheckT { get; set; }
         //public DbSet<AssetSubAccessoryT> AssetSubAccessoryT { get; set; }
     }

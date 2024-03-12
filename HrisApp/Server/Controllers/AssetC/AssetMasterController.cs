@@ -111,6 +111,7 @@
             dbarea.ClientIP = model.ClientIP;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
+            dbarea.TypeId = model.TypeId;
             dbarea.AreaId = model.AreaId;
             dbarea.PurchaseDate = model.PurchaseDate;
             dbarea.PurchaseAmount = model.PurchaseAmount;

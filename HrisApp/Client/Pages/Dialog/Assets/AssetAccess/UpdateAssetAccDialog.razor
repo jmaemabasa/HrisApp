@@ -35,9 +35,21 @@
                             <span>Accessory</span>
                             @if (!isUpdating)
                             {
-                                <div class="assacc-details flex-grow-1">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Asset Code</MudText>
-                                    <MudText Align="Align.Start" Style="color: #27374D; font-weight:bold;" Typo="Typo.body2">@obj.AssetCode</MudText>
+                                <div class="d-flex justify-content-center">
+                                    <div class="asset-img">
+                                        <img class="asset-img-img" alt="asset image" src="@AccessImageData" />
+                                    </div>
+                                </div>
+                                <div class="assacc-details d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Asset Code</MudText>
+                                        <MudText Align="Align.Start" Style="color: #27374D; font-weight:bold;" Typo="Typo.body2">@obj.AssetCode</MudText>
+                                    </div>
+                                    <div>
+                                        <MudTooltip Text="Open">
+                                            <MudIconButton OnClick="@(() => GlobalConfigService.OpenInNewTab($"asset-accessories/details/{obj.Id}"))" Icon="@Icons.Material.Rounded.OpenInNew" Style="color: #757A90"></MudIconButton>
+                                        </MudTooltip>
+                                    </div>
                                 </div>
                                 <div class="assacc-details flex-grow-1">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Type</MudText>
@@ -241,37 +253,6 @@
                         </div>
                     </div>
 
-                    @if (!isUpdating)
-                    {
-                        <div class="assacc-rightpane" style="margin-top: 20px;">
-                            <div class="d-flex flex-column gap-2">
-                                <span>Main Asset</span>
-                                @if (obj.MainAssetId == null)
-                                {
-                                    <span>Not yet connected</span>
-                                }
-                                else
-                                {
-                                    <div class="assacc-details flex-grow-1">
-                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Main Asset</MudText>
-                                        <MudText Align="Align.Start" Style="color: #27374D; font-weight:bold;" Typo="Typo.body2">@obj.MainAsset?.WorksationName</MudText>
-                                    </div>
-                                    <div class="assacc-details flex-grow-1">
-                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Category</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Category?.ACat_Name</MudText>
-                                    </div>
-                                    <div class="assacc-details flex-grow-1">
-                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.SubCategory?.ASubCat_Name</MudText>
-                                    </div>
-                                    <div class="assacc-details flex-grow-1">
-                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Mac Address</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.MainAsset?.MacAddress</MudText>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         </div>

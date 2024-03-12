@@ -29,7 +29,7 @@
                                             <MudFileUpload T="IBrowserFile" OnFilesChanged="@uploadImage" Accept="image/*" capture>
                                                 <ButtonTemplate>
                                                     <MudButton Class="w-100 btnimagewithimage" DisableElevation HtmlTag="label" for="@context">
-                                                        <div style="height: 240px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:10px 0 10px 0">
+                                                        <div style="height: 240px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:0px">
                                                             <MudImage Src="@imgBase64" Style="height: 95%; width: auto; max-width:100%; border-radius: 20px; border: none; " />
                                                         </div>
                                                     </MudButton>
@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <MudText Typo="Typo.body2">Type</MudText>
-                                                <MudSelect @bind-Value="obj.TypeId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                                <MudSelect T="int" ValueChanged="OnChangeType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
                                                     <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
                                                     @foreach (var sec in TYPES)
                                                     {
@@ -54,7 +54,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <MudText Typo="Typo.body2">Category</MudText>
-                                                <MudSelect @bind-Value="obj.CategoryId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                                <MudSelect T="int" ValueChanged="OnChangeCat" Disabled="@disabledcat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
                                                     <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
                                                     @foreach (var sec in CAT)
                                                     {
@@ -66,7 +66,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <MudText Typo="Typo.body2">Sub Category</MudText>
-                                                <MudSelect @bind-Value="obj.SubCategoryId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                                                <MudSelect T="int" ValueChanged="OnChangeSCat" Disabled="@disabledsubcat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
                                                     <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
                                                     @foreach (var sec in SUBCAT.Where(e => e.CategoryId == obj.CategoryId))
                                                     {
@@ -78,7 +78,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <MudText Typo="Typo.body2">Asset Code</MudText>
-                                                <MudTextField @bind-Value="obj.AssetCode" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight:bold;" />
+                                                <MudTextField @bind-Value="obj.AssetCode" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight:bold;" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -125,19 +125,27 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12 col-lg-4">
                                         <MudText Typo="Typo.body2">Brand</MudText>
                                         <MudTextField @bind-Value="obj.Brand" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                                     </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12 col-lg-4">
                                         <MudText Typo="Typo.body2">Model</MudText>
                                         <MudTextField @bind-Value="obj.Model" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                                     </div>
+                                    <div class="col-12 col-lg-4">
+                                        <MudText Typo="Typo.body2">Quantity</MudText>
+                                        <MudTextField @bind-Value="obj.Quantity" Mask="@(new PatternMask("000000000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                    </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 col-lg-6">
                                         <MudText Typo="Typo.body2">Serial</MudText>
                                         <MudTextField @bind-Value="obj.Serial" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <MudText Typo="Typo.body2">Barcode</MudText>
+                                        <MudTextField @bind-Value="obj.Barcode" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                                     </div>
                                 </div>
                                 <div class="row">

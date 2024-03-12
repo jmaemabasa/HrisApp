@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using NPOI.HPSF;
+using System.Text.Json;
 
 namespace HrisApp.Client.Services.Assets.AssetImageService
 {
@@ -6,7 +7,7 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
 
     public class AssetImageService : IAssetImageService
     {
-        private MainsService _mainService = new MainsService();
+        private MainsService _mainService = new();
         private readonly HttpClient _httpClient;
 
         public AssetImageService()
@@ -30,11 +31,11 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
             throw new Exception("employee not found");
         }
 
-        public async Task AttachFile(MultipartFormDataContent formdata, string assetcode, int category, int subcat, string jmcode)
+        public async Task AttachFile(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
         {
             try
             {
-                var response = await _httpClient.PostAsync($"/api/AssetImage/PostUploadImage?assetcode={assetcode}&category={category}&subcat={subcat}&jmcode={jmcode}", formdata);
+                var response = await _httpClient.PostAsync($"/api/AssetImage/PostUploadImage?category={category}&subcat={subcat}&jmcode={jmcode}&remarks={remarks}", formdata);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -58,11 +59,11 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
             }
         }
 
-        public async Task AttachFilePanel(MultipartFormDataContent formdata, string assetcode, int category, int subcat, string jmcode)
+        public async Task AttachFilePanel(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
         {
             try
             {
-                var response = await _httpClient.PostAsync($"/api/AssetImage/PostUploadImagePanel?assetcode={assetcode}&category={category}&subcat={subcat}&jmcode={jmcode}", formdata);
+                var response = await _httpClient.PostAsync($"/api/AssetImage/PostUploadImagePanel?category={category}&subcat={subcat}&jmcode={jmcode}&remarks={remarks}", formdata);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -94,9 +95,9 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
             throw new Exception("No Signature Found");
         }
 
-        public async Task<byte[]> GetImageDataAll(string assetcode)
+        public async Task<byte[]> GetImageDataAll(string filename)
         {
-            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssetImage/GetattachmentviewAll?assetcode={assetcode}");
+            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssetImage/GetattachmentviewAll?filename={filename}");
             if (_imgs != null)
                 return _imgs;
             throw new Exception("No Signature Found");
@@ -116,9 +117,9 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
             }
         }
 
-        public async Task DeleteAssetImg(string filename, string assetcode)
+        public async Task DeleteAssetImg(string filename, string jmcode)
         {
-            await _httpClient.DeleteAsync($"api/AssetImage/DeleteAssetImg?filename={filename}&assetcode={assetcode}");
+            await _httpClient.DeleteAsync($"api/AssetImage/DeleteAssetImg?filename={filename}&jmcode={jmcode}");
         }
     }
 }

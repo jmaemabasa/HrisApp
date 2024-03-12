@@ -1,7 +1,7 @@
 ﻿<MudDialog Style="background-color: #e9ecef;">
     <DialogContent>
         <div class="modal-title">
-            Add Accessory to <span>@assetMaster.AssetCode</span>
+            Add Accessory
         </div>
 
         <div>
@@ -29,16 +29,21 @@
                     </MudSelect>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Accessory</MudText>
-                    <MudSelect @bind-Value="obj.AssetAccessoryId" Disabled="disabledacc" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
-                        <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
-                        @foreach (var item in AssetAccessoryList.Where(e => e.MainAssetId == null && e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
-                        {
-                            <MudSelectItem Value="@item.Id">@item.AssetCode</MudSelectItem>
-                        }
-                    </MudSelect>
+                    <MudAutocomplete T="AssetAccessoryT" Placeholder="Type to search..." @bind-Value="fieldObj" Disabled="disabledacc" HelperText="Code / Brand / Model"
+                                     SearchFunc="@Search1"
+                                     ResetValueOnEmptyText="true"
+                                     CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"
+                                     ToStringFunc="@(e => e==null?null : $"{e.AssetCode} / {e.Brand} / {e.Model}")" ShowProgressIndicator="true" Clearable="true">
+                        <NoItemsTemplate>
+                            <MudText Align="Align.Center" Class="px-4 py-1">
+                                No items found
+                            </MudText>
+                        </NoItemsTemplate>
+                    </MudAutocomplete>
                 </div>
             </div>
         </div>

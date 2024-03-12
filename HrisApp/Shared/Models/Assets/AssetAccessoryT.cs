@@ -37,6 +37,7 @@ namespace HrisApp.Shared.Models.Assets
         public string EUF { get; set; } = string.Empty;
         public string Remarks { get; set; } = string.Empty;
 
+        public DateTime? LastCheckDate { get; set; } = DateTime.Now;
         public DateTime? DateCreated { get; set; } = DateTime.Now;
 
         public AssetMasterT? MainAsset { get; set; }

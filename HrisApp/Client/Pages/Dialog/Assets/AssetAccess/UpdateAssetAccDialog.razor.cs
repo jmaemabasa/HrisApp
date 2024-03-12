@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Dialog.Assets.AssetAccess
+﻿using System.Security.Policy;
+
+namespace HrisApp.Client.Pages.Dialog.Assets.AssetAccess
 {
     public partial class UpdateAssetAccDialog : ComponentBase
     {
@@ -12,6 +14,7 @@
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
         private List<AssetStatusT> STATUS = new();
+        private string AccessImageData { get; set; } = string.Empty;
 
         private void Cancel() => MudDialog?.Cancel();
 
@@ -26,7 +29,17 @@
 
         protected override async Task OnParametersSetAsync()
         {
-            obj = await AssetAccService.GetSingleObj((int)Id);
+            try
+            {
+                obj = await AssetAccService.GetSingleObj(Id);
+                await LoadAccessImg(obj.JMCode);//image
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("aaaa " + ex);
+                Console.WriteLine("aaaa " + ex.Message);
+                AccessImageData = string.Format("images/asset-holder.jpg");
+            }
         }
 
         private async Task SaveUpdate()
@@ -44,6 +57,16 @@
             StateService.SetState("AssetAccList", await AssetAccService.GetObjList());
             obj = await AssetAccService.GetSingleObj((int)Id);
             isUpdating = false;
+        }
+
+        private async Task LoadAccessImg(string jmcode)
+        {
+            var imagemodel = await AssAccImgSvc.GetImageData(jmcode);
+            if (imagemodel != null)
+            {
+                var base642 = Convert.ToBase64String(imagemodel);
+                AccessImageData = string.Format("data:image/png;base64,{0}", base642);
+            }
         }
 
         private bool IsEndOfUsefulLife()

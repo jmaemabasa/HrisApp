@@ -10,10 +10,15 @@
         private List<AssetSubCategoryT> SUBCAT = new();
         private List<AssetStatusT> STATUS = new();
         private List<AssetAccessHistoryT> ACCHISTORY = new();
+        private List<EmployeeT> EMPLOYEE = new();
+
+        private List<AssetAccessImageT> assetImgList = new();
 
         private string MainAssetImage { get; set; } = string.Empty;
 
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+        private string AccessImageData { get; set; } = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
@@ -23,6 +28,7 @@
             ACCHISTORY = await AssetAccHistorySvc.GetObjList();
             await StaticService.GetAssetStatus();
             STATUS = StaticService.AssetStatusTs;
+            EMPLOYEE = await EmployeeService.GetEmployeeList();
         }
 
         protected override async Task OnParametersSetAsync()
@@ -30,13 +36,23 @@
             try
             {
                 obj = await AssetAccService.GetSingleObj(Id);
+                await LoadAccessImg(obj.JMCode);//image
 
-                await LoadMainAssetImg(obj.MainAsset!.JMCode);
+                await AssAccImgSvc.GetAllImagesPerAss(obj.JMCode);
+                assetImgList = AssAccImgSvc.AssetAccessImageTs;
+
+                if (obj.MainAssetId != null)
+                {
+                    await LoadMainAssetImg(obj.MainAsset!.JMCode);
+                }
+
+                Console.WriteLine("testjm" + obj.MainAsset?.Employee?.Verify_Id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Console.WriteLine("aaaa " + ex);
-                //Console.WriteLine("aaaa " + ex.Message);
+                Console.WriteLine("aaaa " + ex);
+                Console.WriteLine("aaaa " + ex.Message);
+                AccessImageData = string.Format("images/asset-holder.jpg");
                 MainAssetImage = string.Format("images/asset-holder.jpg");
             }
         }
@@ -57,7 +73,6 @@
         private async Task LoadMainAssetImg(string jmcode)
         {
             var imagemodel = await AssetImageService.GetImageData(jmcode);
-            Console.WriteLine("aaaa " + imagemodel.ToString());
             if (imagemodel != null)
             {
                 var base642 = Convert.ToBase64String(imagemodel);
@@ -72,6 +87,60 @@
             obj = await AssetAccService.GetSingleObj((int)Id);
             leftPanelOpen = false; detailsPanelOpen = false;
         }
+
+        private async Task LoadAccessImg(string jmcode)
+        {
+            var imagemodel = await AssAccImgSvc.GetImageData(jmcode);
+            if (imagemodel != null)
+            {
+                var base642 = Convert.ToBase64String(imagemodel);
+                AccessImageData = string.Format("data:image/png;base64,{0}", base642);
+            }
+        }
+
+        #region PANEL IMAGE LIST / TABLE
+
+        private async void RefreshPdfFileList()
+        {
+            try
+            {
+                await AssAccImgSvc.GetAllImagesPerAss(obj.JMCode);
+                assetImgList = AssAccImgSvc.AssetAccessImageTs;
+
+                await LoadAccessImg(obj.JMCode);//image
+                StateHasChanged();
+            }
+            catch (Exception)
+            {
+                AccessImageData = string.Format("images/asset-holder.jpg");
+            }
+        }
+
+        private async Task DeleteAssetImg(string filename, string assetcode)
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Pernamently delete the image? \n You can't undo this.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (confirmResult.IsConfirmed)
+            {
+                await AssAccImgSvc.DeleteAssetImg(filename, assetcode);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+
+                await AssAccImgSvc.GetAllImagesPerAss(obj.JMCode);
+                assetImgList = AssAccImgSvc.AssetAccessImageTs;
+
+                StateHasChanged();
+            }
+        }
+
+        #endregion PANEL IMAGE LIST / TABLE
 
         private Anchor anchor;
         private bool leftPanelOpen, detailsPanelOpen;
@@ -107,7 +176,7 @@
                 else if (tabId == 1)
                 {
                     builder.OpenComponent<MudIconButton>(0);
-                    builder.AddAttribute(1, "Class", @GetTabChipClass(2));
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(1));
                     builder.AddAttribute(2, "Icon", @Icons.Material.Outlined.AssignmentInd);
                     builder.AddAttribute(3, "Size", Size.Small);
                     builder.CloseComponent();
@@ -120,12 +189,12 @@
                 {
                     builder.OpenComponent<MudIconButton>(0);
                     builder.AddAttribute(1, "Class", @GetTabChipClass(2));
-                    builder.AddAttribute(2, "Icon", @Icons.Material.Outlined.AssignmentInd);
+                    builder.AddAttribute(2, "Icon", @Icons.Material.Outlined.Image);
                     builder.AddAttribute(3, "Size", Size.Small);
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(2));
-                    builder.AddContent(6, "Assigned To");
+                    builder.AddContent(6, "Gallery");
                     builder.CloseComponent();
                 }
                 else if (tabId == 3)

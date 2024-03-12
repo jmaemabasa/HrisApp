@@ -3,6 +3,7 @@
     public partial class AssetCategories : ComponentBase
     {
         protected override async Task OnInitializedAsync()
+
         {
             await Task.Delay(300);
             StateService.OnChange += OnStateChanged;
@@ -27,6 +28,7 @@
         }
 
         public bool _isVisible;
+
         public async void OpenOverlay()
         {
             _isVisible = false;
@@ -36,10 +38,12 @@
         }
 
         #region TABLES DATA
+
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<AssetCategoryT> AssetCatList = new();
+        private List<AssetCategoryT> AssetCatList = new();
         private AssetCategoryT selectedItem1 = null;
 
         private bool FilterFunc1(AssetCategoryT area) => FilterFunc(area, searchString1);
@@ -52,6 +56,7 @@
                 return true;
             return false;
         }
+
         //END FOR TABLES
 
         //OPEN DIALOGS
@@ -69,6 +74,7 @@
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddAssetCategoryDialog>("New Asset Category", options);
         }
-        #endregion
+
+        #endregion TABLES DATA
     }
 }

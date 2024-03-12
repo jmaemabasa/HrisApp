@@ -1,5 +1,5 @@
 ﻿@page "/asset-accessories/details/{id:int}"
-@attribute [Authorize(Roles = "HR, System Administrator")]
+@attribute [Authorize(Roles = "AssetM")]
 <PageTitle>Asset Details</PageTitle>
 
 
@@ -11,11 +11,11 @@
                     <span class="spantitle">Asset Accessory</span>
                 </div>
                 <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
-                    @* <div class="d-flex justify-content-center">
-                    <div class="asset-img">
-                    <img class="asset-img-img" alt="asset image" src="@ImageData" />
+                    <div class="d-flex justify-content-center">
+                        <div class="asset-img">
+                            <img class="asset-img-img" alt="asset image" src="@AccessImageData" />
+                        </div>
                     </div>
-                    </div> *@
                     <div>
                         <div class="d-flex justify-content-center">
                             <span class="asset-code">@obj.AssetCode</span>
@@ -60,6 +60,29 @@
                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category</MudText>
                         <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.SubCategory?.ASubCat_Name</MudText>
                     </div>
+                    @if (obj.MainAsset?.EmployeeId != null)
+                    {
+                        <div class="divsingledetails">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Currently Assigned To</MudText>
+
+                            <div style="margin-top: 10px;">
+                                <EmployeeNamePosition verify="@EMPLOYEE.Where(e => e.Id == obj.MainAsset?.EmployeeId).FirstOrDefault()!.Verify_Id" />
+                            </div>
+                        </div>
+                    }
+                    <div class="divsingledetails">
+                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Last Check On</MudText>
+                        @if (obj.LastCheckDate == null)
+                        {
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;font-style:italic" Typo="Typo.body2">
+                                Not checked yet.
+                            </MudText>
+                        }
+                        else
+                        {
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.LastCheckDate?.ToString("MMM dd yyyy")</MudText>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,7 +94,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Accessory</span>
-                            <AuthorizeView Roles="HR, System Administrator">
+                            <AuthorizeView Roles="AssetM">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "leftPanelOpen"))">
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
@@ -134,7 +157,7 @@
                     <div class="mainasssec" style="margin-top: 25px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Additional Details</span>
-                            <AuthorizeView Roles="HR, System Administrator">
+                            <AuthorizeView Roles="AssetM">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "detailsPanelOpen"))">
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
@@ -183,6 +206,12 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Currently Assigned To</span>
+                            @if (obj.MainAssetId != null)
+                            {
+                                <MudTooltip Text="Open">
+                                    <MudIconButton OnClick="@(() => GlobalConfigService.OpenInNewTab($"main-asset/details/{obj.MainAssetId}"))" Icon="@Icons.Material.Rounded.OpenInNew"></MudIconButton>
+                                </MudTooltip>
+                            }
                         </div>
                         <div class="container-fluid">
                             <div class="row">
@@ -217,7 +246,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="mainasssec" style="margin-top: 25px;">
+                    <div class="mainasssec" style="margin-top: 25px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Assigned History</span>
                         </div>
@@ -228,18 +257,16 @@
                             }
                             else
                             {
-                                <MudTable Class="stable" Height="323px" Items="ACCHISTORY.Where(e => e.UnassignedDateMainAss != null && e.AssetAccessoryId == obj.Id)" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
+                                <MudTable Class="stable" Height="323px" Items="ACCHISTORY.Where(e => e.UnassignedDateMainAss != null && e.AssetAccessoryId == obj.Id)" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true">
                                     <HeaderContent>
                                         <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;">Asset</MudTh>
                                         <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;">Assigned To</MudTh>
-                                        <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;">Date Released</MudTh>
-                                        <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;">Date Returned</MudTh>
+                                        <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;">Assigned Date</MudTh>
+                                        <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;">Unassigned Date</MudTh>
                                     </HeaderContent>
                                     <RowTemplate>
                                         <MudTd DataLabel=""><b>@item.AssetAccessory?.AssetCode</b></MudTd>
-                                        <MudTd DataLabel="">
-                                            <MudTd DataLabel=""><b>@item.MainAsset?.AssetCode</b></MudTd>
-                                        </MudTd>
+                                        <MudTd DataLabel="">@item.MainAsset?.AssetCode</MudTd>
                                         <MudTd DataLabel="">@item.AssignedDateMainAss?.ToString("MMM dd yyyy")</MudTd>
                                         <MudTd DataLabel="">@item.UnassignedDateMainAss?.ToString("MMM dd yyyy")</MudTd>
                                     </RowTemplate>
@@ -249,12 +276,59 @@
                                 </MudTable>
                             }
                         </div>
-                     </div>
+                    </div>
+                </MudTabPanel>
+                <MudTabPanel TabContent="TabHeader(2)">
+                    <div class="mainasssec" style="padding-bottom: 7px ">
+                        <AccessoryMultiImage AccAssetId="@obj.Id" AccAssetCode="@obj.AssetCode" JMCode="@obj.JMCode" Catid="@obj.CategoryId" SubCatid="obj.SubCategoryId" OnFileAdded="@RefreshPdfFileList" />
+
+                        <div class="" Style="margin-top: 1rem;">
+                            <MudTable Class="stable" Height="590px" Items="assetImgList" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
+                                <HeaderContent>
+                                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;"></MudTh>
+                                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 15px;">Remarks</MudTh>
+                                    <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 15px;text-align: center">Date Uploaded</MudTh>
+                                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;text-align: center">Remove</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd Style="width: 190px">
+                                        <DisplayAccessoryImage filename="@item.Img_Filename" remarks="@item.Remarks" date="@item.Img_Date" />
+                                    </MudTd>
+                                    <MudTd style="color: #6A707D;font-size: 16px;">@item.Remarks</MudTd>
+                                    <MudTd style="color: #6A707D;font-size: 16px;text-align: center">
+                                        <span>@item.Img_Date.ToString("MMM dd yyyy")</span> <br /> <span style="font-size: 13px;">@item.Img_Date.ToString("hh:mm tt")</span>
+                                    </MudTd>
+                                    <MudTd style="text-align: center">
+                                        @if (!item.Remarks.Equals("First image uploaded."))
+                                        {
+                                            <MudTooltip Text="Remove">
+                                                <MudIconButton Icon="@Icons.Material.Rounded.Remove" Class="btn assetdelteimg" OnClick="@(() => DeleteAssetImg(@item.Img_Filename, obj.AssetCode))">
+                                                </MudIconButton>
+                                            </MudTooltip>
+                                        }
+                                    </MudTd>
+                                </RowTemplate>
+                                <PagerContent>
+                                    <MudTablePager PageSizeOptions="new int[] { 5, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                                </PagerContent>
+                            </MudTable>
+
+                        </div>
+                    </div>
                 </MudTabPanel>
             </MudTabs>
         </div>
     </MudItem>
 </MudGrid>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span id="closemodalimg" class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+    <div id="date"></div>
+    <div id="datetime"></div>
+</div>
 
 <MudDrawer @bind-Open="@leftPanelOpen" Width="500px" Height="100%" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <div class="d-flex flex-column gap-2 drawerdetails">
@@ -364,3 +438,57 @@
         </div>
     </div>
 </MudDrawer>
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.ellipsis-clickable', function () {
+            var $this = $(this);
+            var remarks = $this.data('remarks');
+            var maxLength = $this.data('maxLength');
+            var currentText = $this.text();
+
+            if (currentText === remarks) {
+                // Text is already full, truncate it
+                $this.text(truncateString(remarks, maxLength));
+            } else {
+                // Text is truncated, display full remarks
+                $this.text(remarks);
+            }
+        });
+
+        function truncateString(value, maxLength) {
+            return value.length <= maxLength ? value : value.substring(0, maxLength) + "...";
+        }
+    });
+
+    $(document).ready(function () {
+        $(document).on('click', '.textsss', function () {
+            $('#myModal').css("display", "block");
+            $('#myModal').css('z-index', 999999999);
+            $('#img01').attr('src', $(this).parentsUntil("imgassetdiv").children(".imgasset").attr('src'));
+            $('#caption').text($(this).parentsUntil("imgassetdiv").children(".imgasset").attr('alt'));
+            $('#date').text($(this).parentsUntil("imgassetdiv").children(".imgasset").data("date"));
+            $('#datetime').text($(this).parentsUntil("imgassetdiv").children(".imgasset").data("datetime"));
+        });
+
+        $(document).on('click', '.imgasset', function () {
+            $('#myModal').css("display", "block");
+            $('#myModal').css('z-index', 999999999);
+            $('#img01').attr('src', $(this).attr('src'));
+            $('#caption').text($(this).attr('alt'));
+            $('#date').text($(this).data("date"));
+            $('#datetime').text($(this).data("datetime"));
+        });
+
+        $(document).on('click', '#closemodalimg', function () {
+            $('#myModal').css("display", "none");
+        });
+
+        $(document).keydown(function (event) {
+            if (event.keyCode == 27) {
+                $('#myModal').css("display", "none");
+            }
+        });
+    });
+</script>

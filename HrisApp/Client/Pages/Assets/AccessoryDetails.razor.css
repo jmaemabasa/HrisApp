@@ -118,19 +118,15 @@
     opacity: 0;
 }
 
-.assetdelteimg {
-    padding: 0px;
+::deep .assetdelteimg {
+    color: #be1313;
+    transition: all .5s ease;
 }
 
-    .assetdelteimg ::deep .mud-icon-root.mud-svg-icon {
-        color: #be1313;
-        transition: all .5s ease;
+    ::deep .assetdelteimg:hover {
+        color: red;
+        transform: scale(1.1);
     }
-
-        .assetdelteimg ::deep .mud-icon-root.mud-svg-icon:hover {
-            color: red;
-            transform: scale(1.1);
-        }
 
 .imgasset {
     height: 150px;
@@ -392,19 +388,25 @@
 }
 
 /* Caption of Modal Image */
-#caption {
+#caption, #date {
     margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
     text-align: center;
     color: #ccc;
     padding: 10px 0;
-    height: 150px;
 }
 
+#date {
+    font-weight: bold;
+    padding: 0px;
+}
+
+#datetime {
+    margin: auto;
+    text-align: center;
+    color: #ccc;
+}
 /* Add Animation */
-.modal-content, #caption {
+.modal-content, #caption, #date, #datetime {
     -webkit-animation-name: zoom;
     -webkit-animation-duration: 0.6s;
     animation-name: zoom;

@@ -15,5 +15,9 @@
         Task UpdateObj(AssetMasterT model);
 
         Task<int> GetLastCode(int type, int cat, int subcat);
+
+        Task<HttpResponseMessage> QRPrint(string AssetCode);
+
+        Task<string> QRGenerate(string AssetCode);
     }
 }

@@ -1,12 +1,9 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace HrisApp.Client
 {
 #nullable disable
+
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
         private readonly ILocalStorageService _localStorageService;

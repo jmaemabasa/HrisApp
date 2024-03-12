@@ -1,0 +1,101 @@
+﻿<style>
+    .imgassetdiv {
+        border-radius: 10px;
+        position: relative;
+    }
+
+        .imgassetdiv:hover {
+            border: 1px solid #ccc;
+        }
+
+    .middle {
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+
+    .imgasset {
+        height: 150px;
+        width: 190px;
+        object-fit: fill;
+        border-radius: 10px;
+        transition: .5s ease;
+        backface-visibility: hidden;
+        opacity: 1;
+        /*border: 1px solid #ccc;*/
+    }
+
+    .textsss {
+        /*background-color: #4CAF50;*/
+        color: #27374D;
+        font-size: 16px;
+        padding: 16px 32px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .imgassetdiv:hover .imgasset {
+        filter: blur(2px);
+        cursor: pointer;
+        opacity: 0.3;
+    }
+
+    .imgassetdiv:hover .middle {
+        opacity: 1;
+    }
+
+    .imgassetdiv:hover .topright {
+        opacity: 1;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="imgassetdiv">
+    <img id="myImg" class="imgasset" src="@ImageData" alt="@remarks" data-date="@date?.ToString("MMM dd yyyy")" data-datetime="@date?.ToString("hh:mm tt")" />
+    <div class="middle">
+        <MudTooltip Text="View">
+            <div class="textsss">
+                <MudIcon Icon="@Icons.Material.Rounded.ZoomIn" Style="font-size: 4rem;" />
+            </div>
+        </MudTooltip>
+    </div>
+</div>
+
+@code {
+#nullable disable
+    [Parameter] public string filename { get; set; }
+    [Parameter] public string remarks { get; set; }
+    [Parameter] public DateTime? date { get; set; }
+
+    private string ImageData;
+
+    private async Task AssetImg(string filename)
+    {
+        var imagemodel = await AssetImageService.GetImageDataAll(filename);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            await AssetImg(filename);
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/asset-holder.jpg");
+        }
+    }
+}

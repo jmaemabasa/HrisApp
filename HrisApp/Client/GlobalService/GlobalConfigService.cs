@@ -4,22 +4,27 @@ using System.Data;
 namespace HrisApp.Client.GlobalService
 {
 #nullable disable
+
     public class GlobalConfigService
     {
         private readonly HttpClient httpClient;
 
         private readonly AuthenticationStateProvider _authenticationStateProvider;
         private readonly IDialogService DialogService;
-        public GlobalConfigService(AuthenticationStateProvider authenticationStateProvider, HttpClient _httpClient, IDialogService _DialogService)
+        private readonly IJSRuntime jsRuntime;
+
+        public GlobalConfigService(AuthenticationStateProvider authenticationStateProvider, HttpClient _httpClient, IDialogService _DialogService, IJSRuntime _jsRuntime)
         {
             _authenticationStateProvider = authenticationStateProvider;
             httpClient = _httpClient;
             DialogService = _DialogService;
+            jsRuntime = _jsRuntime;
             OnLoadAuth();
             //OnName();
         }
 
         private string _username = string.Empty;
+
         public string Username
         {
             get => _username;
@@ -30,6 +35,7 @@ namespace HrisApp.Client.GlobalService
         }
 
         private string _userrole = string.Empty;
+
         public string Role
         {
             get => _userrole;
@@ -40,6 +46,7 @@ namespace HrisApp.Client.GlobalService
         }
 
         private string _fullname = string.Empty;
+
         public string Fullname
         {
             get => _fullname;
@@ -50,6 +57,7 @@ namespace HrisApp.Client.GlobalService
         }
 
         private string _verid = string.Empty;
+
         public string VerifyId
         {
             get => _verid;
@@ -60,6 +68,7 @@ namespace HrisApp.Client.GlobalService
         }
 
         private string _id;
+
         public string User_Id
         {
             get => _id;
@@ -70,6 +79,7 @@ namespace HrisApp.Client.GlobalService
         }
 
         private string _usercode = string.Empty;
+
         public string User_Code
         {
             get => _usercode;
@@ -80,6 +90,7 @@ namespace HrisApp.Client.GlobalService
         }
 
         private string _usercodeid = string.Empty;
+
         public string User_CodeId
         {
             get => _usercodeid;
@@ -90,6 +101,7 @@ namespace HrisApp.Client.GlobalService
         }
 
         private string _userdepartment = string.Empty;
+
         public string User_Department
         {
             get => _userdepartment;
@@ -114,7 +126,6 @@ namespace HrisApp.Client.GlobalService
             int conId = Convert.ToInt32(User_Id);
             var returnlist = await httpClient.GetFromJsonAsync<List<EmployeeT>>($"api/Employee/GetEmpName/{User_Id}");
 
-
             var returnmodel = returnlist.Where(e => e.Id == conId).FirstOrDefault();
 
             Fullname = $"{returnmodel.FirstName} {returnmodel.LastName}";
@@ -129,7 +140,6 @@ namespace HrisApp.Client.GlobalService
 
             return char.ToUpper(input[0]) + input[1..];
         }
-
 
         public void OpenErrorDialog(string mess)
         {
@@ -147,6 +157,11 @@ namespace HrisApp.Client.GlobalService
 
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<WarningDialog>("", parameters, options);
+        }
+
+        public async void OpenInNewTab(string url)
+        {
+            await jsRuntime.InvokeVoidAsync("openInNewTab", url);
         }
     }
 }

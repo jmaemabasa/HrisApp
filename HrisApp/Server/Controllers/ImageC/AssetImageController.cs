@@ -18,6 +18,7 @@
         [HttpGet("Getattachmentview")]
         public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string jmcode)
         {
+            try
             {
                 var _masterlist = await _context.AssetImageT.ToListAsync();
                 var model = _masterlist.Where(a => a.JM_Code == jmcode).FirstOrDefault();
@@ -38,14 +39,19 @@
                 _memory.Position = 0;
                 return _memory.ToArray();
             }
+            catch (Exception)
+            {
+                return NoContent();
+            }
         }
 
         [HttpGet("GetattachmentviewAll")]
-        public async Task<ActionResult<byte[]>> GetattachmentviewAll([FromQuery] string assetcode)
+        public async Task<ActionResult<byte[]>> GetattachmentviewAll([FromQuery] string filename)
         {
+            try
             {
                 var _masterlist = await _context.AssetImageT.ToListAsync();
-                var model = _masterlist.Where(a => a.Img_Filename == assetcode).FirstOrDefault();
+                var model = _masterlist.Where(a => a.Img_Filename == filename).FirstOrDefault();
 
                 if (model == null)
                 {
@@ -63,11 +69,15 @@
                 _memory.Position = 0;
                 return _memory.ToArray();
             }
+            catch (Exception)
+            {
+                return NoContent();
+            }
         }
 
         //NEW DAGDAG 4.1.23
         [HttpPost("PostUploadImage")]
-        public async Task<IActionResult> PostUploadImage([FromQuery] string assetcode, [FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string Remarks)
+        public async Task<IActionResult> PostUploadImage([FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string remarks)
         {
             try
             {
@@ -76,7 +86,7 @@
                 {
                     foreach (var file in httpRequest.Form.Files)
                     {
-                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", assetcode + "_" + jmcode);
+                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", jmcode);
                         if (!Directory.Exists(filePath))
                             Directory.CreateDirectory(filePath);
 
@@ -87,7 +97,7 @@
                         }
 
                         //update
-                        var db = await _context.AssetImageT.Where(a => a.AssetCode == assetcode && a.JM_Code == jmcode && a.SubCategoryId == subcat).FirstOrDefaultAsync();
+                        var db = await _context.AssetImageT.Where(a => a.JM_Code == jmcode && a.SubCategoryId == subcat).FirstOrDefaultAsync();
                         if (db != null)
                         {
                             //delete previous image
@@ -106,7 +116,7 @@
                         {
                             AssetImageT _Model = new()
                             {
-                                AssetCode = assetcode,
+                                AssetCode = jmcode,
                                 Img_Filename = file.Name,
                                 Img_Contenttype = file.ContentType,
                                 Img_URL = filePath,
@@ -115,7 +125,7 @@
                                 CategoryId = category,
                                 SubCategoryId = subcat,
                                 JM_Code = jmcode,
-                                Remarks = Remarks,
+                                Remarks = remarks,
                             };
                             _context.AssetImageT.Add(_Model);
                             await _context.SaveChangesAsync();
@@ -134,7 +144,7 @@
         }
 
         [HttpPost("PostUploadImagePanel")]
-        public async Task<IActionResult> PostUploadImagePanel([FromQuery] string assetcode, [FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string Remarks)
+        public async Task<IActionResult> PostUploadImagePanel([FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string remarks)
         {
             try
             {
@@ -146,7 +156,7 @@
                         var divisionName = await _context.DivisionT.Where(d => d.Id == category).Select(d => d.Name).FirstOrDefaultAsync();
                         var departmentName = await _context.DepartmentT.Where(d => d.Id == subcat).Select(d => d.Name).FirstOrDefaultAsync();
 
-                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", assetcode + "_" + jmcode);
+                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", jmcode);
                         if (!Directory.Exists(filePath))
                             Directory.CreateDirectory(filePath);
 
@@ -159,7 +169,7 @@
                         //update
                         AssetImageT _Model = new()
                         {
-                            AssetCode = assetcode,
+                            AssetCode = jmcode,
                             Img_Filename = file.Name,
                             Img_Contenttype = file.ContentType,
                             Img_URL = filePath,
@@ -168,7 +178,7 @@
                             CategoryId = category,
                             SubCategoryId = subcat,
                             JM_Code = jmcode,
-                            Remarks = Remarks,
+                            Remarks = remarks,
                         };
                         _context.AssetImageT.Add(_Model);
                         await _context.SaveChangesAsync();
@@ -222,21 +232,21 @@
         [HttpGet("GetFilteredImages")]
         public async Task<ActionResult<List<AssetImageT>>> GetFilteredImages([FromQuery] string jmcode)
         {
-            var filteredDiv = await _context.AssetImageT.Where(x => x.JM_Code == jmcode).ToListAsync();
+            var filteredDiv = await _context.AssetImageT.Where(x => x.JM_Code == jmcode).OrderByDescending(e => e.Img_Date).ToListAsync();
             return Ok(filteredDiv);
         }
 
         [HttpDelete("DeleteAssetImg")]
-        public async Task<ActionResult<List<AssetImageT>>> DeleteAssetImg([FromQuery] string filename, [FromQuery] string assetcode)
+        public async Task<ActionResult<List<AssetImageT>>> DeleteAssetImg([FromQuery] string filename, [FromQuery] string jmcode)
         {
             var dbcol = await _context.AssetImageT
-                .Where(h => h.Img_Filename.Equals(filename) && h.AssetCode.Equals(assetcode))
+                .Where(h => h.Img_Filename.Equals(filename) && h.JM_Code.Equals(jmcode))
                 .FirstOrDefaultAsync();
 
             if (dbcol == null)
                 return NotFound("Sorry, but no senior");
 
-            var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", assetcode + "_" + dbcol.JM_Code);
+            var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", jmcode);
             var previousImagePath = Path.Combine(filePath, dbcol.Img_Filename);
             if (System.IO.File.Exists(previousImagePath))
             {

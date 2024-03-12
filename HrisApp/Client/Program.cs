@@ -92,6 +92,7 @@ global using HrisApp.Client.Services.Assets.AssetImageService;
 global using HrisApp.Client.Services.Assets.AssetMasterHistoryService;
 global using HrisApp.Client.Services.Assets.AssetLastCheckService;
 global using HrisApp.Client.Services.Assets.AssetAccessHistoryService;
+global using HrisApp.Client.Services.Assets.AssetAccessImageService;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -153,6 +154,7 @@ builder.Services.AddScoped<IAssetImageService, AssetImageService>();
 builder.Services.AddScoped<IAssetMasterHistoryService, AssetMasterHistoryService>();
 builder.Services.AddScoped<IAssetLastCheckService, AssetLastCheckService>();
 builder.Services.AddScoped<IAssetAccessHistoryService, AssetAccessHistoryService>();
+builder.Services.AddScoped<IAssetAccessImageService, AssetAccessImageService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();
@@ -162,6 +164,7 @@ builder.Services.AddTransient<JMColors>();
 builder.Services.AddTransient<DTOEmployeeExport>();
 builder.Services.AddTransient<DTOEmpHeadcountExport>();
 builder.Services.AddTransient<DTOEmployeeData>();
+builder.Services.AddTransient<DTOAssetQR>();
 
 //TEMPLATES
 builder.Services.AddTransient<AttendanceImportTemplate>();

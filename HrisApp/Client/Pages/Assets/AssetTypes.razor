@@ -1,13 +1,13 @@
 ﻿@page "/asset-types"
 
-@attribute [Authorize(Roles = "System Administrator")]
+@attribute [Authorize(Roles = "AssetM")]
 
 <PageTitle>Asset Types Management</PageTitle>
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Asset Types Management</span>
-        <AuthorizeView Roles="System Administrator">
+        <AuthorizeView Roles="AssetM">
             <Authorized>
                 <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Asset Type</MudButton>
             </Authorized>
@@ -63,7 +63,7 @@
                     <MudTd DataLabel="">@obj.AType_Code</MudTd>
                     <MudTd DataLabel="">@obj.AType_Name</MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="System Administrator">
+                        <AuthorizeView Roles="AssetM">
                             <Authorized>
                                 <MudTooltip Text="Update">
                                     <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>

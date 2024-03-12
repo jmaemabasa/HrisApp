@@ -1,6 +1,7 @@
 ﻿using HrisApp.Client.Pages.Dialog.Assets.AssetAccess;
 using HrisApp.Client.Pages.Dialog.Assets.MainAsset;
-using HrisApp.Shared.Models.Assets;
+using QRCoder;
+using System.Security.Policy;
 
 namespace HrisApp.Client.Pages.Assets
 {
@@ -25,13 +26,15 @@ namespace HrisApp.Client.Pages.Assets
 
         private List<AssetImageT> assetImgList = new();
 
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
 
-        private string ImageData { get; set; } = string.Empty;
+        private string MainAssetImageData { get; set; } = string.Empty;
         private string ImageEmployee { get; set; } = string.Empty;
 
         //image
         public string imgBase64 { get; set; } = string.Empty;
+
+        public string QRIMAGE { get; set; } = string.Empty;
 
         public string ImageUrl { get; set; } = string.Empty;
         public string ImgFileName { get; set; } = string.Empty;
@@ -79,12 +82,14 @@ namespace HrisApp.Client.Pages.Assets
         {
             try
             {
-                obj = await AssetMasterService.GetSingleObj((int)Id);
+                obj = await AssetMasterService.GetSingleObj(Id);
 
                 await AssetImg(obj.JMCode);//image
 
                 await AssetImageService.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssetImageService.AssetImageTs;
+
+                await GenerateQR(obj.Id);
 
                 await ImgByAssetData();
 
@@ -95,13 +100,64 @@ namespace HrisApp.Client.Pages.Assets
                     deptid = obj.Employee!.DepartmentId;
                     empid = (int)obj.EmployeeId;
                 }
+                else
+                {
+                    ImageEmployee = string.Format("images/imgholder.jpg");
+                }
             }
             catch (Exception)
             {
                 //Console.WriteLine(ex);
                 //Console.WriteLine(ex.Message);
-                ImageData = string.Format("images/asset-holder.jpg");
+                MainAssetImageData = string.Format("images/asset-holder.jpg");
                 ImageEmployee = string.Format("images/imgholder.jpg");
+            }
+        }
+
+        private async Task GenerateQR(int id)
+        {
+            await Task.Delay(0);
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+
+            Url generator = new($"https://localhost:44397/main-asset/details/{id}");
+            string payload = generator.ToString();
+
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://sonicsales.net:1112/main-asset/details/4", QRCodeGenerator.ECCLevel.H);
+
+            var qrCode = new PngByteQRCode(qrCodeData);
+
+            byte[] imageByteArray = qrCode.GetGraphic(20);
+
+            var base642 = Convert.ToBase64String(imageByteArray);
+            QRIMAGE = string.Format("data:image/*;base64,{0}", base642);
+        }
+
+        private async Task PrintQR()
+        {
+            try
+            {
+                string url = await AssetMasterService.QRGenerate(obj.AssetCode);
+                await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //NavigateError();
+            }
+        }
+
+        public async Task OnExporttoExcel()
+        {
+            try
+            {
+                var fileBytes = await _printqr.createExcelPackage(obj.AssetCode);
+                var fileName = $"EmployeesHired{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
+                await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //NavigateError();
             }
         }
 
@@ -156,7 +212,7 @@ namespace HrisApp.Client.Pages.Assets
                 }
                 catch (Exception)
                 {
-                    ImageData = string.Format("images/asset-holder.jpg");
+                    MainAssetImageData = string.Format("images/asset-holder.jpg");
                 }
 
                 StateHasChanged();
@@ -177,7 +233,7 @@ namespace HrisApp.Client.Pages.Assets
             }
             catch (Exception)
             {
-                ImageData = string.Format("images/asset-holder.jpg");
+                MainAssetImageData = string.Format("images/asset-holder.jpg");
             }
         }
 
@@ -212,7 +268,12 @@ namespace HrisApp.Client.Pages.Assets
                 foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
                 {
                     var model = await AssetAccService.GetSingleObj(item.Id);
-                    model.AssetStatusId = 1;
+
+                    if (item.AssetStatusId == 2)
+                    {
+                        model.AssetStatusId = 1;
+                    }
+
                     model.InUseStatusDate = DateTime.Now;
                     await AssetAccService.UpdateObj(model);
                 }
@@ -245,7 +306,10 @@ namespace HrisApp.Client.Pages.Assets
             foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
             {
                 var model = await AssetAccService.GetSingleObj(item.Id);
-                model.AssetStatusId = 2;
+                if (item.AssetStatusId == 1)
+                {
+                    model.AssetStatusId = 2;
+                }
                 model.InUseStatusDate = null;
                 await AssetAccService.UpdateObj(model);
             }
@@ -335,13 +399,13 @@ namespace HrisApp.Client.Pages.Assets
             if (imagemodel != null)
             {
                 var base642 = Convert.ToBase64String(imagemodel);
-                ImageData = string.Format("data:image/png;base64,{0}", base642);
+                MainAssetImageData = string.Format("data:image/png;base64,{0}", base642);
             }
         }
 
         private async Task EmpImg(string verid)
         {
-            var imageEmp = await EmpImgService.GetImageData(verid);
+            var imageEmp = await ImageService.GetImageData(verid);
             if (imageEmp != null)
             {
                 var base642 = Convert.ToBase64String(imageEmp);

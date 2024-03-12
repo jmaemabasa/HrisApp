@@ -4,13 +4,13 @@
     {
         List<AssetImageT> AssetImageTs { get; }
 
-        Task AttachFile(MultipartFormDataContent formdata, string assetcode, int category, int subcat, string jmcode);
+        Task AttachFile(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks);
 
-        Task AttachFilePanel(MultipartFormDataContent formdata, string assetcode, int category, int subcat, string jmcode);
+        Task AttachFilePanel(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks);
 
         Task<byte[]> GetImageData(string jmcode);
 
-        Task<byte[]> GetImageDataAll(string assetcode);
+        Task<byte[]> GetImageDataAll(string filename);
 
         Task UpdateDBImage(AssetImageT img);
 

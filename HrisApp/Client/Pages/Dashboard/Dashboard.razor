@@ -1,25 +1,5 @@
 ﻿@page "/dashboard"
-@inject IDivisionService DivisionService
-@inject IDepartmentService DepartmentService
-@inject ISectionService SectionService
-@inject IPositionService PositionService
-@inject IAddressService AddressService
-@inject IAreaService AreaService
-@inject IEmployeeService EmployeeService
-@inject IToastService _toastService
-@inject IImageService ImageService
-@inject IEducationService EducationService
-@inject IPayrollService PayrollService
-@inject ILicenseTrainingService LicenseTrainingService
-@inject IEmployeeService EmployeeService
-@inject NavigationManager NavigationManager
-@inject SweetAlertService Swal
-@inject IToastService _toastService
-@inject NavigationManager NavigationManager
-@inject GlobalConfigService GlobalConfigService
-@inject IForEvalService ForEvalService
-@inject IAnnouncementService AnnouncementService
-@inject IJSRuntime jsRuntime
+
 @using ChartJs.Blazor.BarChart
 
 @attribute [Authorize(Roles = "System Administrator, HR, User")]

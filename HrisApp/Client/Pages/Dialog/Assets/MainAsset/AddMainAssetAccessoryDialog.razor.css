@@ -37,3 +37,14 @@
         color: #27374D;
         font-size: 23px;
     }
+
+.slectaccessoryfield {
+    background-color: #e9ecef;
+    color: rgba(66,66,66,1);
+    border: 1px solid #c4c4c4;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 2px;
+    width: 100%;
+}

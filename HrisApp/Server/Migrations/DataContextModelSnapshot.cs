@@ -846,6 +846,9 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("LastCheckDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("MainAssetDateUpdated")
                         .HasColumnType("datetime2");
 
@@ -2247,6 +2250,59 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("EmployeeT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.AssetAccessImageT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Img_Contenttype")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Img_Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("Img_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Img_Filename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JM_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("AssetAccessImageT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Images.AssetImageT", b =>
@@ -4900,6 +4956,12 @@ namespace HrisApp.Server.Migrations
                             Id = 3,
                             Name = "HR",
                             RoleCode = "HR"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "AssetM",
+                            RoleCode = "AssetM"
                         });
                 });
 
@@ -5251,6 +5313,25 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Religion");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.AssetAccessImageT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Images.AssetImageT", b =>

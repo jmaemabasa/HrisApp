@@ -344,7 +344,7 @@
             VERIFY = GlobalConfigService.VerifyId;
             USERNAME = GlobalConfigService.Username;
             FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
-            
+
             await EmployeeService.GetEmployee();
             EmployeeList = EmployeeService.EmployeeTs;
 
@@ -359,12 +359,18 @@
                 timer.Enabled = true;
             }
 
-            await EmployeeImg(VERIFY);//image
+            try
+            {
+                await EmployeeImg(VERIFY);//image
+            }
+            catch (Exception)
+            {
+                ImageData = string.Format("images/imgholder.jpg");
+            }
 
         }
         catch (Exception)
         {
-            ImageData = string.Format("images/imgholder.jpg");
         }
     }
 
@@ -428,7 +434,7 @@
 
     private void ViewProfile() => NavigationManager.NavigateTo($"/profile/{USERNAME}");
 
-    private string ImageData { get; set; }
+    private string ImageData { get; set; } = string.Format("images/imgholder.jpg");
 
     private async Task EmployeeImg(string verifyCode)
     {

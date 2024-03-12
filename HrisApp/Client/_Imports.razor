@@ -58,6 +58,7 @@
 @inject IAssetMasterHistoryService AssetMasHistorySvc
 @inject IAssetLastCheckService AssetLastChkSvc
 @inject IAssetAccessHistoryService AssetAccHistorySvc
+@inject IAssetAccessImageService AssAccImgSvc
 
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
@@ -66,6 +67,7 @@
 @inject SweetAlertService Swal
 @inject IJSRuntime jsRuntime
 @inject IToastService _toastService
+
 @inject IAuditlogService AuditlogService
 @inject IStaticService StaticService
 @inject IAssetMasterService AssetMasterService
@@ -78,4 +80,9 @@
 @inject IManpowerService ManpowerService
 @inject IScheduleService ScheduleService
 
-@inject IImageService EmpImgService
+@inject IAnnouncementService AnnouncementService
+@inject IForEvalService ForEvalService
+@inject IPayrollService PayrollService
+
+
+@inject IImageService ImageService

@@ -5,8 +5,9 @@
         private readonly UserMasterT _log = new();
 
         //bool _success;
-        string _message = string.Empty;
-        MudBlazor.Severity _severity;
+        private string _message = string.Empty;
+
+        private MudBlazor.Severity _severity;
         private bool _showAlert = false;
 
         private string _returnUrl = string.Empty;
@@ -14,8 +15,10 @@
         //SUPER ADMIN
         //private const string Adminusername = "Administrator";
         private const string Adminusername = "11";
+
         //private const string Adminpassword = "1t@dm1n2022";
         private const string Adminpassword = "11";
+
         private const string Adminuserrole = "MainAdmin";
 
         protected override async Task OnInitializedAsync()
@@ -40,11 +43,11 @@
             }
         }
 
-
         public void CloseMe()
         {
             _showAlert = false;
         }
+
         private bool _processing = false;
 
         private async Task HandleLogin()
@@ -73,11 +76,18 @@
                         var iduser = Convert.ToInt32(result.Message);
                         await AuditlogService.CreateLog(iduser, "LOGGED IN", "Site", DateTime.Now);
 
-
                         int totalPlantilla = await PositionService.GetTotalPlantilla();
                         await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
-                        NavigationManager.NavigateTo("/dashboard");
+                        if (result.UserRole == "AssetM")
+                        {
+                            NavigationManager.NavigateTo("/asset-dashboard");
+                        }
+                        else
+                        {
+                            NavigationManager.NavigateTo("/dashboard");
+                        }
+
                         _toastService.ShowSuccess("Successfully Login.");
                     }
                     else
@@ -87,7 +97,6 @@
                         _severity = Severity.Error;
                         _message = result.Message;
                         _toastService.ShowError(result.Message);
-
                     }
                 }
             }
@@ -100,11 +109,11 @@
             }
         }
 
-        bool _isShow;
-        InputType _passwordInput = InputType.Password;
-        string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+        private bool _isShow;
+        private InputType _passwordInput = InputType.Password;
+        private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
 
-        void ButtonTestclick()
+        private void ButtonTestclick()
         {
             if (_isShow)
             {
@@ -119,6 +128,7 @@
                 _passwordInput = InputType.Text;
             }
         }
+
         //private void OnValidSubmit(EditContext context)
         //{
         //    _success = true;

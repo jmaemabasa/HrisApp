@@ -1,13 +1,13 @@
 ﻿@page "/asset-main"
 
-@attribute [Authorize(Roles = "System Administrator")]
+@attribute [Authorize(Roles = "AssetM")]
 
 <PageTitle>Main Asset Management</PageTitle>
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Main Asset Management</span>
-        <AuthorizeView Roles="System Administrator">
+        <AuthorizeView Roles="AssetM">
             <Authorized>
                 <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Main Asset</MudButton>
             </Authorized>
@@ -83,17 +83,17 @@
             <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="AssetMasterList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AssetMasterT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
                 <HeaderContent>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Asset Code</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Type</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Category</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Sub Category</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Model</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel=""><b>@obj.AssetCode</b></MudTd>
-                    <MudTd DataLabel="">@obj.Type?.AType_Name</MudTd>
                     <MudTd DataLabel="">@obj.Category?.ACat_Name</MudTd>
                     <MudTd DataLabel="">@obj.SubCategory?.ASubCat_Name</MudTd>
+                    <MudTd DataLabel="">@obj.Model</MudTd>
                     @if (obj.AssetStatusId == 2)
                     {
                         <MudTd Style="color: gray;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
@@ -119,7 +119,7 @@
                         <MudTd Style="color: #397763;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
                     }
                     <MudTd>
-                        <AuthorizeView Roles="System Administrator">
+                        <AuthorizeView Roles="AssetM">
                             <Authorized>
                                 <MudTooltip Text="Details">
                                     <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>

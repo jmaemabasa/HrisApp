@@ -1,0 +1,215 @@
+﻿<MudItem xs="12">
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <div><span class="spantitle mb-3">Images</span></div>
+        <div style="margin: 0px;">
+            <button type="button" class="btn btnopendialog" @onclick="OpenDialog">
+                <MudIcon Icon="@Icons.Material.Rounded.AddAPhoto" />
+                Upload Image
+            </button>
+        </div>
+    </div>
+</MudItem>
+
+<MudDialog @bind-IsVisible="visible" Options="dialogOptions" Style="background-color: #e9ecef">
+    <DialogContent>
+        <div class="divheaderdialgo d-flex justify-content-between align-items-center">
+            <MudText Typo="Typo.h6">Upload Image</MudText>
+            <MudIconButton OnClick="CloseDialog" Icon="@Icons.Material.Rounded.Close" />
+        </div>
+        <div class="flex-grow-1">
+            @for (int i = 0; i < listOfImages.Count; i++)
+            {
+                var index = i;
+                var docs = listOfImages[i];
+
+                <div class="d-flex justify-content-center">
+                    <MudTooltip Text="Select image">
+                        <MudFileUpload T="IBrowserFile" OnFilesChanged="e => UpPdfSec12(e, index)" Accept="image/*">
+                            <ButtonTemplate>
+                                <MudButton class="btnuploadimg" HtmlTag="label" for="@context">
+                                    <MudIcon Icon="@Icons.Material.Rounded.AddAPhoto"></MudIcon>
+                                </MudButton>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+                    </MudTooltip>
+                </div>
+
+                @if (docs.ImgFile != null)
+                {
+                    <span class="textcountimg">@docs.ImgFile.Count() Image@(docs.ImgFile.Count() == 1 ? "" : "s"):</span>
+                    <MudList Style="margin-bottom: 15px;">
+                        @foreach (var file in docs.ImgFile)
+                        {
+                            <MudListItem Class="listitemimg" Icon="@Icons.Material.Filled.Photo" @key="@file">
+                                <span class="imagename">@file.Name <code>@file.Size bytes</code></span>
+                            </MudListItem>
+                        }
+                    </MudList>
+                }
+            }
+
+
+            <MudText Typo="Typo.body2" Style="font-weight: bold;">Remarks</MudText>
+            <MudTextField @bind-Value="_remarks" Lines="2" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: bold;" />
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="d-flex flex-grow-1" style="margin: 0px 15px 15px 15px;;">
+            <MudButton FullWidth="true" OnClick="Submit" Class="submitbtnupload">Upload</MudButton>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+#nullable disable
+    [Parameter] public int AccAssetId { get; set; }
+    [Parameter] public string AccAssetCode { get; set; } = string.Empty;
+    [Parameter] public string JMCode { get; set; } = string.Empty;
+    [Parameter] public int Catid { get; set; }
+    [Parameter] public int SubCatid { get; set; }
+
+    [Parameter]
+    public Action OnFileAdded { get; set; }
+
+    List<AssetAccessImageT> listOfImages = new();
+    private string imgBase64 { get; set; }
+
+    bool isuploading = false;
+
+    private bool visible;
+    private int rating;
+    private DialogOptions dialogOptions = new() { FullWidth = true, NoHeader = true };
+
+    string _remarks { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(0);
+        listOfImages.Add(new AssetAccessImageT());
+    }
+
+    async Task Submit()
+    {
+        if (SelectedImages.Count <= 0 || SelectedImages == null)
+        {
+            await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Error",
+                    Text = "Select an image.",
+                    Icon = SweetAlertIcon.Error
+                });
+            return;
+        }
+        else if (string.IsNullOrWhiteSpace(_remarks))
+        {
+            await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Error",
+                    Text = "Remarks is required.",
+                    Icon = SweetAlertIcon.Error
+                });
+            return;
+        }
+        else
+        {
+            await OnPDFSaving();
+        }
+    }
+
+    private void OpenDialog()
+    {
+        _remarks = "";
+        SelectedImages.Clear();
+        imgfile.Clear();
+        listOfImages.Clear();
+        listOfImages.Add(new AssetAccessImageT());
+        visible = true;
+    }
+
+    private void CloseDialog() => visible = false;
+
+    //attachment
+    private string ImgBase64 { get; set; }
+    private string ImgUrl { get; set; }
+    private string ImgFileName { get; set; }
+    private string ImgContentType { get; set; }
+    private byte[] ImgData { get; set; }
+    private bool Imgbool12 { get; set; }
+    private bool IMGbool12 { get; set; }
+    IList<IBrowserFile> imgfile = new List<IBrowserFile>();
+    private List<MultipartFormDataContent> SelectedImages = new List<MultipartFormDataContent>();
+
+    public class AssetAccessImageT
+    {
+        public IList<IBrowserFile> ImgFile { get; set; } = new List<IBrowserFile>();
+    }
+
+    private async Task UpPdfSec12(InputFileChangeEventArgs e, int index)
+    {
+        long lngImage = long.MaxValue;
+        var brwModel = e.File;
+        var imgFilename = e.File.Name;
+        var imgContent = e.File.ContentType;
+        var imgBuffer = new byte[e.File.Size];
+        var imgURL = $"data:{imgContent};base64,{Convert.ToBase64String(imgBuffer)}";
+
+        using (var _stream = brwModel.OpenReadStream(lngImage))
+        {
+            await _stream.ReadAsync(imgBuffer);
+        }
+        if (e.File.Name is null)
+        {
+            imgBase64 = "Images/empty1.png";
+        }
+        else
+        {
+            var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(brwModel.OpenReadStream(lngImage));
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(imgContent);
+
+            ImgFileName = imgFilename;
+            ImgUrl = imgURL;
+            ImgData = imgBuffer;
+
+            content.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
+
+            var pdfbase64 = Convert.ToBase64String(imgBuffer);
+            imgBase64 = string.Format("data:image/*;base64,{0}", pdfbase64);
+
+
+            Imgbool12 = false;
+            IMGbool12 = true;
+            listOfImages[index].ImgFile.Add(e.File);
+            SelectedImages.Add(content);
+        }
+    }
+
+    private async Task OnPDFSaving()
+    {
+        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure to upload this image/s?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+        if (confirmResult.IsConfirmed)
+        {
+            isuploading = true;
+            foreach (var formdata in SelectedImages)
+            {
+                await AssAccImgSvc.AttachFilePanel(formdata, Catid, SubCatid, JMCode, _remarks);
+            }
+            OnFileAdded?.Invoke();
+            isuploading = false;
+            visible = false;
+
+        }
+
+
+    }
+}

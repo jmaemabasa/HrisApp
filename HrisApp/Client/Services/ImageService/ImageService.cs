@@ -65,6 +65,7 @@ namespace HrisApp.Client.Services.ImageService
             var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/Image/Getattachmentview?verifyCode={verifyCode}");
             if (_imgs != null)
                 return _imgs;
+
             throw new Exception("No Signature Found");
         }
 

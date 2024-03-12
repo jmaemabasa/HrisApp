@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 namespace HrisApp.Server.Services.UserService
 {
 #nullable disable
+
     public class UserService : IUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -109,9 +110,7 @@ namespace HrisApp.Server.Services.UserService
             return new ServiceResponse<bool> { Data = true, Message = "Password has been changed." };
         }
 
-
         //LOGIN AND RESGITER
-
 
         public async Task<ServiceResponse<string>> Login(string username, string password)
         {
@@ -132,6 +131,7 @@ namespace HrisApp.Server.Services.UserService
             {
                 response.Message = login.EmployeeId.ToString();
                 response.Data = CreateToken(login);
+                response.UserRole = login.Role;
                 login.LoginStatus = "Active";
                 await _context.SaveChangesAsync();
             }

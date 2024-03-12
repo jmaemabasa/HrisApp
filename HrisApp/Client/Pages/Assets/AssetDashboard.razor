@@ -1,0 +1,39 @@
+﻿@page "/asset-dashboard"
+@attribute [Authorize(Roles = "AssetM")]
+
+<PageTitle>Dashboard</PageTitle>
+
+<MudGrid Spacing="4">
+    <MudItem xs="12" sm="9">
+        <MudGrid Spacing="4">
+            <MudItem xs="12">
+                <MudCard Class="evalpanel">
+                    <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
+                        <div class="d-flex flex-column gap-2">
+                            <span style="font-size: 24px;font-family: 'Poppins', sans-serif;">Welcome, <b>@FULLNAME</b>!</span>
+                            @* <span style="font-size: 20px;font-family: 'Poppins', sans-serif;">You have @_countForEval employees pending for performance evaluation!</span> *@
+                        </div>
+                        <div class="">
+                            @* <MudButton id="evalpanelbtn" OnClick="NavForEval" Class="btnadd">Check Now</MudButton> *@
+                        </div>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="4" md="3">
+                <TopCards title="Available Main Assets" value="@countAvailableMain" icon="@Icons.Material.TwoTone.Devices" iconColor="font-size: 4.5rem; color: #427D9D" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="3">
+                <TopCards title="Available Accessories" value="@countAvailableAccess" icon="@Icons.Material.TwoTone.KeyboardAlt" iconColor="font-size: 4.5rem; color: #FF9800" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="3">
+                <TopCards title="Total Used Assets" value="@countTotalUsed" icon="@Icons.Material.TwoTone.KeyboardAlt" iconColor="font-size: 4.5rem; color: #9A98E3" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="3">
+                <TopCards title="Total Assets" value="@countTotalAsset" icon="@Icons.Material.TwoTone.Numbers" iconColor="font-size: 4.5rem; color: #E97777" />
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    <MudItem xs="12" sm="3">
+
+    </MudItem>
+</MudGrid>
