@@ -6,6 +6,7 @@
     background-color: #adbbc9;
     margin-bottom: 15px;
 }
+
 ::deep .mud-input.mud-input-text.mud-input-adorned-end.mud-input-margin-dense.mud-shrink.mud-select-input {
     margin: 0;
     padding: 10px 10px 6px 15px;
@@ -67,24 +68,29 @@
 
     ::deep .mud-picker-inline:hover {
         background-color: #82909e;
-    }   
+    }
 
 /*TABLE*/
 ::deep .statusActiveChip {
     background-color: #AAC8A7;
 }
+
 ::deep .statusAwolChip {
     background-color: #888C4D;
 }
+
 ::deep .statusInactiveChip {
     background-color: #B7B7B7;
 }
+
 ::deep .statusResignedChip {
     background-color: #ebc878;
 }
+
 ::deep .statusTerminatedChip {
     background-color: #E97777;
 }
+
 ::deep .statusRetiredChip {
     background-color: #e0dfdc;
 }

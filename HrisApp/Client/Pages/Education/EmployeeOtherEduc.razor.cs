@@ -1,28 +1,31 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Education
+﻿namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
+
     public partial class EmployeeOtherEduc : ComponentBase
     {
         //TABLEEES
-        List<Emp_OtherEducT> otheredList = new List<Emp_OtherEducT>();
+        private List<Emp_OtherEducT> otheredList = new();
+
         private Emp_OtherEducT selectedItem1 = null;
 
         //END FOR TABLES
 
-        private Emp_OtherEducT othered = new Emp_OtherEducT();
+        private Emp_OtherEducT othered = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool OtherEducOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool OtherEducOpen;
+        private Anchor anchor;
+        private readonly string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
-            OtherEducOpen = (drawerx == "OtherEducOpen") ? true : false;
+            OtherEducOpen = (drawerx == "OtherEducOpen");
             this.anchor = anchor;
         }
+
         protected async Task SaveCollege()
         {
             othered.Verify_Id = VerifyCode;
@@ -36,7 +39,6 @@ namespace HrisApp.Client.Pages.Education
             othered.OthersSchoolYear = "";
             otheredList = await EducationService.GetOtherEduclist(VerifyCode);
             OtherEducOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -51,7 +53,7 @@ namespace HrisApp.Client.Pages.Education
             }
         }
 
-        async Task DeleteOther(int id)
+        private async Task DeleteOther(int id)
         {
             await EducationService.DeleteOtherEduc(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

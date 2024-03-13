@@ -20,6 +20,7 @@
     height: 45px;
     margin-bottom: 15px;
 }
+
 ::deep .stable {
     background: #e9ecef;
     border-radius: 20px;
@@ -32,18 +33,18 @@
     padding: 0 0 10px 15px;
     margin-top: 0;
 }
+
 .ssize {
     width: 617px;
 }
 
-
 ::deep .btnedit {
     color: #27374D;
 }
+
     ::deep .btnedit:hover {
         transform: scale(1.1);
     }
-
 
 ::deep .btnadd {
     border: none;
@@ -82,5 +83,4 @@
         width: -webkit-fill-available;
         padding-right: 35px;
     }
-
 }

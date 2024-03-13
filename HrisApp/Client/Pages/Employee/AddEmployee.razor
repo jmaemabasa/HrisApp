@@ -1,8 +1,4 @@
 ﻿@page "/employee/add"
-@inject SweetAlertService Swal
-@inject IToastService _toastService
-@inject IJSRuntime JSRuntime
-@inject AddEmployeeVM _addEmployeeVM
 
 @*@attribute [Authorize(Roles = "System Administrator, HR")]*@
 <PageTitle>Add Employee</PageTitle>
@@ -15,7 +11,7 @@
 
         @* ====================================================================================  JOB  ==================================================================================== *@
         <MudTabPanel TabContent="@_addEmployeeVM.tabHeader(0)">
-            <MudGrid Spacing="5">                
+            <MudGrid Spacing="5">
                 <MudItem xs="12" sm="2">
                     <span class="spantitle">Image</span>
                     @if (_addEmployeeVM.imgBase64 == "./images/addIconImage.png")
@@ -28,19 +24,19 @@
                                     </div>
                                 </MudButton>
                             </ButtonTemplate>
-                         </MudFileUpload>
+                        </MudFileUpload>
                     }
                     else
                     {
                         <MudFileUpload T="IBrowserFile" OnFilesChanged="@_addEmployeeVM.uploadImage" Accept="image/*" capture Style="margin-top: 30px">
                             <ButtonTemplate>
                                 <MudButton Class="w-100 btnimagewithimage" DisableElevation HtmlTag="label" for="@context">
-                                     <div style="height: 240px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:10px 0 10px 0">
-                                         <MudImage Src="@_addEmployeeVM.imgBase64" Style="height: 95%; width: auto; max-width:100%; border-radius: 20px; border: none; " />
-                                     </div>
-                                 </MudButton>
-                             </ButtonTemplate>
-                         </MudFileUpload>
+                                    <div style="height: 240px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:10px 0 10px 0">
+                                        <MudImage Src="@_addEmployeeVM.imgBase64" Style="height: 95%; width: auto; max-width:100%; border-radius: 20px; border: none; " />
+                                    </div>
+                                </MudButton>
+                            </ButtonTemplate>
+                        </MudFileUpload>
                     }
                 </MudItem>
                 <MudItem xs="12" sm="10">
@@ -74,16 +70,16 @@
                                         <MudItem xs="12" sm="4">
                                             <MudText Typo="Typo.body2">Birthdate (mm/dd/yyyy)</MudText>
                                             <MudDatePicker Class="@_addEmployeeVM.clsBday" DisableUnderLine @bind-Date="@_addEmployeeVM.bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-                                             <span class="mud-input-helper-text mud-input-error">@_addEmployeeVM.mesBday</span>
-                                         </MudItem>
-                                         <MudItem xs="12" sm="4">
-                                             <MudText Typo="Typo.body2">Age</MudText>
-                                             <MudTextField Class="txf" DisableUnderLine Value="@_addEmployeeVM.CalculateAge(_addEmployeeVM.bday)" ReadOnly="true" Margin="Margin.Dense" />
-                                         </MudItem>
-                                         <MudItem xs="12" sm="4">
-                                             <MudText Typo="Typo.body2">Gender</MudText>
-                                             <MudSelect Class="@_addEmployeeVM._slectClasssGender" DisableUnderLine @bind-Value="_addEmployeeVM.employee.GenderId" Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                            <span class="mud-input-helper-text mud-input-error">@_addEmployeeVM.mesBday</span>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="4">
+                                            <MudText Typo="Typo.body2">Age</MudText>
+                                            <MudTextField Class="txf" DisableUnderLine Value="@_addEmployeeVM.CalculateAge(_addEmployeeVM.bday)" ReadOnly="true" Margin="Margin.Dense" />
+                                        </MudItem>
+                                        <MudItem xs="12" sm="4">
+                                            <MudText Typo="Typo.body2">Gender</MudText>
+                                            <MudSelect Class="@_addEmployeeVM._slectClasssGender" DisableUnderLine @bind-Value="_addEmployeeVM.employee.GenderId" Margin="Margin.Dense">
+                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                 @foreach (var gender in _addEmployeeVM.GendersL)
                                                 {
                                                     <MudSelectItem Value="@gender.Id">@gender.Name</MudSelectItem>
@@ -93,8 +89,8 @@
                                         <MudItem xs="12" sm="4">
                                             <MudText Typo="Typo.body2">Civil Status</MudText>
                                             <MudSelect Class="@_addEmployeeVM._slectClasssCV" @bind-Value="_addEmployeeVM.employee.CivilStatusId" DisableUnderLine Margin="Margin.Dense">
-                                                 @*//gibago nako class*@
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                @*//gibago nako class*@
+                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                 @foreach (var cs in _addEmployeeVM.CivilStatusL)
                                                 {
                                                     <MudSelectItem Value="@cs.Id">@cs.Name</MudSelectItem>
@@ -109,7 +105,7 @@
                                         <MudItem xs="12" sm="4">
                                             <MudText Typo="Typo.body2">Religion</MudText>
                                             <MudSelect @bind-Value="_addEmployeeVM.employee.ReligionId" Class="@_addEmployeeVM._slectClasssReli" DisableUnderLine Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                 @foreach (var rel in _addEmployeeVM.ReligionsL)
                                                 {
                                                     <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
@@ -119,172 +115,172 @@
                                         <MudItem xs="12" sm="3">
                                             <MudText Typo="Typo.body2">Mobile No.</MudText>
                                             <MudNumericField HideSpinButtons="true" @bind-Value="_addEmployeeVM.employee.MobileNumber" Class="@_addEmployeeVM._txfieldClasssMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => _addEmployeeVM.employee.MobileNumber)" />
-                                         </MudItem>
-                                         <MudItem xs="12" sm="3">
-                                             <MudText Typo="Typo.body2">Email</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.employee.Email" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.employee.Email)" class="mb-2 valmessage" />
-                                         </MudItem>
-                                         <MudItem xs="12" sm="3">
-                                             <MudText Typo="Typo.body2">Weight(kg)</MudText>
-                                             <InputNumber Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.employee.Weight" />
-                                         </MudItem>
-                                         <MudItem xs="12" sm="3">
-                                             <MudText Typo="Typo.body2">Height(cm)</MudText>
-                                             <InputNumber Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.employee.Height" />
-                                         </MudItem>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="3">
+                                            <MudText Typo="Typo.body2">Email</MudText>
+                                            <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.employee.Email" />
+                                            <ValidationMessage For="@(() => _addEmployeeVM.employee.Email)" class="mb-2 valmessage" />
+                                        </MudItem>
+                                        <MudItem xs="12" sm="3">
+                                            <MudText Typo="Typo.body2">Weight(kg)</MudText>
+                                            <InputNumber Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.employee.Weight" />
+                                        </MudItem>
+                                        <MudItem xs="12" sm="3">
+                                            <MudText Typo="Typo.body2">Height(cm)</MudText>
+                                            <InputNumber Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.employee.Height" />
+                                        </MudItem>
 
-                                         <MudItem xs="12" sm="6">
-                                             <MudText Typo="Typo.body2">PHIC No.</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.PhilHealthNum" MaxLength="12" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.payroll.PhilHealthNum)" class="mb-2 valmessage" />
-                                         </MudItem>
-                                         <MudItem xs="12" sm="6">
-                                             <MudText Typo="Typo.body2">HDMF No.</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.HDMFNum" MaxLength="12" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.payroll.HDMFNum)" class="mb-2 valmessage" />
-                                         </MudItem>
-                                         <MudItem xs="12" sm="6">
-                                             <MudText Typo="Typo.body2">SSS No.</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.SSSNum" MaxLength="12" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.payroll.SSSNum)" class="mb-2 valmessage" />
-                                         </MudItem>
-                                         <MudItem xs="12" sm="6">
-                                             <MudText Typo="Typo.body2">TIN No.</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.TINNum" MaxLength="12" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.payroll.TINNum)" class="mb-2 valmessage" />
-                                         </MudItem>
-                                         <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                                             <MudButton EndIcon="@Icons.Material.Rounded.KeyboardArrowDown" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
-                                         </MudItem>
-                                     </MudGrid>
-                                 </MudCardContent>
-                             </MudCard>
+                                        <MudItem xs="12" sm="6">
+                                            <MudText Typo="Typo.body2">PHIC No.</MudText>
+                                            <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.PhilHealthNum" MaxLength="12" />
+                                            <ValidationMessage For="@(() => _addEmployeeVM.payroll.PhilHealthNum)" class="mb-2 valmessage" />
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6">
+                                            <MudText Typo="Typo.body2">HDMF No.</MudText>
+                                            <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.HDMFNum" MaxLength="12" />
+                                            <ValidationMessage For="@(() => _addEmployeeVM.payroll.HDMFNum)" class="mb-2 valmessage" />
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6">
+                                            <MudText Typo="Typo.body2">SSS No.</MudText>
+                                            <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.SSSNum" MaxLength="12" />
+                                            <ValidationMessage For="@(() => _addEmployeeVM.payroll.SSSNum)" class="mb-2 valmessage" />
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6">
+                                            <MudText Typo="Typo.body2">TIN No.</MudText>
+                                            <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.TINNum" MaxLength="12" />
+                                            <ValidationMessage For="@(() => _addEmployeeVM.payroll.TINNum)" class="mb-2 valmessage" />
+                                        </MudItem>
+                                        <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                                            <MudButton EndIcon="@Icons.Material.Rounded.KeyboardArrowDown" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
+                                        </MudItem>
+                                    </MudGrid>
+                                </MudCardContent>
+                            </MudCard>
                         </MudItem>
                     </EditForm>
-                     @* <MudItem xs="12">
-                         <div class="d-flex flex-grow-1 justify-content-center">
-                             <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
-                         </div>
-                     </MudItem> *@
-                     <div class="@displayAdd" style="width: 100%;">
+                    @* <MudItem xs="12">
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                    <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
+                    </div>
+                    </MudItem> *@
+                    <div class="@displayAdd" style="width: 100%;">
                         <EditForm Model="_addEmployeeVM.address" OnValidSubmit="@(() => Activate(1))" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
-                        <DataAnnotationsValidator />
-                         <span class="spantitle">Address</span>
-                         <MudCard Class="mdcard1" Elevation="0">
-                             <MudCardContent>
-                                 <span class="spantitle">Present Address</span>
-                                 <div class="d-flex flex-column flex-grow-1 mb-3">
-                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
-                                             <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentAdd" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentAdd)" class="mb-2 valmessage" />
-                                         </div>
-                                     </div>
-                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">City</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentCity" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentCity)" class="mb-2 valmessage" />
-                                         </div>
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">Province</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentProvince" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentProvince)" class="mb-2 valmessage" />
-                                         </div>
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">ZipCode</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentZipCode" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentZipCode)" class="mb-2 valmessage" />
-                                         </div>
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">Country</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentCountry" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentCountry)" class="mb-2 valmessage" />
-                                         </div>
-                                     </div>
-                                     <span class="spantitle">Permanent Address</span>
-                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentAdd" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentAdd)" class="mb-2 valmessage" />
-                                         </div>
-                                     </div>
-                                     <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">City</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentCity" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentCity)" class="mb-2 valmessage" />
-                                         </div>
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">Province</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentProvince" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentProvince)" class="mb-2 valmessage" />
-                                         </div>
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">ZipCode</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentZipCode" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentZipCode)" class="mb-2 valmessage" />
-                                         </div>
-                                         <div class="flex-grow-1">
-                                             <MudText Typo="Typo.body2">Country</MudText>
-                                             <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentCountry" />
-                                             <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentCountry)" class="mb-2 valmessage" />
-                                         </div>
-                                     </div>
-                                 </div>
+                            <DataAnnotationsValidator />
+                            <span class="spantitle">Address</span>
+                            <MudCard Class="mdcard1" Elevation="0">
+                                <MudCardContent>
+                                    <span class="spantitle">Present Address</span>
+                                    <div class="d-flex flex-column flex-grow-1 mb-3">
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
+                                                <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentAdd" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentAdd)" class="mb-2 valmessage" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">City</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentCity" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentCity)" class="mb-2 valmessage" />
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">Province</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentProvince" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentProvince)" class="mb-2 valmessage" />
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">ZipCode</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentZipCode" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentZipCode)" class="mb-2 valmessage" />
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">Country</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.CurrentCountry" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.CurrentCountry)" class="mb-2 valmessage" />
+                                            </div>
+                                        </div>
+                                        <span class="spantitle">Permanent Address</span>
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentAdd" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentAdd)" class="mb-2 valmessage" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2">
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">City</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentCity" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentCity)" class="mb-2 valmessage" />
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">Province</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentProvince" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentProvince)" class="mb-2 valmessage" />
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">ZipCode</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentZipCode" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentZipCode)" class="mb-2 valmessage" />
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <MudText Typo="Typo.body2">Country</MudText>
+                                                <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.address.PermanentCountry" />
+                                                <ValidationMessage For="@(() => _addEmployeeVM.address.PermanentCountry)" class="mb-2 valmessage" />
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                 <MudItem xs="12">
-                                     <div class="d-flex flex-grow-1 justify-content-center">
-                                         <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
-                                     </div>
-                                 </MudItem>
+                                    <MudItem xs="12">
+                                        <div class="d-flex flex-grow-1 justify-content-center">
+                                            <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
+                                        </div>
+                                    </MudItem>
 
-                                 <MudItem xs="12">
-                                     <span class="spantitle">Person to Notify in Case of Emergency</span>
-                                     <MudCard Class="mdcard1" Elevation="0">
-                                         <MudCardContent>
-                                             <div class="d-flex flex-column flex-grow-1 mb-3">
-                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2 align-items-center">
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Name</MudText>
-                                                         <InputText Class="@_addEmployeeVM._txfieldClasssEN" @bind-Value="_addEmployeeVM.employee.EmerName" />
-                                                         <ValidationMessage For="@(() => _addEmployeeVM.employee.EmerName)" class="mb-2 valmessage" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Relationship</MudText>
-                                                         <MudSelect @bind-Value="_addEmployeeVM.employee.EmerRelationshipId" Class="@_addEmployeeVM._slectClasssRela" DisableUnderLine Margin="Margin.Dense">
-                                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                            @foreach (var rel in _addEmployeeVM.EmerRelationshipsL)
-                                                            {
-                                                                <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
-                                                            }
-                                                        </MudSelect>
+                                    <MudItem xs="12">
+                                        <span class="spantitle">Person to Notify in Case of Emergency</span>
+                                        <MudCard Class="mdcard1" Elevation="0">
+                                            <MudCardContent>
+                                                <div class="d-flex flex-column flex-grow-1 mb-3">
+                                                    <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-2 align-items-center">
+                                                        <div class="flex-grow-1">
+                                                            <MudText Typo="Typo.body2">Name</MudText>
+                                                            <InputText Class="@_addEmployeeVM._txfieldClasssEN" @bind-Value="_addEmployeeVM.employee.EmerName" />
+                                                            <ValidationMessage For="@(() => _addEmployeeVM.employee.EmerName)" class="mb-2 valmessage" />
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <MudText Typo="Typo.body2">Relationship</MudText>
+                                                            <MudSelect @bind-Value="_addEmployeeVM.employee.EmerRelationshipId" Class="@_addEmployeeVM._slectClasssRela" DisableUnderLine Margin="Margin.Dense">
+                                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                                @foreach (var rel in _addEmployeeVM.EmerRelationshipsL)
+                                                                {
+                                                                    <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
+                                                                }
+                                                            </MudSelect>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <MudText Typo="Typo.body2">Address</MudText>
+                                                            <InputText Class="@_addEmployeeVM._txfieldClasssEA" @bind-Value="_addEmployeeVM.employee.EmerAddress" />
+                                                            <ValidationMessage For="@(() => _addEmployeeVM.employee.EmerAddress)" class="mb-2 valmessage" />
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <MudText Typo="Typo.body2">Mobile #</MudText>
+                                                            <MudNumericField HideSpinButtons="true" @bind-Value="_addEmployeeVM.employee.EmerMobNum" Class="@_addEmployeeVM._txfieldClasssEMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => _addEmployeeVM.employee.EmerMobNum)" />
+                                                        </div>
                                                     </div>
-                                                    <div class="flex-grow-1">
-                                                        <MudText Typo="Typo.body2">Address</MudText>
-                                                        <InputText Class="@_addEmployeeVM._txfieldClasssEA" @bind-Value="_addEmployeeVM.employee.EmerAddress" />
-                                                        <ValidationMessage For="@(() => _addEmployeeVM.employee.EmerAddress)" class="mb-2 valmessage" />
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <MudText Typo="Typo.body2">Mobile #</MudText>
-                                                        <MudNumericField HideSpinButtons="true" @bind-Value="_addEmployeeVM.employee.EmerMobNum" Class="@_addEmployeeVM._txfieldClasssEMN" DisableUnderLine Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentText="+63" MaxLength="10" For="@(() => _addEmployeeVM.employee.EmerMobNum)" />
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </MudCardContent>
-                                     </MudCard>
-                                 </MudItem>
-                                 <MudItem xs="12" Class="d-flex justify-content-end mt-5">
-                                     <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
-                                 </MudItem>
-                             </MudCardContent>
-                         </MudCard>
-                    </EditForm>
-                     </div>
-                   
+                                                </div>
+                                            </MudCardContent>
+                                        </MudCard>
+                                    </MudItem>
+                                    <MudItem xs="12" Class="d-flex justify-content-end mt-5">
+                                        <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" ButtonType="ButtonType.Submit">NEXT</MudButton>
+                                    </MudItem>
+                                </MudCardContent>
+                            </MudCard>
+                        </EditForm>
+                    </div>
+
                 </MudItem>
             </MudGrid>
         </MudTabPanel>
@@ -294,25 +290,25 @@
             <MudGrid>
                 <EditForm Model="@_addEmployeeVM.payroll" OnValidSubmit="@(()=> Activate(2))" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                     <DataAnnotationsValidator />
-                     <MudItem xs="12" Class="mt-3 paddingitem">
-                         <span class="spantitle">Work Information</span>
-                         <MudCard Class="mdcard1" Elevation="0">
-                             <MudCardContent>
-                                 <div class="row mb-3">
-                                     <div class="col-md-3">
-                                         <MudText Typo="Typo.body2">Company ID No.</MudText>
-                                         <InputText Class="@txtClassCID" @bind-Value="_addEmployeeVM.employee.EmployeeNo" />
-                                         <ValidationMessage For="@(() => _addEmployeeVM.employee.EmployeeNo)" class="mb-2" />
-                                     </div>
-                                     <div class="col-md-3">
-                                         <MudText Typo="Typo.body2">Biometric Id No.</MudText>
-                                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.BiometricID" />
-                                         <ValidationMessage For="@(() => _addEmployeeVM.payroll.BiometricID)" class="mb-2 valmessage" />
-                                     </div>
-                                     <div class="col-md-3">
-                                         <MudText Typo="Typo.body2">Area of Assignment</MudText>
-                                         <MudSelect Class="@slectClasssAA" @bind-Value="_addEmployeeVM.employee.AreaId" DisableUnderLine Margin="Margin.Dense">
-                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                    <MudItem xs="12" Class="mt-3 paddingitem">
+                        <span class="spantitle">Work Information</span>
+                        <MudCard Class="mdcard1" Elevation="0">
+                            <MudCardContent>
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <MudText Typo="Typo.body2">Company ID No.</MudText>
+                                        <InputText Class="@txtClassCID" @bind-Value="_addEmployeeVM.employee.EmployeeNo" />
+                                        <ValidationMessage For="@(() => _addEmployeeVM.employee.EmployeeNo)" class="mb-2" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <MudText Typo="Typo.body2">Biometric Id No.</MudText>
+                                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.BiometricID" />
+                                        <ValidationMessage For="@(() => _addEmployeeVM.payroll.BiometricID)" class="mb-2 valmessage" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <MudText Typo="Typo.body2">Area of Assignment</MudText>
+                                        <MudSelect Class="@slectClasssAA" @bind-Value="_addEmployeeVM.employee.AreaId" DisableUnderLine Margin="Margin.Dense">
+                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                             @foreach (var area in _addEmployeeVM.AreasL)
                                             {
                                                 <MudSelectItem Value="@area.Id">@area.Name</MudSelectItem>
@@ -322,7 +318,7 @@
                                     <div class="col-md-3">
                                         <MudText Typo="Typo.body2">Status</MudText>
                                         <MudSelect Class="@slectClasssSS" @bind-Value="_addEmployeeVM.employee.StatusId" DisableUnderLine Margin="Margin.Dense">
-                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                             @foreach (var status in _addEmployeeVM.StatusL.Where(s => s.Id == 1))
                                             {
                                                 <MudSelectItem Value="@status.Id">@status.Name</MudSelectItem>
@@ -335,7 +331,7 @@
                                         <div class="flex-grow-1">
                                             <MudText Typo="Typo.body2">Employment Status</MudText>
                                             <MudSelect Class="@slectClasssES" @bind-Value="_addEmployeeVM.employee.EmploymentStatusId" DisableUnderLine Margin="Margin.Dense">
-                                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                 @foreach (var status in _addEmployeeVM.EmploymentStatusL)
                                                 {
                                                     <MudSelectItem Value="@status.Id">@status.Name</MudSelectItem>
@@ -347,82 +343,82 @@
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker Class="txf" DisableUnderLine Date="@_addEmployeeVM.DateHired" DateChanged="@_addEmployeeVM.HandleDateHiredChanged" Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Regularization Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker Class="txf" @bind-Date="@_addEmployeeVM.RegularDate" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                         }
                                         else if (_addEmployeeVM.employee.EmploymentStatusId == 2)
                                         {
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker DateChanged="@_addEmployeeVM.HandleDateHiredChanged" Date="@_addEmployeeVM.DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Probation Start Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.ProbStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Probation End Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.ProbEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                         }
                                         else if (_addEmployeeVM.employee.EmploymentStatusId == 3)
                                         {
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Casual Start Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.CasualStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Casual End Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.CasualEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                         }
                                         else if (_addEmployeeVM.employee.EmploymentStatusId == 4)
                                         {
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Fixed Term Start Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.FixedStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Fixed Term End Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.FixedEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                         }
                                         else if (_addEmployeeVM.employee.EmploymentStatusId == 5)
                                         {
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.DateHired" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Project Based Start Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.ProjStart" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Project Based End Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker @bind-Date="@_addEmployeeVM.ProjEnd" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                         }
                                         else
                                         {
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Date Hired (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker Class="txf" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Disabled DisableUnderLine Editable="true" Date="@_addEmployeeVM.DateHired" DateChanged="@_addEmployeeVM.HandleDateHiredChanged" Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Regularization Date (mm/dd/yyyy)</MudText>
                                                 <MudDatePicker Class="txf" @bind-Date="@_addEmployeeVM.RegularDate" Mask="@(new DateMask("MM/dd/yyyy"))" Disabled DateFormat="MM/dd/yyyy" DisableUnderLine Editable="true" Margin="Margin.Dense" />
-                                             </div>
+                                            </div>
                                         }
                                     </div>
                                 </div>
@@ -436,8 +432,8 @@
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Division</MudText>
                                                 <MudSelect Class="@slectClasssD" DisableUnderLine @bind-Value="_addEmployeeVM.employee.DivisionId" Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @foreach (var div in _addEmployeeVM.DivisionsL)
+                                                    <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var div in _addEmployeeVM.DivisionsL)
                                                     {
                                                         <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
                                                     }
@@ -446,8 +442,8 @@
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Department</MudText>
                                                 <MudSelect Class="@_addEmployeeVM.slectClasss" DisableUnderLine @bind-Value="_addEmployeeVM.employee.DepartmentId" Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @foreach (var dep in _addEmployeeVM.DepartmentsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId))
+                                                    <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var dep in _addEmployeeVM.DepartmentsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId))
                                                     {
                                                         <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                                                     }
@@ -459,8 +455,8 @@
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Section</MudText>
                                                     <MudSelect Class="@slectClasssDT" DisableUnderLine @bind-Value="_addEmployeeVM.employee.SectionId" Margin="Margin.Dense">
-                                                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                     @if (sections.Any())
+                                                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                        @if (sections.Any())
                                                         {
                                                             @foreach (var sect in sections)
                                                             {
@@ -476,11 +472,11 @@
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Position</MudText>
                                                     <MudSelect Class="@slectClasssPS" DisableUnderLine @bind-Value="_addEmployeeVM.employee.PositionId" Margin="Margin.Dense">
-                                                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                        <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
 
-                                                     @foreach (var pos in _addEmployeeVM.SubPositionsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId && d.DepartmentId == _addEmployeeVM.employee.DepartmentId && d.SectionId == _addEmployeeVM.employee.SectionId && d.Status == "Inactive"))
+                                                        @foreach (var pos in _addEmployeeVM.SubPositionsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId && d.DepartmentId == _addEmployeeVM.employee.DepartmentId && d.SectionId == _addEmployeeVM.employee.SectionId && d.Status == "Inactive"))
                                                         {
-                                                           <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
+                                                            <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
                                                         }
                                                     </MudSelect>
                                                 </div>
@@ -491,8 +487,8 @@
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Division</MudText>
                                                 <MudSelect @bind-Value="_addEmployeeVM.employee.DivisionId" Class="@slectClasssD" DisableUnderLine Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @foreach (var div in _addEmployeeVM.DivisionsL)
+                                                    <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var div in _addEmployeeVM.DivisionsL)
                                                     {
                                                         <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
                                                     }
@@ -501,8 +497,8 @@
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Department</MudText>
                                                 <MudSelect @bind-Value="_addEmployeeVM.employee.DepartmentId" Class="@slectClasssDT" DisableUnderLine Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @foreach (var dep in _addEmployeeVM.DepartmentsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId))
+                                                    <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var dep in _addEmployeeVM.DepartmentsL.Where(d => d.DivisionId == _addEmployeeVM.employee.DivisionId))
                                                     {
                                                         <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                                                     }
@@ -511,8 +507,8 @@
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Position</MudText>
                                                 <MudSelect @bind-Value="_addEmployeeVM.employee.PositionId" Class="@slectClasssPS" DisableUnderLine Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                 @foreach (var pos in _addEmployeeVM.SubPositionsL.Where(d => d.DepartmentId == _addEmployeeVM.employee.DepartmentId && d.Status == "Inactive"))
+                                                    <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                                    @foreach (var pos in _addEmployeeVM.SubPositionsL.Where(d => d.DepartmentId == _addEmployeeVM.employee.DepartmentId && d.Status == "Inactive"))
                                                     {
                                                         <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
                                                     }
@@ -527,11 +523,11 @@
                     </MudItem>
 
                     <MudItem xs="12" Class="my-5">
-                         <div class="d-flex flex-grow-1 my-5 justify-content-center">
-                             <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
-                         </div>
+                        <div class="d-flex flex-grow-1 my-5 justify-content-center">
+                            <MudDivider DividerType="DividerType.Middle" Class="my-2 w-25 justify-content-center" Style="border: 2px solid #78909C; border-radius: 5px;" />
+                        </div>
                     </MudItem>
-                    
+
                     <MudItem xs="12" Class="mt-3 paddingitem">
                         <span class="spantitle">Compensation Package</span>
                         <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
@@ -540,39 +536,39 @@
                                     <div class="col-md-4">
                                         <MudText Typo="Typo.body2">Rate</MudText>
                                         <InputText Class="@txtClassRate" @bind-Value="_addEmployeeVM.payroll.Rate" />
-                                                     <ValidationMessage For="@(() => _addEmployeeVM.payroll.Rate)" class="mb-2 valmessage" />
+                                        <ValidationMessage For="@(() => _addEmployeeVM.payroll.Rate)" class="mb-2 valmessage" />
                                     </div>
                                     <div class="col-md-4">
                                         <MudText Typo="Typo.body2">Rate Type</MudText>
                                         <MudSelect Class="@slectClasssRT" DisableUnderLine @bind-Value="_addEmployeeVM.payroll.RateTypeId" Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                    @foreach (var rate in _addEmployeeVM.RateTypeL)
-                                                    {
-                                                        <MudSelectItem Value="@rate.Id">@rate.Name</MudSelectItem>
-                                                    }
-                                                </MudSelect>
+                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                            @foreach (var rate in _addEmployeeVM.RateTypeL)
+                                            {
+                                                <MudSelectItem Value="@rate.Id">@rate.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
                                     </div>
                                     <div class="col-md-4">
-                                         <MudText Typo="Typo.body2">Cash-Bond</MudText>
+                                        <MudText Typo="Typo.body2">Cash-Bond</MudText>
                                         <MudSelect Class="@slectClasssCB" DisableUnderLine @bind-Value="_addEmployeeVM.payroll.CashbondId" Margin="Margin.Dense">
-                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                    @foreach (var cb in _addEmployeeVM.CashbondL)
-                                                    {
-                                                        <MudSelectItem Value="@cb.Id">@cb.Name</MudSelectItem>
-                                                    }
-                                                </MudSelect>
+                                            <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                                            @foreach (var cb in _addEmployeeVM.CashbondL)
+                                            {
+                                                <MudSelectItem Value="@cb.Id">@cb.Name</MudSelectItem>
+                                            }
+                                        </MudSelect>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <MudText Typo="Typo.body2">Meal Allowance</MudText>
-                                                     <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.MealAllowance" />
-                                                     <ValidationMessage For="@(() => _addEmployeeVM.payroll.MealAllowance)" class="mb-2 valmessage" />
+                                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.MealAllowance" />
+                                        <ValidationMessage For="@(() => _addEmployeeVM.payroll.MealAllowance)" class="mb-2 valmessage" />
                                     </div>
                                     <div class="col-md-6">
                                         <MudText Typo="Typo.body2">Bank Account</MudText>
-                                                    <InputText Class="txf1 w-100 mt-1" MaxLength="17" @bind-Value="_addEmployeeVM.payroll.BankAcc" />
-                                                     <ValidationMessage For="@(() => _addEmployeeVM.payroll.BankAcc)" class="mb-2 valmessage" />
+                                        <InputText Class="txf1 w-100 mt-1" MaxLength="17" @bind-Value="_addEmployeeVM.payroll.BankAcc" />
+                                        <ValidationMessage For="@(() => _addEmployeeVM.payroll.BankAcc)" class="mb-2 valmessage" />
                                     </div>
                                 </div>
                             </MudCardContent>
@@ -588,22 +584,22 @@
 
         @* ====================================================================================  EDUCATION  ==================================================================================== *@
 
-        <MudTabPanel TabContent="@_addEmployeeVM.tabHeader(2)" >
+        <MudTabPanel TabContent="@_addEmployeeVM.tabHeader(2)">
             <MudGrid>
                 <MudItem xs="12" Style="padding-top: 0px;">
-                     <MudCard Class="mdcard1" Elevation="0">
+                    <MudCard Class="mdcard1" Elevation="0">
                         <MudCardContent>
                             <div class="d-flex flex-column flex-grow-1">
                                 <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
                                     <span class="spantitle">Primary</span>
                                     <div>
-                                        <MudTooltip  Text="Click to remove Primary">
+                                        <MudTooltip Text="Click to remove Primary">
                                             <MudIconButton Class="p-0 addminbtn" OnClick="@_addEmployeeVM.RemovePrimary" Icon="@Icons.Material.Rounded.RemoveCircle" />
                                         </MudTooltip>
                                         <MudTooltip Text="Click to add more Primary">
                                             <MudIconButton Class="p-0 addminbtn" OnClick="() => _addEmployeeVM.AddNewPrimary(_addEmployeeVM.employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
                                         </MudTooltip>
-                                    </div>                                
+                                    </div>
                                 </div>
                                 @if (_addEmployeeVM.listOfPrimary.Any())
                                 {
@@ -616,22 +612,22 @@
                                                     <MudTextField @bind-Value="pri.PriSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">School Location</MudText>
+                                                    <MudText Typo="Typo.body2">School Location</MudText>
                                                     <MudTextField @bind-Value="pri.PriSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
                                             </div>
-                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Award</MudText>
                                                     <MudTextField @bind-Value="pri.PriAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">School Year</MudText>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">School Year</MudText>
                                                     <MudTextField @bind-Value="pri.PriSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        
+
                                     }
                                 }
                                 else
@@ -653,7 +649,7 @@
                 </MudItem>
                 <MudItem xs="12">
                     <MudCard Class="mdcard1" Elevation="0">
-                        <MudCardContent>       
+                        <MudCardContent>
                             <div class="d-flex flex-column flex-grow-1">
                                 <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
                                     <span class="spantitle">Secondary</span>
@@ -666,7 +662,7 @@
                                         </MudTooltip>
                                     </div>
                                 </div>
-                               
+
                                 @if (_addEmployeeVM.listOfSecondary.Any())
                                 {
                                     @foreach (var sec in _addEmployeeVM.listOfSecondary)
@@ -676,35 +672,35 @@
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Name of School</MudText>
                                                     <MudTextField @bind-Value="sec.SecSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">School Location</MudText>
-                                                     <MudTextField @bind-Value="sec.SecSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                             </div>
-                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Award</MudText>
-                                                     <MudTextField @bind-Value="sec.SecAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">School Year</MudText>
-                                                     <MudTextField @bind-Value="sec.SecSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                             </div>
-                                         </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">School Location</MudText>
+                                                    <MudTextField @bind-Value="sec.SecSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Award</MudText>
+                                                    <MudTextField @bind-Value="sec.SecAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">School Year</MudText>
+                                                    <MudTextField @bind-Value="sec.SecSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 }
                                 else
                                 {
                                     <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-                                         <MudCard>
-                                             <MudCardContent>
-                                                  <p>No Secondary information available.</p>
-                                             </MudCardContent>
-                                         </MudCard>
+                                        <MudCard>
+                                            <MudCardContent>
+                                                <p>No Secondary information available.</p>
+                                            </MudCardContent>
+                                        </MudCard>
                                     </MudContainer>
-                                   
+
                                 }
                             </div>
                         </MudCardContent>
@@ -741,23 +737,23 @@
                                                     <div class="flex-grow-1">
                                                         <MudText Typo="Typo.body2">Name of School</MudText>
                                                         <MudTextField @bind-Value="shs.ShsSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Location</MudText>
-                                                         <MudTextField @bind-Value="shs.ShsSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Award</MudText>
-                                                         <MudTextField @bind-Value="shs.ShsAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Year</MudText>
-                                                         <MudTextField @bind-Value="shs.ShsSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                             </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                                        <MudTextField @bind-Value="shs.ShsSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Award</MudText>
+                                                        <MudTextField @bind-Value="shs.ShsAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                                        <MudTextField @bind-Value="shs.ShsSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                     }
                                     else
@@ -804,29 +800,29 @@
                                             <div class="mb-3 divSchool">
                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                     <div class="flex-grow-1">
-                                                                    <MudText Typo="Typo.body2">Name of School</MudText>
+                                                        <MudText Typo="Typo.body2">Name of School</MudText>
                                                         <MudTextField @bind-Value="col.CollSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Location</MudText>
-                                                         <MudTextField @bind-Value="col.CollSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Award</MudText>
-                                                         <MudTextField @bind-Value="col.CollAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Course</MudText>
-                                                         <MudTextField @bind-Value="col.CollCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Year</MudText>
-                                                         <MudTextField @bind-Value="col.CollSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                             </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                                        <MudTextField @bind-Value="col.CollSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Award</MudText>
+                                                        <MudTextField @bind-Value="col.CollAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Course</MudText>
+                                                        <MudTextField @bind-Value="col.CollCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                                        <MudTextField @bind-Value="col.CollSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                     }
                                     else
@@ -875,27 +871,27 @@
                                                     <div class="flex-grow-1">
                                                         <MudText Typo="Typo.body2">Name of School</MudText>
                                                         <MudTextField @bind-Value="mas.MasSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Location</MudText>
-                                                         <MudTextField @bind-Value="mas.MasSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Award</MudText>
-                                                         <MudTextField @bind-Value="mas.MasAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                      <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Course</MudText>
-                                                         <MudTextField @bind-Value="mas.MasCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Year</MudText>
-                                                         <MudTextField @bind-Value="mas.MasSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                             </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                                        <MudTextField @bind-Value="mas.MasSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Award</MudText>
+                                                        <MudTextField @bind-Value="mas.MasAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Course</MudText>
+                                                        <MudTextField @bind-Value="mas.MasCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                                        <MudTextField @bind-Value="mas.MasSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                     }
                                     else
@@ -944,27 +940,27 @@
                                                     <div class="flex-grow-1">
                                                         <MudText Typo="Typo.body2">Name of School</MudText>
                                                         <MudTextField @bind-Value="doc.DocSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Location</MudText>
-                                                         <MudTextField @bind-Value="doc.DocSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Award</MudText>
-                                                         <MudTextField @bind-Value="doc.DocAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Course</MudText>
-                                                         <MudTextField @bind-Value="doc.DocCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Year</MudText>
-                                                         <MudTextField @bind-Value="doc.DocSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                             </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                                        <MudTextField @bind-Value="doc.DocSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Award</MudText>
+                                                        <MudTextField @bind-Value="doc.DocAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Course</MudText>
+                                                        <MudTextField @bind-Value="doc.DocCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                                        <MudTextField @bind-Value="doc.DocSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                     }
                                     else
@@ -1013,31 +1009,31 @@
                                                     <div class="flex-grow-1">
                                                         <MudText Typo="Typo.body2">School Type</MudText>
                                                         <MudTextField @bind-Value="other.OthersSchoolType" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
+                                                    </div>
                                                     <div class="flex-grow-1">
                                                         <MudText Typo="Typo.body2">Name of School</MudText>
                                                         <MudTextField @bind-Value="other.OthersSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText>School Location</MudText>
-                                                         <MudTextField @bind-Value="other.OthersSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                                 <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Award</MudText>
-                                                         <MudTextField @bind-Value="other.OthersAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">Course</MudText>
-                                                         <MudTextField @bind-Value="other.OthersCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                     <div class="flex-grow-1">
-                                                         <MudText Typo="Typo.body2">School Year</MudText>
-                                                         <MudTextField @bind-Value="other.OthersSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                     </div>
-                                                 </div>
-                                             </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText>School Location</MudText>
+                                                        <MudTextField @bind-Value="other.OthersSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Award</MudText>
+                                                        <MudTextField @bind-Value="other.OthersAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Course</MudText>
+                                                        <MudTextField @bind-Value="other.OthersCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                                        <MudTextField @bind-Value="other.OthersSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                     }
                                     else
@@ -1089,32 +1085,32 @@
                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Date From(mm/dd/yy)</MudText>
-                                                     <MudDatePicker Class="txf" DisableUnderLine @bind-Date="lis.DateFrom" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Date To(mm/dd/yy)</MudText>
-                                                     <MudDatePicker Class="txf" DisableUnderLine @bind-Date="lis.DateTo" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-                                                 </div>
-                                             </div>
-                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 align-items-center">
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Company Name</MudText>
-                                                     <MudTextField @bind-Value="lis.CompanyName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Position</MudText>
-                                                     <MudTextField @bind-Value="lis.Position" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Basic Salary</MudText>
-                                                     <MudTextField @bind-Value="lis.BasicSalary" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Reason for Leaving</MudText>
-                                                     <MudTextField @bind-Value="lis.RSLeaving" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                             </div>
-                                         </div>
+                                                    <MudDatePicker Class="txf" DisableUnderLine @bind-Date="lis.DateFrom" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Date To(mm/dd/yy)</MudText>
+                                                    <MudDatePicker Class="txf" DisableUnderLine @bind-Date="lis.DateTo" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Company Name</MudText>
+                                                    <MudTextField @bind-Value="lis.CompanyName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Position</MudText>
+                                                    <MudTextField @bind-Value="lis.Position" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Basic Salary</MudText>
+                                                    <MudTextField @bind-Value="lis.BasicSalary" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Reason for Leaving</MudText>
+                                                    <MudTextField @bind-Value="lis.RSLeaving" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 }
                                 else
@@ -1158,23 +1154,23 @@
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Professional Licenses/Board Examinations Taken</MudText>
                                                     <MudTextField @bind-Value="lis.Examination" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                  <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Date(mm/dd/yy)</MudText>
-                                                     <MudDatePicker Class="txf" DisableUnderLine @bind-Date="lis.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-                                                 </div>
-                                             </div>
-                                             <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 align-items-center">
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">License No.</MudText>
-                                                     <MudTextField @bind-Value="lis.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
+                                                </div>
                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Rating %</MudText>
-                                                     <MudTextField @bind-Value="lis.Rating" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                             </div>
-                                         </div>
+                                                    <MudText Typo="Typo.body2">Date(mm/dd/yy)</MudText>
+                                                    <MudDatePicker Class="txf" DisableUnderLine @bind-Date="lis.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">License No.</MudText>
+                                                    <MudTextField @bind-Value="lis.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Rating %</MudText>
+                                                    <MudTextField @bind-Value="lis.Rating" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 }
                                 else
@@ -1196,7 +1192,7 @@
                 </MudItem>
                 <MudItem xs="12">
                     <MudCard Class="mdcard1" Elevation="0">
-                        <MudCardContent>       
+                        <MudCardContent>
                             <div class="d-flex flex-column flex-grow-1">
                                 <div class="d-flex flex-grow-1 justify-content-between align-items-center mb-2">
                                     <span class="spantitle">Trainings</span>
@@ -1209,7 +1205,7 @@
                                         </MudTooltip>
                                     </div>
                                 </div>
-                               
+
                                 @if (_addEmployeeVM.listOfTrainings.Any())
                                 {
                                     @foreach (var train in _addEmployeeVM.listOfTrainings)
@@ -1219,35 +1215,35 @@
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Title</MudText>
                                                     <MudTextField @bind-Value="train.TrainingName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Sponsor / Speaker</MudText>
-                                                     <MudTextField @bind-Value="train.SponsorSpeaker" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-                                                 </div>
-                                                 <div class="flex-grow-1">
-                                                     <MudText Typo="Typo.body2">Date Attended(mm/dd/yyyy)</MudText>
-                                                     <MudDatePicker Class="txf" DisableUnderLine @bind-Date="train.TrainingDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-                                                 </div>
-                                             </div>
-                                         </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Sponsor / Speaker</MudText>
+                                                    <MudTextField @bind-Value="train.SponsorSpeaker" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <MudText Typo="Typo.body2">Date Attended(mm/dd/yyyy)</MudText>
+                                                    <MudDatePicker Class="txf" DisableUnderLine @bind-Date="train.TrainingDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 }
                                 else
                                 {
                                     <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-                                         <MudCard>
-                                             <MudCardContent>
-                                                  <p>No Trainings information available.</p>
-                                             </MudCardContent>
-                                         </MudCard>
+                                        <MudCard>
+                                            <MudCardContent>
+                                                <p>No Trainings information available.</p>
+                                            </MudCardContent>
+                                        </MudCard>
                                     </MudContainer>
-                                   
+
                                 }
                             </div>
                         </MudCardContent>
                     </MudCard>
                 </MudItem>
-                 <MudItem xs="12" Class="d-flex justify-content-between mt-5">
+                <MudItem xs="12" Class="d-flex justify-content-between mt-5">
                     <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=>_addEmployeeVM.Activate2(2))" style="background-color: #C5CFD2;">BACK</MudButton>
                     <MudButton EndIcon="@Icons.Material.Rounded.NavigateNext" Class="btnnext" OnClick="@(()=>_addEmployeeVM.Activate2(4))">NEXT</MudButton>
                 </MudItem>
@@ -1274,20 +1270,20 @@
                                                 var docs = _addEmployeeVM.listOfDocuments[i];
                                                 @if (docs.PdfFile != null)
                                                 {
-                                                <MudText Typo="@Typo.h6">@docs.PdfFile.Count() File@(docs.PdfFile.Count() == 1 ? "" : "s"):</MudText>
-                                                <MudList>
-                                                    @foreach (var file in docs.PdfFile)
-                                                    {
-                                                        <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
+                                                    <MudText Typo="@Typo.h6">@docs.PdfFile.Count() File@(docs.PdfFile.Count() == 1 ? "" : "s"):</MudText>
+                                                    <MudList>
+                                                        @foreach (var file in docs.PdfFile)
+                                                        {
+                                                            <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
 
-                                                            @file.Name <code>@file.Size bytes</code>
-                                                        </MudListItem>
-                                                    }
-                                                </MudList>
+                                                                @file.Name <code>@file.Size bytes</code>
+                                                            </MudListItem>
+                                                        }
+                                                    </MudList>
                                                     <MudCardActions Style="display:flex; justify-content: center; padding-bottom:10px; margin-bottom:-15px;">
                                                         <MudFileUpload T="IBrowserFile" OnFilesChanged="e => _addEmployeeVM.UpPdfSec12(e, index)" Accept=".pdf">
-                                                                <ButtonTemplate Context="fileContext">
-                                                                    <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CloudUpload" for="@fileContext" Style="text-transform: none;">Upload Files</MudButton>
+                                                            <ButtonTemplate Context="fileContext">
+                                                                <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CloudUpload" for="@fileContext" Style="text-transform: none;">Upload Files</MudButton>
                                                             </ButtonTemplate>
                                                         </MudFileUpload>
                                                     </MudCardActions>
@@ -1301,7 +1297,7 @@
                     </MudCard>
                 </MudItem>
                 <MudItem xs="12" Class="d-flex justify-content-between mt-5">
-                        <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=>_addEmployeeVM.Activate2(3))" style="background-color: #C5CFD2;">BACK</MudButton>
+                    <MudButton StartIcon="@Icons.Material.Rounded.NavigateBefore" Class="btnnext" OnClick="@(()=>_addEmployeeVM.Activate2(3))" style="background-color: #C5CFD2;">BACK</MudButton>
                     <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" OnClick="@OnCreate">SUBMIT</MudButton>
                 </MudItem>
             </MudGrid>
@@ -1325,13 +1321,14 @@
         {
             _addEmployeeVM.tabs.ActivatePanel(index);
         }
-        else if (index == 1) {
+        else if (index == 1)
+        {
             _addEmployeeVM._slectClasssRela = (_addEmployeeVM.employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
             _addEmployeeVM._txfieldClasssEN = (_addEmployeeVM.employee.EmerName == "") ? "txf1error" : "txf1";
             _addEmployeeVM._txfieldClasssEA = (_addEmployeeVM.employee.EmerAddress == "") ? "txf1error" : "txf1";
             _addEmployeeVM._txfieldClasssEMN = (_addEmployeeVM.employee.EmerMobNum == "") ? "txf1error" : "txf1";
 
-            
+
             if (_addEmployeeVM.employee.EmerRelationshipId == 0 || String.IsNullOrWhiteSpace(_addEmployeeVM.employee.EmerName) || String.IsNullOrWhiteSpace(_addEmployeeVM.employee.EmerAddress) || String.IsNullOrWhiteSpace(_addEmployeeVM.employee.EmerMobNum))
             {
                 _toastService.ShowError("Fill out all fields.");
@@ -1341,7 +1338,8 @@
                 _addEmployeeVM.tabs.ActivatePanel(index);
             }
         }
-        else if (index == 2) {
+        else if (index == 2)
+        {
             txtClassCID = (_addEmployeeVM.employee.EmployeeNo == "") ? "txf1error" : "txf1 mt-1";
             txtClassRate = (_addEmployeeVM.payroll.Rate == "") ? "txf1error" : "txf1 mt-1";
             slectClasssAA = (_addEmployeeVM.employee.AreaId == 0) ? "frmselecterror" : "frmselect";
@@ -1361,7 +1359,7 @@
                 _addEmployeeVM.tabs.ActivatePanel(index);
             }
         }
-        
+
     }
 
     public async void ActivateAddressField()
@@ -1371,7 +1369,7 @@
         _addEmployeeVM._slectClasssGender = (_addEmployeeVM.employee.GenderId == 0) ? "frmselecterror" : "frmselect";
         _addEmployeeVM._slectClasssCV = (_addEmployeeVM.employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
         _addEmployeeVM._slectClasssReli = (_addEmployeeVM.employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
-        
+
 
         if (_addEmployeeVM.employee.GenderId == 0 || _addEmployeeVM.employee.CivilStatusId == 0 || _addEmployeeVM.employee.ReligionId == 0 || String.IsNullOrWhiteSpace(_addEmployeeVM.bday.ToString()))
         {
@@ -1381,7 +1379,7 @@
         {
             displayAdd = "d-flex";
             await Task.Delay(50);
-            await JSRuntime.InvokeVoidAsync("scrollToDiv");
+            await jsRuntime.InvokeVoidAsync("scrollToDiv");
         }
     }
 
@@ -1398,10 +1396,11 @@
                 {
                     _toastService.ShowSuccess(_itm);
                 }
-               
+
             }
         }
-        else {
+        else
+        {
             string[] _resstring = response.Split("xxx");
             foreach (var _itm in _resstring)
             {
@@ -1409,7 +1408,7 @@
                 {
                     _toastService.ShowError(_itm);
                 }
-               
+
             }
         }
     }

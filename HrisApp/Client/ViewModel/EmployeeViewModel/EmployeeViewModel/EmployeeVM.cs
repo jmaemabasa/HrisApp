@@ -4,9 +4,9 @@
 
     public class EmployeeVM : BaseViewModel
     {
-        private IEmployeeService EmployeeService = new EmployeeService();
-        private IStaticService StaticService = new StaticService();
-        private IDivisionService DivisionService = new DivisionService();
+        private readonly IEmployeeService EmployeeService = new EmployeeService();
+        private readonly IStaticService StaticService = new StaticService();
+        private readonly IDivisionService DivisionService = new DivisionService();
 
         private readonly NavigationManager _navigationManager;
 
@@ -389,7 +389,7 @@
             }
         }
 
-        public void EmpDateRangeChange(DateRange? dateRange)
+        public void EmpDateRangeChange(DateRange dateRange)
         {
             _dateRange = dateRange;
             CmbDaateHiredText = _dateRange?.Start?.ToString("MM/dd/yyyy") + " - " + _dateRange?.End?.ToString("MM/dd/yyyy");
@@ -460,7 +460,7 @@
             await EmployeeService.DeleteEmployee(id);
         }
 
-        public string StatusChipColor(string status)
+        public static string StatusChipColor(string status)
         {
             return status switch
             {
@@ -484,7 +484,7 @@
             _isVisible = false;
         }
 
-        public string CapitalizeFirstLetter(string input)
+        public static string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))
             {

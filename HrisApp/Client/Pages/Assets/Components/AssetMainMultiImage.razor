@@ -48,7 +48,6 @@
                 }
             }
 
-
             <MudText Typo="Typo.body2" Style="font-weight: bold;">Remarks</MudText>
             <MudTextField @bind-Value="_remarks" Lines="2" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: bold;" />
         </div>
@@ -75,10 +74,7 @@
     List<AssetImageT> listOfDocuments = new();
     private string imgBase64 { get; set; }
 
-    bool isuploading = false;
-
     private bool visible;
-    private int rating;
     private DialogOptions dialogOptions = new() { FullWidth = true, NoHeader = true };
 
     string _remarks { get; set; }
@@ -199,13 +195,11 @@
 
         if (confirmResult.IsConfirmed)
         {
-            isuploading = true;
             foreach (var formdata in SelectedImages)
             {
                 await AssetImageService.AttachFilePanel(formdata, Catid, SubCatid, JMCode, _remarks);
             }
             OnFileAdded?.Invoke();
-            isuploading = false;
             visible = false;
 
         }

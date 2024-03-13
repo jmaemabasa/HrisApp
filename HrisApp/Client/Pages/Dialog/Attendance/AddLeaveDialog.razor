@@ -1,12 +1,4 @@
-﻿@inject IDialogService _dialogService
-@inject SweetAlertService Swal
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject ILeaveService LeaveService
-@inject IToastService _toastService
-@inject StateService StateService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <div class="d-flex flex-column">
             <div>
@@ -37,12 +29,12 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
     private string newLeaveType = "";
     private int newUnit = 1;
     private string newDesc = "Day";
 
-    void Cancel() => MudDialog.Cancel();
+    void Cancel() => MudDialog?.Cancel();
 
     private async Task ConfirmCreateArea()
     {
@@ -80,7 +72,7 @@
     }
     private async Task ShowErrorMessageBox(string mess)
     {
-        bool? result = await _dialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
         "Warning",
         mess,
         yesText: "Ok");

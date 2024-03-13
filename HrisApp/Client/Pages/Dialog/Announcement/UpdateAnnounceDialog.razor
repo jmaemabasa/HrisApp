@@ -1,10 +1,4 @@
-﻿@inject IAnnouncementService AnnouncementService
-@inject StateService StateService
-@inject IDialogService DialogService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         @if (!isShowUpdate)
         {
@@ -19,8 +13,8 @@
                     <span class="title">Duration</span>
                     @if (obj.DateStart != null)
                     {
-                        @if ((obj.DateStart.Value.Date == DateTime.Now.Date && obj.DateEnd.Value.Date >= DateTime.Now.Date)
-                       || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd.Value.Date >= DateTime.Now.Date))
+                        @if ((obj.DateStart.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date)
+                       || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
                         {
                             <span class="announceShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
                         }
@@ -42,7 +36,7 @@
                     <span class="title">Description</span>
                     <span class="desc">@obj.Ann_Desc</span>
                 </div>
-                
+
             </div>
         }
 
@@ -88,7 +82,7 @@
 </MudDialog>
 
 @code {
-    #nullable disable
+#nullable disable
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 

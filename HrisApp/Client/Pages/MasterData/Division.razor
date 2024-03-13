@@ -2,7 +2,7 @@
 @attribute [Authorize(Roles = "SysAdmin, GenAdmin")]
 
 <PageTitle>Division Management</PageTitle>
-@* 
+@*
 <div class="topnav d-flex justify-content-end align-items-center z-20">
     <MudButton OnClick="OpenAddDivision" Size="Size.Medium">Back</MudButton>
 </div> *@
@@ -17,12 +17,12 @@
     </div>
 </div>
 
-    <div class="box w-auto">
-        <div class="d-flex justify-content-end">
-                <div class="ssize">
-                    <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-                 </div>
+<div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
         </div>
+    </div>
     @if (divisionList == null || divisionList.Count == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
@@ -42,7 +42,7 @@
     }
     else
     {
-         <div style="height: calc(100% - 64px)">
+        <div style="height: calc(100% - 64px)">
             <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="divisionList" Context="divisions" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DivisionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
                 <HeaderContent>
                     <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
@@ -64,14 +64,14 @@
                             <NotAuthorized>
                                 <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDivision(divisions.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                             </NotAuthorized>
-                            </AuthorizeView>
-                            </MudTd>
-                        </RowTemplate>
-                        <PagerContent>
-                            <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-                        </PagerContent>
-                        </MudTable>
+                        </AuthorizeView>
+                    </MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                </PagerContent>
+            </MudTable>
 
-         </div>
-         }
-     </div>
+        </div>
+    }
+</div>

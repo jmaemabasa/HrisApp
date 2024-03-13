@@ -1,10 +1,9 @@
-﻿using System.Xml.Linq;
-
-namespace HrisApp.Client.Pages.Dialog.MasterData
+﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
+#nullable disable
+
     public partial class AddDivisionDialog : ComponentBase
     {
-#nullable disable
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         private string newDivision = "";
 

@@ -1,29 +1,5 @@
 ﻿@page "/employee/edit"
 @page "/employee/edit/{id:int}"
-@inject IDivisionService DivisionService
-@inject IDepartmentService DepartmentService
-@inject ISectionService SectionService
-@inject IPositionService PositionService
-@inject IAddressService AddressService
-@inject IAreaService AreaService
-@inject IEmployeeService EmployeeService
-@inject IImageService ImageService
-@inject IEducationService EducationService
-@inject IEmploymentDateService EmploymentDateService
-@inject IEmpHistoryService EmpHistoryService
-@inject IPayrollService PayrollService
-@inject ILicenseTrainingService LicenseTrainingService
-@inject IStaticService StaticService
-@inject SweetAlertService Swal
-@inject IToastService _toastService
-@inject IDialogService DialogService
-@inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject BackUpDeletion BackUpDeletion
-@inject StateService StateService
-@inject IManpowerService ManpowerService
 
 @attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR, Technical")]
 <PageTitle>Update Employee</PageTitle>

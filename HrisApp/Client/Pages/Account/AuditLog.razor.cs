@@ -2,14 +2,14 @@
 {
     public partial class AuditLog : ComponentBase
     {
-        public List<EmployeeT> employeeList = new List<EmployeeT>();
-        public List<UserMasterT> userList = new List<UserMasterT>();
-        public List<AuditlogsT> logsList = new List<AuditlogsT>();
+        public List<EmployeeT> employeeList = new();
+        public List<UserMasterT> userList = new();
+        public List<AuditlogsT> logsList = new();
 
         public string infoFormat = "{first_item}-{last_item} of {all_items}";
         public string searchString1 = "";
 
-        public DateRange _dateRange = new DateRange
+        public DateRange _dateRange = new()
         {
             Start = DateTime.Now.AddDays(-15),
             End = DateTime.Now
@@ -33,7 +33,7 @@
 
         public void DateRangeChange(DateRange? dateRange)
         {
-            _dateRange = dateRange;
+            _dateRange = dateRange!;
 
             logsList = AuditlogService.AuditlogsTs
                 .Where(log => log.Date >= _dateRange.Start && log.Date <= _dateRange.End)

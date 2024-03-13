@@ -118,7 +118,7 @@
         logsList = AuditlogService.AuditlogsTs.Where(log => log.EmployeeUserId == Id && log.Date >= _dateRange.Start && log.Date <= _dateRange.End).OrderByDescending(log => log.Date).ToList();
     }
 
-    public void DateRangeChange(DateRange? dateRange)
+    public void DateRangeChange(DateRange dateRange)
     {
         _dateRange = dateRange;
 

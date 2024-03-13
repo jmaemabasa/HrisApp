@@ -1,11 +1,4 @@
-﻿@inject ITimetableService TimeService
-@inject StateService StateService
-@inject IDialogService DialogService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject IToastService _toastService
-
-<style>
+﻿<style>
     .diatitle {
         font-size: 20px;
         font-weight: bold;
@@ -101,23 +94,20 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        obj = await TimeService.GetSingleTimetable((int)Id);
+        obj = await TimeTblService.GetSingleTimetable((int)Id);
     }
 
-    bool success;
     private async Task OnValidSubmit(EditContext context)
     {
-        success = true;
         StateHasChanged();
 
-        await TimeService.UpdateTimetable(obj);
+        await TimeTblService.UpdateTimetable(obj);
         await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Model", DateTime.Now);
         _toastService.ShowSuccess(TokenCons.UPDATESUCCESS);
 
         MudDialog.Close();
-        StateService.SetState("TimetableList", await TimeService.GetTimetableList());
+        StateService.SetState("TimetableList", await TimeTblService.GetTimetableList());
     }
-
 
     void Cancel() => MudDialog.Cancel();
 }

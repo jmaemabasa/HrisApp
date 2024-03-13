@@ -1,7 +1,4 @@
 ﻿@page "/leave"
-@inject ILeaveService LeaveService
-@inject IDialogService DialogService
-@inject StateService StateService
 
 @attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR")]
 <PageTitle>Leave Management</PageTitle>
@@ -69,7 +66,7 @@
 </div>
 @code {
     public List<LeaveTypesT> _leaveTypesList = new();
-    private LeaveTypesT selectedItem1 = null;
+    private LeaveTypesT selectedItem1 = null!;
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
 
     protected override async Task OnInitializedAsync()

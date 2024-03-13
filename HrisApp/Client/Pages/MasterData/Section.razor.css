@@ -53,10 +53,10 @@
     color: #27374D;
 }
 
-::deep .btnedit:hover {
-    color: #27374D;
-    transform: scale(1.1);
-}
+    ::deep .btnedit:hover {
+        color: #27374D;
+        transform: scale(1.1);
+    }
 
 ::deep .btnadd {
     border: none;

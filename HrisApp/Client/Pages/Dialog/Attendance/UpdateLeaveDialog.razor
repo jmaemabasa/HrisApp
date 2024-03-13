@@ -1,12 +1,4 @@
-﻿@inject IDialogService _dialogService
-@inject SweetAlertService Swal
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject ILeaveService LeaveService
-@inject IToastService _toastService
-@inject StateService StateService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <div class="d-flex flex-column">
             <div>
@@ -36,16 +28,14 @@
     </DialogActions>
 </MudDialog>
 
-
-
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
     [Parameter]
     public int Id { get; set; }
 
     private LeaveTypesT obj = new();
 
-    void Cancel() => MudDialog.Cancel();
+    void Cancel() => MudDialog?.Cancel();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -64,7 +54,7 @@
         }
         else
         {
-            MudDialog.Close();
+            MudDialog?.Close();
             var confirmResult = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Confirmation",
@@ -91,7 +81,7 @@
     }
     private async Task ShowErrorMessageBox(string mess)
     {
-        bool? result = await _dialogService.ShowMessageBox(
+        bool? result = await DialogService.ShowMessageBox(
         "Warning",
         mess,
         yesText: "Ok");

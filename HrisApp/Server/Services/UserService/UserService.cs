@@ -46,12 +46,12 @@ namespace HrisApp.Server.Services.UserService
         //PASSWORDSSSSSSSS and TOKEN
         private string CreateToken(UserMasterT user)
         {
-            List<Claim> claims = new List<Claim>
+            List<Claim> claims = new()
             {
-                new Claim(ClaimTypes.Sid, user.EmployeeId.ToString()),
-                new Claim(ClaimTypes.Name,  user.Username),
-                new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.StreetAddress, user.Emp_VerifyId),
+                new(ClaimTypes.Sid, user.EmployeeId.ToString()),
+                new(ClaimTypes.Name,  user.Username),
+                new(ClaimTypes.Role, user.Role),
+                new(ClaimTypes.StreetAddress, user.Emp_VerifyId),
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8

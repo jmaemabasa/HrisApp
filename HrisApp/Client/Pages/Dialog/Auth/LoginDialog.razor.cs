@@ -19,8 +19,6 @@
         //private const string Adminpassword = "1t@dm1n2022";
         private const string Adminpassword = "11";
 
-        private const string Adminuserrole = "MainAdmin";
-
         private string MYURL { get; set; } = string.Empty;
         private string OLDURL { get; set; } = string.Empty;
 
@@ -31,7 +29,7 @@
                 //var currentUrl = window.location.href;
 
                 await LocalStorage.RemoveItemAsync("token");
-                await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                await AuthStateProvider.GetAuthenticationStateAsync();
 
                 var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
                 OLDURL = uri.ToString();
@@ -79,7 +77,7 @@
                         _message = string.Empty;
 
                         await LocalStorage.SetItemAsync("token", result.Data);
-                        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                        await AuthStateProvider.GetAuthenticationStateAsync();
 
                         await Task.Delay(500);
 

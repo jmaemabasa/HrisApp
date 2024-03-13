@@ -66,7 +66,7 @@
                 _processing = true;
                 await Task.Delay(2000);
                 var fileBytes = await _crrExport.createExcelPayrollAssists(SubPositionsL);
-                var fileName = $"201FileForPayrollAssists{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
+                var fileName = $"201FileForPayrollAssists{DateTime.Now:yyyy-MM-dd}.xlsx";
                 await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
                 _processing = false;
             }
@@ -132,7 +132,7 @@
                 case "lastyear":
                     CmbDateActiveText = "Last Year";
                     _isOpen = false;
-                    DateTime startOfLastYear = new DateTime(today.Year - 1, 1, 1);
+                    DateTime startOfLastYear = new(today.Year - 1, 1, 1);
                     DateTime endOfLastYear = startOfLastYear.AddYears(1).AddDays(-1);
                     _dateRange.Start = startOfLastYear;
                     _dateRange.End = endOfLastYear;
@@ -262,7 +262,7 @@
             }
         }
 
-        public void EmpDateRangeChange(DateRange? dateRange)
+        public void EmpDateRangeChange(DateRange dateRange)
         {
             _dateRange = dateRange;
             CmbDateActiveText = _dateRange?.Start?.ToString("MM/dd/yyyy") + " - " + _dateRange?.End?.ToString("MM/dd/yyyy");

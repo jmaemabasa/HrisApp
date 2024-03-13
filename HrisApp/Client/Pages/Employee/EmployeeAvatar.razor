@@ -1,13 +1,12 @@
 ﻿@page "/employeeimage"
 @inherits MudComponentBase
-@inject IImageService ImageService
 <MudAvatar>
-        @* <MudImage Src="@ImageData"></MudImage> *@
+    @* <MudImage Src="@ImageData"></MudImage> *@
     <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
 </MudAvatar>
 
 @code {
-    #nullable disable
+#nullable disable
     [Parameter]
     public string verify { get; set; }
 

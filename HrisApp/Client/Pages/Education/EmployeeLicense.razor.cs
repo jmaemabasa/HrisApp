@@ -1,27 +1,30 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Education
+﻿namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
+
     public partial class EmployeeLicense : ComponentBase
     {
         //TABLEEES
-        List<Emp_LicenseT> licenseList = new List<Emp_LicenseT>();
+        private List<Emp_LicenseT> licenseList = new();
+
         private Emp_LicenseT selectedItem1 = null;
         //END FOR TABLES
 
-        private Emp_LicenseT license = new Emp_LicenseT();
+        private Emp_LicenseT license = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool LicenseOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool LicenseOpen;
+        private Anchor anchor;
+        private string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
-            LicenseOpen = (drawerx == "LicenseOpen") ? true : false;
+            LicenseOpen = (drawerx == "LicenseOpen");
             this.anchor = anchor;
         }
+
         protected async Task SaveLicense()
         {
             license.Verify_Id = VerifyCode;
@@ -47,7 +50,7 @@ namespace HrisApp.Client.Pages.Education
             }
         }
 
-        async Task DeleteLicense(int id)
+        private async Task DeleteLicense(int id)
         {
             await LicenseTrainingService.DeleteLicense(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

@@ -1,11 +1,4 @@
-﻿@inject ITimetableService TimeService
-@inject StateService StateService
-@inject IDialogService DialogService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject IToastService _toastService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <EditForm Model="@obj" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
@@ -66,7 +59,7 @@
 
                 <div class="col-12 d-flex justify-content-center">
                     <MudCheckBox @bind-Checked="@obj.Must_C_In"> Must C/In</MudCheckBox>
-                    <MudCheckBox @bind-Checked="@obj.Must_C_Out" >Must C/Out</MudCheckBox>
+                    <MudCheckBox @bind-Checked="@obj.Must_C_Out">Must C/Out</MudCheckBox>
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
@@ -79,7 +72,7 @@
 </MudDialog>
 
 @code {
-    #nullable disable
+#nullable disable
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
@@ -89,12 +82,12 @@
     {
         StateHasChanged();
 
-        await TimeService.CreateTimetable(obj);
+        await TimeTblService.CreateTimetable(obj);
         await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
         _toastService.ShowSuccess(TokenCons.CREATESUCCESS);
 
         MudDialog.Close();
-        StateService.SetState("TimetableList", await TimeService.GetTimetableList());
+        StateService.SetState("TimetableList", await TimeTblService.GetTimetableList());
     }
 
     void Cancel() => MudDialog.Cancel();

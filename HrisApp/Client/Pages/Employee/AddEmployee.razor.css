@@ -60,12 +60,12 @@
 
 /*IMAGE*/
 ::deep .btnimage {
-   box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
-   border-radius: 10px;
-   border: 0;
-   padding: 0 0 10px 15px;
-   margin-top: 0;
-   width: 100%;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    width: 100%;
 }
 
 ::deep .btnimagerror {
@@ -148,6 +148,7 @@
     background: #e8e1e1;
     height: 45px;
 }
+
 ::deep .frmselectvalid {
     border: 1px solid green;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
@@ -156,7 +157,6 @@
     background: #e8e1e1;
     height: 45px;
 }
-
 
 /*DATE TIME*/
 ::deep .mud-picker.mud-picker-inline.mud-picker-input-button.txf, ::deep .mud-picker.mud-picker-inline.mud-picker-input-text.txf {
@@ -176,9 +176,10 @@
 ::deep .mdcard1 {
     background: #e9ecef;
 }
-::deep .mdcard1.lfmargin {
-    margin-left: 20px;
-}
+
+    ::deep .mdcard1.lfmargin {
+        margin-left: 20px;
+    }
 
 /*School DIV*/
 .divSchool {
@@ -191,7 +192,6 @@
 ::deep .addminbtn {
     color: #26446e;
 }
-
 
 /*TABPANELS*/
 
@@ -208,7 +208,6 @@
     border-bottom: 2px solid #D8DADC;
     /*pointer-events: none;*/
 }
-
 
 ::deep .mud-tabs-defaultindex {
     color: #EEB12F;
@@ -260,6 +259,7 @@
     margin-right: 15px;
     opacity: 0.3;
 }
+
 ::deep .mud-chip-after3 {
     font-weight: bold;
     color: white;
@@ -314,4 +314,3 @@
         padding-right: 35px;
     }
 }
-

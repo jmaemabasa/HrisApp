@@ -28,10 +28,10 @@
 @using HrisApp.Client.Pages.Dialog.Employee;
 @using HrisApp.Client.Pages.Applicant.Education
 @using HrisApp.Client.Pages.Assets.Components
-
-
 @using HrisApp.Client.Pages.User.Dashboard
-
+@using HrisApp.Client.Pages.Dialog.AlertDialogs
+@using HrisApp.Client.Pages.Dialog.Announcement
+@using HrisApp.Shared.Models.Attendance
 
 @using ChartJs.Blazor;
 @using ChartJs.Blazor.Common
@@ -44,12 +44,10 @@
 @using ChartJs.Blazor.Interop
 
 
-@using HrisApp.Client.Pages.Dialog.AlertDialogs
-
-@using HrisApp.Client.Pages.Dialog.Announcement
-@using HrisApp.Shared.Models.Attendance
-
 @inject IAuthService AuthService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject HttpClient Http
+@inject IUserRoleService UserRoleService
 
 @inject IAssetTypeService AssetTypeService
 @inject IAssetCategoryService AssetCatService
@@ -61,6 +59,7 @@
 @inject IAssetLastCheckService AssetLastChkSvc
 @inject IAssetAccessHistoryService AssetAccHistorySvc
 @inject IAssetAccessImageService AssAccImgSvc
+@inject IAssetMasterService AssetMasterService
 
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
@@ -69,11 +68,21 @@
 @inject SweetAlertService Swal
 @inject IJSRuntime jsRuntime
 @inject IToastService _toastService
+@inject ILocalStorageService LocalStorage
 
 @inject IAuditlogService AuditlogService
 @inject IStaticService StaticService
-@inject IAssetMasterService AssetMasterService
+
+@inject AddEmployeeVM _addEmployeeVM
 @inject IEmployeeService EmployeeService
+@inject IPayrollService PayrollService
+@inject IEducationService EducationService
+@inject ILicenseTrainingService LicenseTrainingService
+@inject IEmpHistoryService EmpHistoryService
+@inject BackUpDeletion BackUpDeletion
+@inject IEmploymentDateService EmploymentDateService
+@inject IAddressService AddressService
+
 @inject IDivisionService DivisionService
 @inject IDepartmentService DepartmentService
 @inject ISectionService SectionService
@@ -84,7 +93,11 @@
 
 @inject IAnnouncementService AnnouncementService
 @inject IForEvalService ForEvalService
-@inject IPayrollService PayrollService
 
+@inject IAttendanceRecService AttRecSvc
+@inject ILeaveService LeaveService
+@inject ILeaveCredService LeaveCredService
+@inject ILeaveHistoryService LeaveHistoryService
+@inject ITimetableService TimeTblService
 
 @inject IImageService ImageService

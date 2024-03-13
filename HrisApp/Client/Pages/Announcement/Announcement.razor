@@ -1,13 +1,8 @@
 ﻿@page "/announcement"
 
-@inject IAnnouncementService AnnouncementService
-@inject StateService StateService
-@inject IDialogService DialogService
-
 @attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR")]
 
 <PageTitle>Announcement</PageTitle>
-
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
@@ -73,8 +68,8 @@
                 </MudTd>
 
                 <MudTd Class="col-2 text-center" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
-                    @if ((obj.DateStart.Value.Date == DateTime.Now.Date && obj.DateEnd.Value.Date >= DateTime.Now.Date)
-                || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd.Value.Date >= DateTime.Now.Date))
+                    @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date)
+                || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
                     {
                         <span class="announceShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
                     }
@@ -88,10 +83,10 @@
                     }
                 </MudTd>
             </RowTemplate>
-             <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-             </PagerContent>
-         </MudTable>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
     }
 </div>
 
@@ -138,7 +133,7 @@
         var parameters = new DialogParameters<UpdateAnnounceDialog>();
         parameters.Add(x => x.Id, id);
 
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader=true };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
         DialogService.Show<UpdateAnnounceDialog>("", parameters, options);
     }
 }

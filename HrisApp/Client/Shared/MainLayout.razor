@@ -351,9 +351,8 @@
     private string USERNAME = "";
     private string FULLNAME = "";
 
-    public RenderFragment html;
-    private Timer timer;
-    private Timer timeruser;
+    public RenderFragment? html;
+    private Timer? timer;
 
     private static int Count1 { get; set; }
     private string Userrole = string.Empty;
@@ -386,7 +385,7 @@
             {
                 timer = new Timer();
                 timer.Interval = 3000;
-                timer.Elapsed += OnTimerElapsed;
+                timer.Elapsed += OnTimerElapsed!;
                 timer.Enabled = true;
             }
 

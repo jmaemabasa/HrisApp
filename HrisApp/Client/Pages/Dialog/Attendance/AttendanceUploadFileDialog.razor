@@ -4,10 +4,6 @@
 @using OfficeOpenXml;
 
 @inject AttendanceImportTemplate _ExportAtt
-@inject IJSRuntime JSRuntime
-@inject IToastService _toastService
-@inject IAttendanceRecService AttService
-@inject StateService StateService
 
 <MudDialog>
     <TitleContent>
@@ -22,7 +18,7 @@
             {
                 <div class="col-12 mb-2">
                     <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
-                    </div>
+                </div>
             }
             @* EXCEL FILE DISPLAY - NAME *@
             <div>
@@ -35,16 +31,16 @@
             @* GROUP BUTTONS FOR ACTIONS *@
             <div style="margin-left: auto; margin-right: auto; margin-top:8px;">
                 <MudButtonGroup Class="btngrpUpload" DisableElevation Variant="Variant.Filled" OverrideStyles=true>
-                     <InputFile id="fileInput" hidden OnChange="OnImportExcel" />
-                     <div class="btn-group btngrpUpload" role="group" aria-label="Basic example">
-                         <button type="button" class="btn btnUplaod">
-                             <label for="fileInput">
-                                 <MudIcon Icon="@Icons.Material.Rounded.UploadFile"></MudIcon>
-                                 Choose File
-                             </label>
-                         </button>
-                         <button type="button" @onclick="OnDownloadTem" class="btn d-flex btnUplaod align-items-center">
-                             @if (!_processingDownload)
+                    <InputFile id="fileInput" hidden OnChange="OnImportExcel" />
+                    <div class="btn-group btngrpUpload" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btnUplaod">
+                            <label for="fileInput">
+                                <MudIcon Icon="@Icons.Material.Rounded.UploadFile"></MudIcon>
+                                Choose File
+                            </label>
+                        </button>
+                        <button type="button" @onclick="OnDownloadTem" class="btn d-flex btnUplaod align-items-center">
+                            @if (!_processingDownload)
                             {
                                 <div><MudIcon Icon="@Icons.Material.Rounded.SimCardDownload"></MudIcon></div>
                                 <div class="ms-1">Download Template</div>
@@ -69,7 +65,7 @@
         @* DIALOG BUTTONS *@
         <div class="d-flex justify-content-end align-items-center mb-3 me-4 gap-2 mt-5">
             <MudButton DisableElevation OnClick="OnUploadFile" Class="px-10 btnDiaSave">
-                 @if (!_processingSave)
+                @if (!_processingSave)
                 {
                     <div class="d-flex align-items-center">
                         <div><MudIcon Size="Size.Small" Icon="@Icons.Material.Rounded.Save"></MudIcon></div>
@@ -88,7 +84,7 @@
 </MudDialog>
 
 @code {
-    #nullable disable
+#nullable disable
     // VARIABLES
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     private string Filename = string.Empty;
@@ -103,7 +99,7 @@
         try
         {
             _processingSave = true;
-            var response = await AttService.QueryAttendanceForUpload(dtable, Filename);
+            var response = await AttRecSvc.QueryAttendanceForUpload(dtable, Filename);
             switch (response)
             {
                 case TokenCons.INVALIDFILE:
@@ -137,7 +133,7 @@
 
                 case TokenCons.IsSuccess:
                     _showAlert = false;
-                    StateService.SetState("AttendanceRecList", await AttService.GetAttendanceRecList());
+                    StateService.SetState("AttendanceRecList", await AttRecSvc.GetAttendanceRecList());
 
                     MudDialog.Close();
                     _toastService.ShowSuccess("Imported Successfully.");
@@ -145,7 +141,7 @@
 
                 case TokenCons.IsUpdated:
                     _showAlert = false;
-                    StateService.SetState("AttendanceRecList", await AttService.GetAttendanceRecList());
+                    StateService.SetState("AttendanceRecList", await AttRecSvc.GetAttendanceRecList());
                     MudDialog.Close();
                     _toastService.ShowSuccess("Salesman/s updated successfully");
                     break;
@@ -232,7 +228,7 @@
         await Task.Delay(1);
         var fileBytes = await _ExportAtt.DownloadAttendanceTemplate();
         var fileName = $"Attendance_Template.xlsx";
-        await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+        await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
         _processingDownload = false;
         _showAlert = true;
         _severity = Severity.Success;

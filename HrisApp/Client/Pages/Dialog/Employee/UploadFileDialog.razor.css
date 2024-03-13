@@ -20,16 +20,17 @@
     background-color: #90c8f5;
     color: #115f9e;
 }
+
     ::deep .file:hover {
         background-color: #115f9e;
         color: #fafaf5;
     }
 
-
 ::deep .template {
     background-color: #d8ccfc;
     color: #594AE2;
 }
+
     ::deep .template:hover {
         background-color: #594AE2;
         color: #fafaf5;
@@ -39,6 +40,7 @@
     background-color: #EABCBB;
     color: #BE1313;
 }
+
     ::deep .clear:hover {
         background-color: #BE1313;
         color: #fafaf5;
@@ -56,4 +58,3 @@
 .divbtns {
     margin-bottom: 20px;
 }
-

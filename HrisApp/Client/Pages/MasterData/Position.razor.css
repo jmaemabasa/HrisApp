@@ -56,6 +56,7 @@
 ::deep .btnedit {
     color: #27374D;
 }
+
     ::deep .btnedit:hover {
         transform: scale(1.1);
     }

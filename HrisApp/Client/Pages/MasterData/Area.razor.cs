@@ -1,5 +1,7 @@
 ﻿namespace HrisApp.Client.Pages.MasterData
 {
+#nullable disable
+
     public partial class Area : ComponentBase
     {
         protected override async Task OnInitializedAsync()
@@ -23,6 +25,7 @@
         }
 
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = true;
@@ -32,10 +35,12 @@
         }
 
         #region TABLES DATA
+
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<AreaT> areaList = new();
+        private List<AreaT> areaList = new();
         private AreaT selectedItem1 = null;
 
         private bool FilterFunc1(AreaT area) => FilterFunc(area, searchString1);
@@ -48,13 +53,16 @@
                 return true;
             return false;
         }
+
         //END FOR TABLES
 
         //OPEN DIALOGS
         private void OpenUpdateArea(int id)
         {
-            var parameters = new DialogParameters<UpdateAreaDialog>();
-            parameters.Add(x => x.Id, id);
+            var parameters = new DialogParameters<UpdateAreaDialog>
+            {
+                { x => x.Id, id }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<UpdateAreaDialog>("Update Area", parameters, options);
@@ -65,6 +73,7 @@
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddAreaDialog>("New Area", options);
         }
-        #endregion
+
+        #endregion TABLES DATA
     }
 }

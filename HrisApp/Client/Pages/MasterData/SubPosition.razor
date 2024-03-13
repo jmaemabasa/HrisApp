@@ -29,7 +29,7 @@
             </ChildContent>
         </MudMenu>
     </div>
-     @if (subpositionList == null || subpositionList.Count == 0)
+    @if (subpositionList == null || subpositionList.Count == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
 
@@ -89,7 +89,7 @@
                     @* <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton> *@
                 </MudTd>
                 <MudTd Style="text-align: center">
-                   <AuthorizeView Roles="SysAdmin, GenAdmin">
+                    <AuthorizeView Roles="SysAdmin, GenAdmin">
                         <Authorized>
                             <MudTooltip Text="Delete" Arrow=true>
                                 <MudIconButton Color="Color.Error" OnClick="(() => DeletePosition(pos.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
@@ -97,15 +97,15 @@
                         </Authorized>
                         <NotAuthorized>
                             <MudIconButton Disabled Color="Color.Error" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
-                         </NotAuthorized>
-                     </AuthorizeView>
-                 </MudTd>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </MudTd>
 
-             </RowTemplate>
-             <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-             </PagerContent>
-         </MudTable>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
     }
 </div>
 
@@ -117,7 +117,7 @@
     private List<PositionT> Positions = new();
     private List<AreaT> Areas = new();
     List<SubPositionT> subpositionList = new();
-    private SubPositionT selectedItem1 = null;
+    private SubPositionT selectedItem1 = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -165,7 +165,7 @@
 
     async Task DeletePosition(int id)
     {
-        var pos = PositionService.SubPositionTs.Where(x=> x.Id == id);
+        var pos = PositionService.SubPositionTs.Where(x => x.Id == id);
         foreach (var item in pos)
         {
             if (item.Status == "Active")

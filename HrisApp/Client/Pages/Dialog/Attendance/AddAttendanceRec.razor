@@ -1,13 +1,4 @@
-﻿@inject IAttendanceRecService AttService
-@inject StateService StateService
-@inject IDialogService DialogService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-@inject IToastService _toastService
-@inject IEmployeeService EmpService
-@inject IPayrollService PayService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <EditForm Model="@obj" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
@@ -17,15 +8,15 @@
                 {
                     <div class="col-12 mb-2">
                         <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
-                        </div>
+                    </div>
                 }
                 <div class="col-12">
                     <MudText Typo="Typo.body2">AC_No</MudText>
                     <MudTextField @bind-Value="obj.AC_No" For="@(() => obj.AC_No)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
                 @* <div class="col-12">
-                    <MudText Typo="Typo.body2">Name</MudText>
-                    <MudTextField @bind-Value="obj.Name" For="@(() => obj.Name)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                <MudText Typo="Typo.body2">Name</MudText>
+                <MudTextField @bind-Value="obj.Name" For="@(() => obj.Name)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div> *@
                 <div class="col-12 col-md-6">
                     <MudText Typo="Typo.body2">Date</MudText>
@@ -37,10 +28,10 @@
                 </div>
                 <div class="col-12">
                     <MudText Typo="Typo.body2">State</MudText>
-                     <MudSelect @bind-Value="obj.State" Placeholder="Please Select" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
-                         <MudSelectItem Value="@("C/In")">C/In</MudSelectItem>
-                         <MudSelectItem Value="@("C/Out")">C/Out</MudSelectItem>
-                     </MudSelect>
+                    <MudSelect @bind-Value="obj.State" Placeholder="Please Select" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Value="@("C/In")">C/In</MudSelectItem>
+                        <MudSelectItem Value="@("C/Out")">C/Out</MudSelectItem>
+                    </MudSelect>
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
@@ -51,90 +42,3 @@
         </EditForm>
     </DialogContent>
 </MudDialog>
-
-@code {
-    #nullable disable
-
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-
-    private AttendanceRecordT obj = new();
-    TimeSpan? time = DateTime.Now - DateTime.MinValue;
-    // private Timer timer;
-
-    private List<EmployeeT> empList = new();
-    private List<Emp_PayrollT> payList = new();
-
-    void Cancel() => MudDialog.Cancel();
-
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(1);
-        obj.Time = DateTime.Now;
-
-        empList = await EmpService.GetEmployeeList();
-        payList = await PayService.GetPayrollList();
-        // timer = new Timer(UpdateCurrentTime, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
-    }
-
-    private async Task OnValidSubmit(EditContext context)
-    {
-        StateHasChanged();
-
-        var count = await AttService.GetExistingCount(obj.Time?.ToString("MM/dd/yyyy"), obj.AC_No, obj.State);
-        if (count == 0)
-        {
-            var hours = time.Value.Hours;
-            var minutes = time.Value.Minutes;
-
-            // Combine date from MudDatePicker with time components
-            obj.Time = new DateTime(obj.Time.Value.Year, obj.Time.Value.Month, obj.Time.Value.Day, hours, minutes, 0);
-
-            obj.Exception = "OK";
-
-            string verid = "";
-            foreach (var item in payList)
-            {
-                if (item.BiometricID == obj.AC_No)
-                {
-                    verid = item.Verify_Id;
-                }
-            }
-
-            var emp = empList.FirstOrDefault(d => d.Verify_Id == verid);
-            if (emp != null)
-            {
-                obj.Name = $"{emp.LastName}";
-            }
-
-            await AttService.CreateAttendanceRec(obj);
-            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
-            _toastService.ShowSuccess(TokenCons.CREATESUCCESS);
-
-            MudDialog.Close();
-            StateService.SetState("AttendanceRecList", await AttService.GetAttendanceRecList());
-        }
-        else
-        {
-            _showAlert = true;
-            _severity = Severity.Error;
-            _message = TokenCons.ALREADYEXISTATT;
-        }
-    }
-
-    // private void UpdateCurrentTime(object state)
-    // {
-    //     // Update the time to the current time
-    //     time = DateTime.Now.TimeOfDay;
-
-    //     // Notify Blazor that the state has changed
-    //     InvokeAsync(StateHasChanged);
-    // }
-
-
-    #region ERROR TRAPPING
-    string _message = string.Empty;
-    Severity _severity;
-    private bool _showAlert = false;
-    public void CloseMe() => _showAlert = false;
-    #endregion
-}

@@ -4,32 +4,32 @@ using System.Data;
 
 namespace HrisApp.Client.Pages.Dialog.Employee
 {
+#nullable disable
+
     public partial class UploadFileDialog : ComponentBase
     {
-#nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
         private string Filename = string.Empty;
         private bool _processing = false;
         private bool _processingSave = false;
 
-        List<EmployeeT> EmployeeList = new List<EmployeeT>();
-        List<DepartmentT> DepartmentList = new List<DepartmentT>();
-        List<AreaT> AreaList = new();
-        List<DivisionT> DivisionList = new();
-        List<SectionT> SectionList = new();
-        List<GenderT> GenderList = new();
-        List<CivilStatusT> CivilStatusList = new();
-        List<ReligionT> ReligionList = new();
-        List<StatusT> StatusList = new();
-        List<EmploymentStatusT> EmploymentStatusList = new();
-        List<RateTypeT> RateTypeList = new();
-        List<CashBondT> CashBondList = new();
-        List<EmerRelationshipT> EmerRelationshipList = new();
-        List<SubPositionT> SubPositionList = new();
+        private List<EmployeeT> EmployeeList = new();
+        private List<DepartmentT> DepartmentList = new();
+        private List<AreaT> AreaList = new();
+        private List<DivisionT> DivisionList = new();
+        private List<SectionT> SectionList = new();
+        private List<GenderT> GenderList = new();
+        private List<CivilStatusT> CivilStatusList = new();
+        private List<ReligionT> ReligionList = new();
+        private List<StatusT> StatusList = new();
+        private List<EmploymentStatusT> EmploymentStatusList = new();
+        private List<RateTypeT> RateTypeList = new();
+        private List<CashBondT> CashBondList = new();
+        private List<EmerRelationshipT> EmerRelationshipList = new();
+        private List<SubPositionT> SubPositionList = new();
 
-        public DataTable dtable = new DataTable();
-
+        public DataTable dtable = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -58,7 +58,6 @@ namespace HrisApp.Client.Pages.Dialog.Employee
             EmerRelationshipList = StaticService.EmerRelationshipTs;
             await PositionService.GetSubPosition();
             SubPositionList = PositionService.SubPositionTs.Where(e => e.Status != "Active").ToList();
-
         }
 
         private async Task OnUploadFile()
@@ -113,7 +112,6 @@ namespace HrisApp.Client.Pages.Dialog.Employee
                 return;
             }
         }
-
 
         private async Task OnImportExcel(InputFileChangeEventArgs e)
         {
@@ -182,7 +180,7 @@ namespace HrisApp.Client.Pages.Dialog.Employee
             _processing = true;
             var fileBytes = await _export.DownloadEmpTemplate(DepartmentList, AreaList, DivisionList, SectionList, GenderList, CivilStatusList, ReligionList, StatusList, EmploymentStatusList, RateTypeList, CashBondList, EmerRelationshipList, SubPositionList);
             var fileName = $"EmployeeDataTemplate.xlsx";
-            await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+            await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
             _processing = false;
         }
 
@@ -194,6 +192,6 @@ namespace HrisApp.Client.Pages.Dialog.Employee
             Filename = string.Empty;
         }
 
-        void Cancel() => MudDialog.Cancel();
+        private void Cancel() => MudDialog.Cancel();
     }
 }

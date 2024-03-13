@@ -1,28 +1,31 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Education
+﻿namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
+
     public partial class EmployeeSHS : ComponentBase
     {
         //TABLEEES
-        List<Emp_SeniorHST> shsList = new List<Emp_SeniorHST>();
+        private List<Emp_SeniorHST> shsList = new();
+
         private Emp_SeniorHST selectedItem1 = null;
 
         //END FOR TABLES
 
-        private Emp_SeniorHST senior = new Emp_SeniorHST();
+        private Emp_SeniorHST senior = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool SeniorOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool SeniorOpen;
+        private Anchor anchor;
+        private readonly string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
-            SeniorOpen = (drawerx == "SeniorOpen") ? true : false;
+            SeniorOpen = (drawerx == "SeniorOpen");
             this.anchor = anchor;
         }
+
         protected async Task SaveSenior()
         {
             senior.Verify_Id = VerifyCode;
@@ -34,7 +37,6 @@ namespace HrisApp.Client.Pages.Education
             senior.ShsSchoolYear = "";
             shsList = await EducationService.GetSeniorHSlist(VerifyCode);
             SeniorOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -49,7 +51,7 @@ namespace HrisApp.Client.Pages.Education
             }
         }
 
-        async Task DeleteSenior(int id)
+        private async Task DeleteSenior(int id)
         {
             await EducationService.DeleteSHS(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

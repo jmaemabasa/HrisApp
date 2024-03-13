@@ -1,8 +1,9 @@
 ﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
+#nullable disable
+
     public partial class UpdatePositionDialog : Microsoft.AspNetCore.Components.ComponentBase
     {
-#nullable disable
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
         [Parameter]

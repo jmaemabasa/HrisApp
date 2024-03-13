@@ -38,7 +38,6 @@
     width: 617px;
 }
 
-
 ::deep .btnedit {
     color: #27374D;
 }
@@ -46,7 +45,6 @@
     ::deep .btnedit:hover {
         transform: scale(1.1);
     }
-
 
 ::deep .btnadd {
     border: none;

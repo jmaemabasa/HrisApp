@@ -163,7 +163,7 @@
                 <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
                 <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
                 <MudTd DataLabel="Status" Style="text-align: center;">
-                    <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
+                    <MudChip Class="@StatusChipColor(employeeee.Status?.Name!)">@employeeee.Status?.Name</MudChip>
                 </MudTd>
                 @*<MudTd>
             <AuthorizeView Roles="SysAdmin, GenAdmin, HR">

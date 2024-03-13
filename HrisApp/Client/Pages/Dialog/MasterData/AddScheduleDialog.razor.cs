@@ -1,15 +1,15 @@
 ﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
+#nullable disable
+
     public partial class AddScheduleDialog : ComponentBase
     {
-#nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         private string newSchedule = "";
         private string timein = "";
         private string timeout = "";
 
-        void Cancel() => MudDialog.Cancel();
-
+        private void Cancel() => MudDialog.Cancel();
 
         private async Task ConfirmCreateSchedule()
         {
@@ -51,6 +51,7 @@
                 }
             }
         }
+
         //    private async Task ShowErrorMessageBox(string mess)
         //    {
         //        bool? result = await _dialogService.ShowMessageBox(

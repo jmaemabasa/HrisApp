@@ -1,9 +1,9 @@
 ﻿using HrisApp.Client.Pages.Dialog.Attendance;
 
-namespace HrisApp.Client.Pages.User.Leave
-{
 #nullable disable
 
+namespace HrisApp.Client.Pages.User.Leave
+{
     public partial class UserLeave : ComponentBase
     {
         private Emp_LeaveCreditT empLeaveCred = new();
@@ -214,20 +214,14 @@ namespace HrisApp.Client.Pages.User.Leave
 
         private int GetStatusOrder(string status)
         {
-            switch (status.ToLowerInvariant())
+            return status.ToLowerInvariant() switch
             {
-                case "pending":
-                    return 1;
-
-                case "approved":
-                    return 2;
-
-                case "rejected":
-                    return 3;
+                "pending" => 1,
+                "approved" => 2,
+                "rejected" => 3,
                 // Add more cases if needed
-                default:
-                    return int.MaxValue; // Any other status is placed at the end
-            }
+                _ => int.MaxValue,// Any other status is placed at the end
+            };
         }
 
         #endregion FUNCTIONS

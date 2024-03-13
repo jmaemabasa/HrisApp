@@ -1,16 +1,5 @@
 ﻿@page "/employee"
-@inject IToastService _toastService
-@inject SweetAlertService Swal
-@inject IJSRuntime JSRuntime
-@* @inject EmployeeVM _employeeVM *@
 @inject DTOEmployeeExport _crrExport
-@inject IEmployeeService EmployeeService
-@inject IStaticService StaticService
-@inject IDivisionService DivisionService
-@inject IPositionService PositionService
-@inject IDialogService DialogService
-@inject NavigationManager _navigationManager
-@inject StateService StateService
 
 @attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR, Technical")]
 
@@ -192,7 +181,7 @@
                     <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>
                     <MudTd DataLabel="Date Hired">@employeeee.DateHired.ToString("MM/dd/yyyy")</MudTd>
                     <MudTd DataLabel="Status" Style="text-align: center;">
-                        <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
+                        <MudChip Class="@StatusChipColor(employeeee.Status?.Name!)">@employeeee.Status?.Name</MudChip>
                     </MudTd>
                     <MudTd>
                         <AuthorizeView Roles="SysAdmin, GenAdmin, HR, Technical">
@@ -252,7 +241,7 @@
             await Task.Delay(2000);
             var fileBytes = await _crrExport.createExcelPackage(_employeeList, CmbStatusText, daterange, SubPositionsL);
             var fileName = $"EmployeesHired{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
-            await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+            await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
             _processing = false;
 
         }

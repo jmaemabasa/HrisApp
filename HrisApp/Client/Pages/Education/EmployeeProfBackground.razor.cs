@@ -1,26 +1,32 @@
 ﻿namespace HrisApp.Client.Pages.Education
 {
+#nullable disable
+
     public partial class EmployeeProfBackground : ComponentBase
     {
         //TABLEEES
-        List<Emp_ProfBackgroundT> _profBgListt = new List<Emp_ProfBackgroundT>();
+        private List<Emp_ProfBackgroundT> _profBgListt = new();
+
         private Emp_ProfBackgroundT _selectedItem1 = null;
 
         //END FOR TABLES
 
-        private Emp_ProfBackgroundT profBg = new Emp_ProfBackgroundT();
+        private readonly Emp_ProfBackgroundT profBg = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool ProfBgOpen
-            ;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool ProfBgOpen;
+
+        private Anchor anchor;
+        private readonly string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor)
         {
             ProfBgOpen = true;
             this.anchor = anchor;
         }
+
         protected async Task SaveBg()
         {
             profBg.Verify_Id = VerifyCode;
@@ -34,7 +40,6 @@
             profBg.RSLeaving = "";
             _profBgListt = await LicenseTrainingService.GetProfBglist(VerifyCode);
             ProfBgOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -49,7 +54,7 @@
             }
         }
 
-        async Task DeleteProfbg(int id)
+        private async Task DeleteProfbg(int id)
         {
             await LicenseTrainingService.DeleteProfBg(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

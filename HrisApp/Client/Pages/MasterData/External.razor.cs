@@ -1,5 +1,7 @@
 ﻿namespace HrisApp.Client.Pages.MasterData
 {
+#nullable disable
+
     public partial class External : ComponentBase
     {
         protected override async Task OnInitializedAsync()
@@ -14,7 +16,6 @@
                 {
                     OpenOverlay();
                 }
-
             }
             catch (Exception ex)
             {
@@ -35,10 +36,11 @@
             StateHasChanged();
         }
 
-
         #region table
+
         //LOADING
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = false;
@@ -49,10 +51,10 @@
 
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<PosMPExternalT> externalList = new();
+        private List<PosMPExternalT> externalList = new();
         private PosMPExternalT selectedItem1 = null;
-        private HashSet<PosMPExternalT> selectedItems = new();
 
         private bool FilterFunc1(PosMPExternalT obj) => FilterFunc(obj, searchString1);
 
@@ -64,6 +66,7 @@
                 return true;
             return false;
         }
+
         //END FOR TABLES
 
         //OPEN DIALOGS
@@ -83,6 +86,7 @@
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddExternalDialog>("New", options);
         }
-        #endregion
+
+        #endregion table
     }
 }

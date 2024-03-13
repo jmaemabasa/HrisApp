@@ -39,7 +39,7 @@ namespace HrisApp.Client.Pages.Account
             StateHasChanged();
         }
 
-        private static string userstatusclass(string status)
+        private static string Userstatusclass(string status)
         {
             return status switch
             {
@@ -52,12 +52,11 @@ namespace HrisApp.Client.Pages.Account
         private void ShowLogs(int id) => NavigationManager.NavigateTo($"/account/logs/{id}");
 
         //TABLEEES
-        private string infoFormat = "{first_item}-{last_item} of {all_items}";
+        private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
 
         private string searchString1 = "";
         private List<UserMasterT> userList = new();
-        private UserMasterT selectedItem1 = null;
-        private HashSet<UserMasterT> selectedItems = new();
+        private UserMasterT selectedItem1 = null!;
 
         private bool FilterFunc1(UserMasterT user) => FilterFunc(user, searchString1);
 

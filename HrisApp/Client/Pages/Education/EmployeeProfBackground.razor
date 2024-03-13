@@ -1,8 +1,4 @@
 ﻿@page "/employeeprofbg"
-@inject ILicenseTrainingService LicenseTrainingService
-@inject NavigationManager NavigationManager
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
 
 <style>
     .stable {
@@ -68,7 +64,7 @@
         <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
                 <MudTooltip Text="Add">
-                    <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Size="Size.Small">Add Information</MudButton>
+                    <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End))" Size="Size.Small">Add Information</MudButton>
                 </MudTooltip>
             </Authorized>
         </AuthorizeView>
@@ -84,7 +80,7 @@ else
                 <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Add">
-                            <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Size="Size.Small">Add Information</MudButton>
+                            <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End))" Size="Size.Small">Add Information</MudButton>
                         </MudTooltip>
                     </Authorized>
                 </AuthorizeView>

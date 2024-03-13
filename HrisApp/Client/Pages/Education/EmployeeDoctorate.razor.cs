@@ -1,25 +1,27 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Education
+﻿namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
+
     public partial class EmployeeDoctorate : ComponentBase
     {
-        List<Emp_DoctorateT> doctorateList = new List<Emp_DoctorateT>();
+        private List<Emp_DoctorateT> doctorateList = new();
         private Emp_DoctorateT selectedItem1 = null;
 
-        private Emp_DoctorateT doctorate = new Emp_DoctorateT();
+        private Emp_DoctorateT doctorate = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool DoctorateOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool DoctorateOpen;
+        private Anchor anchor;
+        private readonly string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
-            DoctorateOpen = (drawerx == "DoctorateOpen") ? true : false;
+            DoctorateOpen = (drawerx == "DoctorateOpen");
             this.anchor = anchor;
         }
+
         protected async Task SaveCollege()
         {
             doctorate.Verify_Id = VerifyCode;
@@ -32,7 +34,6 @@ namespace HrisApp.Client.Pages.Education
             doctorate.DocSchoolYear = "";
             doctorateList = await EducationService.GetDoctoratelist(VerifyCode);
             DoctorateOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -47,7 +48,7 @@ namespace HrisApp.Client.Pages.Education
             }
         }
 
-        async Task DeleteDoc(int id)
+        private async Task DeleteDoc(int id)
         {
             await EducationService.DeleteDoctorate(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

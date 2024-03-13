@@ -1,21 +1,18 @@
-﻿using Newtonsoft.Json;
-using System.Threading;
-
-namespace HrisApp.Client.Pages.Dialog.MasterData
+﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
+#nullable disable
+
     public partial class UpdateScheduleDialog : ComponentBase
     {
-#nullable disable
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
         [Parameter]
         public int Id { get; set; }
-
 
         //private ScheduleTypeT schedule = null;
         private ScheduleTypeT schedule = new();
 
-        void Cancel() => MudDialog.Cancel();
-
+        private void Cancel() => MudDialog.Cancel();
 
         protected override async Task OnParametersSetAsync()
         {
@@ -23,7 +20,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             schedule = await ScheduleService.GetSingleSchedule(Id);
         }
 
-        async Task UpdateArea()
+        private async Task UpdateArea()
         {
             if (schedule == null)
                 return;

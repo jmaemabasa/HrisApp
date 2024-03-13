@@ -1,11 +1,5 @@
 ﻿@layout AccountListLayout
 @page "/usermasterlist"
-@inject IAuthService AuthService
-@inject IDialogService DialogService
-@inject IAreaService AreaService
-@inject StateService StateService
-@inject IToastService _toastService
-@inject IEmployeeService EmployeeService
 <main class="container">
     <MudGrid>
         <MudItem xs="12">
@@ -18,34 +12,34 @@
                 <ToolBarContent>
                     <div class="w-25">
                         <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
-                     </div>
+                    </div>
 
                     <MudSpacer />
-                     <MudButton OnClick="OpenAddUser" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add User</MudButton>
+                    <MudButton OnClick="OpenAddUser" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd">Add User</MudButton>
 
-                   
-                 </ToolBarContent>
-                 <HeaderContent>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Fullname</MudTh>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Department</MudTh>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
-                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
-                 </HeaderContent>
-                 <RowTemplate>
-                     <MudTd DataLabel="">
-                         @foreach (var emp in employeeList)
-                         {
+
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Fullname</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Department</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Status</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="">
+                        @foreach (var emp in employeeList)
+                        {
                             if (emp.Id == user.EmployeeId)
                             {
                                 @($"{emp.FirstName} {emp.LastName}")
                             }
-                         }
-                     </MudTd>
-                     <MudTd DataLabel="">@user.Username</MudTd>
-                     <MudTd DataLabel="">@user.Role</MudTd>
-                     <MudTd DataLabel="">
+                        }
+                    </MudTd>
+                    <MudTd DataLabel="">@user.Username</MudTd>
+                    <MudTd DataLabel="">@user.Role</MudTd>
+                    <MudTd DataLabel="">
                         @foreach (var emp in employeeList)
                         {
                             if (emp.Id == user.EmployeeId)
@@ -53,26 +47,26 @@
                                 @emp.Department?.Name
                             }
                         }
-                     </MudTd>
+                    </MudTd>
                     <MudTd DataLabel="">
                         <div class="d-flex justify-content-center">
                             <div class="@userstatusclass(user.LoginStatus)">
                             </div>
                         </div>
-                       
-                     </MudTd>
-                     <MudTd>
-                     </MudTd>
-                 </RowTemplate>
-                 <PagerContent>
-                     <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-                 </PagerContent>
-             </MudTable>
+
+                    </MudTd>
+                    <MudTd>
+                    </MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                </PagerContent>
+            </MudTable>
         </MudItem>
     </MudGrid>
 </main>
 
- @code {
+@code {
     List<AreaT> areaList = new();
     List<EmployeeT> employeeList = new();
 

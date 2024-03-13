@@ -1,9 +1,12 @@
 ﻿namespace HrisApp.Client.Pages.MasterData
 {
+#nullable disable
+
     public partial class Department : ComponentBase
     {
         private List<DepartmentT> Departments = new();
         private List<DivisionT> Divisions = new();
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -36,6 +39,7 @@
         }
 
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = true;
@@ -45,10 +49,11 @@
         }
 
         #region TABLES
+
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<DepartmentT> departmentList = new();
-        private DepartmentT? selectedItem1 = null;
+        private List<DepartmentT> departmentList = new();
+        private DepartmentT selectedItem1 = null;
         private readonly HashSet<DepartmentT> selectedItems = new();
 
         private bool FilterFunc1(DepartmentT department) => FilterFunc(department, searchString1);
@@ -78,11 +83,12 @@
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<UpdateDepartmentDialog>("Update Department", parameters, options);
         }
-        #endregion
+
+        #endregion TABLES
 
         #region Search Text Box
 
-        private async Task searchh(int div)
+        private async Task Searchh(int div)
         {
             await Task.Delay(10);
             if (div == 0)
@@ -94,8 +100,8 @@
             {
                 departmentList = await DepartmentService.GetDeptByDivision(div);
             }
-
         }
-        #endregion
+
+        #endregion Search Text Box
     }
 }

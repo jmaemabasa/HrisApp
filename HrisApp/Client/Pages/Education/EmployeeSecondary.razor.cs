@@ -1,28 +1,31 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Education
+﻿namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
+
     public partial class EmployeeSecondary : ComponentBase
     {
         //TABLEEES
-        List<Emp_SecondaryT> secondaryList = new List<Emp_SecondaryT>();
+        private List<Emp_SecondaryT> secondaryList = new();
+
         private Emp_SecondaryT selectedItem1 = null;
 
         //END FOR TABLES
 
-        private Emp_SecondaryT sec = new Emp_SecondaryT();
+        private Emp_SecondaryT sec = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool SecondaryOpen;
-        Anchor anchor;
-        string width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool SecondaryOpen;
+        private Anchor anchor;
+        private readonly string width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
-            SecondaryOpen = (drawerx == "SecondaryOpen") ? true : false;
+            SecondaryOpen = (drawerx == "SecondaryOpen");
             this.anchor = anchor;
         }
+
         protected async Task SaveSecondary()
         {
             sec.Verify_Id = VerifyCode;
@@ -34,7 +37,6 @@ namespace HrisApp.Client.Pages.Education
             sec.SecSchoolYear = "";
             secondaryList = await EducationService.GetSecondarylist(VerifyCode);
             SecondaryOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -49,7 +51,7 @@ namespace HrisApp.Client.Pages.Education
             }
         }
 
-        async Task DeleteSecondary(int id)
+        private async Task DeleteSecondary(int id)
         {
             await EducationService.DeleteSecondary(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

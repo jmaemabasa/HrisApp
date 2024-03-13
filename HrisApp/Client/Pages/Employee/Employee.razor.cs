@@ -1,5 +1,7 @@
 ﻿namespace HrisApp.Client.Pages.Employee
 {
+#nullable disable
+
     public partial class Employee : ComponentBase
     {
         public readonly string _infoFormat = "{first_item}-{last_item} of {all_items}";
@@ -33,7 +35,7 @@
 
                 #region for DASHBOARD
 
-                var uri = new Uri(_navigationManager.Uri);
+                var uri = new Uri(NavigationManager.Uri);
                 var statusFilterString = uri.Query.Split('=').LastOrDefault();
                 if (statusFilterString?.ToLower() == "inactive")
                 {
@@ -410,7 +412,7 @@
             }
         }
 
-        public void EmpDateRangeChange(DateRange? dateRange)
+        public void EmpDateRangeChange(DateRange dateRange)
         {
             _dateRange = dateRange;
             CmbDaateHiredText = _dateRange?.Start?.ToString("MM/dd/yyyy") + " - " + _dateRange?.End?.ToString("MM/dd/yyyy");
@@ -477,9 +479,9 @@
 
         #region FUNCTIONS / METHODS
 
-        public void CreateNewEmployee() => _navigationManager.NavigateTo("/employee/add");
+        public void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");
 
-        public void ShowEmployee(int id) => _navigationManager.NavigateTo($"/employee/edit/{id}");
+        public void ShowEmployee(int id) => NavigationManager.NavigateTo($"/employee/edit/{id}");
 
         private void OpenUploadDialog()
         {
@@ -492,7 +494,7 @@
             await EmployeeService.DeleteEmployee(id);
         }
 
-        public string StatusChipColor(string status)
+        public static string StatusChipColor(string status)
         {
             return status switch
             {
@@ -517,7 +519,7 @@
             StateHasChanged();
         }
 
-        public string CapitalizeFirstLetter(string input)
+        public static string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))
             {

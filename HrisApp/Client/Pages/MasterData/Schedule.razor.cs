@@ -1,9 +1,9 @@
 ﻿namespace HrisApp.Client.Pages.MasterData
 {
-    public partial class Schedule : ComponentBase
-    {
 #nullable disable
 
+    public partial class Schedule : ComponentBase
+    {
         protected override async Task OnInitializedAsync()
         {
             try
@@ -14,9 +14,7 @@
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex);
-
             }
         }
 
@@ -34,8 +32,10 @@
         }
 
         #region function
+
         //LOADING
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = true;
@@ -46,10 +46,10 @@
 
         //TABLEEES
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<ScheduleTypeT> scheduleList = new();
+        private List<ScheduleTypeT> scheduleList = new();
         private ScheduleTypeT selectedItem1 = null;
-        private readonly HashSet<ScheduleTypeT> selectedItems = new();
 
         private bool FilterFunc1(ScheduleTypeT items) => FilterFunc(items, searchString1);
 
@@ -61,6 +61,7 @@
                 return true;
             return false;
         }
+
         //END FOR TABLES
 
         //OPEN DIALOGS
@@ -80,6 +81,7 @@
             var options = new DialogOptions { CloseOnEscapeKey = true };
             DialogService.Show<AddScheduleDialog>("New Schedule", options);
         }
-        #endregion
+
+        #endregion function
     }
 }

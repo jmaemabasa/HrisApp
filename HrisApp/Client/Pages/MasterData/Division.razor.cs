@@ -2,8 +2,6 @@
 {
     public partial class Division : ComponentBase
     {
-        private DivisionT divisions = new();
-
         protected override async Task OnInitializedAsync()
         {
             try
@@ -31,10 +29,11 @@
             StateHasChanged();
         }
 
-
         #region table
+
         //LOADING
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = true;
@@ -45,8 +44,9 @@
 
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<DivisionT> divisionList = new();
+        private List<DivisionT> divisionList = new();
         private DivisionT selectedItem1 = null;
         private HashSet<DivisionT> selectedItems = new();
 
@@ -60,6 +60,7 @@
                 return true;
             return false;
         }
+
         //END FOR TABLES
 
         //OPEN DIALOGS
@@ -79,6 +80,7 @@
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<AddDivisionDialog>("New Division", options);
         }
-        #endregion
+
+        #endregion table
     }
 }

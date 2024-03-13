@@ -1,17 +1,4 @@
 ﻿@page "/nnn"
-@inject HttpClient Http
-@inject AuthenticationStateProvider AuthStateProvider
-@inject ILocalStorageService LocalStorage
-@inject IAuthService AuthService
-@inject IUserRoleService UserRoleService
-@inject IAuditlogService AuditlogService
-@inject SweetAlertService Swal
-@inject StateService StateService
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-@inject IEmployeeService EmployeeService
-@inject IDivisionService DivisionService
-@inject IDepartmentService DepartmentService
 
 <main>
     <div style="text-align: center; margin-bottom: 10px;">
@@ -41,9 +28,9 @@
                 {
                     <MudSelect @bind-Value="deptvar" Variant="Variant.Outlined" Margin="Margin.Dense">
                         <MudSelectItem Value=0
-                                                      Disabled>---Select Department---</MudSelectItem>
+                                       Disabled>---Select Department---</MudSelectItem>
 
-                     @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == divvar))
+                        @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == divvar))
                         {
                             <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                         }
@@ -53,8 +40,8 @@
                 else
                 {
                     <MudSelect @bind-Value="deptvar" Disabled Variant="Variant.Outlined" Margin="Margin.Dense">
-                         <MudSelectItem Value=0 Disabled>---Select Department---</MudSelectItem>
-                 </MudSelect>
+                        <MudSelectItem Value=0 Disabled>---Select Department---</MudSelectItem>
+                    </MudSelect>
                 }
             </div>
             <div class="flex-grow-1 mb-2">
@@ -63,9 +50,9 @@
                 {
                     <MudSelect Class="" @bind-Value="reg.EmployeeId" Variant="Variant.Outlined" Margin="Margin.Dense">
                         <MudSelectItem Value="0"
-                                                      Disabled>---Select Employee---</MudSelectItem>
+                                       Disabled>---Select Employee---</MudSelectItem>
 
-                     @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar && d.StatusId ==1))
+                        @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar && d.StatusId == 1))
                         {
                             <MudSelectItem Value="@emp.Id">@emp.FirstName @emp.LastName</MudSelectItem>
                         }
@@ -74,8 +61,8 @@
                 else
                 {
                     <MudSelect Class="" Disabled @bind-Value="reg.EmployeeId" Variant="Variant.Outlined" Margin="Margin.Dense">
-                         <MudSelectItem Value="0" bled>---Select Employee---</MudSelectItem>
-                     </MudSelect>
+                        <MudSelectItem Value="0" bled>---Select Employee---</MudSelectItem>
+                    </MudSelect>
                 }
             </div>
             <div class="flex-grow-1 mb-2">

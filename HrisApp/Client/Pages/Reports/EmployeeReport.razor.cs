@@ -5,12 +5,12 @@
         public readonly string _infoFormat = "{first_item}-{last_item} of {all_items}";
         public string _searchString1 = "";
         public List<EmployeeT> _employeeList = new();
-        public EmployeeT _selectedItem1 = null;
+        public EmployeeT _selectedItem1 = null!;
         public List<StatusT> StatusL = new();
         public List<DivisionT> DivisionsL = new();
         public List<SubPositionT> SubPositionsL = new();
 
-        public MudDateRangePicker _picker;
+        public MudDateRangePicker? _picker;
         public DateRange _dateRange = new();
 
         private bool _processing = false;
@@ -43,8 +43,8 @@
         {
             try
             {
-                string startdate = _dateRange?.Start?.ToString("MMM dd, yyyy");
-                string enddate = _dateRange?.End?.ToString("MMM dd, yyyy");
+                string startdate = _dateRange?.Start?.ToString("MMM dd, yyyy")!;
+                string enddate = _dateRange?.End?.ToString("MMM dd, yyyy")!;
                 string daterange;
                 if (startdate == null && enddate == null)
                 {
@@ -64,7 +64,7 @@
                 _processing = true;
                 await Task.Delay(2000);
                 var fileBytes = await _crrExport.createExcelHeadcount(_employeeList, daterange, SubPositionsL);
-                var fileName = $"SSDIEmployees{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
+                var fileName = $"SSDIEmployees{DateTime.Now:yyyy-MM-dd}.xlsx";
                 await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
                 _processing = false;
             }
@@ -130,7 +130,7 @@
                 case "lastyear":
                     CmbDateActiveText = "Last Year";
                     _isOpen = false;
-                    DateTime startOfLastYear = new DateTime(today.Year - 1, 1, 1);
+                    DateTime startOfLastYear = new(today.Year - 1, 1, 1);
                     DateTime endOfLastYear = startOfLastYear.AddYears(1).AddDays(-1);
                     _dateRange.Start = startOfLastYear;
                     _dateRange.End = endOfLastYear;
@@ -369,9 +369,9 @@
                 return true;
             if (emp.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (emp.Division.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (emp.Division!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (emp.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (emp.Department!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (emp.DateHired.ToString("MM/dd/yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;

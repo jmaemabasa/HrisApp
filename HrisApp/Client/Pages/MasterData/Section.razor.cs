@@ -1,5 +1,7 @@
 ﻿namespace HrisApp.Client.Pages.MasterData
 {
+#nullable disable
+
     public partial class Section : ComponentBase
     {
         private List<DepartmentT> Departments = new();
@@ -38,7 +40,6 @@
             StateHasChanged();
         }
 
-
         private void OpenAddSection()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
@@ -57,6 +58,7 @@
         }
 
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = false;
@@ -67,8 +69,9 @@
 
         //TABLEEES
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<SectionT> sectionList = new();
+        private List<SectionT> sectionList = new();
 
         private SectionT selectedItem1 = null;
 
@@ -82,13 +85,13 @@
                 return true;
             return false;
         }
-        //END FOR TABLES
 
+        //END FOR TABLES
 
         //DROPDOWN SEARCH LIST
         private int divdd;
 
-        private async Task searchh(int div)
+        private async Task Searchh(int div)
         {
             await Task.Delay(10);
             if (div == 0)
@@ -108,7 +111,8 @@
                 OpenOverlay();
             }
         }
-        private async Task searchh1(int dep)
+
+        private async Task Searchh1(int dep)
         {
             await Task.Delay(10);
             if (dep == 0)

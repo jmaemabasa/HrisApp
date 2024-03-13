@@ -1,13 +1,13 @@
 ﻿namespace HrisApp.Client.Pages.MasterData
 {
+#nullable disable
+
     public partial class Position : ComponentBase
     {
         private List<DepartmentT> Departments = new();
         private List<DivisionT> Divisions = new();
         private List<SectionT> Sections = new();
-        private List<PositionT> Positions = new();
         private List<AreaT> Areas = new();
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -46,10 +46,9 @@
             StateHasChanged();
         }
 
-
         private void OpenAddPosition()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small};
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
             DialogService.Show<AddPositionDialog>("New Position", options);
         }
 
@@ -60,7 +59,7 @@
                 { x => x.Id, id }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader=true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
             DialogService.Show<ViewPositionDialog>("New Position", parameters, options);
         }
 
@@ -76,6 +75,7 @@
         }
 
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = false;
@@ -85,13 +85,14 @@
         }
 
         //TABLEEES
+
         #region Tables
+
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
         private string searchString1 = "";
-        List<PositionT> positionList = new();
+        private List<PositionT> positionList = new();
 
         private PositionT selectedItem1 = null;
-        private readonly HashSet<PositionT> selectedItems = new();
 
         private bool FilterFunc1(PositionT pos) => FilterFunc(pos, searchString1);
 
@@ -103,15 +104,17 @@
                 return true;
             return false;
         }
+
         //END FOR TABLES
-        #endregion
+
+        #endregion Tables
 
         //DROPDOWN SEARCH LIST
         private int divdd;
-        private int depdd;
-        private int secdd;
 
-        private async Task searchh(int div)
+        private int depdd;
+
+        private async Task Searchh(int div)
         {
             if (div == 0)
             {
@@ -134,7 +137,7 @@
             }
         }
 
-        private async Task searchh1(int dep)
+        private async Task Searchh1(int dep)
         {
             if (divdd != 0)
             {
@@ -159,27 +162,25 @@
             }
         }
 
-        private async Task searchh2(int sec)
+        private async Task Searchh2(int sec)
         {
             //if ang value sa section na dd kay dli 0, then i display tanan section sa department id
             if (sec == 0)
             {
                 await PositionService.GetPosition();
                 positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
-                secdd = sec;
             }
             else
             {
                 await PositionService.GetPosBySection(sec);
                 positionList = PositionService.PositionTs.Where(d => d.DepartmentId == depdd).ToList();
-
-                secdd = sec;
             }
             if (positionList == null || positionList.Count == 0)
             {
                 OpenOverlay();
             }
         }
-        //END DROPDOWN SEARCH   
+
+        //END DROPDOWN SEARCH
     }
 }

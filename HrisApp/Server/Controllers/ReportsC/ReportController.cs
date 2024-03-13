@@ -51,15 +51,14 @@ namespace HrisApp.Server.Controllers.ReportsC
             var sortedTraining = await _context.Emp_TrainingT.Where(x => x.Verify_Id == verid).OrderByDescending(x => x.TrainingDate).ToListAsync();
             var sortedPosHistory = await _context.Emp_PosHistoryT.Where(x => x.Verify_Id == verid).OrderByDescending(x => x.DateEnded).ToListAsync();
 
-            string agency = "";
+            string? agency = "";
             string biometricid = "";
 
             foreach (var item in sortedList)
             {
-                string subposcode = await _context.SubPositionT
-                    .Where(x => x.Id == item.PositionId).Select(x => x.PosCode).FirstOrDefaultAsync();
+                string? subposcode = await _context.SubPositionT.Where(x => x.Id == item.PositionId).Select(x => x.PosCode).FirstOrDefaultAsync();
 
-                int posMPExternalId = await _context.PositionT
+                int? posMPExternalId = await _context.PositionT
                    .Where(x => x.PosCode == subposcode)
                    .Select(x => x.PosMPExternalId)
                    .FirstOrDefaultAsync();
@@ -92,12 +91,16 @@ namespace HrisApp.Server.Controllers.ReportsC
             int extension = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{this._webHostEnvironment.WebRootPath}\\EmpDetails\\EmpDetails1.rdlc";
 
-            Dictionary<string, string> parameter = new();
-            parameter.Add("param", "RDLC Report in Balzor");
-            parameter.Add("datenow", DateTime.Now.ToString("dddd, MMM dd, yyyy"));
+            Dictionary<string, string> parameter = new()
+            {
+                { "param", "RDLC Report in Balzor" },
+                { "datenow", DateTime.Now.ToString("dddd, MMM dd, yyyy") }
+            };
 
-            LocalReport localReport = new();
-            localReport.ReportPath = path;
+            LocalReport localReport = new()
+            {
+                ReportPath = path
+            };
             localReport.DataSources.Add(new ReportDataSource("dsEmployeeT", dt));
             localReport.DataSources.Add(new ReportDataSource("dsEmp_PayrollT", dtpayroll));
             localReport.DataSources.Add(new ReportDataSource("dsAddressT", dtAddress));

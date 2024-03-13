@@ -1,11 +1,9 @@
-﻿using HrisApp.Client.Pages.MasterData;
-using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Dialog.MasterData
+﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
+#nullable disable
+
     public partial class UpdateSectionDialog : ComponentBase
     {
-#nullable disable
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
         [Parameter]

@@ -46,30 +46,30 @@ else
                 </div>
             </ToolBarContent>
             <HeaderContent>
-                 <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
-                     <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ScheduleTypeT, object>(x=>x.Name)">
-                         Schedule Type
-                     </MudTableSortLabel>
-                 </MudTh>
-                 <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time-in</MudTh>
-                 <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time-out</MudTh>
-                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ScheduleTypeT, object>(x=>x.Name)">
+                        Schedule Type
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time-in</MudTh>
+                <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time-out</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="">@schedules.Name</MudTd>
                 <MudTd DataLabel="">@schedules.TimeIn</MudTd>
                 <MudTd DataLabel="">@schedules.TimeOut</MudTd>
                 <MudTd>
-                     <AuthorizeView Roles="SysAdmin, GenAdmin">
-                         <Authorized>
-                             <MudTooltip Text="Update">
-                                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                             </MudTooltip>
-                         </Authorized>
-                         <NotAuthorized>
-                             <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                         </NotAuthorized>
-                     </AuthorizeView>
+                    <AuthorizeView Roles="SysAdmin, GenAdmin">
+                        <Authorized>
+                            <MudTooltip Text="Update">
+                                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            </MudTooltip>
+                        </Authorized>
+                        <NotAuthorized>
+                            <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </MudTd>
 
             </RowTemplate>

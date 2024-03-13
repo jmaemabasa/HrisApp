@@ -1,7 +1,4 @@
-﻿@inject ILeaveHistoryService LeaveHistoryService
-@inject StateService StateService
-
-<style>
+﻿<style>
     .divsingledetails {
         background-color: #424242;
         padding: 7px 15px 7px 15px;
@@ -58,7 +55,7 @@
                         }
                     </div>
                 </Authorized>
-             </AuthorizeView>
+            </AuthorizeView>
             <AuthorizeView Roles="System Administrator">
                 <Authorized>
                     <div class="divsingledetails mb-2" style="background-color: #C1D4CD">
@@ -69,7 +66,7 @@
                                 <MudIconButton Style="color: #fafaf5" OnClick="OpenDropDownlist" hidden="@(isUpdateStatus ? true : false)" Icon="@Icons.Material.Rounded.Edit" Size="Size.Small" aria-label="Edit"></MudIconButton>
                             }
                         </div>
-                        
+
                         @if (isUpdateStatus)
                         {
                             <div class="d-flex gap-2">
@@ -106,7 +103,7 @@
 
 
 @code {
-    #nullable disable
+#nullable disable
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Parameter]
     public int Id { get; set; }

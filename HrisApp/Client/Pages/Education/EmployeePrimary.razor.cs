@@ -1,28 +1,31 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Education
+﻿namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
+
     public partial class EmployeePrimary : ComponentBase
     {
         //TABLEEES
-        List<Emp_PrimaryT> primaryList = new List<Emp_PrimaryT>();
+        private List<Emp_PrimaryT> primaryList = new();
+
         private Emp_PrimaryT selectedItem1 = null;
 
         //END FOR TABLES
 
-        private Emp_PrimaryT _pri = new Emp_PrimaryT();
+        private Emp_PrimaryT _pri = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool _primaryOpen;
-        Anchor _anchor;
-        string _width = "500px", height = "100%";
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private bool _primaryOpen;
+        private Anchor _anchor;
+        private readonly string _width = "500px", height = "100%";
+
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
-            _primaryOpen = (drawerx == "PrimaryOpen") ? true : false;
+            _primaryOpen = (drawerx == "PrimaryOpen");
             this._anchor = anchor;
         }
+
         protected async Task SavePrimary()
         {
             _pri.Verify_Id = VerifyCode;
@@ -48,7 +51,7 @@ namespace HrisApp.Client.Pages.Education
             }
         }
 
-        async Task DeletePrimary(int id)
+        private async Task DeletePrimary(int id)
         {
             await EducationService.DeletePrimary(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

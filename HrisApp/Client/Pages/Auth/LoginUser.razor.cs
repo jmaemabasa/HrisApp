@@ -26,7 +26,7 @@
             try
             {
                 await LocalStorage.RemoveItemAsync("token");
-                await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                await AuthStateProvider.GetAuthenticationStateAsync();
 
                 var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
                 if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
@@ -68,7 +68,7 @@
                         _message = string.Empty;
 
                         await LocalStorage.SetItemAsync("token", result.Data);
-                        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                        await AuthStateProvider.GetAuthenticationStateAsync();
 
                         await Task.Delay(500);
 

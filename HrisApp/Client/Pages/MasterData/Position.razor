@@ -19,7 +19,7 @@
         <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
             <div class="d-flex gap-3 flex-grow-1 flex-wrap">
                 <MudItem xs="12" lg="3">
-                    <MudSelect class="dddiv" T="int" ValueChanged="searchh" Margin="Margin.Dense" DisableUnderLine>
+                    <MudSelect class="dddiv" T="int" ValueChanged="Searchh" Margin="Margin.Dense" DisableUnderLine>
                         <MudSelectItem Value=0>All Division</MudSelectItem>
                         @foreach (var div in Divisions)
                         {
@@ -30,9 +30,9 @@
                 @if (divdd != 0)
                 {
                     <MudItem xs="12" lg="3">
-                        <MudSelect class="dddiv" T="int" ValueChanged="searchh1" Margin="Margin.Dense" DisableUnderLine>
-                        <MudSelectItem Value=0>All Departments</MudSelectItem>
-                        @foreach (var dep in Departments.Where(d => d.DivisionId == divdd))
+                        <MudSelect class="dddiv" T="int" ValueChanged="Searchh1" Margin="Margin.Dense" DisableUnderLine>
+                            <MudSelectItem Value=0>All Departments</MudSelectItem>
+                            @foreach (var dep in Departments.Where(d => d.DivisionId == divdd))
                             {
                                 <MudSelectItem Value="@dep.Id">@dep.Name</MudSelectItem>
                             }
@@ -43,9 +43,9 @@
                 @if (depdd != 0 && Sections.Any(d => d.DepartmentId == depdd))
                 {
                     <MudItem xs="12" lg="3">
-                        <MudSelect class="dddiv" T="int" ValueChanged="searchh2" Margin="Margin.Dense" DisableUnderLine>
-                        <MudSelectItem Value=0>All Sections</MudSelectItem>
-                        @foreach (var sec in Sections.Where(s => s.DepartmentId == depdd))
+                        <MudSelect class="dddiv" T="int" ValueChanged="Searchh2" Margin="Margin.Dense" DisableUnderLine>
+                            <MudSelectItem Value=0>All Sections</MudSelectItem>
+                            @foreach (var sec in Sections.Where(s => s.DepartmentId == depdd))
                             {
                                 <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
                             }
@@ -61,15 +61,15 @@
     </div>
     @if (positionList == null || positionList.Count == 0)
     {
-       <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
 
         <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@isVisible" />
         <MudCardContent hidden="@isVisible">
             <MudSkeleton Width="30%" Height="42px;" />
             <MudSkeleton Width="80%" />
-            <MudSkeleton Width= "100%" />
+            <MudSkeleton Width="100%" />
         </MudCardContent>
-        <MudCardActions hidden="@isVisible" >
+        <MudCardActions hidden="@isVisible">
             <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
             <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
         </MudCardActions>
@@ -84,7 +84,8 @@
     else
     {
         <MudTable Class="stable" Items="positionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<PositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-            <HeaderContent>                <MudTh Style="background: #e9ecef; font-size: 16px;">
+            <HeaderContent>
+                <MudTh Style="background: #e9ecef; font-size: 16px;">
                     <div class="d-flex justify-content-between">
                         <div class="ttitle">Division</div>
                         <div class="">
@@ -203,13 +204,13 @@
                         <NotAuthorized>
                             <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdatePosition(pos.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                         </NotAuthorized>
-                        </AuthorizeView>
-                        </MudTd>
+                    </AuthorizeView>
+                </MudTd>
 
-                    </RowTemplate>
-                    <PagerContent>
-                        <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-                    </PagerContent>
-                    </MudTable>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
     }
 </div>

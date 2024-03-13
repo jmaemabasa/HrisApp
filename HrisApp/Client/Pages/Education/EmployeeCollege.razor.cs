@@ -1,28 +1,30 @@
-﻿using Newtonsoft.Json;
-
-namespace HrisApp.Client.Pages.Education
+﻿namespace HrisApp.Client.Pages.Education
 {
 #nullable disable
+
     public partial class EmployeeCollege : ComponentBase
     {
         //TABLEEES
-        List<Emp_CollegeT> collegeList = new();
+        private List<Emp_CollegeT> collegeList = new();
+
         private Emp_CollegeT selectedItem1 = null;
 
         private readonly Emp_CollegeT college = new();
+
         [Parameter]
         public string VerifyCode { get; set; }
 
-        bool CollegeOpen;
-        Anchor anchor;
+        private bool CollegeOpen;
+        private Anchor anchor;
         private readonly string _width = "500px";
         private readonly string _height = "100%";
 
-        void OpenDrawer(Anchor anchor, string drawerx)
+        private void OpenDrawer(Anchor anchor, string drawerx)
         {
             CollegeOpen = (drawerx == "CollegeOpen");
             this.anchor = anchor;
         }
+
         protected async Task SaveCollege()
         {
             college.Verify_Id = VerifyCode;
@@ -34,7 +36,6 @@ namespace HrisApp.Client.Pages.Education
             college.CollSchoolYear = "";
             collegeList = await EducationService.GetCollegelist(VerifyCode);
             CollegeOpen = false;
-
         }
 
         protected override async Task OnParametersSetAsync()
@@ -49,7 +50,7 @@ namespace HrisApp.Client.Pages.Education
             }
         }
 
-        async Task DeleteCollege(int id)
+        private async Task DeleteCollege(int id)
         {
             await EducationService.DeleteCollege(id);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);

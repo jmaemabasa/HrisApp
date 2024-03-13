@@ -1,18 +1,19 @@
 ﻿namespace HrisApp.Client.Services.AuthService
 {
 #nullable disable
+
     public class AuthService : IAuthService
     {
         public HttpClient _httpClient;
         public readonly AuthenticationStateProvider _authStateProvider;
 
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new();
+
         public AuthService(/*AuthenticationStateProvider authStateProvider*/)
         {
             _httpClient = _mainService.Get_Http();
             //_authStateProvider = authStateProvider;
         }
-
 
         public List<UserMasterT> UserMasterTs { get; set; } = new List<UserMasterT>();
 

@@ -1,6 +1,4 @@
-﻿@inject IDialogService _dialogService
-
-<MudDialog>
+﻿<MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Rounded.Error" Color="Color.Error" Class="mr-3" /> Error!
@@ -10,14 +8,14 @@
         <span>@Mess</span>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel" >Close</MudButton>
+        <MudButton OnClick="Cancel">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
 @code {
-    #nullable disable
+#nullable disable
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-    [Parameter] 
+    [Parameter]
     public string Mess { get; set; }
 
     void Cancel() => MudDialog.Cancel();

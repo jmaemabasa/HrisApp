@@ -2,9 +2,10 @@
 
 namespace HrisApp.Client.Pages.Dialog.MasterData
 {
+#nullable disable
+
     public partial class AddPositionDialog : ComponentBase
     {
-#nullable disable
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
         private List<DepartmentT> Department = new();

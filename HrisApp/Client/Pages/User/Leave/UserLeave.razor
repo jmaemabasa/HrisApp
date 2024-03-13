@@ -1,22 +1,10 @@
 ﻿@page "/user/leave"
-@inject GlobalConfigService GlobalConfigService
-@inject IJSRuntime jsRuntime
-@inject IEmployeeService EmployeeService
-@inject ILeaveCredService LeaveCredService
-@inject ILeaveService LeaveService
-@inject ILeaveHistoryService LeaveHistoryService
-@inject IDialogService DialogService
-@inject StateService StateService
-@inject SweetAlertService Swal
-@inject NavigationManager navmanager
-@inject IAuditlogService AuditlogService
-@inject IToastService _toastService
 
-@attribute [Authorize(Roles = "System Administrator, HR, User")]
+@attribute [Authorize]
 <PageTitle>Leave Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-end align-items-center">
-        <AuthorizeView Roles="HR, System Administrator, User">
+        <AuthorizeView>
             <Authorized>
                 <div class="d-flex gap-3">
                     <MudButton OnClick="@(() => OpenDrawer(Anchor.End, "AddHistoryOpen"))" Variant="Variant.Filled" Size="Size.Medium" Style="background-color: #264494; color: #fafaf5;font-family: 'Poppins', sans-serif !important;" Class="btnadd">Request a Leave</MudButton>
@@ -133,7 +121,7 @@
 
                             </MudTd>
                             <MudTd>
-                                <AuthorizeView Roles="System Administrator, HR, User">
+                                <AuthorizeView>
                                     <Authorized>
                                         <MudTooltip Text="Details">
                                             <MudIconButton Class="btnedit" OnClick="@(() => OpenViewLeaveDetails(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
@@ -141,14 +129,14 @@
                                     </Authorized>
                                     <NotAuthorized>
                                         <MudIconButton Disabled Class="btnedit" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
-                                     </NotAuthorized>
-                                 </AuthorizeView>
-                             </MudTd>
-                         </RowTemplate>
-                         <PagerContent>
-                             <MudTablePager PageSizeOptions="new int[] { 5 }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-                         </PagerContent>
-                     </MudTable>
+                                    </NotAuthorized>
+                                </AuthorizeView>
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[] { 5 }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                        </PagerContent>
+                    </MudTable>
                 }
             </MudCardContent>
         </MudCard>
@@ -192,9 +180,3 @@
         </div>
     </div>
 </MudDrawer>
-
-@code {
-   
-
-
-}

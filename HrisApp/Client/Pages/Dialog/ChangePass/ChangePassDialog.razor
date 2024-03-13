@@ -1,16 +1,11 @@
-﻿@inject IAuthService AuthService
-@inject IAuditlogService AuditlogService
-@inject IToastService _toastService
-@inject GlobalConfigService GlobalConfigService
-
-<main>
+﻿<main>
     <div style="text-align: center; margin-bottom: 10px;">
         <span style="font-size: x-large;">Change Password</span>
     </div>
     <MudDivider DividerType="DividerType.Middle" Class="my-6" />
     <EditForm Model="cpass" OnValidSubmit="ChangePassword">
         <DataAnnotationsValidator />
-        <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">            
+        <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">
             <div class="flex-grow-1 mb-2">
                 <MudText Typo="Typo.body2">New Password</MudText>
                 <MudTextField @bind-Value="cpass.Password" For="@(() => cpass.Password)" Variant="Variant.Outlined" Margin="Margin.Dense" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
@@ -63,7 +58,7 @@
         }
     }
 
-   
+
 
     bool isShow;
     InputType PasswordInput = InputType.Password;

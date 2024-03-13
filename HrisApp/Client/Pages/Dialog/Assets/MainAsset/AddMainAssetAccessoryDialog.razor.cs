@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
+﻿namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 {
 #nullable disable
 
     public partial class AddMainAssetAccessoryDialog : ComponentBase
     {
-        [CascadingParameter] private MudDialogInstance? MudDialog { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public int Id { get; set; }
         [Parameter] public EventCallback OnAddSuccess { get; set; }
 
@@ -15,10 +13,8 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         private List<AssetSubCategoryT> SUBCAT = new();
 
         private AssetMasterT assetMaster = new();
-        private MainAssetAccessoriesT obj = new();
-        private AssetAccessHistoryT accHistoryObj = new();
-
-        private string selectedACC { get; set; } = "";
+        private readonly MainAssetAccessoriesT obj = new();
+        private readonly AssetAccessHistoryT accHistoryObj = new();
 
         protected override async Task OnInitializedAsync()
         {

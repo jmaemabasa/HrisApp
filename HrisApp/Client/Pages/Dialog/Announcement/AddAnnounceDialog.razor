@@ -1,10 +1,4 @@
-﻿@inject IAnnouncementService AnnouncementService
-@inject StateService StateService
-@inject IDialogService DialogService
-@inject GlobalConfigService GlobalConfigService
-@inject IAuditlogService AuditlogService
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
         <EditForm Model="@obj" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
@@ -36,7 +30,7 @@
 </MudDialog>
 
 @code {
-    #nullable disable
+#nullable disable
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 

@@ -1,8 +1,4 @@
 ﻿@page "/evaluation"
-@inject IEmployeeService EmployeeService
-@inject IForEvalService ForEvalService
-@inject NavigationManager NavManager
-@inject IJSRuntime JSRuntime
 
 @attribute [Authorize(Roles = "SysAdmin, HR")]
 
@@ -299,8 +295,6 @@
     public List<Emp_EvaluationT> EmpFifthEval = new(); //fifth
     public List<Emp_EvaluationT> EmpSixEval = new(); //sixth
 
-    string finalValStatus ="";
-
     protected override async Task OnInitializedAsync()
     {
         await ForEvalService.GetForEval();
@@ -418,7 +412,7 @@
     }
 
     public void NavToEmpD(int id) { 
-        NavManager.NavigateTo($"/employee/edit/{id}"); 
+        NavigationManager.NavigateTo($"/employee/edit/{id}"); 
     }
 
     public string CapitalizeFirstLetter(string input)

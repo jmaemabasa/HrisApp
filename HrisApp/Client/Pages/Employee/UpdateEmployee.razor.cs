@@ -1,9 +1,9 @@
 ﻿namespace HrisApp.Client.Pages.Employee
 {
-    public partial class UpdateEmployee : ComponentBase
-    {
 #nullable disable
 
+    public partial class UpdateEmployee : ComponentBase
+    {
         [Parameter]
         public int Id { get; set; }
 
@@ -37,7 +37,6 @@
         private List<DivisionT> DivisionsL = new();
         private List<DepartmentT> DepartmentsL = new();
 
-        private List<PositionT> PositionsL = new();
         private List<SubPositionT> SubPositionsL = new();
         private List<PosMPExternalT> ExternalsL = new();
 
@@ -119,9 +118,6 @@
             await DepartmentService.GetDepartment();
             DepartmentsL = DepartmentService.DepartmentTs;
             await SectionService.GetSection();
-            //SectionsL = SectionService.SectionTs;
-            await PositionService.GetPosition();
-            PositionsL = PositionService.PositionTs;
             await PositionService.GetSubPosition();
             SubPositionsL = PositionService.SubPositionTs;
             await StaticService.GetGenderList();
@@ -180,7 +176,7 @@
             try
             {
                 string url = await EmployeeService.EmpDetailsGenerate(employee.Verify_Id);
-                await JSRuntime.InvokeAsync<object>("open", url, "_blank");
+                await jsRuntime.InvokeAsync<object>("open", url, "_blank");
             }
             catch (Exception ex)
             {
@@ -660,7 +656,7 @@
             StateHasChanged();
         }
 
-        private async Task CopyToClipboard(string text) => await JSRuntime.InvokeVoidAsync("copyToClipboard", text);
+        private async Task CopyToClipboard(string text) => await jsRuntime.InvokeVoidAsync("copyToClipboard", text);
 
         private static string FUpper(string input)
         {

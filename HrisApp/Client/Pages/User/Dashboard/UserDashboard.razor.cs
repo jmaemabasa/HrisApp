@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace HrisApp.Client.Pages.User.Dashboard
+﻿namespace HrisApp.Client.Pages.User.Dashboard
 {
+#nullable disable
+
     public partial class UserDashboard : ComponentBase
     {
-#nullable disable
         private string FULLNAME = "";
         private string VERIFY = "";
         private string availableLeavetext = "";
@@ -15,7 +14,7 @@ namespace HrisApp.Client.Pages.User.Dashboard
         private string availableLeavetextOL = "";
         private double countSl, countEl, countMl, countPl, countVl, countOl;
 
-        Emp_LeaveCreditT empLeaveCred = new();
+        private Emp_LeaveCreditT empLeaveCred = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -28,9 +27,7 @@ namespace HrisApp.Client.Pages.User.Dashboard
             await SetValues();
         }
 
-        
-
-        async Task SetValues()
+        private async Task SetValues()
         {
             countSl = await LeaveCredService.GetCountExistCredits(VERIFY, "Sick");
             countEl = await LeaveCredService.GetCountExistCredits(VERIFY, "Emergency");

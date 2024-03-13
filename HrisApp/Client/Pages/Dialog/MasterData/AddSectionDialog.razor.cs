@@ -1,10 +1,9 @@
-﻿using Microsoft.JSInterop;
-
-namespace HrisApp.Client.Pages.Dialog.MasterData
+﻿namespace HrisApp.Client.Pages.Dialog.MasterData
 {
+#nullable disable
+
     public partial class AddSectionDialog : ComponentBase
     {
-#nullable disable
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         private List<DepartmentT> Department = new();
         private List<DivisionT> Division = new();
