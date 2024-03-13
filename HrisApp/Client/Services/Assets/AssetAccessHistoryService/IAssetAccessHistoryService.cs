@@ -8,6 +8,8 @@
 
         Task<AssetAccessHistoryT> GetSingleObj(int id);
 
+        Task<AssetAccessHistoryT> GetObjByAccIDMainId(int accid, int mainid);
+
         Task GetObj();
 
         Task CreateObj(AssetAccessHistoryT model);

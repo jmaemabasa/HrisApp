@@ -2,6 +2,8 @@
     background-color: #F7F8FF;
     padding: 7px 15px 7px 15px;
     border-radius: 10px;
+    min-height: 54.02px;
+    word-wrap: break-word;
 }
 
 .mainassleft, .mainasssec {
@@ -15,7 +17,7 @@
 
 .mainassmain {
     height: calc(100vh - 105px);
-    padding: 10px 10px 10px 20px;
+    padding: 4px 10px 10px 20px;
     overflow: auto;
 }
 
@@ -46,6 +48,19 @@
     .acc-cont .asset {
         color: #26446e;
         font-weight: bold;
+    }
+
+::deep .btnpritnQR {
+    background-color: #27374D;
+    color: #ffff;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding: 4px 6px;
+    text-transform: capitalize;
+}
+
+    ::deep .btnpritnQR:hover {
+        background-color: #26446e;
     }
 
 .drawerdetails {
@@ -455,5 +470,26 @@
 @media only screen and (max-width: 700px) {
     .modal-content {
         width: 100%;
+    }
+
+    .mainassmain {
+        padding: 0px;
+    }
+
+    ::deep .mud-tabs-panels.pa-6 {
+        padding: 3px !important;
+    }
+
+    .qrimage {
+        width: 50% !important;
+    }
+
+    ::deep .detailsgrid {
+        padding: 0px !important;
+    }
+
+    ::deep .mud-tabs-toolbar {
+        margin-left: 0px;
+        margin-bottom: 5px;
     }
 }

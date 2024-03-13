@@ -20,11 +20,21 @@
             <div class="row">
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Sub Category</MudText>
-                    <MudSelect T="int" ValueChanged="OnChangeSCat" Disabled="disabledsubcat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                    <MudSelect T="int" ValueChanged="OnChangeSCat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
                         <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
-                        @foreach (var sec in SUBCAT.Where(e => e.CategoryId == obj.CategoryId))
+                        @if (obj.CategoryId == 0)
                         {
-                            <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
+                            @foreach (var sec in SUBCAT)
+                            {
+                                <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
+                            }
+                        }
+                        else
+                        {
+                            @foreach (var sec in SUBCAT.Where(e => e.CategoryId == obj.CategoryId))
+                            {
+                                <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
+                            }
                         }
                     </MudSelect>
                 </div>
@@ -33,7 +43,7 @@
             <div class="row">
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Accessory</MudText>
-                    <MudAutocomplete T="AssetAccessoryT" Placeholder="Type to search..." @bind-Value="fieldObj" Disabled="disabledacc" HelperText="Code / Brand / Model"
+                    <MudAutocomplete T="AssetAccessoryT" Placeholder="Type to search..." @bind-Value="fieldObj" HelperText="Code / Brand / Model"
                                      SearchFunc="@Search1"
                                      ResetValueOnEmptyText="true"
                                      CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"

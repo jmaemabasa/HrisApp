@@ -36,37 +36,32 @@
         width: 4rem;
     }*/
 
-    .mud-container.mud-container-maxwidth-xxl {
+    /* .mud-container.mud-container-maxwidth-xxl {
         padding-left: 60px;
         padding-right: 35px;
         margin-top: 15px;
     }
 
-    .mud-appbar.mud-appbar-fixed-top.mud-elevation-0{
-        /*background-color: #e9ecef;*/
-/*        color: #27374D;
-*/        left: 15px;
+    .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
+        left: 15px;
         margin-bottom: 25px;
     }
 
     .mud-appbar .mud-toolbar-appbar {
         padding: 0px !important;
         align-items: center;
-        width: calc(100% - 80px) !important; 
+        width: calc(100% - 80px) !important;
         padding-left: 26px !important;
         padding-top: 15px !important;
     }
 
     .btnburger {
-        /*background: #e9ecef;*/
         border: none;
-        /* box-shadow: -2px 1px 6px #ffffff, 3px 4px 9px #b3b4b5; */
         box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
         border-radius: 50%;
         transition: all .5s ease;
         height: 40px;
-    }
-
+    } */
 </style>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
@@ -239,12 +234,48 @@
     </MudHidden>
 
     <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
-        <MudAppBar Elevation="0" Style="left: 0; width: max-content; padding-right: 15px; padding-left: 15px; ">
-            <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-            @* My Application *@
+        <MudAppBar Elevation="0" Style="left: 0; width: auto;">
+            <div class="d-flex flex-grow-1 justify-content-between">
+                <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                @html
 
-            <MudSpacer />
-
+                @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
+                {
+                    @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
+                    <MudMenu Class="btnburger" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                        <ActivatorContent>
+                            <MudTooltip Text="Account">
+                                <MudAvatar>
+                                    <MudImage Src="@ImageData"></MudImage>
+                                </MudAvatar>
+                            </MudTooltip>
+                        </ActivatorContent>
+                        <ChildContent>
+                            <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                            <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                        </ChildContent>
+                    </MudMenu>
+                }
+                else
+                {
+                    @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
+                    <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                        <ActivatorContent>
+                            <MudTooltip Text="Account">
+                                <MudAvatar>
+                                    <MudImage Src="@ImageData"></MudImage>
+                                </MudAvatar>
+                            </MudTooltip>
+                        </ActivatorContent>
+                        <ChildContent>
+                            <MudMenuItem OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
+                            <MudDivider DividerType="DividerType.Middle" Class="my-2" />
+                            <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                            <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                        </ChildContent>
+                    </MudMenu>
+                }
+            </div>
         </MudAppBar>
     </MudHidden>
     

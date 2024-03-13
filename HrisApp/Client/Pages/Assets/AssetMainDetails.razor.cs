@@ -1,5 +1,6 @@
 ﻿using HrisApp.Client.Pages.Dialog.Assets.AssetAccess;
 using HrisApp.Client.Pages.Dialog.Assets.MainAsset;
+using HrisApp.Client.Pages.Dialog.Auth;
 using QRCoder;
 using System.Security.Policy;
 
@@ -12,6 +13,7 @@ namespace HrisApp.Client.Pages.Assets
         private AssetMasterT obj = new();
         private AssetMasterHistoryT assetHistoryObj = new();
         private AssetLastCheckT lastchkObj = new();
+        private AssetAccessHistoryT accessHistoryObj = new();
         private List<AssetAccessoryT> ACCESSORIES = new();
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
@@ -28,8 +30,8 @@ namespace HrisApp.Client.Pages.Assets
 
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
 
-        private string MainAssetImageData { get; set; } = string.Empty;
-        private string ImageEmployee { get; set; } = string.Empty;
+        private string MainAssetImageData { get; set; } = string.Format("images/asset-holder.jpg");
+        private string ImageEmployee { get; set; } = string.Format("images/imgholder.jpg");
 
         //image
         public string imgBase64 { get; set; } = string.Empty;
@@ -62,6 +64,8 @@ namespace HrisApp.Client.Pages.Assets
         private bool mtsChkPanelOpen;
         private Anchor anchor;
 
+        private bool isLoadingPrintQR = false;
+
         protected override async Task OnInitializedAsync()
         {
             TYPES = await AssetTypeService.GetObjList();
@@ -84,7 +88,14 @@ namespace HrisApp.Client.Pages.Assets
             {
                 obj = await AssetMasterService.GetSingleObj(Id);
 
-                await AssetImg(obj.JMCode);//image
+                try
+                {
+                    await AssetImg(obj.JMCode);//image
+                }
+                catch (Exception)
+                {
+                    MainAssetImageData = string.Format("images/asset-holder.jpg");
+                }
 
                 await AssetImageService.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssetImageService.AssetImageTs;
@@ -105,10 +116,10 @@ namespace HrisApp.Client.Pages.Assets
                     ImageEmployee = string.Format("images/imgholder.jpg");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Console.WriteLine(ex);
-                //Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
                 MainAssetImageData = string.Format("images/asset-holder.jpg");
                 ImageEmployee = string.Format("images/imgholder.jpg");
             }
@@ -122,7 +133,7 @@ namespace HrisApp.Client.Pages.Assets
             Url generator = new($"https://localhost:44397/main-asset/details/{id}");
             string payload = generator.ToString();
 
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://sonicsales.net:1112/main-asset/details/4", QRCodeGenerator.ECCLevel.H);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"http://sonicsales.net:1112/main-asset/details/{id}", QRCodeGenerator.ECCLevel.H);
 
             var qrCode = new PngByteQRCode(qrCodeData);
 
@@ -136,13 +147,16 @@ namespace HrisApp.Client.Pages.Assets
         {
             try
             {
+                isLoadingPrintQR = true;
                 string url = await AssetMasterService.QRGenerate(obj.AssetCode);
-                await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+                //await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+                GlobalConfigService.OpenPDFInNewTab(url);
+                isLoadingPrintQR = false;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                //NavigateError();
+                isLoadingPrintQR = false;
             }
         }
 
@@ -274,8 +288,12 @@ namespace HrisApp.Client.Pages.Assets
                         model.AssetStatusId = 1;
                     }
 
-                    model.InUseStatusDate = DateTime.Now;
+                    //model.InUseStatusDate = DateTime.Now;
                     await AssetAccService.UpdateObj(model);
+
+                    var acchistoryobj = await AssetAccHistorySvc.GetObjByAccIDMainId(item.Id, obj.Id);
+                    acchistoryobj.EmployeeId = obj.EmployeeId;
+                    await AssetAccHistorySvc.UpdateObj(acchistoryobj);
                 }
 
                 obj = await AssetMasterService.GetSingleObj(Id);
@@ -337,28 +355,37 @@ namespace HrisApp.Client.Pages.Assets
 
         private async Task RemoveAccessory(int id)
         {
-            var asset_acc = await AssetAccService.GetSingleObj(id);
-            asset_acc.MainAssetId = null;
-            asset_acc.MainAssetDateUpdated = null;
-            asset_acc.AssetStatusId = 2;
-            await AssetAccService.UpdateObj(asset_acc);
-
-            AssetAccessHistoryT newobj = new()
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
             {
-                AssetAccessoryId = id,
-                MainAssetId = obj.Id,
-                UnassignedDateMainAss = DateTime.Now
-            };
+                Title = "Confirmation",
+                Text = "Pernamently remove the accessory? \n You can't undo this.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
 
-            await AssetAccHistorySvc.UpdateDateUnassigned(newobj);
+            if (confirmResult.IsConfirmed)
+            {
+                var asset_acc = await AssetAccService.GetSingleObj(id);
+                asset_acc.MainAssetId = null;
+                asset_acc.MainAssetDateUpdated = null;
+                asset_acc.AssetStatusId = 2;
+                await AssetAccService.UpdateObj(asset_acc);
 
-            await MainAssetAccService.DeleteAccessory(obj.Id, id);
+                AssetAccessHistoryT newobj = new()
+                {
+                    AssetAccessoryId = id,
+                    MainAssetId = obj.Id,
+                    UnassignedDateMainAss = DateTime.Now
+                };
 
-            ACCESSORIES = await AssetAccService.GetObjList();
-            //Console.WriteLine(id.ToString());
+                await AssetAccHistorySvc.UpdateDateUnassigned(newobj);
 
-            //var hh = await AssetAccHistorySvc.GetTestConsole(12);
-            //Console.WriteLine(hh);
+                await MainAssetAccService.DeleteAccessory(obj.Id, id);
+
+                ACCESSORIES = await AssetAccService.GetObjList();
+            }
         }
 
         private string TruncateString(string value, int maxLength)
@@ -465,6 +492,12 @@ namespace HrisApp.Client.Pages.Assets
             if (assignPanelOpen) obj.AssignedDateReleased = DateTime.Now;
 
             if (assignReturnPanelOpen) assetHistoryObj.EndDate = DateTime.Now;
+        }
+
+        private void OpenLogin()
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+            DialogService.Show<LoginDialog>("", options);
         }
 
         private int divid, deptid;

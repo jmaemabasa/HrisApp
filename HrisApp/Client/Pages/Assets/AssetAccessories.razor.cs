@@ -170,7 +170,7 @@ namespace HrisApp.Client.Pages.Assets
 
         private void OpenAddDialog()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
             DialogService.Show<AddAssetAccDialog>("New Asset Accessorry", options);
         }
 

@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
+﻿using System.Collections.Generic;
+
+namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 {
 #nullable disable
 
@@ -34,28 +36,39 @@
 
         private async Task SaveUpdate()
         {
-            obj.AssetAccessoryId = fieldObj.Id;
+            if (fieldObj == null)
+            {
+                GlobalConfigService.OpenErrorDialog("Select accessorry");
+            }
+            else
+            {
+                obj.AssetAccessoryId = fieldObj.Id;
 
-            obj.AssetMasterId = assetMaster.Id;
-            obj.AssetMasterCode = assetMaster.JMCode;
+                obj.CategoryId = AssetAccessoryList.Where(x => x.Id == obj.AssetAccessoryId).FirstOrDefault().CategoryId;
+                obj.SubCategoryId = AssetAccessoryList.Where(x => x.Id == obj.AssetAccessoryId).FirstOrDefault().SubCategoryId;
 
-            await MainAssetAccService.CreateObj(obj);
+                obj.AssetMasterId = assetMaster.Id;
+                obj.AssetMasterCode = assetMaster.JMCode;
 
-            var asset_acc = await AssetAccService.GetSingleObj(obj.AssetAccessoryId);
-            asset_acc.MainAssetId = obj.AssetMasterId;
-            asset_acc.MainAssetDateUpdated = DateTime.Now;
-            asset_acc.AssetStatusId = assetMaster.AssetStatusId;
-            await AssetAccService.UpdateObj(asset_acc);
+                await MainAssetAccService.CreateObj(obj);
 
-            accHistoryObj.AssignedDateMainAss = DateTime.Now;
-            accHistoryObj.MainAssetId = assetMaster.Id;
-            accHistoryObj.AssetAccessoryId = obj.AssetAccessoryId;
-            await AssetAccHistorySvc.CreateObj(accHistoryObj);
+                var asset_acc = await AssetAccService.GetSingleObj(obj.AssetAccessoryId);
+                asset_acc.MainAssetId = obj.AssetMasterId;
+                asset_acc.MainAssetDateUpdated = DateTime.Now;
+                asset_acc.AssetStatusId = assetMaster.AssetStatusId;
+                await AssetAccService.UpdateObj(asset_acc);
 
-            await AssetAccService.GetObj();
-            MudDialog?.Close();
-            _toastService.ShowSuccess("Added Successfully!");
-            await OnAddSuccess.InvokeAsync();
+                accHistoryObj.AssignedDateMainAss = DateTime.Now;
+                accHistoryObj.MainAssetId = assetMaster.Id;
+                accHistoryObj.AssetAccessoryId = obj.AssetAccessoryId;
+                accHistoryObj.EmployeeId = assetMaster.EmployeeId;
+                await AssetAccHistorySvc.CreateObj(accHistoryObj);
+
+                await AssetAccService.GetObj();
+                MudDialog?.Close();
+                _toastService.ShowSuccess("Added Successfully!");
+                await OnAddSuccess.InvokeAsync();
+            }
         }
 
         private AssetAccessoryT fieldObj;
@@ -63,7 +76,24 @@
         private async Task<IEnumerable<AssetAccessoryT>> Search1(string value)
         {
             await Task.Delay(5);
-            var list = AssetAccessoryList.Where(e => e.MainAssetId == null && e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId && e.AssetStatusId == 2);
+            IEnumerable<AssetAccessoryT> list;
+            if (obj.CategoryId != 0 && obj.SubCategoryId != 0)
+            {
+                list = AssetAccessoryList.Where(e => e.MainAssetId == null && e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId && e.AssetStatusId == 2);
+            }
+            else if (obj.CategoryId != 0 && obj.SubCategoryId == 0)
+            {
+                list = AssetAccessoryList.Where(e => e.MainAssetId == null && e.CategoryId == obj.CategoryId && e.AssetStatusId == 2);
+            }
+            else if (obj.CategoryId == 0 && obj.SubCategoryId != 0)
+            {
+                list = AssetAccessoryList.Where(e => e.MainAssetId == null && e.SubCategoryId == obj.SubCategoryId && e.AssetStatusId == 2);
+            }
+            else
+            {
+                list = AssetAccessoryList.Where(e => e.MainAssetId == null && e.AssetStatusId == 2);
+            }
+
             if (string.IsNullOrEmpty(value))
             {
                 return list;
@@ -78,19 +108,14 @@
             }
         }
 
-        private bool disabledsubcat = true;
-        private bool disabledacc = true;
-
         private void OnChangeCat(int id)
         {
             obj.CategoryId = id;
-            disabledsubcat = false;
         }
 
         private void OnChangeSCat(int id)
         {
             obj.SubCategoryId = id;
-            disabledacc = false;
         }
     }
 }

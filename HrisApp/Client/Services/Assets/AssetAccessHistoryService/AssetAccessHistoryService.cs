@@ -30,6 +30,16 @@
             throw new Exception("employee not found");
         }
 
+        public async Task<AssetAccessHistoryT> GetObjByAccIDMainId(int accid, int mainid)
+        {
+            var result = await _httpClient.GetFromJsonAsync<AssetAccessHistoryT>($"api/AssetAccessHistory/GetObjByAccIDMainId?accid={accid}&mainid={mainid}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
+
         public async Task GetObj()
         {
             var result = await _httpClient.GetFromJsonAsync<List<AssetAccessHistoryT>>("api/AssetAccessHistory/GetObj");

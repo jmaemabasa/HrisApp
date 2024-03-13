@@ -1,30 +1,53 @@
-﻿@using Microsoft.AspNetCore.Components.Authorization
+﻿@using HrisApp.Client.Pages.Dialog.Auth
+@using Microsoft.AspNetCore.Components.Authorization
 @inject IMainsService _mainsService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-                    <NotAuthorized>
-                        <img width="600" src="https://i.kym-cdn.com/entries/icons/original/000/002/144/You_Shall_Not_Pass!_0-1_screenshot.jpg" />
-                    </NotAuthorized>
-                </AuthorizeRouteView>
-                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <img width="600" src="https://i.kym-cdn.com/entries/icons/original/000/002/144/You_Shall_Not_Pass!_0-1_screenshot.jpg" />
+                    @* <HrisApp.Client.Pages.Dialog.Auth.LoginDialog /> *@
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
-                <PageTitle>Not found</PageTitle>
-                <LayoutView Layout="@typeof(MainLayout)">
-                    <h1>404 Error</h1>
-                    <p role="alert">Sorry, there's nothing at this address.</p>
-                </LayoutView>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <h1>404 Error</h1>
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
 
 @code {
+    #nullable disable
+    private AuthenticationState _authenticationState;
     protected override async Task OnInitializedAsync()
     {
         await _mainsService.Set_Http();
+
+        _authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = _authenticationState.User;
+        if (!user.Identity.IsAuthenticated)
+        {
+            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+            var uristring = uri.ToString();
+            var uripage = "http://sonicsales.net:1112/";
+            if (uristring != uripage)
+            {
+                OpenLogin();
+            }
+        }
+    }
+    private void OpenLogin()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+        DialogService.Show<LoginDialog>("", options);
     }
 }
 

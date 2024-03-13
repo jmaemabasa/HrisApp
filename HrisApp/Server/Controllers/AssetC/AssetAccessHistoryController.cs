@@ -18,6 +18,7 @@
             var obj = await _context.AssetAccessHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
+                .Include(e => e.Employee)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -28,6 +29,7 @@
             var obj = await _context.AssetAccessHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
+                .Include(e => e.Employee)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -38,7 +40,24 @@
             var obj = await _context.AssetAccessHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
+                .Include(e => e.Employee)
                 .FirstOrDefaultAsync(h => h.Id == id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
+
+        [HttpGet("GetObjByAccIDMainId")]
+        public async Task<ActionResult<AssetAccessHistoryT>> GetObjByAccIDMainId([FromQuery] int accid, [FromQuery] int mainid)
+        {
+            var obj = await _context.AssetAccessHistoryT
+                .Include(e => e.MainAsset)
+                .Include(e => e.AssetAccessory)
+                .Include(e => e.Employee)
+                .FirstOrDefaultAsync(h => h.AssetAccessoryId == accid && h.MainAssetId == mainid);
 
             if (obj == null)
             {
@@ -52,6 +71,7 @@
             return await _context.AssetAccessHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
+                .Include(e => e.Employee)
                 .ToListAsync();
         }
 
@@ -66,14 +86,15 @@
         }
 
         [HttpPut("UpdateObj")]
-        public async Task<ActionResult> UpdateArea(AssetAccessHistoryT model)
+        public async Task<ActionResult> UpdateObj(AssetAccessHistoryT model)
         {
             var dbObj = await _context.AssetAccessHistoryT.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbObj.MainAssetId = model.MainAssetId;
-            dbObj.AssetAccessoryId = model.AssetAccessoryId;
-            dbObj.AssignedDateMainAss = model.AssignedDateMainAss;
-            dbObj.UnassignedDateMainAss = model.UnassignedDateMainAss;
+            //dbObj.MainAssetId = model.MainAssetId;
+            //dbObj.AssetAccessoryId = model.AssetAccessoryId;
+            //dbObj.AssignedDateMainAss = model.AssignedDateMainAss;
+            //dbObj.UnassignedDateMainAss = model.UnassignedDateMainAss;
+            dbObj.EmployeeId = model.EmployeeId;
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBObj());
@@ -99,6 +120,7 @@
             var test = await _context.AssetAccessHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
+                .Include(e => e.Employee)
                 .Where(e => e.AssetAccessoryId == obj)
                 .ToListAsync();
 

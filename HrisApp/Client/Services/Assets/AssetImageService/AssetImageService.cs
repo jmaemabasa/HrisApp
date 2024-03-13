@@ -1,5 +1,4 @@
-﻿using NPOI.HPSF;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace HrisApp.Client.Services.Assets.AssetImageService
 {
@@ -19,7 +18,7 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
 
         public async Task UpdateDBImage(AssetImageT img)
         {
-            var result = await _httpClient.PutAsJsonAsync($"api/AssetImage/{img.Id}", img);
+            await _httpClient.PutAsJsonAsync($"api/AssetImage/{img.Id}", img);
             //await Ok(result);
         }
 

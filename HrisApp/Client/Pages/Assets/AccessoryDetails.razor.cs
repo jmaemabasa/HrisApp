@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Assets
+﻿using QRCoder;
+
+namespace HrisApp.Client.Pages.Assets
 {
     public partial class AccessoryDetails : ComponentBase
     {
@@ -14,11 +16,14 @@
 
         private List<AssetAccessImageT> assetImgList = new();
 
-        private string MainAssetImage { get; set; } = string.Empty;
+        private string MainAssetImage { get; set; } = string.Format("images/asset-holder.jpg");
 
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
+        public IMask currMask = new RegexMask(@"^\$?[0-9,\.]*$");
 
-        private string AccessImageData { get; set; } = string.Empty;
+        private string AccessImageData { get; set; } = string.Format("images/asset-holder.jpg");
+        public string QRIMAGE { get; set; } = string.Empty;
+        private bool isLoadingPrintQR = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,7 +41,17 @@
             try
             {
                 obj = await AssetAccService.GetSingleObj(Id);
-                await LoadAccessImg(obj.JMCode);//image
+
+                try
+                {
+                    await LoadAccessImg(obj.JMCode);//image
+                }
+                catch (Exception)
+                {
+                    AccessImageData = string.Format("images/asset-holder.jpg");
+                }
+
+                await GenerateQR(obj.Id);
 
                 await AssAccImgSvc.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssAccImgSvc.AssetAccessImageTs;
@@ -141,6 +156,38 @@
         }
 
         #endregion PANEL IMAGE LIST / TABLE
+
+        private async Task GenerateQR(int id)
+        {
+            await Task.Delay(0);
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"http://sonicsales.net:1112/asset-accessories/details/{id}", QRCodeGenerator.ECCLevel.H);
+
+            var qrCode = new PngByteQRCode(qrCodeData);
+
+            byte[] imageByteArray = qrCode.GetGraphic(20);
+
+            var base642 = Convert.ToBase64String(imageByteArray);
+            QRIMAGE = string.Format("data:image/*;base64,{0}", base642);
+        }
+
+        private async Task PrintQR()
+        {
+            try
+            {
+                isLoadingPrintQR = true;
+                string url = await AssetAccService.QRGenerate(obj.AssetCode);
+                //await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+                GlobalConfigService.OpenPDFInNewTab(url);
+                isLoadingPrintQR = false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                isLoadingPrintQR = false;
+            }
+        }
 
         private Anchor anchor;
         private bool leftPanelOpen, detailsPanelOpen;

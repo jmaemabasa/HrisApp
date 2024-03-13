@@ -58,7 +58,7 @@
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/AssetPrint/GetReport?AssetCode={AssetCode}");
+                var response = await _httpClient.GetAsync($"api/AssetPrint/QRPrintMain?AssetCode={AssetCode}");
                 return response;
             }
             catch (Exception ex)

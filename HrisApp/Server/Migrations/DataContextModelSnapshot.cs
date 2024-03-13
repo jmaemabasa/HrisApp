@@ -791,6 +791,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<DateTime?>("AssignedDateMainAss")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MainAssetId")
                         .HasColumnType("int");
 
@@ -800,6 +803,8 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssetAccessoryId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("MainAssetId");
 
@@ -856,6 +861,10 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseAmount")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -5019,6 +5028,10 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "MainAsset")
                         .WithMany()
                         .HasForeignKey("MainAssetId")
@@ -5026,6 +5039,8 @@ namespace HrisApp.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("AssetAccessory");
+
+                    b.Navigation("Employee");
 
                     b.Navigation("MainAsset");
                 });

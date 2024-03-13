@@ -163,5 +163,10 @@ namespace HrisApp.Client.GlobalService
         {
             await jsRuntime.InvokeVoidAsync("openInNewTab", url);
         }
+
+        public async void OpenPDFInNewTab(string url)
+        {
+            await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+        }
     }
 }

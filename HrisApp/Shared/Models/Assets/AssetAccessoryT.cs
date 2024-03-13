@@ -31,6 +31,7 @@ namespace HrisApp.Shared.Models.Assets
         public string Barcode { get; set; } = string.Empty;
         public string Serial { get; set; } = string.Empty;
         public DateTime? PurchaseDate { get; set; }
+        public string PurchaseAmount { get; set; } = string.Empty;
         public DateTime? InUseStatusDate { get; set; }
         public DateTime? StatusDate { get; set; }
 

@@ -1,13 +1,13 @@
 ﻿@page "/asset-main"
 
-@attribute [Authorize(Roles = "AssetM")]
+@attribute [Authorize(Roles = "Technical")]
 
 <PageTitle>Main Asset Management</PageTitle>
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Main Asset Management</span>
-        <AuthorizeView Roles="AssetM">
+        <AuthorizeView Roles="Technical">
             <Authorized>
                 <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Main Asset</MudButton>
             </Authorized>
@@ -119,7 +119,7 @@
                         <MudTd Style="color: #397763;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
                     }
                     <MudTd>
-                        <AuthorizeView Roles="AssetM">
+                        <AuthorizeView Roles="Technical">
                             <Authorized>
                                 <MudTooltip Text="Details">
                                     <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>

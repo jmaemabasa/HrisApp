@@ -21,14 +21,25 @@
 
         private const string Adminuserrole = "MainAdmin";
 
+        private string MYURL { get; set; } = string.Empty;
+        private string OLDURL { get; set; } = string.Empty;
+
         protected override async Task OnInitializedAsync()
         {
             try
             {
+                //var currentUrl = window.location.href;
+
                 await LocalStorage.RemoveItemAsync("token");
                 await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
                 var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+                OLDURL = uri.ToString();
+
+                var splitstring = uri.ToString().Split('/');
+                var id = splitstring.Last();
+                MYURL = id;
+                Console.WriteLine("URL " + uri);
                 if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
                 {
                     _returnUrl = url;
@@ -79,14 +90,8 @@
                         int totalPlantilla = await PositionService.GetTotalPlantilla();
                         await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
-                        if (result.UserRole == "AssetM")
-                        {
-                            NavigationManager.NavigateTo("/asset-dashboard");
-                        }
-                        else
-                        {
-                            NavigationManager.NavigateTo("/dashboard");
-                        }
+                        //NavigationManager.NavigateTo($"/main-asset/details/{MYURL}");
+                        NavigationManager.NavigateTo($"{OLDURL}");
 
                         _toastService.ShowSuccess("Successfully Login.");
                     }

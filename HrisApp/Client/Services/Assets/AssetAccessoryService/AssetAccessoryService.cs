@@ -53,5 +53,34 @@
             var result = await _httpClient.GetFromJsonAsync<int>($"api/AssetAccess/GetLastCode?cat={cat}&subcat={subcat}");
             return result;
         }
+
+        public async Task<HttpResponseMessage> QRPrint(string AssetCode)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/AssetPrint/QRPrintAccess?AssetCode={AssetCode}");
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HttpResponse : {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<string> QRGenerate(string AssetCode)
+        {
+            try
+            {
+                var result = await QRPrint(AssetCode);
+                var url = result.RequestMessage.RequestUri.ToString();
+                return url;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"String Response : {ex.Message}");
+                return null;
+            }
+        }
     }
 }

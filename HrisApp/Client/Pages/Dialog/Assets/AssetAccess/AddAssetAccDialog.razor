@@ -1,5 +1,8 @@
 ﻿<MudDialog Style="background-color: #e9ecef">
     <DialogContent>
+        <div class="dialog-title">
+            <span>New Asset Accessorry</span>
+        </div>
         <div class="d-flex flex-column justify-content-center align-items-center">
             <div style="width: 45%;">
                 @if (imgBase64 == "./images/addIconImage.png")
@@ -77,17 +80,13 @@
             </div>
             <div class="d-flex gap-3">
                 <div class="flex-grow-1">
-                    <MudText Typo="Typo.body2">Barcode</MudText>
-                    <MudTextField @bind-Value="obj.Barcode" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    <MudText Typo="Typo.body2">Serial</MudText>
+                    <MudTextField @bind-Value="obj.Serial" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
                 <div class="flex-grow-1">
                     <MudText Typo="Typo.body2">Quantity</MudText>
                     <MudTextField @bind-Value="obj.Quantity" Mask="@(new PatternMask("00000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Typo="Typo.body2">Serial</MudText>
-                <MudTextField @bind-Value="obj.Serial" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
             </div>
             <div class="d-flex gap-3">
                 <div class="flex-grow-1">
@@ -95,13 +94,19 @@
                     <MudDatePicker Editable="true" @bind-Date="obj.PurchaseDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
                 <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">Purchase Amount</MudText>
+                    <MudTextField @bind-Value="obj.PurchaseAmount" Mask="@currMask" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+            </div>
+            <div class="d-flex gap-3">
+                <div class="flex-grow-1">
                     <MudText Typo="Typo.body2">End of Useful Life (Months)</MudText>
                     <MudTextField @bind-Value="obj.EUF" Mask="@(new PatternMask("00000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Typo="Typo.body2">Remarks</MudText>
-                <MudTextField @bind-Value="obj.Remarks" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">Remarks</MudText>
+                    <MudTextField @bind-Value="obj.Remarks" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
             </div>
         }
     </DialogContent>

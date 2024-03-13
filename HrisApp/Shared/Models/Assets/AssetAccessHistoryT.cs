@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HrisApp.Shared.Models.Employee;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrisApp.Shared.Models.Assets
@@ -14,6 +15,9 @@ namespace HrisApp.Shared.Models.Assets
 
         public AssetMasterT? MainAsset { get; set; }
         public int MainAssetId { get; set; }
+
+        public EmployeeT? Employee { get; set; }
+        public int? EmployeeId { get; set; }
 
         public DateTime? AssignedDateMainAss { get; set; }
         public DateTime? UnassignedDateMainAss { get; set; }

@@ -18,7 +18,7 @@ namespace HrisApp.Server.Controllers.AssetC.AssetPrintC
             System.Text.Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
-        [HttpGet("GetReport")]
+        [HttpGet("QRPrintMain")]
         public async Task<IActionResult> GetReport([FromQuery] string AssetCode)
         {
             var MasterList = await _context.AssetMasterT.Include(e => e.AssetStatus)
@@ -33,7 +33,7 @@ namespace HrisApp.Server.Controllers.AssetC.AssetPrintC
 
             var sortlist = MasterList.Where(e => e.AssetCode.Equals(AssetCode)).FirstOrDefault();
 
-            byte[] qrCodeBytes = GenerateQRCode(sortlist.AssetCode);
+            byte[] qrCodeBytes = GenerateQRCode($"http://sonicsales.net:1112/main-asset/details/{sortlist?.Id}");
 
             if (qrCodeBytes == null)
             {
@@ -76,6 +76,38 @@ namespace HrisApp.Server.Controllers.AssetC.AssetPrintC
             var qrCodeData = qrGenerator.CreateQrCode(content, QRCodeGenerator.ECCLevel.Q);
             var qrCode = new PngByteQRCode(qrCodeData);
             return qrCode.GetGraphic(20);
+        }
+
+        [HttpGet("QRPrintAccess")]
+        public async Task<IActionResult> QRPrintAccess([FromQuery] string AssetCode)
+        {
+            var MasterList = await _context.AssetAccessoryT.Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .ToListAsync();
+
+            var sortlist = MasterList.Where(e => e.AssetCode.Equals(AssetCode)).FirstOrDefault();
+
+            byte[] qrCodeBytes = GenerateQRCode($"http://sonicsales.net:1112/asset-accessories/details/{sortlist?.Id}");
+
+            if (qrCodeBytes == null)
+            {
+                return StatusCode(500, "Failed to generate QR code");
+            }
+
+            string qrCodeBase64 = Convert.ToBase64String(qrCodeBytes);
+
+            var path = $"{this._webHostEnvironment.WebRootPath}\\EmpDetails\\PrintAssetQR.rdlc";
+
+            var reportParameters = new List<ReportParameter>
+        {
+            new ReportParameter("ImgQR", qrCodeBase64)
+        };
+
+            byte[] pdfBytes = await RenderReportWithParameters(reportParameters);
+
+            return File(pdfBytes, "application/pdf");
         }
     }
 }

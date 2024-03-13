@@ -1,5 +1,5 @@
 ﻿.dialogbtns {
-    padding: 15px 15px 15px 10px;
+    padding: 0px 15px 15px 10px;
 }
 
 .cancel {
@@ -42,4 +42,10 @@
     border-radius: 20px;
     padding-bottom: 4px;
     padding-top: 4px;
+}
+
+.dialog-title {
+    padding: 10px 0px 8px 0px;
+    color: rgb(66, 66, 66);
+    font-size: 20px;
 }

@@ -79,7 +79,7 @@
                         int totalPlantilla = await PositionService.GetTotalPlantilla();
                         await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
-                        if (result.UserRole == "AssetM")
+                        if (result.UserRole == "Technical")
                         {
                             NavigationManager.NavigateTo("/asset-dashboard");
                         }

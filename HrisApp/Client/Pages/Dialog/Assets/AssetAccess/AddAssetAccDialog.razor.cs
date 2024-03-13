@@ -17,6 +17,8 @@
         private MultipartFormDataContent MainAssImage = new();
         public string imguploadclass = "btnimage";
 
+        public IMask currMask = new RegexMask(@"^\$?[0-9,\.]*$");
+
         private void Cancel() => MudDialog?.Cancel();
 
         protected override async Task OnInitializedAsync()

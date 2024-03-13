@@ -33,7 +33,7 @@
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
-                                .Include(e => e.MainAsset)
+                .Include(e => e.MainAsset)
 .ToListAsync();
             return Ok(obj);
         }
@@ -92,6 +92,7 @@
             dbarea.Barcode = model.Barcode;
             dbarea.Serial = model.Serial;
             dbarea.PurchaseDate = model.PurchaseDate;
+            dbarea.PurchaseAmount = model.PurchaseAmount;
             dbarea.AssetStatusId = model.AssetStatusId;
             dbarea.Remarks = model.Remarks;
             dbarea.InUseStatusDate = model.InUseStatusDate;

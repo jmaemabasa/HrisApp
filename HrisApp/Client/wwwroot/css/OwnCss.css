@@ -48,3 +48,43 @@ img, .imgavatar {
         image-resolution: 72dpi;
     }
 }
+
+.mud-container.mud-container-maxwidth-xxl {
+    padding-left: 60px;
+    padding-right: 35px;
+    margin-top: 15px;
+}
+
+.mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
+    left: 15px;
+    margin-bottom: 25px;
+}
+
+.mud-appbar .mud-toolbar-appbar {
+    padding: 0px !important;
+    align-items: center;
+    width: calc(100% - 80px) !important;
+    padding-left: 26px !important;
+    padding-top: 15px !important;
+}
+
+.btnburger {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 50%;
+    transition: all .5s ease;
+    height: 40px;
+}
+
+@media (max-width: 640.98px) {
+    .mud-appbar .mud-toolbar-appbar {
+        width: calc(100% - 16px) !important;
+        padding-top: 0px !important;
+        padding-left: 16px !important;
+    }
+
+    .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
+        margin-bottom: 0px !important;
+        box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.1);
+    }
+}
