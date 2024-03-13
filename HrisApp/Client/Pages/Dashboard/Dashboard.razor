@@ -2,11 +2,11 @@
 
 @using ChartJs.Blazor.BarChart
 
-@attribute [Authorize(Roles = "System Administrator, HR, User")]
+@attribute [Authorize(Roles = "SysAdmin, HR, GenAdmin, User")]
 
 <PageTitle>Dashboard</PageTitle>
 
-@if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
+@if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "SysAdmin" || GlobalConfigService.Role == "GenAdmin")
 {
     <MudGrid Spacing="4">
         <MudItem xs="12" sm="9">

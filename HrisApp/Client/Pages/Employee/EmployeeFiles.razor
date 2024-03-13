@@ -19,35 +19,40 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
-    .btnaddfile:hover {
+        .btnaddfile:hover {
             background-color: #E38D0F;
             transform: scale(1.1);
-    }
+        }
 </style>
 
-    <MudItem xs="12">
-        <div class="d-flex flex-grow-1 justify-content-between align-items-center">
-            <div><span class="spantitle mb-3">PDF Files (TOR, Certificates, & etc.)</span></div>
-            <div style="margin: 0px;">
+<MudItem xs="12">
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <div><span class="spantitle mb-3">PDF Files (TOR, Certificates, & etc.)</span></div>
+        <div style="margin: 0px;">
             @for (int i = 0; i < listOfDocuments.Count; i++)
             {
                 var index = i;
                 var docs = listOfDocuments[i];
                 @if (docs.PdfFile != null)
                 {
-                    <MudFileUpload T="IBrowserFile" OnFilesChanged="e => OnPDFSaving123(e, index, empid, div, dept, ln, VerifyCode)" Accept=".pdf">
-                        <ButtonTemplate Context="fileContext">
-                            <MudButton HtmlTag="label" Class="btnaddfile" StartIcon="@Icons.Material.Filled.CloudUpload" for="@fileContext" Style="text-transform: none;">Upload Files</MudButton>
-                        </ButtonTemplate>
-                    </MudFileUpload>                }
+                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                        <Authorized>
+                            <MudFileUpload T="IBrowserFile" OnFilesChanged="e => OnPDFSaving123(e, index, empid, div, dept, ln, VerifyCode)" Accept=".pdf">
+                                <ButtonTemplate Context="fileContext">
+                                    <MudButton HtmlTag="label" Class="btnaddfile" StartIcon="@Icons.Material.Filled.CloudUpload" for="@fileContext" Style="text-transform: none;">Upload Files</MudButton>
+                                </ButtonTemplate>
+                            </MudFileUpload>
+                        </Authorized>
+                    </AuthorizeView>
                 }
-            </div>
-           
+            }
         </div>
-    </MudItem>
+
+    </div>
+</MudItem>
 
 @code {
-    #nullable disable
+#nullable disable
     [Parameter]
     public string VerifyCode { get; set; }
     [Parameter]
@@ -64,7 +69,8 @@
     List<DocumentT> listOfDocuments = new();
     private string imgBase64 { get; set; }
 
-    protected override async Task OnInitializedAsync() {
+    protected override async Task OnInitializedAsync()
+    {
         await Task.Delay(1000);
         listOfDocuments.Add(new DocumentT());
     }

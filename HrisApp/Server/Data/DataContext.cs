@@ -227,10 +227,11 @@ namespace HrisApp.Server.Data
             );
 
             modelBuilder.Entity<UserRoleT>().HasData(
-             new UserRoleT { Id = 1, Name = "System Administrator", RoleCode = "Admin" },
+             new UserRoleT { Id = 1, Name = "System Administrator", RoleCode = "SysAdmin" },
              new UserRoleT { Id = 2, Name = "User", RoleCode = "User" },
              new UserRoleT { Id = 3, Name = "HR", RoleCode = "HR" },
-             new UserRoleT { Id = 4, Name = "AssetM", RoleCode = "AssetM" }
+             new UserRoleT { Id = 4, Name = "AssetM", RoleCode = "AssetM" },
+             new UserRoleT { Id = 5, Name = "General Admin", RoleCode = "GenAdmin" }
             );
 
             modelBuilder.Entity<LeaveTypesT>().HasData(

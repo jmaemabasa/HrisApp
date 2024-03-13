@@ -4,7 +4,7 @@ namespace HrisApp.Client.Pages.Account
 {
     public partial class AccountList : ComponentBase
     {
-        List<EmployeeT> employeeList = new();
+        private List<EmployeeT> employeeList = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,6 +30,7 @@ namespace HrisApp.Client.Pages.Account
         }
 
         private bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = true;
@@ -48,12 +49,13 @@ namespace HrisApp.Client.Pages.Account
             };
         }
 
-        void ShowLogs(int id) => NavigationManager.NavigateTo($"/account/logs/{id}");
+        private void ShowLogs(int id) => NavigationManager.NavigateTo($"/account/logs/{id}");
 
         //TABLEEES
         private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
         private string searchString1 = "";
-        List<UserMasterT> userList = new();
+        private List<UserMasterT> userList = new();
         private UserMasterT selectedItem1 = null;
         private HashSet<UserMasterT> selectedItems = new();
 
@@ -71,7 +73,7 @@ namespace HrisApp.Client.Pages.Account
                 return true;
             if (user.Username.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            
+
             return false;
         }
 

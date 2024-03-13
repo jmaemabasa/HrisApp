@@ -1,12 +1,12 @@
 ﻿@page "/subposition"
-@attribute [Authorize(Roles = "System Administrator")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin")]
 
 <PageTitle>Sub Position Management</PageTitle>
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Position Management</span>
-        <AuthorizeView Roles="System Administrator">
+        <AuthorizeView Roles="SysAdmin, GenAdmin">
             <Authorized>
                 <MudButton OnClick="OpenAddPosition" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Position</MudButton>
             </Authorized>
@@ -89,7 +89,7 @@
                     @* <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton> *@
                 </MudTd>
                 <MudTd Style="text-align: center">
-                   <AuthorizeView Roles="System Administrator">
+                   <AuthorizeView Roles="SysAdmin, GenAdmin">
                         <Authorized>
                             <MudTooltip Text="Delete" Arrow=true>
                                 <MudIconButton Color="Color.Error" OnClick="(() => DeletePosition(pos.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>

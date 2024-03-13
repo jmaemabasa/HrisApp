@@ -3,17 +3,16 @@
 @inject IDialogService DialogService
 @inject StateService StateService
 
-@attribute [Authorize(Roles = "System Administrator, HR")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR")]
 <PageTitle>Leave Management</PageTitle>
-
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Leave Types</span>
-       @*  <AuthorizeView Roles="HR, System Administrator">
-            <Authorized>
-                <MudButton OnClick="OpenAddLeave" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Leave Type</MudButton>
-            </Authorized>
+        @*  <AuthorizeView Roles="HR, System Administrator">
+        <Authorized>
+        <MudButton OnClick="OpenAddLeave" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Leave Type</MudButton>
+        </Authorized>
         </AuthorizeView> *@
     </div>
 </div>
@@ -50,7 +49,7 @@
                 <MudTd DataLabel="">@obj.Name</MudTd>
                 <MudTd DataLabel="">@obj.Unit @obj.Description</MudTd>
                 <MudTd>
-                    <AuthorizeView Roles="System Administrator">
+                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                         <Authorized>
                             <MudTooltip Text="Update">
                                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateLeave(obj.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
@@ -58,14 +57,14 @@
                         </Authorized>
                         <NotAuthorized>
                             <MudIconButton Disabled Class="btnedit" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
-                         </NotAuthorized>
-                     </AuthorizeView>
-                 </MudTd>
-             </RowTemplate>
-             <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-             </PagerContent>
-         </MudTable>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
     }
 </div>
 @code {

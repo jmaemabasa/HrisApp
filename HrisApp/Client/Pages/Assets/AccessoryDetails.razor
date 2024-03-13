@@ -1,5 +1,5 @@
 ﻿@page "/asset-accessories/details/{id:int}"
-@attribute [Authorize(Roles = "Technical")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, Technical")]
 <PageTitle>Asset Details</PageTitle>
 
 
@@ -286,7 +286,7 @@
                         <div class="">
                             @if (ACCHISTORY.Where(e => e.UnassignedDateMainAss != null && e.AssetAccessoryId == obj.Id) == null || ACCHISTORY.Where(e => e.UnassignedDateMainAss != null && e.AssetAccessoryId == obj.Id).ToList().Count == 0)
                             {
-                                <span style="font-style: italic;">Never been used</span>
+                                <div style="font-style: italic;margin-bottom: 20px;">Never been used</div>
                             }
                             else
                             {

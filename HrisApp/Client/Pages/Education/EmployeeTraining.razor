@@ -60,12 +60,12 @@
             transform: scale(1.1);
         }
 </style>
-@if (_trainingListt.Count == 0 ||_trainingListt == null)
+@if (_trainingListt.Count == 0 || _trainingListt == null)
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No Trainings Information.</span>
-        
-        <AuthorizeView Roles="HR, System Administrator">
+
+        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
                 <MudTooltip Text="Add">
                     <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -80,8 +80,8 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Trainings</span>
-                
-                <AuthorizeView Roles="HR, System Administrator">
+
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Add">
                             <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -101,7 +101,7 @@ else
             <MudTd DataLabel="">@training.SponsorSpeaker</MudTd>
             <MudTd DataLabel="">@training.TrainingDate?.ToString("MM/dd/yyyy")</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteTraining(training.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
@@ -109,7 +109,7 @@ else
                     </Authorized>
                     <NotAuthorized>
                         <MudIconButton Class="btnedit" Disabled Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
-                     </NotAuthorized>
+                    </NotAuthorized>
                 </AuthorizeView>
             </MudTd>
         </RowTemplate>
@@ -119,21 +119,21 @@ else
     <span class="spantitle mb-3">Trainings</span>
     <MudItem xs="12">
         <EditForm Model="training" OnValidSubmit="SaveTraining" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
-             <MudItem xs="12" Class="mb-2">
+            <MudItem xs="12" Class="mb-2">
                 <MudInputLabel>Title</MudInputLabel>
-                 <MudTextField @bind-Value="training.TrainingName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Sponsor / Speaker</MudInputLabel>
-                 <MudTextField @bind-Value="training.SponsorSpeaker" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Date Attended(mm/dd/yyyy)</MudInputLabel>
-                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="training.TrainingDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                 <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
-             </MudItem>
-         </EditForm>
-     </MudItem>
- </MudDrawer>
+                <MudTextField @bind-Value="training.TrainingName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Sponsor / Speaker</MudInputLabel>
+                <MudTextField @bind-Value="training.SponsorSpeaker" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Date Attended(mm/dd/yyyy)</MudInputLabel>
+                <MudDatePicker Class="txf" DisableUnderLine @bind-Date="training.TrainingDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer>

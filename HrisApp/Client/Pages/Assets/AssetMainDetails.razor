@@ -1,5 +1,5 @@
 ﻿@page "/main-asset/details/{id:int}"
-@attribute [Authorize(Roles = "Technical")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, Technical")]
 @inject DTOAssetQR _printqr
 <PageTitle>Asset Details</PageTitle>
 
@@ -90,7 +90,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Details</span>
-                            <AuthorizeView Roles="Technical">
+                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "leftPanelOpen"))">
 
@@ -199,7 +199,7 @@
                     <div class="mainasssec" style="margin-top: 25px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Asset Accessories</span>
-                            <AuthorizeView Roles="Technical">
+                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" @onclick="OpenManageAccessories">
 
@@ -282,7 +282,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Details</span>
-                            <AuthorizeView Roles="Technical">
+                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "detailsPanelOpen"))">
 
@@ -416,7 +416,7 @@
                             <span class="spantitle">Currently Assigned To</span>
                             @if (obj.EmployeeId == null)
                             {
-                                <AuthorizeView Roles="Technical">
+                                <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "assignPanelOpen"))">
 
@@ -429,7 +429,7 @@
                             }
                             else
                             {
-                                <AuthorizeView Roles="Technical">
+                                <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
                                     <Authorized>
                                         <button class="btn-returned" onclick="@(() => OpenDrawer(Anchor.End, "assignReturnPanelOpen"))">
                                             <MudIcon Icon="@Icons.Material.Rounded.SwipeLeftAlt" Class="me-1"></MudIcon> Returned?
@@ -479,7 +479,7 @@
                         <div class="d-flex flex-column gap-3">
                             @if (MAINHISTORY.Where(e => e.EndDate != null && e.MainAssetId == obj.Id) == null || MAINHISTORY.Where(e => e.EndDate != null && e.MainAssetId == obj.Id).ToList().Count == 0)
                             {
-                                <span style="font-style: italic;">Never been used</span>
+                                <div style="font-style: italic;margin-bottom: 20px;">Never been used</div>
                             }
                             else
                             {
@@ -510,7 +510,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Last Check On</span>
-                            <AuthorizeView Roles="Technical">
+                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "mtsChkPanelOpen"))">
 
@@ -558,7 +558,7 @@
                 </MudTabPanel>
                 <MudTabPanel TabContent="TabHeader(4)">
                     <div class="mainasssec" style="padding-bottom: 7px ">
-                        <TechnicalainMultiImage MainAssetId="@obj.Id" MainAssetCode="@obj.AssetCode" JMCode="@obj.JMCode" Catid="@obj.CategoryId" SubCatid="obj.SubCategoryId" OnFileAdded="@RefreshPdfFileList" />
+                        <SysAdmin, GenAdmin, TechnicalainMultiImage MainAssetId="@obj.Id" MainAssetCode="@obj.AssetCode" JMCode="@obj.JMCode" Catid="@obj.CategoryId" SubCatid="obj.SubCategoryId" OnFileAdded="@RefreshPdfFileList" />
                         <div class="" Style="margin-top: 1rem;">
                             @* @if (ImgByAssetList.Any())
                             {

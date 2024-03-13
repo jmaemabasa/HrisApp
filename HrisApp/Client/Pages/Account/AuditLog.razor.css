@@ -8,7 +8,6 @@
     margin-top: 30px;
 }
 
-
 ::deep .stable {
     background: #e9ecef;
     padding: 25px 50px 25px 50px;
@@ -44,14 +43,12 @@
 
     ::deep .mud-picker-inline:hover {
         background-color: #82909e;
-    }   
-
-
-
-    .actionCreate {
-        color: #1A5D1A;
-        font-weight: bold;
     }
+
+.actionCreate {
+    color: #1A5D1A;
+    font-weight: bold;
+}
 
 .actionUpdate {
     color: #1572A1;

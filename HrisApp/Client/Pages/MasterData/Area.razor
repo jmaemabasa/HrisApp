@@ -1,12 +1,12 @@
 ﻿@page "/area"
-@attribute [Authorize(Roles = "System Administrator")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin")]
 
 <PageTitle>Area Management</PageTitle>
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Area Management</span>
-        <AuthorizeView Roles="System Administrator">
+        <AuthorizeView Roles="SysAdmin, GenAdmin">
             <Authorized>
                 <MudButton OnClick="OpenAddArea" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Area</MudButton>
             </Authorized>
@@ -51,7 +51,7 @@
                 <RowTemplate>
                     <MudTd DataLabel="">@area.Name</MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="System Administrator">
+                        <AuthorizeView Roles="SysAdmin, GenAdmin">
                             <Authorized>
                                 <MudTooltip Text="Update">
                                     <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateArea(area.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>

@@ -84,7 +84,7 @@
                     <MudSelectItem Value="@roleholder" Disabled>---Select Role---</MudSelectItem>
                     @foreach (var roles in UserRolesL)
                     {
-                        <MudSelectItem Value="@roles.Name">@roles.Name</MudSelectItem>
+                        <MudSelectItem Value="@roles.RoleCode">@roles.Name</MudSelectItem>
                     }
                 </MudSelect>
             </div>

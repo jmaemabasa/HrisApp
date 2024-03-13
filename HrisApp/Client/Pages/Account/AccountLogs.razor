@@ -1,11 +1,7 @@
 ﻿@page "/account/logs"
 @page "/account/logs/{id:int}"
-@inject IAuditlogService AuditlogService
-@inject IEmployeeService EmployeeService
-@inject NavigationManager _navigationManager
-@inject IAuthService AuthService
 
-@attribute [Authorize(Roles = "System Administrator")]
+@attribute [Authorize(Roles = "SysAdmin")]
 
 <PageTitle>Audit Log</PageTitle>
 
@@ -25,15 +21,15 @@
 </div>
 
 <div class="box w-auto">
-        <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between" style="padding: 0px 50px 0px 50px;">
-            <div class="w-25">
-                <MudTextField DisableUnderLine @bind-Value="@searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
-             </div>
-             <div>
-                 <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
-             </div>
-         </div>
-     @if (logsList == null || logsList.Count() == 0)
+    <div class="d-flex flex-grow-1 align-items-lg-start justify-content-between" style="padding: 0px 50px 0px 50px;">
+        <div class="w-25">
+            <MudTextField DisableUnderLine @bind-Value="@searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+        </div>
+        <div>
+            <MudDateRangePicker Class="daterangepicker" Label="Filter Date" DateRangeChanged="@DateRangeChange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />
+        </div>
+    </div>
+    @if (logsList == null || logsList.Count() == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
 
@@ -57,38 +53,38 @@
     }
     else
     {
-    <MudTable Class="stable" Items="logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(FilterFunc1)">
-         <HeaderContent>
-             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
-             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
-             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Type</MudTh>
-             <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Timestamp</MudTh>
-         </HeaderContent>
-         <RowTemplate>
-             <MudTd>
-                     <div class="d-flex flex-column">
-                         <MudText Typo="Typo.body2" Style="font-weight: bold; color: #424242;">@log.EmployeeUSer?.FirstName @log.EmployeeUSer?.LastName</MudText>
-                         <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.EmployeeUserId.ToString())</MudText>
-                     </div>
-            </MudTd>
-            <MudTd Style=""><span class="@ActionColor(log.Action)">@log.Action</span></MudTd>
-            <MudTd>@log.Type</MudTd>
-            <MudTd>
-                <div class="d-flex flex-column">
-                    <MudText Typo="Typo.body2" Style="color: #424242;">@log.Date?.ToString("dd MMM yyyy")</MudText>
-                    <MudText Typo="Typo.caption" Style="color: #A6AABA;">@log.Date?.ToString("hh:m   tt")</MudText>
-                </div>
-            </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-        </PagerContent>
-    </MudTable>
+        <MudTable Class="stable" Items="logsList" Context="log" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="593px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AuditlogsT,bool>(FilterFunc1)">
+            <HeaderContent>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Type</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Timestamp</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>
+                    <div class="d-flex flex-column">
+                        <MudText Typo="Typo.body2" Style="font-weight: bold; color: #424242;">@log.EmployeeUSer?.FirstName @log.EmployeeUSer?.LastName</MudText>
+                        <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.EmployeeUserId.ToString())</MudText>
+                    </div>
+                </MudTd>
+                <MudTd Style=""><span class="@ActionColor(log.Action)">@log.Action</span></MudTd>
+                <MudTd>@log.Type</MudTd>
+                <MudTd>
+                    <div class="d-flex flex-column">
+                        <MudText Typo="Typo.body2" Style="color: #424242;">@log.Date?.ToString("dd MMM yyyy")</MudText>
+                        <MudText Typo="Typo.caption" Style="color: #A6AABA;">@log.Date?.ToString("hh:m   tt")</MudText>
+                    </div>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 15, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
     }
 </div>
 
 @code {
-    #nullable disable
+#nullable disable
     [Parameter]
     public int? Id { get; set; }
     AuditlogsT _auditlogs = new();
@@ -138,7 +134,7 @@
         }
     }
 
-    public void BackBtn() => _navigationManager.NavigateTo("/accounts");
+    public void BackBtn() => NavigationManager.NavigateTo("/accounts");
 
     private bool FilterFunc1(AuditlogsT log) => FilterFunc(log, searchString1);
 

@@ -8,6 +8,7 @@
 
         public string infoFormat = "{first_item}-{last_item} of {all_items}";
         public string searchString1 = "";
+
         public DateRange _dateRange = new DateRange
         {
             Start = DateTime.Now.AddDays(-15),
@@ -80,6 +81,7 @@
         }
 
         public bool isVisible;
+
         public async void OpenOverlay()
         {
             isVisible = false;

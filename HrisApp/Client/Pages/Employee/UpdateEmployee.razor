@@ -25,7 +25,7 @@
 @inject StateService StateService
 @inject IManpowerService ManpowerService
 
-@attribute [Authorize(Roles = "HR, System Administrator")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR, Technical")]
 <PageTitle>Update Employee</PageTitle>
 
 <div class="topnav d-flex justify-content-end align-items-center z-60">
@@ -47,9 +47,13 @@
                             <div>
                                 @if (employee.DateInactiveStatus <= FiveYearsAgo)
                                 {
-                                    <MudTooltip Text="Delete" Arrow="true" Color="Color.Error">
-                                        <MudIconButton Icon="@Icons.Material.Rounded.Delete" Color="Color.Error" OnClick="@(() => DeleteEmployee(Id))"></MudIconButton>
-                                    </MudTooltip>
+                                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                                        <Authorized>
+                                            <MudTooltip Text="Delete" Arrow="true" Color="Color.Error">
+                                                <MudIconButton Icon="@Icons.Material.Rounded.Delete" Color="Color.Error" OnClick="@(() => DeleteEmployee(Id))"></MudIconButton>
+                                            </MudTooltip>
+                                        </Authorized>
+                                    </AuthorizeView>
                                 }
                                 @*  <MudTooltip Text="Print" Color="Color.Tertiary" Arrow="true">
                                 <MudIconButton Icon="@Icons.Material.Rounded.Print" Color="Color.Tertiary" aria-label="print" OnClick="@OnExporttoPDF"></MudIconButton>
@@ -63,7 +67,13 @@
                             <div class="diveditimg">
                                 <MudFileUpload T="IBrowserFile" OnFilesChanged="UploadImage" Accept="image/*" capture>
                                     <ButtonTemplate>
-                                        <MudIconButton Icon="@Icons.Material.Rounded.Edit" DisableElevation HtmlTag="label" for="@context" Class="btnupdateimg" />
+                                        <AuthorizeView Context="cccc" Roles="SysAdmin, GenAdmin, HR">
+                                            <Authorized>
+                                                <MudTooltip Text="Change Image" Arrow="true">
+                                                    <MudIconButton Icon="@Icons.Material.Rounded.Edit" DisableElevation HtmlTag="label" for="@context" Class="btnupdateimg" />
+                                                </MudTooltip>
+                                            </Authorized>
+                                        </AuthorizeView>
                                     </ButtonTemplate>
                                 </MudFileUpload>
                             </div>
@@ -136,7 +146,8 @@
                     <MudCard Class="empdmain">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="spantitle">Personal Data</span><AuthorizeView Roles="HR, System Administrator">
+                                <span class="spantitle">Personal Data</span>
+                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
 
@@ -236,7 +247,8 @@
                     <MudCard Class="empdmain" Style="margin-top: 2rem;">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="spantitle">Address Information</span><AuthorizeView Roles="HR, System Administrator">
+                                <span class="spantitle">Address Information</span>
+                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "addressOpen"))">
 
@@ -303,7 +315,8 @@
                     <MudCard Class="empdmain" Style="margin-top: 2rem;">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="spantitle">Person to Notify in Case of Emergency</span><AuthorizeView Roles="HR, System Administrator">
+                                <span class="spantitle">Person to Notify in Case of Emergency</span>
+                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "emerOpen"))">
 
@@ -341,7 +354,8 @@
                     <MudCard Class="empdmain">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="spantitle">Work Information</span><AuthorizeView Roles="HR, System Administrator">
+                                <span class="spantitle">Work Information</span>
+                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "workInfoOpen"))">
 
@@ -531,7 +545,8 @@
                     <MudCard Class="empdmain" Style="margin-top: 2rem;">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="spantitle">Compensation Package</span><AuthorizeView Roles="HR, System Administrator">
+                                <span class="spantitle">Compensation Package</span>
+                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "documentsOpen"))">
 

@@ -64,14 +64,14 @@
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No Licenses Information.</span>
-       
-        <AuthorizeView Roles="HR, System Administrator">
-                    <Authorized>
+
+        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+            <Authorized>
                 <MudTooltip Text="Add">
                     <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "LicenseOpen"))" Size="Size.Small">Add Information</MudButton>
                 </MudTooltip>
-                    </Authorized>
-                </AuthorizeView>
+            </Authorized>
+        </AuthorizeView>
     </div>
 }
 else
@@ -80,8 +80,8 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Licenses</span>
-                
-                <AuthorizeView Roles="HR, System Administrator">
+
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Add">
                             <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "LicenseOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -103,7 +103,7 @@ else
             <MudTd DataLabel="">@license.LicenseNo</MudTd>
             <MudTd DataLabel="">@license.Rating</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteLicense(license.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
@@ -111,7 +111,7 @@ else
                     </Authorized>
                     <NotAuthorized>
                         <MudIconButton Class="btnedit" Disabled Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
-                     </NotAuthorized>
+                    </NotAuthorized>
                 </AuthorizeView>
             </MudTd>
         </RowTemplate>
@@ -125,20 +125,20 @@ else
                 <MudInputLabel>Professional Licenses/Board Examinations Taken</MudInputLabel>
                 <MudTextField @bind-Value="license.Examination" Class="txf" DisableUnderLine Margin="Margin.Dense" />
             </MudItem>
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Date(mm/dd/yy)</MudInputLabel>
-                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="license.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-             </MudItem>
             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>License No.</MudInputLabel>
-                 <MudTextField @bind-Value="license.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-            </MudItem>             
+                <MudInputLabel>Date(mm/dd/yy)</MudInputLabel>
+                <MudDatePicker Class="txf" DisableUnderLine @bind-Date="license.Date" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+            </MudItem>
             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Rating %</MudInputLabel>
-                 <MudTextField @bind-Value="license.Rating" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-             </MudItem>
+                <MudInputLabel>License No.</MudInputLabel>
+                <MudTextField @bind-Value="license.LicenseNo" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Rating %</MudInputLabel>
+                <MudTextField @bind-Value="license.Rating" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
             <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                 <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+                <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
             </MudItem>
         </EditForm>
     </MudItem>

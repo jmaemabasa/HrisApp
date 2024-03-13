@@ -10,81 +10,111 @@
 
 <MudNavMenu Rounded="true" Margin="Margin.Normal" Bordered="true" Style="height: 100%">
     <span class="menutitle">Menu</span>
-    
-    <AuthorizeView Roles="System Administrator, HR">
-        <Authorized>
-            <MudNavLink Class="navlinktitle" Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
-            <MudNavLink Class="navlinktitle" Href="/announcement" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Announcement" IconColor="Color.Inherit">Announcement</MudNavLink>
-            <MudNavGroup Class="navlinktitle" Title="Employee" Expanded="false" Icon="@Icons.Material.Filled.Group" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employees</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/evaluationlist" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Assignment" IconColor="Color.Inherit">Evaluation</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
-            </MudNavGroup>
-            @* <MudNavGroup Class="navlinktitle" Title="Applicant" Expanded="false" Icon="@Icons.Material.Filled.GroupAdd" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/applicants" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Applicants</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/applicantstracker" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ElectricBolt" IconColor="Color.Inherit">Applicants Tracker</MudNavLink>
-            </MudNavGroup> *@
-        </Authorized>
-    </AuthorizeView>
-    <AuthorizeView Roles="System Administrator, HR">
-        <Authorized>
-            <MudNavGroup Class="navlinktitle" Title="Attendance" Expanded="false" Icon="@Icons.Material.Rounded.CalendarMonth" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/attendancerecords" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ViewTimeline" IconColor="Color.Inherit">Attendance Records</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/timetable" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.TableChart" IconColor="Color.Inherit">Shift Timetable <br /> Maintenance</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SensorOccupied" IconColor="Color.Inherit">Leave Types</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/leaveApprovals" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave Approvals</MudNavLink>
-            </MudNavGroup>
-        </Authorized>
-    </AuthorizeView>
-    <AuthorizeView Roles="System Administrator">
-        <Authorized>
-            <MudNavGroup Class="navlinktitle" Title="Master Data" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Job Position</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/subposition" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/external" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">External Manpower</MudNavLink>
-                @* <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink> *@
-                @* <MudNavGroup Class="navlinktitle" Title="Manpower" Expanded="false" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">
-                    <MudNavLink Class="navlinktitle" Href="/internal" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">Internal</MudNavLink>
-                </MudNavGroup> *@
-            </MudNavGroup>
-            <MudNavGroup Class="navlinktitle" Title="Account" Expanded="false" Icon="@Icons.Material.Rounded.LockPerson" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/accounts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">User List</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/auditlog" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.History" IconColor="Color.Inherit">Audit Log</MudNavLink>
-            </MudNavGroup>
-            <MudNavGroup Class="navlinktitle" Title="Reports" Expanded="false" Icon="@Icons.Material.Rounded.ImportExport" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/employeeReport" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Face" IconColor="Color.Inherit">Headcount Report</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/payrollAssistReport" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Payments" IconColor="Color.Inherit">201 File For Payroll <br /> Assist</MudNavLink>
-            </MudNavGroup>
-        </Authorized>
-    </AuthorizeView>
+    <div class="d-flex flex-column" style="height: calc(100% - 45px);">
+        <div class="flex-grow-1">
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <Authorized>
+                    <MudNavLink Class="navlinktitle" Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
+                </Authorized>
+            </AuthorizeView>
 
-    <AuthorizeView Roles="Technical">
-        <Authorized>
-            <MudNavLink Class="navlinktitle" Href="/asset-dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <Authorized>
+                    <MudNavLink Class="navlinktitle" Href="/announcement" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Announcement" IconColor="Color.Inherit">Announcement</MudNavLink>
+                    <MudNavGroup Class="navlinktitle" Title="Employee" Expanded="false" Icon="@Icons.Material.Filled.Group" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employees</MudNavLink>
 
-            <MudNavGroup Class="navlinktitle" Title="Asset" Expanded="true" Icon="@Icons.Material.Rounded.AdfScanner" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/asset-main" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Devices" IconColor="Color.Inherit">Main Asset</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/asset-accessories" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.KeyboardAlt" IconColor="Color.Inherit">Accessory</MudNavLink>
-            </MudNavGroup>
-            <MudNavGroup Class="navlinktitle" Title="Asset Master Data" Expanded="false" Icon="@Icons.Material.Rounded.AdminPanelSettings" IconColor="Color.Inherit">
-                <MudNavLink Class="navlinktitle" Href="/asset-types" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Mouse" IconColor="Color.Inherit">Types</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/asset-category" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category" IconColor="Color.Inherit">Category</MudNavLink>
-                <MudNavLink Class="navlinktitle" Href="/asset-subcategory" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.MenuBook" IconColor="Color.Inherit">Sub Category</MudNavLink>
-            </MudNavGroup>
-        </Authorized>
-    </AuthorizeView>
+                        <MudNavLink Class="navlinktitle" Href="/evaluationlist" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Assignment" IconColor="Color.Inherit">Evaluation</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/vacancy" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.RunningWithErrors" IconColor="Color.Inherit">Vacancy</MudNavLink>
+                    </MudNavGroup>
+                    @* <MudNavGroup Class="navlinktitle" Title="Applicant" Expanded="false" Icon="@Icons.Material.Filled.GroupAdd" IconColor="Color.Inherit">
+                    <MudNavLink Class="navlinktitle" Href="/applicants" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Applicants</MudNavLink>
+                    <MudNavLink Class="navlinktitle" Href="/applicantstracker" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ElectricBolt" IconColor="Color.Inherit">Applicants Tracker</MudNavLink>
+                    </MudNavGroup> *@
+                </Authorized>
+            </AuthorizeView>
 
-     <AuthorizeView Roles="User">
-          <Authorized>
-            <MudNavLink Class="navlinktitle" Href="/user/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave</MudNavLink>
-           
-          </Authorized>
-     </AuthorizeView>
-     
+            <AuthorizeView Roles="Technical">
+                <Authorized>
+                    <MudNavLink Class="navlinktitle" Href="/asset-dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
+                    <MudNavGroup Class="navlinktitle" Title="Employee" Expanded="false" Icon="@Icons.Material.Filled.Group" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/employee" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person" IconColor="Color.Inherit">Employees</MudNavLink>
+                    </MudNavGroup>
+                </Authorized>
+            </AuthorizeView>
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <Authorized>
+                    <MudNavGroup Class="navlinktitle" Title="Attendance" Expanded="false" Icon="@Icons.Material.Rounded.CalendarMonth" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/attendancerecords" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ViewTimeline" IconColor="Color.Inherit">Attendance Records</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/timetable" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.TableChart" IconColor="Color.Inherit">Shift Timetable <br /> Maintenance</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SensorOccupied" IconColor="Color.Inherit">Leave Types</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/leaveApprovals" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave Approvals</MudNavLink>
+                    </MudNavGroup>
+                </Authorized>
+            </AuthorizeView>
+
+            <MudDivider Class="my-1" />
+
+            <AuthorizeView Roles="SysAdmin, GenAdmin">
+                <Authorized>
+                    <MudNavGroup Class="navlinktitle" Title="Master Data" Expanded="false" Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/area" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Place" IconColor="Color.Inherit">Area</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/division" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Workspaces" IconColor="Color.Inherit">Division</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/department" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity3" IconColor="Color.Inherit">Department</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/section" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Diversity2" IconColor="Color.Inherit">Section</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Job Position</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/subposition" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Position</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/external" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">External Manpower</MudNavLink>
+                        @* <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink> *@
+                        @* <MudNavGroup Class="navlinktitle" Title="Manpower" Expanded="false" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/internal" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">Internal</MudNavLink>
+                        </MudNavGroup> *@
+                    </MudNavGroup>
+                </Authorized>
+            </AuthorizeView>
+
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <Authorized>
+                    <MudNavGroup Class="navlinktitle" Title="Reports" Expanded="false" Icon="@Icons.Material.Rounded.ImportExport" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/employeeReport" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Face" IconColor="Color.Inherit">Headcount Report</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/payrollAssistReport" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Payments" IconColor="Color.Inherit">201 File For Payroll <br /> Assist</MudNavLink>
+                    </MudNavGroup>
+                </Authorized>
+            </AuthorizeView>
+
+            <MudDivider Class="my-1" />
+
+            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
+                <Authorized>
+                    <MudNavGroup Class="navlinktitle" Title="Asset Monitoring" Expanded="false" Icon="@Icons.Material.Rounded.AdfScanner" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/asset-main" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Devices" IconColor="Color.Inherit">Main Asset</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/asset-accessories" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.KeyboardAlt" IconColor="Color.Inherit">Accessory</MudNavLink>
+                    </MudNavGroup>
+                    <MudNavGroup Class="navlinktitle" Title="Asset Master Data" Expanded="false" Icon="@Icons.Material.Rounded.AdminPanelSettings" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/asset-types" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Mouse" IconColor="Color.Inherit">Types</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/asset-category" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category" IconColor="Color.Inherit">Category</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/asset-subcategory" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.MenuBook" IconColor="Color.Inherit">Sub Category</MudNavLink>
+                    </MudNavGroup>
+                </Authorized>
+            </AuthorizeView>
+
+            <AuthorizeView Roles="User">
+                <Authorized>
+                    <MudNavLink Class="navlinktitle" Href="/user/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave</MudNavLink>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+        <div class="">
+            <AuthorizeView Roles="SysAdmin">
+                <Authorized>
+                    <MudNavGroup Class="navlinktitle" Title="Account" Expanded="false" Icon="@Icons.Material.Rounded.LockPerson" IconColor="Color.Inherit">
+                        <MudNavLink Class="navlinktitle" Href="/accounts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">User List</MudNavLink>
+                        <MudNavLink Class="navlinktitle" Href="/auditlog" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.History" IconColor="Color.Inherit">Audit Log</MudNavLink>
+                    </MudNavGroup>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+    </div>
 </MudNavMenu>
 
 @code {

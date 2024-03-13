@@ -47,7 +47,6 @@
         font-weight: bolder;
     }
 
-
 ::deep .mud-picker-inline {
     border: 2px solid #DEE2E6;
     padding: 0px 15px;
@@ -63,7 +62,7 @@
 
     ::deep .mud-picker-inline:hover {
         background-color: #82909e;
-    }   
+    }
 
 .actionCreate {
     color: #1A5D1A;

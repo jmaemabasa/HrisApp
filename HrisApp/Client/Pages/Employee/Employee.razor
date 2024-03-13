@@ -12,13 +12,13 @@
 @inject NavigationManager _navigationManager
 @inject StateService StateService
 
-@attribute [Authorize(Roles = "System Administrator, HR, User")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR, Technical")]
 
 <PageTitle>Employee Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242; font-family: 'Poppins', sans-serif;">Employee List</span>
-        <AuthorizeView Roles="HR, System Administrator">
+        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
                     <button class="Btn" @onclick="OnExporttoExcel">
@@ -195,7 +195,7 @@
                         <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
                     </MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="HR, System Administrator">
+                        <AuthorizeView Roles="SysAdmin, GenAdmin, HR, Technical">
                             <Authorized>
                                 <MudTooltip Text="View Details">
                                     <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>

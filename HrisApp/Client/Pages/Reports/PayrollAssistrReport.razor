@@ -1,14 +1,5 @@
 ﻿@page "/payrollAssistReport"
-
-@inject IToastService _toastService
-@inject SweetAlertService Swal
-@inject IJSRuntime JSRuntime
 @inject DTOEmpHeadcountExport _crrExport
-@inject IEmployeeService EmployeeService
-@inject IStaticService StaticService
-@inject IDivisionService DivisionService
-@inject IPositionService PositionService
-@inject NavigationManager _navigationManager
 
 <PageTitle>Payroll Assist Report</PageTitle>
 <div class="mb-5">
@@ -16,7 +7,7 @@
         <div class="d-flex flex-column">
             <div><span style="font-size: x-large;font-weight: 600;color: #424242;">Extract 201 File For Payroll Assist</span></div>
         </div>
-        <AuthorizeView Roles="HR, System Administrator">
+        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
                     @if (!_processing)
@@ -61,11 +52,11 @@
             </MudItem>
             <MudItem xs="12" sm="3">
                 <MudTextField DisableUnderLine @bind-Value="@_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
-             </MudItem>
-         </MudGrid>
+            </MudItem>
+        </MudGrid>
 
-     </div>
-     @if (_employeeList == null || _employeeList.Count == 0)
+    </div>
+    @if (_employeeList == null || _employeeList.Count == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
 
@@ -148,7 +139,7 @@
                     <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
                 </MudTd>
                 @*<MudTd>
-            <AuthorizeView Roles="HR, System Administrator">
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
             <MudTooltip Text="View Details">
             <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>

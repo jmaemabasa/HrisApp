@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace HrisApp.Client.Pages.Reports
+﻿namespace HrisApp.Client.Pages.Reports
 {
 #nullable disable
+
     public partial class PayrollAssistrReport : ComponentBase
     {
         public readonly string _infoFormat = "{first_item}-{last_item} of {all_items}";
@@ -68,9 +67,8 @@ namespace HrisApp.Client.Pages.Reports
                 await Task.Delay(2000);
                 var fileBytes = await _crrExport.createExcelPayrollAssists(SubPositionsL);
                 var fileName = $"201FileForPayrollAssists{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
-                await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+                await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
                 _processing = false;
-
             }
             catch (Exception ex)
             {
@@ -80,9 +78,10 @@ namespace HrisApp.Client.Pages.Reports
             }
         }
 
-
         #region COMBOBOX FILTERS
+
         public bool _isOpen;
+
         public void ToggleOpen()
         {
             if (_isOpen)
@@ -90,6 +89,7 @@ namespace HrisApp.Client.Pages.Reports
             else
                 _isOpen = true;
         }
+
         public void ToggleOpenMenu(bool test)
         {
             if (test)
@@ -100,6 +100,7 @@ namespace HrisApp.Client.Pages.Reports
 
         public string CmbDivText = "All Division";
         public string CmbDateActiveText = "All";
+
         public void CmbDateAllActive(string type)
         {
             DateTime today = DateTime.Today;
@@ -304,11 +305,13 @@ namespace HrisApp.Client.Pages.Reports
             }
         }
 
-        #endregion
+        #endregion COMBOBOX FILTERS
 
         #region FUNCTIONS / METHODS
-        public void CreateNewEmployee() => _navigationManager.NavigateTo("/employee/add");
-        public void ShowEmployee(int id) => _navigationManager.NavigateTo($"/employee/edit/{id}");
+
+        public void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");
+
+        public void ShowEmployee(int id) => NavigationManager.NavigateTo($"/employee/edit/{id}");
 
         public async Task DeleteEmployee(int id)
         {
@@ -331,6 +334,7 @@ namespace HrisApp.Client.Pages.Reports
 
         //LOADING
         public bool _isVisible;
+
         public async void OpenOverlay()
         {
             _isVisible = false;
@@ -338,6 +342,7 @@ namespace HrisApp.Client.Pages.Reports
             _isVisible = true;
             StateHasChanged();
         }
+
         public string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -347,9 +352,11 @@ namespace HrisApp.Client.Pages.Reports
 
             return char.ToUpper(input[0]) + input[1..];
         }
-        #endregion
+
+        #endregion FUNCTIONS / METHODS
 
         #region TABLE VARIABLES
+
         public bool FilterFunc1(EmployeeT emp) => FilterFunc(emp, _searchString1);
 
         private static bool FilterFunc(EmployeeT emp, string searchString)
@@ -373,7 +380,7 @@ namespace HrisApp.Client.Pages.Reports
 
             return false;
         }
-        #endregion
 
+        #endregion TABLE VARIABLES
     }
 }

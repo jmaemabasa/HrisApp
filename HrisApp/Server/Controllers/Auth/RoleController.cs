@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace HrisApp.Server.Controllers.Auth
+﻿namespace HrisApp.Server.Controllers.Auth
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -19,7 +16,6 @@ namespace HrisApp.Server.Controllers.Auth
         {
             var role = await _context.UserRoleT.ToListAsync();
             return Ok(role);
-
         }
     }
 }

@@ -64,8 +64,8 @@
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No Senior HS Information.</span>
-        
-        <AuthorizeView Roles="HR, System Administrator">
+
+        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
                 <MudTooltip Text="Add">
                     <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "SeniorOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -80,8 +80,8 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Senir HS Education</span>
-               
-                <AuthorizeView Roles="HR, System Administrator">
+
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Add">
                             <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "SeniorOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -103,7 +103,7 @@ else
             <MudTd DataLabel="">@secondary.ShsAward</MudTd>
             <MudTd DataLabel="">@secondary.ShsSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteSenior(secondary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

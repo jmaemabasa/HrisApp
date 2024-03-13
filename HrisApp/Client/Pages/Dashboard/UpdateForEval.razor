@@ -5,7 +5,7 @@
 @inject NavigationManager NavManager
 @inject IDivisionService DivisionService
 
-@attribute [Authorize(Roles = "System Administrator, HR")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR")]
 
 <PageTitle>Evaluation</PageTitle>
 
@@ -141,11 +141,15 @@
                 </MudTd>
                 @if (employe1.EvalStatus != "Done")
                 {
-                    <MudTd DataLabel="" Style="text-align: center;">
-                        <MudTooltip Text="Update" Color="Color.Tertiary">
-                            <MudIconButton Icon="@Icons.Material.Rounded.DownloadDone" OnClick="@(() => UpdateTable(employe1))"></MudIconButton>
-                        </MudTooltip>
-                    </MudTd>
+                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                        <Authorized>
+                            <MudTd DataLabel="" Style="text-align: center;">
+                                <MudTooltip Text="Update" Color="Color.Tertiary">
+                                    <MudIconButton Icon="@Icons.Material.Rounded.DownloadDone" OnClick="@(() => UpdateTable(employe1))"></MudIconButton>
+                                </MudTooltip>
+                            </MudTd>
+                        </Authorized>
+                    </AuthorizeView>
                 }
                 else
                 {

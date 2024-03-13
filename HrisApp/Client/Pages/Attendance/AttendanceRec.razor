@@ -6,7 +6,7 @@
 @inject IEmployeeService EmpService
 @inject IPayrollService PayService
 
-@attribute [Authorize(Roles = "System Administrator, HR")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR")]
 
 <PageTitle>Attendance</PageTitle>
 
@@ -58,7 +58,7 @@
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Attendance Records</span>
-        <AuthorizeView Roles="HR, System Administrator">
+        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
                     <button class="Btn" @onclick="OpenUploadDialog">

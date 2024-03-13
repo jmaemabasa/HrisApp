@@ -12,55 +12,56 @@
     <MudCardContent>
         <div class="d-flex justify-content-between mb-3 align-items-center">
             <span class="maintitlespan">Leave Balance</span>
-
-            <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "UpdateLeaveBalOpen"))">
-
-                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
-
-                <div class="text">Update</div>
-            </button>
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <Authorized>
+                    <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "UpdateLeaveBalOpen"))">
+                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+                        <div class="text">Update</div>
+                    </button>
+                </Authorized>
+            </AuthorizeView>
         </div>
 
         <div class="d-flex justify-content-around">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="progress-bar-el el" style="--el: @availableLeavetextEL">
                     <progress value="@empLeaveCred.EL" min="0" max="@empLeaveCred.EL" style="visibility:hidden;height:0;width:0;"></progress>
-                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.EL- countEl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.EL</span></div>
+                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.EL - countEl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.EL</span></div>
                 </div>
                 <div class="credtitle">Emergency Leave</div>
             </div>
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="progress-bar-ml ml" style="--ml: @availableLeavetextML">
                     <progress value="@empLeaveCred.ML" min="0" max="@empLeaveCred.ML" style="visibility:hidden;height:0;width:0;"></progress>
-                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.ML- countMl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.ML</span></div>
+                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.ML - countMl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.ML</span></div>
                 </div>
                 <div class="credtitle">Maternity Leave</div>
             </div>
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="progress-bar-pl pl" style="--pl: @availableLeavetextPL">
                     <progress value="@empLeaveCred.PL" min="0" max="@empLeaveCred.PL" style="visibility:hidden;height:0;width:0;"></progress>
-                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.PL- countPl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.PL</span></div>
+                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.PL - countPl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.PL</span></div>
                 </div>
                 <div class="credtitle">Paternity Leave</div>
             </div>
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="progress-bar-sl sl" style="--sl: @availableLeavetext">
                     <progress value="@empLeaveCred.SL" min="0" max="@empLeaveCred.SL" style="visibility:hidden;height:0;width:0;"></progress>
-                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.SL- countSl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.SL</span></div>
+                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.SL - countSl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.SL</span></div>
                 </div>
                 <div class="credtitle">Sick Leave</div>
             </div>
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="progress-bar-vl vl" style="--vl: @availableLeavetextVL">
                     <progress value="@empLeaveCred.VL" min="0" max="@empLeaveCred.VL" style="visibility:hidden;height:0;width:0;"></progress>
-                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.VL- countVl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.VL</span></div>
+                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.VL - countVl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.VL</span></div>
                 </div>
                 <div class="credtitle">Vacation Leave</div>
             </div>
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="progress-bar-ol sl" style="--ol: @availableLeavetextOL">
                     <progress value="@empLeaveCred.OL" min="0" max="@empLeaveCred.OL" style="visibility:hidden;height:0;width:0;"></progress>
-                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.OL- countOl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.OL</span></div>
+                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.OL - countOl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.OL</span></div>
                 </div>
                 <div class="credtitle">Other</div>
             </div>
@@ -73,13 +74,14 @@
     <MudCardContent Class="pb-0">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <span class="maintitlespan">Leave History</span>
-
-            <button class="Btn btnaddleave" onclick="@(() => OpenDrawer(Anchor.End, "AddHistoryOpen"))">
-
-                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
-
-                <div class="text">Add Leave</div>
-            </button>
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <Authorized>
+                    <button class="Btn btnaddleave" onclick="@(() => OpenDrawer(Anchor.End, "AddHistoryOpen"))">
+                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+                        <div class="text">Add Leave</div>
+                    </button>
+                </Authorized>
+            </AuthorizeView>
         </div>
 
         @if (leaveHistoryList == null || leaveHistoryList.Count == 0)
@@ -127,7 +129,7 @@
 
                     </MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="System Administrator">
+                        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                             <Authorized>
                                 <MudTooltip Text="Check">
                                     <MudIconButton Class="btnedit" OnClick="@(() => OpenViewLeaveDetails(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
@@ -135,13 +137,13 @@
                             </Authorized>
                             <NotAuthorized>
                                 <MudIconButton Disabled Class="btnedit" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
-                             </NotAuthorized>
-                         </AuthorizeView>
-                     </MudTd>
-                 </RowTemplate>
-                 <PagerContent>
-                     <MudTablePager PageSizeOptions="new int[] { 5 }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-                 </PagerContent>
+                            </NotAuthorized>
+                        </AuthorizeView>
+                    </MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[] { 5 }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                </PagerContent>
             </MudTable>
         }
     </MudCardContent>
@@ -186,7 +188,7 @@
             <span style="font-size: 16px; color: #E38D0F; margin-bottom: 10px;"><b>Leave Form</b></span>
             <MudText Typo="Typo.body2" Style="color: #6A707D">Please fill up the form</MudText>
         </div>
-        
+
         <div>
             <MudText Typo="Typo.body2">Leave Type</MudText>
             <MudSelect @bind-Value="newLeaveType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:10px;">
@@ -227,7 +229,7 @@
                     <MudIconButton Style="color: #BE1313; background-color: #EABCBB" OnClick="Cancel" Icon="@Icons.Material.Filled.Close" Size="Size.Small" aria-label="Edit"></MudIconButton>
                 </MudTooltip>
             </div>
-            
+
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Leave Type</MudText>
                 <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.LeaveType</MudText>
@@ -250,7 +252,7 @@
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Purpose</MudText>
                 <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.Purpose</MudText>
             </div>
-            <AuthorizeView Roles="System Administrator">
+            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                 <Authorized>
                     <div class="divsingledetails mb-2">
                         <div class="d-flex justify-content-between align-items-center">

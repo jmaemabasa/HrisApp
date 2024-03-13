@@ -65,9 +65,8 @@
                 await Task.Delay(2000);
                 var fileBytes = await _crrExport.createExcelHeadcount(_employeeList, daterange, SubPositionsL);
                 var fileName = $"SSDIEmployees{DateTime.Now.ToString("yyyy-MM-dd")}.xlsx";
-                await JSRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+                await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
                 _processing = false;
-
             }
             catch (Exception ex)
             {
@@ -77,9 +76,10 @@
             }
         }
 
-
         #region COMBOBOX FILTERS
+
         public bool _isOpen;
+
         public void ToggleOpen()
         {
             if (_isOpen)
@@ -87,6 +87,7 @@
             else
                 _isOpen = true;
         }
+
         public void ToggleOpenMenu(bool test)
         {
             if (test)
@@ -97,6 +98,7 @@
 
         public string CmbDivText = "All Division";
         public string CmbDateActiveText = "All";
+
         public void CmbDateAllActive(string type)
         {
             DateTime today = DateTime.Today;
@@ -224,14 +226,14 @@
             if (div == 0)
             {
                 CmbDivText = "All Division";
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs;
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => (e.DateHired <= _dateRange.End) && (e.DateInactiveStatus == null || e.DateInactiveStatus >= _dateRange.End)).ToList();
-                    }
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs;
+                }
+                else
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => (e.DateHired <= _dateRange.End) && (e.DateInactiveStatus == null || e.DateInactiveStatus >= _dateRange.End)).ToList();
+                }
             }
             else
             {
@@ -242,14 +244,14 @@
                         CmbDivText = e.Name;
                     }
                 }
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.DivisionId == div).ToList();
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.DivisionId == div && (e.DateHired <= _dateRange.End) && (e.DateInactiveStatus == null || e.DateInactiveStatus >= _dateRange.End)).ToList();
-                    }
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.DivisionId == div).ToList();
+                }
+                else
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.DivisionId == div && (e.DateHired <= _dateRange.End) && (e.DateInactiveStatus == null || e.DateInactiveStatus >= _dateRange.End)).ToList();
+                }
             }
 
             if (_employeeList == null || _employeeList.Count == 0)
@@ -301,11 +303,13 @@
             }
         }
 
-        #endregion
+        #endregion COMBOBOX FILTERS
 
         #region FUNCTIONS / METHODS
-        public void CreateNewEmployee() => _navigationManager.NavigateTo("/employee/add");
-        public void ShowEmployee(int id) => _navigationManager.NavigateTo($"/employee/edit/{id}");
+
+        public void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");
+
+        public void ShowEmployee(int id) => NavigationManager.NavigateTo($"/employee/edit/{id}");
 
         public async Task DeleteEmployee(int id)
         {
@@ -328,6 +332,7 @@
 
         //LOADING
         public bool _isVisible;
+
         public async void OpenOverlay()
         {
             _isVisible = false;
@@ -335,6 +340,7 @@
             _isVisible = true;
             StateHasChanged();
         }
+
         public string CapitalizeFirstLetter(string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -344,9 +350,11 @@
 
             return char.ToUpper(input[0]) + input[1..];
         }
-        #endregion
+
+        #endregion FUNCTIONS / METHODS
 
         #region TABLE VARIABLES
+
         public bool FilterFunc1(EmployeeT emp) => FilterFunc(emp, _searchString1);
 
         private static bool FilterFunc(EmployeeT emp, string searchString)
@@ -370,7 +378,7 @@
 
             return false;
         }
-        #endregion
 
+        #endregion TABLE VARIABLES
     }
 }

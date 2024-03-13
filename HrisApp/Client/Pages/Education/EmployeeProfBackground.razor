@@ -64,8 +64,8 @@
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No Professional Background.</span>
-        
-        <AuthorizeView Roles="HR, System Administrator">
+
+        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
             <Authorized>
                 <MudTooltip Text="Add">
                     <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -80,8 +80,8 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Professional Background</span>
-                
-                <AuthorizeView Roles="HR, System Administrator">
+
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Add">
                             <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "TrainingOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -107,7 +107,7 @@ else
             <MudTd DataLabel="">@training.BasicSalary</MudTd>
             <MudTd DataLabel="">@training.RSLeaving</MudTd>
             <MudTd>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeleteProfbg(training.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
@@ -115,7 +115,7 @@ else
                     </Authorized>
                     <NotAuthorized>
                         <MudIconButton Class="btnedit" Disabled Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
-                     </NotAuthorized>
+                    </NotAuthorized>
                 </AuthorizeView>
             </MudTd>
         </RowTemplate>
@@ -125,33 +125,33 @@ else
     <span class="spantitle mb-3">Professional Background</span>
     <MudItem xs="12">
         <EditForm Model="profBg" OnValidSubmit="SaveBg" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Date From(mm/dd/yyyy)</MudInputLabel>
-                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="profBg.DateFrom" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Date To(mm/dd/yyyy)</MudInputLabel>
-                 <MudDatePicker Class="txf" DisableUnderLine @bind-Date="profBg.DateTo" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
-             </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Date From(mm/dd/yyyy)</MudInputLabel>
+                <MudDatePicker Class="txf" DisableUnderLine @bind-Date="profBg.DateFrom" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Date To(mm/dd/yyyy)</MudInputLabel>
+                <MudDatePicker Class="txf" DisableUnderLine @bind-Date="profBg.DateTo" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+            </MudItem>
             <MudItem xs="12" Class="mb-2">
                 <MudInputLabel>Company Name</MudInputLabel>
                 <MudTextField @bind-Value="profBg.CompanyName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Position</MudInputLabel>
-                 <MudTextField @bind-Value="profBg.Position" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Basic Salary</MudInputLabel>
-                 <MudTextField @bind-Value="profBg.BasicSalary" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="mb-2">
-                 <MudInputLabel>Reason for Leaving</MudInputLabel>
-                 <MudTextField @bind-Value="profBg.RSLeaving" Class="txf" DisableUnderLine Margin="Margin.Dense" />
-             </MudItem>
-             <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                 <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
-             </MudItem>
-         </EditForm>
-     </MudItem>
- </MudDrawer>
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Position</MudInputLabel>
+                <MudTextField @bind-Value="profBg.Position" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Basic Salary</MudInputLabel>
+                <MudTextField @bind-Value="profBg.BasicSalary" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Reason for Leaving</MudInputLabel>
+                <MudTextField @bind-Value="profBg.RSLeaving" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer>

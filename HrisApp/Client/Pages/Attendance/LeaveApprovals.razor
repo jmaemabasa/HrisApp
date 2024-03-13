@@ -8,7 +8,7 @@
 @inject IAuditlogService AuditlogService
 @inject IToastService _toastService
 @inject ILeaveService LeaveService
-@attribute [Authorize(Roles = "System Administrator, HR")]
+@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR")]
 <PageTitle>Leave Approvals</PageTitle>
 
 
@@ -80,7 +80,7 @@
 
                 </MudTd>
                 <MudTd>
-                    <AuthorizeView Roles="System Administrator, HR, User">
+                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
                         <Authorized>
                             <MudTooltip Text="View">
                                 <MudIconButton Class="btnedit" OnClick="@(() => OpenViewLeaveDetails(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
@@ -88,14 +88,14 @@
                         </Authorized>
                         <NotAuthorized>
                             <MudIconButton Disabled Class="btnedit" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
-                         </NotAuthorized>
-                     </AuthorizeView>
-                 </MudTd>
-             </RowTemplate>
-             <PagerContent>
-                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
-             </PagerContent>
-         </MudTable>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
     }
 </div>
 
@@ -156,8 +156,8 @@
                                 </div>
                                 <div class="col col-4 flex-grow-1">
                                     <MudButton Variant="Variant.Filled" OnClick="@SaveUpdateStatus" DisableElevation Class="btnSaveStatus" Size="Size.Medium" FullWidth="true"><MudText>Save</MudText></MudButton>
-                                 </div>
-                             </div>
+                                </div>
+                            </div>
                         }
                         else if (obj.Status == "Approved")
                         {
@@ -177,7 +177,3 @@
         </div>
     </DialogContent>
 </MudDialog>
-
-@code {
-
-}

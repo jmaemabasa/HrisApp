@@ -24,7 +24,7 @@
 @inject BackUpDeletion BackUpDeletion
 @inject StateService StateService
 @inject IManpowerService ManpowerService
-@attribute [Authorize(Roles = "System Administrator, HR, User, Technical")]
+@attribute [Authorize(Roles = "System Administrator, GenAdmin, HR, User, Technical")]
 <PageTitle>Profile</PageTitle>
 
 <div class="@*tabdiv*@ pt-2">
@@ -42,13 +42,6 @@
                             <MudAvatar Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
                                 <MudImage Src="@ImageData"></MudImage>
                             </MudAvatar>
-                            <div class="diveditimg">
-                                <MudFileUpload T="IBrowserFile" OnFilesChanged="UploadImage" Accept="image/*" capture>
-                                    <ButtonTemplate>
-                                        <MudIconButton Icon="@Icons.Material.Rounded.Edit" DisableElevation HtmlTag="label" for="@context" Class="btnupdateimg" />
-                                     </ButtonTemplate>
-                                 </MudFileUpload>
-                             </div>
                          </div>
                          <div>
                              <MudText Align="Align.Center" Style="font-family: 'Poppins', sans-serif !important;font-weight: bold; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@FUpper(employee.FirstName) @FUpper(employee.LastName)</MudText>
