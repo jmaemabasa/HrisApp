@@ -9,7 +9,7 @@
 @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "SysAdmin" || GlobalConfigService.Role == "GenAdmin")
 {
     <MudGrid Spacing="4">
-        <MudItem xs="12" sm="9">
+        <MudItem xs="12" lg="9">
             <MudGrid Spacing="4">
                 <MudItem xs="12">
                     <MudCard Class="evalpanel">
@@ -39,21 +39,21 @@
             </MudGrid>
 
         </MudItem>
-        <MudItem xs="12" sm="3">
+        <MudItem xs="12" lg="3">
             <MudCard Class="bdaypanel">
                 <MudCarousel Class="mud-width-full" Style="height:100%;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object" ArrowsPosition="MudBlazor.Position.Bottom">
                     <MudCarouselItem Transition="Transition.Slide">
                         <div class="row">
                             <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
                                     <span class="bdaytitle"><strong>Birthdays</strong></span>
                                     <MudMenu FullWidth="true" ActivationEvent="@MouseEvent.LeftClick">
                                         <ActivatorContent>
                                             <MudChip Variant="Variant.Outlined" Color="Color.Dark" Style="width: 130px">@cmbBdyTitle <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown" Style="font-size: 1.3em; margin-left: 5px;" /></MudChip>
                                         </ActivatorContent>
                                         <ChildContent>
-                                            <MudMenuItem OnClick="BdayThisMonth">This Month</MudMenuItem>
-                                            <MudMenuItem OnClick="BdayThisDay">Today</MudMenuItem>
+                                            <MudMenuItem OnTouch="BdayThisMonth" OnClick="BdayThisMonth">This Month</MudMenuItem>
+                                            <MudMenuItem OnTouch="BdayThisDay" OnClick="BdayThisDay">Today</MudMenuItem>
                                         </ChildContent>
                                     </MudMenu>
                                 </div>
@@ -74,7 +74,7 @@
                     <MudCarouselItem Transition="Transition.Slide">
                         <div class="row">
                             <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center  flex-wrap">
                                     <a href="/announcement" class="bdaytitle announceHeader"><strong>Announcements</strong></a>
                                     <MudIcon Icon="@Icons.Material.Rounded.Comment" Size="Size.Large"></MudIcon>
                                 </div>
@@ -116,7 +116,7 @@
             </MudCard>
         </MudItem>
 
-        <MudItem xs="12" sm="8">
+        <MudItem xs="12" lg="8">
             <MudCard Class="bargraph">
                 <MudCardContent Style="">
                     <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Headcount vs Plantilla</span>
@@ -127,7 +127,7 @@
             </MudCard>
         </MudItem>
 
-        <MudItem xs="12" sm="4">
+        <MudItem xs="12" lg="4">
             <MudCard Class="bargraph">
                 <MudCardContent Style="">
                     <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Count by Division</span>

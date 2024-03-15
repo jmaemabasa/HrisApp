@@ -2,85 +2,62 @@
 @using System.Timers;
 @inherits LayoutComponentBase
 
-@inject NavigationManager NavigationManager
-@inject ILocalStorageService LocalStorage
-@inject AuthenticationStateProvider AuthStateProvider
-@inject IAuthService AuthService
-@inject GlobalConfigService GlobalConfigService
-@inject IToastService _toastService
-@inject IDialogService DialogService
-@inject IJSRuntime JSRuntime
-@inject IImageService ImageService
-@inject IEmployeeService EmployeeService
-@inject ILeaveHistoryService LeaveHistoryService
-
 <style>
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
-        background: #e9ecef;
-        border: none;
-        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-        border-radius: 20px;
-        height: 95vh;
-        left: 15px;
-        top: 15px;
-    }*/
+                    background: #e9ecef;
+                    border: none;
+                    box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                    border-radius: 20px;
+                    height: 95vh;
+                    left: 15px;
+                    top: 15px;
+                }*/
 
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
-        background: #e9ecef;
-        border: none;
-        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-        border-radius: 20px;
-        height: 95vh;
-        left: 15px;
-        top: 15px;
-        width: 4rem;
-    }*/
+                    background: #e9ecef;
+                    border: none;
+                    box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                    border-radius: 20px;
+                    height: 95vh;
+                    left: 15px;
+                    top: 15px;
+                    width: 4rem;
+                }*/
 
     /* .mud-container.mud-container-maxwidth-xxl {
-        padding-left: 60px;
-        padding-right: 35px;
-        margin-top: 15px;
-    }
+                    padding-left: 60px;
+                    padding-right: 35px;
+                    margin-top: 15px;
+                }
 
-    .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
-        left: 15px;
-        margin-bottom: 25px;
-    }
+                .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
+                    left: 15px;
+                    margin-bottom: 25px;
+                }
 
-    .mud-appbar .mud-toolbar-appbar {
-        padding: 0px !important;
-        align-items: center;
-        width: calc(100% - 80px) !important;
-        padding-left: 26px !important;
-        padding-top: 15px !important;
-    }
+                .mud-appbar .mud-toolbar-appbar {
+                    padding: 0px !important;
+                    align-items: center;
+                    width: calc(100% - 80px) !important;
+                    padding-left: 26px !important;
+                    padding-top: 15px !important;
+                }
 
-    .btnburger {
-        border: none;
-        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-        border-radius: 50%;
-        transition: all .5s ease;
-        height: 40px;
-    } */
+                .btnburger {
+                    border: none;
+                    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+                    border-radius: 50%;
+                    transition: all .5s ease;
+                    height: 40px;
+                } */
 </style>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
-@* #EEF1F6  #031a5a*@
 
 <MudLayout>
-    @* <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
-        <MudAppBar Elevation="0" Style="left: 45px; width: max-content; margin-right: 35px;">
-            <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-            @* <span style="font-weight: 600;font-size: 1.4rem;">Good Afternoon, @GlobalConfigService.Fullname.Split(' ')[0]</span> *@
-            
-
-             @*<MudSpacer />
-
-        </MudAppBar>
-    </MudHidden> *@
-
+    @* APP BAR *@
     <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
         <MudAppBar Elevation="0" Style="left: 45px;">
             <MudIconButton Class="" Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
@@ -92,7 +69,7 @@
                 <ActivatorContent>
                     <MudTooltip Text="Notifications">
                         @* <MudBadge Content="@badgeCount" Color="Color.Error" Overlap="true" Bordered="true" Class="me-4 notifbadge">
-                            <MudIcon Icon="@Icons.Material.Rounded.CircleNotifications" Size="Size.Large" Color="Color.Default" />
+                        <MudIcon Icon="@Icons.Material.Rounded.CircleNotifications" Size="Size.Large" Color="Color.Default" />
                         </MudBadge> *@
                         <button class="notifbadge me-3">
                             <MudIcon Style="font-size: 3rem;" Icon="@Icons.Material.Rounded.CircleNotifications"></MudIcon>
@@ -116,7 +93,7 @@
                             {
                                 @if (DateTime.Now - item.InsertedTime < TimeSpan.FromMinutes(60))
                                 {
-                                    <MudMenuItem class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
+                                    <MudMenuItem OnTouch="@(() => ReadNotif(item.Id))" class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center">
                                                 <div>
@@ -154,7 +131,7 @@
                             {
                                 @if (DateTime.Now - item.InsertedTime > TimeSpan.FromMinutes(60))
                                 {
-                                    <MudMenuItem class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
+                                    <MudMenuItem OnTouch="@(() => ReadNotif(item.Id))" class="d-flex eachnotifbox align-items-center justify-content-between" @onclick="(() => ReadNotif(item.Id))">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center">
                                                 <div>
@@ -185,14 +162,14 @@
                                 }
                             }
                         </div>
-                        @if (PendingCount.Count() !> 10)
+                        @if (PendingCount.Count()! > 10)
                         {
                             <div class="seemorebutton" @onclick="UpdateLimitNotif">
                                 See More
                             </div>
                         }
-                    </div>                
-                    </ChildContent>
+                    </div>
+                </ChildContent>
             </MudMenu>
             @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
             {
@@ -206,8 +183,8 @@
                         </MudTooltip>
                     </ActivatorContent>
                     <ChildContent>
-                        <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                        <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                        <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                        <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
                     </ChildContent>
                 </MudMenu>
             }
@@ -223,10 +200,10 @@
                         </MudTooltip>
                     </ActivatorContent>
                     <ChildContent>
-                        <MudMenuItem OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
+                        <MudMenuItem OnTouch="ViewProfile" OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
                         <MudDivider DividerType="DividerType.Middle" Class="my-2" />
-                        <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                        <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                        <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                        <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
                     </ChildContent>
                 </MudMenu>
             }
@@ -244,15 +221,13 @@
                     @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
                     <MudMenu Class="btnburger" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                         <ActivatorContent>
-                            <MudTooltip Text="Account">
-                                <MudAvatar>
-                                    <MudImage Src="@ImageData"></MudImage>
-                                </MudAvatar>
-                            </MudTooltip>
+                            <MudAvatar>
+                                <MudImage Src="@ImageData"></MudImage>
+                            </MudAvatar>
                         </ActivatorContent>
                         <ChildContent>
-                            <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                            <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                            <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                            <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
                         </ChildContent>
                     </MudMenu>
                 }
@@ -261,25 +236,23 @@
                     @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
                     <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                         <ActivatorContent>
-                            <MudTooltip Text="Account">
-                                <MudAvatar>
-                                    <MudImage Src="@ImageData"></MudImage>
-                                </MudAvatar>
-                            </MudTooltip>
+                            <MudAvatar>
+                                <MudImage Src="@ImageData"></MudImage>
+                            </MudAvatar>
                         </ActivatorContent>
                         <ChildContent>
-                            <MudMenuItem OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
+                            <MudMenuItem OnTouch="ViewProfile" OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
                             <MudDivider DividerType="DividerType.Middle" Class="my-2" />
-                            <MudMenuItem OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                            <MudMenuItem OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                            <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
+                            <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
                         </ChildContent>
                     </MudMenu>
                 }
             </div>
         </MudAppBar>
     </MudHidden>
-    
 
+    @* DRAWER *@
     <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
         <MudDrawer @bind-Open="@_drawerOpen" Fixed="true" Elevation="0" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true" Class="sidebarmenu">
             @if (_drawerOpen == true)
@@ -309,7 +282,8 @@
             <NavMenu />
         </MudDrawer>
     </MudHidden>
-    
+
+    @* BODY *@
     <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
         <MudMainContent>
             <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
@@ -361,7 +335,7 @@
     private List<Emp_LeaveHistoryT> PendingCount = new();
     private List<EmployeeT> EmployeeList = new();
     private int newRequest;
-    private int badgeCount =0;
+    private int badgeCount = 0;
     private int countSnack = 0;
 
 
@@ -407,7 +381,7 @@
     private async Task ToggleTheme()
     {
         _isDarkMode = !_isDarkMode;
-        await JSRuntime.InvokeVoidAsync("themeToggle", _isDarkMode);
+        await jsRuntime.InvokeVoidAsync("themeToggle", _isDarkMode);
     }
 
     MudTheme MyCustomTheme = new MudTheme()
@@ -525,12 +499,10 @@
         PendingCount = await LeaveHistoryService.Getpendingcount();
         newRequest = PendingCount.Count();
 
-        // Console.WriteLine(newRequest);
-
         countSnack = newRequest;
         if (countSnack != 0)
         {
-           OnVal(newRequest);
+            OnVal(newRequest);
         }
         else
         {

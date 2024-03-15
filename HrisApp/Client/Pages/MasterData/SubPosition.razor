@@ -21,10 +21,10 @@
                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                <MudMenuItem OnTouch="@(() => CmbDivision(0))" OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
                 @foreach (var item in Divisions)
                 {
-                    <MudMenuItem OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                    <MudMenuItem OnTouch="@(() => CmbDivision(item.Id))" OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
                 }
             </ChildContent>
         </MudMenu>

@@ -1,12 +1,4 @@
 ﻿@using System.Timers;
-@inject NavigationManager NavigationManager
-@inject ILocalStorageService LocalStorage
-@inject AuthenticationStateProvider AuthStateProvider
-@inject IAuthService AuthService
-@inject GlobalConfigService GlobalConfigService
-@inject IToastService _toastService
-@inject IDialogService DialogService
-@inject ILeaveHistoryService LeaveHistoryService
 
 <MudNavMenu Rounded="true" Margin="Margin.Normal" Bordered="true" Style="height: 100%">
     <span class="menutitle">Menu</span>
@@ -50,10 +42,11 @@
                         <MudNavLink Class="navlinktitle" Href="/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.SensorOccupied" IconColor="Color.Inherit">Leave Types</MudNavLink>
                         <MudNavLink Class="navlinktitle" Href="/leaveApprovals" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave Approvals</MudNavLink>
                     </MudNavGroup>
+
+                    <MudDivider Class="my-1" />
+
                 </Authorized>
             </AuthorizeView>
-
-            <MudDivider Class="my-1" />
 
             <AuthorizeView Roles="SysAdmin, GenAdmin">
                 <Authorized>
@@ -82,10 +75,11 @@
                 </Authorized>
             </AuthorizeView>
 
-            <MudDivider Class="my-1" />
-
             <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
                 <Authorized>
+
+                    <MudDivider Class="my-1" />
+
                     <MudNavGroup Class="navlinktitle" Title="Asset Monitoring" Expanded="false" Icon="@Icons.Material.Rounded.AdfScanner" IconColor="Color.Inherit">
                         <MudNavLink Class="navlinktitle" Href="/asset-main" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Devices" IconColor="Color.Inherit">Main Asset</MudNavLink>
                         <MudNavLink Class="navlinktitle" Href="/asset-accessories" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.KeyboardAlt" IconColor="Color.Inherit">Accessory</MudNavLink>

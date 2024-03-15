@@ -43,10 +43,10 @@
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDivision(0))" OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
                                 @foreach (var item in DivisionsL)
                                 {
-                                    <MudMenuItem OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                                    <MudMenuItem OnTouch="@(() => CmbDivision(item.Id))" OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
                                 }
                             </ChildContent>
                         </MudMenu>
@@ -58,12 +58,12 @@
                                 <div style="width: 251px;" class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDateActiveText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem OnClick="@(() => CmbDateAllActive("all"))">All</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateAllActive("yesterday"))">Yesterday</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateAllActive("lastweek"))">Last Week</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateAllActive("lastmonth"))">Last Month</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateAllActive("lastyear"))">Last Year</MudMenuItem>
-                                <MudMenuItem OnClick="@ToggleOpen" AutoClose=false>
+                                <MudMenuItem OnTouch="@(() => CmbDateAllActive("all"))" OnClick="@(() => CmbDateAllActive("all"))">All</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateAllActive("yesterday"))" OnClick="@(() => CmbDateAllActive("yesterday"))">Yesterday</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateAllActive("lastweek"))" OnClick="@(() => CmbDateAllActive("lastweek"))">Last Week</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateAllActive("lastmonth"))" OnClick="@(() => CmbDateAllActive("lastmonth"))">Last Month</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateAllActive("lastyear"))" OnClick="@(() => CmbDateAllActive("lastyear"))">Last Year</MudMenuItem>
+                                <MudMenuItem OnTouch="@ToggleOpen" OnClick="@ToggleOpen" AutoClose=false>
                                     <div class="d-flex justify-content-between align-items-center">Custom Date Range <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight"></MudIcon></div>
                                     <MudPopover Class="popoverDateHired" Open="@_isOpen">
                                         <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />

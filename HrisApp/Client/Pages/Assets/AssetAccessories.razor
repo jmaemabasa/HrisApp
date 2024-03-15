@@ -25,10 +25,10 @@
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbStatusText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem OnClick="@(() => SearchStatus(0))">All Status</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => SearchStatus(0))" OnClick="@(() => SearchStatus(0))">All Status</MudMenuItem>
                                 @foreach (var item in ASSSTATUS)
                                 {
-                                    <MudMenuItem OnClick="@(() => SearchStatus(item.Id))">@item.Name</MudMenuItem>
+                                    <MudMenuItem OnTouch="@(() => SearchStatus(item.Id))" OnClick="@(() => SearchStatus(item.Id))">@item.Name</MudMenuItem>
                                 }
                             </ChildContent>
                         </MudMenu>
@@ -39,10 +39,10 @@
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbCatText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem OnClick="@(() => CmbCategory(0))">All Category</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbCategory(0))" OnClick="@(() => CmbCategory(0))">All Category</MudMenuItem>
                                 @foreach (var item in CATEGORIES)
                                 {
-                                    <MudMenuItem OnClick="@(() => CmbCategory(item.Id))">@item.ACat_Name</MudMenuItem>
+                                    <MudMenuItem OnTouch="@(() => CmbCategory(item.Id))" OnClick="@(() => CmbCategory(item.Id))">@item.ACat_Name</MudMenuItem>
                                 }
                             </ChildContent>
                         </MudMenu>

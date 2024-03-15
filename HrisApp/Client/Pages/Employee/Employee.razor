@@ -38,17 +38,17 @@
     <div class="d-flex flex-grow-1 mt-3 mb-3">
         <MudGrid Class="d-flex align-items-center">
             <MudItem xs="12" sm="9">
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-3 flex-wrap">
                     <div>
                         <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
                             <ActivatorContent>
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbStatusText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem OnClick="@(() => SearchStatus(0))">All Status</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => SearchStatus(0))" OnClick="@(() => SearchStatus(0))">All Status</MudMenuItem>
                                 @foreach (var item in StatusL)
                                 {
-                                    <MudMenuItem OnClick="@(() => SearchStatus(item.Id))">@item.Name</MudMenuItem>
+                                    <MudMenuItem OnTouch="@(() => SearchStatus(item.Id))" OnClick="@(() => SearchStatus(item.Id))">@item.Name</MudMenuItem>
                                 }
                             </ChildContent>
                         </MudMenu>
@@ -59,10 +59,10 @@
                                 <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDivision(0))" OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
                                 @foreach (var item in DivisionsL)
                                 {
-                                    <MudMenuItem OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                                    <MudMenuItem OnTouch="@(() => CmbDivision(item.Id))" OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
                                 }
                             </ChildContent>
                         </MudMenu>
@@ -74,12 +74,12 @@
                                 <div style="width: 251px;" class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDaateHiredText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem OnClick="@(() => CmbDateHired("all"))">All</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateHired("yesterday"))">Yesterday</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateHired("lastweek"))">Last Week</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateHired("lastmonth"))">Last Month</MudMenuItem>
-                                <MudMenuItem OnClick="@(() => CmbDateHired("lastyear"))">Last Year</MudMenuItem>
-                                <MudMenuItem OnClick="@ToggleOpen" AutoClose=false>
+                                <MudMenuItem OnTouch="@(() => CmbDateHired("all"))" OnClick="@(() => CmbDateHired("all"))">All</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateHired("yesterday"))" OnClick="@(() => CmbDateHired("yesterday"))">Yesterday</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateHired("lastweek"))" OnClick="@(() => CmbDateHired("lastweek"))">Last Week</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateHired("lastmonth"))" OnClick="@(() => CmbDateHired("lastmonth"))">Last Month</MudMenuItem>
+                                <MudMenuItem OnTouch="@(() => CmbDateHired("lastyear"))" OnClick="@(() => CmbDateHired("lastyear"))">Last Year</MudMenuItem>
+                                <MudMenuItem OnTouch="@ToggleOpen" OnClick="@ToggleOpen" AutoClose=false>
                                     <div class="d-flex justify-content-between align-items-center">Custom Date Range <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight"></MudIcon></div>
                                     <MudPopover Class="popoverDateHired" Open="@_isOpen">
                                         <MudDateRangePicker Class="daterangepicker" Label="Date Hired" DateRangeChanged="@EmpDateRangeChange" Clearable="true" PlaceholderStart="Start Date" PlaceholderEnd="End Date" />

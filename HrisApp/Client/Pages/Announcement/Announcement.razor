@@ -5,7 +5,7 @@
 <PageTitle>Announcement</PageTitle>
 
 <div class="mb-5">
-    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center flex-wrap">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Announcement</span>
         <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Announcement</MudButton>
     </div>
@@ -43,7 +43,7 @@
     {
         <MudTable Class="stable" Height="665px" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="true" Bordered="false" @bind-SelectedItem="selectedItem1">
             <RowTemplate>
-                <MudTd Class="col-1" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
+                <MudTd Class="col-sm-12 col-md-1" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
                     @if (obj.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
                     {
                         <div class="d-flex flex-column">
@@ -60,14 +60,14 @@
                     }
                 </MudTd>
 
-                <MudTd Class="col-9" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
+                <MudTd Class="col-sm-12 col-md-9" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
                     <div class="d-flex flex-column" style="text-align: justify;">
                         <span class="announceTitle">@obj.Ann_Title</span>
                         <span class="announceDesc">@(obj.Ann_Desc.Length > 200 ? @obj.Ann_Desc.Substring(0, 200) + "..." : @obj.Ann_Desc)</span>
                     </div>
                 </MudTd>
 
-                <MudTd Class="col-2 text-center" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
+                <MudTd Class="col-sm-12 col-md-2 text-center" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
                     @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date)
                 || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
                     {
@@ -91,6 +91,7 @@
 </div>
 
 @code {
+    #nullable disable
     public List<AnnouncementT> _announceList = new();
     private AnnouncementT selectedItem1 = null;
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
