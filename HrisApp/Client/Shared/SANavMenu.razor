@@ -1,0 +1,40 @@
+﻿@using System.Timers;
+
+<MudNavMenu Rounded="true" Margin="Margin.Normal" Bordered="true" Style="height: 100%">
+    <span class="menutitle">Menu</span>
+    <div class="d-flex flex-column" style="height: calc(100% - 45px);">
+        <div class="flex-grow-1">
+            <MudNavLink Class="navlinktitle" Href="/sadashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
+            <MudNavLink Class="navlinktitle" Href="/sasubposition" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Work" IconColor="Color.Inherit">Sub Position</MudNavLink>
+            <MudNavLink Class="navlinktitle" Href="/saemployee" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Person" IconColor="Color.Inherit">Employee</MudNavLink>
+            <MudNavLink Class="navlinktitle" Href="/saaccounts" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SwitchAccount" IconColor="Color.Inherit">Users List</MudNavLink>
+        </div>
+    </div>
+</MudNavMenu>
+
+@code {
+#nullable disable
+    async Task Logout()
+    {
+        try
+        {
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+            await AuthService.UpdateLoginStatus(id);
+            await LocalStorage.RemoveItemAsync("token");
+            await AuthStateProvider.GetAuthenticationStateAsync();
+
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+            return;
+        }
+    }
+
+    private void OpenChangePass()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true, NoHeader = true };
+        DialogService.Show<ChangePassDialog>("", options);
+    }
+}

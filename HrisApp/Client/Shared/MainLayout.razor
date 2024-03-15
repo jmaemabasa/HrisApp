@@ -271,7 +271,13 @@
                     </MudDrawerHeader>
                 </a>
             }
-            <NavMenu />
+            @if (!string.IsNullOrEmpty(GlobalConfigService.Role))
+            {
+                <NavMenu />
+            }else
+            {
+                <SANavMenu />
+            }
         </MudDrawer>
     </MudHidden>
     <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
@@ -416,12 +422,18 @@
     {
         try
         {
-            var id = Convert.ToInt32(GlobalConfigService.User_Id);
-            await AuthService.UpdateLoginStatus(id);
-            await LocalStorage.RemoveItemAsync("token");
-            await AuthStateProvider.GetAuthenticationStateAsync();
+            if (string.IsNullOrEmpty(GlobalConfigService.Role))
+            {
+                NavigationManager.NavigateTo("/");
+            }else
+            {
+                var id = Convert.ToInt32(GlobalConfigService.User_Id);
+                await AuthService.UpdateLoginStatus(id);
+                await LocalStorage.RemoveItemAsync("token");
+                await AuthStateProvider.GetAuthenticationStateAsync();
 
-            NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/");
+            }
         }
         catch (Exception ex)
         {

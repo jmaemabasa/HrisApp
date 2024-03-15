@@ -37,8 +37,8 @@
         {
             var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
             var uristring = uri.ToString();
-            var uripage = "http://sonicsales.net:1112/";
-            if (uristring != uripage)
+            // var uripage = "http://sonicsales.net:1112/";
+            if (uristring != "http://sonicsales.net:1113/" && uristring != "http://192.168.1.19:1113/" && uristring != "https://localhost:44397/")
             {
                 OpenLogin();
             }

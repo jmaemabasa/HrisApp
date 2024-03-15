@@ -173,6 +173,7 @@ builder.Services.AddTransient<AttendanceImportTemplate>();
 builder.Services.AddTransient<AuditlogVM>();
 builder.Services.AddTransient<EmployeeVM>();
 builder.Services.AddTransient<AddEmployeeVM>();
+builder.Services.AddTransient<SAAddEmployeeVM>();
 builder.Services.AddTransient<AreaVM>();
 builder.Services.AddTransient<DepartmentVM>();
 

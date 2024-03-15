@@ -1,37 +1,13 @@
-﻿@page "/employee"
+﻿@page "/saemployee"
 @inject DTOEmployeeExport _crrExport
-
-@attribute [Authorize(Roles = "SuperAdmin, SysAdmin, GenAdmin, HR, Technical")]
 
 <PageTitle>Employee Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242; font-family: 'Poppins', sans-serif;">Employee List</span>
-        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
-            <Authorized>
                 <div class="d-flex gap-3">
-                    <button class="Btn" @onclick="OnExporttoExcel">
-                        @if (!_processing)
-                        {
-                            <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.ImportExport"></MudIcon></div>
-                            <div class="text">Export to Excel</div>
-                        }
-                        else
-                        {
-                            <div class="sign"> <MudProgressCircular Color="Color.Warning" Class="ms-n1" Size="Size.Small" Indeterminate="true" /></div>
-                            <div class="text">Exporting</div>
-                        }
-
-                    </button>
-                    <button class="Btn" @onclick="OpenUploadDialog">
-                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Upload"></MudIcon></div>
-                        <div class="text">Upload File</div>
-                    </button>
                     <MudButton OnClick="@CreateNewEmployee" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.PersonAdd" Class="btnadd"> Employee</MudButton>
-
                 </div>
-            </Authorized>
-        </AuthorizeView>
     </div>
 </div>
 <div class="box w-auto">

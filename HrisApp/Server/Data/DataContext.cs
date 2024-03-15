@@ -2,6 +2,7 @@
 using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
+using HrisApp.Shared.Models.StaticData;
 
 namespace HrisApp.Server.Data
 {
@@ -134,43 +135,40 @@ namespace HrisApp.Server.Data
                 );
 
             modelBuilder.Entity<AreaT>().HasData(
-                new AreaT { Id = 1, Name = "Davao" },
-                new AreaT { Id = 2, Name = "Digos" },
-                new AreaT { Id = 3, Name = "Kidapawan" },
-                new AreaT { Id = 4, Name = "Cotabato" },
-                new AreaT { Id = 5, Name = "Calinan" },
-                new AreaT { Id = 6, Name = "Gumalang" }
+            new AreaT { Id = 1, Name = "Davao" },
+            new AreaT { Id = 2, Name = "Digos" },
+            new AreaT { Id = 3, Name = "Kidapawan" },
+            new AreaT { Id = 4, Name = "Cotabato" },
+            new AreaT { Id = 5, Name = "Calinan" },
+            new AreaT { Id = 6, Name = "Gumalang" }
             );
 
             //EMPLOYEE DETAILS
             modelBuilder.Entity<EmploymentStatusT>().HasData(
-                new EmploymentStatusT { Id = 1, Name = "Regular" },
-                new EmploymentStatusT { Id = 2, Name = "Probationary" },
-                new EmploymentStatusT { Id = 3, Name = "Casual" },
-                new EmploymentStatusT { Id = 4, Name = "Fixed Term" },
-                new EmploymentStatusT { Id = 5, Name = "Project Based" }
+            new EmploymentStatusT { Id = 1, Name = "Regular" },
+            new EmploymentStatusT { Id = 2, Name = "Probationary" },
+            new EmploymentStatusT { Id = 3, Name = "Casual" },
+            new EmploymentStatusT { Id = 4, Name = "Fixed Term" },
+            new EmploymentStatusT { Id = 5, Name = "Project Based" }
             );
-
             modelBuilder.Entity<InactiveStatusT>().HasData(
-                new InactiveStatusT { Id = 1, Name = "Active" },
-                new InactiveStatusT { Id = 2, Name = "Resigned" },
-                new InactiveStatusT { Id = 3, Name = "Terminated" },
-                new InactiveStatusT { Id = 4, Name = "Awol" },
-                new InactiveStatusT { Id = 5, Name = "Retired" }
+            new InactiveStatusT { Id = 1, Name = "Active" },
+            new InactiveStatusT { Id = 2, Name = "Resigned" },
+            new InactiveStatusT { Id = 3, Name = "Terminated" },
+            new InactiveStatusT { Id = 4, Name = "Awol" },
+            new InactiveStatusT { Id = 5, Name = "Retired" }
             );
-
             modelBuilder.Entity<StatusT>().HasData(
-                new StatusT { Id = 1, Name = "Active" },
-                new StatusT { Id = 2, Name = "Inactive" },
-                new StatusT { Id = 3, Name = "Resigned" },
-                new StatusT { Id = 4, Name = "Terminated" },
-                new StatusT { Id = 5, Name = "Awol" },
-                new StatusT { Id = 6, Name = "Retired" }
+            new StatusT { Id = 1, Name = "Active" },
+            new StatusT { Id = 2, Name = "Inactive" },
+            new StatusT { Id = 3, Name = "Resigned" },
+            new StatusT { Id = 4, Name = "Terminated" },
+            new StatusT { Id = 5, Name = "Awol" },
+            new StatusT { Id = 6, Name = "Retired" }
             );
-
             modelBuilder.Entity<CivilStatusT>().HasData(
-                new CivilStatusT { Id = 1, Name = "Single" },
-                new CivilStatusT { Id = 2, Name = "Married" },
+            new CivilStatusT { Id = 1, Name = "Single" },
+            new CivilStatusT { Id = 2, Name = "Married" },
                 new CivilStatusT { Id = 3, Name = "Widowed" }
             );
 

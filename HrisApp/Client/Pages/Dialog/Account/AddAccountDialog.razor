@@ -237,8 +237,10 @@
                     _processing = false;
 
                     var userid = Convert.ToInt32(GlobalConfigService.User_Id);
-                    await AuditlogService.CreateLog(userid, "CREATE", "User", DateTime.Now);
-
+                    if (!string.IsNullOrEmpty(GlobalConfigService.Role))
+                    {
+                        await AuditlogService.CreateLog(userid, "CREATE", "User", DateTime.Now);
+                    }
 
                     // Update the List using the StateService
                     await AuthService.GetUsers();

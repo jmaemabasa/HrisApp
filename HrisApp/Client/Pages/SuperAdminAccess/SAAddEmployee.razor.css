@@ -1,0 +1,316 @@
+﻿.tabdiv {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: auto;
+    padding: 25px 50px 25px 50px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.spantitle {
+    font-weight: bold;
+    color: #26446e;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+::deep .validation-message, ::deep .me-auto {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+    margin-top: 2px;
+}
+
+::deep .paddingitem {
+    margin-left: 50px;
+}
+
+/*TOP BUTTONS*/
+.topnav {
+    position: fixed;
+    top: 0;
+    padding-top: 30px;
+    width: -webkit-fill-available;
+    padding-right: 35px;
+    background-color: #e9ecef;
+}
+
+/*BUTTONS*/
+::deep .btnnext {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    background-color: #F1BC3A;
+    color: #424242;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-weight: bold;
+    width: 200px;
+    margin-top: 15px;
+    transition: all .5s ease;
+}
+
+    ::deep .btnnext:hover {
+        background-color: #E38D0F;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+/*IMAGE*/
+::deep .btnimage {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    width: 100%;
+}
+
+::deep .btnimagerror {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    border: 1px solid red;
+    width: 100%;
+}
+
+::deep .btnimagewithimage {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding-bottom: 4px;
+}
+
+/*TEXTFIELD*/
+::deep .txf > .mud-input-control-input-container {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+
+::deep .txf1 {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    background: #e9ecef;
+    padding-top: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+::deep .txf1error {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 1px solid red;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    background: #e9ecef;
+    padding-top: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+::deep .txf > .mud-input-control-input-container:focus-within {
+    border: 2px solid black !important;
+}
+
+::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
+    margin-top: 10px;
+    width: 100%;
+}
+
+/*DROP DOWN LIST*/
+::deep .frmselect {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    padding: 0px 15px 4px 15px;
+    background: #e8e1e1;
+    height: 45px;
+}
+
+::deep .frmselecterror {
+    border: 1px solid red;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    padding: 0px 15px 4px 15px;
+    background: #e8e1e1;
+    height: 45px;
+}
+
+::deep .frmselectvalid {
+    border: 1px solid green;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 10px;
+    padding: 0px 15px 4px 15px;
+    background: #e8e1e1;
+    height: 45px;
+}
+
+/*DATE TIME*/
+::deep .mud-picker.mud-picker-inline.mud-picker-input-button.txf, ::deep .mud-picker.mud-picker-inline.mud-picker-input-text.txf {
+    height: 45px;
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 15px 10px 15px;
+    margin-top: 0;
+}
+
+    ::deep .mud-picker.mud-picker-inline.mud-picker-input-button.txf:focus-within, ::deep .mud-picker.mud-picker-inline.mud-picker-input-text.txf:focus-within {
+        border: 2px solid black;
+    }
+
+/*INPUT CARD*/
+::deep .mdcard1 {
+    background: #e9ecef;
+}
+
+    ::deep .mdcard1.lfmargin {
+        margin-left: 20px;
+    }
+
+/*School DIV*/
+.divSchool {
+    padding: 16px;
+    border: 1px ridge #f5f5f5;
+    /*background: #f5f5f5;*/
+    border-radius: 10px;
+}
+
+::deep .addminbtn {
+    color: #26446e;
+}
+
+/*TABPANELS*/
+
+::deep .mud-tab.mud-tab-active {
+    color: #EEB12F;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-toolbar-content {
+    background: #e9ecef;
+    color: #78909C;
+    font-size: 15px;
+    font-weight: bold;
+    border-bottom: 2px solid #D8DADC;
+    /*pointer-events: none;*/
+}
+
+::deep .mud-tabs-defaultindex {
+    color: #EEB12F;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-afterindex {
+    color: #EEB12F;
+    font-weight: bold;
+    border-bottom: 2px solid #79AC78;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-active {
+    font-weight: bold;
+    color: white;
+    background-color: #EEB12F;
+    margin-right: 15px;
+}
+
+::deep .mud-chip-after {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-after0 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.1;
+}
+
+::deep .mud-chip-after1 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.2;
+}
+
+::deep .mud-chip-after2 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.3;
+}
+
+::deep .mud-chip-after3 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.4;
+}
+
+::deep .mud-chip-default {
+    font-weight: bold;
+    color: white;
+    background-color: #C5CFD2;
+    margin-right: 15px;
+}
+
+::deep .mud-text-after {
+    color: #0A86C2;
+    font-weight: bold;
+    opacity: 0.2;
+}
+
+::deep .mud-text-default {
+    font-weight: bold;
+}
+
+@media (max-width: 576px) {
+    ::deep .mdcard1.lfmargin {
+        margin-left: 0px;
+    }
+
+    ::deep .paddingitem {
+        margin-left: 0px;
+    }
+
+    ::deep .frmselect {
+        width: 223px;
+    }
+
+    .tabdiv {
+        padding: 15px 0px 15px 0px;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    /*TOP BUTTONS*/
+    .topnav {
+        position: absolute;
+        top: 28px;
+        width: -webkit-fill-available;
+        padding-right: 35px;
+    }
+}

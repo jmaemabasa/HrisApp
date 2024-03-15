@@ -1,0 +1,65 @@
+﻿/*TABLE*/
+.box {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: 784px;
+    padding: 25px 50px 25px 50px;
+    margin-top: 30px;
+}
+
+::deep .stable {
+    background: #e9ecef;
+    padding: 25px 50px 25px 50px;
+    border-radius: 20px;
+    margin-top: 0px;
+}
+
+::deep .tsearch {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+}
+
+    ::deep .tsearch:focus-within {
+        border: 2px solid #F1BC3A;
+        font-weight: bolder;
+    }
+
+/*::deep .mud-table-row:hover {
+    background-color: #FFC107 !important;
+}*/
+
+/*BUTTONS*/
+::deep .btnadd {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    background-color: #F1BC3A;
+    color: #424242;
+    padding-bottom: 4px;
+}
+
+    ::deep .btnadd:hover {
+        background-color: #E38D0F;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+/*USER STATUS*/
+.statusActive {
+    width: 20px;
+    height: 20px;
+    background: #79AC78;
+    border-radius: 50%
+}
+
+.statusInActive {
+    width: 20px;
+    height: 20px;
+    background: #E97777;
+    border-radius: 50%
+}

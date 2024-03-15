@@ -53,8 +53,10 @@
                 await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Inactive", selectedDivision, selectedDepartment, selectedSection, selectedArea);
 
                 _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
-
+                if (!string.IsNullOrEmpty(GlobalConfigService.Role))
+                {
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+                }
                 await PositionService.GetSubPosition();
                 var newList = PositionService.SubPositionTs;
                 StateService.SetState("SubPositionList", newList);

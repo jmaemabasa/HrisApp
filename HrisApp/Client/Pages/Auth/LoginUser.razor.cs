@@ -13,13 +13,14 @@
         private string _returnUrl = string.Empty;
 
         //SUPER ADMIN
-        //private const string Adminusername = "Administrator";
-        private const string Adminusername = "11";
+        private const string Adminusername = "Administrator";
 
-        //private const string Adminpassword = "1t@dm1n2022";
-        private const string Adminpassword = "11";
+        //private const string Adminusername = "11";
 
-        private const string Adminuserrole = "MainAdmin";
+        private const string Adminpassword = "1t@dm1n2022";
+        //private const string Adminpassword = "11";
+
+        private const string Adminuserrole = "SuperAdmin";
 
         protected override async Task OnInitializedAsync()
         {
@@ -58,7 +59,7 @@
 
                 if (_log.Password == Adminpassword && _log.Username == Adminusername)
                 {
-                    NavigationManager.NavigateTo("/usermasterlist");
+                    NavigationManager.NavigateTo("/sadashboard");
                 }
                 else
                 {

@@ -1,0 +1,85 @@
+﻿@page "/saaccounts"
+
+<PageTitle>Accounts</PageTitle>
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Account User List</span>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <div class="d-flex justify-content-between align-items-center" style="padding: 10px 50px 0px 50px;">
+        <div class="w-25">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+        </div>
+        <div>
+            <MudButton OnClick="OpenAddUser" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> User</MudButton>
+        </div>
+    </div>
+    @if (userList == null || userList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
+        <MudTable Class="stable" Items="userList" Context="user" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="587px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<UserMasterT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+            <HeaderContent>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Fullname</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Username</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Role</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">User Department</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Login Status</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">Action</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="">
+                    @foreach (var emp in employeeList)
+                    {
+                        if (emp.Id == user.EmployeeId)
+                        {
+                            @($"{emp.FirstName} {emp.LastName}")
+                        }
+                    }
+                </MudTd>
+                <MudTd DataLabel="">@user.Username</MudTd>
+                <MudTd DataLabel="">@user.Role</MudTd>
+                <MudTd DataLabel="">
+                    @foreach (var emp in employeeList)
+                    {
+                        if (emp.Id == user.EmployeeId)
+                        {
+                            @emp.Department?.Name
+                        }
+                    }
+                </MudTd>
+                <MudTd DataLabel="">
+                    <div class="d-flex justify-content-center">
+                        <div class="@Userstatusclass(user.LoginStatus)">
+                        </div>
+                    </div>
+                </MudTd>
+                <MudTd Style="text-align:center;">
+                    <MudTooltip Text="View History">
+                        <MudIconButton Class="btnedit" OnClick="(() => ShowLogs(user.EmployeeId))" Icon="@Icons.Material.Rounded.Info" aria-label="view" />
+                    </MudTooltip>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    }
+</div>

@@ -1,0 +1,247 @@
+﻿@page "/sasubposition"
+
+<PageTitle>Sub Position Management</PageTitle>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Position Management</span>
+                <MudButton OnClick="OpenAddPosition" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Position</MudButton>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <div class="d-flex align-items-center gap-3 mb-2">
+        <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
+            <ActivatorContent>
+                <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnTouch="@(() => CmbDivision(0))" OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                @foreach (var item in Divisions)
+                {
+                    <MudMenuItem OnTouch="@(() => CmbDivision(item.Id))" OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                }
+            </ChildContent>
+        </MudMenu>
+    </div>
+    @if (subpositionList == null || subpositionList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@isVisible" />
+        <MudCardContent hidden="@isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <MudTable Class="stable" Items="subpositionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<SubPositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+            <HeaderContent>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.SubPosCode)">
+                        Code
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.PosCode)">
+                        Position Code
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Description)">
+                        Description
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Status</MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@pos.SubPosCode</MudTd>
+                <MudTd DataLabel="">@pos.PosCode</MudTd>
+                <MudTd DataLabel="">@pos.Description</MudTd>
+                <MudTd DataLabel="" Style="text-align: center">
+                    @if (pos.Status == "Active")
+                    {
+                        <MudChip Style="font-family: 'Poppins', sans-serif; background-color: #C1D4CD; color: #397763;">@pos.Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Style="font-family: 'Poppins', sans-serif; background-color: #d1d0cf; color: #424140;">@pos.Status</MudChip>
+                    }
+                    @* <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton> *@
+                </MudTd>
+                <MudTd Style="text-align: center">
+                    <AuthorizeView Roles="SysAdmin, GenAdmin">
+                        <Authorized>
+                            <MudTooltip Text="Delete" Arrow=true>
+                                <MudIconButton Color="Color.Error" OnClick="(() => DeletePosition(pos.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
+                            </MudTooltip>
+                        </Authorized>
+                        <NotAuthorized>
+                            <MudIconButton Disabled Color="Color.Error" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </MudTd>
+
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    }
+</div>
+
+
+@code {
+    private List<DepartmentT> Departments = new();
+    private List<DivisionT> Divisions = new();
+    private List<SectionT> Sections = new();
+    private List<PositionT> Positions = new();
+    private List<AreaT> Areas = new();
+    List<SubPositionT> subpositionList = new();
+    private SubPositionT selectedItem1 = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await Task.Delay(500);
+            StateService.OnChange += OnStateChanged;
+            await LoadList();
+
+            await DepartmentService.GetDepartment();
+            await DivisionService.GetDivision();
+            await SectionService.GetSection();
+            await AreaService.GetArea();
+
+            Divisions = DivisionService.DivisionTs;
+            Departments = DepartmentService.DepartmentTs;
+            Sections = SectionService.SectionTs;
+            Areas = AreaService.AreaTs;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    private async Task LoadList()
+    {
+        await PositionService.GetSubPosition();
+        StateService.SetState("SubPositionList", PositionService.SubPositionTs);
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        subpositionList = StateService.GetState<List<SubPositionT>>("SubPositionList");
+        StateHasChanged();
+    }
+
+    private void OpenAddPosition()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+        DialogService.Show<AddSubPositionDialog>("New Position", options);
+    }
+
+
+    async Task DeletePosition(int id)
+    {
+        var pos = PositionService.SubPositionTs.Where(x => x.Id == id);
+        foreach (var item in pos)
+        {
+            if (item.Status == "Active")
+            {
+                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
+            }
+            else if (item.Status == "Inactive" && item.Emp_VerifyId != "")
+            {
+                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
+            }
+            else
+            {
+                await PositionService.DeleteSubPosition(id);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+                await PositionService.GetSubPosition();
+                var newList = PositionService.SubPositionTs;
+                StateService.SetState("SubPositionList", newList);
+                _toastService.ShowSuccess("Deleted Successfully!");
+            }
+        }
+    }
+
+    private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private string searchString1 = "";
+    private bool FilterFunc1(SubPositionT pos) => FilterFunc(pos, searchString1);
+
+    private bool FilterFunc(SubPositionT pos, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (pos.SubPosCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    private bool isVisible;
+    public async void OpenOverlay()
+    {
+        isVisible = false;
+        await Task.Delay(2000);
+        isVisible = true;
+        StateHasChanged();
+    }
+
+    public string CmbDivText = "All Division";
+    public void CmbDivision(int div)
+    {
+        //    _dateRange.Start = null;
+        //    _dateRange.End = null;
+
+        if (div == 0)
+        {
+            CmbDivText = "All Division";
+            subpositionList = PositionService.SubPositionTs;
+        }
+        else
+        {
+            foreach (var e in Divisions)
+            {
+                if (e.Id == div)
+                {
+                    CmbDivText = e.Name;
+                }
+            }
+
+            subpositionList = PositionService.SubPositionTs.Where(x => x.DivisionId == div).ToList();
+        }
+
+        if (subpositionList == null || subpositionList.Count == 0)
+        {
+            OpenOverlay();
+        }
+    }
+    private async Task ShowErrorMessageBox(string mess)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+        "Error",
+        mess,
+        yesText: "Ok");
+    }
+
+}
