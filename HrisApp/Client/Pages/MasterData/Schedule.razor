@@ -1,5 +1,5 @@
 ﻿@page "/schedule"
-@attribute [Authorize(Roles = "SysAdmin, GenAdmin")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin")]
 
 <PageTitle>Schedule Management</PageTitle>
 
@@ -9,7 +9,7 @@
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Schedule Management</span>
-        <AuthorizeView Roles="SysAdmin, GenAdmin">
+        <AuthorizeView Roles="CadAdmin, SysAdmin">
             <Authorized>
                 <MudButton OnClick="OpenAddSchedule" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Schedule</MudButton>
             </Authorized>
@@ -60,7 +60,7 @@ else
                 <MudTd DataLabel="">@schedules.TimeIn</MudTd>
                 <MudTd DataLabel="">@schedules.TimeOut</MudTd>
                 <MudTd>
-                    <AuthorizeView Roles="SysAdmin, GenAdmin">
+                    <AuthorizeView Roles="CadAdmin, SysAdmin">
                         <Authorized>
                             <MudTooltip Text="Update">
                                 <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateScheudle(schedules.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>

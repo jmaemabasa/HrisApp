@@ -201,5 +201,25 @@ namespace HrisApp.Server.Services.UserService
 
             return new ServiceResponse<int> { Data = db.Id, Message = "Successful!" };
         }
+
+        public async Task<bool> IsPassMatched(int id, string inputpass)
+        {
+            var db = await _context.UserMasterT.Where(s => s.EmployeeId == id).FirstOrDefaultAsync();
+            Console.WriteLine("asasasasasas " + db.Id);
+
+            if (db == null)
+            {
+                return false;
+            }
+
+            if (!VerifyPasswordHash(inputpass, db.PasswordHash, db.PasswordSalt))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

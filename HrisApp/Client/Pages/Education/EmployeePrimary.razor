@@ -60,7 +60,7 @@
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No Primary Information.</span>
-        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
             <Authorized>
                 <MudTooltip Text="Add">
                     <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "PrimaryOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -75,7 +75,7 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Primary Education</span>
-                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Add">
                             <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "PrimaryOpen"))" Size="Size.Small">Add Information</MudButton>
@@ -97,7 +97,7 @@ else
             <MudTd DataLabel="">@primary.PriAward</MudTd>
             <MudTd DataLabel="">@primary.PriSchoolYear</MudTd>
             <MudTd>
-                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                     <Authorized>
                         <MudTooltip Text="Remove">
                             <MudIconButton Class="btnedit" OnClick="@(() => DeletePrimary(primary.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>

@@ -81,7 +81,7 @@ namespace HrisApp.Client.Pages.Assets
             await AssetAccService.UpdateObj(obj);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
-            _toastService.ShowSuccess(obj.AssetCode + " Updated Successfully!");
+            _toastService.ShowSuccess("Updated Successfully!");
             await ReloadObjects();
         }
 
@@ -100,7 +100,7 @@ namespace HrisApp.Client.Pages.Assets
             // Update the List using the StateService
             StateService.SetState("AssetAccList", await AssetAccService.GetObjList());
             obj = await AssetAccService.GetSingleObj((int)Id);
-            leftPanelOpen = false; detailsPanelOpen = false;
+            leftPanelOpen = false; detailsPanelOpen = false; lastCheckOpen = false;
         }
 
         private async Task LoadAccessImg(string jmcode)
@@ -190,13 +190,19 @@ namespace HrisApp.Client.Pages.Assets
         }
 
         private Anchor anchor;
-        private bool leftPanelOpen, detailsPanelOpen;
+        private bool leftPanelOpen, detailsPanelOpen, lastCheckOpen;
 
         private void OpenDrawer(Anchor anchor, string drawerx)
         {
             this.anchor = anchor;
             leftPanelOpen = (drawerx == "leftPanelOpen");
             detailsPanelOpen = (drawerx == "detailsPanelOpen");
+            lastCheckOpen = (drawerx == "lastCheckOpen");
+
+            if (drawerx == "lastCheckOpen")
+            {
+                obj.LastCheckDate = DateTime.Now;
+            }
         }
 
         #region MUD TABS / TAB PANEL

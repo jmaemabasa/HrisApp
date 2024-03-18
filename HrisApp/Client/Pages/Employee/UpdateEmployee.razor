@@ -1,7 +1,7 @@
 ﻿@page "/employee/edit"
 @page "/employee/edit/{id:int}"
 
-@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR, Technical")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR, Technical")]
 <PageTitle>Update Employee</PageTitle>
 
 <div class="topnav d-flex justify-content-end align-items-center z-60">
@@ -23,7 +23,7 @@
                             <div>
                                 @if (employee.DateInactiveStatus <= FiveYearsAgo)
                                 {
-                                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                                    <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                                         <Authorized>
                                             <MudTooltip Text="Delete" Arrow="true" Color="Color.Error">
                                                 <MudIconButton Icon="@Icons.Material.Rounded.Delete" Color="Color.Error" OnClick="@(() => DeleteEmployee(Id))"></MudIconButton>
@@ -43,7 +43,7 @@
                             <div class="diveditimg">
                                 <MudFileUpload T="IBrowserFile" OnFilesChanged="UploadImage" Accept="image/*" capture>
                                     <ButtonTemplate>
-                                        <AuthorizeView Context="cccc" Roles="SysAdmin, GenAdmin, HR">
+                                        <AuthorizeView Context="cccc" Roles="CadAdmin, SysAdmin, HR">
                                             <Authorized>
                                                 <MudTooltip Text="Change Image" Arrow="true">
                                                     <MudIconButton Icon="@Icons.Material.Rounded.Edit" DisableElevation HtmlTag="label" for="@context" Class="btnupdateimg" />
@@ -122,8 +122,13 @@
                     <MudCard Class="empdmain">
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="spantitle">Personal Data</span>
-                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                                <div class="d-flex align-items-center gap-1">
+                                    <span class="spantitle">Personal Data</span>
+                                   @*  <MudTooltip Text="Show All">
+                                        <MudIconButton Icon="@_dataDisplayIcon" aria-label="show password" OnClick="OpenEnterPass" Style="color: #757A90;font-size: 16px;" />
+                                    </MudTooltip> *@
+                                </div>
+                                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
 
@@ -198,22 +203,26 @@
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
-                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">PHIC No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_payroll.PhilHealthNum</MudText>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">PHIC No.</MudText>
+                                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_pHealthHolder</MudText>
+                                            </div>
+                                        </div>
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">HDMF No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_payroll.HDMFNum</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_pagIbigHolder</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">SSS No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_payroll.SSSNum</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_sssHolder</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">TIN No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_payroll.TINNum</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_tinHolder</MudText>
                                     </MudItem>
                                 </div>
                             </div>
@@ -224,7 +233,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="spantitle">Address Information</span>
-                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "addressOpen"))">
 
@@ -292,7 +301,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="spantitle">Person to Notify in Case of Emergency</span>
-                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "emerOpen"))">
 
@@ -331,7 +340,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="spantitle">Work Information</span>
-                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "workInfoOpen"))">
 
@@ -522,7 +531,7 @@
                         <MudCardContent>
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="spantitle">Compensation Package</span>
-                                <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "documentsOpen"))">
 
@@ -537,7 +546,7 @@
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Rate</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_payroll.Rate</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_rateholder</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Rate Type</MudText>
@@ -660,6 +669,27 @@
             </MudTabs>
         </MudItem>
     </MudGrid>
+
+    <MudDialog @bind-IsVisible="isOpenEnterPass" Options="passdialogOptions">
+        <TitleContent>
+            <MudText Typo="Typo.h6">
+                Show Confidential Data
+            </MudText>
+        </TitleContent>
+        <DialogContent>
+            @if (_showAlert)
+            {
+                <MudAlert Severity="@_severity" Class="mb-2">@_message</MudAlert>
+            }
+            <MudText Typo="Typo.body2">Enter password first:</MudText>
+            <MudTextField @bind-Value="inputPassword" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" Variant="Variant.Outlined" Margin="Margin.Dense" Class="w-100 mt-1" />
+        </DialogContent>
+        <DialogActions>
+            <div class="d-flex flex-grow-1" style="padding: 12px 15px 10px 15px;">
+                <button type="button" @onclick="DisplayConfData" class="btn btnshowdata">Show</button>
+            </div>
+        </DialogActions>
+    </MudDialog>
 
     <!-- #region DRAWERS -->
     <MudDrawer Class="drawerdetails" @bind-Open="@personalandjobOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
@@ -1073,39 +1103,9 @@
             <EditForm Model="_address" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                 <DataAnnotationsValidator />
                 <MudItem xs="12" Class="mb-2">
-                    <span class="spantitle mb-2" style="font-size:14px">Present Address</span>
-                    <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
-                    <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentAdd" />
-                    <ValidationMessage For="@(() => _address.CurrentAdd)" class="mb-2 valmessage" />
-                </MudItem>
-                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
-                    <MudItem xs="12" sm="6">
-                        <MudText Typo="Typo.body2">City</MudText>
-                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCity" />
-                        <ValidationMessage For="@(() => _address.CurrentCity)" class="mb-2 valmessage" />
-                    </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudText Typo="Typo.body2">Province</MudText>
-                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentProvince" />
-                        <ValidationMessage For="@(() => _address.CurrentProvince)" class="mb-2 valmessage" />
-                    </MudItem>
-                </div>
-                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
-                    <MudItem xs="12" sm="6">
-                        <MudText Typo="Typo.body2">ZipCode</MudText>
-                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentZipCode" />
-                        <ValidationMessage For="@(() => _address.CurrentZipCode)" class="mb-2 valmessage" />
-                    </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudText Typo="Typo.body2">Country</MudText>
-                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCountry" />
-                        <ValidationMessage For="@(() => _address.CurrentCountry)" class="mb-2 valmessage" />
-                    </MudItem>
-                </div>
-                <MudItem xs="12" Class="mb-2">
                     <span class="spantitle mb-2" style="font-size:14px">Permanent Address</span>
                     <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
-                    <InputText id="bb" Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentAdd" />
+                    <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.PermanentAdd" />
                     <ValidationMessage For="@(() => _address.PermanentAdd)" class="mb-2 valmessage" />
                 </MudItem>
                 <div class="d-flex flex-row gap-3 mb-2 align-items-center">
@@ -1130,6 +1130,39 @@
                         <MudText Typo="Typo.body2">Country</MudText>
                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCountry" />
                         <ValidationMessage For="@(() => _address.PermanentCountry)" class="mb-2 valmessage" />
+                    </MudItem>
+                </div>
+                <MudCheckBox T="bool" CheckedChanged="IsUsePermAddress" Color="Color.Primary" Dense="true" Style="margin-top: 15px;left: -4px;position: relative;">
+                    <MudText Typo="Typo.body2">Same as Permanent Address</MudText>
+                </MudCheckBox>
+                <MudItem xs="12" Class="mb-2">
+                    <span class="spantitle mb-2" style="font-size:14px">Present Address</span>
+                    <MudText Typo="Typo.body2">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
+                    <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentAdd" />
+                    <ValidationMessage For="@(() => _address.CurrentAdd)" class="mb-2 valmessage" />
+                </MudItem>
+                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.body2">City</MudText>
+                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCity" />
+                        <ValidationMessage For="@(() => _address.CurrentCity)" class="mb-2 valmessage" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.body2">Province</MudText>
+                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentProvince" />
+                        <ValidationMessage For="@(() => _address.CurrentProvince)" class="mb-2 valmessage" />
+                    </MudItem>
+                </div>
+                <div class="d-flex flex-row gap-3 mb-2 align-items-center">
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.body2">ZipCode</MudText>
+                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentZipCode" />
+                        <ValidationMessage For="@(() => _address.CurrentZipCode)" class="mb-2 valmessage" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.body2">Country</MudText>
+                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_address.CurrentCountry" />
+                        <ValidationMessage For="@(() => _address.CurrentCountry)" class="mb-2 valmessage" />
                     </MudItem>
                 </div>
                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">

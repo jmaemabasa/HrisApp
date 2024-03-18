@@ -16,7 +16,7 @@
 {
     <div class="d-flex flex-grow-1 justify-content-between align-items-center">
         <span class="spantitle mb-3">No History.</span>
-        <AuthorizeView Roles="HR, System Administrator">
+        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
             <Authorized>
                 <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
 
@@ -34,7 +34,7 @@ else
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
                 <span class="spantitle mb-3">Employee Position History</span>
-                <AuthorizeView Roles="HR, System Administrator">
+                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                     <Authorized>
                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
 

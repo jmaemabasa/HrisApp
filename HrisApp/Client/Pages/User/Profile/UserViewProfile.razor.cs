@@ -81,6 +81,8 @@
 
         #endregion LIST TABLE VARIABLES
 
+        private string _pHealthHolder = "●●●●●●●●●", _pagIbigHolder = "●●●●●●●●●", _sssHolder = "●●●●●●●●●", _tinHolder = "●●●●●●●●●", _rateholder = "●●●●●●●●●";
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -137,6 +139,8 @@
                 VERIFY = employee.Verify_Id;
                 Bday = employee.Birthdate;
                 DateHired = employee.DateHired;
+
+                _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
 
                 await EmployeeImg(employee.Verify_Id);//image
             }
@@ -238,7 +242,89 @@
         }
 
         #region FUNCTIONS
+        private bool _isShowData = false;
+        private string _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
 
+
+        private bool isOpenEnterPass;
+        private DialogOptions passdialogOptions = new() { FullWidth = true };
+        private string inputPassword;
+
+        private string _message = string.Empty;
+        private MudBlazor.Severity _severity;
+        private bool _showAlert = false;
+
+        private void OpenEnterPass()
+        {
+            if (_isShowData)
+            {
+                _isShowData = false;
+                _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
+                _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
+            }
+            else
+            {
+                inputPassword = "";
+                _showAlert = false;
+                isOpenEnterPass = true;
+            }
+        }
+
+        private async Task DisplayConfData()
+        {
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+
+            var ismatch = await AuthService.IsPassMatched(id, @inputPassword);
+
+            if (ismatch)
+            {
+                _isShowData = !_isShowData;
+                if (_isShowData != true)
+                {
+                    //_isShowData = false;
+                    _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
+                    _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
+                }
+                else
+                {
+                    //_isShowData = true;
+                    _dataDisplayIcon = Icons.Material.Filled.Visibility;
+                    _pHealthHolder = _payroll.PhilHealthNum;
+                    _pagIbigHolder = _payroll.HDMFNum;
+                    _sssHolder = _payroll.SSSNum;
+                    _tinHolder = _payroll.TINNum;
+                    _rateholder = _payroll.Rate;
+                    isOpenEnterPass = false;
+                    _toastService.ShowSuccess("Data showed.");
+                }
+            }
+            else
+            {
+                _showAlert = true;
+                _severity = Severity.Error;
+                _message = "Incorrect Password";
+            }
+        }
+
+        private bool _isShowPass;
+        private InputType _passwordInput = InputType.Password;
+        private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+        private void ButtonTestclick()
+        {
+            if (_isShowPass)
+            {
+                _isShowPass = false;
+                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+                _passwordInput = InputType.Password;
+            }
+            else
+            {
+                _isShowPass = true;
+                _passwordInputIcon = Icons.Material.Filled.Visibility;
+                _passwordInput = InputType.Text;
+            }
+        }
         private async Task EmployeeImg(string verifyCode)
         {
             var imagemodel = await ImageService.GetImageData(verifyCode);

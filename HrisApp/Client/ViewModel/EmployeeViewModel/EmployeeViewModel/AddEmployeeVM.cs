@@ -29,6 +29,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         private readonly GlobalConfigService GlobalConfigService;
         private readonly NavigationManager _navigationManager;
 
+        public bool isSaving = false;
+
         public AddEmployeeVM(NavigationManager navigationManager, GlobalConfigService globalConfigService)
         {
             _navigationManager = navigationManager;
@@ -90,7 +92,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             await StaticService.GetRestDay();
             RestDayL = StaticService.RestDayTs;
 
-            imgBase64 = "./images/addIconImage.png";
+            imgBase64 = "./images/avatarorimagepng.png";
 
             AddNewPrimary(employee.Verify_Id);
             AddNewSecondary(employee.Verify_Id);
@@ -175,6 +177,29 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         #endregion DATE VARIBALE
 
+        public async Task IsUsePermAddress(bool ischeck)
+        {
+            await Task.Delay(1);
+            if (ischeck)
+            {
+                address.CurrentAdd = address.PermanentAdd;
+                address.CurrentProvince = address.PermanentProvince;
+                address.CurrentCity = address.PermanentCity;
+                address.CurrentBrgy = address.PermanentBrgy;
+                address.CurrentZipCode = address.PermanentZipCode;
+                address.CurrentCountry = address.PermanentCountry;
+            }
+            else
+            {
+                address.CurrentAdd = "";
+                address.CurrentProvince = "";
+                address.CurrentCity = "";
+                address.CurrentBrgy = "";
+                address.CurrentZipCode = "";
+                address.CurrentCountry = "";
+            }
+        }
+
         #region IMAGE VARIABLE
 
         //attachment
@@ -216,6 +241,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public async Task<string> CreateEmployee()
         {
+            isSaving = true;
+            await Task.Delay(1000);
             payroll.ScheduleTypeId = 1;
             payroll.RestDayId = 1;
             if (bday.HasValue)
@@ -334,6 +361,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     //CREATE LEAVE CREDITS
                     await LeaveCredService.CreateLeaveCred(verifyId, 0, 0, 0, 0, 0, 0);
 
+                    isSaving = false;
                     var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
                     await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);
                     _navigationManager.NavigateTo("employee");
@@ -343,6 +371,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                 }
                 catch (Exception ex)
                 {
+                    isSaving = false;
                     return $"{TokenConst.AlertError}xxx{ex.Message}";
                 }
             }

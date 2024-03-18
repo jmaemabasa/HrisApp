@@ -1,13 +1,13 @@
 ﻿@page "/employee"
 @inject DTOEmployeeExport _crrExport
 
-@attribute [Authorize(Roles = "SuperAdmin, SysAdmin, GenAdmin, HR, Technical")]
+@attribute [Authorize(Roles = "CadAdmin, SuperAdmin, SysAdmin, GenAdmin, HR, Technical")]
 
 <PageTitle>Employee Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242; font-family: 'Poppins', sans-serif;">Employee List</span>
-        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
                     <button class="Btn" @onclick="OnExporttoExcel">
@@ -184,7 +184,7 @@
                         <MudChip Class="@StatusChipColor(employeeee.Status?.Name!)">@employeeee.Status?.Name</MudChip>
                     </MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="SysAdmin, GenAdmin, HR, Technical">
+                        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR, Technical">
                             <Authorized>
                                 <MudTooltip Text="View Details">
                                     <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>

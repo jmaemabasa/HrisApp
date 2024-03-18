@@ -50,6 +50,8 @@
     background-color: #F7F8FF;
     padding: 7px 15px 7px 15px;
     border-radius: 10px;
+    min-height: 54.02px;
+    word-wrap: break-word;
 }
 
 ::deep .mud-avatar.mud-avatar-medium {
@@ -537,4 +539,16 @@
 /* button click effect*/
 .Btn:active {
     transform: translate(2px,2px);
+}
+
+::deep .btnshowdata, .btnshowdata {
+    background-color: #27374D;
+    color: #fff;
+    padding: 6px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+::deep .btnshowdata:hover, .btnshowdata:hover {
+    background-color: #26446e;
 }

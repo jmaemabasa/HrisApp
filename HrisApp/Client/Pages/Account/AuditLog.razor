@@ -1,6 +1,9 @@
 ﻿@page "/auditlog"
 
+
 @attribute [Authorize(Roles = "SysAdmin")]
+
+
 
 <PageTitle>Audit Log</PageTitle>
 
@@ -80,6 +83,8 @@
     // protected override async Task OnInitializedAsync()
     // {
     //    await OnRefreshPage();
-    // }
+    // }2
+
+    //private string RoleList = string.Empty;
 
 }

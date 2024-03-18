@@ -9,11 +9,13 @@
 #nullable disable
     [Parameter]
     public string verify { get; set; }
+    EmployeeT employee = new();
 
     private string ImageData;
 
     private async Task EmployeeImg(string verifyCode)
     {
+        employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
         var imagemodel = await ImageService.GetImageData(verifyCode);
         if (imagemodel != null)
         {
@@ -31,7 +33,14 @@
         }
         catch (Exception)
         {
-            ImageData = string.Format("images/imgholder.jpg");
+            if (employee.GenderId == 1)
+            {
+                ImageData = string.Format("images/avatarmaleholder.jpg");
+            }
+            else
+            {
+                ImageData = string.Format("images/avatarfemaleholder.jpg");
+            }
         }
     }
 }

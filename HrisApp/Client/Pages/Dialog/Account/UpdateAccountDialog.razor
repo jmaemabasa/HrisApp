@@ -1,0 +1,92 @@
+﻿<MudDialog Style="background-color: #e9ecef">
+    <DialogContent>
+        <div class="dialog-title">
+            <span>Update Account</span>
+        </div>
+        <div class="d-flex flex-column flex-grow-1 gap-1 mb-3">
+
+            <div style="font-weight: bold;font-size: 16px;color: #27374D">
+                Details
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Full Name</MudText>
+                <MudTextField @bind-Value="inputfullname" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Username</MudText>
+                <MudTextField @bind-Value="obj.Username" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Department</MudText>
+                <MudTextField @bind-Value="inputdept" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+
+            <MudDivider DividerType="DividerType.Middle" Class="my-3" />
+
+            <div style="font-weight: bold;font-size: 16px;color: #27374D">
+                Change Role
+            </div>
+
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Role</MudText>
+
+                <MudSelect @bind-Value="obj.Role" Variant="Variant.Outlined" Margin="Margin.Dense">
+
+                    @foreach (var dep in RoleList)
+                    {
+                        <MudSelectItem Value="@dep.RoleCode">@dep.Name</MudSelectItem>
+                    }
+
+                </MudSelect>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="SaveUpdate">Save</button>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance? MudDialog { get; set; }
+    [Parameter] public int Id { get; set; }
+
+    string inputfullname = "", inputdept = "";
+
+    UserMasterT obj = new();
+    List<UserRoleT> RoleList = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UserRoleService.GetUserRole();
+        RoleList = UserRoleService.UserRoleTs;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        obj = await AuthService.GetSingleObj(Id);
+
+        inputfullname = GlobalConfigService.CapitalizeFirstLetter(obj.Employee?.FirstName) + " " + GlobalConfigService.CapitalizeFirstLetter(obj.Employee?.LastName);
+        inputdept = obj.Employee!.Department!.Name;
+    }
+
+    private async Task SaveUpdate()
+    {
+        obj.Password = "xx";
+        await AuthService.UpdateObj(obj);
+
+        var userid = Convert.ToInt32(GlobalConfigService.User_Id);
+            await AuditlogService.CreateLog(userid, "UPDATE", "User", DateTime.Now);
+        
+        // Update the List using the StateService
+        await AuthService.GetUsers();
+        var newList = AuthService.UserMasterTs;
+        StateService.SetState("UserList", newList);
+        Cancel();
+        _toastService.ShowSuccess("Updated Successfully!");
+    }
+
+    private void Cancel() => MudDialog?.Cancel();
+}

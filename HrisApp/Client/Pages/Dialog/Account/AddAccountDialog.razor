@@ -27,8 +27,7 @@
                 @if (divvar != 0)
                 {
                     <MudSelect @bind-Value="deptvar" Variant="Variant.Outlined" Margin="Margin.Dense">
-                        <MudSelectItem Value=0
-                                       Disabled>---Select Department---</MudSelectItem>
+                        <MudSelectItem Value=0 Disabled>---Select Department---</MudSelectItem>
 
                         @foreach (var dep in DepartmentsL.Where(d => d.DivisionId == divvar))
                         {
@@ -49,10 +48,13 @@
                 @if (divvar != 0 && deptvar != 0)
                 {
                     <MudSelect Class="" @bind-Value="reg.EmployeeId" Variant="Variant.Outlined" Margin="Margin.Dense">
-                        <MudSelectItem Value="0"
-                                       Disabled>---Select Employee---</MudSelectItem>
+                        <MudSelectItem Value="0" Disabled>---Select Employee---</MudSelectItem>
 
-                        @foreach (var emp in EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar && d.StatusId == 1))
+                        @{
+                            var mainempselections = EmployeesL.Where(d => d.DivisionId == divvar && d.DepartmentId == deptvar && d.StatusId == 1 && !empIDs.Contains(d.Id.ToString()));
+                        }
+
+                        @foreach (var emp in mainempselections)
                         {
                             <MudSelectItem Value="@emp.Id">@emp.FirstName @emp.LastName</MudSelectItem>
                         }
@@ -109,6 +111,8 @@
 
     void Cancel() => MudDialog?.Cancel();
 
+    List<string> empIDs = new();
+
     UserLoginDto reg = new();
     private bool _processing = false;
     private bool readonlyvar = true;
@@ -143,6 +147,8 @@
 
         await EmployeeService.GetEmployee();
         EmployeesL = EmployeeService.EmployeeTs;
+
+        empIDs = await AuthService.GetAllEmployeeID();
     }
 
     string GetFormattedUsername()

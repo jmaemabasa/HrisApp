@@ -31,7 +31,7 @@
 </MudAvatar>
 
 @code {
-#nullable disable
+    #nullable disable
     [Parameter]
     public string verify { get; set; }
     EmployeeT employee = new();
@@ -58,7 +58,14 @@
         }
         catch (Exception)
         {
-            ImageData = string.Format("images/imgholder.jpg");
+            if (employee.GenderId == 1)
+            {
+                ImageData = string.Format("images/avatarmaleholder.jpg");
+            }
+            else
+            {
+                ImageData = string.Format("images/avatarfemaleholder.jpg");
+            }
         }
     }
 

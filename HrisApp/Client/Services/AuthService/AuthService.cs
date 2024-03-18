@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Services.AuthService
+﻿using System.Security.Cryptography;
+
+namespace HrisApp.Client.Services.AuthService
 {
 #nullable disable
 
@@ -63,6 +65,41 @@
         {
             var result = await _httpClient.PutAsJsonAsync($"api/Auth/UpdatePassword/{id}", newpass);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
+        }
+
+        public async Task<bool> IsPassMatched(int id, string inputpass)
+        {
+            try
+            {
+                var result = await _httpClient.GetFromJsonAsync<bool>($"api/Auth/IsPassMatched?id={id}&inputpass={inputpass}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error calling authservice: {ex}");
+                return false;
+            }
+        }
+
+        public async Task<List<string>> GetAllEmployeeID()
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<string>>("api/Auth/GetAllEmployeeID");
+            return result;
+        }
+
+        public async Task<UserMasterT> GetSingleObj(int id)
+        {
+            var result = await _httpClient.GetFromJsonAsync<UserMasterT>($"api/Auth/{id}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("user not found");
+        }
+
+        public async Task UpdateObj(UserMasterT model)
+        {
+            await _httpClient.PutAsJsonAsync("api/Auth/UpdateObj", model);
         }
     }
 }

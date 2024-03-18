@@ -1,0 +1,51 @@
+﻿.dialogbtns {
+    padding: 0px 15px 15px 10px;
+}
+
+.cancel {
+    margin-right: 10px;
+    font-weight: bold;
+    transition: all .5s ease;
+}
+
+    .cancel:hover {
+        color: #be1313;
+        font-weight: bold;
+        transform: scale(1.1);
+    }
+
+.save {
+    background-color: #27374D;
+    color: #ffffff;
+    padding: 8px 40px;
+    transition: all .5s ease;
+}
+
+    .save:hover {
+        background-color: #3a5273;
+        transform: scale(1.1);
+    }
+
+/*IMAGE*/
+::deep .btnimage {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    width: 100%;
+}
+
+::deep .btnimagewithimage {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.dialog-title {
+    padding: 10px 0px 8px 0px;
+    color: rgb(66, 66, 66);
+    font-size: 20px;
+}

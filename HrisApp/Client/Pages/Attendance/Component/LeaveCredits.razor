@@ -12,7 +12,7 @@
     <MudCardContent>
         <div class="d-flex justify-content-between mb-3 align-items-center">
             <span class="maintitlespan">Leave Balance</span>
-            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+            <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                 <Authorized>
                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "UpdateLeaveBalOpen"))">
                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
@@ -74,7 +74,7 @@
     <MudCardContent Class="pb-0">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <span class="maintitlespan">Leave History</span>
-            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+            <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                 <Authorized>
                     <button class="Btn btnaddleave" onclick="@(() => OpenDrawer(Anchor.End, "AddHistoryOpen"))">
                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
@@ -129,7 +129,7 @@
 
                     </MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                             <Authorized>
                                 <MudTooltip Text="Check">
                                     <MudIconButton Class="btnedit" OnClick="@(() => OpenViewLeaveDetails(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
@@ -252,7 +252,7 @@
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Purpose</MudText>
                 <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.Purpose</MudText>
             </div>
-            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+            <AuthorizeView Roles="SysAdmin, HR">
                 <Authorized>
                     <div class="divsingledetails mb-2">
                         <div class="d-flex justify-content-between align-items-center">

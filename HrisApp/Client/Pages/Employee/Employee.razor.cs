@@ -47,6 +47,11 @@
                 }
 
                 #endregion for DASHBOARD
+
+                if (_employeeList == null || _employeeList.Count == 0)
+                {
+                    OpenOverlay();
+                }
             }
             catch (Exception ex)
             {

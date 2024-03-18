@@ -1,5 +1,5 @@
 ﻿@page "/asset-accessories/details/{id:int}"
-@attribute [Authorize(Roles = "SysAdmin, GenAdmin, Technical")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical")]
 <PageTitle>Asset Details</PageTitle>
 
 
@@ -71,17 +71,24 @@
                         </div>
                     }
                     <div class="divsingledetails">
-                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Last Check On</MudText>
-                        @if (obj.LastCheckDate == null)
-                        {
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;font-style:italic" Typo="Typo.body2">
-                                Not checked yet.
-                            </MudText>
-                        }
-                        else
-                        {
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.LastCheckDate?.ToString("MMM dd yyyy")</MudText>
-                        }
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Last Check On</MudText>
+                                @if (obj.LastCheckDate == null)
+                                {
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;font-style:italic" Typo="Typo.body2">
+                                        Not checked yet.
+                                    </MudText>
+                                }
+                                else
+                                {
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.LastCheckDate?.ToString("MMM dd yyyy")</MudText>
+                                }
+                            </div>
+                            <div>
+                                <MudIconButton OnClick="@(() => OpenDrawer(Anchor.End, "lastCheckOpen"))" Icon="@Icons.Material.Filled.TipsAndUpdates" Style="color: #757A90" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +101,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Accessory</span>
-                            <AuthorizeView Roles="Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin,Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "leftPanelOpen"))">
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
@@ -194,7 +201,7 @@
                     <div class="mainasssec" style="margin-top: 25px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Additional Details</span>
-                            <AuthorizeView Roles="Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin,Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "detailsPanelOpen"))">
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
@@ -474,6 +481,19 @@
     </div>
 </MudDrawer>
 
+<MudDrawer @bind-Open="@lastCheckOpen" Width="500px" Height="100%" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <div class="d-flex flex-column gap-2 drawerdetails">
+        <span>Last Check On</span>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Last Check On</MudText>
+
+            <MudDatePicker Editable="true" @bind-Date="obj.LastCheckDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-save" @onclick="SaveUpdate">Save</button>
+        </div>
+    </div>
+</MudDrawer>
 
 <script>
     $(document).ready(function () {

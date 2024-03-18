@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Employee
+﻿using NPOI.SS.Formula.Functions;
+
+namespace HrisApp.Client.Pages.Employee
 {
 #nullable disable
 
@@ -164,11 +166,27 @@
             }
             catch (Exception)
             {
-                ImageData = string.Format("images/imgholder.jpg");
+                if (employee.GenderId == 1)
+                {
+                    ImageData = string.Format("images/avatarmaleholder.jpg");
+                }
+                else
+                {
+                    ImageData = string.Format("images/avatarfemaleholder.jpg");
+                }
             }
 
             Bday = employee.Birthdate;
             DateHired = employee.DateHired;
+
+            if (GlobalConfigService.Role == "CadAdmin")
+            {
+                _pHealthHolder = _payroll.PhilHealthNum; _pagIbigHolder = _payroll.HDMFNum; _sssHolder = _payroll.SSSNum; _tinHolder = _payroll.TINNum; _rateholder = _payroll.Rate;
+            }
+            else
+            {
+                _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
+            }
         }
 
         public async Task OnExporttoPDF()
@@ -646,7 +664,6 @@
                     PDFDataList.Add(dataUrl);
                 }
             }
-            Console.WriteLine(PDFDataList.Count);
         }
 
         private async void RefreshPdfFileList()
@@ -715,7 +732,6 @@
             {
                 var base642 = Convert.ToBase64String(imagemodel);
                 ImageData = string.Format("data:image/png;base64,{0}", base642);
-                //Console.WriteLine($"2nd Test: {verifyCode}");
             }
         }
 
@@ -735,7 +751,6 @@
                     case 2:
                         ProbStart = newDate;
                         ProbEnd = ProbStart.Value.AddMonths(3);
-                        Console.WriteLine(ProbStart.ToString());
                         break;
                 }
             }
@@ -756,5 +771,113 @@
         private void Backbtn() => NavigationManager.NavigateTo("/employee");
 
         #endregion FUNCTIONS / BUTTONS
+
+        private bool isOpenEnterPass;
+        private DialogOptions passdialogOptions = new() { FullWidth = true };
+        private string inputPassword;
+
+        private string _message = string.Empty;
+        private MudBlazor.Severity _severity;
+        private bool _showAlert = false;
+
+        private void OpenEnterPass()
+        {
+            if (_isShowData)
+            {
+                _isShowData = false;
+                _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
+                _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
+            }
+            else
+            {
+                inputPassword = "";
+                _showAlert = false;
+                isOpenEnterPass = true;
+            }
+        }
+
+        //private string _pHealthHolder = "●●●●●●●●●", _pagIbigHolder = "●●●●●●●●●", _sssHolder = "●●●●●●●●●", _tinHolder = "●●●●●●●●●";
+        private string _pHealthHolder = "", _pagIbigHolder = "", _sssHolder = "", _tinHolder = "", _rateholder ="";
+        private bool _isShowData = false;
+        private string _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
+
+        private async Task DisplayConfData()
+        {
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+
+            var ismatch = await AuthService.IsPassMatched(id, @inputPassword);
+
+            if (ismatch)
+            {
+                _isShowData = !_isShowData;
+                if (_isShowData != true)
+                {
+                    //_isShowData = false;
+                    _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
+                    _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
+                }
+                else
+                {
+                    //_isShowData = true;
+                    _dataDisplayIcon = Icons.Material.Filled.Visibility;
+                    _pHealthHolder = _payroll.PhilHealthNum;
+                    _pagIbigHolder = _payroll.HDMFNum;
+                    _sssHolder = _payroll.SSSNum;
+                    _tinHolder = _payroll.TINNum;
+                    _rateholder = _payroll.Rate;
+                    isOpenEnterPass = false;
+                    _toastService.ShowSuccess("Data showed.");
+                }
+            }
+            else
+            {
+                _showAlert = true;
+                _severity = Severity.Error;
+                _message = "Incorrect Password";
+            }
+        }
+
+        private bool _isShowPass;
+        private InputType _passwordInput = InputType.Password;
+        private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+        private void ButtonTestclick()
+        {
+            if (_isShowPass)
+            {
+                _isShowPass = false;
+                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+                _passwordInput = InputType.Password;
+            }
+            else
+            {
+                _isShowPass = true;
+                _passwordInputIcon = Icons.Material.Filled.Visibility;
+                _passwordInput = InputType.Text;
+            }
+        }
+
+        public async Task IsUsePermAddress(bool ischeck)
+        {
+            await Task.Delay(1);
+            if (ischeck)
+            {
+                _address.CurrentAdd = _address.PermanentAdd;
+                _address.CurrentProvince = _address.PermanentProvince;
+                _address.CurrentCity = _address.PermanentCity;
+                _address.CurrentBrgy = _address.PermanentBrgy;
+                _address.CurrentZipCode = _address.PermanentZipCode;
+                _address.CurrentCountry = _address.PermanentCountry;
+            }
+            else
+            {
+                _address.CurrentAdd = "";
+                _address.CurrentProvince = "";
+                _address.CurrentCity = "";
+                _address.CurrentBrgy = "";
+                _address.CurrentZipCode = "";
+                _address.CurrentCountry = "";
+            }
+        }
     }
 }

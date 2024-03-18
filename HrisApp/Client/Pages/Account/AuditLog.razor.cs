@@ -29,6 +29,11 @@
 
             await AuthService.GetUsers();
             userList = AuthService.UserMasterTs;
+
+            if (logsList == null || logsList.Count == 0)
+            {
+                OpenOverlay();
+            }
         }
 
         public void DateRangeChange(DateRange? dateRange)

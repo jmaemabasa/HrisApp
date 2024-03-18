@@ -1,5 +1,5 @@
 ﻿@page "/main-asset/details/{id:int}"
-@attribute [Authorize(Roles = "SysAdmin, GenAdmin, Technical")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical")]
 @inject DTOAssetQR _printqr
 <PageTitle>Asset Details</PageTitle>
 
@@ -90,7 +90,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Details</span>
-                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "leftPanelOpen"))">
 
@@ -199,7 +199,7 @@
                     <div class="mainasssec" style="margin-top: 25px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Asset Accessories</span>
-                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" @onclick="OpenManageAccessories">
 
@@ -282,7 +282,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Details</span>
-                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "detailsPanelOpen"))">
 
@@ -416,7 +416,7 @@
                             <span class="spantitle">Currently Assigned To</span>
                             @if (obj.EmployeeId == null)
                             {
-                                <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
+                                <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
                                     <Authorized>
                                         <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "assignPanelOpen"))">
 
@@ -429,7 +429,7 @@
                             }
                             else
                             {
-                                <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
+                                <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
                                     <Authorized>
                                         <button class="btn-returned" onclick="@(() => OpenDrawer(Anchor.End, "assignReturnPanelOpen"))">
                                             <MudIcon Icon="@Icons.Material.Rounded.SwipeLeftAlt" Class="me-1"></MudIcon> Returned?
@@ -510,7 +510,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Last Check On</span>
-                            <AuthorizeView Roles="SysAdmin, GenAdmin, Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "mtsChkPanelOpen"))">
 

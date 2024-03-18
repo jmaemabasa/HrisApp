@@ -1,5 +1,6 @@
 ﻿@page "/payrollAssistReport"
 @inject DTOEmpHeadcountExport _crrExport
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
 
 <PageTitle>Payroll Assist Report</PageTitle>
 <div class="mb-5">
@@ -7,7 +8,7 @@
         <div class="d-flex flex-column">
             <div><span style="font-size: x-large;font-weight: 600;color: #424242;">Extract 201 File For Payroll Assist</span></div>
         </div>
-        <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
                     @if (!_processing)
@@ -139,7 +140,7 @@
                     <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
                 </MudTd>
                 @*<MudTd>
-            <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
             <Authorized>
             <MudTooltip Text="View Details">
             <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>

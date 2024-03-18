@@ -1,6 +1,6 @@
 ﻿@page "/evaluationlist"
 
-@attribute [Authorize(Roles = "SysAdmin, GenAdmin, HR")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
 
 <PageTitle>Evaluation</PageTitle>
 
@@ -136,7 +136,7 @@
                 </MudTd>
                 @if (employe1.EvalStatus != "Done")
                 {
-                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                    <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
                         <Authorized>
                             <MudTd DataLabel="" Style="text-align: center;">
                                 <MudTooltip Text="Update" Color="Color.Tertiary">

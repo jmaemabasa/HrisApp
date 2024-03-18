@@ -33,6 +33,7 @@
 
         private async Task ConfirmCreate()
         {
+            obj.LastCheckDate = null;
             await AssetAccService.CreateObj(obj);
             await OnsavingImg(obj.CategoryId, obj.SubCategoryId, obj.JMCode, "First image uploaded.");
 

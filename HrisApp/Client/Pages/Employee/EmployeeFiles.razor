@@ -33,9 +33,9 @@
                 var docs = listOfDocuments[i];
                 @if (docs.PdfFile != null)
                 {
-                    <AuthorizeView Roles="SysAdmin, GenAdmin, HR">
+                    <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
                         <Authorized>
-                            <MudFileUpload T="IBrowserFile" OnFilesChanged="e => OnPDFSaving123(e, index, empid, div, dept, ln, VerifyCode)" Accept=".pdf">
+                            <MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles" Accept=".pdf" Multiple>
                                 <ButtonTemplate Context="fileContext">
                                     <MudButton HtmlTag="label" Class="btnaddfile" StartIcon="@Icons.Material.Filled.CloudUpload" for="@fileContext" Style="text-transform: none;">Upload Files</MudButton>
                                 </ButtonTemplate>
@@ -91,21 +91,44 @@
     }
     #endregion
 
+    private async Task UploadFiles(IReadOnlyList<IBrowserFile> files)
+    {
+        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure to upload this file/s?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+        if (confirmResult.IsConfirmed)
+        {
+            foreach (var file in files)
+            {
+                await OnPDFSaving123(file);
+            }
+            OnFileAdded?.Invoke();
+            _toastService.ShowSuccess("File Uploaded Succesfully.");
+        }
+    }
+
     //documents
-    private async Task OnPDFSaving123(InputFileChangeEventArgs e, int index, string EmployeeId, int division, int department, string lastname, string verify)
+    private async Task OnPDFSaving123(IBrowserFile e)
     {
         long maxPDFSize = long.MaxValue;
-        var _pdfModel = e.File;
-        var _pdfFilename = e.File.Name;
-        var _pdfContent = e.File.ContentType;
-        var _pdfBuffer = new byte[e.File.Size];
+        var _pdfModel = e;
+        var _pdfFilename = e.Name;
+        var _pdfContent = e.ContentType;
+        var _pdfBuffer = new byte[e.Size];
         var _pdfURL = $"data:{_pdfContent};base64,{Convert.ToBase64String(_pdfBuffer)}";
 
         using (var _stream = _pdfModel.OpenReadStream(maxPDFSize))
         {
             await _stream.ReadAsync(_pdfBuffer);
         }
-        if (e.File.Name is null)
+        if (e.Name is null)
         {
             imgBase64 = "Images/imageholder.png";
         }
@@ -129,9 +152,8 @@
 
             pdfbool12 = false;
             PDFbool12 = true;
-            await ImageService.AttachedFile(content, EmployeeId, division, department, lastname, verify);
-            OnFileAdded?.Invoke();
-            _toastService.ShowSuccess("File Uploaded Succesfully.");
+            await ImageService.AttachedFile(content, empid, div, dept, ln, VerifyCode);
         }
+
     }
 }

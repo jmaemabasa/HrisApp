@@ -49,6 +49,17 @@ namespace HrisApp.Client.Pages.Account
             };
         }
 
+        private void OpenUpdateDialog(int id)
+        {
+            var parameters = new DialogParameters<UpdateAccountDialog>
+            {
+                { x => x.Id, id }
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader=true };
+            DialogService.Show<UpdateAccountDialog>("", parameters, options);
+        }
+
         private void ShowLogs(int id) => NavigationManager.NavigateTo($"/account/logs/{id}");
 
         //TABLEEES
