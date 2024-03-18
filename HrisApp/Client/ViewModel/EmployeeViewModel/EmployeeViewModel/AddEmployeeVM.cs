@@ -23,6 +23,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         private IEmpHistoryService EmpHistoryService = new EmpHistoryService();
         private IForEvalService ForEvalService = new ForEvalService();
         private ILeaveCredService LeaveCredService = new LeaveCredService();
+        private IAuthService AuthService = new AuthService();
 
         public SweetAlertService Swal { get; set; }
 
@@ -239,6 +240,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public string slectClasssST = "frmselect";
         public string slectClasssRD = "frmselect";
 
+        private UserLoginDto userObj = new();
+
         public async Task<string> CreateEmployee()
         {
             isSaving = true;
@@ -269,7 +272,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             {
                 try
                 {
-                    Console.WriteLine("Saving Page");
                     var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
 
                     //CREATE EMPLOYEE
@@ -361,6 +363,25 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     //CREATE LEAVE CREDITS
                     await LeaveCredService.CreateLeaveCred(verifyId, 0, 0, 0, 0, 0, 0);
 
+                    //AUTOMATIC CREATE ACOCUNT
+                    userObj.Username = !string.IsNullOrEmpty(employee.FirstName) && !string.IsNullOrEmpty(employee.LastName)
+                                        ? $"{employee.FirstName[0].ToString().ToLower()}.{employee.LastName.ToLower()}"
+                                        : "";
+
+                    bool isUsernameExist = await AuthService.IsUsernameExist(userObj.Username);
+                    if (isUsernameExist)
+                    {
+                        await GenerateUsername();
+                    }
+
+                    var employees = await EmployeeService.GetEmployeeList();
+                    userObj.EmployeeId = employees.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id;
+                    userObj.Emp_VerifyId = verifyCode;
+                    userObj.Password = "p@ssw0rd";
+                    userObj.LoginStatus = "Inactive";
+                    userObj.Role = "User";
+                    await AuthService.Register(userObj);
+
                     isSaving = false;
                     var user_id = Convert.ToInt32(GlobalConfigService.User_Id);
                     await AuditlogService.CreateLog(user_id, "CREATE", "Model", DateTime.Now);
@@ -375,6 +396,17 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     return $"{TokenConst.AlertError}xxx{ex.Message}";
                 }
             }
+        }
+
+        private async Task GenerateUsername()
+        {
+            await Task.Delay(0);
+            // Generate random 5-digit number
+            Random rnd = new();
+            int randomNumber = rnd.Next(10000, 99999);
+
+            // Concatenate random number to username
+            userObj.Username += randomNumber.ToString();
         }
 
         #region IMAGE
@@ -493,12 +525,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public async Task OnPDFSaving(string EmployeeId, int division, int department, string lastname, string verify)
         {
-            Console.WriteLine($"EmployeeId: {EmployeeId}");
-            Console.WriteLine($"division: {division}");
-            Console.WriteLine($"department: {department}");
-            Console.WriteLine($"lastname: {lastname}");
-            Console.WriteLine($"verify: {verify}");
-
             foreach (var formdata in DocuEmployees)
             {
                 await ImageService.AttachedFile(formdata, EmployeeId, division, department, lastname, verify);

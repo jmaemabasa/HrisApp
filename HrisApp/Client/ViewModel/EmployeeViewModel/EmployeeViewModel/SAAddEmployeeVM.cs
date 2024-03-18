@@ -242,7 +242,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             {
                 try
                 {
-                    Console.WriteLine("Saving Page");
                     var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
 
                     //CREATE EMPLOYEE
@@ -462,12 +461,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public async Task OnPDFSaving(string EmployeeId, int division, int department, string lastname, string verify)
         {
-            Console.WriteLine($"EmployeeId: {EmployeeId}");
-            Console.WriteLine($"division: {division}");
-            Console.WriteLine($"department: {department}");
-            Console.WriteLine($"lastname: {lastname}");
-            Console.WriteLine($"verify: {verify}");
-
             foreach (var formdata in DocuEmployees)
             {
                 await ImageService.AttachedFile(formdata, EmployeeId, division, department, lastname, verify);

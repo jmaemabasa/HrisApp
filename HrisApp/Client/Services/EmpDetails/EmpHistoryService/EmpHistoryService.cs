@@ -1,16 +1,19 @@
 ﻿namespace HrisApp.Client.Services.EmpDetails.EmpHistoryService
 {
 #nullable disable
+
     public class EmpHistoryService : IEmpHistoryService
     {
         public HttpClient _httpClient;
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
+
         public EmpHistoryService()
         {
             _httpClient = _mainService.Get_Http();
         }
 
         public List<Emp_PosHistoryT> Emp_PosHistoryTs { get; set; } = new List<Emp_PosHistoryT>();
+
         public async Task<List<Emp_PosHistoryT>> GetEmpHistoryList(string verCode)
         {
             return await _httpClient.GetFromJsonAsync<List<Emp_PosHistoryT>>($"api/EmpHistory/GetEmpHistorylist?verCode={verCode}");
@@ -48,14 +51,10 @@
 
         public async Task<string> CreateEmpHistory(Emp_PosHistoryT history)
         {
-            Console.WriteLine("Saving Services sa create employee history");
-
-
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/EmpHistory/CreateEmpHistory", history);
             if (!response.IsSuccessStatusCode)
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("Error: " + errorMessage);
             }
             return history.Verify_Id;
         }

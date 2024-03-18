@@ -7,7 +7,6 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
     [ApiController]
     public class EmpEvaluationController : ControllerBase
     {
-
         private readonly DataContext _context;
 
         public EmpEvaluationController(DataContext context)
@@ -70,7 +69,6 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
             return Ok(await GetDBEval());
         }
 
-
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Emp_EvaluationT>>> UpdateForEval(Emp_EvaluationT emphistory, int id)
         {
@@ -81,9 +79,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 dbEmployeeHis.Eval1Status = emphistory.Eval1Status;
                 dbEmployeeHis.Eval2Status = emphistory.Eval2Status;
                 dbEmployeeHis.Eval3Status = emphistory.Eval3Status;
-                dbEmployeeHis.Eval4Status = emphistory.Eval4Status;
                 dbEmployeeHis.Eval5Status = emphistory.Eval5Status;
-                dbEmployeeHis.Eval6Status = emphistory.Eval6Status;
                 dbEmployeeHis.EvalStatus = emphistory.EvalStatus;
 
                 await _context.SaveChangesAsync();
@@ -101,11 +97,9 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 dbEmployeeHis.Eval1Status = emphistory.Eval1Status;
                 dbEmployeeHis.Eval2Status = emphistory.Eval2Status;
                 dbEmployeeHis.Eval3Status = emphistory.Eval3Status;
-                dbEmployeeHis.Eval4Status = emphistory.Eval4Status;
                 dbEmployeeHis.Eval5Status = emphistory.Eval5Status;
-                dbEmployeeHis.Eval6Status = emphistory.Eval6Status;
 
-                if (dbEmployeeHis.Eval6Status == "Done")
+                if (dbEmployeeHis.Eval5Status == "Done")
                 {
                     dbEmployeeHis.EvalStatus = "Done";
                 }

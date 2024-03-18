@@ -36,7 +36,6 @@
     private async Task OnDonwloadfile()
     {
         var response = await Http.GetAsync($"/api/Document/Getdocumentfile?employeeId={employee.EmployeeNo}&verifyCode={employee.Verify_Id}");
-        Console.WriteLine(response.ToString());
         if (!response.IsSuccessStatusCode)
         {
             await jsRuntime.InvokeVoidAsync("Alert", "File not found");

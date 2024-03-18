@@ -7,10 +7,12 @@ using System.Net.Http;
 namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 {
 #nullable disable
+
     public class EmployeeService : IEmployeeService
     {
         public HttpClient _httpClient;
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
+
         public EmployeeService()
         {
             _httpClient = _mainService.Get_Http();
@@ -38,7 +40,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             if (result != null)
                 return result;
             throw new Exception("employee not found");
-
         }
 
         public async Task<EmployeeT> GetSingleEmployeeByVerId(string verId)
@@ -47,7 +48,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             if (result != null)
                 return result;
             throw new Exception("employee not found");
-
         }
 
         public async Task SetEmployees(HttpResponseMessage result)
@@ -58,9 +58,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
         public async Task<string> CreateEmployee(EmployeeT employee)
         {
-            Console.WriteLine("Saving Services sa create employee");
-
-
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Employee/CreateEmployee", employee);
             if (!response.IsSuccessStatusCode)
             {
@@ -68,8 +65,8 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                 Console.WriteLine("Error: " + errorMessage);
             }
             return employee.Verify_Id;
-
         }
+
         public async Task UpdateEmployee(EmployeeT employee)
         {
             var result = await _httpClient.PutAsJsonAsync($"api/Employee/{employee.Id}", employee);
@@ -85,7 +82,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
         public async Task<string> Getname(int id)
         {
             var returnlist = await _httpClient.GetFromJsonAsync<List<EmployeeT>>($"api/Employee/GetEmpName/{id}");
-
 
             var returnmodel = returnlist.Where(e => e.Id == id).FirstOrDefault();
 
@@ -108,7 +104,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             return response;
         }
 
-
         public async Task<HttpResponseMessage> EmpDetailsPrint(string verid)
         {
             try
@@ -118,7 +113,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"HttpResponse : {ex.Message}");
                 return null;
             }
@@ -134,12 +128,10 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"String Response : {ex.Message}");
                 return null;
             }
         }
-
 
         public async Task<string> QueryEmployeeForUpload(DataTable dtable, string filename)
         {
@@ -210,12 +202,12 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                 var permzip = dtable.Rows[a][43].ToString();
                                 var permcountry = dtable.Rows[a][44].ToString();
 
-
                                 DateTime outreg = Convert.ToDateTime(regularization);
                                 var outdate = outreg.ToString("yyyyMMdd");
                                 var verifyformat = $"{outdate}{hhmm}{ssff}";
 
                                 #region SETTING FK ID
+
                                 var depid = await _httpClient.GetFromJsonAsync<int>($"api/Department/GetDepartmentId/{dep}");
                                 var areaid = await _httpClient.GetFromJsonAsync<int>($"api/Area/GetAreaId/{area}");
                                 var divisionid = await _httpClient.GetFromJsonAsync<int>($"api/Division/GetDivisionId/{division}");
@@ -228,10 +220,10 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                 var erelid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetEmerRelationshipId/{emerrel}");
                                 var ratetypeid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetRateTypeId/{ratetype}");
                                 var cbid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetCashbondId/{cashbond}");
-                                #endregion
+
+                                #endregion SETTING FK ID
 
                                 var positionid = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetSubPositionId/{position.Split(" - ").Last()}");
-
 
                                 EmployeeT EmployeeModel = new EmployeeT()
                                 {
@@ -261,7 +253,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     EmerRelationshipId = erelid,
                                     EmerAddress = emeraddress,
                                     EmerMobNum = emermobile,
-                                    
+
                                     DateInactiveStatus = null,
                                     Verify_Id = verifyformat
                                 };
@@ -287,7 +279,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     CashbondId = cbid,
                                     SSSNum = sss,
                                     PhilHealthNum = philhealth,
-                                    HDMFNum = hdmf,                                    
+                                    HDMFNum = hdmf,
                                     TINNum = tin,
                                     ScheduleTypeId = 1,
                                     RestDayId = 1,
@@ -307,7 +299,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     NewAreaId = areaid,
                                     NewDivisionId = divisionid,
                                     NewDepartmentId = depid,
-                                    NewSectionId = secid, 
+                                    NewSectionId = secid,
                                     NewPositionId = positionid,
                                     newPositionCode = "IT01"
                                 };
@@ -344,7 +336,9 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     var poshis = await _httpClient.PostAsJsonAsync("api/EmpHistory/CreateEmpHistory", PosHistoryModel);
 
                                     //foreval
+
                                     #region FOR EVALUATION MODEL
+
                                     int calculateMonth = 0;
                                     int totalMonth = 12;
 
@@ -370,9 +364,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Done",
                                                 Eval3Status = "Done",
-                                                Eval4Status = "Done",
                                                 Eval5Status = "Done",
-                                                Eval6Status = "Done",
                                                 EvalStatus = "Done",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -388,9 +380,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                                 Eval1Status = "Pending",
                                                 Eval2Status = "Pending",
                                                 Eval3Status = "Pending",
-                                                Eval4Status = "Pending",
                                                 Eval5Status = "Pending",
-                                                Eval6Status = "Pending",
                                                 EvalStatus = "Pending",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -403,15 +393,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     {
                                         if (Convert.ToDateTime(datehired).Year < DateTime.Now.Year - 1)
                                         {
-                                            Emp_EvaluationT EvalModel = new Emp_EvaluationT()
+                                            Emp_EvaluationT EvalModel = new()
                                             {
                                                 Verify_Id = verifyId,
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Done",
                                                 Eval3Status = "Done",
-                                                Eval4Status = "Done",
                                                 Eval5Status = "Done",
-                                                Eval6Status = "Done",
                                                 EvalStatus = "Done",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -421,15 +409,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                         }
                                         else
                                         {
-                                            Emp_EvaluationT EvalModel = new Emp_EvaluationT()
+                                            Emp_EvaluationT EvalModel = new()
                                             {
                                                 Verify_Id = verifyId,
                                                 Eval1Status = "Pending",
                                                 Eval2Status = "Pending",
                                                 Eval3Status = "Pending",
-                                                Eval4Status = "Pending",
                                                 Eval5Status = "Pending",
-                                                Eval6Status = "Pending",
                                                 EvalStatus = "Pending",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -448,9 +434,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Done",
                                                 Eval3Status = "Done",
-                                                Eval4Status = "Done",
                                                 Eval5Status = "Done",
-                                                Eval6Status = "Done",
                                                 EvalStatus = "Done",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -466,9 +450,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Pending",
                                                 Eval3Status = "Pending",
-                                                Eval4Status = "Pending",
                                                 Eval5Status = "Pending",
-                                                Eval6Status = "Pending",
                                                 EvalStatus = "Pending",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -487,9 +469,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Done",
                                                 Eval3Status = "Done",
-                                                Eval4Status = "Done",
                                                 Eval5Status = "Done",
-                                                Eval6Status = "Done",
                                                 EvalStatus = "Done",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -505,48 +485,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Done",
                                                 Eval3Status = "Pending",
-                                                Eval4Status = "Pending",
                                                 Eval5Status = "Pending",
-                                                Eval6Status = "Pending",
-                                                EvalStatus = "Pending",
-                                                DateHired = Convert.ToDateTime(datehired),
-                                                DateEvaluate = todayDate,
-                                                TimesEvaluate = +1
-                                            };
-                                            var saveeval = await _httpClient.PostAsJsonAsync("api/EmpEvaluation/CreateForEval", EvalModel);
-                                        }
-                                    }
-                                    else if (calculateMonth == 4)
-                                    {
-                                        if (Convert.ToDateTime(datehired).Year < DateTime.Now.Year - 1)
-                                        {
-                                            Emp_EvaluationT EvalModel = new Emp_EvaluationT()
-                                            {
-                                                Verify_Id = verifyId,
-                                                Eval1Status = "Done",
-                                                Eval2Status = "Done",
-                                                Eval3Status = "Done",
-                                                Eval4Status = "Done",
-                                                Eval5Status = "Done",
-                                                Eval6Status = "Done",
-                                                EvalStatus = "Done",
-                                                DateHired = Convert.ToDateTime(datehired),
-                                                DateEvaluate = todayDate,
-                                                TimesEvaluate = +1
-                                            };
-                                            var saveeval = await _httpClient.PostAsJsonAsync("api/EmpEvaluation/CreateForEval", EvalModel);
-                                        }
-                                        else
-                                        {
-                                            Emp_EvaluationT EvalModel = new Emp_EvaluationT()
-                                            {
-                                                Verify_Id = verifyformat,
-                                                Eval1Status = "Done",
-                                                Eval2Status = "Done",
-                                                Eval3Status = "Done",
-                                                Eval4Status = "Pending",
-                                                Eval5Status = "Pending",
-                                                Eval6Status = "Pending",
                                                 EvalStatus = "Pending",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -565,9 +504,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Done",
                                                 Eval3Status = "Done",
-                                                Eval4Status = "Done",
                                                 Eval5Status = "Done",
-                                                Eval6Status = "Done",
                                                 EvalStatus = "Done",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -577,55 +514,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                         }
                                         else
                                         {
-
                                             Emp_EvaluationT EvalModel = new Emp_EvaluationT()
                                             {
                                                 Verify_Id = verifyId,
                                                 Eval1Status = "Done",
                                                 Eval2Status = "Done",
                                                 Eval3Status = "Done",
-                                                Eval4Status = "Done",
                                                 Eval5Status = "Pending",
-                                                Eval6Status = "Pending",
-                                                EvalStatus = "Pending",
-                                                DateHired = Convert.ToDateTime(datehired),
-                                                DateEvaluate = todayDate,
-                                                TimesEvaluate = +1
-                                            };
-                                            var saveeval = await _httpClient.PostAsJsonAsync("api/EmpEvaluation/CreateForEval", EvalModel);
-                                        }
-                                    }
-                                    else if (calculateMonth == 6)
-                                    {
-                                        if (Convert.ToDateTime(datehired).Year < DateTime.Now.Year - 1)
-                                        {
-                                            Emp_EvaluationT EvalModel = new Emp_EvaluationT()
-                                            {
-                                                Verify_Id = verifyId,
-                                                Eval1Status = "Done",
-                                                Eval2Status = "Done",
-                                                Eval3Status = "Done",
-                                                Eval4Status = "Done",
-                                                Eval5Status = "Done",
-                                                Eval6Status = "Done",
-                                                EvalStatus = "Done",
-                                                DateHired = Convert.ToDateTime(datehired),
-                                                DateEvaluate = todayDate,
-                                                TimesEvaluate = +1
-                                            };
-                                            var saveeval = await _httpClient.PostAsJsonAsync("api/EmpEvaluation/CreateForEval", EvalModel);
-                                        }
-                                        else
-                                        {
-                                            Emp_EvaluationT EvalModel = new Emp_EvaluationT()
-                                            {
-                                                Verify_Id = verifyId,
-                                                Eval1Status = "Done",
-                                                Eval2Status = "Done",
-                                                Eval3Status = "Done",
-                                                Eval4Status = "Done",
-                                                Eval5Status = "Done",
-                                                Eval6Status = "Pending",
                                                 EvalStatus = "Pending",
                                                 DateHired = Convert.ToDateTime(datehired),
                                                 DateEvaluate = todayDate,
@@ -636,15 +531,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     }
                                     else
                                     {
-                                        Emp_EvaluationT EvalModel = new Emp_EvaluationT()
+                                        Emp_EvaluationT EvalModel = new()
                                         {
                                             Verify_Id = verifyId,
                                             Eval1Status = "Done",
                                             Eval2Status = "Done",
                                             Eval3Status = "Done",
-                                            Eval4Status = "Done",
                                             Eval5Status = "Done",
-                                            Eval6Status = "Done",
                                             EvalStatus = "Done",
                                             DateHired = Convert.ToDateTime(datehired),
                                             DateEvaluate = todayDate,
@@ -653,27 +546,27 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                         var saveeval = await _httpClient.PostAsJsonAsync("api/EmpEvaluation/CreateForEval", EvalModel);
                                     }
 
-                                    #endregion
+                                    #endregion FOR EVALUATION MODEL
 
                                     //LEAVE CREDIT
                                     LEAVECREDITMODEL.Verify_Id = verifyId;
                                     var cred = await _httpClient.PostAsJsonAsync("api/LeaveCredit/CreateLeaveCredit", LEAVECREDITMODEL);
 
-
                                     #region UPDATE SUBPOSITION
+
                                     var subposup = await _httpClient.GetFromJsonAsync<SubPositionT>($"api/Position/GetSingleSubPosition/{positionid}");
 
                                     subposup.Status = "Active";
                                     subposup.Emp_VerifyId = verifyId;
                                     subposup.ActiveDate = Convert.ToDateTime(datehired);
                                     var updatesubpos = await _httpClient.PutAsJsonAsync($"api/Position/UpdateSubPosition", subposup);
-                                    #endregion
+
+                                    #endregion UPDATE SUBPOSITION
                                 }
                                 else
                                 {
                                     await UpdateEmployee(EmployeeModel);
                                 }
-
                             }
 
                             return "Success";
@@ -701,6 +594,5 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
             var response = await _httpClient.GetFromJsonAsync<int>($"api/Employee/GetEmployeeExist/{companyId}");
             return response;
         }
-
     }
 }

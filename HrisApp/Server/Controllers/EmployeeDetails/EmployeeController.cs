@@ -50,7 +50,6 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
-
         }
 
         [HttpGet("{id}")]
@@ -169,9 +168,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                                 valStatus.Eval1Status = "Pending";
                                 valStatus.Eval2Status = "Pending";
                                 valStatus.Eval3Status = "Pending";
-                                valStatus.Eval4Status = "Pending";
                                 valStatus.Eval5Status = "Pending";
-                                valStatus.Eval6Status = "Pending";
                                 valStatus.EvalStatus = "Pending";
                                 valStatus.DateEvaluate = todayDate;
                                 valStatus.TimesEvaluate = +1;
@@ -181,9 +178,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                                 valStatus.Eval1Status = "Pending";
                                 valStatus.Eval2Status = "Pending";
                                 valStatus.Eval3Status = "Pending";
-                                valStatus.Eval4Status = "Pending";
                                 valStatus.Eval5Status = "Pending";
-                                valStatus.Eval6Status = "Pending";
                                 valStatus.EvalStatus = "Pending";
                                 valStatus.DateEvaluate = todayDate;
                                 valStatus.TimesEvaluate = +1;
@@ -193,9 +188,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                                 valStatus.Eval1Status = "Done";
                                 valStatus.Eval2Status = "Pending";
                                 valStatus.Eval3Status = "Pending";
-                                valStatus.Eval4Status = "Pending";
                                 valStatus.Eval5Status = "Pending";
-                                valStatus.Eval6Status = "Pending";
                                 valStatus.EvalStatus = "Pending";
                                 valStatus.DateEvaluate = todayDate;
                                 valStatus.TimesEvaluate = +1;
@@ -205,9 +198,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                                 valStatus.Eval1Status = "Done";
                                 valStatus.Eval2Status = "Done";
                                 valStatus.Eval3Status = "Pending";
-                                valStatus.Eval4Status = "Pending";
                                 valStatus.Eval5Status = "Pending";
-                                valStatus.Eval6Status = "Pending";
                                 valStatus.EvalStatus = "Pending";
                                 valStatus.DateEvaluate = todayDate;
                                 valStatus.TimesEvaluate = +1;
@@ -217,9 +208,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                                 valStatus.Eval1Status = "Done";
                                 valStatus.Eval2Status = "Done";
                                 valStatus.Eval3Status = "Done";
-                                valStatus.Eval4Status = "Pending";
                                 valStatus.Eval5Status = "Pending";
-                                valStatus.Eval6Status = "Pending";
                                 valStatus.EvalStatus = "Pending";
                                 valStatus.DateEvaluate = todayDate;
                                 valStatus.TimesEvaluate = +1;
@@ -229,21 +218,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                                 valStatus.Eval1Status = "Done";
                                 valStatus.Eval2Status = "Done";
                                 valStatus.Eval3Status = "Done";
-                                valStatus.Eval4Status = "Done";
                                 valStatus.Eval5Status = "Pending";
-                                valStatus.Eval6Status = "Pending";
-                                valStatus.EvalStatus = "Pending";
-                                valStatus.DateEvaluate = todayDate;
-                                valStatus.TimesEvaluate = +1;
-                                break;
-
-                            case 6:
-                                valStatus.Eval1Status = "Done";
-                                valStatus.Eval2Status = "Done";
-                                valStatus.Eval3Status = "Done";
-                                valStatus.Eval4Status = "Done";
-                                valStatus.Eval5Status = "Done";
-                                valStatus.Eval6Status = "Pending";
                                 valStatus.EvalStatus = "Pending";
                                 valStatus.DateEvaluate = todayDate;
                                 valStatus.TimesEvaluate = +1;
@@ -253,9 +228,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                                 valStatus.Eval1Status = "Done";
                                 valStatus.Eval2Status = "Done";
                                 valStatus.Eval3Status = "Done";
-                                valStatus.Eval4Status = "Done";
                                 valStatus.Eval5Status = "Done";
-                                valStatus.Eval6Status = "Done";
                                 valStatus.EvalStatus = "Done";
                                 valStatus.DateEvaluate = todayDate;
                                 valStatus.TimesEvaluate = +1;
@@ -380,6 +353,5 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
 
             return Ok(_isexist);
         }
-
     }
 }

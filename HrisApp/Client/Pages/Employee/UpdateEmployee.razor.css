@@ -96,6 +96,7 @@
     margin-bottom: 10px;
     padding: 10px 10px 10px 10px;
     transition: all .5s ease;
+    pointer-events: none;
 }
 
     ::deep .filebtn:hover {
@@ -536,7 +537,6 @@
     transform: translate(2px,2px);
 }
 
-
 ::deep .btnshowdata, .btnshowdata {
     background-color: #27374D;
     color: #fff;
@@ -544,7 +544,6 @@
     margin-bottom: 8px;
     width: 100%;
 }
-
 
     ::deep .btnshowdata:hover, .btnshowdata:hover {
         background-color: #26446e;

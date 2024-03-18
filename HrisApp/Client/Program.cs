@@ -93,6 +93,7 @@ global using HrisApp.Client.Services.Assets.AssetMasterHistoryService;
 global using HrisApp.Client.Services.Assets.AssetLastCheckService;
 global using HrisApp.Client.Services.Assets.AssetAccessHistoryService;
 global using HrisApp.Client.Services.Assets.AssetAccessImageService;
+global using HrisApp.Client.Services.Assets.AssetVehicleService;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -155,6 +156,7 @@ builder.Services.AddScoped<IAssetMasterHistoryService, AssetMasterHistoryService
 builder.Services.AddScoped<IAssetLastCheckService, AssetLastCheckService>();
 builder.Services.AddScoped<IAssetAccessHistoryService, AssetAccessHistoryService>();
 builder.Services.AddScoped<IAssetAccessImageService, AssetAccessImageService>();
+builder.Services.AddScoped<IAssetVehicleService, AssetVehicleService>();
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();
 builder.Services.AddSingleton<StateService>();

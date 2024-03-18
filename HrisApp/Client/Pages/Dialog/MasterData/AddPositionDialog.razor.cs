@@ -197,7 +197,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (!string.IsNullOrEmpty(newTechSkill))
                 listOfTechSkills.Add(new PositionTechSkillT { PosCode = code, SkillName = newSkill, VerifyId = verifyCode });
             newTechSkill = "";
-            Console.WriteLine(verifyCode);
         }
 
         public void CloseTechSkill(MudChip chip)

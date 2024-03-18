@@ -68,8 +68,7 @@ namespace HrisApp.Server.Data
                 new SectionT { Id = 14, Name = "Tax and Compliance", DivisionId = 1, DepartmentId = 9 },
                 new SectionT { Id = 15, Name = "Accounts Receivable", DivisionId = 1, DepartmentId = 10 }, //FAMS SA
                 new SectionT { Id = 16, Name = "Credit and Collection", DivisionId = 1, DepartmentId = 10 },
-                new SectionT { Id = 17, Name = "Billing to Cash Settlement", DivisionId = 1, DepartmentId = 10 },
-                new SectionT { Id = 18, Name = "Cash Operations", DivisionId = 1, DepartmentId = 12 } //FAMS TR
+                new SectionT { Id = 17, Name = "Billing to Cash Settlement", DivisionId = 1, DepartmentId = 10 }
                 );
 
             modelBuilder.Entity<PositionT>().HasData(
@@ -126,8 +125,7 @@ namespace HrisApp.Server.Data
                 new PositionT { Id = 46, PosCode = "SABIL01", Name = "Billing to Cash Settlement Staff", DivisionId = 2, DepartmentId = 10, SectionId = 17, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS SA - BCS
                 new PositionT { Id = 47, PosCode = "IT01", Name = "Manager", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS IT
                 new PositionT { Id = 48, PosCode = "IT02", Name = "IT Associate", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
-                new PositionT { Id = 49, PosCode = "IT03", Name = "IT Staff", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
-                new PositionT { Id = 50, PosCode = "TREASURYCAS01", Name = "Cash Operations Head", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS T -CO
+                new PositionT { Id = 49, PosCode = "IT03", Name = "IT Staff", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 3, Manpower = "Internal" }, //FAMS T -CO
                 new PositionT { Id = 51, PosCode = "TREASURYCAS02", Name = "Davao Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
                 new PositionT { Id = 52, PosCode = "TREASURYCAS03", Name = "Cotabato Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
                 new PositionT { Id = 53, PosCode = "TREASURYCAS04", Name = "Kidapawan Cashier", DivisionId = 2, DepartmentId = 12, SectionId = 18, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
@@ -387,6 +385,7 @@ namespace HrisApp.Server.Data
         public DbSet<AssetImageT> AssetImageT { get; set; }
         public DbSet<AssetAccessImageT> AssetAccessImageT { get; set; }
         public DbSet<AssetLastCheckT> AssetLastCheckT { get; set; }
+        public DbSet<AssetVehiclesT> AssetVehiclesT { get; set; }
         //public DbSet<AssetSubAccessoryT> AssetSubAccessoryT { get; set; }
     }
 }

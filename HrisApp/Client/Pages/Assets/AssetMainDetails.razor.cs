@@ -133,7 +133,7 @@ namespace HrisApp.Client.Pages.Assets
             Url generator = new($"https://localhost:44397/main-asset/details/{id}");
             string payload = generator.ToString();
 
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"http://sonicsales.net:1112/main-asset/details/{id}", QRCodeGenerator.ECCLevel.H);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"http://sonicsales.net:1113/main-asset/details/{id}", QRCodeGenerator.ECCLevel.H);
 
             var qrCode = new PngByteQRCode(qrCodeData);
 

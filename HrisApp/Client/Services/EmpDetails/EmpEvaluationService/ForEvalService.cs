@@ -1,13 +1,12 @@
-﻿using HrisApp.Client.Pages.Employee;
-using HrisApp.Shared.Models.Employee;
-
-namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
+﻿namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
 {
 #nullable disable
+
     public class ForEvalService : IForEvalService
     {
         public HttpClient _httpClient;
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
+
         public ForEvalService()
         {
             _httpClient = _mainService.Get_Http();
@@ -15,7 +14,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
 
         public List<Emp_EvaluationT> Emp_EvaluationTs { get; set; } = new List<Emp_EvaluationT>();
 
-        private string statusEval {  get; set; }
+        private string statusEval { get; set; }
 
         public async Task<List<Emp_EvaluationT>> GetForEvallist(string verCode)
         {
@@ -41,9 +40,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
 
         public async Task<string> CreateForEval(Emp_EvaluationT eval)
         {
-            Console.WriteLine("Saving Services sa create employee evaluation");
-
-
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/EmpEvaluation/CreateForEval", eval);
             if (!response.IsSuccessStatusCode)
             {
@@ -64,6 +60,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
             var response = await result.Content.ReadFromJsonAsync<List<Emp_EvaluationT>>();
             Emp_EvaluationTs = response;
         }
+
         public async Task<Emp_EvaluationT> GenerateStatus(string verifyId, DateTime datehired, string _evalStatus)
         {
             await Task.Delay(1);
@@ -82,21 +79,18 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                 Console.WriteLine("calmonth " + calculateMonth);
             }
 
-
             switch (calculateMonth)
             {
-                case 0 :
+                case 0:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case0eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = "Done",
                             Eval3Status = "Done",
-                            Eval4Status = "Done",
                             Eval5Status = "Done",
-                            Eval6Status = "Done",
                             EvalStatus = "Done",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -106,15 +100,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                     }
                     else
                     {
-                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case0eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Pending",
                             Eval2Status = "Pending",
                             Eval3Status = "Pending",
-                            Eval4Status = "Pending",
                             Eval5Status = "Pending",
-                            Eval6Status = "Pending",
                             EvalStatus = "Pending",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -125,15 +117,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                 case 1:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case0eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = "Done",
                             Eval3Status = "Done",
-                            Eval4Status = "Done",
                             Eval5Status = "Done",
-                            Eval6Status = "Done",
                             EvalStatus = "Done",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -143,15 +133,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                     }
                     else
                     {
-                        Emp_EvaluationT case1eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case1eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = _evalStatus,
                             Eval2Status = "Pending",
                             Eval3Status = "Pending",
-                            Eval4Status = "Pending",
                             Eval5Status = "Pending",
-                            Eval6Status = "Pending",
                             EvalStatus = "Pending",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -162,15 +150,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                 case 2:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case0eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = "Done",
                             Eval3Status = "Done",
-                            Eval4Status = "Done",
                             Eval5Status = "Done",
-                            Eval6Status = "Done",
                             EvalStatus = "Done",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -180,15 +166,13 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                     }
                     else
                     {
-                        Emp_EvaluationT case2eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case2eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = _evalStatus,
                             Eval3Status = "Pending",
-                            Eval4Status = "Pending",
                             Eval5Status = "Pending",
-                            Eval6Status = "Pending",
                             EvalStatus = "Pending",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -197,34 +181,15 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                         return case2eval;
                     }
                 case 3:
-                    Emp_EvaluationT case3eval = new Emp_EvaluationT()
-                    {
-                        Verify_Id = verifyId,
-                        Eval1Status = "Done",
-                        Eval2Status = "Done",
-                        Eval3Status = _evalStatus,
-                        Eval4Status = "Pending",
-                        Eval5Status = "Pending",
-                        Eval6Status = "Pending",
-                        EvalStatus = "Pending",
-                        DateHired = datehired,
-                        DateEvaluate = todayDate,
-                        TimesEvaluate = +1
-                    };
-                    return case3eval;
-
-                case 4:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case0eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = "Done",
                             Eval3Status = "Done",
-                            Eval4Status = "Done",
                             Eval5Status = "Done",
-                            Eval6Status = "Done",
                             EvalStatus = "Done",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -234,34 +199,30 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                     }
                     else
                     {
-                        Emp_EvaluationT case4eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case3eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = "Done",
-                            Eval3Status = "Done",
-                            Eval4Status = _evalStatus,
+                            Eval3Status = _evalStatus,
                             Eval5Status = "Pending",
-                            Eval6Status = "Pending",
                             EvalStatus = "Pending",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
                             TimesEvaluate = +1
                         };
-                        return case4eval;
+                        return case3eval;
                     }
                 case 5:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case0eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = "Done",
                             Eval3Status = "Done",
-                            Eval4Status = "Done",
                             Eval5Status = "Done",
-                            Eval6Status = "Done",
                             EvalStatus = "Done",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
@@ -271,59 +232,19 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                     }
                     else
                     {
-
-                        Emp_EvaluationT case5eval = new Emp_EvaluationT()
+                        Emp_EvaluationT case5eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
                             Eval2Status = "Done",
                             Eval3Status = "Done",
-                            Eval4Status = "Done",
                             Eval5Status = _evalStatus,
-                            Eval6Status = "Pending",
-                            EvalStatus = "Pending",
+                            EvalStatus = "Done",
                             DateHired = datehired,
                             DateEvaluate = todayDate,
                             TimesEvaluate = +1
                         };
                         return case5eval;
-                    }
-                case 6:
-                    if (datehired.Year < DateTime.Now.Year - 1)
-                    {
-                        Emp_EvaluationT case0eval = new Emp_EvaluationT()
-                        {
-                            Verify_Id = verifyId,
-                            Eval1Status = "Done",
-                            Eval2Status = "Done",
-                            Eval3Status = "Done",
-                            Eval4Status = "Done",
-                            Eval5Status = "Done",
-                            Eval6Status = "Done",
-                            EvalStatus = "Done",
-                            DateHired = datehired,
-                            DateEvaluate = todayDate,
-                            TimesEvaluate = +1
-                        };
-                        return case0eval;
-                    }
-                    else
-                    {
-                        Emp_EvaluationT case6eval = new Emp_EvaluationT()
-                        {
-                            Verify_Id = verifyId,
-                            Eval1Status = "Done",
-                            Eval2Status = "Done",
-                            Eval3Status = "Done",
-                            Eval4Status = "Done",
-                            Eval5Status = "Done",
-                            Eval6Status = _evalStatus,
-                            EvalStatus = "Pending",
-                            DateHired = datehired,
-                            DateEvaluate = todayDate,
-                            TimesEvaluate = +1
-                        };
-                        return case6eval;
                     }
                 default:
                     Emp_EvaluationT defaulteval = new Emp_EvaluationT()
@@ -332,9 +253,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                         Eval1Status = "Done",
                         Eval2Status = "Done",
                         Eval3Status = "Done",
-                        Eval4Status = "Done",
                         Eval5Status = "Done",
-                        Eval6Status = "Done",
                         EvalStatus = "Done",
                         DateHired = datehired,
                         DateEvaluate = todayDate,
@@ -344,7 +263,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
             }
         }
 
-  
         public async Task<string> GetStatusPerEmp(string verifyId)
         {
             var masterData = await _httpClient.GetFromJsonAsync<List<Emp_EvaluationT>>("api/EmpEvaluation/GetForEval");
@@ -363,7 +281,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
                     returnstring = item.EvalStatus;
                     return returnstring;
                 }
-                
             }
             return returnstring;
         }
@@ -373,7 +290,6 @@ namespace HrisApp.Client.Services.EmpDetails.EmpEvaluationService
             var masterData = await _httpClient.GetFromJsonAsync<List<Emp_EvaluationT>>("api/EmpEvaluation/GetForEval");
             var returnModel = masterData.Where(e => e.Verify_Id == verifyId).FirstOrDefault();
 
-            
             statusEval = returnModel.EvalStatus;
         }
     }

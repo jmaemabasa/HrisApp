@@ -60,8 +60,6 @@ namespace HrisApp.Client.Pages.Assets
                 {
                     await LoadMainAssetImg(obj.MainAsset!.JMCode);
                 }
-
-                Console.WriteLine("testjm" + obj.MainAsset?.Employee?.Verify_Id);
             }
             catch (Exception ex)
             {
@@ -162,7 +160,7 @@ namespace HrisApp.Client.Pages.Assets
             await Task.Delay(0);
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
 
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"http://sonicsales.net:1112/asset-accessories/details/{id}", QRCodeGenerator.ECCLevel.H);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"http://sonicsales.net:1113/asset-accessories/details/{id}", QRCodeGenerator.ECCLevel.H);
 
             var qrCode = new PngByteQRCode(qrCodeData);
 

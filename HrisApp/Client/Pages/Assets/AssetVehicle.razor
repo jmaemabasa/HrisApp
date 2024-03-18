@@ -1,0 +1,140 @@
+﻿@page "/asset-vehicles"
+
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical")]
+
+<PageTitle>Vehicle Asset Management</PageTitle>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Vehicle Asset Management</span>
+        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
+            <Authorized>
+                <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Main Asset</MudButton>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+<div class="box w-auto">
+    <div class="d-flex flex-grow-1 mt-3 mb-3">
+        <MudGrid Class="d-flex align-items-center">
+            <MudItem xs="12" sm="9">
+                <div class="d-flex align-items-center gap-3">
+                    <div>
+                        <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
+                            <ActivatorContent>
+                                <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbStatusText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem OnTouch="@(() => SearchStatus(0))" OnClick="@(() => SearchStatus(0))">All Status</MudMenuItem>
+                                @foreach (var item in ASSSTATUS)
+                                {
+                                    <MudMenuItem OnTouch="@(() => SearchStatus(item.Id))" OnClick="@(() => SearchStatus(item.Id))">@item.Name</MudMenuItem>
+                                }
+                            </ChildContent>
+                        </MudMenu>
+                    </div>
+                    <div>
+                        <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
+                            <ActivatorContent>
+                                <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbCatText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem OnTouch="@(() => CmbCategory(0))" OnClick="@(() => CmbCategory(0))">All Category</MudMenuItem>
+                                @foreach (var item in CATEGORIES)
+                                {
+                                    <MudMenuItem OnTouch="@(() => CmbCategory(item.Id))" OnClick="@(() => CmbCategory(item.Id))">@item.ACat_Name</MudMenuItem>
+                                }
+                            </ChildContent>
+                        </MudMenu>
+                    </div>
+                </div>
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudTextField DisableUnderLine @bind-Value="@searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+            </MudItem>
+        </MudGrid>
+
+    </div>
+    @if (AssetMasterList == null || AssetMasterList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <div style="height: calc(100% - 64px)">
+            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="AssetMasterList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AssetMasterT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+                <HeaderContent>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Asset Code</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Category</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Sub Category</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Model</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel=""><b>@obj.AssetCode</b></MudTd>
+                    <MudTd DataLabel="">@obj.Category?.ACat_Name</MudTd>
+                    <MudTd DataLabel="">@obj.SubCategory?.ASubCat_Name</MudTd>
+                    <MudTd DataLabel="">@obj.Model</MudTd>
+                    @if (obj.AssetStatusId == 2)
+                    {
+                        <MudTd Style="color: gray;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
+                    }
+                    else if (obj.AssetStatusId == 3)
+                    {
+                        <MudTd Style="color: #7567b8;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
+                    }
+                    else if (obj.AssetStatusId == 4)
+                    {
+                        <MudTd Style="color: #9caac1;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
+                    }
+                    else if (obj.AssetStatusId == 5)
+                    {
+                        <MudTd Style="color: #e38d0f;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
+                    }
+                    else if (obj.AssetStatusId == 6)
+                    {
+                        <MudTd Style="color: #be1313;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
+                    }
+                    else
+                    {
+                        <MudTd Style="color: #397763;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
+                    }
+                    <MudTd>
+                        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
+                            <Authorized>
+                                <MudTooltip Text="Details">
+                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
+                                </MudTooltip>
+                            </Authorized>
+                            <NotAuthorized>
+                                <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
+                            </NotAuthorized>
+                        </AuthorizeView>
+                    </MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                </PagerContent>
+            </MudTable>
+        </div>
+    }
+</div>

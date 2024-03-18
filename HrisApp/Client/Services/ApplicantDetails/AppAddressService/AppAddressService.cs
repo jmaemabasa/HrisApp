@@ -2,8 +2,9 @@
 {
     public class AppAddressService : IAppAddressService
     {
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
         private readonly HttpClient _httpClient;
+
         public AppAddressService()
         {
             _httpClient = _mainService.Get_Http();
@@ -17,9 +18,9 @@
             if (result != null)
                 AddressT = result;
         }
+
         public async Task<App_AddressT> GetSingleAddress(int id)
         {
-
             var result = await _httpClient.GetFromJsonAsync<App_AddressT>($"api/AppAddress/{id}");
             if (result != null)
                 return result;
@@ -28,7 +29,6 @@
 
         public async Task<string> CreateAddress(App_AddressT address)
         {
-            Console.WriteLine("Saving address");
             var result = await _httpClient.PostAsJsonAsync("api/AppAddress", address);
             await SetAddress(result);
             return address.Verify_Id;//new
@@ -46,12 +46,10 @@
             //await SetAddress(result);
         }
 
-
         private async Task SetAddress(HttpResponseMessage result)
         {
             var response = await result.Content.ReadFromJsonAsync<List<App_AddressT>>();
             AddressT = response;
-
         }
     }
 }

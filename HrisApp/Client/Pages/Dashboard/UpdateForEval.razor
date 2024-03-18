@@ -64,9 +64,7 @@
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">1st Month</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">2nd Month</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">3rd Month</MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">4th Month</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">5th Month</MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">6th Month</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px; text-align: center;">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
@@ -105,16 +103,6 @@
                     }
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
-                    @if (employe1.Eval4Status != "Done")
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.AccessTimeFilled" Class="chipPending">@employe1.Eval4Status</MudChip>
-                    }
-                    else
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.CheckCircle" Class="chipDone">@employe1.Eval4Status</MudChip>
-                    }
-                </MudTd>
-                <MudTd DataLabel="" Style="text-align: center;">
                     @if (employe1.Eval5Status != "Done")
                     {
                         <MudChip Icon="@Icons.Material.Rounded.AccessTimeFilled" Class="chipPending">@employe1.Eval5Status</MudChip>
@@ -122,16 +110,6 @@
                     else
                     {
                         <MudChip Icon="@Icons.Material.Rounded.CheckCircle" Class="chipDone">@employe1.Eval5Status</MudChip>
-                    }
-                </MudTd>
-                <MudTd DataLabel="" Style="text-align: center;">
-                    @if (employe1.Eval6Status != "Done")
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.AccessTimeFilled" Class="chipPending">@employe1.Eval6Status</MudChip>
-                    }
-                    else
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.CheckCircle" Class="chipDone">@employe1.Eval6Status</MudChip>
                     }
                 </MudTd>
                 @if (employe1.EvalStatus != "Done")

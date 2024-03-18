@@ -1,10 +1,12 @@
 ﻿namespace HrisApp.Client.Services.EmpDetails.AddressService
 {
 #nullable disable
+
     public class AddressService : IAddressService
     {
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
         private readonly HttpClient _httpClient;
+
         public AddressService()
         {
             _httpClient = _mainService.Get_Http();
@@ -18,9 +20,9 @@
             if (result != null)
                 AddressT = result;
         }
+
         public async Task<Emp_AddressT> GetSingleAddress(int id)
         {
-
             var result = await _httpClient.GetFromJsonAsync<Emp_AddressT>($"api/Address/{id}");
             if (result != null)
                 return result;
@@ -29,7 +31,6 @@
 
         public async Task<string> CreateAddress(Emp_AddressT address)
         {
-            Console.WriteLine("Saving address");
             var result = await _httpClient.PostAsJsonAsync("api/Address", address);
             await SetAddress(result);
             return address.Verify_Id;//new
@@ -47,13 +48,10 @@
             //await SetAddress(result);
         }
 
-
         private async Task SetAddress(HttpResponseMessage result)
         {
             var response = await result.Content.ReadFromJsonAsync<List<Emp_AddressT>>();
             AddressT = response;
-
         }
-
     }
 }

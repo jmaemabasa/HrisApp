@@ -33,7 +33,7 @@ namespace HrisApp.Server.Controllers.AssetC.AssetPrintC
 
             var sortlist = MasterList.Where(e => e.AssetCode.Equals(AssetCode)).FirstOrDefault();
 
-            byte[] qrCodeBytes = GenerateQRCode($"http://sonicsales.net:1112/main-asset/details/{sortlist?.Id}");
+            byte[] qrCodeBytes = GenerateQRCode($"http://sonicsales.net:1113/main-asset/details/{sortlist?.Id}");
 
             if (qrCodeBytes == null)
             {
@@ -89,7 +89,7 @@ namespace HrisApp.Server.Controllers.AssetC.AssetPrintC
 
             var sortlist = MasterList.Where(e => e.AssetCode.Equals(AssetCode)).FirstOrDefault();
 
-            byte[] qrCodeBytes = GenerateQRCode($"http://sonicsales.net:1112/asset-accessories/details/{sortlist?.Id}");
+            byte[] qrCodeBytes = GenerateQRCode($"http://sonicsales.net:1113/asset-accessories/details/{sortlist?.Id}");
 
             if (qrCodeBytes == null)
             {

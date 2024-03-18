@@ -2,8 +2,9 @@
 {
     public class EmploymentDateService : IEmploymentDateService
     {
-        MainsService _mainService = new MainsService();
+        private MainsService _mainService = new MainsService();
         private readonly HttpClient _httpClient;
+
         public EmploymentDateService()
         {
             _httpClient = _mainService.Get_Http();
@@ -13,7 +14,6 @@
 
         public async Task<string> CreateEmploymentDate(Emp_EmploymentDateT obj)
         {
-            Console.WriteLine("Saving EmploymentDate");
             var result = await _httpClient.PostAsJsonAsync("api/EmploymentDate", obj);
             await SetEmploymentDate(result);
             return obj.Verify_Id;//new
@@ -44,7 +44,6 @@
         {
             var response = await result.Content.ReadFromJsonAsync<List<Emp_EmploymentDateT>>();
             EmploymentDateT = response;
-
         }
     }
 }
