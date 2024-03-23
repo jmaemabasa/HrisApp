@@ -78,6 +78,11 @@
                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@lastCheck?.LastCheckDate?.ToString("MMM dd yyyy")</MudText>
                         }
                     </div>
+
+                    <div class="divsingledetails">
+                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Created By</MudText>
+                        <AssetCreatedBy Id="@obj.CreatedById" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -150,7 +155,7 @@
                                     </MudItem>
                                     <MudItem xs="12" sm="4">
                                         <div class="divsingledetails">
-                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">End of Life (Months)</MudText>
+                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">End of Useful Life (Months)</MudText>
                                             @{
                                                 int eufMonths = 0;
                                                 if (!string.IsNullOrEmpty(obj.EUF) && int.TryParse(obj.EUF, out eufMonths))
@@ -222,49 +227,12 @@
                                 {
                                     <div class="d-flex acc-cont" @onclick="()=>OpenAccessoriesDialog(item.Id)">
                                         <MudGrid Spacing="2" Style="align-items: center">
-                                            <MudItem xs="12" sm="2"><span class="asset">@item.AssetCode</span></MudItem>
-                                            <MudItem xs="12" sm="3"><span>@item.SubCategory?.ASubCat_Name</span></MudItem>
+                                            <MudItem xs="12" sm="3">
+                                                <AssetImgandName assetcode="@item.AssetCode" assettype="acc" />
+                                            </MudItem>
+                                            <MudItem xs="12" sm="3"><span>@item.Model</span></MudItem>
+                                            <MudItem xs="12" sm="3"><span>@item.Brand</span></MudItem>
                                             <MudItem xs="12" sm="2"><span>@item.PurchaseDate?.ToString("MMM dd yyyy")</span></MudItem>
-
-                                            @{
-                                                var isEuf = item.PurchaseDate.HasValue && DateTime.Today > item.PurchaseDate.Value.AddMonths(Convert.ToInt32(item.EUF));
-                                            }
-
-                                            @if (isEuf)
-                                            {
-                                                <MudItem xs="12" sm="2"><span style="color: #be1313">@item.EUF Months</span></MudItem>
-                                            }
-                                            else
-                                            {
-                                                <MudItem xs="12" sm="2"><span>@item.EUF Months</span></MudItem>
-                                            }
-
-                                            @if (item.AssetStatusId == 2)
-                                            {
-                                                <MudItem xs="12" sm="2"><span style="color: gray;">@item.AssetStatus?.Name</span></MudItem>
-                                            }
-                                            else if (item.AssetStatusId == 3)
-                                            {
-                                                <MudItem xs="12" sm="2"><span style="color: #7567b8;">@item.AssetStatus?.Name</span></MudItem>
-                                            }
-                                            else if (item.AssetStatusId == 4)
-                                            {
-                                                <MudItem xs="12" sm="2"><span style="color: #9caac1;">@item.AssetStatus?.Name</span></MudItem>
-                                            }
-                                            else if (item.AssetStatusId == 5)
-                                            {
-                                                <MudItem xs="12" sm="2"><span style="color: #e38d0f;">@item.AssetStatus?.Name</span></MudItem>
-
-                                            }
-                                            else if (item.AssetStatusId == 6)
-                                            {
-                                                <MudItem xs="12" sm="2"><span style="color: #be1313;">@item.AssetStatus?.Name</span></MudItem>
-                                            }
-                                            else
-                                            {
-                                                <MudItem xs="12" sm="2"><span style="color: #397763;">@item.AssetStatus?.Name</span></MudItem>
-                                            }
-
                                             <MudItem xs="12" sm="1">
                                                 <MudTooltip Text="Remove">
                                                     <MudIconButton Class="btnremoveacc" OnClick="(() => RemoveAccessory(item.Id))" Size="Size.Medium" Icon="@Icons.Material.Rounded.Remove" aria-label="Remove"></MudIconButton>
@@ -275,7 +243,6 @@
                                 }
                             </div>
                         }
-
                     </div>
                 </MudTabPanel>
                 <MudTabPanel TabContent="TabHeader(1)">
@@ -294,6 +261,12 @@
                             </AuthorizeView>
                         </div>
                         <MudGrid Spacing="2">
+                            <MudItem xs="12">
+                                <div class="divsingledetails">
+                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Description</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Description</MudText>
+                                </div>
+                            </MudItem>
                             <MudItem xs="12">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Workstation Name</MudText>
@@ -320,19 +293,19 @@
                                 </div>
                             </MudItem>
 
-                            <MudItem xs="12" sm="4">
+                            @* <MudItem xs="12" sm="4">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Serial</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Serial</MudText>
                                 </div>
-                            </MudItem>
-                            <MudItem xs="12" sm="4">
+                            </MudItem> *@
+                            <MudItem xs="12" sm="6">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Device ID</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.DeviceID</MudText>
                                 </div>
                             </MudItem>
-                            <MudItem xs="12" sm="4">
+                            <MudItem xs="12" sm="6">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Product ID</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.ProductID</MudText>
@@ -355,7 +328,8 @@
                             <MudItem xs="12" sm="6">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Storage (GB) Recommended 500</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Storage
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">
+                                        @obj.Storage
                                     </MudText>
                                 </div>
                             </MudItem>
@@ -404,7 +378,20 @@
                             <MudItem xs="12">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Remarks</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Remarks</MudText>
+                                    @* <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Remarks</MudText> *@
+                                    <div class="d-flex flex-wrap">
+                                        @if (REMARKS.Count != 0)
+                                        {
+                                            @foreach (var item in REMARKS)
+                                            {
+                                                <MudChip Text="orange" Variant="Variant.Filled" Style="color: #4b4e5c; background-color: rgba(117, 122, 144,.1);">@item.Remark</MudChip>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span style="font-weight: bold;color: #fafaf5">No Information</span>
+                                        }
+                                    </div>
                                 </div>
                             </MudItem>
                         </MudGrid>
@@ -560,38 +547,38 @@
                     <div class="mainasssec" style="padding-bottom: 7px ">
                         <AssetMainMultiImage MainAssetId="@obj.Id" MainAssetCode="@obj.AssetCode" JMCode="@obj.JMCode" Catid="@obj.CategoryId" SubCatid="obj.SubCategoryId" OnFileAdded="@RefreshPdfFileList" />
                         <div class="" Style="margin-top: 1rem;">
-                            @* @if (ImgByAssetList.Any())
+                            @if (ImgByAssetList.Any())
                             {
-                            <div class="d-flex gap-3 flex-wrap">
+                                <div class="d-flex gap-3 flex-wrap">
 
-                            @foreach (var item in ImgByAssetList)
-                            {
-                            var ssrcc = item.Split("xxJMGWAPAxx")[0];
-                            var ssrccalt = item.Split("xxJMGWAPAxx")[1];
-                            <div class="imgassetdiv">
-                            <img id="myImg" class="imgasset" src="@ssrcc" alt="@ssrccalt" />
-                            <div class="topright">
-                            <MudTooltip Text="Remove">
-                            <button type="button" class="btn assetdelteimg" onclick="@(() => DeleteAssetImg(ssrccalt, obj.AssetCode))">
-                            <MudIcon Icon="@Icons.Material.Rounded.Delete" />
-                            </button>
-                            </MudTooltip>
-                            </div>
-                            <div class="middle">
-                            <div class="textsss">
-                            <MudTooltip Text="View">
-                            <MudIcon Icon="@Icons.Material.Rounded.ZoomIn" Style="font-size: 4rem;" />
-                            </MudTooltip>
-                            </div>
-                            </div>
-                            </div>
-                            }
-                            </div>
+                                    @foreach (var item in ImgByAssetList)
+                                    {
+                                        var ssrcc = item.Split("xxJMGWAPAxx")[0];
+                                        var ssrccalt = item.Split("xxJMGWAPAxx")[1];
+                                        <div class="imgassetdiv">
+                                            <img id="myImg" class="imgasset" src="@ssrcc" alt="@ssrccalt" />
+                                            <div class="topright">
+                                                <MudTooltip Text="Remove">
+                                                    <button type="button" class="btn assetdelteimg" onclick="@(() => DeleteAssetImg(ssrccalt, obj.AssetCode))">
+                                                        <MudIcon Icon="@Icons.Material.Rounded.Delete" />
+                                                    </button>
+                                                </MudTooltip>
+                                            </div>
+                                            <div class="middle">
+                                                <div class="textsss">
+                                                    <MudTooltip Text="View">
+                                                        <MudIcon Icon="@Icons.Material.Rounded.ZoomIn" Style="font-size: 4rem;" />
+                                                    </MudTooltip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             }
                             else
                             {
-                            <span style="font-style: italic;">No Images found!</span>
-                            } *@
+                                <span style="font-style: italic;">No Images found!</span>
+                            }
 
 
                             <MudTable Class="stable" Height="590px" Items="assetImgList" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
@@ -733,6 +720,10 @@
 <MudDrawer @bind-Open="@detailsPanelOpen" Width="500px" Height="100%" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <div class="d-flex flex-column gap-2 drawerdetails">
         <span>Update</span>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Description</MudText>
+            <MudTextField @bind-Value="obj.Description" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        </div>
         <div class="row">
             <div class="col-12 col-lg-6">
                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Workstation Name</MudText>
@@ -757,13 +748,15 @@
             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Serial</MudText>
             <MudTextField @bind-Value="obj.Serial" Variant="Variant.Outlined" Margin="Margin.Dense" />
         </div>
-        <div class="flex-grow-1">
-            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Device ID</MudText>
-            <MudTextField @bind-Value="obj.DeviceID" Variant="Variant.Outlined" Margin="Margin.Dense" />
-        </div>
-        <div class="flex-grow-1">
-            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Product ID</MudText>
-            <MudTextField @bind-Value="obj.ProductID" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Device ID</MudText>
+                <MudTextField @bind-Value="obj.DeviceID" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+            <div class="col-12 col-lg-6">
+                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Product ID</MudText>
+                <MudTextField @bind-Value="obj.ProductID" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
@@ -809,9 +802,24 @@
                 <MudTextField @bind-Value="obj.PasswordAdmin" Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.End" InputType="@_passwordInput" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="ButtonShowPassword" AdornmentAriaLabel="Show Password" />
             </div>
         </div>
-        <div class="flex-grow-1">
-            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Remarks</MudText>
-            <MudTextField @bind-Value="obj.Remarks" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <div class="flex-grow-1">s
+            <div class="d-flex flex-column" style="margin-bottom: 10px;">
+                <div class="flex-grow-1">
+                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Remarks</MudText>
+                    <div class="d-flex">
+                        <MudTextField @bind-Value="newRemark" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                        <MudButton Style="width: 127px;" Class="btnsmallsapos" Variant="Variant.Filled" OnClick="@(() => AddNewRemark(obj.AssetCode, newRemark))">Add Remark</MudButton>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap flex-grow-1">
+                    <MudChipSet AllClosable="true" OnClose="CloseRemark">
+                        @foreach (var item in REMARKS)
+                        {
+                            <MudChip Style="color: #fafaf5; background-color: #757a90;" Text="@item.Remark"></MudChip>
+                        }
+                    </MudChipSet>
+                </div>
+            </div>
         </div>
         <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-save" @onclick="SaveUpdate">Save</button>

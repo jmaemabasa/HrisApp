@@ -17,6 +17,7 @@ namespace HrisApp.Shared.Models.Assets
         public string WorksationName { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
         public AssetTypesT? Type { get; set; }
         public int TypeId { get; set; }
@@ -35,11 +36,6 @@ namespace HrisApp.Shared.Models.Assets
         public string Serial { get; set; } = string.Empty;
         public string DeviceID { get; set; } = string.Empty;
         public string ProductID { get; set; } = string.Empty;
-        public string Processor { get; set; } = string.Empty;
-        public string RAM { get; set; } = string.Empty;
-        public string Storage { get; set; } = string.Empty;
-        public string StorageType { get; set; } = string.Empty;
-        public string MacAddress { get; set; } = string.Empty;
         public DateTime? PurchaseDate { get; set; }
         public string PurchaseAmount { get; set; } = string.Empty;
         public string EUF { get; set; } = string.Empty;
@@ -61,12 +57,12 @@ namespace HrisApp.Shared.Models.Assets
 
         public string AssetNo { get; set; } = string.Empty;
         public string Asset { get; set; } = string.Empty;
-        public string Remarks { get; set; } = string.Empty;
         public string UsernameAdmin { get; set; } = string.Empty;
         public string PasswordAdmin { get; set; } = string.Empty;
-        public string ClientIP { get; set; } = string.Empty;
         public DateTime? LastCheckDate { get; set; }
 
         public DateTime? DateCreated { get; set; } = DateTime.Now;
+        public EmployeeT? CreatedBy { get; set; }
+        public int? CreatedById { get; set; }
     }
 }

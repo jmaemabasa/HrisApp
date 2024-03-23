@@ -26,6 +26,8 @@ namespace HrisApp.Client.Pages.Assets
         private List<AssetMasterHistoryT> MAINHISTORY = new();
         private List<AssetLastCheckT> LASTCHK = new();
 
+        private List<MainRemarksT> REMARKS = new();
+
         private List<AssetImageT> assetImgList = new();
 
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
@@ -87,6 +89,7 @@ namespace HrisApp.Client.Pages.Assets
             try
             {
                 obj = await AssetMasterService.GetSingleObj(Id);
+                REMARKS = await MainRemarksService.GetObjList(obj.AssetCode);
 
                 try
                 {
@@ -125,6 +128,198 @@ namespace HrisApp.Client.Pages.Assets
             }
         }
 
+        private async Task SaveUpdate()
+        {
+            await AssetMasterService.UpdateObj(obj);
+            await SaveRemarksTODB(obj.AssetCode);
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+            _toastService.ShowSuccess(obj.Asset + " Updated Successfully!");
+
+            // Update the List using the StateService
+            obj = await AssetMasterService.GetSingleObj(Id);
+            REMARKS = await MainRemarksService.GetObjList(obj.AssetCode);
+
+            leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
+        }
+
+        private async Task SaveAssignEmp()
+        {
+            try
+            {
+                obj.EmployeeId = empid;
+                obj.AssetStatusId = 1;
+                obj.AssignedDate = DateTime.Now;
+                obj.InUseStatusDate = DateTime.Now;
+                await AssetMasterService.UpdateObj(obj);
+
+                assetHistoryObj.AssignedDateToReturn = obj.AssignedDateToReturn;
+                assetHistoryObj.AssignedDateReleased = obj.AssignedDateReleased;
+                assetHistoryObj.EmployeeId = empid;
+                assetHistoryObj.MainAssetId = obj.Id;
+                assetHistoryObj.MainAssetCode = obj.JMCode;
+                await AssetMasHistorySvc.CreateObj(assetHistoryObj);
+
+                foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
+                {
+                    var model = await AssetAccService.GetSingleObj(item.Id);
+
+                    if (item.AssetStatusId == 2)
+                    {
+                        model.AssetStatusId = 1;
+                    }
+
+                    //model.InUseStatusDate = DateTime.Now;
+                    await AssetAccService.UpdateObj(model);
+
+                    var acchistoryobj = await AssetAccHistorySvc.GetObjByAccIDMainId(item.Id, obj.Id);
+                    acchistoryobj.EmployeeId = obj.EmployeeId;
+                    await AssetAccHistorySvc.UpdateObj(acchistoryobj);
+                }
+
+                obj = await AssetMasterService.GetSingleObj(Id);
+                await EmpImg(obj.Employee!.Verify_Id);//image
+                ACCESSORIES = await AssetAccService.GetObjList();
+                leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+                _toastService.ShowSuccess(obj.Employee.LastName + " Assigned Successfully!");
+            }
+            catch (Exception)
+            {
+                ImageEmployee = string.Format("images/imgholder.jpg");
+            }
+        }
+
+        private async Task SaveAssignDateReturned()
+        {
+            await AssetMasHistorySvc.UpdateDateReturned((int)obj.EmployeeId!, obj.Id, obj.AssignedDateReleased, assetHistoryObj);
+
+            obj.EmployeeId = null;
+            obj.AssetStatusId = 2;
+            obj.AssignedDate = null;
+            obj.InUseStatusDate = null;
+            obj.AssignedDateReleased = null;
+            obj.AssignedDateToReturn = null;
+            await AssetMasterService.UpdateObj(obj);
+
+            foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
+            {
+                var model = await AssetAccService.GetSingleObj(item.Id);
+                if (item.AssetStatusId == 1)
+                {
+                    model.AssetStatusId = 2;
+                }
+                model.InUseStatusDate = null;
+                await AssetAccService.UpdateObj(model);
+            }
+
+            ImageEmployee = "";
+            empid = divid = deptid = 0;
+            obj = await AssetMasterService.GetSingleObj(Id);
+            MAINHISTORY = await AssetMasHistorySvc.GetObjList();
+            ACCESSORIES = await AssetAccService.GetObjList();
+            leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+            _toastService.ShowSuccess(obj.Asset + " Returned Successfully!");
+        }
+
+        private async Task SaveLastChkDate()
+        {
+            lastchkObj.MainAssetId = obj.Id;
+            await AssetLastChkSvc.CreateObj(lastchkObj);
+            leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
+            LASTCHK = await AssetLastChkSvc.GetObjList();
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+            _toastService.ShowSuccess("Successful!");
+            StateHasChanged();
+        }
+
+
+        #region REMARKS
+        private string newRemark = "";
+
+        public async Task SaveRemarksTODB(string posCode)
+        {
+            var listApi = await MainRemarksService.GetObjList(posCode);
+            List<string> arrApi = new();
+
+            var validRemark = REMARKS
+               .Where(obj => !string.IsNullOrEmpty(obj.MainAssetCode))
+               .ToList();
+
+            var listOfValidRemarks = validRemark.OrderByDescending(obj => obj.VerifyId).ToList();
+
+            if (listOfValidRemarks.Count == 0)
+            {
+                foreach (var item in listApi)
+                {
+                    await MainRemarksService.DeleteAllObj(item.VerifyId);
+                }
+                return;
+            }
+
+            foreach (var pays in listApi)
+            {
+                var P = listOfValidRemarks.Where(p => p.VerifyId == pays.VerifyId).Count();
+
+                if (P == 0)
+                {
+                    await MainRemarksService.DeleteAllObj(pays.VerifyId);
+                }
+            }
+
+            foreach (var item in listOfValidRemarks)
+            {
+                item.MainAssetCode = posCode;
+
+                int isExistTech = await MainRemarksService.GetExistObj(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await MainRemarksService.CreateObj(item);
+                }
+                else
+                {
+                    await MainRemarksService.UpdateObj(item);
+                }
+            }
+
+            REMARKS.Clear();
+        }
+
+        public void AddNewRemark(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newRemark))
+                REMARKS.Add(new MainRemarksT { MainAssetCode = code, Remark = newSkill, VerifyId = verifyCode });
+            newRemark = "";
+            //Console.WriteLine(verifyCode);
+        }
+
+        public async Task CloseRemark(MudChip chip)
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure you remove this? You can't undo your action.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (confirmResult.IsConfirmed)
+            {
+
+                var skillToRemove = REMARKS.FirstOrDefault(item => item.Remark == chip.Text);
+
+                if (skillToRemove != null)
+                {
+                    REMARKS.Remove(skillToRemove);
+                }
+            }
+        }
+        #endregion
+
+        #region FUNCTIONS
         private async Task GenerateQR(int id)
         {
             await Task.Delay(0);
@@ -250,109 +445,6 @@ namespace HrisApp.Client.Pages.Assets
                 MainAssetImageData = string.Format("images/asset-holder.jpg");
             }
         }
-
-        private async Task SaveUpdate()
-        {
-            await AssetMasterService.UpdateObj(obj);
-            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-            _toastService.ShowSuccess(obj.Asset + " Updated Successfully!");
-
-            // Update the List using the StateService
-            obj = await AssetMasterService.GetSingleObj(Id);
-            leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
-        }
-
-        private async Task SaveAssignEmp()
-        {
-            try
-            {
-                obj.EmployeeId = empid;
-                obj.AssetStatusId = 1;
-                obj.AssignedDate = DateTime.Now;
-                obj.InUseStatusDate = DateTime.Now;
-                await AssetMasterService.UpdateObj(obj);
-
-                assetHistoryObj.AssignedDateToReturn = obj.AssignedDateToReturn;
-                assetHistoryObj.AssignedDateReleased = obj.AssignedDateReleased;
-                assetHistoryObj.EmployeeId = empid;
-                assetHistoryObj.MainAssetId = obj.Id;
-                assetHistoryObj.MainAssetCode = obj.JMCode;
-                await AssetMasHistorySvc.CreateObj(assetHistoryObj);
-
-                foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
-                {
-                    var model = await AssetAccService.GetSingleObj(item.Id);
-
-                    if (item.AssetStatusId == 2)
-                    {
-                        model.AssetStatusId = 1;
-                    }
-
-                    //model.InUseStatusDate = DateTime.Now;
-                    await AssetAccService.UpdateObj(model);
-
-                    var acchistoryobj = await AssetAccHistorySvc.GetObjByAccIDMainId(item.Id, obj.Id);
-                    acchistoryobj.EmployeeId = obj.EmployeeId;
-                    await AssetAccHistorySvc.UpdateObj(acchistoryobj);
-                }
-
-                obj = await AssetMasterService.GetSingleObj(Id);
-                await EmpImg(obj.Employee!.Verify_Id);//image
-                ACCESSORIES = await AssetAccService.GetObjList();
-                leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-                _toastService.ShowSuccess(obj.Employee.LastName + " Assigned Successfully!");
-            }
-            catch (Exception)
-            {
-                ImageEmployee = string.Format("images/imgholder.jpg");
-            }
-        }
-
-        private async Task SaveAssignDateReturned()
-        {
-            await AssetMasHistorySvc.UpdateDateReturned((int)obj.EmployeeId!, obj.Id, obj.AssignedDateReleased, assetHistoryObj);
-
-            obj.EmployeeId = null;
-            obj.AssetStatusId = 2;
-            obj.AssignedDate = null;
-            obj.InUseStatusDate = null;
-            obj.AssignedDateReleased = null;
-            obj.AssignedDateToReturn = null;
-            await AssetMasterService.UpdateObj(obj);
-
-            foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
-            {
-                var model = await AssetAccService.GetSingleObj(item.Id);
-                if (item.AssetStatusId == 1)
-                {
-                    model.AssetStatusId = 2;
-                }
-                model.InUseStatusDate = null;
-                await AssetAccService.UpdateObj(model);
-            }
-
-            ImageEmployee = "";
-            empid = divid = deptid = 0;
-            obj = await AssetMasterService.GetSingleObj(Id);
-            MAINHISTORY = await AssetMasHistorySvc.GetObjList();
-            ACCESSORIES = await AssetAccService.GetObjList();
-            leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
-            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-            _toastService.ShowSuccess(obj.Asset + " Returned Successfully!");
-        }
-
-        private async Task SaveLastChkDate()
-        {
-            lastchkObj.MainAssetId = obj.Id;
-            await AssetLastChkSvc.CreateObj(lastchkObj);
-            leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
-            LASTCHK = await AssetLastChkSvc.GetObjList();
-            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-            _toastService.ShowSuccess("Successful!");
-            StateHasChanged();
-        }
-
         private async Task RemoveAccessory(int id)
         {
             var confirmResult = await Swal.FireAsync(new SweetAlertOptions
@@ -515,6 +607,8 @@ namespace HrisApp.Client.Pages.Assets
             deptid = id;
             isdisableEmp = false;
         }
+
+        #endregion
 
         #region MUD TABS / TAB PANEL
 

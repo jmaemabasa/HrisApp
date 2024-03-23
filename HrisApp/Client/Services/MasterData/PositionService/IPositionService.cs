@@ -16,8 +16,8 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task<PositionT> GetSinglePosition(int id);
         Task<PositionT> GetSinglePositionByCode(string code);
 
-        Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal);
-        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal);
+        Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
+        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
         Task UpdatePosition(PositionT position);
 
 
@@ -25,7 +25,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task GetSubPosition();
         Task<int> GetExistingPos(int divid, int depid, int secid);
         Task<int> GetExistingSubPos(string poscode);
-        Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid);
+        Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid, string reportingTo);
         Task UpdateSubPosition(SubPositionT position);
         Task UpdateDescSubPosition(string poscode, string desc);
         Task<SubPositionT> GetSingleSubPosition(int id);

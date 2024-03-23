@@ -2,7 +2,6 @@
 using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
-using HrisApp.Shared.Models.StaticData;
 
 namespace HrisApp.Server.Data
 {
@@ -116,12 +115,8 @@ namespace HrisApp.Server.Data
                 new PositionT { Id = 37, PosCode = "GAINV03", Name = "Non Trade Payable Staff", DivisionId = 2, DepartmentId = 9, SectionId = 12, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
                 new PositionT { Id = 38, PosCode = "GAGEN01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 13, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS GA - GA
                 new PositionT { Id = 39, PosCode = "GAGEN02", Name = "Gen Accounting Staff", DivisionId = 2, DepartmentId = 9, SectionId = 13, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
-                new PositionT { Id = 40, PosCode = "GATAX01", Name = "Team Leader/Supervisor", DivisionId = 2, DepartmentId = 9, SectionId = 14, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS GA - TC
                 new PositionT { Id = 41, PosCode = "GATAX02", Name = "Tax and Compliance Staff", DivisionId = 2, DepartmentId = 9, SectionId = 14, AreaId = 1, Plantilla = 3, Manpower = "Internal" },
-                new PositionT { Id = 42, PosCode = "SAACC01", Name = "Team Leader", DivisionId = 2, DepartmentId = 10, SectionId = 15, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS SA - AR
                 new PositionT { Id = 43, PosCode = "SAACC02", Name = "Accounts Receivable Staff", DivisionId = 2, DepartmentId = 10, SectionId = 15, AreaId = 1, Plantilla = 4, Manpower = "Internal" },
-                new PositionT { Id = 44, PosCode = "SACRE01", Name = "Credit and Collection Staff", DivisionId = 2, DepartmentId = 10, SectionId = 16, AreaId = 1, Plantilla = 6, Manpower = "Internal" }, //FAMS SA - CC
-                new PositionT { Id = 45, PosCode = "SACRE02", Name = "C&C - Billings to Customer", DivisionId = 2, DepartmentId = 10, SectionId = 16, AreaId = 1, Plantilla = 1, Manpower = "Internal" },
                 new PositionT { Id = 46, PosCode = "SABIL01", Name = "Billing to Cash Settlement Staff", DivisionId = 2, DepartmentId = 10, SectionId = 17, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS SA - BCS
                 new PositionT { Id = 47, PosCode = "IT01", Name = "Manager", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 1, Manpower = "Internal" }, //FAMS IT
                 new PositionT { Id = 48, PosCode = "IT02", Name = "IT Associate", DivisionId = 2, DepartmentId = 11, AreaId = 1, Plantilla = 2, Manpower = "Internal" },
@@ -385,7 +380,11 @@ namespace HrisApp.Server.Data
         public DbSet<AssetImageT> AssetImageT { get; set; }
         public DbSet<AssetAccessImageT> AssetAccessImageT { get; set; }
         public DbSet<AssetLastCheckT> AssetLastCheckT { get; set; }
+        public DbSet<MainRemarksT> MainRemarksT { get; set; }
+        public DbSet<AccessoryRemarksT> AccessoryRemarksT { get; set; }
         public DbSet<AssetVehiclesT> AssetVehiclesT { get; set; }
-        //public DbSet<AssetSubAccessoryT> AssetSubAccessoryT { get; set; }
+        public DbSet<VehicleRemarksT> VehicleRemarksT { get; set; }
+        public DbSet<AssetVehicleImageT> AssetVehicleImageT { get; set; }
+
     }
 }

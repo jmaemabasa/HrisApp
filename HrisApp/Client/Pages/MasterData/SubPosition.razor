@@ -15,19 +15,25 @@
 </div>
 
 <div class="box w-auto">
-    <div class="d-flex align-items-center gap-3 mb-2">
-        <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
-            <ActivatorContent>
-                <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
-            </ActivatorContent>
-            <ChildContent>
-                <MudMenuItem OnTouch="@(() => CmbDivision(0))" OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
-                @foreach (var item in Divisions)
-                {
-                    <MudMenuItem OnTouch="@(() => CmbDivision(item.Id))" OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
-                }
-            </ChildContent>
-        </MudMenu>
+    <div class="d-flex flex-grow-1 mb-3">
+        <div class="d-flex flex-grow-1 flex-wrap justify-content-between">
+            <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
+                <ActivatorContent>
+                    <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDivText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                </ActivatorContent>
+                <ChildContent>
+                    <MudMenuItem OnTouch="@(() => CmbDivision(0))" OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+                    @foreach (var item in Divisions)
+                    {
+                        <MudMenuItem OnTouch="@(() => CmbDivision(item.Id))" OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
+                    }
+                </ChildContent>
+            </MudMenu>
+
+            <MudItem xs="12" lg="4">
+                <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
+            </MudItem>
+        </div>
     </div>
     @if (subpositionList == null || subpositionList.Count == 0)
     {
@@ -53,7 +59,7 @@
     }
     else
     {
-        <MudTable Class="stable" Items="subpositionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<SubPositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <MudTable Class="stable" Items="subpositionList" Context="pos" FixedHeader="true" Elevation="0" Height="615px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<SubPositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
             <HeaderContent>
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
                     <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.SubPosCode)">
@@ -70,6 +76,7 @@
                         Description
                     </MudTableSortLabel>
                 </MudTh>
+                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Reporting To</MudTh>
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Status</MudTh>
                 <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
             </HeaderContent>
@@ -77,6 +84,7 @@
                 <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);">@pos.SubPosCode</MudTd>
                 <MudTd DataLabel="">@pos.PosCode</MudTd>
                 <MudTd DataLabel="">@pos.Description</MudTd>
+                <MudTd DataLabel="">@pos.ReportingTo</MudTd>
                 <MudTd DataLabel="" Style="text-align: center">
                     @if (pos.Status == "Active")
                     {
@@ -91,8 +99,8 @@
                 <MudTd Style="text-align: center">
                     <AuthorizeView Roles="CadAdmin, SysAdmin">
                         <Authorized>
-                            <MudTooltip Text="Delete" Arrow=true>
-                                <MudIconButton Color="Color.Error" OnClick="(() => DeletePosition(pos.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
+                            <MudTooltip Text="Update" Arrow=true>
+                                <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(pos.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Update"></MudIconButton>
                             </MudTooltip>
                         </Authorized>
                         <NotAuthorized>
@@ -162,6 +170,16 @@
         DialogService.Show<AddSubPositionDialog>("New Position", options);
     }
 
+    private void OpenUpdateDialog(int id)
+    {
+        var parameters = new DialogParameters<UpdateSubPositionDialog>
+            {
+                { x => x.Id, id }
+            };
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, NoHeader=true };
+        DialogService.Show<UpdateSubPositionDialog>("Update Information", parameters, options);
+    }
 
     async Task DeletePosition(int id)
     {
@@ -192,13 +210,22 @@
 
     private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
     private string searchString1 = "";
-    private bool FilterFunc1(SubPositionT pos) => FilterFunc(pos, searchString1);
 
-    private bool FilterFunc(SubPositionT pos, string searchString)
+    private bool FilterFunc1(SubPositionT obj) => FilterFunc(obj, searchString1);
+
+    private static bool FilterFunc(SubPositionT obj, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (pos.SubPosCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (obj.PosCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (obj.SubPosCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (obj.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (obj.ReportingTo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (obj.Status.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
     }

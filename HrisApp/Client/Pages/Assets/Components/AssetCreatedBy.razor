@@ -1,0 +1,46 @@
+﻿<div class="d-flex flex-row align-items-center gap-3" style="cursor: pointer;margin-top: 5px;" @onclick="GoToEmployee">
+    <div class="d-flex align-items-center">
+        <EmployeeAvatar verify="@employee.Verify_Id" />
+    </div>
+    <div>
+        <div class="flex-column">
+            <div style="font-weight: bold;color: #757A90;">@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
+            <div style="font-size: 13px !important;color: #757A90;">@subpos.Description</div>
+        </div>
+    </div>
+</div>
+
+@code {
+#nullable disable
+    [Parameter]
+    public int? Id { get; set; }
+
+    EmployeeT employee = new();
+    SubPositionT subpos = new();
+
+
+    private void GoToEmployee() => NavigationManager.NavigateTo($"/employee/edit/{employee.Id}");
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            employee = await EmployeeService.GetSingleEmployee((int)Id);
+            subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("");
+        }
+    }
+
+    private string CapitalizeFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        return char.ToUpper(input[0]) + input[1..];
+    }
+}

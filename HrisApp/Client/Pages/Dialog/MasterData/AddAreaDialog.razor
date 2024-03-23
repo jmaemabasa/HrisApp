@@ -3,7 +3,10 @@
         <MudTextField Label="Area" @bind-Value="newArea" Variant="Variant.Outlined"></MudTextField>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" @onclick="ConfirmCreateArea">Save</MudButton>
+
+        <div style="padding: 5px 13px 11px 13px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="ConfirmCreateArea">Save</button>
+        </div>
     </DialogActions>
 </MudDialog>

@@ -1,0 +1,225 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center">
+                <div style="font-size: 20px">Update Information</div>
+                <div>
+                    <MudTooltip Text="Delete" Arrow=true>
+                        <MudIconButton Color="Color.Error" OnClick="DeletePosition" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
+                    </MudTooltip>
+                </div>
+            </div>
+            <MudDivider Class="my-3" />
+
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Code</MudText>
+                <MudTextField @bind-Value="obj.SubPosCode" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Description</MudText>
+                <MudTextField @bind-Value="obj.Description" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            </div>
+
+            <MudDivider Class="my-3" />
+
+
+            <div class="flex-grow-1">
+                <MudText Typo="Typo.body2">Division</MudText>
+                <MudSelect @bind-Value="obj.DivisionId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                    <MudSelectItem Disabled="true" Value="0">---Select Division---</MudSelectItem>
+                    @foreach (var div in Division)
+                    {
+                        <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </div>
+            @if (obj.DivisionId != 0)
+            {
+                var selectedCategoryObject = Division.FirstOrDefault(c => c.Id == obj.DivisionId);
+                if (selectedCategoryObject != null)
+                {
+                    var departments = Department.Where(d => d.DivisionId == selectedCategoryObject.Id).ToList();
+                    @* Select Department *@
+                    <div class="flex-grow-1">
+                        <MudText Typo="Typo.body2">Department</MudText>
+                        <MudSelect @bind-Value="obj.DepartmentId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                            <MudSelectItem Disabled="true" Value="0">---Select Department---</MudSelectItem>
+                            @foreach (var department in departments)
+                            {
+                                <MudSelectItem Value="@department.Id">@department.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </div>
+                }
+            }
+
+            @if (obj.DepartmentId != 0)
+            {
+                var departmentHasSections = Sections.Any(s => s.DepartmentId == obj.DepartmentId);
+                if (departmentHasSections)
+                {
+                    var departmentSections = Sections.Where(s => s.DepartmentId == obj.DepartmentId).ToList();
+                    @* Select Section *@
+                    <div class="flex-grow-1">
+                        <MudText Typo="Typo.body2">Section</MudText>
+                        <MudSelect @bind-Value="obj.SectionId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                            <MudSelectItem Disabled="true" Value="0">---Select Section---</MudSelectItem>
+                            @foreach (var sec in departmentSections)
+                            {
+                                <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </div>
+
+                    if (obj.SectionId != 0)
+                    {
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Reporting To</MudText>
+                            <MudSelect T="string" @bind-Value="@obj.ReportingTo" HelperText="Code / Description" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="selecteReportToHolder">---Select---</MudSelectItem>
+                                @foreach (var subPos in SubPositions.Where(subPos =>
+                               {
+                                   var correspondingPosition = Positions.FirstOrDefault(pos => pos.PosCode == subPos.PosCode);
+                                   return correspondingPosition != null && correspondingPosition.Supervisory == "Yes";
+                               }).Where(x => x.DivisionId == obj.DivisionId && x.DepartmentId == obj.DepartmentId && x.SectionId == obj.SectionId))
+                                {
+                                    <MudSelectItem Value="@subPos.SubPosCode">@subPos.SubPosCode / @subPos.Description</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="flex-grow-1">
+                        <MudText Typo="Typo.body2">Reporting To</MudText>
+                        <MudSelect T="string" @bind-Value="@obj.ReportingTo" HelperText="Code / Description" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                            <MudSelectItem Disabled="true" Value="selecteReportToHolder">---Select---</MudSelectItem>
+                            @foreach (var subPos in SubPositions.Where(subPos =>
+                           {
+                               var correspondingPosition = Positions.FirstOrDefault(pos => pos.PosCode == subPos.PosCode);
+                               return correspondingPosition != null && correspondingPosition.Supervisory == "Yes";
+                           }).Where(x => x.DivisionId == obj.DivisionId && x.DepartmentId == obj.DepartmentId))
+                            {
+                                <MudSelectItem Value="@subPos.SubPosCode">@subPos.SubPosCode / @subPos.Description</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </div>
+                }
+            }
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div style="padding: 5px 13px 11px 13px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="UpdateObj">Save</button>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    #nullable disable
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public int Id { get; set; }
+
+    private SubPositionT obj = new();
+
+    private string selecteReportToHolder = "Null";
+
+
+    private List<DepartmentT> Department = new();
+    private List<DivisionT> Division = new();
+    private List<SectionT> Sections = new();
+    private List<PositionT> Positions = new();
+    private List<SubPositionT> SubPositions = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await DivisionService.GetDivision();
+        Division = DivisionService.DivisionTs;
+
+        await DepartmentService.GetDepartment();
+        Department = DepartmentService.DepartmentTs;
+
+        await SectionService.GetSection();
+        Sections = SectionService.SectionTs;
+
+        await PositionService.GetPosition();
+        Positions = PositionService.PositionTs;
+
+        await PositionService.GetSubPosition();
+        SubPositions = PositionService.SubPositionTs;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        obj = await PositionService.GetSingleSubPosition(Id);
+
+        if (string.IsNullOrEmpty(obj.ReportingTo))
+            obj.ReportingTo = selecteReportToHolder;
+    }
+
+    void Cancel() => MudDialog.Cancel();
+
+
+    private async Task UpdateObj()
+    {
+
+        await PositionService.UpdateSubPosition(obj);
+
+        if (obj.ReportingTo == "Null")
+            obj.ReportingTo = "";
+        Cancel();
+        _toastService.ShowSuccess("Updated Successfully!");
+        if (!string.IsNullOrEmpty(GlobalConfigService.Role))
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+        await PositionService.GetSubPosition();
+        var newList = PositionService.SubPositionTs;
+        StateService.SetState("SubPositionList", newList);
+    }
+
+    async Task DeletePosition()
+    {
+        var pos = PositionService.SubPositionTs.Where(x => x.Id == Id);
+        foreach (var item in pos)
+        {
+            if (item.Status == "Active")
+            {
+                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
+            }
+            else if (item.Status == "Inactive" && item.Emp_VerifyId != "")
+            {
+                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
+            }
+            else
+            {
+                var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                    {
+                        Title = "Confirmation",
+                        Text = "Pernamently delete this? You can't undo the action.",
+                        Icon = SweetAlertIcon.Question,
+                        ShowCancelButton = true,
+                        ConfirmButtonText = "Yes",
+                        CancelButtonText = "No"
+                    });
+
+                if (confirmResult.IsConfirmed)
+                {
+                    await PositionService.DeleteSubPosition(Id);
+                    Cancel();
+
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+                    await PositionService.GetSubPosition();
+                    var newList = PositionService.SubPositionTs;
+                    StateService.SetState("SubPositionList", newList);
+                    _toastService.ShowSuccess("Deleted Successfully!");
+                }
+
+            }
+        }
+    }
+}

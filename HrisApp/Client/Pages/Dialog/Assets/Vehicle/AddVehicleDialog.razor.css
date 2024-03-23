@@ -1,0 +1,181 @@
+﻿.container-fluid > .row {
+    --bs-gutter-x: 2.5rem;
+}
+
+.addmainassetcont {
+    background: #e9ecef;
+    border: none;
+    /*box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;*/
+    border-radius: 16px;
+    padding: 10px 15px 10px 15px;
+}
+
+.dialogbtns {
+    padding: 15px 25px 15px 10px;
+}
+
+.cancel {
+    margin-right: 10px;
+    font-weight: bold;
+    transition: all .5s ease;
+}
+
+    .cancel:hover {
+        color: #be1313;
+        font-weight: bold;
+        transform: scale(1.1);
+    }
+
+.save {
+    background-color: #27374D;
+    color: #ffffff;
+    padding: 8px 60px;
+    transition: all .5s ease;
+    letter-spacing: 1px;
+}
+
+    .save:hover {
+        background-color: #3a5273;
+        transform: scale(1.1);
+    }
+
+.save-back {
+    background-color: #C5CFD2;
+    color: slategray;
+    padding: 8px 60px;
+    transition: all .5s ease;
+    letter-spacing: 1px;
+}
+
+    .save-back:hover {
+        background-color: slategray;
+        transform: scale(1.1);
+        color: #ffffff;
+    }
+
+.tab-buttons {
+    margin-top: 30px;
+}
+
+::deep .mud-tab.mud-tab-active {
+    color: #27374D;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-toolbar-content {
+    background: #e9ecef;
+    color: #78909C;
+    font-size: 15px;
+    font-weight: bold;
+    border-bottom: 2px solid #D8DADC;
+    pointer-events: none;
+}
+
+::deep .mud-tabs-defaultindex {
+    color: #EEB12F;
+    font-weight: bold;
+}
+
+::deep .mud-tabs-afterindex {
+    color: #EEB12F;
+    font-weight: bold;
+    border-bottom: 2px solid #79AC78;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-active {
+    font-weight: bold;
+    color: white;
+    background-color: #27374D;
+    margin-right: 15px;
+}
+
+::deep .mud-chip-after {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.5;
+}
+
+::deep .mud-chip-after0 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.1;
+}
+
+::deep .mud-chip-after1 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.2;
+}
+
+::deep .mud-chip-after2 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.3;
+}
+
+::deep .mud-chip-after3 {
+    font-weight: bold;
+    color: white;
+    background-color: #0A86C2;
+    margin-right: 15px;
+    opacity: 0.4;
+}
+
+::deep .mud-chip-default {
+    font-weight: bold;
+    color: white;
+    background-color: #C5CFD2;
+    margin-right: 15px;
+}
+
+::deep .mud-text-after {
+    color: #0A86C2;
+    font-weight: bold;
+    opacity: 0.2;
+}
+
+::deep .mud-text-default {
+    font-weight: bold;
+}
+
+.firsttabrow {
+    --bs-gutter-x: 2.5rem;
+}
+
+/*IMAGE*/
+::deep .btnimage {
+    box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 0 10px 15px;
+    margin-top: 0;
+    width: 100%;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #27374D;
+    margin-bottom: 10px;
+}
+
+::deep .addmaindialog {
+    height: 800px !important;
+}
+
+::deep .btnimagewithimage {
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}

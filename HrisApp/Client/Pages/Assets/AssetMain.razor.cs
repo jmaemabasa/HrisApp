@@ -24,6 +24,11 @@ namespace HrisApp.Client.Pages.Assets
             {
                 OpenOverlay();
             }
+
+            //foreach (var item in AssetMasterList)
+            //{
+            //    await AssetImg(item.AssetCode);
+            //}
         }
 
         private async Task LoadList()
@@ -57,23 +62,22 @@ namespace HrisApp.Client.Pages.Assets
         private List<AssetMasterT> AssetMasterList = new();
         private AssetMasterT selectedItem1 = null;
 
-        private bool FilterFunc1(AssetMasterT area) => FilterFunc(area, searchString1);
+        private bool FilterFunc1(AssetMasterT obj) => FilterFunc(obj, searchString1);
 
-        private bool FilterFunc(AssetMasterT area, string searchString)
+        private bool FilterFunc(AssetMasterT obj, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (area.WorksationName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.AssetCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.Brand.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.Model.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.Model.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.Category.ACat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.SubCategory.ASubCat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.AssetStatus.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.Category.ACat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (area.AssetStatus.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+
+            if (obj.Serial.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }

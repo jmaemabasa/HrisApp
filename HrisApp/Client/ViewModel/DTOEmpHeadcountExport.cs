@@ -165,6 +165,7 @@ namespace HrisApp.Client.ViewModel
                 payrollDummyList.Add(payrollDummy);
             }
         }
+
         public async Task<byte[]> createExcelPayrollAssists(List<SubPositionT> subpos)
         {
             var crr = await httpClient.GetFromJsonAsync<List<EmployeeT>>("api/Employee");

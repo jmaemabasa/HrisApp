@@ -1,66 +1,136 @@
-﻿@page "/userdashboard"
+﻿@page "/user-dashboard"
+@attribute [Authorize]
 
 <MudGrid Spacing="4">
-    <MudItem xs="12">
-        <MudCard Class="Welcomepanel">
-            <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
-                <div class="d-flex flex-column gap-2">
-                    <span style="font-size: 24px;">Welcome, <b>@FULLNAME</b>!</span>
-                </div>
-            </MudCardContent>
-        </MudCard>
+    <MudItem xs="12" lg="9">
+        <MudGrid Spacing="4">
+            <MudItem xs="12">
+                <MudCard Class="Welcomepanel">
+                    <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
+                        <div class="d-flex flex-column gap-2">
+                            <span style="font-size: 24px;">@GetGreeting(), <b>@FULLNAME</b>!</span>
+                        </div>
+                        @* <div class="VissionMission">
+                            <div>
+                                <div>Vission</div>
+                                <div>Wee see Sonic Sales &Aacute; Distribution, Inc as the preferred employer and supplier of retail products in mindanao.</div>
+                            </div>
+                            <div>
+                                <div>Mission</div>
+                                <div>1. We are a company that delivers excellent customer service.</div>
+                                <div>2. We take care of the growth and development of our people.</div>
+                                <div>2. We aim to grow our business by expanding our customers reach.</div>
+                            </div>
+                        </div> *@
+                        <div class="coretitle">Core Values</div>
+                        <div class="corevalues d-flex justify-content-evenly flex-wrap gap-3">
+                            <div class="d-flex flex-column align-items-center text-center"><img class="imgcore" src="images/corevalues/customer-support.png" height="50"/>Customer Service</div>
+                            <div class="d-flex flex-column align-items-center text-center"><img class="imgcore" src="images/corevalues/excellence.png" height="50"/>Passion for <br />Exccellence</div>
+                            <div class="d-flex flex-column align-items-center text-center"><img class="imgcore" src="images/corevalues/teamwork.png" height="50" />Teamwork and <br />Collaboration</div>
+                            <div class="d-flex flex-column align-items-center text-center"><img class="imgcore" src="images/corevalues/energetic.png" height="50" />Diligence</div>
+                            <div class="d-flex flex-column align-items-center text-center"><img class="imgcore" src="images/corevalues/honest.png" height="50" />Integrity</div>
+                            <div class="d-flex flex-column align-items-center text-center"><img class="imgcore" src="images/corevalues/pray.png" height="50" />God Centeredness</div>
+                        </div>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudCard Class="leavebalancepanel">
+                    <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
+                        <div class="d-flex justify-content-between mb-3 align-items-center">
+                            <span class="maintitlespan">Leave Balance</span>
+                        </div>
+                        <div class="d-flex justify-content-around flex-wrap">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <div class="progress-bar-el el" style="--el: @availableLeavetextEL">
+                                    <progress value="@empLeaveCred.EL" min="0" max="@empLeaveCred.EL" style="visibility:hidden;height:0;width:0;"></progress>
+                                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.EL - countEl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.EL</span></div>
+                                </div>
+                                <div class="credtitle">Emergency Leave</div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <div class="progress-bar-ml ml" style="--ml: @availableLeavetextML">
+                                    <progress value="@empLeaveCred.ML" min="0" max="@empLeaveCred.ML" style="visibility:hidden;height:0;width:0;"></progress>
+                                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.ML - countMl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.ML</span></div>
+                                </div>
+                                <div class="credtitle">Maternity Leave</div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <div class="progress-bar-pl pl" style="--pl: @availableLeavetextPL">
+                                    <progress value="@empLeaveCred.PL" min="0" max="@empLeaveCred.PL" style="visibility:hidden;height:0;width:0;"></progress>
+                                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.PL - countPl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.PL</span></div>
+                                </div>
+                                <div class="credtitle">Paternity Leave</div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <div class="progress-bar-sl sl" style="--sl: @availableLeavetext">
+                                    <progress value="@empLeaveCred.SL" min="0" max="@empLeaveCred.SL" style="visibility:hidden;height:0;width:0;"></progress>
+                                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.SL - countSl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.SL</span></div>
+                                </div>
+                                <div class="credtitle">Sick Leave</div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <div class="progress-bar-vl vl" style="--vl: @availableLeavetextVL">
+                                    <progress value="@empLeaveCred.VL" min="0" max="@empLeaveCred.VL" style="visibility:hidden;height:0;width:0;"></progress>
+                                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.VL - countVl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.VL</span></div>
+                                </div>
+                                <div class="credtitle">Vacation Leave</div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <div class="progress-bar-ol sl" style="--ol: @availableLeavetextOL">
+                                    <progress value="@empLeaveCred.OL" min="0" max="@empLeaveCred.OL" style="visibility:hidden;height:0;width:0;"></progress>
+                                    <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.OL - countOl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.OL</span></div>
+                                </div>
+                                <div class="credtitle">Other</div>
+                            </div>
+                        </div>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
     </MudItem>
-    <MudItem xs="12">
-        <MudCard Class="leavebalancepanel">
-            <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
-                <div class="d-flex justify-content-between mb-3 align-items-center">
-                    <span class="maintitlespan">Leave Balance</span>
-                </div>
-                <div class="d-flex justify-content-around">
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="progress-bar-el el" style="--el: @availableLeavetextEL">
-                            <progress value="@empLeaveCred.EL" min="0" max="@empLeaveCred.EL" style="visibility:hidden;height:0;width:0;"></progress>
-                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.EL - countEl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.EL</span></div>
-                        </div>
-                        <div class="credtitle">Emergency Leave</div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="progress-bar-ml ml" style="--ml: @availableLeavetextML">
-                            <progress value="@empLeaveCred.ML" min="0" max="@empLeaveCred.ML" style="visibility:hidden;height:0;width:0;"></progress>
-                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.ML - countMl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.ML</span></div>
-                        </div>
-                        <div class="credtitle">Maternity Leave</div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="progress-bar-pl pl" style="--pl: @availableLeavetextPL">
-                            <progress value="@empLeaveCred.PL" min="0" max="@empLeaveCred.PL" style="visibility:hidden;height:0;width:0;"></progress>
-                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.PL - countPl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.PL</span></div>
-                        </div>
-                        <div class="credtitle">Paternity Leave</div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="progress-bar-sl sl" style="--sl: @availableLeavetext">
-                            <progress value="@empLeaveCred.SL" min="0" max="@empLeaveCred.SL" style="visibility:hidden;height:0;width:0;"></progress>
-                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.SL - countSl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.SL</span></div>
-                        </div>
-                        <div class="credtitle">Sick Leave</div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="progress-bar-vl vl" style="--vl: @availableLeavetextVL">
-                            <progress value="@empLeaveCred.VL" min="0" max="@empLeaveCred.VL" style="visibility:hidden;height:0;width:0;"></progress>
-                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.VL - countVl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.VL</span></div>
-                        </div>
-                        <div class="credtitle">Vacation Leave</div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="progress-bar-ol sl" style="--ol: @availableLeavetextOL">
-                            <progress value="@empLeaveCred.OL" min="0" max="@empLeaveCred.OL" style="visibility:hidden;height:0;width:0;"></progress>
-                            <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@(empLeaveCred.OL - countOl)</span><span class="slash">/</span><span class="progress-total">@empLeaveCred.OL</span></div>
-                        </div>
-                        <div class="credtitle">Other</div>
+    <MudItem xs="12" lg="3">
+        <MudCard Class="bdaypanel" Style="height: 30rem;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center  flex-wrap">
+                        <a href="/announcement" class="bdaytitle announceHeader"><strong>Announcements</strong></a>
+                        <MudIcon Icon="@Icons.Material.Rounded.Comment" Size="Size.Large"></MudIcon>
                     </div>
                 </div>
-            </MudCardContent>
+                <div class="col-12">
+                    <div class="d-flex flex-column divlistbday">
+                        @foreach (var item in announceL)
+                        {
+                            <div class="d-flex mb-2 align-items-baseline announceRow" @onclick="(() => OpenViewAnnoun(item.Id))">
+                                <div class="col-2 border  border-2 border-top-0 border-start-0 border-bottom-0 me-4">
+                                    @if (item.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
+                                    {
+                                        <div class="d-flex flex-column">
+                                            <span class="announceDate">Today</span>
+                                            <span class="announceDate">@item.DateStart?.ToString("HH:mm")</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex flex-column">
+                                            <span class="announceDate">@item.DateStart?.ToString("MMM dd")</span>
+                                            <span class="announceDate">@item.DateStart?.ToString("yyyy")</span>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex flex-column">
+                                        <span class="announceTitle">@item.Ann_Title</span>
+                                        <span class="announceDesc">@(item.Ann_Desc.Length > 50 ? @item.Ann_Desc.Substring(0, 50) + "..." : @item.Ann_Desc)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </MudCard>
     </MudItem>
 </MudGrid>

@@ -64,7 +64,7 @@
                 <MudTd>
                     <div class="d-flex flex-column">
                         <MudText Typo="Typo.body2" Style="font-weight: bold; color: #424242;">@log.EmployeeUSer?.FirstName @log.EmployeeUSer?.LastName</MudText>
-                        <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.EmployeeUserId.ToString())</MudText>
+                        <MudText Typo="Typo.caption" Style="color: #A6AABA;">@GetRole(log.EmployeeUserId)</MudText>
                     </div>
                 </MudTd>
                 <MudTd Style=""><span class="@ActionColor(log.Action)">@log.Action</span></MudTd>
@@ -92,6 +92,8 @@
     private List<EmployeeT> employeeList = new List<EmployeeT>();
     private List<UserMasterT> userList = new List<UserMasterT>();
     private List<AuditlogsT> logsList = new List<AuditlogsT>();
+    private List<UserRoleT> rolesList = new();
+
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
     private string searchString1 = "";
     public DateRange _dateRange = new DateRange
@@ -103,6 +105,9 @@
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(500);
+
+        await UserRoleService.GetUserRole();
+        rolesList = UserRoleService.UserRoleTs;
         await AuditlogService.GetLogs();
 
         await EmployeeService.GetEmployee();
@@ -155,11 +160,11 @@
         return false;
     }
 
-    private string GetRole(string employeeId)
+    private string GetRole(int employeeId)
     {
-        // Logic to get the user name based on the employee ID
-        var role = userList.FirstOrDefault(e => e.Id == Convert.ToInt32(employeeId));
-        return role != null ? $"{role.Role}" : "";
+        var role = userList.FirstOrDefault(e => e.EmployeeId == employeeId);
+        var rerole = rolesList.Where(r => r.RoleCode == role?.Role).FirstOrDefault()!.Name;
+        return rerole;
     }
 
     private static string ActionColor(string action)

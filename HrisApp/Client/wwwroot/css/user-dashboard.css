@@ -1,1 +1,202 @@
-﻿.Welcomepanel,.leavebalancepanel,.userleavehistorypanel{box-shadow:-5px -5px 10px #fff,5px 5px 10px #cacdcf;padding:10px 15px}.btnavatar{transition:.5s}.btnavatar:hover{transform:scale(1)}.Welcomepanel{border-radius:20px;background:linear-gradient(90deg,#f1bc3a 0,#f9d44f 46%,rgba(249,212,79,.4430147058823529) 100%);border:none;color:#424242}.leavebalancepanel{height:14rem;border-radius:20px;border:none;background:#e9ecef;background-color:var(--BackgroundGrey);color:#424242}.progress-bar-el,.progress-bar-sl{text-align:center;width:100px;height:100px;border-radius:50%}.progress-bar-sl{display:flex;justify-content:center;align-items:center;background:radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#a6a842 var(--sl),#d5d6a5 0)}.progress-bar-el,.progress-bar-ml{display:flex;justify-content:center}.progress-bar-el{align-items:center;background:radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#fd7e14 var(--el),#ffc107 0)}.progress-bar-ml{align-items:center;text-align:center;width:100px;height:100px;border-radius:50%;background:radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#51b5ab var(--ml),#9cd9d2 0)}.progress-bar-pl,.progress-bar-vl{justify-content:center;display:flex;width:100px;height:100px;border-radius:50%;text-align:center}.progress-bar-pl{align-items:center;background:radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#e890e2 var(--pl),#dbbad9 0)}.progress-bar-vl{align-items:center;background:radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#789cd6 var(--vl),#a1b3cf 0)}.progress-bar-ol{display:flex;justify-content:center;align-items:center;text-align:center;width:100px;height:100px;border-radius:50%;background:radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#71d995 var(--ol),#94e3af 0)}.progress-text{color:#0c0048}.progress-title{font-size:12px}.progress-count{font-weight:700;font-size:18px}.progress-total{color:#6a707d;font-size:12px}.slash{color:#6a707d;font-size:18px}.maintitlespan{font-size:20px;font-weight:700;color:#264487;font-family:Poppins,sans-serif!important}.credtitle{text-align:center;color:#6a707d;font-weight:700;font-size:16px;margin-top:10px;font-family:Poppins,sans-serif}.fullnameappbar{font-family:Poppins,sans-serif!important;margin-right:8px;font-size:14px;color:#6a707d}.userleavehistorypanel{height:29rem;border-radius:20px;background:#e9ecef;border:none;color:#424242}
+﻿.Welcomepanel, .leavebalancepanel, .userleavehistorypanel {
+    box-shadow: -5px -5px 10px #fff,5px 5px 10px #cacdcf;
+    padding: 10px 15px
+}
+
+.btnavatar {
+    transition: .5s
+}
+
+    .btnavatar:hover {
+        transform: scale(1)
+    }
+
+.Welcomepanel {
+    border-radius: 20px;
+    background: linear-gradient(90deg,#f1bc3a 0,#f9d44f 46%,rgba(249,212,79,.4430147058823529) 100%);
+    border: none;
+    color: #424242
+}
+
+.leavebalancepanel {
+    min-height: 14rem;
+    border-radius: 20px;
+    border: none;
+    background: #e9ecef;
+    background-color: var(--BackgroundGrey);
+    color: #424242
+}
+
+.progress-bar-el, .progress-bar-sl {
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.progress-bar-sl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#a6a842 var(--sl),#d5d6a5 0)
+}
+
+.progress-bar-el, .progress-bar-ml {
+    display: flex;
+    justify-content: center;
+}
+
+.progress-bar-el {
+    align-items: center;
+    background: radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#fd7e14 var(--el),#ffc107 0)
+}
+
+.progress-bar-ml {
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#51b5ab var(--ml),#9cd9d2 0)
+}
+
+.progress-bar-pl, .progress-bar-vl {
+    justify-content: center;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    text-align: center
+}
+
+.progress-bar-pl {
+    align-items: center;
+    background: radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#e890e2 var(--pl),#dbbad9 0)
+}
+
+.progress-bar-vl {
+    align-items: center;
+    background: radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#789cd6 var(--vl),#a1b3cf 0)
+}
+
+.progress-bar-ol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side,#e9ecef 79%,transparent 80% 100%),conic-gradient(#71d995 var(--ol),#94e3af 0)
+}
+
+.progress-text {
+    color: #0c0048
+}
+
+.progress-title {
+    font-size: 12px
+}
+
+.progress-count {
+    font-weight: 700;
+    font-size: 18px
+}
+
+.progress-total {
+    color: #6a707d;
+    font-size: 12px
+}
+
+.slash {
+    color: #6a707d;
+    font-size: 18px
+}
+
+.maintitlespan {
+    font-size: 20px;
+    font-weight: 700;
+    color: #264487;
+    font-family: Poppins,sans-serif !important
+}
+
+.credtitle {
+    text-align: center;
+    color: #6a707d;
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 10px;
+    font-family: Poppins,sans-serif
+}
+
+.fullnameappbar {
+    font-family: Poppins,sans-serif !important;
+    margin-right: 8px;
+    font-size: 14px;
+    color: #6a707d
+}
+
+.userleavehistorypanel {
+    height: 29rem;
+    border-radius: 20px;
+    background: #e9ecef;
+    border: none;
+    color: #424242
+}
+
+
+.divlistbday {
+    border: 2px solid #DEE2E6;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    height: 25rem;
+    overflow: auto;
+}
+
+
+.announceDate {
+    color: #757A90;
+    font-size: 12px;
+}
+
+.announceTitle {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.announceDesc {
+    color: #757A90;
+    font-size: 12px;
+}
+
+.announceRow {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 2px 8px 8px 8px;
+}
+
+    .announceRow:hover {
+        background-color: #e1e2e5;
+    }
+
+
+.announceHeader {
+    cursor: pointer;
+}
+
+    .announceHeader:hover {
+        text-decoration: underline;
+    }
+
+
+.coretitle {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.imgcore {
+    filter: invert(63%) sepia(11%) saturate(3204%) hue-rotate(146deg) brightness(115%) contrast(89%);
+}

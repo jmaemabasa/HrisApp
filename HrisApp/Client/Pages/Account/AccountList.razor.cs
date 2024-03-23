@@ -5,10 +5,14 @@ namespace HrisApp.Client.Pages.Account
     public partial class AccountList : ComponentBase
     {
         private List<EmployeeT> employeeList = new();
+        private List<UserRoleT> rolesList = new();
 
         protected override async Task OnInitializedAsync()
         {
             await Task.Delay(500);
+            await UserRoleService.GetUserRole();
+            rolesList = UserRoleService.UserRoleTs;
+
             StateService.OnChange += OnStateChanged;
             await LoadList();
 

@@ -11,7 +11,35 @@
     font-size: 16px;
 }
 
+.bdaytoday, .bdayupcoming, .bdaypassed {
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
 
+.bdaytoday {
+    background-color: rgba(193, 212, 205, .5);
+}
+
+    .bdaytoday:hover {
+        background-color: rgba(193, 212, 205, 1);
+    }
+
+.bdayupcoming {
+    background-color: rgba(216, 213, 232, .5);
+}
+
+    .bdayupcoming:hover {
+        background-color: rgba(216, 213, 232, 1);
+    }
+
+.bdaypassed {
+    background-color: rgba(234, 188, 187, .5);
+}
+
+    .bdaypassed:hover {
+        background-color: rgba(234, 188, 187, 1);
+    }
 
 .progress-bar {
     display: flex;
@@ -49,7 +77,7 @@
 
 .announceTitle {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .announceDesc {
@@ -72,6 +100,6 @@
     cursor: pointer;
 }
 
-.announceHeader:hover {
-    text-decoration: underline;
-}
+    .announceHeader:hover {
+        text-decoration: underline;
+    }

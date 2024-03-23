@@ -1,13 +1,17 @@
 ﻿@page "/announcement"
 
-@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR, Technical, User")]
 
 <PageTitle>Announcement</PageTitle>
 
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center flex-wrap">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Announcement</span>
-        <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Announcement</MudButton>
+        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+            <Authorized>
+                <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Announcement</MudButton>
+            </Authorized>
+        </AuthorizeView>
     </div>
 </div>
 
@@ -41,47 +45,150 @@
     }
     else
     {
-        <MudTable Class="stable" Height="665px" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="true" Bordered="false" @bind-SelectedItem="selectedItem1">
+        <MudTable Class="stable" Height="665px" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="false" Bordered="false" @bind-SelectedItem="selectedItem1">
             <RowTemplate>
-                <MudTd Class="col-sm-12 col-md-1" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
-                    @if (obj.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
-                    {
-                        <div class="d-flex flex-column">
-                            <span class="announceDate">Today</span>
-                            <span class="announceDate">@obj.DateStart?.ToString("HH:mm")</span>
+                @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date) || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
+                {
+                    <div class="divannounceShow" @onclick="(() => OpenViewAnnoun(obj.Id))">
+                        <div class="col-sm-12 col-md-1" style="cursor: pointer;">
+                            @if (obj.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
+                            {
+                                <div class="d-flex flex-column">
+                                    <span class="announceDate">Today</span>
+                                    <span class="announceDate">@obj.DateStart?.ToString("HH:mm")</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex flex-column">
+                                    <span class="announceDate">@obj.DateStart?.ToString("MMM dd")</span>
+                                    <span class="announceDate">@obj.DateStart?.ToString("yyyy")</span>
+                                </div>
+                            }
                         </div>
-                    }
-                    else
-                    {
-                        <div class="d-flex flex-column">
-                            <span class="announceDate">@obj.DateStart?.ToString("MMM dd")</span>
-                            <span class="announceDate">@obj.DateStart?.ToString("yyyy")</span>
-                        </div>
-                    }
-                </MudTd>
 
-                <MudTd Class="col-sm-12 col-md-9" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
-                    <div class="d-flex flex-column" style="text-align: justify;">
-                        <span class="announceTitle">@obj.Ann_Title</span>
-                        <span class="announceDesc">@(obj.Ann_Desc.Length > 200 ? @obj.Ann_Desc.Substring(0, 200) + "..." : @obj.Ann_Desc)</span>
+
+                        <div class="col-sm-12 col-md-9" style="cursor: pointer">
+                            <div class="d-flex flex-column" style="text-align: justify;">
+                                <span class="announceTitle">@obj.Ann_Title</span>
+                                <span class="announceDesc">@(obj.Ann_Desc.Length > 200 ? @obj.Ann_Desc.Substring(0, 200) + "..." : @obj.Ann_Desc)</span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-12 col-md-2 text-center" style="cursor: pointer">
+                            @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date)
+                       || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
+                            {
+                                <span class="announceShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                            else if (obj.DateStart.Value.Date > DateTime.Now.Date)
+                            {
+                                <span class="announcePending">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                            else
+                            {
+                                <span class="announceNotShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                        </div>
                     </div>
-                </MudTd>
+                }
+                else if (obj.DateStart.Value.Date > DateTime.Now.Date)
+                {
+                    <div class="divannouncePending" @onclick="(() => OpenViewAnnoun(obj.Id))">
+                        <div class="col-sm-12 col-md-1" style="cursor: pointer;">
+                            @if (obj.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
+                            {
+                                <div class="d-flex flex-column">
+                                    <span class="announceDate">Today</span>
+                                    <span class="announceDate">@obj.DateStart?.ToString("HH:mm")</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex flex-column">
+                                    <span class="announceDate">@obj.DateStart?.ToString("MMM dd")</span>
+                                    <span class="announceDate">@obj.DateStart?.ToString("yyyy")</span>
+                                </div>
+                            }
+                        </div>
 
-                <MudTd Class="col-sm-12 col-md-2 text-center" @onclick="(() => OpenViewAnnoun(obj.Id))" Style="cursor: pointer">
-                    @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date)
-                || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
-                    {
-                        <span class="announceShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
-                    }
-                    else if (obj.DateStart.Value.Date > DateTime.Now.Date)
-                    {
-                        <span class="announcePending">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
-                    }
-                    else
-                    {
-                        <span class="announceNotShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
-                    }
-                </MudTd>
+
+                        <div class="col-sm-12 col-md-9" style="cursor: pointer">
+                            <div class="d-flex flex-column" style="text-align: justify;">
+                                <span class="announceTitle">@obj.Ann_Title</span>
+                                <span class="announceDesc">@(obj.Ann_Desc.Length > 200 ? @obj.Ann_Desc.Substring(0, 200) + "..." : @obj.Ann_Desc)</span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-12 col-md-2 text-center" style="cursor: pointer">
+                            @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date)
+                       || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
+                            {
+                                <span class="announceShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                            else if (obj.DateStart.Value.Date > DateTime.Now.Date)
+                            {
+                                <span class="announcePending">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                            else
+                            {
+                                <span class="announceNotShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="divannounceNotShow" @onclick="(() => OpenViewAnnoun(obj.Id))">
+                        <div class="col-sm-12 col-md-1" style="cursor: pointer;">
+                            @if (obj.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
+                            {
+                                <div class="d-flex flex-column">
+                                    <span class="announceDate">Today</span>
+                                    <span class="announceDate">@obj.DateStart?.ToString("HH:mm")</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex flex-column">
+                                    <span class="announceDate">@obj.DateStart?.ToString("MMM dd")</span>
+                                    <span class="announceDate">@obj.DateStart?.ToString("yyyy")</span>
+                                </div>
+                            }
+                        </div>
+
+
+                        <div class="col-sm-12 col-md-9" style="cursor: pointer">
+                            <div class="d-flex flex-column" style="text-align: justify;">
+                                <span class="announceTitle">@obj.Ann_Title</span>
+                                <span class="announceDesc">@(obj.Ann_Desc.Length > 200 ? @obj.Ann_Desc.Substring(0, 200) + "..." : @obj.Ann_Desc)</span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-12 col-md-2 text-center" style="cursor: pointer">
+                            @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date)
+                       || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
+                            {
+                                <span class="announceShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                            else if (obj.DateStart.Value.Date > DateTime.Now.Date)
+                            {
+                                <span class="announcePending">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                            else
+                            {
+                                <span class="announceNotShow">@obj.DateStart?.ToString("MMM dd") - @obj.DateEnd?.ToString("MMM dd")</span>
+                            }
+                        </div>
+                    </div>
+                }
+
             </RowTemplate>
             <PagerContent>
                 <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
@@ -113,7 +220,19 @@
     }
     private async Task LoadList()
     {
-        StateService.SetState("AnnouncementList", await AnnouncementService.GetAnnouncementList());
+        await AnnouncementService.GetAnnouncement();
+        _announceList = AnnouncementService.AnnouncementTs.OrderBy(a => a.DateStart).ToList();
+
+        // Then, reorder announcements based on their date ranges
+        var currentTime = DateTime.Now;
+
+        var currentAnnouncements = _announceList.Where(a => a.DateStart <= currentTime && a.DateEnd >= currentTime).ToList();
+        var upcomingAnnouncements = _announceList.Where(a => a.DateStart > currentTime).ToList();
+        var pastAnnouncements = _announceList.Where(a => a.DateEnd < currentTime).ToList();
+
+        // Concatenate the sorted announcement lists
+        _announceList = currentAnnouncements.Concat(upcomingAnnouncements).Concat(pastAnnouncements).ToList();
+        StateService.SetState("AnnouncementList", _announceList);
     }
 
     private void OnStateChanged()
@@ -133,6 +252,7 @@
     {
         var parameters = new DialogParameters<UpdateAnnounceDialog>();
         parameters.Add(x => x.Id, id);
+        parameters.Add(x => x.FromPage, "Announcement");
 
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
         DialogService.Show<UpdateAnnounceDialog>("", parameters, options);

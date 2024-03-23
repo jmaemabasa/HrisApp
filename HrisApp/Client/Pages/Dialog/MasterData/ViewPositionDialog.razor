@@ -30,6 +30,10 @@
             <MudTabPanel Text="Additional Info">
                 <div class="d-flex flex-column gap-2 cont mb-1">
                     <span style="margin-bottom: 5px; font-size: 16px; color: #424242"><b>Additional Info</b></span>
+                    <div class="divsingledetails mb-1">
+                        <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Supervisory</MudText>
+                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@(string.IsNullOrWhiteSpace(position.Supervisory) ? "No Information." : position.Supervisory)</MudText>
+                    </div>
                     @if (position.PositionType == "Permanent")
                     {
                         <div class="divsingledetails mb-1">

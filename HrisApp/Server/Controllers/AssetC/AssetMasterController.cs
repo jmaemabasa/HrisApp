@@ -24,6 +24,7 @@
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
                 .Include(e => e.Area)
+                .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -40,6 +41,7 @@
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
                 .Include(e => e.Area)
+                .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -65,6 +67,27 @@
             return Ok(obj);
         }
 
+        [HttpGet("GetSingleObjByCode")]
+        public async Task<ActionResult<AssetMasterT>> GetSingleObjByCode([FromQuery]string code)
+        {
+            var obj = await _context.AssetMasterT
+                 .Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .Include(e => e.Employee)
+                .Include(e => e.Area)
+                .Include(e => e.Employee!.Division)
+                .Include(e => e.Employee!.Department)
+                .FirstOrDefaultAsync(h => h.AssetCode == code);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
+
         private async Task<List<AssetMasterT>> GetDBObj()
         {
             return await _context.AssetMasterT
@@ -76,6 +99,7 @@
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
                 .Include(e => e.Area)
+                .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
         }
 
@@ -102,6 +126,7 @@
             dbarea.ProductID = model.ProductID;
             dbarea.ProductID = model.ProductID;
             dbarea.Processor = model.Processor;
+            dbarea.Description = model.Description;
             dbarea.RAM = model.RAM;
             dbarea.Quantity = model.Quantity;
             dbarea.Barcode = model.Barcode;

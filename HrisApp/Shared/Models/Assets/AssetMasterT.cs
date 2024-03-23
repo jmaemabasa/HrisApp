@@ -17,6 +17,7 @@ namespace HrisApp.Shared.Models.Assets
         public string WorksationName { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
         public AssetTypesT? Type { get; set; }
         public int TypeId { get; set; }
@@ -65,5 +66,7 @@ namespace HrisApp.Shared.Models.Assets
         public DateTime? LastCheckDate { get; set; }
 
         public DateTime? DateCreated { get; set; } = DateTime.Now;
+        public EmployeeT? CreatedBy { get; set; }
+        public int? CreatedById { get; set; }
     }
 }

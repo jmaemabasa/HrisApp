@@ -6,13 +6,14 @@
 
 .announceTitle {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .announceDesc {
     color: #757A90;
     font-size: 15px;
 }
+
 
 .announceRow {
     cursor: pointer;
@@ -68,4 +69,50 @@
 
 .dotDone {
     background-color: #BE1313;
+}
+
+
+.divannounceShow, .divannouncePending, .divannounceNotShow {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 8px 8px 8px 20px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    min-height: 83.31px;
+    transition: all .5s ease;
+}
+
+.divannounceShow {
+    background-color: rgba(193, 212, 205, .5);
+}
+
+    .divannounceShow:hover {
+        background-color: rgba(193, 212, 205, 1);
+    }
+
+.divannouncePending {
+    background-color: rgba(216, 213, 232, .5);
+}
+
+    .divannouncePending:hover {
+        background-color: rgba(216, 213, 232, 1);
+    }
+
+.divannounceNotShow {
+    background-color: rgba(234, 188, 187, .5);
+}
+
+    .divannounceNotShow:hover {
+        background-color: rgba(234, 188, 187, 1);
+    }
+
+@media (max-width: 640.98px) {
+
+    .divannounceShow, .divannouncePending, .divannounceNotShow {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
 }

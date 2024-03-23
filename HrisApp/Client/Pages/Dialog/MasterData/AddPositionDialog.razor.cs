@@ -41,6 +41,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private string newPosType = "";
         private string newDuration = "";
         private string newManpower = "";
+        private string newSupervisory = "No";
         private int newPlantilla;
 
         private string newPosTypeHolder = "";
@@ -133,7 +134,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentHasSections)
             {
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal);
+                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal, newSupervisory);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
@@ -143,7 +144,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             else
             {
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal);
+                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal, newSupervisory);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
@@ -344,7 +345,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
                 }
             }
 
-            listOfKnowledge.Clear();
+            listOfWorkExp.Clear();
         }
 
         public void AddNewWorkExp(string code, string newSkill)

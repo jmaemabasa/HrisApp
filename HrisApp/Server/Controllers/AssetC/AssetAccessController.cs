@@ -20,8 +20,9 @@
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
-                                .Include(e => e.MainAsset)
-.ToListAsync();
+                .Include(e => e.MainAsset)
+                .OrderByDescending(x => x.DateCreated)
+                .ToListAsync();
             return Ok(obj);
         }
 
@@ -34,6 +35,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                                .OrderByDescending(x => x.DateCreated)
 .ToListAsync();
             return Ok(obj);
         }
@@ -55,6 +57,24 @@
             }
             return Ok(obj);
         }
+        
+        [HttpGet("GetSingleObjByCode")]
+        public async Task<ActionResult<AssetAccessoryT>> GetSingleObjByCode([FromQuery]string code)
+        {
+            var obj = await _context.AssetAccessoryT
+                .Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .Include(e => e.MainAsset)
+                .FirstOrDefaultAsync(h => h.AssetCode == code);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
 
         private async Task<List<AssetAccessoryT>> GetDBObj()
         {
@@ -64,6 +84,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                                .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
         }
 
@@ -88,6 +109,7 @@
             dbarea.TypeId = model.TypeId;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
+            dbarea.Description = model.Description;
             dbarea.Quantity = model.Quantity;
             dbarea.Barcode = model.Barcode;
             dbarea.Serial = model.Serial;

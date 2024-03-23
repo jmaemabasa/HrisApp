@@ -1,0 +1,20 @@
+﻿<AuthorizeView Roles="Technical">
+    <Authorized>
+        <MudDivider Class="my-1" />
+        <MudNavLink Class="navlinktitle" Href="/asset-dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
+
+        <MudNavGroup Class="navlinktitle" Title="Asset Master Data" Expanded="false" Icon="@Icons.Material.Rounded.AdminPanelSettings" IconColor="Color.Inherit">
+            <MudNavLink Class="navlinktitle" Href="/asset-types" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Mouse" IconColor="Color.Inherit">Types</MudNavLink>
+            <MudNavLink Class="navlinktitle" Href="/asset-category" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category" IconColor="Color.Inherit">Category</MudNavLink>
+            <MudNavLink Class="navlinktitle" Href="/asset-subcategory" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.MenuBook" IconColor="Color.Inherit">Sub Category</MudNavLink>
+        </MudNavGroup>
+        <MudNavGroup Class="navlinktitle" Title="Asset Monitoring" Expanded="false" Icon="@Icons.Material.Rounded.AdfScanner" IconColor="Color.Inherit">
+            <MudNavLink Class="navlinktitle" Href="/asset-main" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Devices" IconColor="Color.Inherit">Main Asset</MudNavLink>
+            <MudNavLink Class="navlinktitle" Href="/asset-accessories" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.KeyboardAlt" IconColor="Color.Inherit">Accessory</MudNavLink>
+            @* <MudNavLink Class="navlinktitle" Href="/asset-vehicles" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.DirectionsCar" IconColor="Color.Inherit">Vehicles</MudNavLink> *@
+        </MudNavGroup>
+        @* <MudNavGroup Class="navlinktitle" Title="Vehicale Monitoring" Expanded="false" Icon="@Icons.Material.Rounded.DirectionsCar" IconColor="Color.Inherit">
+            <MudNavLink Class="navlinktitle" Href="/asset-vehicle" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.DirectionsCar" IconColor="Color.Inherit">Vehicles</MudNavLink>
+        </MudNavGroup> *@
+    </Authorized>
+</AuthorizeView>

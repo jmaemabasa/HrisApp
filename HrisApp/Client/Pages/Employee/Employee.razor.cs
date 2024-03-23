@@ -10,6 +10,7 @@
         public EmployeeT _selectedItem1 = null;
         public List<StatusT> StatusL = new();
         public List<DivisionT> DivisionsL = new();
+        public List<DepartmentT> DepartmentsL = new();
         public List<SubPositionT> SubPositionsL = new();
 
         public MudDateRangePicker _picker;
@@ -32,6 +33,8 @@
 
                 await PositionService.GetSubPosition();
                 SubPositionsL = PositionService.SubPositionTs;
+
+                DepartmentsL = await DepartmentService.GetDepartmentList();
 
                 #region for DASHBOARD
 
@@ -93,6 +96,7 @@
         }
 
         public string CmbDivText = "All Division";
+        public string CmbDeptText = "All Department";
         public string CmbStatusText = "All Status";
         public string CmbDaateHiredText = "All";
 
@@ -111,30 +115,7 @@
                     _dateRange.Start = startOfLastMonth;
                     _dateRange.End = endOfLastMonth;
 
-                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                         .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
-                         .ToList();
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
-                        .ToList();
-                    }
-                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
-                            .ToList();
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
-                            .ToList();
-                    }
+                    await UpdateEmpList();
                     break;
 
                 case "lastyear":
@@ -145,30 +126,7 @@
                     _dateRange.Start = startOfLastYear;
                     _dateRange.End = endOfLastYear;
 
-                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                         .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
-                         .ToList();
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
-                        .ToList();
-                    }
-                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
-                            .ToList();
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
-                            .ToList();
-                    }
+                    await UpdateEmpList();
                     break;
 
                 case "lastweek":
@@ -212,30 +170,7 @@
                     _dateRange.Start = yesterday;
                     _dateRange.End = yesterday.AddDays(1).AddTicks(-1);
 
-                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                         .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
-                         .ToList();
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
-                        .ToList();
-                    }
-                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
-                            .ToList();
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
-                            .ToList();
-                    }
+                    await UpdateEmpList();
                     break;
 
                 default:
@@ -243,28 +178,8 @@
                     _isOpen = false;
                     _dateRange.Start = null;
                     _dateRange.End = null;
-                    if (CmbStatusText == "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs;
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.Status?.Name == CmbStatusText)
-                            .ToList();
-                    }
-                    else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.Division?.Name == CmbDivText)
-                            .ToList();
-                    }
-                    else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
-                    {
-                        _employeeList = EmployeeService.EmployeeTs
-                            .Where(e => e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
-                            .ToList();
-                    }
+
+                    await UpdateEmpList();
                     break;
             }
 
@@ -274,211 +189,171 @@
             }
         }
 
-        public void CmbDivision(int div)
+        public async Task CmbDivision(int div)
         {
-            //    _dateRange.Start = null;
-            //    _dateRange.End = null;
-
             if (div == 0)
             {
                 CmbDivText = "All Division";
-
-                if (CmbStatusText != "All Status")
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Status?.Name == CmbStatusText).ToList();
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Status?.Name == CmbStatusText && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
-                else
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs;
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
             }
             else
             {
-                foreach (var e in DivisionsL)
-                {
-                    if (e.Id == div)
-                    {
-                        CmbDivText = e.Name;
-                    }
-                }
-
-                if (CmbStatusText != "All Status")
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Status?.Name == CmbStatusText && e.DivisionId == div).ToList();
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Status?.Name == CmbStatusText && e.DivisionId == div && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
-                else
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.DivisionId == div).ToList();
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.DivisionId == div && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
+                CmbDivText = DivisionsL.FirstOrDefault(e => e.Id == div)?.Name ?? CmbDivText;
             }
-
-            if (_employeeList == null || _employeeList.Count == 0)
-            {
-                OpenOverlay();
-            }
+            await UpdateEmpList();
         }
 
-        public void SearchStatus(int status)
+        public async Task SearchStatus(int status)
         {
-            //_dateRange.Start = null;
-            //_dateRange.End = null;
             if (status == 0)
             {
                 CmbStatusText = "All Status";
-
-                if (CmbDivText != "All Division")
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Division?.Name == CmbDivText).ToList();
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Division?.Name == CmbDivText && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
-                else
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs;
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
             }
             else
             {
-                foreach (var e in StatusL)
-                {
-                    if (e.Id == status)
-                    {
-                        CmbStatusText = e.Name;
-                    }
-                }
-
-                if (CmbDivText != "All Division")
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Division?.Name == CmbDivText && e.StatusId == status).ToList();
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.Division?.Name == CmbDivText && e.StatusId == status && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
-                else
-                {
-                    if (_dateRange.Start == null && _dateRange.End == null)
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == status).ToList();
-                    }
-                    else
-                    {
-                        _employeeList = EmployeeService.EmployeeTs.Where(e => e.StatusId == status && e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End).ToList();
-                    }
-                }
+                CmbStatusText = StatusL.FirstOrDefault(e => e.Id == status)?.Name ?? CmbStatusText;
             }
-
-            if (_employeeList == null || _employeeList.Count == 0)
-            {
-                OpenOverlay();
-            }
+            await UpdateEmpList();
         }
 
-        public void EmpDateRangeChange(DateRange dateRange)
+        public async Task EmpDateRangeChange(DateRange dateRange)
         {
             _dateRange = dateRange;
             CmbDaateHiredText = _dateRange?.Start?.ToString("MM/dd/yyyy") + " - " + _dateRange?.End?.ToString("MM/dd/yyyy");
             ToggleOpen();
 
-            if (CmbStatusText == "All Status" && CmbDivText == "All Division")
+            await UpdateEmpList();
+        }
+
+        public async Task CmbDepartment(int dep)
+        {
+            if (dep == 0)
             {
-                _employeeList = EmployeeService.EmployeeTs
-                    .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
-                    .ToList();
+                CmbDeptText = "All Department";
             }
-            else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
+            else
             {
-                _employeeList = EmployeeService.EmployeeTs
-                    .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
-                    .ToList();
-            }
-            else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
-            {
-                _employeeList = EmployeeService.EmployeeTs
-                    .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
-                    .ToList();
-            }
-            else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
-            {
-                _employeeList = EmployeeService.EmployeeTs
-                    .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
-                    .ToList();
+                CmbDeptText = DepartmentsL.FirstOrDefault(e => e.Id == dep)?.Name ?? CmbDeptText;
             }
 
-            if (_dateRange.Start == null && _dateRange.End == null)
+            await UpdateEmpList();
+        }
+
+
+        public async Task UpdateEmpList()
+        {
+            await Task.Delay(0);
+            if (CmbStatusText == "All Status" && CmbDivText == "All Division" && CmbDeptText == "All Department")
             {
-                if (CmbStatusText == "All Status" && CmbDivText == "All Division")
+                if (_dateRange.Start == null && _dateRange.End == null)
                 {
                     _employeeList = EmployeeService.EmployeeTs;
                 }
-                else if (CmbStatusText != "All Status" && CmbDivText == "All Division")
+                else
                 {
                     _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.Status?.Name == CmbStatusText)
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End)
                         .ToList();
                 }
-                else if (CmbStatusText == "All Status" && CmbDivText != "All Division")
+            }
+            else if (CmbStatusText != "All Status" && CmbDivText == "All Division" && CmbDeptText == "All Department")
+            {
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.Status?.Name == CmbStatusText).ToList();
+                }
+                else
                 {
                     _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.Division?.Name == CmbDivText)
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Status?.Name == CmbStatusText)
                         .ToList();
                 }
-                else if (CmbStatusText != "All Status" && CmbDivText != "All Division")
+            }
+            else if (CmbStatusText == "All Status" && CmbDivText != "All Division" && CmbDeptText == "All Department")
+            {
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.Division?.Name == CmbDivText).ToList();
+                }
+                else
                 {
                     _employeeList = EmployeeService.EmployeeTs
-                        .Where(e => e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText)
+                        .ToList();
+                }
+            }
+            else if (CmbStatusText == "All Status" && CmbDivText == "All Division" && CmbDeptText != "All Department")
+            {
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.Department?.Name == CmbDeptText).ToList();
+                }
+                else
+                {
+                    _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Department?.Name == CmbDeptText)
+                        .ToList();
+                }
+            }
+            else if (CmbStatusText != "All Status" && CmbDivText != "All Division" && CmbDeptText == "All Department")
+            {
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText).ToList();
+                }
+                else
+                {
+                    _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
+                        .ToList();
+                }
+            }
+            else if (CmbStatusText != "All Status" && CmbDivText == "All Division" && CmbDeptText != "All Department")
+            {
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.Department?.Name == CmbDeptText && e.Status?.Name == CmbStatusText).ToList();
+                }
+                else
+                {
+                    _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Department?.Name == CmbDeptText && e.Status?.Name == CmbStatusText)
+                        .ToList();
+                }
+            }
+            else if (CmbStatusText == "All Status" && CmbDivText != "All Division" && CmbDeptText != "All Department")
+            {
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.Department?.Name == CmbDeptText && e.Division?.Name == CmbDivText).ToList();
+                }
+                else
+                {
+                    _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Department?.Name == CmbDeptText && e.Division?.Name == CmbDivText)
+                        .ToList();
+                }
+            }
+            else if (CmbStatusText != "All Status" && CmbDivText != "All Division" && CmbDeptText != "All Department")
+            {
+                if (_dateRange.Start == null && _dateRange.End == null)
+                {
+                    _employeeList = EmployeeService.EmployeeTs.Where(e => e.Department?.Name == CmbDeptText && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText).ToList();
+                }
+                else
+                {
+                    _employeeList = EmployeeService.EmployeeTs
+                        .Where(e => e.DateHired >= _dateRange.Start && e.DateHired <= _dateRange.End && e.Department?.Name == CmbDeptText && e.Division?.Name == CmbDivText && e.Status?.Name == CmbStatusText)
                         .ToList();
                 }
             }
 
+            // Check if the employee list is empty and show overlay if needed
             if (_employeeList == null || _employeeList.Count == 0)
             {
                 OpenOverlay();
             }
         }
+
 
         #endregion COMBOBOX FILTERS
 

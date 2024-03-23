@@ -23,6 +23,7 @@
         private string newEduc;
 
         private string newPosTypeHolder = "";
+        private string newSupervisory = "";
 
         private PositionT position = new();
 

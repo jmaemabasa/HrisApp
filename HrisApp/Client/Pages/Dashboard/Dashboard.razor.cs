@@ -1,12 +1,14 @@
 ﻿using ChartJs.Blazor.Common.Axes.Ticks;
+using HrisApp.Client.Pages.Dialog.Announcement;
 using System.Data;
 using System.Globalization;
 
 namespace HrisApp.Client.Pages.Dashboard
 {
+#nullable disable
+
     public partial class Dashboard : ComponentBase
     {
-#nullable disable
         private string _countActiveEmployees = "0";
         private string _countInactiveEmployees = "0";
         private string _countForEval = "0";
@@ -436,6 +438,35 @@ namespace HrisApp.Client.Pages.Dashboard
         #endregion PIE CHART
 
         #region FUNCTIONS
+        private static string GetGreeting()
+        {
+            var currentTime = DateTime.Now;
+            var currentHour = currentTime.Hour;
+
+            if (currentHour < 12)
+            {
+                return "Good morning";
+            }
+            else if (currentHour < 18)
+            {
+                return "Good afternoon";
+            }
+            else
+            {
+                return "Good evening";
+            }
+        }
+        private void OpenViewAnnoun(int id)
+        {
+            var parameters = new DialogParameters<UpdateAnnounceDialog>
+            {
+                { x => x.Id, id },
+                { x => x.FromPage, "Dashboard" }
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+            DialogService.Show<UpdateAnnounceDialog>("", parameters, options);
+        }
 
         public void BdayThisDay()
         {

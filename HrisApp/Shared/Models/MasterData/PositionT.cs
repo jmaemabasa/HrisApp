@@ -25,5 +25,7 @@ namespace HrisApp.Shared.Models.MasterData
         public string TemporaryDuration { get; set; } = string.Empty;
         public string Manpower { get; set; } = string.Empty;
         public int PosMPExternalId { get; set; }
+
+        public string Supervisory { get; set;} = string.Empty; //YesorNo
     }
 }

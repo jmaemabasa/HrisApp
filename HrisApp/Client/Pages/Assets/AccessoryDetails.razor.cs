@@ -15,6 +15,7 @@ namespace HrisApp.Client.Pages.Assets
         private List<EmployeeT> EMPLOYEE = new();
 
         private List<AssetAccessImageT> assetImgList = new();
+        private List<AccessoryRemarksT> REMARKS = new();
 
         private string MainAssetImage { get; set; } = string.Format("images/asset-holder.jpg");
 
@@ -41,6 +42,7 @@ namespace HrisApp.Client.Pages.Assets
             try
             {
                 obj = await AssetAccService.GetSingleObj(Id);
+                REMARKS = await AccRemarksService.GetObjList(obj.AssetCode);
 
                 try
                 {
@@ -77,39 +79,99 @@ namespace HrisApp.Client.Pages.Assets
                 obj.StatusDate = null;
             }
             await AssetAccService.UpdateObj(obj);
+            await SaveRemarksTODB(obj.AssetCode);
+
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
 
             _toastService.ShowSuccess("Updated Successfully!");
             await ReloadObjects();
         }
 
-        private async Task LoadMainAssetImg(string jmcode)
+        #region REMARKS
+
+        private string newRemark = "";
+
+        public async Task SaveRemarksTODB(string posCode)
         {
-            var imagemodel = await AssetImageService.GetImageData(jmcode);
-            if (imagemodel != null)
+            var listApi = await AccRemarksService.GetObjList(posCode);
+            List<string> arrApi = new();
+
+            var validRemark = REMARKS
+               .Where(obj => !string.IsNullOrEmpty(obj.AccAssetCode))
+               .ToList();
+
+            var listOfValidRemarks = validRemark.OrderByDescending(obj => obj.VerifyId).ToList();
+
+            if (listOfValidRemarks.Count == 0)
             {
-                var base642 = Convert.ToBase64String(imagemodel);
-                MainAssetImage = string.Format("data:image/png;base64,{0}", base642);
+                foreach (var item in listApi)
+                {
+                    await AccRemarksService.DeleteAllObj(item.VerifyId);
+                }
+                return;
+            }
+
+            foreach (var pays in listApi)
+            {
+                var P = listOfValidRemarks.Where(p => p.VerifyId == pays.VerifyId).Count();
+
+                if (P == 0)
+                {
+                    await AccRemarksService.DeleteAllObj(pays.VerifyId);
+                }
+            }
+
+            foreach (var item in listOfValidRemarks)
+            {
+                item.AccAssetCode = posCode;
+
+                int isExistTech = await AccRemarksService.GetExistObj(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await AccRemarksService.CreateObj(item);
+                }
+                else
+                {
+                    await AccRemarksService.UpdateObj(item);
+                }
+            }
+
+            REMARKS.Clear();
+        }
+
+        public void AddNewRemark(string code, string newSkill)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newRemark))
+                REMARKS.Add(new AccessoryRemarksT { AccAssetCode = code, Remark = newSkill, VerifyId = verifyCode });
+            newRemark = "";
+            //Console.WriteLine(verifyCode);
+        }
+
+        public async Task CloseRemark(MudChip chip)
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure you remove this? You can't undo your action.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (confirmResult.IsConfirmed)
+            {
+                var skillToRemove = REMARKS.FirstOrDefault(item => item.Remark == chip.Text);
+
+                if (skillToRemove != null)
+                {
+                    REMARKS.Remove(skillToRemove);
+                }
             }
         }
 
-        public async Task ReloadObjects()
-        {
-            // Update the List using the StateService
-            StateService.SetState("AssetAccList", await AssetAccService.GetObjList());
-            obj = await AssetAccService.GetSingleObj((int)Id);
-            leftPanelOpen = false; detailsPanelOpen = false; lastCheckOpen = false;
-        }
-
-        private async Task LoadAccessImg(string jmcode)
-        {
-            var imagemodel = await AssAccImgSvc.GetImageData(jmcode);
-            if (imagemodel != null)
-            {
-                var base642 = Convert.ToBase64String(imagemodel);
-                AccessImageData = string.Format("data:image/png;base64,{0}", base642);
-            }
-        }
+        #endregion REMARKS
 
         #region PANEL IMAGE LIST / TABLE
 
@@ -154,6 +216,37 @@ namespace HrisApp.Client.Pages.Assets
         }
 
         #endregion PANEL IMAGE LIST / TABLE
+
+        #region FUNCTIONS
+
+        private async Task LoadMainAssetImg(string jmcode)
+        {
+            var imagemodel = await AssetImageService.GetImageData(jmcode);
+            if (imagemodel != null)
+            {
+                var base642 = Convert.ToBase64String(imagemodel);
+                MainAssetImage = string.Format("data:image/png;base64,{0}", base642);
+            }
+        }
+
+        public async Task ReloadObjects()
+        {
+            // Update the List using the StateService
+            StateService.SetState("AssetAccList", await AssetAccService.GetObjList());
+            REMARKS = await AccRemarksService.GetObjList(obj.AssetCode);
+            obj = await AssetAccService.GetSingleObj((int)Id);
+            leftPanelOpen = false; detailsPanelOpen = false; lastCheckOpen = false;
+        }
+
+        private async Task LoadAccessImg(string jmcode)
+        {
+            var imagemodel = await AssAccImgSvc.GetImageData(jmcode);
+            if (imagemodel != null)
+            {
+                var base642 = Convert.ToBase64String(imagemodel);
+                AccessImageData = string.Format("data:image/png;base64,{0}", base642);
+            }
+        }
 
         private async Task GenerateQR(int id)
         {
@@ -202,6 +295,8 @@ namespace HrisApp.Client.Pages.Assets
                 obj.LastCheckDate = DateTime.Now;
             }
         }
+
+        #endregion FUNCTIONS
 
         #region MUD TABS / TAB PANEL
 

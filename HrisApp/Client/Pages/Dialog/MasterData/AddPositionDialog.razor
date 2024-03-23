@@ -84,6 +84,13 @@
                             <MudText Typo="Typo.body2">Job Summary</MudText>
                             <MudTextField @bind-Value="newSummary" Variant="Variant.Outlined" Margin="Margin.Dense" Lines="3" Style="margin-bottom: 5px;" />
                         </div>
+                        <div class="flex-grow-1 d-flex  align-items-center gap-3">
+                            <MudText Typo="Typo.body2">Supervisory</MudText>
+                            <MudRadioGroup @bind-SelectedOption="@newSupervisory">
+                                <MudRadio Option="@("Yes")" Color="Color.Secondary"><b>Yes</b></MudRadio>
+                                <MudRadio Option="@("No")" Color="Color.Secondary"><b>No</b></MudRadio>
+                            </MudRadioGroup>
+                        </div>
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Position Type</MudText>
                             <MudSelect @bind-Value="newPosType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
@@ -226,7 +233,8 @@
                         <MudDivider DividerType="DividerType.Middle" Class="my-6" />
                         @* Select Area *@
                         <div class="flex-grow-1">
-                            <MudSelect Label="Select Area" @bind-Value="selectedArea" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                            <MudText Typo="Typo.body2">Area</MudText>
+                            <MudSelect @bind-Value="selectedArea" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
                                 <MudSelectItem Disabled="true" Value="0">---Select Area---</MudSelectItem>
                                 @foreach (var areas in Areas)
                                 {
@@ -245,6 +253,13 @@
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Job Summary</MudText>
                             <MudTextField @bind-Value="newSummary" Variant="Variant.Outlined" Margin="Margin.Dense" Lines="3" Style="margin-bottom: 5px;" />
+                        </div>
+                        <div class="flex-grow-1 d-flex  align-items-center gap-3">
+                            <MudText Typo="Typo.body2">Supervisory</MudText>
+                            <MudRadioGroup @bind-SelectedOption="@newSupervisory">
+                                <MudRadio Option="@("Yes")" Color="Color.Secondary"><b>Yes</b></MudRadio>
+                                <MudRadio Option="@("No")" Color="Color.Secondary"><b>No</b></MudRadio>
+                            </MudRadioGroup>
                         </div>
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Position Type</MudText>
@@ -388,7 +403,9 @@
         </div>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Class="btnadd" @onclick="ConfirmCreatePositionAsync">Save</MudButton>
+        <div style="padding: 5px 13px 11px 13px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="ConfirmCreatePositionAsync">Save</button>
+        </div>
     </DialogActions>
 </MudDialog>

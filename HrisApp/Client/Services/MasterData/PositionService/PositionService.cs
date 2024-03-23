@@ -86,7 +86,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         }
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal)
+        public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory)
         {
             PositionT newPosition = new()
             {
@@ -106,6 +106,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 TemporaryDuration = tempDur,
                 Manpower = manpower,
                 PosMPExternalId = mpexternal,
+                Supervisory = supervisory
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
@@ -116,7 +117,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             }
         }
 
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory)
         {
             PositionT newPosition = new()
             {
@@ -137,6 +138,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 TemporaryDuration = tempDur,
                 Manpower = manpower,
                 PosMPExternalId = mpexternal,
+                Supervisory = supervisory
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreatePosition", newPosition);
@@ -411,7 +413,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             return result;
         }
 
-        public async Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid)
+        public async Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid, string reportingTo)
         {
             SubPositionT newPosition = new()
             {
@@ -422,7 +424,8 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 DivisionId = divid,
                 DepartmentId = depid,
                 SectionId = secid,
-                AreaId = areaid
+                AreaId = areaid,
+                ReportingTo = reportingTo
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreateSubPosition", newPosition);

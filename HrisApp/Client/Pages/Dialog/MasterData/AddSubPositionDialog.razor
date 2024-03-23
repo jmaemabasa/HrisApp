@@ -68,6 +68,21 @@
                                 <MudTextField @bind-Value="Roles_Code" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                             </div>
 
+                            <div class="flex-grow-1">
+                                <MudText Typo="Typo.body2">Reporting To</MudText>
+                                <MudSelect T="string" @bind-Value="@selecteReportTo" HelperText="Code / Description" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                    <MudSelectItem Disabled="true" Value="selecteReportToHolder">---Select---</MudSelectItem>
+                                    @foreach (var subPos in SubPositions.Where(subPos =>
+                                   {
+                                       var correspondingPosition = Positions.FirstOrDefault(pos => pos.PosCode == subPos.PosCode);
+                                       return correspondingPosition != null && correspondingPosition.Supervisory == "Yes";
+                                   }).Where(x => x.DivisionId == selectedDivision && x.DepartmentId == selectedDepartment && x.SectionId == selectedSection))
+                                    {
+                                        <MudSelectItem Value="@subPos.SubPosCode">@subPos.SubPosCode / @subPos.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </div>
+
                         }
                     }
                     else
@@ -86,6 +101,21 @@
                             <MudText Typo="Typo.body2">Code</MudText>
                             <MudTextField @bind-Value="Roles_Code" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                         </div>
+
+                        <div class="flex-grow-1">
+                            <MudText Typo="Typo.body2">Reporting To</MudText>
+                            <MudSelect T="string" @bind-Value="@selecteReportTo" HelperText="Code / Description" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                                <MudSelectItem Disabled="true" Value="selecteReportToHolder">---Select---</MudSelectItem>
+                                @foreach (var subPos in SubPositions.Where(subPos =>
+                                {
+                                    var correspondingPosition = Positions.FirstOrDefault(pos => pos.PosCode == subPos.PosCode);
+                                    return correspondingPosition != null && correspondingPosition.Supervisory == "Yes";
+                                }).Where(x => x.DivisionId == selectedDivision && x.DepartmentId == selectedDepartment))
+                                {
+                                    <MudSelectItem Value="@subPos.SubPosCode">@subPos.SubPosCode / @subPos.Description</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </div>
                     }
                 }
 
@@ -94,7 +124,9 @@
         </div>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Class="btnadd" @onclick="ConfirmCreatePositionAsync">Save</MudButton>
+        <div style="padding: 5px 13px 11px 13px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="ConfirmCreatePositionAsync">Save</button>
+        </div>
     </DialogActions>
 </MudDialog>

@@ -1,6 +1,5 @@
 ﻿using HrisApp.Shared.Models.Dashboard;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.MasterData
 {
@@ -128,6 +127,7 @@ namespace HrisApp.Server.Controllers.MasterData
             dbpos.TemporaryDuration = pos.TemporaryDuration;
             dbpos.PosMPExternalId = pos.PosMPExternalId;
             dbpos.Manpower = pos.Manpower;
+            dbpos.Supervisory = pos.Supervisory;
 
             await _context.SaveChangesAsync();
 
@@ -577,6 +577,7 @@ namespace HrisApp.Server.Controllers.MasterData
             dbpos.Status = pos.Status;
             dbpos.ActiveDate = pos.ActiveDate;
             dbpos.InActiveDate = pos.InActiveDate;
+            dbpos.ReportingTo = pos.ReportingTo;
 
             await _context.SaveChangesAsync();
 

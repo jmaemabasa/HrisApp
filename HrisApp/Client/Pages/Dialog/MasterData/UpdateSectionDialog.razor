@@ -3,7 +3,9 @@
         <MudTextField Label="Name" @bind-Value="section.Name" Variant="Variant.Outlined"></MudTextField>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="UpdateArea">Save</MudButton>
+        <div style="padding: 5px 13px 11px 13px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="UpdateArea">Save</button>
+        </div>
     </DialogActions>
 </MudDialog>

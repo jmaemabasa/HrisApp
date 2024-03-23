@@ -2,155 +2,165 @@
 
 @using ChartJs.Blazor.BarChart
 
-@attribute [Authorize(Roles = "CadAdmin, SysAdmin, HR, GenAdmin, User")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, HR, GenAdmin")]
 
 <PageTitle>Dashboard</PageTitle>
 
-@if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "SysAdmin" || GlobalConfigService.Role == "GenAdmin" || GlobalConfigService.Role == "CadAdmin")
-{
-    <MudGrid Spacing="4">
-        <MudItem xs="12" lg="9">
-            <MudGrid Spacing="4">
-                <MudItem xs="12">
-                    <MudCard Class="evalpanel">
-                        <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
-                            <div class="d-flex flex-column gap-2">
-                                <span style="font-size: 24px;font-family: 'Poppins', sans-serif;">Welcome, <b>@FULLNAME</b>!</span>
-                                <span style="font-size: 20px;font-family: 'Poppins', sans-serif;">You have @_countForEval employees pending for performance evaluation!</span>
-                            </div>
-                            <div class="">
-                                <MudButton id="evalpanelbtn" OnClick="NavForEval" Class="btnadd">Check Now</MudButton>
-                            </div>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem xs="12" sm="3">
-                    <TopCards title="Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 4.5rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
-                </MudItem>
-                <MudItem xs="12" sm="3">
-                    <TopCards title="Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 4.5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
-                </MudItem>
-                <MudItem xs="12" sm="3">
-                    <TopCards title="Required Manpower" value="@_totalPlantilla.ToString()" icon="@Icons.Material.TwoTone.Group" iconColor="font-size: 4.5rem; color: #9A98E3" OnCardClick=@(()=>NavIconBtns("totalPlantilla")) OnIconClick=@(()=>NavIconBtns("totalPlantilla")) />
-                </MudItem>
-                <MudItem xs="12" sm="3">
-                    <TopCards title="Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 4.5rem; color: #E97777" OnCardClick=@(()=>NavIconBtns("vacancy")) OnIconClick=@(()=>NavIconBtns("vacancy")) />
-                </MudItem>
-            </MudGrid>
+<MudGrid Spacing="4">
+    <MudItem xs="12" lg="9">
+        <MudGrid Spacing="4">
+            <MudItem xs="12">
+                <MudCard Class="evalpanel">
+                    <MudCardContent Class="d-flex h-100 flex-column justify-content-between flex-grow-1">
+                        <div class="d-flex flex-column gap-2">
+                            <span style="font-size: 24px;font-family: 'Poppins', sans-serif;">@GetGreeting(), <b>@FULLNAME</b>!</span>
+                            <span style="font-size: 20px;font-family: 'Poppins', sans-serif;">You have @_countForEval employees pending for performance evaluation!</span>
+                        </div>
+                        <div class="">
+                            <MudButton id="evalpanelbtn" OnClick="NavForEval" Class="btnadd">Check Now</MudButton>
+                        </div>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <TopCards title="Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 4.5rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <TopCards title="Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 4.5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <TopCards title="Required Manpower" value="@_totalPlantilla.ToString()" icon="@Icons.Material.TwoTone.Group" iconColor="font-size: 4.5rem; color: #9A98E3" OnCardClick=@(()=>NavIconBtns("totalPlantilla")) OnIconClick=@(()=>NavIconBtns("totalPlantilla")) />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <TopCards title="Vacancies as of Today" value="@_totalVacancy.ToString()" icon="@Icons.Material.TwoTone.RunningWithErrors" iconColor="font-size: 4.5rem; color: #E97777" OnCardClick=@(()=>NavIconBtns("vacancy")) OnIconClick=@(()=>NavIconBtns("vacancy")) />
+            </MudItem>
+        </MudGrid>
 
-        </MudItem>
-        <MudItem xs="12" lg="3">
-            <MudCard Class="bdaypanel">
-                <MudCarousel Class="mud-width-full" Style="height:100%;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object" ArrowsPosition="MudBlazor.Position.Bottom">
-                    <MudCarouselItem Transition="Transition.Slide">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                    <span class="bdaytitle"><strong>Birthdays</strong></span>
-                                    <MudMenu FullWidth="true" ActivationEvent="@MouseEvent.LeftClick">
-                                        <ActivatorContent>
-                                            <MudChip Variant="Variant.Outlined" Color="Color.Dark" Style="width: 130px">@cmbBdyTitle <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown" Style="font-size: 1.3em; margin-left: 5px;" /></MudChip>
-                                        </ActivatorContent>
-                                        <ChildContent>
-                                            <MudMenuItem OnTouch="BdayThisMonth" OnClick="BdayThisMonth">This Month</MudMenuItem>
-                                            <MudMenuItem OnTouch="BdayThisDay" OnClick="BdayThisDay">Today</MudMenuItem>
-                                        </ChildContent>
-                                    </MudMenu>
-                                </div>
+    </MudItem>
+    <MudItem xs="12" lg="3">
+        <MudCard Class="bdaypanel">
+            <MudCarousel Class="mud-width-full" Style="height:100%;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object" ArrowsPosition="MudBlazor.Position.Bottom">
+                <MudCarouselItem Transition="Transition.Slide">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                <span class="bdaytitle"><strong>Birthdays</strong></span>
+                                @* <MudMenu FullWidth="true" ActivationEvent="@MouseEvent.LeftClick">
+                                    <ActivatorContent>
+                                        <MudChip Variant="Variant.Outlined" Color="Color.Dark" Style="width: 130px">@cmbBdyTitle <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown" Style="font-size: 1.3em; margin-left: 5px;" /></MudChip>
+                                    </ActivatorContent>
+                                    <ChildContent>
+                                        <MudMenuItem OnTouch="BdayThisMonth" OnClick="BdayThisMonth">This Month</MudMenuItem>
+                                        <MudMenuItem OnTouch="BdayThisDay" OnClick="BdayThisDay">Today</MudMenuItem>
+                                    </ChildContent>
+                                </MudMenu> *@
+                                <MudChip Variant="Variant.Outlined" Color="Color.Dark" Style="width: 130px">@cmbBdyTitle </MudChip>
                             </div>
-                            <div class="col-12">
-                                <div class="d-flex flex-column divlistbday">
-                                    @foreach (var item in employeeBdayL)
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex flex-column divlistbday">
+                                @{
+                                    var todayBirthdays = employeeBdayL.Where(e => e.Birthdate.Month == DateTime.Today.Month && e.Birthdate.Day == DateTime.Today.Day).ToList();
+                                    var upcomingBirthdays = employeeBdayL.Where(e => e.Birthdate.Month > DateTime.Today.Month || (e.Birthdate.Month == DateTime.Today.Month && e.Birthdate.Day > DateTime.Today.Day)).ToList();
+                                    var passedBirthdays = employeeBdayL.Where(e => e.Birthdate.Month < DateTime.Today.Month || (e.Birthdate.Month == DateTime.Today.Month && e.Birthdate.Day < DateTime.Today.Day)).ToList();
+
+                                }
+
+                                @foreach (var item in todayBirthdays.Concat(upcomingBirthdays).Concat(passedBirthdays))
+                                {
+                                    if (item.Birthdate.Month == DateTime.Today.Month && item.Birthdate.Day == DateTime.Today.Day)
                                     {
-                                        <div class="d-flex justify-content-between" style="margin-bottom:15px;">
+                                        // Birthday is today
+                                        <div class="bdaytoday d-flex justify-content-between">
                                             <EmployeeBdyComponent verify="@item.Verify_Id" />
                                             <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
                                         </div>
                                     }
-                                </div>
-                            </div>
-                        </div>
-                    </MudCarouselItem>
-                    <MudCarouselItem Transition="Transition.Slide">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center  flex-wrap">
-                                    <a href="/announcement" class="bdaytitle announceHeader"><strong>Announcements</strong></a>
-                                    <MudIcon Icon="@Icons.Material.Rounded.Comment" Size="Size.Large"></MudIcon>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="d-flex flex-column divlistbday">
-                                    @foreach (var item in announceL)
+                                    else if (item.Birthdate.Month > DateTime.Today.Month || (item.Birthdate.Month == DateTime.Today.Month && item.Birthdate.Day > DateTime.Today.Day))
                                     {
-                                        <div class="d-flex mb-2 align-items-baseline announceRow">
-                                            <div class="col-2 border  border-2 border-top-0 border-start-0 border-bottom-0 me-4">
-                                                @if (item.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
-                                                {
-                                                    <div class="d-flex flex-column">
-                                                        <span class="announceDate">Today</span>
-                                                        <span class="announceDate">@item.DateStart?.ToString("HH:mm")</span>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="d-flex flex-column">
-                                                        <span class="announceDate">@item.DateStart?.ToString("MMM dd")</span>
-                                                        <span class="announceDate">@item.DateStart?.ToString("yyyy")</span>
-                                                    </div>
-                                                }
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <div class="d-flex flex-column">
-                                                    <span class="announceTitle">@item.Ann_Title</span>
-                                                    <span class="announceDesc">@(item.Ann_Desc.Length > 50 ? @item.Ann_Desc.Substring(0, 50) + "..." : @item.Ann_Desc)</span>
-                                                </div>
-                                            </div>
+                                        // Birthday is upcoming
+                                        <div class="bdayupcoming d-flex justify-content-between">
+                                            <EmployeeBdyComponent verify="@item.Verify_Id" />
+                                            <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
                                         </div>
                                     }
-                                </div>
+                                    else
+                                    {
+                                        // Birthday has already passed
+                                        <div class="bdaypassed d-flex justify-content-between">
+                                            <EmployeeBdyComponent verify="@item.Verify_Id" />
+                                            <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
+                                        </div>
+                                    }
+                                }
                             </div>
                         </div>
-                    </MudCarouselItem>
-                </MudCarousel>
-            </MudCard>
-        </MudItem>
-
-        <MudItem xs="12" lg="8">
-            <MudCard Class="bargraph">
-                <MudCardContent Style="">
-                    <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Headcount vs Plantilla</span>
-                    <div class="divbarchart" style="margin-top: 10px">
-                        <Chart Config="_lineconfig"></Chart>
                     </div>
-                </MudCardContent>
-            </MudCard>
-        </MudItem>
-
-        <MudItem xs="12" lg="4">
-            <MudCard Class="bargraph">
-                <MudCardContent Style="">
-                    <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Count by Division</span>
-                    <div class="divbarchart" style="margin-top: 10px">
-                        <Chart Config="_configPie"></Chart>
+                </MudCarouselItem>
+                <MudCarouselItem Transition="Transition.Slide">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center  flex-wrap">
+                                <a href="/announcement" class="bdaytitle announceHeader"><strong>Announcements</strong></a>
+                                <MudIcon Icon="@Icons.Material.Rounded.Comment" Size="Size.Large"></MudIcon>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex flex-column divlistbday">
+                                @foreach (var item in announceL)
+                                {
+                                    <div class="d-flex mb-2 align-items-baseline announceRow" @onclick="(() => OpenViewAnnoun(item.Id))">
+                                        <div class="col-2 border  border-2 border-top-0 border-start-0 border-bottom-0 me-4">
+                                            @if (item.DateStart?.ToString("MM/dd/yyyy") == (DateTime.Now.ToString("MM/dd/yyyy")))
+                                            {
+                                                <div class="d-flex flex-column">
+                                                    <span class="announceDate">Today</span>
+                                                    <span class="announceDate">@item.DateStart?.ToString("HH:mm")</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="d-flex flex-column">
+                                                    <span class="announceDate">@item.DateStart?.ToString("MMM dd")</span>
+                                                    <span class="announceDate">@item.DateStart?.ToString("yyyy")</span>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex flex-column">
+                                                <span class="announceTitle">@item.Ann_Title</span>
+                                                <span class="announceDesc">@(item.Ann_Desc.Length > 50 ? @item.Ann_Desc.Substring(0, 50) + "..." : @item.Ann_Desc)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
-                </MudCardContent>
-            </MudCard>
-        </MudItem>
-    </MudGrid>
-}
-else
-{
-    @* <div class="progress-bar sl" style="--sl: @availableLeavetext">
-        <progress value="@availableLeave" min="0" max="@totalLeave" style="visibility:hidden;height:0;width:0;"></progress>
-        <div class="progress-text"><span class="progress-title">Available</span> <br> <span class="progress-count">@availableLeave</span><span class="progress-total">/@totalLeave</span></div>
-    </div> *@
-    <AuthorizeView Roles="User">
-        <Authorized>
-            <UserDashboard />
-        </Authorized>
-    </AuthorizeView>
-                            
+                </MudCarouselItem>
+            </MudCarousel>
+        </MudCard>
+    </MudItem>
 
-}
+    <MudItem xs="12" lg="8">
+        <MudCard Class="bargraph">
+            <MudCardContent Style="">
+                <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Headcount vs Plantilla</span>
+                <div class="divbarchart" style="margin-top: 10px">
+                    <Chart Config="_lineconfig"></Chart>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
+    <MudItem xs="12" lg="4">
+        <MudCard Class="bargraph">
+            <MudCardContent Style="">
+                <span style="color: #424242;font-size: 16px;font-weight: bold;">Employee Count by Division</span>
+                <div class="divbarchart" style="margin-top: 10px">
+                    <Chart Config="_configPie"></Chart>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>

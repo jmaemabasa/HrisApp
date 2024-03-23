@@ -1,0 +1,76 @@
+﻿<div class="d-flex flex-row align-items-center gap-3">
+    <div class="d-flex align-items-center">
+        <MudAvatar Rounded="true">
+            @* <MudImage Src="@ImageData"></MudImage> *@
+            <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
+        </MudAvatar>
+    </div>
+    <div>
+        <div class="flex-column">
+            <div>
+                @if (assettype == "main")
+                {
+                    <b>@asset.AssetCode</b>
+                }
+                else
+                {
+                    <b>@assetacc.AssetCode</b>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    #nullable disable
+    [Parameter]public string assetcode { get; set; }
+    [Parameter]public string assettype { get; set; }
+
+    AssetMasterT asset = new();
+    AssetAccessoryT assetacc = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (assettype == "main")
+            {
+                asset = await AssetMasterService.GetSingleObjByCode(assetcode);
+                await LoadAssImg(assetcode);//image
+            }
+            else
+            {
+                assetacc = await AssetAccService.GetSingleObjByCode(assetcode);
+                await LoadAssAccImg(assetcode);//image
+            }
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/asset-holder.jpg");
+        }
+    }
+
+    private string ImageData;
+
+    private async Task LoadAssImg(string verifyCode)
+    {
+        var imagemodel = await AssetImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+            // Console.WriteLine($"2nd Test: {verifyCode}");
+        }
+    }
+
+    private async Task LoadAssAccImg(string verifyCode)
+    {
+        var imagemodel = await AssAccImgSvc.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+            // Console.WriteLine($"2nd Test: {verifyCode}");
+        }
+    }
+}

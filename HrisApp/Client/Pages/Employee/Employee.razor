@@ -1,13 +1,13 @@
 ﻿@page "/employee"
 @inject DTOEmployeeExport _crrExport
 
-@attribute [Authorize(Roles = "CadAdmin, SuperAdmin, SysAdmin, GenAdmin, HR, Technical")]
+@attribute [Authorize(Roles = RolesHelper.EmployeePg)]
 
 <PageTitle>Employee Management</PageTitle>
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242; font-family: 'Poppins', sans-serif;">Employee List</span>
-        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
+        <AuthorizeView Roles= "CadAdmin, SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
                     <button class="Btn" @onclick="OnExporttoExcel">
@@ -67,6 +67,42 @@
                             </ChildContent>
                         </MudMenu>
                     </div>
+                    <div>
+                        @if (CmbDivText == "All Division")
+                        {
+                            <MudMenu PopoverClass="popMenu" MaxHeight="300" FullWidth="true" Dense="true">
+                                <ActivatorContent>
+                                    <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDeptText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                                </ActivatorContent>
+                                <ChildContent>
+                                    <MudMenuItem OnTouch="@(() => CmbDepartment(0))" OnClick="@(() => CmbDepartment(0))">All Department</MudMenuItem>
+                                    @foreach (var item in DepartmentsL)
+                                    {
+                                        <MudMenuItem OnTouch="@(() => CmbDepartment(item.Id))" OnClick="@(() => CmbDepartment(item.Id))">@item.Name</MudMenuItem>
+                                    }
+                                </ChildContent>
+                            </MudMenu>
+                        }
+                        else
+                        {
+                            <MudMenu PopoverClass="popMenu" MaxHeight="300" FullWidth="true" Dense="true">
+                                <ActivatorContent>
+                                    <div class="d-flex justify-content-between cmbDivisionFilter"><div class="cdivtext">@CmbDeptText</div><MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowDown"></MudIcon></div>
+                                </ActivatorContent>
+                                <ChildContent>
+                                    <MudMenuItem OnTouch="@(() => CmbDepartment(0))" OnClick="@(() => CmbDepartment(0))">All Department</MudMenuItem>
+                                    @{
+                                        var divid = DivisionsL.Where(e => e.Name == CmbDivText).FirstOrDefault().Id;
+                                    }
+                                    @foreach (var item in DepartmentsL.Where(e => e.DivisionId == divid))
+                                    {
+                                        <MudMenuItem OnTouch="@(() => CmbDepartment(item.Id))" OnClick="@(() => CmbDepartment(item.Id))">@item.Name</MudMenuItem>
+                                    }
+                                </ChildContent>
+                            </MudMenu>
+                        }
+
+                    </div>
                     <MudSpacer />
                     <div>
                         <MudMenu PopoverClass="popMenu" IsOpenChanged="@ToggleOpenMenu" FullWidth="true" Dense="true">
@@ -123,7 +159,7 @@
     else
     {
         <div style="height: calc(100% - 64px)">
-            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="@_employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1" Virtualize="true">
+            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="@_employeeList" Context="employeeee" Virtualize="false" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1">
                 <HeaderContent>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
@@ -184,7 +220,7 @@
                         <MudChip Class="@StatusChipColor(employeeee.Status?.Name!)">@employeeee.Status?.Name</MudChip>
                     </MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR, Technical">
+                        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
                             <Authorized>
                                 <MudTooltip Text="View Details">
                                     <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
@@ -197,7 +233,7 @@
                     </MudTd>
                 </RowTemplate>
                 <PagerContent>
-                    <MudTablePager PageSizeOptions="new int[] { 9, 25, int.MaxValue }" InfoFormat="@($"Right {@_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                    <MudTablePager PageSizeOptions="new int[] { 9, 25, 50 }" InfoFormat="@($"Right {@_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
                 </PagerContent>
             </MudTable>
 

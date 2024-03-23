@@ -7,6 +7,7 @@
         Task<List<AssetMasterT>> GetObjList();
 
         Task<AssetMasterT> GetSingleObj(int id);
+        Task<AssetMasterT> GetSingleObjByCode(string code);
 
         Task GetObj();
 

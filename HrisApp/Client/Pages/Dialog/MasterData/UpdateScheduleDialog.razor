@@ -5,7 +5,9 @@
         <MudTextField Label="Time-out" InputType="InputType.Time" @bind-Value="schedule.TimeOut" Variant="Variant.Outlined" />
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="UpdateArea">Save</MudButton>
+        <div style="padding: 5px 13px 11px 13px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="UpdateArea">Save</button>
+        </div>
     </DialogActions>
 </MudDialog>

@@ -4,52 +4,52 @@
 
 <style>
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
-                    background: #e9ecef;
-                    border: none;
-                    box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-                    border-radius: 20px;
-                    height: 95vh;
-                    left: 15px;
-                    top: 15px;
-                }*/
+                        background: #e9ecef;
+                        border: none;
+                        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                        border-radius: 20px;
+                        height: 95vh;
+                        left: 15px;
+                        top: 15px;
+                    }*/
 
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
-                    background: #e9ecef;
-                    border: none;
-                    box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-                    border-radius: 20px;
-                    height: 95vh;
-                    left: 15px;
-                    top: 15px;
-                    width: 4rem;
-                }*/
+                        background: #e9ecef;
+                        border: none;
+                        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                        border-radius: 20px;
+                        height: 95vh;
+                        left: 15px;
+                        top: 15px;
+                        width: 4rem;
+                    }*/
 
     /* .mud-container.mud-container-maxwidth-xxl {
-                    padding-left: 60px;
-                    padding-right: 35px;
-                    margin-top: 15px;
-                }
+                        padding-left: 60px;
+                        padding-right: 35px;
+                        margin-top: 15px;
+                    }
 
-                .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
-                    left: 15px;
-                    margin-bottom: 25px;
-                }
+                    .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
+                        left: 15px;
+                        margin-bottom: 25px;
+                    }
 
-                .mud-appbar .mud-toolbar-appbar {
-                    padding: 0px !important;
-                    align-items: center;
-                    width: calc(100% - 80px) !important;
-                    padding-left: 26px !important;
-                    padding-top: 15px !important;
-                }
+                    .mud-appbar .mud-toolbar-appbar {
+                        padding: 0px !important;
+                        align-items: center;
+                        width: calc(100% - 80px) !important;
+                        padding-left: 26px !important;
+                        padding-top: 15px !important;
+                    }
 
-                .btnburger {
-                    border: none;
-                    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-                    border-radius: 50%;
-                    transition: all .5s ease;
-                    height: 40px;
-                } */
+                    .btnburger {
+                        border: none;
+                        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+                        border-radius: 50%;
+                        transition: all .5s ease;
+                        height: 40px;
+                    } */
 </style>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
@@ -173,7 +173,6 @@
             </MudMenu>
             @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
             {
-                @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
                 <MudMenu Class="btnburger" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                     <ActivatorContent>
                         <MudTooltip Text="Account">
@@ -190,7 +189,6 @@
             }
             else
             {
-                @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
                 <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                     <ActivatorContent>
                         <MudTooltip Text="Account">
@@ -209,7 +207,6 @@
             }
         </MudAppBar>
     </MudHidden>
-
     <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
         <MudAppBar Elevation="0" Style="left: 0; width: auto;">
             <div class="d-flex flex-grow-1 justify-content-between">
@@ -218,7 +215,6 @@
 
                 @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
                 {
-                    @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
                     <MudMenu Class="btnburger" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                         <ActivatorContent>
                             <MudAvatar>
@@ -233,7 +229,6 @@
                 }
                 else
                 {
-                    @* <MudText Class="fullnameappbar" Style="font-family: 'Poppins', sans-serif !important;margin-right: 8px;font-size: 14px;color: #6A707D;">@FULLNAME</MudText> *@
                     <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                         <ActivatorContent>
                             <MudAvatar>
@@ -274,9 +269,10 @@
             @if (!string.IsNullOrEmpty(GlobalConfigService.Role))
             {
                 <NavMenu />
-            }else
+            }
+            else
             {
-                <SANavMenu />
+                <HrisApp.Client.Shared.NavMenus.SANavMenu />
             }
         </MudDrawer>
     </MudHidden>
@@ -297,7 +293,6 @@
             </MudContainer>
         </MudMainContent>
     </MudHidden>
-
     <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
         <MudMainContent>
             <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Style="padding-right: 15px; padding-left: 15px">
@@ -310,7 +305,7 @@
 <BlazoredToasts Position="ToastPosition.BottomRight" Timeout="5" IconType="IconType.FontAwesome" SuccessClass="success-toast-override" SuccessIcon="fa fa-thumbs-up" ErrorIcon="fa fa-bug"  ShowProgressBar="true" />
 
 @code {
-    bool _drawerOpen = false;
+    bool _drawerOpen = true;
 
     void DrawerToggle()
     {
@@ -344,43 +339,49 @@
     private int badgeCount = 0;
     private int countSnack = 0;
 
+    [CascadingParameter]
+    public Task<AuthenticationState> authstate { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
-        // await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
+        // await jsRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
         try
         {
             await Task.Delay(1);
-            VERIFY = GlobalConfigService.VerifyId;
-            USERNAME = GlobalConfigService.Username;
-            FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
 
-            await EmployeeService.GetEmployee();
-            EmployeeList = EmployeeService.EmployeeTs;
-
-
-            Userrole = GlobalConfigService.Role;
-
-            if (Userrole == "System Administrator" || Userrole == "HR")
+            if (Userrole == "SysAdmin" || Userrole == "HR" || Userrole == "CadAdmin")
             {
                 timer = new Timer();
                 timer.Interval = 3000;
                 timer.Elapsed += OnTimerElapsed!;
                 timer.Enabled = true;
             }
-
-            try
-            {
-                await EmployeeImg(VERIFY);//image
-            }
-            catch (Exception)
-            {
-                ImageData = string.Format("images/imgholder.jpg");
-            }
-
         }
         catch (Exception)
         {
+        }
+    }
+
+    private async Task OnRefreshPage()
+    {
+        await Task.Delay(1);
+        VERIFY = GlobalConfigService.VerifyId;
+        USERNAME = GlobalConfigService.Username;
+        FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
+
+        await EmployeeService.GetEmployee();
+        EmployeeList = EmployeeService.EmployeeTs;
+
+
+        Userrole = GlobalConfigService.Role;
+        try
+        {
+            await EmployeeImg(VERIFY);//image
+        }
+        catch (Exception)
+        {
+            ImageData = string.Format("images/imgholder.jpg");
         }
     }
 
@@ -420,27 +421,40 @@
     // [JSInvokable]
     public async Task Logout()
     {
-        try
+        var _auth = await authstate;
+        if (_auth.User.Identity!.IsAuthenticated)
         {
-            if (string.IsNullOrEmpty(GlobalConfigService.Role))
-            {
-                NavigationManager.NavigateTo("/");
-            }else
-            {
-                var id = Convert.ToInt32(GlobalConfigService.User_Id);
-                await AuthService.UpdateLoginStatus(id);
-                await LocalStorage.RemoveItemAsync("token");
-                await AuthStateProvider.GetAuthenticationStateAsync();
-
-                NavigationManager.NavigateTo("/");
-            }
-        }
-        catch (Exception ex)
-        {
-            _toastService.ShowError(ex.Message);
-            return;
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+            await AuthService.UpdateLoginStatus(id);
+            await LocalStorage.RemoveItemAsync("token");
+            await AuthStateProvider.GetAuthenticationStateAsync();
+            NavigationManager.NavigateTo("/", true);
         }
     }
+
+    // public async Task Logout()
+    // {
+    //     try
+    //     {
+    //         if (string.IsNullOrEmpty(GlobalConfigService.Role))
+    //         {
+    //             NavigationManager.NavigateTo("/");
+    //         }else
+    //         {
+    //             var id = Convert.ToInt32(GlobalConfigService.User_Id);
+    //             await AuthService.UpdateLoginStatus(id);
+    //             await LocalStorage.RemoveItemAsync("token");
+    //             await AuthStateProvider.GetAuthenticationStateAsync();
+
+    //             NavigationManager.NavigateTo("/");
+    //         }
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _toastService.ShowError(ex.Message);
+    //         return;
+    //     }
+    // }
 
     private void OpenChangePass()
     {
@@ -505,6 +519,7 @@
     #region NOTIF ADMIN
     private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
     {
+        await OnRefreshPage();
         await LeaveHistoryService.GetLeaveHistory();
         badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
 

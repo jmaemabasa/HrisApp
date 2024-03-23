@@ -56,7 +56,7 @@
                     }
                 </MudTd>
                 <MudTd DataLabel="">@user.Username</MudTd>
-                <MudTd DataLabel="">@user.Role</MudTd>
+                <MudTd DataLabel="">@rolesList.Where(r => r.RoleCode == user.Role).FirstOrDefault().Name</MudTd>
                 <MudTd DataLabel="">
                     @foreach (var emp in employeeList)
                     {

@@ -33,8 +33,10 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" @onclick="ConfirmCreateSectionAsync">Save</MudButton>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <div style="padding: 5px 13px 11px 13px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="ConfirmCreateSectionAsync">Save</button>
+        </div>
     </DialogActions>
 </MudDialog>
 

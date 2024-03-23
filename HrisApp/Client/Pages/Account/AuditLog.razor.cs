@@ -5,6 +5,7 @@
         public List<EmployeeT> employeeList = new();
         public List<UserMasterT> userList = new();
         public List<AuditlogsT> logsList = new();
+        private List<UserRoleT> rolesList = new();
 
         public string infoFormat = "{first_item}-{last_item} of {all_items}";
         public string searchString1 = "";
@@ -18,6 +19,10 @@
         protected override async Task OnInitializedAsync()
         {
             await Task.Delay(500);
+
+            await UserRoleService.GetUserRole();
+            rolesList = UserRoleService.UserRoleTs;
+
             await AuditlogService.GetLogs();
             logsList = AuditlogService.AuditlogsTs
                 .Where(log => log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
@@ -68,9 +73,9 @@
 
         public string GetRole(int employeeId)
         {
-            // Logic to get the user name based on the employee ID
             var role = userList.FirstOrDefault(e => e.EmployeeId == employeeId);
-            return role != null ? $"{role.Role}" : "";
+            var rerole = rolesList.Where(r => r.RoleCode == role?.Role).FirstOrDefault()!.Name;
+            return rerole;
         }
 
         public string ActionColor(string action)

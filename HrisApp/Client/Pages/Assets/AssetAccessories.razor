@@ -82,17 +82,19 @@
             <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="AssetAccessList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AssetAccessoryT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
                 <HeaderContent>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Asset Code</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Category</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Sub Category</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Model</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Category</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Serial</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd DataLabel=""><b>@obj.AssetCode</b></MudTd>
-                    <MudTd DataLabel="">@obj.Category?.ACat_Name</MudTd>
-                    <MudTd DataLabel="">@obj.SubCategory?.ASubCat_Name</MudTd>
+                    <MudTd DataLabel="">
+                        <AssetImgandName assetcode="@obj.AssetCode" assettype="Acc"/>
+                    </MudTd>                   
                     <MudTd DataLabel="">@obj.Model</MudTd>
+                    <MudTd DataLabel="">@obj.Category?.ACat_Name</MudTd>
+                    <MudTd DataLabel="">@obj.Serial</MudTd>
                     @if (obj.AssetStatusId == 2)
                     {
                         <MudTd Style="color: gray;font-weight: 500">@obj.AssetStatus?.Name</MudTd>

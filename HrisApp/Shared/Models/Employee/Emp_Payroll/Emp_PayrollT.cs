@@ -14,6 +14,7 @@ namespace HrisApp.Shared.Models.Emp_Payroll
         public string Verify_Id { get; set; } = string.Empty;
 
         //[RegularExpression("^[0-9]{1,12}$", ErrorMessage = "Value must be digits only")]
+        [Required]
         public string Rate { get; set; } = string.Empty;
 
         public RateTypeT? RateType { get; set; }

@@ -11,10 +11,14 @@
         private int selectedSection = 0;
         private int selectedArea = 0;
 
+        private string selecteReportToHolder = "Null";
+        private string selecteReportTo;
+
         private List<DepartmentT> Department = new();
         private List<DivisionT> Division = new();
         private List<SectionT> Sections = new();
         private List<PositionT> Positions = new();
+        private List<SubPositionT> SubPositions = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -29,6 +33,11 @@
 
             await PositionService.GetPosition();
             Positions = PositionService.PositionTs;
+            
+            await PositionService.GetSubPosition();
+            SubPositions = PositionService.SubPositionTs;
+
+            selecteReportTo = selecteReportToHolder;
         }
 
         private void Cancel() => MudDialog.Cancel();
@@ -50,7 +59,9 @@
             else
             {
                 MudDialog.Close();
-                await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Inactive", selectedDivision, selectedDepartment, selectedSection, selectedArea);
+                if (selecteReportTo == "Null")
+                    selecteReportTo = "";
+                await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Inactive", selectedDivision, selectedDepartment, selectedSection, selectedArea, selecteReportTo);
 
                 _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
                 if (!string.IsNullOrEmpty(GlobalConfigService.Role))
@@ -69,7 +80,6 @@
 
         private async Task OnGenerateCode()
         {
-            await Task.Delay(10);
             string _rolesCode = string.Empty;
             var selectedposcode = Positions.Where(x => x.Id == selectedPos).Select(x => x.PosCode).FirstOrDefault();
             int _existCount = await PositionService.GetExistingSubPos(selectedposcode);

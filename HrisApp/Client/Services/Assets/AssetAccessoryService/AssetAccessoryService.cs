@@ -29,6 +29,16 @@
             }
             throw new Exception("employee not found");
         }
+        
+        public async Task<AssetAccessoryT> GetSingleObjByCode(string code)
+        {
+            var result = await _httpClient.GetFromJsonAsync<AssetAccessoryT>($"api/AssetAccess/GetSingleObjByCode?code={code}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
 
         public async Task GetObj()
         {

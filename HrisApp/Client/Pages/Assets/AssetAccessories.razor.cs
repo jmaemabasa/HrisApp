@@ -141,21 +141,21 @@ namespace HrisApp.Client.Pages.Assets
         private string searchString1 = "";
         private AssetAccessoryT selectedItem1 = null;
 
-        private bool FilterFunc1(AssetAccessoryT area) => FilterFunc(area, searchString1);
+        private bool FilterFunc1(AssetAccessoryT obj) => FilterFunc(obj, searchString1);
 
-        private bool FilterFunc(AssetAccessoryT area, string searchString)
+        private bool FilterFunc(AssetAccessoryT obj, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (area.Brand.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.AssetCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.Model.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.Model.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.SubCategory.ASubCat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.Serial.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.AssetCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.Category.ACat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (area.AssetStatus.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (obj.AssetStatus.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }

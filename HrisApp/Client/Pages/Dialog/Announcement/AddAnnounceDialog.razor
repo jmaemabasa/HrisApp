@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Description</MudText>
-                    <MudTextField @bind-Value="obj.Ann_Desc" For="@(() => obj.Ann_Desc)" Lines="5" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    <MudTextField @bind-Value="obj.Ann_Desc" For="@(() => obj.Ann_Desc)" Lines="15" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Start Date</MudText>
@@ -20,9 +20,9 @@
                     <MudDatePicker @bind-Date="obj.DateEnd" For="@(() => obj.DateEnd)" Placeholder="Enter Date" Editable="true" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 10px;" />
                 </div>
 
-                <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
-                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary">Save</MudButton>
-                    <MudButton OnClick="Cancel">Cancel</MudButton>
+                <div class="d-flex justify-content-end align-items-center gap-2 mt-4 mb-3">
+                    <MudButton Class="btn btncancel" OnClick="Cancel">Cancel</MudButton>
+                    <MudButton Class="btn btnsave" ButtonType="ButtonType.Submit">Save</MudButton>
                 </div>
             </div>
         </EditForm>
@@ -59,6 +59,18 @@
         await AnnouncementService.CreateAnnouncement(obj);
 
         MudDialog.Close();
-        StateService.SetState("AnnouncementList", await AnnouncementService.GetAnnouncementList());
+        await AnnouncementService.GetAnnouncement();
+        var _announceList = AnnouncementService.AnnouncementTs.OrderBy(a => a.DateStart).ToList();
+
+        // Then, reorder announcements based on their date ranges
+        var currentTime = DateTime.Now;
+
+        var currentAnnouncements = _announceList.Where(a => a.DateStart <= currentTime && a.DateEnd >= currentTime).ToList();
+        var upcomingAnnouncements = _announceList.Where(a => a.DateStart > currentTime).ToList();
+        var pastAnnouncements = _announceList.Where(a => a.DateEnd < currentTime).ToList();
+
+        // Concatenate the sorted announcement lists
+        _announceList = currentAnnouncements.Concat(upcomingAnnouncements).Concat(pastAnnouncements).ToList();
+        StateService.SetState("AnnouncementList", _announceList);
     }
 }

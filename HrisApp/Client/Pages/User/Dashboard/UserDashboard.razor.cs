@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.User.Dashboard
+﻿using HrisApp.Client.Pages.Dialog.Announcement;
+
+namespace HrisApp.Client.Pages.User.Dashboard
 {
 #nullable disable
 
@@ -15,6 +17,7 @@
         private double countSl, countEl, countMl, countPl, countVl, countOl;
 
         private Emp_LeaveCreditT empLeaveCred = new();
+        private List<AnnouncementT> announceL = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -25,6 +28,9 @@
             VERIFY = GlobalConfigService.VerifyId;
             empLeaveCred = await LeaveCredService.GetSingleLeaveCredByVerId(VERIFY);
             await SetValues();
+
+            announceL = await AnnouncementService.GetFilteredAnnouncementList();
+
         }
 
         private async Task SetValues()
@@ -42,6 +48,37 @@
             availableLeavetextPL = (((Convert.ToDouble(empLeaveCred.PL) - countPl) / Convert.ToDouble(empLeaveCred.PL)) * 100).ToString() + "%";
             availableLeavetextVL = (((Convert.ToDouble(empLeaveCred.VL) - countVl) / Convert.ToDouble(empLeaveCred.VL)) * 100).ToString() + "%";
             availableLeavetextOL = (((Convert.ToDouble(empLeaveCred.OL) - countOl) / Convert.ToDouble(empLeaveCred.OL)) * 100).ToString() + "%";
+        }
+
+        private void OpenViewAnnoun(int id)
+        {
+            var parameters = new DialogParameters<UpdateAnnounceDialog>
+            {
+                { x => x.Id, id },
+                { x => x.FromPage, "Dashboard" }
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+            DialogService.Show<UpdateAnnounceDialog>("", parameters, options);
+        }
+
+        private static string GetGreeting()
+        {
+            var currentTime = DateTime.Now;
+            var currentHour = currentTime.Hour;
+
+            if (currentHour < 12)
+            {
+                return "Good morning";
+            }
+            else if (currentHour < 18)
+            {
+                return "Good afternoon";
+            }
+            else
+            {
+                return "Good evening";
+            }
         }
     }
 }

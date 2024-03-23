@@ -53,8 +53,11 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         {
             try
             {
+                obj.CreatedById = Int32.Parse(GlobalConfigService.User_Id);
                 await AssetMasterService.CreateObj(obj);
                 await OnsavingImg(obj.CategoryId, obj.SubCategoryId, obj.JMCode, "First image uploaded.");
+                await SaveAlLRemarks(obj.AssetCode);
+
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
@@ -70,6 +73,60 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
                 Console.WriteLine(ex.Message);
             }
         }
+
+
+        #region REMARKS
+        private string newRemark = "";
+        public List<MainRemarksT> listOfNewRemarks = new();
+
+        public void AddNewRemark(string code, string remark)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newRemark))
+                listOfNewRemarks.Add(new MainRemarksT { MainAssetCode = code, Remark = remark, VerifyId = verifyCode });
+            newRemark = "";
+        }
+
+        public void CloseRemark(MudChip chip)
+        {
+            var remarkToRemove = listOfNewRemarks.FirstOrDefault(item => item.Remark == chip.Text);
+
+            if (remarkToRemove != null)
+            {
+                listOfNewRemarks.Remove(remarkToRemove);
+            }
+        }
+
+        public async Task SaveAlLRemarks(string code)
+        {
+            var validtechSkill = listOfNewRemarks
+               .Where(obj => !string.IsNullOrEmpty(obj.Remark)).ToList();
+
+            if (validtechSkill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in validtechSkill)
+            {
+                item.MainAssetCode = code;
+
+                int isExistTech = await MainRemarksService.GetExistObj(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await MainRemarksService.CreateObj(item);
+                }
+                else
+                {
+                    await MainRemarksService.UpdateObj(item);
+                }
+            }
+
+            listOfNewRemarks.Clear();
+        }
+        #endregion
+
+        #region FUNCTIONS
 
         private static char AllUpperCase(char c) => c.ToString().ToUpperInvariant()[0];
 
@@ -108,6 +165,85 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
             var base642 = Convert.ToBase64String(imageByteArray);
             QRIMAGE = string.Format("data:image/*;base64,{0}", base642);
         }
+
+        private bool disabledsubcat = true;
+        private bool disabledcat = true;
+
+        private void OnChangeType(int id)
+        {
+            obj.TypeId = id;
+            disabledcat = false;
+        }
+
+        private void OnChangeCat(int id)
+        {
+            obj.CategoryId = id;
+            disabledsubcat = false;
+        }
+
+        private async Task OnChangeSCat(int id)
+        {
+            obj.SubCategoryId = id;
+            await OnGenerateCode();
+        }
+
+        public string imguploadclass = "btnimage";
+
+        public async Task uploadImage(InputFileChangeEventArgs e)
+        {
+            long lngImage = long.MaxValue;
+            var brwModel = e.File;
+            var imgFilename = e.File.Name;
+            var imgContent = e.File.ContentType;
+            var imgBuffer = new byte[e.File.Size];
+            var imgURL = $"data:{imgContent};base64,{Convert.ToBase64String(imgBuffer)}";
+
+            using (var _stream = brwModel.OpenReadStream(lngImage))
+            {
+                await _stream.ReadAsync(imgBuffer);
+            }
+
+            if (e.File.Name is null)
+            {
+                await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Error",
+                    Text = "No image uploaded!",
+                    Icon = SweetAlertIcon.Error
+                });
+                return;
+            }
+            else
+            {
+                using var content = new MultipartFormDataContent();
+                var fileContent = new StreamContent(brwModel.OpenReadStream(lngImage));
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(imgContent);
+
+                ImageUrl = imgURL;
+                ImgContentType = imgContent;
+                ImgFileName = imgFilename;
+                MainAssImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
+
+                var base642 = Convert.ToBase64String(imgBuffer);
+                imgBase64 = string.Format("data:image/*;base64,{0}", base642);
+            }
+        }
+
+        public async Task OnsavingImg(int cat, int subcat, string jmcode, string remarks)
+        {
+            using var _contentImg = new MultipartFormDataContent();
+
+            if (MainAssImage.Any())
+            {
+                _contentImg.Add(MainAssImage.LastOrDefault()!);
+                await AssetImageService.AttachFile(_contentImg, cat, subcat, jmcode, remarks);
+            }
+            else
+            {
+            }
+        }
+
+        #endregion
 
         #region TABS
 
@@ -191,81 +327,5 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 
         #endregion TABS
 
-        private bool disabledsubcat = true;
-        private bool disabledcat = true;
-
-        private void OnChangeType(int id)
-        {
-            obj.TypeId = id;
-            disabledcat = false;
-        }
-
-        private void OnChangeCat(int id)
-        {
-            obj.CategoryId = id;
-            disabledsubcat = false;
-        }
-
-        private async Task OnChangeSCat(int id)
-        {
-            obj.SubCategoryId = id;
-            await OnGenerateCode();
-        }
-
-        public string imguploadclass = "btnimage";
-
-        public async Task uploadImage(InputFileChangeEventArgs e)
-        {
-            long lngImage = long.MaxValue;
-            var brwModel = e.File;
-            var imgFilename = e.File.Name;
-            var imgContent = e.File.ContentType;
-            var imgBuffer = new byte[e.File.Size];
-            var imgURL = $"data:{imgContent};base64,{Convert.ToBase64String(imgBuffer)}";
-
-            using (var _stream = brwModel.OpenReadStream(lngImage))
-            {
-                await _stream.ReadAsync(imgBuffer);
-            }
-
-            if (e.File.Name is null)
-            {
-                await Swal.FireAsync(new SweetAlertOptions
-                {
-                    Title = "Error",
-                    Text = "No image uploaded!",
-                    Icon = SweetAlertIcon.Error
-                });
-                return;
-            }
-            else
-            {
-                using var content = new MultipartFormDataContent();
-                var fileContent = new StreamContent(brwModel.OpenReadStream(lngImage));
-                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(imgContent);
-
-                ImageUrl = imgURL;
-                ImgContentType = imgContent;
-                ImgFileName = imgFilename;
-                MainAssImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
-
-                var base642 = Convert.ToBase64String(imgBuffer);
-                imgBase64 = string.Format("data:image/*;base64,{0}", base642);
-            }
-        }
-
-        public async Task OnsavingImg(int cat, int subcat, string jmcode, string remarks)
-        {
-            using var _contentImg = new MultipartFormDataContent();
-
-            if (MainAssImage.Any())
-            {
-                _contentImg.Add(MainAssImage.LastOrDefault()!);
-                await AssetImageService.AttachFile(_contentImg, cat, subcat, jmcode, remarks);
-            }
-            else
-            {
-            }
-        }
     }
 }

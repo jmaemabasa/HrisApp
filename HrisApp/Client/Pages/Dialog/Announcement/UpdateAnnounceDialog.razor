@@ -3,11 +3,25 @@
         @if (!isShowUpdate)
         {
             <div class="row">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="diatitle">Announcement</span>
-                    <MudTooltip Text="Update">
-                        <MudIconButton OnClick="UpdateClick" Icon="@Icons.Material.Rounded.Edit" aria-label="update"></MudIconButton>
-                    </MudTooltip>
+                <div class="d-flex justify-content-between align-items-center">
+                    @if (FromPage == "Announcement")
+                    {
+                        <span class="diatitle">Announcement</span>
+                        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+                            <Authorized>
+                                <MudTooltip Text="Update">
+                                    <MudIconButton OnClick="UpdateClick" Icon="@Icons.Material.Rounded.Edit" aria-label="update" Style="color:#27374D" />
+                                </MudTooltip>
+                            </Authorized>
+                        </AuthorizeView>
+                    }
+                    else
+                    {
+                        <div class="diatitle" style="margin-top: 10px;">Announcement</div>
+                    }
+                </div>
+                <div>
+                    <MudDivider Class="my-3" />
                 </div>
                 <div class="col-12  mb-2  d-flex flex-column">
                     <span class="title">Duration</span>
@@ -37,23 +51,29 @@
                     <span class="desc">@obj.Ann_Desc</span>
                 </div>
 
+                <div>
+                    <MudDivider Class="mt-3 mb-1" />
+                </div>
             </div>
         }
 
         @if (isShowUpdate)
         {
             <div class="row">
-                <div class="d-flex justify-content-between align-items-center mb-4 mt-2">
+                <div class="d-flex justify-content-between align-items-center mt-2">
                     <span class="diatitle">Update Announcement</span>
                 </div>
 
+                <div>
+                    <MudDivider Class="my-3" />
+                </div>
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Title</MudText>
                     <MudTextField @bind-Value="obj.Ann_Title" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Description</MudText>
-                    <MudTextField @bind-Value="obj.Ann_Desc" Lines="5" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    <MudTextField @bind-Value="obj.Ann_Desc" Lines="15" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Start Date</MudText>
@@ -63,19 +83,23 @@
                     <MudText Typo="Typo.body2">End Date</MudText>
                     <MudDatePicker @bind-Date="obj.DateEnd" Placeholder="Select Date" Editable="true" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 10px;" />
                 </div>
+
+                <div>
+                    <MudDivider Class="mt-3 mb-1" />
+                </div>
             </div>
         }
     </DialogContent>
     <DialogActions>
-        <div style="padding: 8px 16px">
+        <div class="d-flex align-items-center" style="padding: 0px 16px; margin-bottom: 10px;">
             @if (isShowUpdate)
             {
-                <MudButton Color="Color.Primary" @onclick="ConfirmUpdate">Save</MudButton>
-                <MudButton OnClick="Cancel">Cancel</MudButton>
+                <MudButton Class="btn btncancel" OnClick="Cancel">Cancel</MudButton>
+                <MudButton Class="btn btnsave" OnClick="ConfirmUpdate">Save</MudButton>
             }
             else
             {
-                <MudButton OnClick="Cancel">Cancel</MudButton>
+                <MudButton Class="btn btncancel" OnClick="Cancel">Cancel</MudButton>
             }
         </div>
     </DialogActions>
@@ -86,8 +110,8 @@
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-    [Parameter]
-    public int Id { get; set; }
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string FromPage { get; set; }
 
     private AnnouncementT obj = new();
 
@@ -115,6 +139,18 @@
         obj = await AnnouncementService.GetSingleAnnouncement((int)Id);
 
         isShowUpdate = false;
-        StateService.SetState("AnnouncementList", await AnnouncementService.GetAnnouncementList());
+        await AnnouncementService.GetAnnouncement();
+        var _announceList = AnnouncementService.AnnouncementTs.OrderBy(a => a.DateStart).ToList();
+
+        // Then, reorder announcements based on their date ranges
+        var currentTime = DateTime.Now;
+
+        var currentAnnouncements = _announceList.Where(a => a.DateStart <= currentTime && a.DateEnd >= currentTime).ToList();
+        var upcomingAnnouncements = _announceList.Where(a => a.DateStart > currentTime).ToList();
+        var pastAnnouncements = _announceList.Where(a => a.DateEnd < currentTime).ToList();
+
+        // Concatenate the sorted announcement lists
+        _announceList = currentAnnouncements.Concat(upcomingAnnouncements).Concat(pastAnnouncements).ToList();
+        StateService.SetState("AnnouncementList", _announceList);
     }
 }

@@ -84,6 +84,10 @@
                         {
                             NavigationManager.NavigateTo("/asset-dashboard");
                         }
+                        else if (result.UserRole == "User")
+                        {
+                            NavigationManager.NavigateTo("/user-dashboard");
+                        }
                         else
                         {
                             NavigationManager.NavigateTo("/dashboard");

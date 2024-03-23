@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace HrisApp.Server.Controllers.AssetC
+﻿namespace HrisApp.Server.Controllers.AssetC
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -104,14 +101,9 @@ namespace HrisApp.Server.Controllers.AssetC
             dbarea.DeviceID = model.DeviceID;
             dbarea.ProductID = model.ProductID;
             dbarea.ProductID = model.ProductID;
-            dbarea.Processor = model.Processor;
-            dbarea.RAM = model.RAM;
+            dbarea.Description = model.Description;
             dbarea.Quantity = model.Quantity;
             dbarea.Barcode = model.Barcode;
-            dbarea.StorageType = model.StorageType;
-            dbarea.Storage = model.Storage;
-            dbarea.MacAddress = model.MacAddress;
-            dbarea.ClientIP = model.ClientIP;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
             dbarea.TypeId = model.TypeId;
@@ -123,8 +115,8 @@ namespace HrisApp.Server.Controllers.AssetC
             dbarea.UsernameAdmin = model.UsernameAdmin;
             dbarea.PasswordAdmin = model.PasswordAdmin;
             dbarea.Asset = model.Asset;
-            dbarea.Remarks = model.Remarks;
             dbarea.InUseStatusDate = model.InUseStatusDate;
+
             dbarea.ChassisNumber = model.ChassisNumber;
             dbarea.PlateNumber = model.PlateNumber;
 

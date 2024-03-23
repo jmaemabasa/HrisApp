@@ -13,11 +13,11 @@
         private string _returnUrl = string.Empty;
 
         //SUPER ADMIN
-        //private const string Adminusername = "Administrator";
-        private const string Adminusername = "11";
+        private const string Adminusername = "Administrator";
+        //private const string Adminusername = "11";
 
-        //private const string Adminpassword = "1t@dm1n2022";
-        private const string Adminpassword = "11";
+        private const string Adminpassword = "1t@dm1n2022";
+        //private const string Adminpassword = "11";
 
         private string MYURL { get; set; } = string.Empty;
         private string OLDURL { get; set; } = string.Empty;
@@ -37,7 +37,6 @@
                 var splitstring = uri.ToString().Split('/');
                 var id = splitstring.Last();
                 MYURL = id;
-                Console.WriteLine("URL " + uri);
                 if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
                 {
                     _returnUrl = url;
@@ -89,7 +88,7 @@
                         await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
                         //NavigationManager.NavigateTo($"/main-asset/details/{MYURL}");
-                        NavigationManager.NavigateTo($"{OLDURL}");
+                        NavigationManager.NavigateTo($"{OLDURL}",true);
 
                         _toastService.ShowSuccess("Successfully Login.");
                     }

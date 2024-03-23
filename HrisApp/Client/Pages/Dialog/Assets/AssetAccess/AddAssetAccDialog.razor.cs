@@ -34,8 +34,10 @@
         private async Task ConfirmCreate()
         {
             obj.LastCheckDate = null;
+            obj.CreatedById = Int32.Parse(GlobalConfigService.User_Id);
             await AssetAccService.CreateObj(obj);
             await OnsavingImg(obj.CategoryId, obj.SubCategoryId, obj.JMCode, "First image uploaded.");
+            await SaveAlLRemarks(obj.AssetCode);
 
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
@@ -46,6 +48,58 @@
             StateService.SetState("AssetAccList", await AssetAccService.GetObjList());
         }
 
+        #region REMARKS
+        private string newRemark = "";
+        public List<AccessoryRemarksT> listOfNewRemarks = new();
+
+        public void AddNewRemark(string code, string remark)
+        {
+            var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (!string.IsNullOrEmpty(newRemark))
+                listOfNewRemarks.Add(new AccessoryRemarksT { AccAssetCode = code, Remark = remark, VerifyId = verifyCode });
+            newRemark = "";
+        }
+
+        public void CloseRemark(MudChip chip)
+        {
+            var remarkToRemove = listOfNewRemarks.FirstOrDefault(item => item.Remark == chip.Text);
+
+            if (remarkToRemove != null)
+            {
+                listOfNewRemarks.Remove(remarkToRemove);
+            }
+        }
+
+        public async Task SaveAlLRemarks(string code)
+        {
+            var validtechSkill = listOfNewRemarks
+               .Where(obj => !string.IsNullOrEmpty(obj.Remark)).ToList();
+
+            if (validtechSkill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in validtechSkill)
+            {
+                item.AccAssetCode = code;
+
+                int isExistTech = await AccRemarksService.GetExistObj(item.VerifyId);
+                if (isExistTech == 0)
+                {
+                    await AccRemarksService.CreateObj(item);
+                }
+                else
+                {
+                    await AccRemarksService.UpdateObj(item);
+                }
+            }
+
+            listOfNewRemarks.Clear();
+        }
+        #endregion
+
+        #region FUNCTIONS
         public async Task uploadImage(InputFileChangeEventArgs e)
         {
             long lngImage = long.MaxValue;
@@ -131,5 +185,7 @@
             obj.SubCategoryId = id;
             await OnGenerateCode();
         }
+
+        #endregion
     }
 }

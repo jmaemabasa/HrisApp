@@ -42,11 +42,93 @@
             /*font-family: 'Nunito Sans', sans-serif;*/
             font-family: 'Poppins', sans-serif !important;
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .loadingContainer {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ring {
+            width: 200px;
+            height: 200px;
+            border: 0px solid black;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+            .ring:nth-child(1) {
+                border-bottom-width: 8px;
+                border-color: rgb(10, 164, 230);
+                animation: rotate1 2s linear infinite;
+            }
+
+            .ring:nth-child(2) {
+                border-bottom-width: 8px;
+                border-color: rgb(190, 19, 19);
+                animation: rotate2 2s linear infinite;
+            }
+
+            .ring:nth-child(3) {
+                border-bottom-width: 8px;
+                border-color: rgb(241, 188, 58);
+                animation: rotate3 2s linear infinite;
+            }
+
+        .loading {
+            color: #27374d;
+        }
+
+        @keyframes rotate1 {
+            0% {
+                transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+            }
+        }
+
+        @keyframes rotate2 {
+            0% {
+                transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(50deg) rotateY(-10deg) rotateZ(360deg);
+            }
+        }
+
+        @keyframes rotate3 {
+            0% {
+                transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <!--<div id="app">Loading...</div>-->
+    <div id="app">
+        <div class="loadingContainer" style="width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; background: #e9ecef;">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <span class="loading"><img src="images/sonic3.gif" height="100" style="transform: scaleX(-1);" /></span>
+        </div>
+    </div>
+
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

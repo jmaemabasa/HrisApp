@@ -1,0 +1,12 @@
+﻿<AuthorizeView Roles="User">
+    <Authorized>
+        <MudNavLink Class="navlinktitle" Href="/user-dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">My Dashboard</MudNavLink>
+        <MudNavLink Class="navlinktitle" Href="/announcement" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Announcement" IconColor="Color.Inherit">Announcement</MudNavLink>
+        <MudNavLink Class="navlinktitle" Href="/user/leave" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccessTimeFilled" IconColor="Color.Inherit">Leave</MudNavLink>
+
+    </Authorized>
+</AuthorizeView>
+
+@code {
+
+}

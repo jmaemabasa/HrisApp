@@ -777,6 +777,34 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("ApplicantT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AccessoryRemarksT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AccAssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccessoryRemarksT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetAccessHistoryT", b =>
                 {
                     b.Property<int>("Id")
@@ -837,8 +865,15 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EUF")
                         .IsRequired()
@@ -896,6 +931,8 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("AssetStatusId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("MainAssetId");
 
@@ -1038,8 +1075,15 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeviceID")
                         .IsRequired()
@@ -1137,6 +1181,8 @@ namespace HrisApp.Server.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CreatedById");
+
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("SubCategoryId");
@@ -1219,6 +1265,157 @@ namespace HrisApp.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetVehiclesT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AreaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Asset")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssetNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AssetStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AssignedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("AssignedDateReleased")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("AssignedDateToReturn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ChassisNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientIP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeviceID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EUF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("InUseStatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JMCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastCheckDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordAdmin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlateNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseAmount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Serial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsernameAdmin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorksationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AreaId");
+
+                    b.HasIndex("AssetStatusId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("AssetVehiclesT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainAssetAccessoriesT", b =>
                 {
                     b.Property<int>("Id")
@@ -1263,6 +1460,62 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("SubCategoryId");
 
                     b.ToTable("MainAssetAccessoriesT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainRemarksT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MainAssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MainRemarksT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.VehicleRemarksT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VhcAssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VehicleRemarksT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Attendance.AttendanceRecordT", b =>
@@ -1935,15 +2188,7 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Eval4Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Eval5Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval6Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -2931,6 +3176,10 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Supervisory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TemporaryDuration")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -2965,6 +3214,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -2986,6 +3236,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3007,6 +3258,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3028,6 +3280,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3049,6 +3302,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3070,6 +3324,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3091,6 +3346,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3112,6 +3368,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3133,6 +3390,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3154,6 +3412,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3175,6 +3434,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3196,6 +3456,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3217,6 +3478,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3238,6 +3500,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3259,6 +3522,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3280,6 +3544,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 4,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3301,6 +3566,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 4,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3322,6 +3588,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3343,6 +3610,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3364,6 +3632,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3385,6 +3654,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 5,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3406,6 +3676,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3427,6 +3698,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3448,6 +3720,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 6,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3469,6 +3742,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 7,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3490,6 +3764,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 7,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3511,6 +3786,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3532,6 +3808,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3553,6 +3830,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3574,6 +3852,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3595,6 +3874,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 8,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3616,6 +3896,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 9,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3637,6 +3918,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 10,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3658,6 +3940,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 11,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3679,6 +3962,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3700,6 +3984,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3721,6 +4006,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 12,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3742,6 +4028,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 13,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3763,27 +4050,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 13,
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 40,
-                            AreaId = 1,
-                            DepartmentId = 9,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Team Leader/Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "GATAX01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 14,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3805,27 +4072,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 14,
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 42,
-                            AreaId = 1,
-                            DepartmentId = 10,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Team Leader",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "SAACC01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 15,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3847,48 +4094,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 15,
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 44,
-                            AreaId = 1,
-                            DepartmentId = 10,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Credit and Collection Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 6,
-                            PosCode = "SACRE01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 16,
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 45,
-                            AreaId = 1,
-                            DepartmentId = 10,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "C&C - Billings to Customer",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "SACRE02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 16,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3910,6 +4116,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 17,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3931,6 +4138,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3952,6 +4160,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -3973,27 +4182,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 0,
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 50,
-                            AreaId = 1,
-                            DepartmentId = 12,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Cash Operations Head",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "TREASURYCAS01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 18,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -4015,6 +4204,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -4036,6 +4226,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -4057,6 +4248,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -4078,6 +4270,7 @@ namespace HrisApp.Server.Migrations
                             PositionType = "",
                             Restrictions = "",
                             SectionId = 18,
+                            Supervisory = "",
                             TemporaryDuration = "",
                             VerifyId = "",
                             WorkExperience = ""
@@ -4330,13 +4523,6 @@ namespace HrisApp.Server.Migrations
                             DepartmentId = 10,
                             DivisionId = 1,
                             Name = "Billing to Cash Settlement"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            DepartmentId = 12,
-                            DivisionId = 1,
-                            Name = "Cash Operations"
                         });
                 });
 
@@ -4372,6 +4558,10 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportingTo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -4969,14 +5159,20 @@ namespace HrisApp.Server.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "AssetM",
-                            RoleCode = "AssetM"
+                            Name = "Technical",
+                            RoleCode = "Technical"
                         },
                         new
                         {
                             Id = 5,
                             Name = "General Admin",
                             RoleCode = "GenAdmin"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "CAD Admin",
+                            RoleCode = "CadAdmin"
                         });
                 });
 
@@ -5065,6 +5261,10 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "MainAsset")
                         .WithMany()
                         .HasForeignKey("MainAssetId");
@@ -5084,6 +5284,8 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("AssetStatus");
 
                     b.Navigation("Category");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("MainAsset");
 
@@ -5140,6 +5342,10 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
@@ -5162,6 +5368,8 @@ namespace HrisApp.Server.Migrations
 
                     b.Navigation("Category");
 
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("Employee");
 
                     b.Navigation("SubCategory");
@@ -5178,6 +5386,61 @@ namespace HrisApp.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetVehiclesT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.AreaT", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.StaticData.AssetStatusT", "AssetStatus")
+                        .WithMany()
+                        .HasForeignKey("AssetStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetTypesT", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Area");
+
+                    b.Navigation("AssetStatus");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("SubCategory");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainAssetAccessoriesT", b =>

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using HrisApp.Shared.Models.StaticData;
+using HrisApp.Shared.Models.Employee;
 
 namespace HrisApp.Shared.Models.Assets
 {
@@ -14,6 +15,7 @@ namespace HrisApp.Shared.Models.Assets
         public string AssetCode { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
         public AssetTypesT? Type { get; set; }
         public int TypeId { get; set; }
@@ -39,10 +41,14 @@ namespace HrisApp.Shared.Models.Assets
         public string Remarks { get; set; } = string.Empty;
 
         public DateTime? LastCheckDate { get; set; } = DateTime.Now;
-        public DateTime? DateCreated { get; set; } = DateTime.Now;
 
         public AssetMasterT? MainAsset { get; set; }
         public int? MainAssetId { get; set; }
         public DateTime? MainAssetDateUpdated { get; set; }
+
+
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
+        public EmployeeT? CreatedBy { get; set; }
+        public int? CreatedById { get; set; }
     }
 }

@@ -49,7 +49,7 @@
         private void OpenAddPosition()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
-            DialogService.Show<AddPositionDialog>("New Position", options);
+            DialogService.Show<AddPositionDialog>("New Job Position", options);
         }
 
         private void OpenViewPosition(int id)
