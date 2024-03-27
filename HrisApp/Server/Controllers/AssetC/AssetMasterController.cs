@@ -24,6 +24,7 @@
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
                 .Include(e => e.Area)
+                .Include(e => e.CreatedBy)
                 .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
             return Ok(obj);
@@ -41,6 +42,7 @@
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
                 .Include(e => e.Area)
+                .Include(e => e.CreatedBy)
                 .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
             return Ok(obj);
@@ -58,6 +60,7 @@
                 .Include(e => e.Area)
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
+                .Include(e => e.CreatedBy)
                 .FirstOrDefaultAsync(h => h.Id == id);
 
             if (obj == null)
@@ -79,6 +82,7 @@
                 .Include(e => e.Area)
                 .Include(e => e.Employee!.Division)
                 .Include(e => e.Employee!.Department)
+                .Include(e => e.CreatedBy)
                 .FirstOrDefaultAsync(h => h.AssetCode == code);
 
             if (obj == null)
@@ -100,6 +104,7 @@
                 .Include(e => e.Employee!.Department)
                 .Include(e => e.Area)
                 .OrderByDescending(x => x.DateCreated)
+                .Include(e => e.CreatedBy)
                 .ToListAsync();
         }
 
@@ -118,7 +123,7 @@
         {
             var dbarea = await _context.AssetMasterT.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbarea.WorksationName = model.WorksationName;
+            dbarea!.Name = model.Name;
             dbarea.Brand = model.Brand;
             dbarea.Model = model.Model;
             dbarea.Serial = model.Serial;
@@ -161,7 +166,7 @@
         }
 
         [HttpGet("GetObjId/{name}")]
-        public async Task<ActionResult<int>> GetAreaId(string code)
+        public async Task<ActionResult<int>> GetObjId(string code)
         {
             var Masterlist = await _context.AssetMasterT
                 .ToListAsync();

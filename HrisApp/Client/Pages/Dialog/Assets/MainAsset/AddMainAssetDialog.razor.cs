@@ -62,7 +62,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
                 MudDialog?.Close();
-                _toastService.ShowSuccess(obj.WorksationName + " Created Successfully!");
+                _toastService.ShowSuccess(obj.Name + " Created Successfully!");
 
                 // Update the List using the StateService
                 StateService.SetState("AssetMasterList", await AssetMasterService.GetObjList());

@@ -96,7 +96,7 @@
     margin-bottom: 10px;
     padding: 10px 10px 10px 10px;
     transition: all .5s ease;
-    pointer-events: none;
+    
 }
 
     ::deep .filebtn:hover {

@@ -17,7 +17,7 @@
         private string imgBase64 { get; set; }
 
         private bool visible;
-        private DialogOptions dialogOptions = new() { FullWidth = true, NoHeader = true };
+        private DialogOptions dialogOptions = new() { FullWidth = true, NoHeader = true, DisableBackdropClick=true };
 
         private string _remarks { get; set; }
 

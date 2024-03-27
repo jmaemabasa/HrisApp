@@ -1,0 +1,110 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 10px;margin-top: 4px;">
+            <div style="font-weight: bold;font-size: 20px;">
+                Update UOM
+            </div>
+            <div>
+                <MudTooltip Text="Delete" Arrow="true">
+                    <MudIconButton OnClick="RemoveObj" Icon="@Icons.Material.Rounded.Delete" Style="color:#f44336;position: relative; right: -5px;" />
+                </MudTooltip>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Code</MudText>
+                    <MudTextField @bind-Value="obj.Code" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: bold;text-transform:uppercase" />
+                </div>
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Name</MudText>
+                    <MudTextField @bind-Value="obj.Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+                <div class="col-12">
+                    <div class="d-flex justify-content-end" style="margin: 17px 0px 15px 0px;">
+                        <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+                        <button type="button" class="save btn" @onclick="ConfirmUpdate">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </DialogContent>
+</MudDialog>
+
+
+@code {
+#nullable disable
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public int Id { get; set; }
+
+    private VendorT obj = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        obj = await VendorService.GetSingleObj(Id);
+    }
+
+    private async Task ConfirmUpdate()
+    {
+        if (string.IsNullOrWhiteSpace(obj.Name))
+        {
+            GlobalConfigService.OpenWarningDialog("Please fill up the description.");
+        }
+        else
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to update " + obj.Code + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+            if (confirmResult.IsConfirmed)
+            {
+                Cancel();
+                await VendorService.UpdateObj(obj);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+
+                _toastService.ShowSuccess("Updated Successfully!");
+                await VendorService.GetObj();
+                StateService.SetState("VendorList", VendorService.VendorTs);
+            }
+        }
+    }
+
+    private async Task RemoveObj()
+    {
+        var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Are you sure you want to remove " + obj.Code + "? You can't undo this.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+        if (confirmResult.IsConfirmed)
+        {
+            Cancel();
+            var res = await VendorService.DeleteObj(obj.Id);
+            if (res.Equals("Success"))
+            {
+                _toastService.ShowSuccess("Removed Successfully!");
+            }
+            else
+            {
+                _toastService.ShowError("You can't delete this because it has an active reference.");
+            }
+
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Content", DateTime.Now);
+            await VendorService.GetObj();
+            StateService.SetState("VendorList", VendorService.VendorTs);
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

@@ -70,6 +70,8 @@ namespace HrisApp.Client.Pages.Assets
                 return true;
             if (obj.AssetCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if (obj.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
             if (obj.Model.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (obj.Category.ACat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))

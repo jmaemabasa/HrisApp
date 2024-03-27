@@ -1,0 +1,76 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Code</MudText>
+                    <MudTextField @bind-Value="obj.Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: bold;text-transform:uppercase" />
+                </div>
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Description</MudText>
+                    <MudTextField @bind-Value="obj.Description" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                </div>
+                <div class="col-12">
+                    <div class="d-flex justify-content-end" style="margin: 17px 0px 15px 0px;">
+                        <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+                        <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    #nullable disable
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+    private UOMT obj = new();
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task ConfirmCreate()
+    {
+        if (string.IsNullOrWhiteSpace(obj.Code))
+        {
+            GlobalConfigService.OpenWarningDialog("Please fill up the code.");
+        }
+        else if (string.IsNullOrWhiteSpace(obj.Description))
+        {
+            GlobalConfigService.OpenWarningDialog("Please fill up the description.");
+        }
+        else
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to add " + obj.Code + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+            if (confirmResult.IsConfirmed)
+            {
+                var isexist = await UOMService.IsExistCode(obj.Code);
+                if (isexist == 0) {
+                    MudDialog.Close();
+                    await UOMService.CreateObj(obj);
+
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+                    _toastService.ShowSuccess("Created Successfully!");
+
+                    // Update the areaList using the StateService
+                    await UOMService.GetObj();
+                    StateService.SetState("UOMList", UOMService.UOMTs);
+                }
+                else
+                {
+                    GlobalConfigService.OpenWarningDialog("Code already exists.");
+                }
+
+            }
+        }
+    }
+}

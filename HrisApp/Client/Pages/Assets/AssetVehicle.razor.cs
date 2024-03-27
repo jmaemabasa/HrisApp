@@ -61,7 +61,7 @@
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (area.WorksationName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (area.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (area.Brand.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;

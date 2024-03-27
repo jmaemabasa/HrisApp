@@ -56,25 +56,25 @@
             </HeaderContent>
             <RowTemplate>
                 <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="font-weight: bold;cursor: pointer;">@obj.Timetable_Name</MudTd>
-                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center; cursor: pointer;">
-                        @(obj.OnDuty_Time?.Hours.ToString("00") + ":" + obj.OnDuty_Time?.Minutes.ToString("00"))
-                    </MudTd>
-                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
-                        @(obj.OffDuty_Time?.Hours.ToString("00") + ":" + obj.OffDuty_Time?.Minutes.ToString("00"))
-                    </MudTd>
-                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
-                        @(obj.Begin_C_In?.Hours.ToString("00") + ":" + obj.Begin_C_In?.Minutes.ToString("00"))
-                    </MudTd>
-                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
-                        @(obj.Ending_C_In?.Hours.ToString("00") + ":" + obj.Ending_C_In?.Minutes.ToString("00"))
-                    </MudTd>
-                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
-                        @(obj.Begin_C_Out?.Hours.ToString("00") + ":" + obj.Begin_C_Out?.Minutes.ToString("00"))
-                    </MudTd>
-                    <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
-                        @(obj.Ending_C_Out?.Hours.ToString("00") + ":" + obj.Ending_C_Out?.Minutes.ToString("00"))
-                    </MudTd>
-                    <MudTd Style="text-align: center;cursor: pointer;">@obj.Workday_Count</MudTd>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center; cursor: pointer;">
+                    @(obj.OnDuty_Time?.Hours.ToString("00") + ":" + obj.OnDuty_Time?.Minutes.ToString("00"))
+                </MudTd>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                    @(obj.OffDuty_Time?.Hours.ToString("00") + ":" + obj.OffDuty_Time?.Minutes.ToString("00"))
+                </MudTd>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                    @(obj.Begin_C_In?.Hours.ToString("00") + ":" + obj.Begin_C_In?.Minutes.ToString("00"))
+                </MudTd>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                    @(obj.Ending_C_In?.Hours.ToString("00") + ":" + obj.Ending_C_In?.Minutes.ToString("00"))
+                </MudTd>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                    @(obj.Begin_C_Out?.Hours.ToString("00") + ":" + obj.Begin_C_Out?.Minutes.ToString("00"))
+                </MudTd>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center;cursor: pointer;">
+                    @(obj.Ending_C_Out?.Hours.ToString("00") + ":" + obj.Ending_C_Out?.Minutes.ToString("00"))
+                </MudTd>
+                <MudTd Style="text-align: center;cursor: pointer;">@obj.Workday_Count</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager PageSizeOptions="new int[] { 20, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
@@ -84,7 +84,7 @@
 </div>
 
 @code {
-    #nullable disable
+#nullable disable
     public List<ShiftTimetableT> _shiftList = new();
     private ShiftTimetableT selectedItem1 = null;
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
@@ -123,7 +123,7 @@
         DialogService.Show<AddTimetableDialog>("New Record", options);
     }
 
-    private void OpenUpdateTimetable(int id)
+    private async Task OpenUpdateTimetable(int id)
     {
         var parameters = new DialogParameters<UpdateTimetableDialog>();
         parameters.Add(x => x.Id, id);

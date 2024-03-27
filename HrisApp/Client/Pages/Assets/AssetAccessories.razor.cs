@@ -149,6 +149,8 @@ namespace HrisApp.Client.Pages.Assets
                 return true;
             if (obj.AssetCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if (obj.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
             if (obj.Model.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (obj.Serial.Contains(searchString, StringComparison.OrdinalIgnoreCase))
@@ -170,7 +172,7 @@ namespace HrisApp.Client.Pages.Assets
 
         private void OpenAddDialog()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, DisableBackdropClick = true, MaxWidth = MaxWidth.Small, NoHeader = true };
             DialogService.Show<AddAssetAccDialog>("New Asset Accessorry", options);
         }
 

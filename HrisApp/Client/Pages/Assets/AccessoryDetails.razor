@@ -218,6 +218,12 @@
                         <div class="d-flex flex-column gap-3">
                             <div class="d-flex flex-row gap-4">
                                 <MudItem xs="12" Class="divsingledetails">
+                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Name</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Name</MudText>
+                                </MudItem>
+                            </div>
+                            <div class="d-flex flex-row gap-4">
+                                <MudItem xs="12" Class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Description</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Description</MudText>
                                 </MudItem>
@@ -378,7 +384,6 @@
                                     <MudTablePager PageSizeOptions="new int[] { 5, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
                                 </PagerContent>
                             </MudTable>
-
                         </div>
                     </div>
                 </MudTabPanel>
@@ -476,6 +481,10 @@
 <MudDrawer @bind-Open="@detailsPanelOpen" Width="500px" Height="100%" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <div class="d-flex flex-column gap-2 drawerdetails">
         <span>Update</span>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Name</MudText>
+            <MudTextField @bind-Value="obj.Name" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        </div>
         <div class="flex-grow-1">
             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Description</MudText>
             <MudTextField @bind-Value="obj.Description" Variant="Variant.Outlined" Margin="Margin.Dense" />

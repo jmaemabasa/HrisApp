@@ -1,0 +1,147 @@
+﻿<MudDialog Style="background-color: #e9ecef;">
+    <DialogContent>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="dialog-title">@obj.Transact_Code</div>
+                    <div class="dialog-title-date">@obj.CreatedOn?.ToString("MMM dd yyyy")<span> | @obj.CreatedOn?.ToString("hh:mm tt")</span></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="box-details">
+                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Type</MudText>
+                        @if (obj.Transact_Type.Equals("Issue"))
+                        {
+                            <MudText Align="Align.Start" Style="color: #be1313; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Type</MudText>
+                        }
+                        else
+                        {
+                            <MudText Align="Align.Start" Style="color: #397763; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Type</MudText>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @if (obj.Transact_Type.Equals("Issue"))
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Assigned To</MudText>
+                            <EmployeeNamePosition verify="@obj.Employee?.Verify_Id" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Department?.Name</MudText>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Qty @obj.Consumable?.UOM?.Code</MudText>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (obj.Transact_Type.Equals("Purchase"))
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Created By</MudText>
+                            <EmployeeNamePosition verify="@obj.Employee?.Verify_Id" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Department?.Name</MudText>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Qty @obj.Consumable?.UOM?.Code</MudText>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="--bs-gutter-x: 0.5rem;">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Price</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PricePerUOM</MudText>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Total Purchase Amount</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PurchaseAmount</MudText>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row" style="--bs-gutter-x: 0.5rem;">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PurchasedDate?.ToString("MMM dd yyyy")</MudText>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Invoice No</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.InvoiceNo</MudText>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box-details">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Vendor</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Vendor?.Name</MudText>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns" style="padding: 0px 8px 9px 10px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Close</button>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+    [Parameter] public int Id { get; set; }
+
+
+    private Cons_TransactionT obj = new();
+
+    void Cancel() => MudDialog?.Cancel();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        obj = await ConsTranSvc.GetSingleObj((int)Id);
+    }
+}

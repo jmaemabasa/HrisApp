@@ -21,6 +21,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
                 .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
             return Ok(obj);
@@ -35,6 +36,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
                                 .OrderByDescending(x => x.DateCreated)
 .ToListAsync();
             return Ok(obj);
@@ -49,6 +51,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
                 .FirstOrDefaultAsync(h => h.Id == id);
 
             if (obj == null)
@@ -67,6 +70,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
                 .FirstOrDefaultAsync(h => h.AssetCode == code);
 
             if (obj == null)
@@ -84,6 +88,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
                                 .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
         }
@@ -103,7 +108,8 @@
         {
             var dbarea = await _context.AssetAccessoryT.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbarea.AssetCode = model.AssetCode;
+            dbarea!.AssetCode = model.AssetCode;
+            dbarea.Name = model.Name;
             dbarea.Brand = model.Brand;
             dbarea.Model = model.Model;
             dbarea.TypeId = model.TypeId;

@@ -32,6 +32,8 @@
 @using HrisApp.Client.Pages.Dialog.AlertDialogs
 @using HrisApp.Client.Pages.Dialog.Announcement
 @using HrisApp.Shared.Models.Attendance
+@using HrisApp.Client.Pages.Dialog.MasterData.UOM;
+
 
 @using ChartJs.Blazor;
 @using ChartJs.Blazor.Common
@@ -65,6 +67,10 @@
 @inject IVhcRemarksService VhcRemarksService
 @inject IAssetVehicleService AssetVehicleService
 @inject IAssVehicleImageSvc AssVehicleImageSvc
+@inject IConsumablesService ConsumablesService
+@inject IConsumableImgService ConsImgService
+@inject IConsumeRemarksService ConsRemarksSvc
+@inject IConsTransactionService ConsTranSvc
 
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
@@ -96,6 +102,8 @@
 @inject IAreaService AreaService
 @inject IManpowerService ManpowerService
 @inject IScheduleService ScheduleService
+@inject IUOMService UOMService
+@inject IVendorService VendorService
 
 @inject IAnnouncementService AnnouncementService
 @inject IForEvalService ForEvalService

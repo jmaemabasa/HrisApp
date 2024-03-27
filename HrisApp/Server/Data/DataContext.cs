@@ -1,4 +1,5 @@
 ﻿using HrisApp.Shared.Models.Announcement;
+using HrisApp.Shared.Models.Assets.Consumables;
 using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
@@ -250,6 +251,27 @@ namespace HrisApp.Server.Data
              new AssetTypesT { Id = 3, AType_Code = "003", AType_Name = "Licenses" },
              new AssetTypesT { Id = 4, AType_Code = "004", AType_Name = "Consumables" }
             );
+
+            modelBuilder.Entity<ConsumablesT>()
+                .Property(e => e.Id)
+                .UseIdentityColumn(1, 1); 
+
+            modelBuilder.Entity<UOMT>()
+               .Property(e => e.Id)
+               .UseIdentityColumn(1, 1);
+
+            modelBuilder.Entity<ConsumableImageT>()
+              .Property(e => e.Id)
+              .UseIdentityColumn(1, 1); 
+            
+            modelBuilder.Entity<Cons_TransactionT>()
+              .Property(e => e.Id)
+              .UseIdentityColumn(1, 1);
+            
+            modelBuilder.Entity<VendorT>()
+              .Property(e => e.Id)
+              .UseIdentityColumn(1, 1);
+
         }
 
         //USERS
@@ -274,6 +296,8 @@ namespace HrisApp.Server.Data
         public DbSet<PosMPExternalT> PosMPExternalT { get; set; }
         public DbSet<PosMPInternalT> PosMPInternalT { get; set; }
         public DbSet<DailyTotalPlantillaT> DailyTotalPlantillaT { get; set; }
+        public DbSet<UOMT> UOMT { get; set; }
+        public DbSet<VendorT> VendorT { get; set; }
 
         public DbSet<LeaveTypesT> LeaveTypesT { get; set; }
         public DbSet<Emp_LeaveCreditT> Emp_LeaveCreditT { get; set; }
@@ -385,6 +409,10 @@ namespace HrisApp.Server.Data
         public DbSet<AssetVehiclesT> AssetVehiclesT { get; set; }
         public DbSet<VehicleRemarksT> VehicleRemarksT { get; set; }
         public DbSet<AssetVehicleImageT> AssetVehicleImageT { get; set; }
+        public DbSet<ConsumablesT> ConsumablesT { get; set; }
+        public DbSet<ConsumableImageT> ConsumableImageT { get; set; }
+        public DbSet<ConsumableRemarksT> ConsumableRemarksT { get; set; }
+        public DbSet<Cons_TransactionT> Cons_TransactionT { get; set; }
 
     }
 }

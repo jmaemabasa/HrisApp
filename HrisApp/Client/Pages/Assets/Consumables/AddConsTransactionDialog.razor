@@ -1,0 +1,293 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div style=" font-weight: bold;color: #26446e;font-size: 20px;margin-top: 15px;"> New Transaction</div>
+                    <div style="margin-bottom: 15px;color: #757A90;font-size: 15px;">@obj.Transact_Code</div>
+                </div>
+            </div>
+
+            @if (_showAlert)
+            {
+                <MudAlert Severity="Severity.Error" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
+            }
+            <div class="row mb-1">
+                <div class="col-12">
+                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Transaction Type</MudText>
+                    <MudSelect @bind-Value="obj.Transact_Type" Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem Value="@("Issue")" />
+                        <MudSelectItem Value="@("Purchase")" />
+                    </MudSelect>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(obj.Transact_Type))
+            {
+                @if (obj.Transact_Type.Equals("Issue"))
+                {
+                    <div class="row mb-1">
+                        <div class="col-12">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Employee</MudText>
+                            <MudAutocomplete Class="@empClass" T="EmployeeT" Placeholder="Type to search..." @bind-Value="employeeObj"
+                                             SearchFunc="@SearchEmployee"
+                                             ResetValueOnEmptyText="true"
+                                             CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"
+                                             ToStringFunc="@(e => e==null?null : $"{e.FirstName} {e.LastName}")" ShowProgressIndicator="true" Clearable="true">
+                                <NoItemsTemplate>
+                                    <MudText Align="Align.Center" Class="px-4 py-1">
+                                        No items found
+                                    </MudText>
+                                </NoItemsTemplate>
+                            </MudAutocomplete>
+                        </div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-12">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity <span style="font-weight: 500;">(Available: @consumableObj.Quantity @consumableObj.UOM?.Code)</span></MudText>
+                            <MudNumericField Class="@qtyclass" Min="1" @bind-Value="obj.Transact_Qty" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
+                            <MudNumericField T="int" TextChanged="QuantityTotal" Immediate="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
+                            <MudDatePicker Editable="true" @bind-Date="obj.PurchasedDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <MudText Typo="Typo.body2">Price</MudText>
+                            <MudNumericField T="decimal" TextChanged="PriceTotal" Immediate="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Amount</MudText>
+                            <MudNumericField @bind-Value="obj.PurchaseAmount" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Invoice No</MudText>
+                            <MudNumericField @bind-Value="obj.InvoiceNo" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-12">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Vendor</MudText>
+                            <MudAutocomplete Class="@empClass" T="VendorT" Placeholder="Type to search..." @bind-Value="vendorObj"
+                                             SearchFunc="@SearchVendor"
+                                             ResetValueOnEmptyText="true"
+                                             CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"
+                                             ToStringFunc="@(e => e==null?null : $"{e.Name}")" ShowProgressIndicator="true" Clearable="true">
+                                <NoItemsTemplate>
+                                    <MudText Align="Align.Center" Class="px-4 py-1">
+                                        No items found
+                                    </MudText>
+                                </NoItemsTemplate>
+                            </MudAutocomplete>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns" style="padding: 15px 27px 15px 10px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="UpdateSave">Save</button>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+
+
+@code {
+    #nullable disable
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+    [Parameter] public int ConsumableId { get; set; }
+    [Parameter] public EventCallback OnAddSuccess { get; set; }
+
+    private Cons_TransactionT obj = new();
+    private ConsumablesT consumableObj = new();
+
+    private EmployeeT employeeObj;
+    private VendorT vendorObj;
+    IEnumerable<EmployeeT> EMPLOYEE;
+    IEnumerable<VendorT> VENDOR;
+
+    private string _message = string.Empty;
+    private bool _showAlert = false;
+    public void CloseMe() => _showAlert = false;
+    private string empClass = "", qtyclass = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await OnGenerateCode();
+        EMPLOYEE = await EmployeeService.GetEmployeeList();
+        VENDOR = await VendorService.GetObjList();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        consumableObj = await ConsumablesService.GetSingleObj((int)ConsumableId);
+        obj.Transact_Qty = 1;
+    }
+
+    private async Task UpdateSave()
+    {
+        //ISSUE
+        if (obj.Transact_Type.Equals("Issue"))
+        {
+
+            if (employeeObj == null)
+            {
+                _showAlert = true;
+                _message = "Fill out all fields.";
+                empClass = employeeObj == null ? "mud-input-error" : "";
+            }
+            else if (obj.Transact_Qty > consumableObj.Quantity)
+            {
+                _showAlert = true;
+                _message = "Insufficient quantity";
+                qtyclass = "mud-input-error";
+            }
+            else
+            {
+                _showAlert = false;
+                empClass = ""; qtyclass = "";
+
+
+                obj.ConsumableId = consumableObj.Id;
+                obj.ConsumableCode = consumableObj.AssetCode;
+                obj.CreatedById = Int32.Parse(GlobalConfigService.User_Id);
+                obj.EmployeeId = employeeObj.Id;
+                obj.DepartmentId = employeeObj.DepartmentId;
+
+                obj.Total_Qty = obj.Transact_Type.Equals("Issue") ? consumableObj.Quantity - obj.Transact_Qty : consumableObj.Quantity + obj.Transact_Qty;
+                consumableObj.Quantity = obj.Transact_Type.Equals("Issue") ? consumableObj.Quantity - obj.Transact_Qty : consumableObj.Quantity + obj.Transact_Qty;
+
+
+                await ConsumablesService.UpdateObj(consumableObj);
+                await ConsTranSvc.CreateObj(obj);
+
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+                MudDialog?.Close();
+                _toastService.ShowSuccess("Created Successfully!");
+                await OnAddSuccess.InvokeAsync();
+            }
+        }
+        else
+        {
+            //PURCHASE
+            _showAlert = false;
+            empClass = ""; qtyclass = "";
+
+            obj.ConsumableId = consumableObj.Id;
+            obj.ConsumableCode = consumableObj.AssetCode;
+            obj.CreatedById = Int32.Parse(GlobalConfigService.User_Id);
+            obj.EmployeeId = Int32.Parse(GlobalConfigService.User_Id);
+            obj.DepartmentId = EMPLOYEE.Where(e=> e.Id == obj.EmployeeId).FirstOrDefault().DepartmentId;
+            obj.VendorId = vendorObj.Id;
+
+            obj.Total_Qty = obj.Transact_Type.Equals("Issue") ? consumableObj.Quantity - obj.Transact_Qty : consumableObj.Quantity + obj.Transact_Qty;
+            consumableObj.Quantity = obj.Transact_Type.Equals("Issue") ? consumableObj.Quantity - obj.Transact_Qty : consumableObj.Quantity + obj.Transact_Qty;
+
+
+            await ConsumablesService.UpdateObj(consumableObj);
+            await ConsTranSvc.CreateObj(obj);
+
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+            MudDialog?.Close();
+            _toastService.ShowSuccess("Created Successfully!");
+            await OnAddSuccess.InvokeAsync();
+
+        }
+    }
+
+    void Cancel() => MudDialog?.Cancel();
+
+    private async Task PriceTotal(string text)
+    {
+        await Task.Delay(0);
+        if (!string.IsNullOrEmpty(text))
+        {
+            obj.PricePerUOM = Convert.ToDecimal(text);
+            obj.PurchaseAmount = obj.Transact_Qty * (decimal)obj.PricePerUOM;
+        }
+        else
+        {
+            obj.PurchaseAmount = 0;
+        }
+    }
+
+    private async Task QuantityTotal(string text)
+    {
+        await Task.Delay(0);
+        if (!string.IsNullOrEmpty(text))
+        {
+            obj.Transact_Qty = Convert.ToInt32(text);
+            if (obj.PricePerUOM != null)
+            {
+                obj.PurchaseAmount = obj.Transact_Qty * (decimal)obj.PricePerUOM;
+            }
+        }
+        else
+        {
+            obj.PurchaseAmount = 0;
+        }
+    }
+
+    private async Task OnGenerateCode()
+    {
+        int lastCount = await ConsTranSvc.GetLastCode() + 1;
+        string rolesCode = lastCount.ToString().PadLeft(6, '0');
+        obj.Transact_Code = "TXN" + rolesCode;
+    }
+
+    private async Task<IEnumerable<EmployeeT>> SearchEmployee(string value)
+    {
+        await Task.Delay(5);
+
+        if (string.IsNullOrEmpty(value))
+        {
+            return EMPLOYEE;
+        }
+        else
+        {
+            var chk = EMPLOYEE.Where(x => x.FirstName.Contains(value, StringComparison.InvariantCultureIgnoreCase) ||
+                                        x.LastName.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+
+            return chk;
+        }
+    }
+
+    private async Task<IEnumerable<VendorT>> SearchVendor(string value)
+    {
+        await Task.Delay(5);
+
+        if (string.IsNullOrEmpty(value))
+        {
+            return VENDOR;
+        }
+        else
+        {
+            var chk = VENDOR.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+
+            return chk;
+        }
+    }
+
+}

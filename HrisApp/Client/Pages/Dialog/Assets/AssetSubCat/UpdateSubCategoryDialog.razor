@@ -19,7 +19,9 @@
         </div>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" @onclick="UpdateSave">Save</MudButton>
+        <div class="dialogbtns" style="padding: 15px 15px 15px 10px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="UpdateSave">Save</button>
+        </div>
     </DialogActions>
 </MudDialog>

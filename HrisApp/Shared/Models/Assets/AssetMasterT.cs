@@ -14,7 +14,7 @@ namespace HrisApp.Shared.Models.Assets
 
         public string JMCode { get; set; } = string.Empty;
         public string AssetCode { get; set; } = string.Empty;
-        public string WorksationName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

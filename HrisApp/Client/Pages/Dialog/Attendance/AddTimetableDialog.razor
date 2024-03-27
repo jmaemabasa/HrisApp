@@ -63,8 +63,10 @@
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
-                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary">Save</MudButton>
-                    <MudButton OnClick="Cancel">Cancel</MudButton>
+                    <div class="dialogbtns" style="padding: 4px 0px 15px 10px;">
+                        <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+                        <button type="submit" class="save btn">Save</button>
+                    </div>
                 </div>
             </div>
         </EditForm>

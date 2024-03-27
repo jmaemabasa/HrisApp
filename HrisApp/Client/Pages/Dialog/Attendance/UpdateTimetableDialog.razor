@@ -12,7 +12,7 @@
             <div class="row">
                 @* ERROR/SUCCESS ALERT *@
                 <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
-                    <span class="diatitle">Announcement</span>
+                    <span class="diatitle">Update Record</span>
                 </div>
                 <div class="col-12">
                     <MudText Typo="Typo.body2">Timetable Name</MudText>
@@ -74,8 +74,10 @@
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
-                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary">Save</MudButton>
-                    <MudButton OnClick="Cancel">Cancel</MudButton>
+                    <div class="dialogbtns" style="padding: 4px 0px 15px 10px;">
+                        <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+                        <button type="submit" class="save btn">Save</button>
+                    </div>
                 </div>
             </div>
         </EditForm>

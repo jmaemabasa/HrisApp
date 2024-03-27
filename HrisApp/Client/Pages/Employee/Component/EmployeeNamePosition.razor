@@ -1,14 +1,13 @@
-﻿@inject IEmployeeService EmployeeService
-@inject IPositionService PositionService
-@inject NavigationManager navTo
-
-<div class="d-flex flex-row align-items-center gap-3" style="cursor: pointer" @onclick="GoToEmployee">
+﻿<div class="d-flex flex-row align-items-center gap-3" style="cursor: pointer" @onclick="GoToEmployee">
     <div class="d-flex align-items-center">
-        <EmployeeAvatar verify="@verify" />
+        <MudAvatar>
+            @* <MudImage Src="@ImageData"></MudImage> *@
+            <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
+        </MudAvatar>
     </div>
     <div>
         <div class="flex-column" >
-            <div style="font-weight: bold;">@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
+            <div style="font-weight: bold;">@employee.FirstName  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @employee.LastName</div>
             <div style="font-size: 13px !important;">@subpos.Description</div>
         </div>
     </div>
@@ -22,7 +21,10 @@
     EmployeeT employee = new();
     SubPositionT subpos = new();
 
-    private void GoToEmployee() => navTo.NavigateTo($"/employee/edit/{employee.Id}");
+    private string ImageData;
+
+
+    private void GoToEmployee() => NavigationManager.NavigateTo($"/employee/edit/{employee.Id}");
 
     protected override async Task OnParametersSetAsync()
     {
@@ -30,10 +32,29 @@
         {
             employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
             subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
+
+            await EmployeeImg(verify);//image
         }
         catch (Exception)
         {
-            Console.WriteLine("");
+            if (employee.GenderId == 1)
+            {
+                ImageData = string.Format("images/avatarmaleholder.jpg");
+            }
+            else
+            {
+                ImageData = string.Format("images/avatarfemaleholder.jpg");
+            }
+        }
+    }
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
         }
     }
 

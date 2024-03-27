@@ -1,0 +1,27 @@
+﻿.box-details {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-height: 56.90px;
+    margin-bottom: 8px;
+}
+
+.dialog-title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 15px;
+    color: #26446e;
+}
+
+.dialog-title-date {
+    color: #757A90;
+    margin-bottom: 20px;
+}
+
+    .dialog-title-date span {
+        color: rgba(117, 122, 144, .6);
+    }
+
+.cancel:hover {
+    color: #27374D;
+}

@@ -35,6 +35,8 @@
                     <MudNavLink Class="navlinktitle" Href="/position" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Job Information</MudNavLink>
                     <MudNavLink Class="navlinktitle" Href="/subposition" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Work" IconColor="Color.Inherit">Job Position</MudNavLink>
                     <MudNavLink Class="navlinktitle" Href="/external" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">External Manpower</MudNavLink>
+                    <MudNavLink Class="navlinktitle" Href="/uom" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Scale" IconColor="Color.Inherit">Unit of Measurement</MudNavLink>
+                    <MudNavLink Class="navlinktitle" Href="/vendors" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Storefront" IconColor="Color.Inherit">Vendors</MudNavLink>
                     @* <MudNavLink Href="/schedule" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.AccessTimeFilled" IconColor="Color.Inherit">Schedule</MudNavLink> *@
                     @* <MudNavGroup Class="navlinktitle" Title="Manpower" Expanded="false" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">
                     <MudNavLink Class="navlinktitle" Href="/internal" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.WorkspacePremium" IconColor="Color.Inherit">Internal</MudNavLink>
@@ -48,15 +50,19 @@
 
                 <MudDivider Class="my-1" />
 
+                <MudNavGroup Class="navlinktitle" Title="Asset Master Data" Expanded="false" Icon="@Icons.Material.Rounded.AdminPanelSettings" IconColor="Color.Inherit">
+                    <MudNavLink Class="navlinktitle" Href="/asset-types" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Mouse" IconColor="Color.Inherit">Types</MudNavLink>
+                    <MudNavLink Class="navlinktitle" Href="/asset-category" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category" IconColor="Color.Inherit">Category</MudNavLink>
+                    <MudNavLink Class="navlinktitle" Href="/asset-subcategory" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.MenuBook" IconColor="Color.Inherit">Sub Category</MudNavLink>
+                </MudNavGroup>
                 <MudNavGroup Class="navlinktitle" Title="Asset Monitoring" Expanded="false" Icon="@Icons.Material.Rounded.AdfScanner" IconColor="Color.Inherit">
                     <MudNavLink Class="navlinktitle" Href="/asset-main" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Devices" IconColor="Color.Inherit">Main Asset</MudNavLink>
                     <MudNavLink Class="navlinktitle" Href="/asset-accessories" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.KeyboardAlt" IconColor="Color.Inherit">Accessory</MudNavLink>
                     @* <MudNavLink Class="navlinktitle" Href="/asset-vehicles" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.DirectionsCar" IconColor="Color.Inherit">Vehicles</MudNavLink> *@
                 </MudNavGroup>
-                <MudNavGroup Class="navlinktitle" Title="Asset Master Data" Expanded="false" Icon="@Icons.Material.Rounded.AdminPanelSettings" IconColor="Color.Inherit">
-                    <MudNavLink Class="navlinktitle" Href="/asset-types" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Mouse" IconColor="Color.Inherit">Types</MudNavLink>
-                    <MudNavLink Class="navlinktitle" Href="/asset-category" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category" IconColor="Color.Inherit">Category</MudNavLink>
-                    <MudNavLink Class="navlinktitle" Href="/asset-subcategory" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.MenuBook" IconColor="Color.Inherit">Sub Category</MudNavLink>
+
+                <MudNavGroup Class="navlinktitle" Title="Consumable Assets" Expanded="false" Icon="@Icons.Material.Rounded.ShoppingBag" IconColor="Color.Inherit">
+                    <MudNavLink Class="navlinktitle" Href="/asset-consumable" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ShoppingBag" IconColor="Color.Inherit">Consumables</MudNavLink>
                 </MudNavGroup>
             </div>
             <div class="">

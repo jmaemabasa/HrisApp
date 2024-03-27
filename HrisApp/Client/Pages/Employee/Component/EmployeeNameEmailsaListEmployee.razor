@@ -1,8 +1,4 @@
-﻿@page "/employeeimagewithborder"
-@inherits MudComponentBase
-@inject IImageService ImageService
-@inject IEmployeeService EmployeeService
-<style>
+﻿<style>
     /*EMPLOYMENT AVATAR CLASS*/
     .statusRegular {
         border: 2px solid #9BB67C;
@@ -26,7 +22,6 @@
 </style>
 
 <MudAvatar Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
-    @* <MudImage Src="@ImageData"></MudImage> *@
     <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
 </MudAvatar>
 
@@ -38,20 +33,9 @@
 
     private string ImageData;
 
-    private async Task EmployeeImg(string verifyCode)
-    {
-        employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
-        var imagemodel = await ImageService.GetImageData(verifyCode);
-        if (imagemodel != null)
-        {
-            var base642 = Convert.ToBase64String(imagemodel);
-            ImageData = string.Format("data:image/png;base64,{0}", base642);
-            // Console.WriteLine($"2nd Test: {verifyCode}");
-        }
-    }
-
     protected override async Task OnParametersSetAsync()
     {
+        employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
         try
         {
             await EmployeeImg(verify);//image
@@ -66,6 +50,17 @@
             {
                 ImageData = string.Format("images/avatarfemaleholder.jpg");
             }
+        }
+    }
+
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
         }
     }
 

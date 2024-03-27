@@ -77,6 +77,13 @@
             </div>
             @if (obj.AssetCode != "")
             {
+
+                <div class="row">
+                    <div class="col-12">
+                        <MudText Typo="Typo.body2">Name</MudText>
+                        <MudTextField @bind-Value="obj.Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <MudText Typo="Typo.body2">Description</MudText>

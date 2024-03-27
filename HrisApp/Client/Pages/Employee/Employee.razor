@@ -35,9 +35,9 @@
     </div>
 </div>
 <div class="box w-auto">
-    <div class="d-flex flex-grow-1 mt-3 mb-3">
+    <div class="d-flex flex-grow-1">
         <MudGrid Class="d-flex align-items-center">
-            <MudItem xs="12" sm="9">
+            <MudItem xs="12" sm="9" Style="padding: 10px 12px 0px 12px;">
                 <div class="d-flex align-items-center gap-3 flex-wrap">
                     <div>
                         <MudMenu PopoverClass="popMenu" FullWidth="true" Dense="true">
@@ -92,7 +92,7 @@
                                 <ChildContent>
                                     <MudMenuItem OnTouch="@(() => CmbDepartment(0))" OnClick="@(() => CmbDepartment(0))">All Department</MudMenuItem>
                                     @{
-                                        var divid = DivisionsL.Where(e => e.Name == CmbDivText).FirstOrDefault().Id;
+                                        var divid = DivisionsL.Where(e => e.Name == CmbDivText).FirstOrDefault()!.Id;
                                     }
                                     @foreach (var item in DepartmentsL.Where(e => e.DivisionId == divid))
                                     {
@@ -128,7 +128,7 @@
 
                 </div>
             </MudItem>
-            <MudItem xs="12" sm="3">
+            <MudItem xs="12" sm="3" Style="padding: 10px 12px 0px 12px;">
                 <MudTextField DisableUnderLine @bind-Value="@_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch" Immediate=true Margin="Margin.Dense" />
             </MudItem>
         </MudGrid>
@@ -158,28 +158,28 @@
     }
     else
     {
-        <div style="height: calc(100% - 64px)">
-            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="@_employeeList" Context="employeeee" Virtualize="false" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1">
+        <div>
+            <MudTable Class="stable" Items="@_employeeList" Height="620px" Context="employeeee" Virtualize="false" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1">
                 <HeaderContent>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
                             Full Name
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
-                            ID No.
+                            ID No
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-sm-12 col-md-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
+                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
+                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
+                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
                             Date Hired
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">
+                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">
                         <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<EmployeeT, object>(x=>x.StatusId)">
                             Status
                         </MudTableSortLabel>
@@ -201,7 +201,7 @@
                         </div>
 
                     </MudTd>
-                    <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
+                    <MudTd DataLabel="EmployeeNo">@employeeee.EmployeeNo</MudTd>
                     <MudTd DataLabel="Position">
                         @foreach (var item in SubPositionsL)
                         {
