@@ -178,29 +178,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         #endregion DATE VARIBALE
 
-        public async Task IsUsePermAddress(bool ischeck)
-        {
-            await Task.Delay(1);
-            if (ischeck)
-            {
-                address.CurrentAdd = address.PermanentAdd;
-                address.CurrentProvince = address.PermanentProvince;
-                address.CurrentCity = address.PermanentCity;
-                address.CurrentBrgy = address.PermanentBrgy;
-                address.CurrentZipCode = address.PermanentZipCode;
-                address.CurrentCountry = address.PermanentCountry;
-            }
-            else
-            {
-                address.CurrentAdd = "";
-                address.CurrentProvince = "";
-                address.CurrentCity = "";
-                address.CurrentBrgy = "";
-                address.CurrentZipCode = "";
-                address.CurrentCountry = "";
-            }
-        }
-
         #region IMAGE VARIABLE
 
         //attachment
@@ -407,6 +384,29 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
             // Concatenate random number to username
             userObj.Username += randomNumber.ToString();
+        }
+
+        public async Task IsUsePermAddress(bool ischeck)
+        {
+            await Task.Delay(1);
+            if (ischeck)
+            {
+                address.CurrentAdd = address.PermanentAdd;
+                address.CurrentProvince = address.PermanentProvince;
+                address.CurrentCity = address.PermanentCity;
+                address.CurrentBrgy = address.PermanentBrgy;
+                address.CurrentZipCode = address.PermanentZipCode;
+                address.CurrentCountry = address.PermanentCountry;
+            }
+            else
+            {
+                address.CurrentAdd = "";
+                address.CurrentProvince = "";
+                address.CurrentCity = "";
+                address.CurrentBrgy = "";
+                address.CurrentZipCode = "";
+                address.CurrentCountry = "";
+            }
         }
 
         #region IMAGE

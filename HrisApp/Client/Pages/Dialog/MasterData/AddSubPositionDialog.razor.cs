@@ -61,7 +61,7 @@
                 MudDialog.Close();
                 if (selecteReportTo == "Null")
                     selecteReportTo = "";
-                await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Inactive", selectedDivision, selectedDepartment, selectedSection, selectedArea, selecteReportTo);
+                await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Vacant", selectedDivision, selectedDepartment, selectedSection, selectedArea, selecteReportTo);
 
                 _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
                 if (!string.IsNullOrEmpty(GlobalConfigService.Role))

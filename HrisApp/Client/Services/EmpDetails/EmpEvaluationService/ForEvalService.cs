@@ -117,7 +117,7 @@
                 case 1:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new()
+                        Emp_EvaluationT case1eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
@@ -129,7 +129,7 @@
                             DateEvaluate = todayDate,
                             TimesEvaluate = +1
                         };
-                        return case0eval;
+                        return case1eval;
                     }
                     else
                     {
@@ -150,7 +150,7 @@
                 case 2:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new()
+                        Emp_EvaluationT case2eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
@@ -162,7 +162,7 @@
                             DateEvaluate = todayDate,
                             TimesEvaluate = +1
                         };
-                        return case0eval;
+                        return case2eval;
                     }
                     else
                     {
@@ -183,7 +183,7 @@
                 case 3:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new()
+                        Emp_EvaluationT case3eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
@@ -195,7 +195,7 @@
                             DateEvaluate = todayDate,
                             TimesEvaluate = +1
                         };
-                        return case0eval;
+                        return case3eval;
                     }
                     else
                     {
@@ -216,7 +216,7 @@
                 case 5:
                     if (datehired.Year < DateTime.Now.Year - 1)
                     {
-                        Emp_EvaluationT case0eval = new()
+                        Emp_EvaluationT case5eval = new()
                         {
                             Verify_Id = verifyId,
                             Eval1Status = "Done",
@@ -228,7 +228,7 @@
                             DateEvaluate = todayDate,
                             TimesEvaluate = +1
                         };
-                        return case0eval;
+                        return case5eval;
                     }
                     else
                     {
@@ -247,7 +247,7 @@
                         return case5eval;
                     }
                 default:
-                    Emp_EvaluationT defaulteval = new Emp_EvaluationT()
+                    Emp_EvaluationT defaulteval = new()
                     {
                         Verify_Id = verifyId,
                         Eval1Status = "Done",

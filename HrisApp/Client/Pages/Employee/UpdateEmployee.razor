@@ -1028,7 +1028,7 @@
                             <MudText Typo="Typo.body2">Position</MudText>
                             <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Immediate=true Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                @foreach (var pos in SubPositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId && d.Status == "Inactive" || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active")))
+                                @foreach (var pos in SubPositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId && d.Status == "Vacant" || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active")))
                                 {
                                     <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
                                 }
@@ -1062,7 +1062,7 @@
                         <MudText Typo="Typo.body2">Position</MudText>
                         <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                            @foreach (var pos in SubPositionsL.Where(d => d.DepartmentId == employee.DepartmentId && d.Status == "Inactive" && d.PosCode != _subposition.PosCode || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active" && d.PosCode == _subposition.PosCode)))
+                            @foreach (var pos in SubPositionsL.Where(d => d.DepartmentId == employee.DepartmentId && d.Status == "Vacant" && d.PosCode != _subposition.PosCode || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active" && d.PosCode == _subposition.PosCode)))
                             {
                                 <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
                             }

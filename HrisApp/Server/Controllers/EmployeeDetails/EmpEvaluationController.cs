@@ -56,7 +56,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         {
             // Delete rows where eval status is "done"
             var evaluationsToDelete = _context.Emp_EvaluationT
-                .Where(e => e.EvalStatus == "done")
+                .Where(e => e.EvalStatus == "Done")
                 .ToList();
 
             _context.Emp_EvaluationT.RemoveRange(evaluationsToDelete);

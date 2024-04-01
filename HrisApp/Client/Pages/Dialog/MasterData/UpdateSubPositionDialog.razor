@@ -19,6 +19,36 @@
                 <MudText Typo="Typo.body2">Description</MudText>
                 <MudTextField @bind-Value="obj.Description" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
             </div>
+            
+            @if (obj.Status.Equals("Vacant"))
+            {
+                <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">Status</MudText>
+                    <MudSelect T="string" @bind-Value="obj.Status" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                        <MudSelectItem Value="@obj.Status" />
+                        <MudSelectItem Value="@("Inactive")" />
+                    </MudSelect>
+                </div>
+            }
+            else if (obj.Status.Equals("Inactive"))
+            {
+                <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">Status</MudText>
+                    <MudSelect T="string" @bind-Value="obj.Status" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+                        <MudSelectItem Value="@obj.Status" />
+                        <MudSelectItem Value="@("Vacant")" />
+                    </MudSelect>
+                </div>
+            }
+            else
+            {
+                <div class="flex-grow-1">
+                    <MudText Typo="Typo.body2">Status</MudText>
+                    <div class="flex-grow-1" style="background-color: #C1D4CD;padding: 10px 12px;border-radius: 5px;">
+                        @obj.Status
+                    </div>
+                </div>
+            }
 
             <MudDivider Class="my-3" />
 
@@ -165,11 +195,11 @@
 
     private async Task UpdateObj()
     {
+        if (obj.ReportingTo == "Null")
+            obj.ReportingTo = "";
 
         await PositionService.UpdateSubPosition(obj);
 
-        if (obj.ReportingTo == "Null")
-            obj.ReportingTo = "";
         Cancel();
         _toastService.ShowSuccess("Updated Successfully!");
         if (!string.IsNullOrEmpty(GlobalConfigService.Role))
@@ -191,6 +221,11 @@
                 GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
             }
             else if (item.Status == "Inactive" && item.Emp_VerifyId != "")
+            {
+                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
+            }
+            else if (item.Status == "Vacant" && item.Emp_VerifyId != "")
             {
                 // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
                 GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");

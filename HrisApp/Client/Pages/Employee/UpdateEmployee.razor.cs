@@ -189,20 +189,6 @@ namespace HrisApp.Client.Pages.Employee
             }
         }
 
-        public async Task OnExporttoPDF()
-        {
-            try
-            {
-                string url = await EmployeeService.EmpDetailsGenerate(employee.Verify_Id);
-                await jsRuntime.InvokeAsync<object>("open", url, "_blank");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                //NavigateError();
-            }
-        }
-
         protected async Task SaveUpdateEmployee()
         {
             if (Bday.HasValue)
@@ -281,8 +267,8 @@ namespace HrisApp.Client.Pages.Employee
                         var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
                     }
 
-                    //UPDATE SUB POSITION INACTIVE EMPLOYEE
-                    _subposition.Status = "Inactive";
+                    //UPDATE SUB POSITION FOR INACTIVE EMPLOYEE
+                    _subposition.Status = "Vacant";
                     _subposition.InActiveDate = employee.DateInactiveStatus;
                     await PositionService.UpdateSubPosition(_subposition);
 
@@ -365,7 +351,7 @@ namespace HrisApp.Client.Pages.Employee
                 }
                 else
                 {
-                    _subposition.Status = "Inactive";
+                    _subposition.Status = "Vacant";
                     _subposition.Emp_VerifyId = string.Empty;
                     _subposition.ActiveDate = null;
                     await PositionService.UpdateSubPosition(_subposition);
@@ -465,6 +451,20 @@ namespace HrisApp.Client.Pages.Employee
 
         #endregion Image Update
 
+
+        public async Task OnExporttoPDF()
+        {
+            try
+            {
+                string url = await EmployeeService.EmpDetailsGenerate(employee.Verify_Id);
+                await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //NavigateError();
+            }
+        }
         public async Task DeleteEmployee(int id)
         {
             var result = await Swal.FireAsync(new SweetAlertOptions

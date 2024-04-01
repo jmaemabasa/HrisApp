@@ -86,15 +86,18 @@
                 <MudTd DataLabel="">@pos.Description</MudTd>
                 <MudTd DataLabel="">@pos.ReportingTo</MudTd>
                 <MudTd DataLabel="" Style="text-align: center">
-                    @if (pos.Status == "Active")
+                    @if (pos.Status.Equals("Active"))
                     {
                         <MudChip Style="font-family: 'Poppins', sans-serif; background-color: #C1D4CD; color: #397763;">@pos.Status</MudChip>
+                    }
+                    else if (pos.Status.Equals("Inactive"))
+                    {
+                        <MudChip Style="font-family: 'Poppins', sans-serif; background-color: rgba(234, 188, 187, .5); color: #BE1313;">@pos.Status</MudChip>
                     }
                     else
                     {
                         <MudChip Style="font-family: 'Poppins', sans-serif; background-color: #d1d0cf; color: #424140;">@pos.Status</MudChip>
                     }
-                    @* <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton> *@
                 </MudTd>
                 <MudTd Style="text-align: center">
                     <AuthorizeView Roles="CadAdmin, SysAdmin">
