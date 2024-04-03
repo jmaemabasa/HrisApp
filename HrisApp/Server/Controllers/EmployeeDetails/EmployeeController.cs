@@ -75,8 +75,8 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
             return Ok(user);
         }
 
-        [HttpGet("GetSingleEmployeeByVerId/{verId}")]
-        public async Task<ActionResult<EmployeeT>> GetSingleEmployeeByVerId(string verId)
+        [HttpGet("GetSingleEmployeeByVerId")]
+        public async Task<ActionResult<EmployeeT>> GetSingleEmployeeByVerId([FromQuery]string verId)
         {
             var user = await _context.EmployeeT
                 .Include(em => em.Status)

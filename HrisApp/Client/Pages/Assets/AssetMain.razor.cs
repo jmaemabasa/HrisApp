@@ -24,11 +24,6 @@ namespace HrisApp.Client.Pages.Assets
             {
                 OpenOverlay();
             }
-
-            //foreach (var item in AssetMasterList)
-            //{
-            //    await AssetImg(item.AssetCode);
-            //}
         }
 
         private async Task LoadList()

@@ -1594,6 +1594,176 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("ConsumablesT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.Licenses.AssetLicenseHistoryT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AssetLicenseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AssignedDateMainAss")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MainAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UnassignedDateMainAss")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetLicenseId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("MainAssetId");
+
+                    b.ToTable("AssetLicenseHistoryT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.Licenses.AssetLicenseRemarksT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LicenseAssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetLicenseRemarksT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.Licenses.AssetLicenseT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AssetStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EUF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InUseStatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JMCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastCheckDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("MainAssetDateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("MainAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseAmount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Serial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetStatusId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("MainAssetId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("AssetLicenseT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainAssetAccessoriesT", b =>
                 {
                     b.Property<int>("Id")
@@ -1638,6 +1808,52 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("SubCategoryId");
 
                     b.ToTable("MainAssetAccessoriesT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainAssetLicensesT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AssetLicenseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AssetMasterCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AssetMasterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateStatusChanged")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateUsed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetLicenseId");
+
+                    b.HasIndex("AssetMasterId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("MainAssetLicensesT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainRemarksT", b =>
@@ -2366,15 +2582,7 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Eval4Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Eval5Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Eval6Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -2495,6 +2703,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("EmploymentStatusId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NewAreaId")
                         .HasColumnType("int");
 
@@ -2519,6 +2730,8 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmploymentStatusId");
 
                     b.ToTable("Emp_PosHistoryT");
                 });
@@ -2849,6 +3062,59 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("SubCategoryId");
 
                     b.ToTable("AssetVehicleImageT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.AssLicenseImageT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Img_Contenttype")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Img_Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("Img_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Img_Filename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JM_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("AssLicenseImageT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Images.ConsumableImageT", b =>
@@ -3443,9 +3709,6 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Plantilla")
-                        .HasColumnType("int");
-
                     b.Property<string>("PosCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3487,1086 +3750,6 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PositionT");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AreaId = 1,
-                            DepartmentId = 1,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "FSS",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S101",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AreaId = 1,
-                            DepartmentId = 1,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Feeder",
-                            OtherCompetencies = "",
-                            Plantilla = 2,
-                            PosCode = "S102",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AreaId = 1,
-                            DepartmentId = 1,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "FCCR",
-                            OtherCompetencies = "",
-                            Plantilla = 2,
-                            PosCode = "S103",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AreaId = 1,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "FSS",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3K01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AreaId = 1,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "DT Booking/ GT Booking",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3K02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 6,
-                            AreaId = 1,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "DSS",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3K03",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 7,
-                            AreaId = 1,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "PM Salesman",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3K04",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 8,
-                            AreaId = 1,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "OMNI Feeder",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "S3K05",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 9,
-                            AreaId = 1,
-                            DepartmentId = 4,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "FCCR",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3K06",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 10,
-                            AreaId = 1,
-                            DepartmentId = 5,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "FSS",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3C01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 11,
-                            AreaId = 1,
-                            DepartmentId = 5,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "DT Booking/ GT Booking",
-                            OtherCompetencies = "",
-                            Plantilla = 2,
-                            PosCode = "S3C02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 12,
-                            AreaId = 1,
-                            DepartmentId = 5,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "DSS",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3C03",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 13,
-                            AreaId = 1,
-                            DepartmentId = 5,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "OMNI Feeder",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "S3C04",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 14,
-                            AreaId = 1,
-                            DepartmentId = 5,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "FCCR",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "S3C05",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 15,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Operations Manager",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "URIC01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 16,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "HAPI Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "URICHAP01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 4,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 17,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "HAPI Dealer Coor",
-                            OtherCompetencies = "",
-                            Plantilla = 4,
-                            PosCode = "URICHAP02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 4,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 18,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Field Sales Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "URICSER01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 19,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "MAG Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "URICSER02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 20,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "GTAS",
-                            OtherCompetencies = "",
-                            Plantilla = 5,
-                            PosCode = "URICSER03",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 21,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "SMS",
-                            OtherCompetencies = "",
-                            Plantilla = 11,
-                            PosCode = "URICSER04",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 5,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 22,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "NAO Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "URICEXP01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 6,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 23,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "NAO",
-                            OtherCompetencies = "",
-                            Plantilla = 2,
-                            PosCode = "URICEXP02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 6,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 24,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "HAPI NAO",
-                            OtherCompetencies = "",
-                            Plantilla = 4,
-                            PosCode = "URICEXP02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 6,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 25,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "IT & Support Services Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "URICDTE01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 7,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 26,
-                            AreaId = 1,
-                            DepartmentId = 6,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Teleservices Support Staff / Online Coor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "URICDTE02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 7,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 27,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Field Sales Manager",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "GCASH01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 28,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Field Sales Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "GCASH02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 29,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Field Sales Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "GCASHSER01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 8,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 30,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Sonic DSP",
-                            OtherCompetencies = "",
-                            Plantilla = 4,
-                            PosCode = "GCASHSER02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 8,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 31,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "DSP (Commando/Incubator)",
-                            OtherCompetencies = "",
-                            Plantilla = 6,
-                            PosCode = "GCASHSER03",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 8,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 32,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Ambassador",
-                            OtherCompetencies = "",
-                            Plantilla = 2,
-                            PosCode = "GCASHEXP01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 9,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 33,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Merchandiser",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "GCASHMER01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 10,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 34,
-                            AreaId = 1,
-                            DepartmentId = 8,
-                            DivisionId = 1,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Scan to Pay",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "GCASHSCA01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 11,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 35,
-                            AreaId = 1,
-                            DepartmentId = 9,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Team Leader/Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "GAINV01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 12,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 36,
-                            AreaId = 1,
-                            DepartmentId = 9,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Trade Payable Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 2,
-                            PosCode = "GAINV02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 12,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 37,
-                            AreaId = 1,
-                            DepartmentId = 9,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Non Trade Payable Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "GAINV03",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 12,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 38,
-                            AreaId = 1,
-                            DepartmentId = 9,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Team Leader/Supervisor",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "GAGEN01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 13,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 39,
-                            AreaId = 1,
-                            DepartmentId = 9,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Gen Accounting Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "GAGEN02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 13,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 41,
-                            AreaId = 1,
-                            DepartmentId = 9,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Tax and Compliance Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "GATAX02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 14,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 43,
-                            AreaId = 1,
-                            DepartmentId = 10,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Accounts Receivable Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 4,
-                            PosCode = "SAACC02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 15,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 46,
-                            AreaId = 1,
-                            DepartmentId = 10,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Billing to Cash Settlement Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "SABIL01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 17,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 47,
-                            AreaId = 1,
-                            DepartmentId = 11,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Manager",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "IT01",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 48,
-                            AreaId = 1,
-                            DepartmentId = 11,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "IT Associate",
-                            OtherCompetencies = "",
-                            Plantilla = 2,
-                            PosCode = "IT02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 49,
-                            AreaId = 1,
-                            DepartmentId = 11,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "IT Staff",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "IT03",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 0,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 51,
-                            AreaId = 1,
-                            DepartmentId = 12,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Davao Cashier",
-                            OtherCompetencies = "",
-                            Plantilla = 3,
-                            PosCode = "TREASURYCAS02",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 52,
-                            AreaId = 1,
-                            DepartmentId = 12,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Cotabato Cashier",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "TREASURYCAS03",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 53,
-                            AreaId = 1,
-                            DepartmentId = 12,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Kidapawan Cashier",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "TREASURYCAS04",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        },
-                        new
-                        {
-                            Id = 54,
-                            AreaId = 1,
-                            DepartmentId = 12,
-                            DivisionId = 2,
-                            JobSummary = "",
-                            Manpower = "Internal",
-                            Name = "Digos Cashier",
-                            OtherCompetencies = "",
-                            Plantilla = 1,
-                            PosCode = "TREASURYCAS05",
-                            PosEducation = "",
-                            PosMPExternalId = 0,
-                            PositionType = "",
-                            Restrictions = "",
-                            SectionId = 18,
-                            Supervisory = "",
-                            TemporaryDuration = "",
-                            VerifyId = "",
-                            WorkExperience = ""
-                        });
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionTechSkillT", b =>
@@ -5867,6 +5050,78 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("UOM");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.Licenses.AssetLicenseHistoryT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.Licenses.AssetLicenseT", "AssetLicense")
+                        .WithMany()
+                        .HasForeignKey("AssetLicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "MainAsset")
+                        .WithMany()
+                        .HasForeignKey("MainAssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssetLicense");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("MainAsset");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.Licenses.AssetLicenseT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.StaticData.AssetStatusT", "AssetStatus")
+                        .WithMany()
+                        .HasForeignKey("AssetStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "MainAsset")
+                        .WithMany()
+                        .HasForeignKey("MainAssetId");
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetTypesT", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssetStatus");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("MainAsset");
+
+                    b.Navigation("SubCategory");
+
+                    b.Navigation("Type");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainAssetAccessoriesT", b =>
                 {
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetAccessoryT", "AssetAccessory")
@@ -5894,6 +5149,41 @@ namespace HrisApp.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("AssetAccessory");
+
+                    b.Navigation("AssetMaster");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.MainAssetLicensesT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.Licenses.AssetLicenseT", "AssetLicense")
+                        .WithMany()
+                        .HasForeignKey("AssetLicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "AssetMaster")
+                        .WithMany()
+                        .HasForeignKey("AssetMasterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssetLicense");
 
                     b.Navigation("AssetMaster");
 
@@ -5946,6 +5236,15 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("RestDay");
 
                     b.Navigation("ScheduleType");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Employee.Emp_PosHistoryT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.StaticData.EmploymentStatusT", "EmploymentStatus")
+                        .WithMany()
+                        .HasForeignKey("EmploymentStatusId");
+
+                    b.Navigation("EmploymentStatus");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Employee.EmployeeT", b =>
@@ -6062,6 +5361,25 @@ namespace HrisApp.Server.Migrations
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Images.AssetVehicleImageT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.AssLicenseImageT", b =>
                 {
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
                         .WithMany()

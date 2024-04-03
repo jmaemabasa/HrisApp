@@ -8,6 +8,7 @@
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private bool isSavingAdd = false;
 
         public string imgBase64 { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
@@ -33,6 +34,8 @@
 
         private async Task ConfirmCreate()
         {
+            isSavingAdd = true;
+
             obj.LastCheckDate = null;
             obj.CreatedById = Int32.Parse(GlobalConfigService.User_Id);
             await AssetAccService.CreateObj(obj);
@@ -40,12 +43,14 @@
             await SaveAlLRemarks(obj.AssetCode);
 
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
-
             MudDialog?.Close();
-            _toastService.ShowSuccess(obj.MainAsset + " Created Successfully!");
+
 
             // Update the List using the StateService
             StateService.SetState("AssetAccList", await AssetAccService.GetObjList());
+            _toastService.ShowSuccess(obj.MainAsset + " Created Successfully!");
+
+            isSavingAdd = false;
         }
 
         #region REMARKS

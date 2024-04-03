@@ -1,13 +1,12 @@
 ﻿<div class="d-flex flex-row align-items-center gap-3" style="cursor: pointer" @onclick="GoToEmployee">
     <div class="d-flex align-items-center">
         <MudAvatar>
-            @* <MudImage Src="@ImageData"></MudImage> *@
             <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
         </MudAvatar>
     </div>
     <div>
-        <div class="flex-column" >
-            <div style="font-weight: bold;">@employee.FirstName  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @employee.LastName</div>
+        <div class="flex-column">
+            <div style="font-weight: bold;">@fname  @mname  @lname</div>
             <div style="font-size: 13px !important;">@subpos.Description</div>
         </div>
     </div>
@@ -15,11 +14,12 @@
 
 @code {
     #nullable disable
-    [Parameter]
-    public string verify { get; set; }
+    [Parameter] public string verify { get; set; }
 
     EmployeeT employee = new();
     SubPositionT subpos = new();
+
+    string fname = "", lname = "", mname = "", pos ="";
 
     private string ImageData;
 
@@ -28,14 +28,17 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
+        subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
+
+        fname = employee.FirstName;
+        lname = employee.LastName;
+        mname = (employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "");
         try
         {
-            employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
-            subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
-
             await EmployeeImg(verify);//image
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             if (employee.GenderId == 1)
             {

@@ -20,7 +20,6 @@ namespace HrisApp.Shared.Models.MasterData
         public string WorkExperience { get; set; } = string.Empty;
         public string OtherCompetencies { get; set; } = string.Empty;
         public string Restrictions { get; set; } = string.Empty;
-        public int Plantilla { get; set; } //FK
         public string PositionType { get; set; } = string.Empty;
         public string TemporaryDuration { get; set; } = string.Empty;
         public string Manpower { get; set; } = string.Empty;

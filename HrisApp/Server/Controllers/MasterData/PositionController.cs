@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 namespace HrisApp.Server.Controllers.MasterData
 {
 #nullable disable
+
     [Route("api/[controller]")]
     [ApiController]
     public class PositionController : ControllerBase
@@ -122,7 +123,6 @@ namespace HrisApp.Server.Controllers.MasterData
             dbpos.JobSummary = pos.JobSummary;
             dbpos.OtherCompetencies = pos.OtherCompetencies;
             dbpos.Restrictions = pos.Restrictions;
-            dbpos.Plantilla = pos.Plantilla;
             dbpos.PositionType = pos.PositionType;
             dbpos.TemporaryDuration = pos.TemporaryDuration;
             dbpos.PosMPExternalId = pos.PosMPExternalId;
@@ -138,9 +138,12 @@ namespace HrisApp.Server.Controllers.MasterData
         [HttpGet("GetTotalPlantilla")]
         public async Task<ActionResult<int>> GetTotalPlantilla()
         {
-            var totalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla);
-            return Ok(totalPlantilla);
+            await Task.Delay(0);
+            //var totalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla);
+            //return Ok(totalPlantilla);
+            return 0;
         }
+
         [HttpPost("CreateTotalPlantilla")]
         public async Task<ActionResult<DailyTotalPlantillaT>> CreateTotalPlantilla(DailyTotalPlantillaT obj)
         {
@@ -150,11 +153,14 @@ namespace HrisApp.Server.Controllers.MasterData
             var existingRecord = await _context.DailyTotalPlantillaT
                 .FirstOrDefaultAsync(d => d.Date == today);
 
+            var subpos = await _context.SubPositionT.ToListAsync();
+
             if (existingRecord != null)
             {
                 //return Conflict("Total plantilla record for today already exists.");
                 // Check if the new total plantilla is different from the existing one
-                int newTotalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla);
+                //int newTotalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla);
+                int newTotalPlantilla = subpos.Where(e => e.Status != "Inactive").Count();
 
                 if (existingRecord.TotalPlantilla != newTotalPlantilla)
                 {
@@ -167,10 +173,10 @@ namespace HrisApp.Server.Controllers.MasterData
             }
 
             // Create a new record for today
-            DailyTotalPlantillaT newRecord = new DailyTotalPlantillaT
+            DailyTotalPlantillaT newRecord = new()
             {
                 Date = today,
-                TotalPlantilla = await _context.PositionT.SumAsync(p => p.Plantilla)
+                TotalPlantilla = subpos.Where(e => e.Status != "Inactive").Count()
             };
 
             _context.DailyTotalPlantillaT.Add(newRecord);
@@ -178,6 +184,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(newRecord);
         }
+
         [HttpGet("GetDbTotalPlantilla")]
         public async Task<ActionResult<List<DailyTotalPlantillaT>>> GetDbTotalPlantilla()
         {
@@ -214,11 +221,13 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(list);
         }
+
         private async Task<List<PositionTechSkillT>> GetDBTech()
         {
             return await _context.PositionTechSkillT
                 .ToListAsync();
         }
+
         [HttpGet("GetExistingTechSkill")]
         public async Task<ActionResult<int>> GetExistingTechSkill([FromQuery] string verifyCode)
         {
@@ -226,6 +235,7 @@ namespace HrisApp.Server.Controllers.MasterData
             var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
             return image;
         }
+
         [HttpPost("CreateTechSkill")]
         public async Task<ActionResult<PositionTechSkillT>> CreateTechSkill([FromBody] PositionTechSkillT obj)
         {
@@ -238,6 +248,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(obj);
         }
+
         [HttpPut("UpdateTechSkill/{VerifyId}")]
         public async Task<ActionResult<List<PositionComAppT>>> UpdateTechSkill(PositionTechSkillT emphistory, string VerifyId)
         {
@@ -274,11 +285,13 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(list);
         }
+
         private async Task<List<PositionComAppT>> GetDBComApp()
         {
             return await _context.PositionComAppT
                 .ToListAsync();
         }
+
         [HttpGet("GetExistingComApp")]
         public async Task<ActionResult<int>> GetExistingComApp([FromQuery] string verifyCode)
         {
@@ -286,6 +299,7 @@ namespace HrisApp.Server.Controllers.MasterData
             var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
             return image;
         }
+
         [HttpPost("CreateComApp")]
         public async Task<ActionResult<PositionComAppT>> CreateComApp([FromBody] PositionComAppT obj)
         {
@@ -298,6 +312,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(obj);
         }
+
         [HttpPut("UpdateComApp/{VerifyId}")]
         public async Task<ActionResult<List<PositionComAppT>>> UpdateComApp(PositionComAppT emphistory, string VerifyId)
         {
@@ -334,11 +349,13 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(list);
         }
+
         private async Task<List<PositionKnowledgeT>> GetDBKnow()
         {
             return await _context.PositionKnowledgeT
                 .ToListAsync();
         }
+
         [HttpGet("GetExistingKnowledge")]
         public async Task<ActionResult<int>> GetExistingKnowledge([FromQuery] string verifyCode)
         {
@@ -346,6 +363,7 @@ namespace HrisApp.Server.Controllers.MasterData
             var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
             return image;
         }
+
         [HttpPost("CreateKnowledge")]
         public async Task<ActionResult<PositionKnowledgeT>> CreateKnowledge([FromBody] PositionKnowledgeT obj)
         {
@@ -358,6 +376,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(obj);
         }
+
         [HttpPut("UpdateKnowledge/{VerifyId}")]
         public async Task<ActionResult<List<PositionComAppT>>> UpdateKnowledge(PositionKnowledgeT emphistory, string VerifyId)
         {
@@ -394,11 +413,13 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(list);
         }
+
         private async Task<List<PositionWorkExpT>> GetDBWorkExp()
         {
             return await _context.PositionWorkExpT
                 .ToListAsync();
         }
+
         [HttpGet("GetExistingWorkExp")]
         public async Task<ActionResult<int>> GetExistingWorkExp([FromQuery] string verifyCode)
         {
@@ -406,6 +427,7 @@ namespace HrisApp.Server.Controllers.MasterData
             var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
             return image;
         }
+
         [HttpPost("CreateWorkExp")]
         public async Task<ActionResult<PositionWorkExpT>> CreateWorkExp([FromBody] PositionWorkExpT obj)
         {
@@ -418,6 +440,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(obj);
         }
+
         [HttpPut("UpdateWorkExp/{VerifyId}")]
         public async Task<ActionResult<List<PositionWorkExpT>>> UpdateWorkExp(PositionWorkExpT emphistory, string VerifyId)
         {
@@ -454,11 +477,13 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(list);
         }
+
         private async Task<List<PositionEducT>> GetDBEduc()
         {
             return await _context.PositionEducT
                 .ToListAsync();
         }
+
         [HttpGet("GetExistingEduc")]
         public async Task<ActionResult<int>> GetExistingEduc([FromQuery] string verifyCode)
         {
@@ -466,6 +491,7 @@ namespace HrisApp.Server.Controllers.MasterData
             var image = allimage.Where(h => h.VerifyId == verifyCode).Count();
             return image;
         }
+
         [HttpPost("CreateEduc")]
         public async Task<ActionResult<PositionEducT>> CreateEduc([FromBody] PositionEducT obj)
         {
@@ -478,6 +504,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(obj);
         }
+
         [HttpPut("UpdateEduc/{VerifyId}")]
         public async Task<ActionResult<List<PositionEducT>>> UpdateEduc(PositionEducT emphistory, string VerifyId)
         {
@@ -538,7 +565,6 @@ namespace HrisApp.Server.Controllers.MasterData
             }
         }
 
-
         [HttpGet("GetSubPosition")]
         public async Task<ActionResult<List<SubPositionT>>> GetSubPosition()
         {
@@ -546,6 +572,7 @@ namespace HrisApp.Server.Controllers.MasterData
                 .ToListAsync();
             return Ok(pos);
         }
+
         [HttpGet("GetExistingSubPos/{poscode}")]
         public async Task<ActionResult<int>> GetExistingSubPos(string poscode)
         {
@@ -563,11 +590,13 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(await GetDBSubPosition());
         }
+
         private async Task<List<SubPositionT>> GetDBSubPosition()
         {
             return await _context.SubPositionT
                 .ToListAsync();
         }
+
         [HttpPut("UpdateSubPosition")]
         public async Task<ActionResult> UpdateSubPosition(SubPositionT pos)
         {
@@ -584,7 +613,6 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(await GetDBSubPosition());
         }
 
-
         [HttpPut("UpdateDescSubPosition/{poscode}/{desc}")]
         public async Task<ActionResult> UpdateDescSubPosition(string poscode, string desc)
         {
@@ -598,7 +626,6 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(await GetDBSubPosition());
         }
 
-
         [HttpGet("GetSingleSubPosition/{id}")]
         public async Task<ActionResult<SubPositionT>> GetSingleSubPosition(int id)
         {
@@ -611,6 +638,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return pos;
         }
+
         [HttpDelete("DeleteSubPosition/{id}")]
         public async Task<ActionResult<List<SubPositionT>>> DeleteSubPosition(int id)
         {
@@ -626,7 +654,6 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(obj);
         }
 
-
         [HttpGet("GetSubPositionId/{name}")]
         public async Task<ActionResult<int>> GetSubPositionId(string name)
         {
@@ -637,6 +664,5 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(_returnId.Id);
         }
-
     }
 }

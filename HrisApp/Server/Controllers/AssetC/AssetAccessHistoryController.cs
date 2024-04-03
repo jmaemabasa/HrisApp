@@ -19,6 +19,7 @@
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateMainAss)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -30,6 +31,7 @@
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateMainAss)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -41,6 +43,7 @@
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateMainAss)
                 .FirstOrDefaultAsync(h => h.Id == id);
 
             if (obj == null)
@@ -57,6 +60,7 @@
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateMainAss)
                 .FirstOrDefaultAsync(h => h.AssetAccessoryId == accid && h.MainAssetId == mainid);
 
             if (obj == null)
@@ -72,6 +76,7 @@
                 .Include(e => e.MainAsset)
                 .Include(e => e.AssetAccessory)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateMainAss)
                 .ToListAsync();
         }
 

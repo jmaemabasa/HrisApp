@@ -1,0 +1,167 @@
+﻿<MudDialog Style="background-color: #e9ecef">
+    <DialogContent>
+        <div class="dialog-title">
+            <span>New Asset License</span>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div style="width: 45%;">
+                @if (imgBase64 == "./images/addIconImage.png")
+                {
+                    <MudFileUpload T="IBrowserFile" OnFilesChanged="@UploadImage" Accept="image/*" capture>
+                        <ButtonTemplate>
+                            <MudButton Class="@imguploadclass" DisableElevation HtmlTag="label" Variant="Variant.Outlined" for="@context">
+                                <div style="height: 165px; display: flex; justify-content: center; align-items: center; ">
+                                    <MudImage Src="@imgBase64" Style="height: 100px; width: 100px; " />
+                                </div>
+                            </MudButton>
+                        </ButtonTemplate>
+                    </MudFileUpload>
+                }
+                else
+                {
+                    <MudFileUpload T="IBrowserFile" OnFilesChanged="@UploadImage" Accept="image/*" capture>
+                        <ButtonTemplate>
+                            <MudButton Class="w-100 btnimagewithimage" DisableElevation HtmlTag="label" for="@context">
+                                <div style="height: 165px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:0px">
+                                    <MudImage Src="@imgBase64" Style="height: 95%; width: auto; max-width:100%; border-radius: 14px; border: none; " />
+                                </div>
+                            </MudButton>
+                        </ButtonTemplate>
+                    </MudFileUpload>
+                }
+            </div>
+            <MudText Typo="Typo.body2" Style="margin-top: 10px;">Select Image</MudText>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Type</MudText>
+                    <MudSelect T="int" ValueChanged="OnChangeType" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                        @foreach (var sec in TYPES)
+                        {
+                            <MudSelectItem Value="@sec.Id">@sec.AType_Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Category</MudText>
+                    <MudSelect T="int" ValueChanged="OnChangeCat" Disabled="@disabledcat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                        @foreach (var sec in CAT)
+                        {
+                            <MudSelectItem Value="@sec.Id">@sec.ACat_Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Sub Category</MudText>
+                    <MudSelect T="int" ValueChanged="OnChangeSCat" Disabled="@disabledsubcat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                        @foreach (var sec in SUBCAT.Where(e => e.CategoryId == obj.CategoryId))
+                        {
+                            <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Asset Code</MudText>
+                    <MudTextField @bind-Value="obj.AssetCode" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px; font-weight: bold;" />
+                </div>
+            </div>
+            @if (obj.AssetCode != "")
+            {
+
+                <div class="row">
+                    <div class="col-12">
+                        <MudText Typo="Typo.body2">Name</MudText>
+                        <MudTextField @bind-Value="obj.Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <MudText Typo="Typo.body2">Description</MudText>
+                        <MudTextField @bind-Value="obj.Description" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Brand</MudText>
+                        <MudTextField @bind-Value="obj.Brand" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Model</MudText>
+                        <MudTextField @bind-Value="obj.Model" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Serial</MudText>
+                        <MudTextField @bind-Value="obj.Serial" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Quantity</MudText>
+                        <MudTextField @bind-Value="obj.Quantity" Mask="@(new PatternMask("00000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Purchase Date</MudText>
+                        <MudDatePicker Editable="true" @bind-Date="obj.PurchaseDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Purchase Amount</MudText>
+                        <MudTextField @bind-Value="obj.PurchaseAmount" Mask="@currMask" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <MudText Typo="Typo.body2">End of Useful Life (Months)</MudText>
+                        <MudTextField @bind-Value="obj.EUF" Mask="@(new PatternMask("00000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="d-flex flex-column">
+                    <div class="flex-grow-1">
+                        <MudText Typo="Typo.body2">Remarks</MudText>
+                        <div class="d-flex">
+                            <MudTextField @bind-Value="newRemark" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            <MudButton Class="btnsmallsapos" Variant="Variant.Filled" OnClick="@(() => AddNewRemark(obj.AssetCode, newRemark))">Add</MudButton>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap flex-grow-1">
+                        <MudChipSet AllClosable="true" OnClose="CloseRemark">
+                            @foreach (var item in listOfNewRemarks)
+                            {
+                                <MudChip Style="color: #fafaf5; background-color: #424242;" Text="@item.Remark"></MudChip>
+                            }
+                        </MudChipSet>
+                    </div>
+                </div>
+            }
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            @if (isSavingAdd)
+            {
+                <button type="button" disabled class="save btn">
+                    <div class="d-flex align-items-center">
+                        <div><MudProgressCircular Class="ms-n1" Color="Color.Info" Size="Size.Small" Indeterminate="true" /></div>
+                        <div class="ms-2">Saving...</div>
+                    </div>
+                </button>
+            }
+            else
+            {
+                <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+            }
+        </div>
+    </DialogActions>
+</MudDialog>

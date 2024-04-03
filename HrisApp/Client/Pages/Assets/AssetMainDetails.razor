@@ -7,8 +7,11 @@
     <MudItem xs="12" lg="3">
         <div class="mainassleft" style="margin-top: 10px;">
             <div class="d-flex flex-column justify-content-center ">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="spantitle">Main Asset</span>
+                <div class="d-flex align-items-center">
+                    <div class="">
+                        <MudIconButton Class="backTomainbtn" OnClick="BackToMainPage" Icon="@Icons.Material.Rounded.KeyboardArrowLeft" Size="Size.Medium" />
+                    </div>
+                    <div class="spantitle">Main Asset</div>
                 </div>
                 <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
                     <div class="d-flex justify-content-center">
@@ -201,7 +204,7 @@
                         </MudGrid>
                     </div>
 
-                    <div class="mainasssec" style="margin-top: 25px;">
+                    <div class="mainasssec" style="margin-top: 25px;max-height: 328px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Asset Accessories</span>
                             <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
@@ -222,25 +225,73 @@
                         }
                         else
                         {
-                            <div class="d-flex flex-column">
-                                @foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
-                                {
-                                    <div class="d-flex acc-cont" @onclick="()=>OpenAccessoriesDialog(item.Id)">
-                                        <MudGrid Spacing="2" Style="align-items: center">
-                                            <MudItem xs="12" sm="3">
-                                                <AssetImgandName assetcode="@item.AssetCode" assettype="acc" />
-                                            </MudItem>
-                                            <MudItem xs="12" sm="3"><span>@item.Model</span></MudItem>
-                                            <MudItem xs="12" sm="3"><span>@item.Brand</span></MudItem>
-                                            <MudItem xs="12" sm="2"><span>@item.PurchaseDate?.ToString("MMM dd yyyy")</span></MudItem>
-                                            <MudItem xs="12" sm="1">
-                                                <MudTooltip Text="Remove">
-                                                    <MudIconButton Class="btnremoveacc" OnClick="(() => RemoveAccessory(item.Id))" Size="Size.Medium" Icon="@Icons.Material.Rounded.Remove" aria-label="Remove"></MudIconButton>
-                                                </MudTooltip>
-                                            </MudItem>
-                                        </MudGrid>
-                                    </div>
-                                }
+                            <div style="max-height: 242px;overflow: auto;">
+                                <div class="d-flex flex-column">
+                                    @foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
+                                    {
+                                        <div class="d-flex acc-cont" @onclick="()=>OpenAccessoriesDialog(item.Id)">
+                                            <MudGrid Spacing="2" Style="align-items: center">
+                                                <MudItem xs="12" sm="3">
+                                                    <AssetImgandName assetcode="@item.AssetCode" assettype="acc" />
+                                                </MudItem>
+                                                <MudItem xs="12" sm="3"><span>@item.Model</span></MudItem>
+                                                <MudItem xs="12" sm="3"><span>@item.Brand</span></MudItem>
+                                                <MudItem xs="12" sm="2"><span>@item.PurchaseDate?.ToString("MMM dd yyyy")</span></MudItem>
+                                                <MudItem xs="12" sm="1">
+                                                    <MudTooltip Text="Remove">
+                                                        <MudIconButton Class="btnremoveacc" OnClick="(() => RemoveAccessory(item.Id))" Size="Size.Medium" Icon="@Icons.Material.Rounded.Remove" aria-label="Remove"></MudIconButton>
+                                                    </MudTooltip>
+                                                </MudItem>
+                                            </MudGrid>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mainasssec" style="margin-top: 25px;max-height: 328px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="spantitle">Asset Licenses</span>
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
+                                <Authorized>
+                                    <button class="Btn" @onclick="OpenManageLicenses">
+
+                                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+
+                                        <div class="text">Add</div>
+                                    </button>
+                                </Authorized>
+                            </AuthorizeView>
+                        </div>
+
+                        @if (LICENSES.Where(e => e.MainAssetId == obj.Id) == null || LICENSES.Where(e => e.MainAssetId == obj.Id).ToList().Count == 0)
+                        {
+                            <span style="font-style: italic;">No licenses</span>
+                        }
+                        else
+                        {
+                            <div style="max-height: 242px;overflow: auto;">
+                                <div class="d-flex flex-column">
+                                    @foreach (var item in LICENSES.Where(e => e.MainAssetId == obj.Id))
+                                    {
+                                        <div class="d-flex acc-cont" @onclick="()=>OpenLicenseDialog(item.Id)">
+                                            <MudGrid Spacing="2" Style="align-items: center">
+                                                <MudItem xs="12" sm="3">
+                                                    <AssetImgandName assetcode="@item.AssetCode" assettype="license" />
+                                                </MudItem>
+                                                <MudItem xs="12" sm="3"><span>@item.Model</span></MudItem>
+                                                <MudItem xs="12" sm="3"><span>@item.Brand</span></MudItem>
+                                                <MudItem xs="12" sm="2"><span>@item.PurchaseDate?.ToString("MMM dd yyyy")</span></MudItem>
+                                                <MudItem xs="12" sm="1">
+                                                    <MudTooltip Text="Remove">
+                                                        <MudIconButton Class="btnremoveacc" OnClick="(() => RemoveLicense(item.Id))" Size="Size.Medium" Icon="@Icons.Material.Rounded.Remove" aria-label="Remove"></MudIconButton>
+                                                    </MudTooltip>
+                                                </MudItem>
+                                            </MudGrid>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         }
                     </div>
@@ -480,7 +531,7 @@
                                     <RowTemplate>
                                         <MudTd DataLabel="Code"><b>@item.MainAsset?.AssetCode</b></MudTd>
                                         <MudTd DataLabel="Employee">
-                                            <EmployeeNamePosition verify="@item.Employee?.Verify_Id" />
+                                            <EmployeeNamePosition verify="@item.Employee.Verify_Id" />
                                         </MudTd>
                                         <MudTd DataLabel="Released Date">@item.AssignedDateReleased?.ToString("MMM dd yyyy")</MudTd>
                                         <MudTd DataLabel="Returned Date">@item.EndDate?.ToString("MMM dd yyyy")</MudTd>
@@ -830,77 +881,44 @@
 <MudDrawer @bind-Open="@assignPanelOpen" Width="500px" Height="100%" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <div class="d-flex flex-column gap-2 drawerdetails">
         <span>Assign Employee to @obj.Name</span>
-        @if (obj.EmployeeId == null)
-        {
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Division</MudText>
-                <MudSelect T="int" ValueChanged="OnDivChange" Variant="Variant.Outlined" Margin="Margin.Dense">
-                    <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
-                    @foreach (var sec in DIVISION)
-                    {
-                        <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
-                <MudSelect T="int" ValueChanged="OnDepChange" Disabled="isdisableDept" Variant="Variant.Outlined" Margin="Margin.Dense">
-                    <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
-                    @foreach (var sec in DEPARTMENT.Where(e => e.DivisionId == divid))
-                    {
-                        <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Employee</MudText>
-                <MudSelect @bind-Value="empid" Disabled="isdisableEmp" Variant="Variant.Outlined" Margin="Margin.Dense">
-                    <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
-                    @foreach (var sec in EMPLOYEE.Where(e => e.DivisionId == divid && e.DepartmentId == deptid && e.StatusId == 1))
-                    {
-                        <MudSelectItem Value="@sec.Id">@sec.FirstName @sec.LastName</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date Released</MudText>
-                <MudDatePicker Editable="true" @bind-Date="obj.AssignedDateReleased" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
-        }
-        else
-        {
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Division</MudText>
-                <MudSelect @bind-Value="divid" Variant="Variant.Outlined" Margin="Margin.Dense">
-                    @foreach (var sec in DIVISION)
-                    {
-                        <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
-                <MudSelect @bind-Value="deptid" Variant="Variant.Outlined" Margin="Margin.Dense">
-                    @foreach (var sec in DEPARTMENT.Where(e => e.DivisionId == divid))
-                    {
-                        <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Employee</MudText>
-                <MudSelect @bind-Value="empid" Variant="Variant.Outlined" Margin="Margin.Dense">
-                    @foreach (var sec in EMPLOYEE.Where(e => e.DivisionId == divid && e.DepartmentId == deptid && e.StatusId == 1))
-                    {
-                        <MudSelectItem Value="@sec.Id">@sec.FirstName @sec.LastName</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
-            <div class="flex-grow-1">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date Released</MudText>
-                <MudDatePicker Editable="true" @bind-Date="obj.AssignedDateReleased" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
-        }
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Division</MudText>
+            <MudSelect T="int" ValueChanged="OnDivChange" Variant="Variant.Outlined" Margin="Margin.Dense">
+                <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                @foreach (var sec in DIVISION)
+                {
+                    <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
+            <MudSelect T="int" ValueChanged="OnDepChange" Variant="Variant.Outlined" Margin="Margin.Dense">
+                <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
+                @foreach (var sec in DEPARTMENT.Where(e => e.DivisionId == divid))
+                {
+                    <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Employee</MudText>
+            <MudAutocomplete T="EmployeeT" Placeholder="Type to search..." @bind-Value="selectedAssignEmployee"
+                             SearchFunc="@SearchAssignEmployee"
+                             ResetValueOnEmptyText="true"
+                             CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"
+                             ToStringFunc="@(e => e==null?null : $"{e.FirstName} {e.LastName}")" ShowProgressIndicator="true" Clearable="true">
+                <NoItemsTemplate>
+                    <MudText Align="Align.Center" Class="px-4 py-1">
+                        No items found
+                    </MudText>
+                </NoItemsTemplate>
+            </MudAutocomplete>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Date Released</MudText>
+            <MudDatePicker Editable="true" @bind-Date="obj.AssignedDateReleased" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        </div>
         <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-save" @onclick="SaveAssignEmp">Save</button>
         </div>

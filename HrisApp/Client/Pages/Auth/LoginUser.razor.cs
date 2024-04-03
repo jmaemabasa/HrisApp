@@ -77,7 +77,9 @@
                         var iduser = Convert.ToInt32(result.Message);
                         await AuditlogService.CreateLog(iduser, "LOGGED IN", "Site", DateTime.Now);
 
-                        int totalPlantilla = await PositionService.GetTotalPlantilla();
+                        //int totalPlantilla = await PositionService.GetTotalPlantilla();
+                        await PositionService.GetSubPosition();
+                        int totalPlantilla = PositionService.SubPositionTs.Where(e => e.Status != "Inactive").Count();
                         await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
                         if (result.UserRole == "Technical")

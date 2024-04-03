@@ -109,5 +109,37 @@ namespace HrisApp.Server.Controllers.AssetC.AssetPrintC
 
             return File(pdfBytes, "application/pdf");
         }
+
+        [HttpGet("QRPrintLicense")]
+        public async Task<IActionResult> QRPrintLicense([FromQuery] string AssetCode)
+        {
+            var MasterList = await _context.AssetAccessoryT.Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .ToListAsync();
+
+            var sortlist = MasterList.Where(e => e.AssetCode.Equals(AssetCode)).FirstOrDefault();
+
+            byte[] qrCodeBytes = GenerateQRCode($"http://sonicsales.net:1113/asset-license/details/{sortlist?.Id}");
+
+            if (qrCodeBytes == null)
+            {
+                return StatusCode(500, "Failed to generate QR code");
+            }
+
+            string qrCodeBase64 = Convert.ToBase64String(qrCodeBytes);
+
+            var path = $"{this._webHostEnvironment.WebRootPath}\\EmpDetails\\PrintAssetQR.rdlc";
+
+            var reportParameters = new List<ReportParameter>
+        {
+            new ReportParameter("ImgQR", qrCodeBase64)
+        };
+
+            byte[] pdfBytes = await RenderReportWithParameters(reportParameters);
+
+            return File(pdfBytes, "application/pdf");
+        }
     }
 }

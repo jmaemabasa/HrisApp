@@ -16,6 +16,8 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 
         private QRCodeGenerator qrGenerator = new();
 
+        private bool isSavingAdd = false;
+
         //image
         public string imgBase64 { get; set; } = string.Empty;
 
@@ -51,13 +53,13 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 
         private async Task ConfirmCreate()
         {
+            isSavingAdd = true;
             try
             {
                 obj.CreatedById = Int32.Parse(GlobalConfigService.User_Id);
                 await AssetMasterService.CreateObj(obj);
                 await OnsavingImg(obj.CategoryId, obj.SubCategoryId, obj.JMCode, "First image uploaded.");
                 await SaveAlLRemarks(obj.AssetCode);
-
 
                 await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
 
@@ -66,16 +68,18 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 
                 // Update the List using the StateService
                 StateService.SetState("AssetMasterList", await AssetMasterService.GetObjList());
+                isSavingAdd = false;
             }
             catch (Exception ex)
             {
+                isSavingAdd = false;
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.Message);
             }
         }
 
-
         #region REMARKS
+
         private string newRemark = "";
         public List<MainRemarksT> listOfNewRemarks = new();
 
@@ -124,7 +128,8 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
 
             listOfNewRemarks.Clear();
         }
-        #endregion
+
+        #endregion REMARKS
 
         #region FUNCTIONS
 
@@ -243,7 +248,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
             }
         }
 
-        #endregion
+        #endregion FUNCTIONS
 
         #region TABS
 
@@ -326,6 +331,5 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         }
 
         #endregion TABS
-
     }
 }

@@ -16,8 +16,8 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task<PositionT> GetSinglePosition(int id);
         Task<PositionT> GetSinglePositionByCode(string code);
 
-        Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
-        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
+        Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
+        Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
         Task UpdatePosition(PositionT position);
 
 

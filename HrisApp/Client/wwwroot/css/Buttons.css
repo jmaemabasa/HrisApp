@@ -1,4 +1,10 @@
-﻿.btnadd {
+﻿
+.backTomainbtn {
+    color: #424242;
+    margin-right: 3px;
+}
+
+.btnadd {
     border: none;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
     border-radius: 20px;

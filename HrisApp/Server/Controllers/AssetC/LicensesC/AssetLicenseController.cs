@@ -1,0 +1,171 @@
+﻿using HrisApp.Shared.Models.Assets.Licenses;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HrisApp.Server.Controllers.AssetC.LicensesC
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AssetLicenseController : ControllerBase
+    {
+        private readonly DataContext _context;
+
+        public AssetLicenseController(DataContext context)
+        {
+            _context = context;
+        }
+
+        //GEEET
+        [HttpGet]
+        public async Task<ActionResult<List<AssetLicenseT>>> GetObjList()
+        {
+            var obj = await _context.AssetLicenseT
+                .Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
+                .OrderByDescending(x => x.DateCreated)
+                .ToListAsync();
+            return Ok(obj);
+        }
+
+        [HttpGet("GetObj")]
+        public async Task<ActionResult<List<AssetLicenseT>>> GetObj()
+        {
+            var obj = await _context.AssetLicenseT
+                .Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
+                                .OrderByDescending(x => x.DateCreated)
+.ToListAsync();
+            return Ok(obj);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AssetLicenseT>> GetSingleObj(int id)
+        {
+            var obj = await _context.AssetLicenseT
+                .Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
+                .FirstOrDefaultAsync(h => h.Id == id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
+
+        [HttpGet("GetSingleObjByCode")]
+        public async Task<ActionResult<AssetLicenseT>> GetSingleObjByCode([FromQuery] string code)
+        {
+            var obj = await _context.AssetLicenseT
+                .Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
+                .FirstOrDefaultAsync(h => h.AssetCode == code);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
+        }
+
+        private async Task<List<AssetLicenseT>> GetDBObj()
+        {
+            return await _context.AssetLicenseT
+                .Include(e => e.AssetStatus)
+                .Include(e => e.Category)
+                .Include(e => e.SubCategory)
+                .Include(e => e.Type)
+                .Include(e => e.MainAsset)
+                .Include(e => e.CreatedBy)
+                                .OrderByDescending(x => x.DateCreated)
+                .ToListAsync();
+        }
+
+        //CREATE AND UPDATEEE
+        [HttpPost("CreateObj")]
+        public async Task<ActionResult<AssetLicenseT>> CreateArea(AssetLicenseT model)
+        {
+            _context.AssetLicenseT.Add(model);
+            await _context.SaveChangesAsync();
+
+            return Ok(await GetDBObj());
+        }
+
+        [HttpPut("UpdateObj")]
+        public async Task<ActionResult> UpdateArea(AssetLicenseT model)
+        {
+            var dbarea = await _context.AssetLicenseT.FirstOrDefaultAsync(d => d.Id == model.Id);
+
+            dbarea!.AssetCode = model.AssetCode;
+            dbarea.Name = model.Name;
+            dbarea.Brand = model.Brand;
+            dbarea.Model = model.Model;
+            dbarea.TypeId = model.TypeId;
+            dbarea.CategoryId = model.CategoryId;
+            dbarea.SubCategoryId = model.SubCategoryId;
+            dbarea.Description = model.Description;
+            dbarea.Quantity = model.Quantity;
+            dbarea.Barcode = model.Barcode;
+            dbarea.Serial = model.Serial;
+            dbarea.PurchaseDate = model.PurchaseDate;
+            dbarea.PurchaseAmount = model.PurchaseAmount;
+            dbarea.AssetStatusId = model.AssetStatusId;
+            dbarea.Remarks = model.Remarks;
+            dbarea.InUseStatusDate = model.InUseStatusDate;
+            dbarea.StatusDate = model.StatusDate;
+            dbarea.LastCheckDate = model.LastCheckDate;
+            dbarea.EUF = model.EUF;
+
+            dbarea.MainAssetId = model.MainAssetId;
+            dbarea.MainAssetDateUpdated = model.MainAssetDateUpdated;
+            await _context.SaveChangesAsync();
+
+            return Ok(await GetDBObj());
+        }
+
+        [HttpGet("GetObjId/{name}")]
+        public async Task<ActionResult<int>> GetAreaId(string code)
+        {
+            var Masterlist = await _context.AssetLicenseT
+                .ToListAsync();
+
+            var _returnId = Masterlist.Where(d => d.JMCode.Contains(code, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            return Ok(_returnId.Id);
+        }
+
+        [HttpGet("GetLastCode")]
+        public async Task<ActionResult<int>> GetLastCode([FromQuery] int cat, [FromQuery] int subcat)
+        {
+            var fromquery = $"{cat}-{subcat}";
+            var filtered = await _context.AssetLicenseT.Where(e => e.CategoryId == cat && e.SubCategoryId == subcat).ToListAsync();
+            var lastItem = filtered.OrderByDescending(e => e.Id).FirstOrDefault();
+
+            if (lastItem != null)
+            {
+                string code = lastItem.JMCode;
+
+                string splitcode = code.Split("-")[2];
+                return Ok(Convert.ToInt32(splitcode));
+            }
+
+            return Ok(0);
+        }
+    }
+}

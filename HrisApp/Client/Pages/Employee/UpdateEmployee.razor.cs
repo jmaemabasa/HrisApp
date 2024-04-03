@@ -592,6 +592,17 @@ namespace HrisApp.Client.Pages.Employee
                     builder.AddContent(6, "Attendance");
                     builder.CloseComponent();
                 }
+                else if (tabId == 6)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(6));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(6));
+                    builder.AddContent(6, "Assets");
+                    builder.CloseComponent();
+                }
             };
         }
 
@@ -607,6 +618,10 @@ namespace HrisApp.Client.Pages.Employee
                     return "mud-chip-after2";
                 else if (tabId == 3)
                     return "mud-chip-after3";
+                else if (tabId == 4)
+                    return "mud-chip-after4";
+                else if (tabId == 5)
+                    return "mud-chip-after5";
                 else
                     return "mud-chip-after";
             }
@@ -779,22 +794,6 @@ namespace HrisApp.Client.Pages.Employee
         private string _message = string.Empty;
         private MudBlazor.Severity _severity;
         private bool _showAlert = false;
-
-        private void OpenEnterPass()
-        {
-            if (_isShowData)
-            {
-                _isShowData = false;
-                _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
-                _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
-            }
-            else
-            {
-                inputPassword = "";
-                _showAlert = false;
-                isOpenEnterPass = true;
-            }
-        }
 
         //private string _pHealthHolder = "●●●●●●●●●", _pagIbigHolder = "●●●●●●●●●", _sssHolder = "●●●●●●●●●", _tinHolder = "●●●●●●●●●";
         private string _pHealthHolder = "", _pagIbigHolder = "", _sssHolder = "", _tinHolder = "", _rateholder ="";

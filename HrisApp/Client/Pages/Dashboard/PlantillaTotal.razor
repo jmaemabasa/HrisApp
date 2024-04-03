@@ -49,14 +49,16 @@
     }
     else
     {
-        <MudTable Class="stable" Items="@allPositions" Context="pos" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="697px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+        <MudTable Class="stable" Items="@allPositions" Context="pos" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="690px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
             <HeaderContent>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; ">Division</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; ">Department</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; ">Position</MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">No. of Personnel Required
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">
+                    Required Personnel
                 </MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">Active Employees</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align: center;">Vacant</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd>
@@ -80,9 +82,11 @@
                 </MudTd>
 
                 <MudTd>@pos.Name</MudTd>
-                <MudTd Style="text-align: center;">@pos.Plantilla</MudTd>
                 <MudTd Style="text-align: center;">
-                    @if (allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count() == pos.Plantilla)
+                    @allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status != "Inactive").Count()
+                </MudTd>
+                <MudTd Style="text-align: center;">
+                    @if (allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count() == allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status != "Inactive").Count())
                     {
                         <span style="color: green; font-weight: bold"> @allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count()</span>
                     }
@@ -90,8 +94,19 @@
                     {
                         <span style="color: red; font-weight: bold">@allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count()</span>
                     }
-                   
+
                 </MudTd>
+                <MudTd Style="text-align: center;">
+                    @if (allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Vacant").Count() != 0)
+                    {
+                        <span style="color: #E38D0F; font-weight: bold">@allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Vacant").Count()</span>
+                    }
+                    else
+                    {
+                        <span>@allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Vacant").Count()</span>
+                    }
+                </MudTd>
+
             </RowTemplate>
         </MudTable>
     }
@@ -121,10 +136,7 @@
             allSubPositions = PositionService.SubPositionTs;
 
 
-            foreach (var item in allPositions)
-            {
-                _totalPlantilla += item.Plantilla;
-            }
+            _totalPlantilla = PositionService.SubPositionTs.Where(e => e.Status != "Inactive").Count();
         }
         catch (Exception ex)
         {
@@ -135,7 +147,7 @@
 
     private void CmbDivision(int div)
     {
-        @foreach (var item in allDivisions)
+        foreach (var item in allDivisions)
         {
             if (item.Id == div)
                 cmbDivTitle = div == 0 ? "All Division" : item.Name;

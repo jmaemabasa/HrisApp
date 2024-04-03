@@ -305,6 +305,7 @@
 <BlazoredToasts Position="ToastPosition.BottomRight" Timeout="5" IconType="IconType.FontAwesome" SuccessClass="success-toast-override" SuccessIcon="fa fa-thumbs-up" ErrorIcon="fa fa-bug"  ShowProgressBar="true" />
 
 @code {
+    #nullable disable
     bool _drawerOpen = true;
 
     void DrawerToggle()
@@ -346,25 +347,6 @@
     protected override async Task OnInitializedAsync()
     {
         // await jsRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
-        try
-        {
-            await Task.Delay(1);
-
-            if (Userrole == "SysAdmin" || Userrole == "HR" || Userrole == "CadAdmin")
-            {
-                timer = new Timer();
-                timer.Interval = 3000;
-                timer.Elapsed += OnTimerElapsed!;
-                timer.Enabled = true;
-            }
-        }
-        catch (Exception)
-        {
-        }
-    }
-
-    private async Task OnRefreshPage()
-    {
         await Task.Delay(1);
         VERIFY = GlobalConfigService.VerifyId;
         USERNAME = GlobalConfigService.Username;
@@ -383,7 +365,37 @@
         {
             ImageData = string.Format("images/imgholder.jpg");
         }
+
+        if (Userrole == "SysAdmin" || Userrole == "HR" || Userrole == "CadAdmin")
+        {
+            timer = new Timer();
+            timer.Interval = 3000;
+            timer.Elapsed += OnTimerElapsed!;
+            timer.Enabled = true;
+        }
     }
+
+    // private async Task OnRefreshPage()
+    // {
+    //     await Task.Delay(1);
+    //     VERIFY = GlobalConfigService.VerifyId;
+    //     USERNAME = GlobalConfigService.Username;
+    //     FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
+
+    //     await EmployeeService.GetEmployee();
+    //     EmployeeList = EmployeeService.EmployeeTs;
+
+
+    //     Userrole = GlobalConfigService.Role;
+    //     try
+    //     {
+    //         await EmployeeImg(VERIFY);//image
+    //     }
+    //     catch (Exception)
+    //     {
+    //         ImageData = string.Format("images/imgholder.jpg");
+    //     }
+    // }
 
     private async Task ToggleTheme()
     {
@@ -519,7 +531,7 @@
     #region NOTIF ADMIN
     private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        await OnRefreshPage();
+        // await OnRefreshPage();
         await LeaveHistoryService.GetLeaveHistory();
         badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
 

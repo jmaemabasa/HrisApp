@@ -228,7 +228,19 @@
                                 <div class="row">
                                     <div class="col-12 tab-buttons d-flex justify-content-between">
                                         <button type="button" class="save-back btn" @onclick="()=> Activate(0)">Back</button>
-                                        <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+                                        @if (isSavingAdd)
+                                        {
+                                            <button type="button" disabled class="save btn">
+                                                <div class="d-flex align-items-center">
+                                                    <div><MudProgressCircular Class="ms-n1" Color="Color.Info" Size="Size.Small" Indeterminate="true" /></div>
+                                                    <div class="ms-2">Saving...</div>
+                                                </div>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+                                        }
                                     </div>
                                 </div>
                             </MudTabPanel>

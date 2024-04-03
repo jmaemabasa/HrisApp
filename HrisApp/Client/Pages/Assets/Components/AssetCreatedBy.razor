@@ -1,46 +1,54 @@
 ﻿<div class="d-flex flex-row align-items-center gap-3" style="cursor: pointer;margin-top: 5px;" @onclick="GoToEmployee">
     <div class="d-flex align-items-center">
-        <EmployeeAvatar verify="@employee.Verify_Id" />
+        <MudAvatar>
+            <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
+        </MudAvatar>
     </div>
     <div>
         <div class="flex-column">
-            <div style="font-weight: bold;color: #757A90;">@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
+            <div style="font-weight: bold;color: #757A90;">@employee.FirstName  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @employee.LastName</div>
             <div style="font-size: 13px !important;color: #757A90;">@subpos.Description</div>
         </div>
     </div>
 </div>
 
 @code {
-#nullable disable
+    #nullable disable
     [Parameter]
     public int? Id { get; set; }
 
     EmployeeT employee = new();
     SubPositionT subpos = new();
+    private string ImageData;
 
 
     private void GoToEmployee() => NavigationManager.NavigateTo($"/employee/edit/{employee.Id}");
 
     protected override async Task OnParametersSetAsync()
     {
-        try
+        if (Id.HasValue)
         {
             employee = await EmployeeService.GetSingleEmployee((int)Id);
             subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("");
-        }
-    }
 
-    private string CapitalizeFirstLetter(string input)
-    {
-        if (string.IsNullOrEmpty(input))
-        {
-            return input;
-        }
 
-        return char.ToUpper(input[0]) + input[1..];
+            var imagemodel = await ImageService.GetImageData(employee.Verify_Id);
+            if (imagemodel != null)
+            {
+                var base642 = Convert.ToBase64String(imagemodel);
+                ImageData = string.Format("data:image/png;base64,{0}", base642);
+            }
+            else
+            {
+                if (employee.GenderId == 1)
+                {
+                    ImageData = string.Format("images/avatarmaleholder.jpg");
+                }
+                else
+                {
+                    ImageData = string.Format("images/avatarfemaleholder.jpg");
+                }
+            }
+        }
     }
 }

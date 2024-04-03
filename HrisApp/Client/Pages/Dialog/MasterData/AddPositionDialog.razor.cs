@@ -42,7 +42,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         private string newDuration = "";
         private string newManpower = "";
         private string newSupervisory = "No";
-        private int newPlantilla;
 
         private string newPosTypeHolder = "";
 
@@ -115,7 +114,6 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             var sectionId = selectedSection;
             var areaId = selectedArea;
             var positionName = newPosition;
-            var plantillacount = newPlantilla;
             newPosCode = Generateposcode(divisionId, departmentId, sectionId);
 
             if (newPosType != "Permanent")
@@ -134,7 +132,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentHasSections)
             {
                 // Create a position in the section
-                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal, newSupervisory);
+                await PositionService.CreatePositionPerSection(positionName, newPosCode, divisionId, departmentId, sectionId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, verifyCode, newPosType, newDuration, newManpower, selectedExternal, newSupervisory);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);
@@ -144,7 +142,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             else
             {
                 // Create a position in the department
-                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, plantillacount, verifyCode, newPosType, newDuration, newManpower, selectedExternal, newSupervisory);
+                await PositionService.CreatePositionPerDept(positionName, newPosCode, divisionId, departmentId, areaId, newSummary, newEduc, newWorkExp, newTechSkill, newKnowledge, newComApp, newOtherComp, newRestrict, verifyCode, newPosType, newDuration, newManpower, selectedExternal, newSupervisory);
                 await SaveNewTechSkills(newPosCode);
                 await SaveNewKnowledge(newPosCode);
                 await SaveNewComApp(newPosCode);

@@ -1,0 +1,84 @@
+﻿.spantitle {
+    font-weight: bold;
+    color: #26446e;
+    font-size: 16px;
+}
+
+.btnaddfile {
+    background-color: #27374D;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 6px 15px;
+    transition: all .5s ease;
+}
+
+    .btnaddfile:hover {
+        background-color: #3a5273;
+        transform: scale(1.1);
+    }
+
+::deep .btnuploadimg {
+    border-radius: 10px;
+    background: #e9ecef;
+    box-shadow: 6px 6px 12px #cfd2d5, -6px -6px 12px #ffffff;
+    height: 85px;
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+    ::deep .btnuploadimg .mud-icon-size-medium {
+        font-size: 3.5rem;
+        color: #939393
+    }
+
+    ::deep .btnuploadimg:hover .mud-icon-size-medium {
+        color: #5f5f5f
+    }
+
+.textcountimg {
+}
+
+.imagename {
+    font-size: 12px;
+}
+
+::deep .listitemimg {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+::deep .submitbtnupload {
+    background-color: #27374D;
+    color: #fff;
+    padding: 6px;
+    margin-bottom: 8px;
+}
+
+    ::deep .submitbtnupload:hover {
+        background-color: #3a5273;
+        color: #fff;
+    }
+
+.btnopendialog {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #27374D;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    padding: 7px 18px;
+}
+
+    .btnopendialog:hover {
+        background-color: #3a5273;
+    }
+
+    .btnopendialog ::deep .mud-icon-size-medium {
+        font-size: 21px !important;
+    }
+
+.divheaderdialgo {
+    margin-bottom: 10px;
+}

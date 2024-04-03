@@ -1,0 +1,16 @@
+﻿.maincont {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    height: 737px;
+    padding: 20px 20px 20px 20px;
+    overflow: auto;
+}
+
+
+.spantitle {
+    font-weight: bold;
+    color: #26446e;
+    font-size: 16px;
+}

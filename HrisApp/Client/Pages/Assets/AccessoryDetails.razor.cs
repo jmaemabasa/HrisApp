@@ -218,7 +218,10 @@ namespace HrisApp.Client.Pages.Assets
         #endregion PANEL IMAGE LIST / TABLE
 
         #region FUNCTIONS
-
+        private void BackToMainPage()
+        {
+            NavigationManager.NavigateTo("/asset-accessories");
+        }
         private async Task LoadMainAssetImg(string jmcode)
         {
             var imagemodel = await AssetImageService.GetImageData(jmcode);

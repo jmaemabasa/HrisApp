@@ -33,25 +33,30 @@ else
     <MudTable Class="stable" Items="empHistoryList" Context="history" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
             <div class="d-flex flex-grow-1 justify-content-between align-items-center">
-                <span class="spantitle mb-3">Employee Position History</span>
-                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
-                    <Authorized>
-                        <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
+                <div>
+                    <span class="spantitle mb-3">Employee Position History</span>
+                </div>
+                <div>
+                    <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+                        <Authorized>
+                            <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
 
-                            <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+                                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
 
-                            <div class="text">Add</div>
-                        </button>
-                    </Authorized>
-                </AuthorizeView>
+                                <div class="text">Add</div>
+                            </button>
+                        </Authorized>
+                    </AuthorizeView>
+                </div>
             </div>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Position</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Started</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Ended</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Area</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;color: #424242;">Department</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Position</MudTh>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Employment</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Started</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Ended</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Area</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Department</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="">
@@ -63,6 +68,7 @@ else
                     }
                 }
             </MudTd>
+            <MudTd DataLabel="">@history.EmploymentStatus?.Name</MudTd>
             <MudTd DataLabel="">@history.DateStarted?.ToString("MM/dd/yyyy")</MudTd>
             <MudTd DataLabel="">@history.DateEnded?.ToString("MM/dd/yyyy")</MudTd>
             <MudTd DataLabel="">
@@ -90,53 +96,53 @@ else
 <MudDrawer Class="drawerdetails" @bind-Open="@AddOpenDrawer" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
     <span class="spantitle mb-3">Position History</span>
     <MudItem xs="12">
-        <EditForm Model="college" OnValidSubmit="SaveAdd" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+        <EditForm Model="obj" OnValidSubmit="SaveAdd" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
             <DataAnnotationsValidator />
             <MudItem xs="12" Class="mb-2">
                 <MudText Typo="Typo.body2">Area</MudText>
-                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewAreaId" Margin="Margin.Dense">
+                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@obj.NewAreaId" Margin="Margin.Dense">
                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                    @foreach (var sched in AreasL)
+                    @foreach (var item in AreasL)
                     {
-                        <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                        <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
                     }
                 </MudSelect>
             </MudItem>
             <MudItem xs="12" Class="mb-2">
                 <MudText Typo="Typo.body2">Division</MudText>
-                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewDivisionId" Margin="Margin.Dense">
+                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@obj.NewDivisionId" Margin="Margin.Dense">
                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                    @foreach (var sched in DivisionL)
+                    @foreach (var item in DivisionL)
                     {
-                        <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                        <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
                     }
                 </MudSelect>
             </MudItem>
             <MudItem xs="12" Class="mb-2">
                 <MudText Typo="Typo.body2">Department</MudText>
-                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewDepartmentId" Margin="Margin.Dense">
+                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@obj.NewDepartmentId" Margin="Margin.Dense">
                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                    @foreach (var item in DepartmentsL.Where(d => d.DivisionId == college.NewDivisionId))
+                    @foreach (var item in DepartmentsL.Where(d => d.DivisionId == obj.NewDivisionId))
                     {
                         <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
                     }
                 </MudSelect>
             </MudItem>
             @{
-                var departmentHasSection = college.NewDepartmentId != 0 && SectionsL.Any(s => s.DepartmentId == college.NewDepartmentId);
+                var departmentHasSection = obj.NewDepartmentId != 0 && SectionsL.Any(s => s.DepartmentId == obj.NewDepartmentId);
             }
             @if (departmentHasSection)
             {
-                var sections = college.NewDepartmentId != 0 ? SectionsL.Where(s => s.DepartmentId == college.NewDepartmentId) : Enumerable.Empty<SectionT>();
+                var sections = obj.NewDepartmentId != 0 ? SectionsL.Where(s => s.DepartmentId == obj.NewDepartmentId) : Enumerable.Empty<SectionT>();
                 <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Section</MudText>
-                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewSectionId" Margin="Margin.Dense">
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@obj.NewSectionId" Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                         @if (sections.Any())
                         {
-                            @foreach (var sect in sections)
+                            @foreach (var item in sections)
                             {
-                                <MudSelectItem Value="@sect.Id">@sect.Name</MudSelectItem>
+                                <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
                             }
                         }
                         else
@@ -147,11 +153,11 @@ else
                 </MudItem>
                 <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Position</MudText>
-                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewPositionId" Margin="Margin.Dense">
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@obj.NewPositionId" Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                        @foreach (var sched in PositionsL.Where(d => d.DivisionId == college.NewDivisionId && d.DepartmentId == college.NewDepartmentId && d.SectionId == college.NewSectionId))
+                        @foreach (var item in PositionsL.Where(d => d.DivisionId == obj.NewDivisionId && d.DepartmentId == obj.NewDepartmentId && d.SectionId == obj.NewSectionId))
                         {
-                            <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                            <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
@@ -160,11 +166,11 @@ else
             {
                 <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Position</MudText>
-                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@college.NewPositionId" Margin="Margin.Dense">
+                    <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@obj.NewPositionId" Margin="Margin.Dense">
                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                        @foreach (var sched in PositionsL.Where(d => d.DivisionId == college.NewDivisionId && d.DepartmentId == college.NewDepartmentId))
+                        @foreach (var item in PositionsL.Where(d => d.DivisionId == obj.NewDivisionId && d.DepartmentId == obj.NewDepartmentId))
                         {
-                            <MudSelectItem Value="@sched.Id">@sched.Name</MudSelectItem>
+                            <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
@@ -172,12 +178,23 @@ else
 
 
             <MudItem xs="12" Class="mb-2">
+                <MudText Typo="Typo.body2">Employment Status</MudText>
+                <MudSelect Class="@slectClasssRela" DisableUnderLine @bind-Value="@employmentstatusholder" Margin="Margin.Dense">
+                    <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
+                    @foreach (var item in EmploymentStatusL)
+                    {
+                        <MudSelectItem Value="@item.Id">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+
+            <MudItem xs="12" Class="mb-2">
                 <MudText Typo="Typo.body2">Date Started</MudText>
-                <MudDatePicker Class="txf" @bind-Date="college.DateStarted" DisableUnderLine Margin="Margin.Dense" />
+                <MudDatePicker Class="txf" @bind-Date="obj.DateStarted" DisableUnderLine Margin="Margin.Dense" />
             </MudItem>
             <MudItem xs="12" Class="mb-2">
                 <MudText Typo="Typo.body2">Date Ended</MudText>
-                <MudDatePicker Class="txf" @bind-Date="college.DateEnded" DisableUnderLine Margin="Margin.Dense" />
+                <MudDatePicker Class="txf" @bind-Date="obj.DateEnded" DisableUnderLine Margin="Margin.Dense" />
             </MudItem>
 
             <MudItem xs="12" Class="d-flex justify-content-center mt-5">
@@ -188,7 +205,7 @@ else
 </MudDrawer>
 
 @code {
-    #nullable disable
+#nullable disable
     //TABLEEES
     List<Emp_PosHistoryT> empHistoryList = new();
     private Emp_PosHistoryT selectedItem1 = null;
@@ -199,8 +216,11 @@ else
     private List<DepartmentT> DepartmentsL = new();
     private List<SubPositionT> SubPositionsL = new();
     private List<PositionT> PositionsL = new();
+    public List<EmploymentStatusT> EmploymentStatusL = new();
 
-    private readonly Emp_PosHistoryT college = new();
+    int employmentstatusholder = 0;
+
+    private readonly Emp_PosHistoryT obj = new();
     [Parameter]
     public string VerifyCode { get; set; }
 
@@ -220,18 +240,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await AreaService.GetArea();
-        AreasL = AreaService.AreaTs;
-        await DepartmentService.GetDepartment();
-        DepartmentsL = DepartmentService.DepartmentTs;
-        await DivisionService.GetDivision();
-        DivisionL = DivisionService.DivisionTs;
-        await SectionService.GetSection();
-        SectionsL = SectionService.SectionTs;
+        AreasL = await AreaService.GetAreaList();
+        DepartmentsL = await DepartmentService.GetDepartmentList();
+        DivisionL = await DivisionService.GetDivisionList();
+        SectionsL = await SectionService.GetSectionList();
         await PositionService.GetSubPosition();
         await PositionService.GetPosition();
         SubPositionsL = PositionService.SubPositionTs;
         PositionsL = PositionService.PositionTs;
+
+        await StaticService.GetEmploymentStatusList();
+        EmploymentStatusL = StaticService.EmploymentStatusTs;
     }
 
     private async Task LoadList()
@@ -248,16 +267,17 @@ else
 
     private async Task SaveAdd()
     {
-        college.Verify_Id = VerifyCode;
-        college.DateModified = DateTime.Now;
+        obj.Verify_Id = VerifyCode;
+        obj.DateModified = DateTime.Now;
+        obj.EmploymentStatusId = employmentstatusholder;
         foreach (var item in PositionsL)
         {
-            if (item.Id == college.NewPositionId)
+            if (item.Id == obj.NewPositionId)
             {
-                college.newPositionCode = item.PosCode;
+                obj.newPositionCode = item.PosCode;
             }
         }
-        await EmpHistoryService.CreateEmpHistory(college);
+        await EmpHistoryService.CreateEmpHistory(obj);
 
 
         empHistoryList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);

@@ -44,7 +44,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
 
         public async Task<EmployeeT> GetSingleEmployeeByVerId(string verId)
         {
-            var result = await _httpClient.GetFromJsonAsync<EmployeeT>($"api/Employee/GetSingleEmployeeByVerId/{verId}");
+            var result = await _httpClient.GetFromJsonAsync<EmployeeT>($"api/Employee/GetSingleEmployeeByVerId?verId={verId}");
             if (result != null)
                 return result;
             throw new Exception("employee not found");

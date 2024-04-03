@@ -1,12 +1,14 @@
-﻿using HrisApp.Client.Pages.Dialog.Assets.AssetAccess;
+﻿using HrisApp.Client.Pages.Assets.Licenses;
+using HrisApp.Client.Pages.Dialog.Assets.AssetAccess;
 using HrisApp.Client.Pages.Dialog.Assets.MainAsset;
-using HrisApp.Client.Pages.Dialog.Auth;
 using QRCoder;
 using System.Security.Policy;
 
 namespace HrisApp.Client.Pages.Assets
 {
-    public partial class AssetMainDetails : Microsoft.AspNetCore.Components.ComponentBase
+#nullable disable
+
+    public partial class AssetMainDetails : ComponentBase
     {
         [Parameter] public int Id { get; set; }
 
@@ -15,6 +17,7 @@ namespace HrisApp.Client.Pages.Assets
         private AssetLastCheckT lastchkObj = new();
         private AssetAccessHistoryT accessHistoryObj = new();
         private List<AssetAccessoryT> ACCESSORIES = new();
+        private List<AssetLicenseT> LICENSES = new();
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
@@ -74,6 +77,7 @@ namespace HrisApp.Client.Pages.Assets
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
             ACCESSORIES = await AssetAccService.GetObjList();
+            LICENSES = await AssLicenseSvc.GetObjList();
             DIVISION = await DivisionService.GetDivisionList();
             DEPARTMENT = await DepartmentService.GetDepartmentList();
             EMPLOYEE = await EmployeeService.GetEmployeeList();
@@ -107,16 +111,16 @@ namespace HrisApp.Client.Pages.Assets
 
                 await ImgByAssetData();
 
-                if (obj.EmployeeId != null)
+                if (obj.EmployeeId == null)
+                {
+                    ImageEmployee = string.Format("images/imgholder.jpg");
+                }
+                else
                 {
                     await EmpImg(obj.Employee!.Verify_Id);//image
                     divid = obj.Employee!.DivisionId;
                     deptid = obj.Employee!.DepartmentId;
                     empid = (int)obj.EmployeeId;
-                }
-                else
-                {
-                    ImageEmployee = string.Format("images/imgholder.jpg");
                 }
             }
             catch (Exception ex)
@@ -144,49 +148,49 @@ namespace HrisApp.Client.Pages.Assets
 
         private async Task SaveAssignEmp()
         {
-            try
+            obj.EmployeeId = selectedAssignEmployee.Id;
+            obj.AssetStatusId = 1;
+            obj.AssignedDate = DateTime.Now;
+            obj.InUseStatusDate = DateTime.Now;
+            await AssetMasterService.UpdateObj(obj);
+
+            assetHistoryObj.AssignedDateToReturn = obj.AssignedDateToReturn;
+            assetHistoryObj.AssignedDateReleased = obj.AssignedDateReleased;
+            assetHistoryObj.EmployeeId = selectedAssignEmployee.Id;
+            assetHistoryObj.MainAssetId = obj.Id;
+            assetHistoryObj.MainAssetCode = obj.JMCode;
+            await AssetMasHistorySvc.CreateObj(assetHistoryObj);
+
+            foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
             {
-                obj.EmployeeId = empid;
-                obj.AssetStatusId = 1;
-                obj.AssignedDate = DateTime.Now;
-                obj.InUseStatusDate = DateTime.Now;
-                await AssetMasterService.UpdateObj(obj);
+                var model = await AssetAccService.GetSingleObj(item.Id);
 
-                assetHistoryObj.AssignedDateToReturn = obj.AssignedDateToReturn;
-                assetHistoryObj.AssignedDateReleased = obj.AssignedDateReleased;
-                assetHistoryObj.EmployeeId = empid;
-                assetHistoryObj.MainAssetId = obj.Id;
-                assetHistoryObj.MainAssetCode = obj.JMCode;
-                await AssetMasHistorySvc.CreateObj(assetHistoryObj);
-
-                foreach (var item in ACCESSORIES.Where(e => e.MainAssetId == obj.Id))
+                if (item.AssetStatusId == 2)
                 {
-                    var model = await AssetAccService.GetSingleObj(item.Id);
-
-                    if (item.AssetStatusId == 2)
-                    {
-                        model.AssetStatusId = 1;
-                    }
-
-                    //model.InUseStatusDate = DateTime.Now;
-                    await AssetAccService.UpdateObj(model);
-
-                    var acchistoryobj = await AssetAccHistorySvc.GetObjByAccIDMainId(item.Id, obj.Id);
-                    acchistoryobj.EmployeeId = obj.EmployeeId;
-                    await AssetAccHistorySvc.UpdateObj(acchistoryobj);
+                    model.AssetStatusId = 1;
                 }
 
-                obj = await AssetMasterService.GetSingleObj(Id);
-                await EmpImg(obj.Employee!.Verify_Id);//image
-                ACCESSORIES = await AssetAccService.GetObjList();
-                leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-                _toastService.ShowSuccess(obj.Employee.LastName + " Assigned Successfully!");
+                //model.InUseStatusDate = DateTime.Now;
+                await AssetAccService.UpdateObj(model);
+
+                var acchistoryobj = await AssetAccHistorySvc.GetObjByAccIDMainId(item.Id, obj.Id);
+                acchistoryobj.EmployeeId = obj.EmployeeId;
+                await AssetAccHistorySvc.UpdateObj(acchistoryobj);
+            }
+
+            leftPanelOpen = false; detailsPanelOpen = false; assignPanelOpen = false; assignReturnPanelOpen = false; mtsChkPanelOpen = false;
+            obj = await AssetMasterService.GetSingleObj(Id);
+            try
+            {
+                await EmpImg(obj.Employee.Verify_Id);//image
             }
             catch (Exception)
             {
                 ImageEmployee = string.Format("images/imgholder.jpg");
             }
+            ACCESSORIES = await AssetAccService.GetObjList();
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+            _toastService.ShowSuccess("Assigned Successfully!");
         }
 
         private async Task SaveAssignDateReturned()
@@ -233,8 +237,8 @@ namespace HrisApp.Client.Pages.Assets
             StateHasChanged();
         }
 
-
         #region REMARKS
+
         private string newRemark = "";
 
         public async Task SaveRemarksTODB(string posCode)
@@ -291,7 +295,6 @@ namespace HrisApp.Client.Pages.Assets
             if (!string.IsNullOrEmpty(newRemark))
                 REMARKS.Add(new MainRemarksT { MainAssetCode = code, Remark = newSkill, VerifyId = verifyCode });
             newRemark = "";
-            //Console.WriteLine(verifyCode);
         }
 
         public async Task CloseRemark(MudChip chip)
@@ -308,7 +311,6 @@ namespace HrisApp.Client.Pages.Assets
 
             if (confirmResult.IsConfirmed)
             {
-
                 var skillToRemove = REMARKS.FirstOrDefault(item => item.Remark == chip.Text);
 
                 if (skillToRemove != null)
@@ -317,9 +319,11 @@ namespace HrisApp.Client.Pages.Assets
                 }
             }
         }
-        #endregion
+
+        #endregion REMARKS
 
         #region FUNCTIONS
+
         private async Task GenerateQR(int id)
         {
             await Task.Delay(0);
@@ -445,6 +449,7 @@ namespace HrisApp.Client.Pages.Assets
                 MainAssetImageData = string.Format("images/asset-holder.jpg");
             }
         }
+
         private async Task RemoveAccessory(int id)
         {
             var confirmResult = await Swal.FireAsync(new SweetAlertOptions
@@ -480,6 +485,41 @@ namespace HrisApp.Client.Pages.Assets
             }
         }
 
+        private async Task RemoveLicense(int id)
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Pernamently remove the accessory? \n You can't undo this.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (confirmResult.IsConfirmed)
+            {
+                var asset_lic = await AssLicenseSvc.GetSingleObj(id);
+                asset_lic.MainAssetId = null;
+                asset_lic.MainAssetDateUpdated = null;
+                asset_lic.AssetStatusId = 2;
+                await AssLicenseSvc.UpdateObj(asset_lic);
+
+                AssetLicenseHistoryT newobj = new()
+                {
+                    AssetLicenseId = id,
+                    MainAssetId = obj.Id,
+                    UnassignedDateMainAss = DateTime.Now
+                };
+
+                await AssLicenseHisSvc.UpdateDateUnassigned(newobj);
+
+                await MainAssLicSvc.DeleteAccessory(obj.Id, id);
+
+                LICENSES = await AssLicenseSvc.GetObjList();
+            }
+        }
+
         private string TruncateString(string value, int maxLength)
         {
             return value.Length <= maxLength ? value : value[..maxLength] + "...";
@@ -488,6 +528,7 @@ namespace HrisApp.Client.Pages.Assets
         private async Task RefreshTable()
         {
             ACCESSORIES = await AssetAccService.GetObjList();
+            LICENSES = await AssLicenseSvc.GetObjList();
         }
 
         private void OpenManageAccessories()
@@ -501,6 +542,17 @@ namespace HrisApp.Client.Pages.Assets
             DialogService.Show<AddMainAssetAccessoryDialog>("", parameters, options);
         }
 
+        private void OpenManageLicenses()
+        {
+            var parameters = new DialogParameters<AddMainAssetLicense>
+            {
+                { x => x.Id, obj.Id },
+                { x => x.OnAddSuccess, EventCallback.Factory.Create(this, RefreshTable) }
+            };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, DisableBackdropClick = true, NoHeader = true };
+            DialogService.Show<AddMainAssetLicense>("", parameters, options);
+        }
+
         private void OpenAccessoriesDialog(int id)
         {
             var parameters = new DialogParameters<UpdateAssetAccDialog>
@@ -510,6 +562,17 @@ namespace HrisApp.Client.Pages.Assets
 
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
             DialogService.Show<UpdateAssetAccDialog>("", parameters, options);
+        }
+
+        private void OpenLicenseDialog(int id)
+        {
+            var parameters = new DialogParameters<UpdateAssetLicenseDialog>
+            {
+                { x => x.Id, id }
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, NoHeader = true };
+            DialogService.Show<UpdateAssetLicenseDialog>("", parameters, options);
         }
 
         private async Task AssetImg(string jmcode)
@@ -586,12 +649,6 @@ namespace HrisApp.Client.Pages.Assets
             if (assignReturnPanelOpen) assetHistoryObj.EndDate = DateTime.Now;
         }
 
-        private void OpenLogin()
-        {
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
-            DialogService.Show<LoginDialog>("", options);
-        }
-
         private int divid, deptid;
         private int empid;
         private bool isdisableDept = true, isdisableEmp = true;
@@ -608,7 +665,48 @@ namespace HrisApp.Client.Pages.Assets
             isdisableEmp = false;
         }
 
-        #endregion
+        private EmployeeT selectedAssignEmployee;
+
+        private async Task<IEnumerable<EmployeeT>> SearchAssignEmployee(string value)
+        {
+            await Task.Delay(5);
+            IEnumerable<EmployeeT> list;
+            if (divid != 0 && deptid != 0)
+            {
+                list = EMPLOYEE.Where(e => e.DivisionId == divid && e.DepartmentId == deptid && e.StatusId == 1);
+            }
+            else if (divid != 0 && deptid == 0)
+            {
+                list = EMPLOYEE.Where(e => e.DivisionId == divid && e.StatusId == 1);
+            }
+            else if (divid == 0 && deptid != 0)
+            {
+                list = EMPLOYEE.Where(e => e.DepartmentId == deptid && e.StatusId == 1);
+            }
+            else
+            {
+                list = EMPLOYEE.Where(e => e.StatusId == 1);
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                return list;
+            }
+            else
+            {
+                var chk = list.Where(x => x.FirstName.Contains(value, StringComparison.InvariantCultureIgnoreCase) ||
+                                            x.LastName.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+
+                return chk;
+            }
+        }
+
+        private void BackToMainPage()
+        {
+            NavigationManager.NavigateTo("/asset-main");
+        }
+
+        #endregion FUNCTIONS
 
         #region MUD TABS / TAB PANEL
 

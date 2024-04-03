@@ -1,6 +1,4 @@
 ﻿using HrisApp.Shared.Models.Dashboard;
-using HrisApp.Shared.Models.Employee;
-using System.Reflection.Emit;
 
 namespace HrisApp.Client.Services.MasterData.PositionService
 {
@@ -8,7 +6,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
 
     public class PositionService : IPositionService
     {
-        private MainsService _mainService = new MainsService();
+        private MainsService _mainService = new();
         private readonly HttpClient _httpClient;
 
         public PositionService()
@@ -86,7 +84,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         }
 
         //CREATE AND UPDATEEEEEE
-        public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory)
+        public async Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory)
         {
             PositionT newPosition = new()
             {
@@ -100,7 +98,6 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 WorkExperience = work,
                 OtherCompetencies = othercom,
                 Restrictions = restrict,
-                Plantilla = plantilla,
                 VerifyId = verifyCode,
                 PositionType = posType,
                 TemporaryDuration = tempDur,
@@ -117,7 +114,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             }
         }
 
-        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, int plantilla, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory)
+        public async Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory)
         {
             PositionT newPosition = new()
             {
@@ -132,7 +129,6 @@ namespace HrisApp.Client.Services.MasterData.PositionService
                 WorkExperience = work,
                 OtherCompetencies = othercom,
                 Restrictions = restrict,
-                Plantilla = plantilla,
                 VerifyId = verifyCode,
                 PositionType = posType,
                 TemporaryDuration = tempDur,
@@ -177,7 +173,7 @@ namespace HrisApp.Client.Services.MasterData.PositionService
 
         public async Task CreateTotalPlantilla(int tootal, DateTime date)
         {
-            DailyTotalPlantillaT obj = new DailyTotalPlantillaT()
+            DailyTotalPlantillaT obj = new()
             {
                 TotalPlantilla = tootal,
                 Date = date

@@ -12,143 +12,53 @@
 </div>
 
 <div class="box w-auto">
-
-    <MudGrid Justify="Justify.FlexStart" Spacing="5">
-        @try
-        {
-            @foreach (var division in DivisionService.DivisionTs)
+    <MudMenu FullWidth="true">
+        <ActivatorContent>
+            <MudButton Class="cmbDivision" EndIcon="@Icons.Material.Filled.KeyboardArrowDown">@cmbDivTitle</MudButton>
+        </ActivatorContent>
+        <ChildContent>
+            <MudMenuItem OnTouch="@(() => CmbDivision(0))" OnClick="@(() => CmbDivision(0))">All Division</MudMenuItem>
+            @foreach (var item in allDivisions)
             {
-                var divisionVacancies = allPositions
-                .Where(position => position.DivisionId == division.Id)
-                .Select(position =>
-                {
-                    var vacancy = position.Plantilla - positionCounts[position.Id];
-                    return vacancy;
-                })
-                .Sum();
-                if (divisionVacancies > 0)
-                {
-                    <MudItem xs="12" Class="pb-0">
-                        <div class="d-flex align-items-center gap-3">
-                            <MudIcon Class="child" Icon="@Icons.Material.TwoTone.Workspaces" Style="font-size: 1.4rem; color: #908DE2" />
-                            <span style="font-weight: 700;font-size: 1.5em;">@division.Name</span>
-                        </div>
-
-                    </MudItem>
-                    @foreach (var department in DepartmentService.DepartmentTs.Where(d => d.DivisionId == division.Id))
-                    {
-                        var departmentVacancies = allPositions
-                        .Where(position => position.DepartmentId == department.Id)
-                        .Select(position =>
-                        {
-                            var vacancy = position.Plantilla - positionCounts[position.Id];
-                            return vacancy;
-                        })
-                        .Sum();
-
-                        if (departmentVacancies > 0)
-                        {
-                            <MudItem xs="12" sm="6" lg="3">
-                                <MudCard Class="carddep divvac" Elevation="0">
-                                    <MudCardContent Class="carddepcontent">
-                                        <div class="d-flex justify-content-center gap-2 divvacheader" style="background-color: #F5F5FA;position: sticky;top: 0;margin-bottom: 10px;">
-                                            <div class="d-flex align-items-start gap-2" style="padding: 7px 0 7px 0;">
-                                                <MudIcon Class="child" Icon="@Icons.Material.TwoTone.Diversity3" Style="font-size: 1.4rem; color: #E38D0F" />
-                                                <span class="child" style="color: #424242; font-size: 16px; font-weight: bold">@department.Name</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            @{
-                                                var departmentHasSection = SectionService.SectionTs.Any(s => s.DepartmentId == department.Id);
-                                            }
-                                            @if (departmentHasSection)
-                                            {
-                                                @foreach (var position in allPositions.Where(p => p.DepartmentId == department.Id && p.SectionId == 0))
-                                                {
-                                                    var vacancy = position.Plantilla - positionCounts[position.Id];
-
-                                                    if (vacancy > 0)
-                                                    {
-                                                        <div class="divsingledetails d-flex justify-content-between mb-2">
-                                                            <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
-                                                            <div class="d-flex w-25 justify-content-between">
-                                                                <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                                <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                }
-                                                var sections = SectionService.SectionTs.Where(s => s.DepartmentId == department.Id);
-                                                @if (sections.Any())
-                                                {
-                                                    @foreach (var sect in sections)
-                                                    {
-                                                        var sectionVacancies = allPositions
-                                                        .Where(s => s.DepartmentId == department.Id && s.SectionId == sect.Id)
-                                                        .Select(s =>
-                                                        {
-                                                            var vacancy = s.Plantilla - positionCounts[s.Id];
-                                                            return vacancy;
-                                                        })
-                                                        .Sum();
-                                                        if (sectionVacancies > 0)
-                                                        {
-                                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                                <MudIcon Icon="@Icons.Material.TwoTone.Diversity2" Class="child" Style="font-size: 1.2rem; color: #F1BC3A" />
-                                                                <span class="child" style="font-size: 15px;">@sect.Name</span>
-                                                            </div>
-                                                            @foreach (var position in allPositions.Where(p => p.SectionId == sect.Id))
-                                                            {
-                                                                var vacancy = position.Plantilla - positionCounts[position.Id];
-
-                                                                if (vacancy > 0)
-                                                                {
-                                                                    <div class="divsingledetails d-flex justify-content-between mb-2 ms-3">
-                                                                        <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
-                                                                        <div class="d-flex w-25 justify-content-between">
-                                                                            <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                                            <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
-                                                                        </div>
-                                                                    </div>
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                @foreach (var position in allPositions.Where(p => p.DepartmentId == department.Id))
-                                                {
-                                                    var vacancy = position.Plantilla - positionCounts[position.Id];
-
-                                                    if (vacancy > 0)
-                                                    {
-                                                        <div class="divsingledetails d-flex justify-content-between mb-2">
-                                                            <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">@position.Name</MudText>
-                                                            <div class="d-flex w-25 justify-content-between">
-                                                                <MudText Class="txt child" Align="Align.Start" Typo="Typo.caption">:</MudText>
-                                                                <MudText Class="txt child" Style="color: #292727; font-weight:bold;" Typo="Typo.body2">@vacancy</MudText>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                }
-                                            }
-                                        </div>
-                                    </MudCardContent>
-                                </MudCard>
-                            </MudItem>
-                        }
-                    }
-                }
-
+                <MudMenuItem OnTouch="@(() => CmbDivision(item.Id))" OnClick="@(() => CmbDivision(item.Id))">@item.Name</MudMenuItem>
             }
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("");
-        }
-    </MudGrid>
+        </ChildContent>
+    </MudMenu>
+    @if (allPositions == null)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <MudTable Class="stable" Items="tableListpos" Context="pos" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true">
+                <HeaderContent>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Section</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;text-align: center;">Vacancy</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="">@(allDivisions.Where(e => e.Id == pos.DivisionId).First().Name)</MudTd>
+                    <MudTd DataLabel="">@(allDepartments.Where(e => e.Id == pos.DepartmentId).First().Name)</MudTd>
+                    <MudTd DataLabel="">@(pos.SectionId == 0 ? "" : allSections.Where(e => e.Id == pos.SectionId).First().Name)</MudTd>
+                    <MudTd DataLabel="">@pos.Description</MudTd>
+                    <MudTd DataLabel="" Style="text-align: center;font-weight: bold;">@(allSubPositions.Where(e => e.Status.Equals("Vacant") && e.PosCode.Equals(pos.PosCode)).Count())</MudTd>
+                </RowTemplate>
+            </MudTable>
+        </div>
+    }
 
 
 </div>

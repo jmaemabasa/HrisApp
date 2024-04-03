@@ -149,7 +149,19 @@
     <DialogActions>
         <div class="dialogbtns">
             <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
-            <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+            @if (isSavingAdd)
+            {
+                <button type="button" disabled class="save btn">
+                    <div class="d-flex align-items-center">
+                        <div><MudProgressCircular Class="ms-n1" Color="Color.Info" Size="Size.Small" Indeterminate="true" /></div>
+                        <div class="ms-2">Saving...</div>
+                    </div>
+                </button>
+            }
+            else
+            {
+                <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+            }
         </div>
     </DialogActions>
 </MudDialog>

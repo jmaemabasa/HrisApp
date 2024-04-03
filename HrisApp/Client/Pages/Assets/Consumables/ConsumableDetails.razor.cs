@@ -119,6 +119,11 @@
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true, DisableBackdropClick = true };
             DialogService.Show<AddConsTransactionDialog>("", parameters, options);
         }
+
+        private void BackToMainPage()
+        {
+            NavigationManager.NavigateTo("/asset-consumable");
+        }
         #endregion FUNCTIONS
 
         #region REMARKS

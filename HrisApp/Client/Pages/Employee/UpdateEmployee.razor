@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <MudAvatar Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
+                            <MudAvatar Style="width: 230px;height: 230px;" Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
                                 <MudImage Src="@ImageData"></MudImage>
                             </MudAvatar>
                             <div class="diveditimg">
@@ -684,6 +684,9 @@
                 <MudTabPanel TabContent="TabHeader(5)">
                     <LeaveCredits Verify="@VerifyCode" />
                 </MudTabPanel>
+                <MudTabPanel TabContent="TabHeader(6)">
+                    <EmployeeAssetTab EmpId="@Id" />
+                </MudTabPanel>
             </MudTabs>
         </MudItem>
     </MudGrid>
@@ -1230,40 +1233,6 @@
                     <InputText Class="txf1 w-100 mt-1" MaxLength="10" @bind-Value="_payroll.BankAcc" />
                     <ValidationMessage For="@(() => _payroll.BankAcc)" class="mb-2 valmessage" />
                 </MudItem>
-                <MudItem xs="12" Class="d-flex justify-content-center mt-5">
-                    <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
-
-                </MudItem>
-            </EditForm>
-        </MudItem>
-    </MudDrawer>
-
-    <MudDrawer Class="drawerdetails" @bind-Open="@StatutoryOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
-        <span class="spantitle mb-3">Statutory Documents</span>
-        <MudItem xs="12">
-            <EditForm Model="_payroll" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
-                <DataAnnotationsValidator />
-                <MudItem xs="12" Class="mb-2">
-                    <MudText Typo="Typo.body2">PHIC No.</MudText>
-                    <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.PhilHealthNum" MaxLength="12" />
-                    <ValidationMessage For="@(() => _payroll.PhilHealthNum)" class="mb-2 valmessage" />
-                </MudItem>
-                <MudItem xs="12" Class="mb-2">
-                    <MudText Typo="Typo.body2">HDMF No.</MudText>
-                    <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.HDMFNum" MaxLength="12" />
-                    <ValidationMessage For="@(() => _payroll.HDMFNum)" class="mb-2 valmessage" />
-                </MudItem>
-                <MudItem xs="12" Class="mb-2">
-                    <MudText Typo="Typo.body2">SSS No.</MudText>
-                    <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.SSSNum" MaxLength="12" />
-                    <ValidationMessage For="@(() => _payroll.SSSNum)" class="mb-2 valmessage" />
-                </MudItem>
-                <MudItem xs="12" Class="mb-2">
-                    <MudText Typo="Typo.body2">TIN No.</MudText>
-                    <InputText Class="txf1 w-100 mt-1" @bind-Value="_payroll.TINNum" MaxLength="12" />
-                    <ValidationMessage For="@(() => _payroll.TINNum)" class="mb-2 valmessage" />
-                </MudItem>
-
                 <MudItem xs="12" Class="d-flex justify-content-center mt-5">
                     <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
 

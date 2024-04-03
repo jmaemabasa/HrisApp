@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace HrisApp.Client.Pages.Dialog.Assets.AssetAccess
+﻿namespace HrisApp.Client.Pages.Dialog.Assets.AssetAccess
 {
     public partial class UpdateAssetAccDialog : ComponentBase
     {
@@ -29,15 +27,16 @@ namespace HrisApp.Client.Pages.Dialog.Assets.AssetAccess
 
         protected override async Task OnParametersSetAsync()
         {
+            obj = await AssetAccService.GetSingleObj(Id);
+
             try
             {
-                obj = await AssetAccService.GetSingleObj(Id);
                 await LoadAccessImg(obj.JMCode);//image
             }
             catch (Exception ex)
             {
-                Console.WriteLine("aaaa " + ex);
-                Console.WriteLine("aaaa " + ex.Message);
+                //Console.WriteLine("aaaa " + ex);
+                //Console.WriteLine("aaaa " + ex.Message);
                 AccessImageData = string.Format("images/asset-holder.jpg");
             }
         }

@@ -1,56 +1,61 @@
 ﻿namespace HrisApp.Client.Pages.Dashboard
 {
+#nullable disable
+
     public partial class Vacancy : ComponentBase
     {
-#nullable disable
         private List<PositionT> allPositions;
-        private List<SectionT> sections = new List<SectionT>();
-        private Dictionary<int, int> positionCounts = new Dictionary<int, int>();
+        private List<SubPositionT> allSubPositions;
+        private List<SubPositionT> tableListpos;
+        private List<DepartmentT> allDepartments;
+        private List<DivisionT> allDivisions;
+        private List<SectionT> allSections = new();
 
         private int _totalVacancy = 0;
+        private string cmbDivTitle = "All Division";
 
         protected override async Task OnInitializedAsync()
         {
             await EmployeeService.GetEmployee();
+            await PositionService.GetPosition();
             allPositions = await PositionService.GetPositionList();
 
-            await DivisionService.GetDivision();
-            await DepartmentService.GetDepartment();
-            await SectionService.GetSection();
-            sections = SectionService.SectionTs;
-
+            allDivisions = await DivisionService.GetDivisionList();
+            allDepartments = await DepartmentService.GetDepartmentList();
+            allSections = await SectionService.GetSectionList();
             await PositionService.GetSubPosition();
+            allSubPositions = PositionService.SubPositionTs;
+            tableListpos = PositionService.SubPositionTs
+                    .Where(e => e.Status.Equals("Vacant"))
+                    .GroupBy(e => e.PosCode) // Group by position code
+                    .Select(g => g.First()) // Select the first item of each group
+                    .ToList();
 
+            _totalVacancy = allSubPositions.Where(e => e.Status.Equals("Vacant")).Count();
+        }
 
-            foreach (var position in allPositions)
+        private void CmbDivision(int div)
+        {
+            foreach (var item in allDivisions)
             {
-                //int positionId = position.Id;
-                //int count = EmployeeService.EmployeeTs.Count(e => e.StatusId == 1 && e.PositionId == positionId);
-                //positionCounts[positionId] = count;
-
-                int positionId = position.Id;
-                string positionCode = position.PosCode;
-                //int count = EmployeeService.EmployeeTs.Count(e => e.StatusId == 1 && e.PositionId == positionId);
-                int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.PosCode == positionCode);
-                positionCounts[positionId] = count;
+                if (item.Id == div)
+                    cmbDivTitle = div == 0 ? "All Division" : item.Name;
             }
 
-            //foreach (var item in positionCounts)
-            //{
-            //    Console.WriteLine(item.Key + " " + item.Value);
-            //}
+            if (div == 0)
+                cmbDivTitle = "All Division";
 
-            //foreach (var department in DepartmentService.DepartmentTs)
-            //{
-            //    await SectionService.GetSectByDepartment(department.Id);
-            //    var departmentSections = SectionService.SectionTs;
-            //    sections.AddRange(departmentSections);
-            //}
-
-            //foreach (var kvp in positionCounts)
-            //    Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
-
-            _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
+            tableListpos = div == 0 ?
+                PositionService.SubPositionTs
+                    .Where(e => e.Status.Equals("Vacant"))
+                    .GroupBy(e => e.PosCode) // Group by position code
+                    .Select(g => g.First()) // Select the first item of each group
+                    .ToList()
+                : PositionService.SubPositionTs
+                    .Where(e => e.Status.Equals("Vacant") && e.DivisionId == div) //filter div
+                    .GroupBy(e => e.PosCode)
+                    .Select(g => g.First())
+                    .ToList();
         }
     }
 }

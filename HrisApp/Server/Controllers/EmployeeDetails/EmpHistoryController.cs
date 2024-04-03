@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace HrisApp.Server.Controllers.EmployeeDetails
+﻿namespace HrisApp.Server.Controllers.EmployeeDetails
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -18,6 +16,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         {
             var histlist = await _context.Emp_PosHistoryT
                 .Where(x => x.Verify_Id == verCode && x.DateEnded != null)
+                .Include(e => e.EmploymentStatus)
                 .OrderByDescending(x => x.DateEnded)
                 .ToListAsync();
 
@@ -29,6 +28,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         {
             var history = await _context.Emp_PosHistoryT
                 .Where(x => x.Verify_Id == verCode)
+                .Include(e => e.EmploymentStatus)
                 .OrderByDescending(e => e.Id)
                 .FirstOrDefaultAsync();
 
@@ -44,15 +44,16 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         public async Task<ActionResult<List<Emp_PosHistoryT>>> GetEmpHistory()
         {
             var empHis = await _context.Emp_PosHistoryT
+                .Include(e => e.EmploymentStatus)
                 .ToListAsync();
             return Ok(empHis);
-
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Emp_PosHistoryT>> GetSingleEmpHistory(int id)
         {
             var history = await _context.Emp_PosHistoryT
+                .Include(e => e.EmploymentStatus)
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (history == null)
             {
@@ -65,6 +66,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         public async Task<ActionResult<Emp_PosHistoryT>> GetSingleLastEmpHistory(int id)
         {
             var history = await _context.Emp_PosHistoryT
+                .Include(e => e.EmploymentStatus)
                 .OrderByDescending(s => s.Id)
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (history == null)
@@ -77,6 +79,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         private async Task<List<Emp_PosHistoryT>> GetDBEmpHistory()
         {
             return await _context.Emp_PosHistoryT
+                .Include(e => e.EmploymentStatus)
                 .ToListAsync();
         }
 

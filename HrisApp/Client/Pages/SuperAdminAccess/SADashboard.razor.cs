@@ -59,7 +59,10 @@ namespace HrisApp.Client.Pages.SuperAdminAccess
                     int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.PosCode == positionCode);
                     positionCounts[positionId] = count;
                 }
-                _totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
+                //_totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
+                _totalVacancy = PositionService.SubPositionTs.Where(e => e.Status.Equals("Vacant")).Count();
+                _totalPlantilla = PositionService.SubPositionTs.Where(e => e.Status != "Inactive").Count();
+
 
                 var globalId = Convert.ToInt32(GlobalConfigService.User_Id);
                 FULLNAME = await EmployeeService.Getname(globalId);
@@ -79,10 +82,10 @@ namespace HrisApp.Client.Pages.SuperAdminAccess
                 .Count(e => e.EvalStatus != "Done")
                 .ToString();
 
-                foreach (var item in allPositions)
-                {
-                    _totalPlantilla += item.Plantilla;
-                }
+                //foreach (var item in allPositions)
+                //{
+                //    _totalPlantilla += item.Plantilla;
+                //}
 
                 #endregion Top Cards
 

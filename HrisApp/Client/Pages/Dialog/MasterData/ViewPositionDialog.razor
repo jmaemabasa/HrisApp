@@ -123,7 +123,7 @@
                                     </div>
                                 }
 
-                                @if (item.InActiveDate != null)
+                                @if (item.InActiveDate != null && item.Status != "Active")
                                 {
                                     <div class="">
                                         <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Inactive Date</MudText>

@@ -18,6 +18,7 @@
             var obj = await _context.AssetMasterHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateReleased)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -28,6 +29,7 @@
             var obj = await _context.AssetMasterHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateReleased)
                 .ToListAsync();
             return Ok(obj);
         }
@@ -38,6 +40,7 @@
             var obj = await _context.AssetMasterHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateReleased)
                 .FirstOrDefaultAsync(h => h.Id == id);
 
             if (obj == null)
@@ -52,6 +55,7 @@
             return await _context.AssetMasterHistoryT
                 .Include(e => e.MainAsset)
                 .Include(e => e.Employee)
+                .OrderByDescending(e => e.AssignedDateReleased)
                 .ToListAsync();
         }
 
@@ -70,7 +74,7 @@
         {
             var dbObj = await _context.AssetMasterHistoryT.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbObj.MainAssetId = model.MainAssetId;
+            dbObj!.MainAssetId = model.MainAssetId;
             dbObj.MainAssetCode = model.MainAssetCode;
             dbObj.EmployeeId = model.EmployeeId;
             dbObj.AssignedDateReleased = model.AssignedDateReleased;
