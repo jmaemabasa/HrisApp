@@ -6,7 +6,7 @@
     }
 
     .cont {
-        background-color: #FAFAF5;
+        background-color: #e9ecef;
         padding-top: 10px;
     }
 
@@ -21,10 +21,14 @@
         .clsemployee:hover {
             background-color: rgba(250, 250, 245, .1);
         }
+
+    .mud-tabs-toolbar {
+        background-color: #e9ecef !important;
+    }
 </style>
 
 
-<MudDialog Style="background-color: #FAFAF5">
+<MudDialog Style="background-color: #e9ecef">
     <DialogContent>
         <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
             <MudTabPanel Text="Additional Info">
@@ -123,11 +127,11 @@
                                     </div>
                                 }
 
-                                @if (item.InActiveDate != null && item.Status != "Active")
+                                @if (item.VacantDate != null && item.Status != "Active")
                                 {
                                     <div class="">
                                         <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Inactive Date</MudText>
-                                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.InActiveDate?.ToString("MM/dd/yyyy")</MudText>
+                                        <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@item.VacantDate?.ToString("MM/dd/yyyy")</MudText>
                                     </div>
                                 }
                             </div>
@@ -232,6 +236,29 @@
                     </div>
                 </div>
             </MudTabPanel>
+             <MudTabPanel Text="History">
+                <div style="height: 495px;overflow: auto;">
+                    <MudTable Class="stable" Items="POSITIONHISTORY" Context="his" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
+                        <HeaderContent>
+                            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Job Position</MudTh>
+                            <MudTh Class="col-5" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Employee</MudTh>
+                            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Started</MudTh>
+                            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Ended</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="">
+                                @{
+                                    var subpos = PositionService.SubPositionTs.Where(e => e.Id == his.NewPositionId).FirstOrDefault();
+                                }
+                                @subpos?.SubPosCode
+                            </MudTd>
+                            <MudTd DataLabel=""><EmployeeNamePosition verify="@his.Verify_Id" /></MudTd>
+                            <MudTd DataLabel="">@his.DateStarted?.ToString("MMM dd yyyy")</MudTd>
+                            <MudTd DataLabel="">@his.DateEnded?.ToString("MMM dd yyyy")</MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </div>
+             </MudTabPanel>
         </MudTabs>
     </DialogContent>
     <DialogActions>
@@ -261,6 +288,7 @@
     private List<SubPositionT> SubPositionsL = new();
     private List<EmployeeT> EmployeesL = new();
 
+    private List<Emp_PosHistoryT> POSITIONHISTORY = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -278,6 +306,10 @@
         await EmployeeService.GetEmployee();
         EmployeesL = EmployeeService.EmployeeTs;
 
+        await EmpHistoryService.GetEmpHistory();
+
+        await PositionService.GetSubPosition();
+
     }
 
     protected override async Task OnParametersSetAsync()
@@ -290,6 +322,14 @@
         EducL = await PositionService.GetEduc(position.PosCode);
 
         SubPositionsL = PositionService.SubPositionTs.Where(x => x.PosCode == position.PosCode).ToList();
+
+        POSITIONHISTORY = EmpHistoryService.Emp_PosHistoryTs.Where(e => e.newPositionCode == position.PosCode && e.DateEnded != null).ToList();
+
+        foreach (var item in POSITIONHISTORY)
+        {
+            Console.WriteLine(item.NewPositionId);
+
+        }
     }
 
 

@@ -189,28 +189,33 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<List<DailyTotalPlantillaT>>> GetDbTotalPlantilla()
         {
             // Define the cutoff date (11 days ago from today)
-            DateTime cutoffDate = DateTime.Today.AddDays(-11);
+            //DateTime cutoffDate = DateTime.Today.AddDays(-11);
 
             // Get records from the database
             var pos = await _context.DailyTotalPlantillaT
-                .Where(d => d.Date >= cutoffDate)
                 .ToListAsync();
+
+            //var pos = await _context.DailyTotalPlantillaT
+            //    .Where(d => d.Date >= cutoffDate)
+            //    .ToListAsync();
 
             // Delete records older than 11 days
-            var recordsToDelete = await _context.DailyTotalPlantillaT
-                .Where(d => d.Date < cutoffDate)
-                .ToListAsync();
+            //var recordsToDelete = await _context.DailyTotalPlantillaT
+            //    .Where(d => d.Date < cutoffDate)
+            //    .ToListAsync();
 
-            foreach (var record in recordsToDelete)
-            {
-                _context.DailyTotalPlantillaT.Remove(record);
-            }
+            //foreach (var record in recordsToDelete)
+            //{
+            //    _context.DailyTotalPlantillaT.Remove(record);
+            //}
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
 
             return Ok(pos);
         }
 
+
+        #region POSITION SKILLS
         //SKILLS
         [HttpGet("GetTechSkill")]
         public async Task<ActionResult<List<PositionTechSkillT>>> GetTechSkill([FromQuery] string posCode)
@@ -530,7 +535,7 @@ namespace HrisApp.Server.Controllers.MasterData
             await _context.SaveChangesAsync();
             return Ok();
         }
-
+        #endregion
         //[HttpGet("GeneratePosCode")]
         //public async Task<ActionResult<int>> GetExistingEduc([FromQuery] string verifyCode)
         //{
@@ -605,7 +610,9 @@ namespace HrisApp.Server.Controllers.MasterData
             dbpos.Emp_VerifyId = pos.Emp_VerifyId;
             dbpos.Status = pos.Status;
             dbpos.ActiveDate = pos.ActiveDate;
-            dbpos.InActiveDate = pos.InActiveDate;
+            dbpos.VacantDate = pos.VacantDate;
+            dbpos.DateInactive = pos.DateInactive;
+            dbpos.DateCreated = pos.DateCreated;
             dbpos.ReportingTo = pos.ReportingTo;
 
             await _context.SaveChangesAsync();

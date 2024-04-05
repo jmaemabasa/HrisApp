@@ -118,20 +118,20 @@
 
         private bool _isShow;
         private InputType _passwordInput = InputType.Password;
-        private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+        private string _passwordInputIcon = Icons.Material.Outlined.VisibilityOff;
 
         private void ButtonTestclick()
         {
             if (_isShow)
             {
                 _isShow = false;
-                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+                _passwordInputIcon = Icons.Material.Outlined.VisibilityOff;
                 _passwordInput = InputType.Password;
             }
             else
             {
                 _isShow = true;
-                _passwordInputIcon = Icons.Material.Filled.Visibility;
+                _passwordInputIcon = Icons.Material.Outlined.Visibility;
                 _passwordInput = InputType.Text;
             }
         }

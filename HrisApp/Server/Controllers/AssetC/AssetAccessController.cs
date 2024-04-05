@@ -21,6 +21,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.MainAsset!.Employee)
                 .Include(e => e.CreatedBy)
                 .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
@@ -36,6 +37,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.MainAsset!.Employee)
                 .Include(e => e.CreatedBy)
                                 .OrderByDescending(x => x.DateCreated)
 .ToListAsync();
@@ -51,6 +53,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.MainAsset!.Employee)
                 .Include(e => e.CreatedBy)
                 .FirstOrDefaultAsync(h => h.Id == id);
 
@@ -70,6 +73,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.MainAsset!.Employee)
                 .Include(e => e.CreatedBy)
                 .FirstOrDefaultAsync(h => h.AssetCode == code);
 
@@ -88,6 +92,7 @@
                 .Include(e => e.SubCategory)
                 .Include(e => e.Type)
                 .Include(e => e.MainAsset)
+                .Include(e => e.MainAsset!.Employee)
                 .Include(e => e.CreatedBy)
                                 .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();

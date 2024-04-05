@@ -16,6 +16,7 @@ namespace HrisApp.Shared.Models.Employee
         public int NewSectionId { get; set; }
         public int NewPositionId { get; set; }
         public string newPositionCode { get; set; } = string.Empty;
+
         public DateTime? DateStarted { get; set; }
         public DateTime? DateEnded { get; set; }
         public DateTime? DateModified { get; set; }
@@ -23,5 +24,10 @@ namespace HrisApp.Shared.Models.Employee
 
         public EmploymentStatusT? EmploymentStatus { get; set; }
         public int? EmploymentStatusId { get; set; }
+
+
+
+        //public int NewSubPositionId { get; set}
+        //public string NewSubPositionCode { get; set; } = string.Empty;
     }
 }

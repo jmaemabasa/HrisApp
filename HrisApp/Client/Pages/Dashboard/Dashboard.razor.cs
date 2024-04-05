@@ -2,6 +2,7 @@
 using HrisApp.Client.Pages.Dialog.Announcement;
 using System.Data;
 using System.Globalization;
+
 namespace HrisApp.Client.Pages.Dashboard
 {
 #nullable disable
@@ -61,10 +62,8 @@ namespace HrisApp.Client.Pages.Dashboard
                     int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.PosCode == positionCode);
                     positionCounts[positionId] = count;
                 }
-                //_totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);
                 _totalVacancy = PositionService.SubPositionTs.Where(e => e.Status.Equals("Vacant")).Count();
                 _totalPlantilla = PositionService.SubPositionTs.Where(e => e.Status != "Inactive").Count();
-
 
                 var globalId = Convert.ToInt32(GlobalConfigService.User_Id);
                 FULLNAME = await EmployeeService.Getname(globalId);
@@ -76,18 +75,10 @@ namespace HrisApp.Client.Pages.Dashboard
                 _countActiveEmployees = EmployeeService.EmployeeTs.Where(e => e.StatusId == 1).Count().ToString();
                 _countInactiveEmployees = EmployeeService.EmployeeTs.Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId)).Count().ToString();
                 DateTime fiveYearsAgo = DateTime.Now.AddYears(-5);
-                //_countInactiveEmployees5yearFromInactive = EmployeeService.EmployeeTs
-                //    .Where(e => new[] { 2, 3, 4, 5, 6 }.Contains(e.StatusId) && e.DateInactiveStatus <= fiveYearsAgo)
-                //    .Count().ToString();
 
                 _countForEval = ForEvalService.Emp_EvaluationTs
                 .Count(e => e.EvalStatus != "Done")
                 .ToString();
-
-                //foreach (var item in allPositions)
-                //{
-                //    _totalPlantilla += item.Plantilla;
-                //}
 
                 #endregion Top Cards
 
@@ -97,13 +88,14 @@ namespace HrisApp.Client.Pages.Dashboard
                 FilterEmployee();
                 ConfigureBarConfig();
 
-                dataforline = GetLast10DaysLabels();
+                ConfigurePieConfig();
+                FilterPieEmployee();
+
+                dataforline = GetLast12MonthsLabels();
+
                 FilterLineEmployeeActual();
                 FilterLineEmployeePlantilla();
                 ConfigureLineConfig();
-
-                ConfigurePieConfig();
-                FilterPieEmployee();
 
                 //availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) * 100).ToString() + "%";
             }
@@ -256,7 +248,7 @@ namespace HrisApp.Client.Pages.Dashboard
                         {
                             ScaleLabel = new ScaleLabel
                             {
-                                LabelString = "Last 10 Days",
+                                LabelString = "Last 12 Months",
                                 Display = true,
                             },
                         }
@@ -277,19 +269,15 @@ namespace HrisApp.Client.Pages.Dashboard
 
         private void ConfigureLineConfig()
         {
-            foreach (var item in dataforline)
+            _lineconfig.Data.Labels.Clear();
+            _lineconfig.Data.Datasets.Clear();
+
+            // Add labels for all months
+            foreach (var monthLabel in dataforline)
             {
-                if (DateTime.TryParse(item, out DateTime date))
-                {
-                    if (item == DateTime.Today.ToString("yyyy-MM-dd"))
-                    {
-                        _lineconfig.Data.Labels.Add("Today");
-                    }
-                    else
-                    {
-                        _lineconfig.Data.Labels.Add(date.ToString("MMM dd"));
-                    }
-                }
+                DateTime dateTime = Convert.ToDateTime(monthLabel);
+
+                _lineconfig.Data.Labels.Add(dateTime.ToString("MMM yyyy"));
             }
 
             Random rd = new();
@@ -324,45 +312,83 @@ namespace HrisApp.Client.Pages.Dashboard
             {
                 string format = "yyyy-MM-dd";
                 DateTime dateTime = DateTime.ParseExact(item, format, CultureInfo.InvariantCulture);
-                var countEmployee = EmployeeService.EmployeeTs.Where(e => (e.DateHired <= dateTime) && (e.DateInactiveStatus == null || e.DateInactiveStatus > dateTime)).Count();
+
+                var countEmployee = EmployeeService.EmployeeTs.Where(e => (e.DateHired.Date <= dateTime.Date) && (e.DateInactiveStatus == null || e.DateInactiveStatus.Value.Date > dateTime.Date)).Count();
                 empCountActual.Add(countEmployee);
             }
             EmployeeCountActual = empCountActual.ToArray();
         }
 
+
+        //private void FilterLineEmployeePlantilla()
+        //{
+        //    List<int> empCountPlantilla = new();
+        //    List<string> labels = GetLast12MonthsLabels();
+
+        //    foreach (var label in labels)
+        //    {
+        //        string[] dateParts = label.Split('-');
+        //        int year = int.Parse(dateParts[0]);
+        //        int month = int.Parse(dateParts[1]);
+
+        //        // Find the total plantilla count for the last day of the specified year and month
+        //        var monthlyTotal = PositionService.DailyTotalPlantillaTs
+        //            .Where(s => s.Date.Year == year && s.Date.Month == month)
+        //            .OrderByDescending(s => s.Date)
+        //            .FirstOrDefault()?.TotalPlantilla ?? 0;
+
+        //        Console.WriteLine("total " + monthlyTotal);
+
+        //        empCountPlantilla.Add(monthlyTotal);
+        //    }
+
+        //    EmployeeCountPlantilla = empCountPlantilla.ToArray();
+        //}
+
         private void FilterLineEmployeePlantilla()
         {
             List<int> empCountPlantilla = new();
+            List<string> labels = GetLast12MonthsLabels();
 
-            foreach (var item in dataforline)
+            foreach (var label in labels)
             {
-                string format = "yyyy-MM-dd";
-                DateTime dateTime = DateTime.ParseExact(item, format, CultureInfo.InvariantCulture);
+                string[] dateParts = label.Split('-');
+                int year = int.Parse(dateParts[0]);
+                int month = int.Parse(dateParts[1]);
 
-                // Find the total plantilla count for the specified date
-                var dailyTotal = PositionService.DailyTotalPlantillaTs
-                    .Where(s => s.Date <= dateTime)
-                    .OrderByDescending(s => s.Date)
-                    .FirstOrDefault()?.TotalPlantilla ?? 0;
+                //string format = "yyyy-MM-dd";
+                DateTime dateTime = Convert.ToDateTime(label);
 
-                empCountPlantilla.Add(dailyTotal);
+                // Find the total plantilla count for the last day of the specified year and month
+                //var monthlyTotal = PositionService.SubPositionTs
+                //    .Where(s => s.DateCreated?.Year == year && s.DateCreated?.Month == month && (s.DateInactive == null || s.DateInactive > dateTime))
+                //    .Count();
+                
+                var monthlyTotal = PositionService.SubPositionTs
+                    .Where(s => s.DateCreated?.Date <= dateTime.Date && (s.DateInactive == null || s.DateInactive?.Date > dateTime.Date))
+                    .Count();
+
+                empCountPlantilla.Add(monthlyTotal);
             }
 
             EmployeeCountPlantilla = empCountPlantilla.ToArray();
         }
 
+
+
         private List<string> dataforline = new();
 
-        private List<string> GetLast10DaysLabels()
+        private static List<string> GetLast12MonthsLabels()
         {
             List<string> labels = new();
 
             DateTime currentDate = DateTime.Now;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 12; i++)
+
             {
                 labels.Add(currentDate.ToString("yyyy-MM-dd"));
-                currentDate = currentDate.AddDays(-1);
+                currentDate = currentDate.AddMonths(-1);
             }
             labels.Reverse();
             return labels;
@@ -440,6 +466,7 @@ namespace HrisApp.Client.Pages.Dashboard
         #endregion PIE CHART
 
         #region FUNCTIONS
+
         private static string GetGreeting()
         {
             var currentTime = DateTime.Now;
@@ -458,6 +485,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 return "Good evening";
             }
         }
+
         private void OpenViewAnnoun(int id)
         {
             var parameters = new DialogParameters<UpdateAnnounceDialog>

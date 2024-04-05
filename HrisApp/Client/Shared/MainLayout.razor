@@ -4,52 +4,52 @@
 
 <style>
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
-                        background: #e9ecef;
-                        border: none;
-                        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-                        border-radius: 20px;
-                        height: 95vh;
-                        left: 15px;
-                        top: 15px;
-                    }*/
+                            background: #e9ecef;
+                            border: none;
+                            box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                            border-radius: 20px;
+                            height: 95vh;
+                            left: 15px;
+                            top: 15px;
+                        }*/
 
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
-                        background: #e9ecef;
-                        border: none;
-                        box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-                        border-radius: 20px;
-                        height: 95vh;
-                        left: 15px;
-                        top: 15px;
-                        width: 4rem;
-                    }*/
+                            background: #e9ecef;
+                            border: none;
+                            box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                            border-radius: 20px;
+                            height: 95vh;
+                            left: 15px;
+                            top: 15px;
+                            width: 4rem;
+                        }*/
 
     /* .mud-container.mud-container-maxwidth-xxl {
-                        padding-left: 60px;
-                        padding-right: 35px;
-                        margin-top: 15px;
-                    }
+                            padding-left: 60px;
+                            padding-right: 35px;
+                            margin-top: 15px;
+                        }
 
-                    .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
-                        left: 15px;
-                        margin-bottom: 25px;
-                    }
+                        .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
+                            left: 15px;
+                            margin-bottom: 25px;
+                        }
 
-                    .mud-appbar .mud-toolbar-appbar {
-                        padding: 0px !important;
-                        align-items: center;
-                        width: calc(100% - 80px) !important;
-                        padding-left: 26px !important;
-                        padding-top: 15px !important;
-                    }
+                        .mud-appbar .mud-toolbar-appbar {
+                            padding: 0px !important;
+                            align-items: center;
+                            width: calc(100% - 80px) !important;
+                            padding-left: 26px !important;
+                            padding-top: 15px !important;
+                        }
 
-                    .btnburger {
-                        border: none;
-                        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-                        border-radius: 50%;
-                        transition: all .5s ease;
-                        height: 40px;
-                    } */
+                        .btnburger {
+                            border: none;
+                            box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+                            border-radius: 50%;
+                            transition: all .5s ease;
+                            height: 40px;
+                        } */
 </style>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
@@ -252,19 +252,57 @@
         <MudDrawer @bind-Open="@_drawerOpen" Fixed="true" Elevation="0" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true" Class="sidebarmenu">
             @if (_drawerOpen == true)
             {
-                <a href="/dashboard">
-                    <MudDrawerHeader>
-                        <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
-                    </MudDrawerHeader>
-                </a>
+                if (GlobalConfigService.Role.Equals("Technical"))
+                {
+                    <a href="/asset-dashboard">
+                        <MudDrawerHeader>
+                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        </MudDrawerHeader>
+                    </a>
+                }
+                else if (GlobalConfigService.Role.Equals("User"))
+                {
+                    <a href="/user-dashboard">
+                        <MudDrawerHeader>
+                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        </MudDrawerHeader>
+                    </a>
+                }
+                else
+                {
+                    <a href="/dashboard">
+                        <MudDrawerHeader>
+                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        </MudDrawerHeader>
+                    </a>
+                }
             }
             else
             {
-                <a href="/dashboard">
-                    <MudDrawerHeader Style="padding: 15px 0px 10px 12px">
-                        <MudImage Src="./images/logo.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
-                    </MudDrawerHeader>
-                </a>
+                if (GlobalConfigService.Role.Equals("Technical"))
+                {
+                    <a href="/asset-dashboard">
+                        <MudDrawerHeader>
+                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        </MudDrawerHeader>
+                    </a>
+                }
+                else if (GlobalConfigService.Role.Equals("User"))
+                {
+                    <a href="/user-dashboard">
+                        <MudDrawerHeader>
+                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        </MudDrawerHeader>
+                    </a>
+                }
+                else
+                {
+                    <a href="/dashboard">
+                        <MudDrawerHeader>
+                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        </MudDrawerHeader>
+                    </a>
+                }
             }
             @if (!string.IsNullOrEmpty(GlobalConfigService.Role))
             {
@@ -325,10 +363,9 @@
     private bool _isDarkMode;
     private string VERIFY = "";
     private string USERNAME = "";
-    private string FULLNAME = "";
 
-    public RenderFragment? html;
-    private Timer? timer;
+    public RenderFragment html;
+    private Timer timer;
 
     private static int Count1 { get; set; }
     private string Userrole = string.Empty;
@@ -347,31 +384,38 @@
     protected override async Task OnInitializedAsync()
     {
         // await jsRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
-        await Task.Delay(1);
-        VERIFY = GlobalConfigService.VerifyId;
-        USERNAME = GlobalConfigService.Username;
-        FULLNAME = await EmployeeService.Getname(Convert.ToInt32(GlobalConfigService.User_Id));
-
-        await EmployeeService.GetEmployee();
-        EmployeeList = EmployeeService.EmployeeTs;
-
-
-        Userrole = GlobalConfigService.Role;
         try
         {
-            await EmployeeImg(VERIFY);//image
-        }
-        catch (Exception)
-        {
-            ImageData = string.Format("images/imgholder.jpg");
-        }
+            await Task.Delay(1);
+            VERIFY = GlobalConfigService.VerifyId;
+            USERNAME = GlobalConfigService.Username;
 
-        if (Userrole == "SysAdmin" || Userrole == "HR" || Userrole == "CadAdmin")
+            await EmployeeService.GetEmployee();
+            EmployeeList = EmployeeService.EmployeeTs;
+
+
+            Userrole = GlobalConfigService.Role;
+            try
+            {
+                await EmployeeImg(VERIFY);//image
+            }
+            catch (Exception)
+            {
+                ImageData = string.Format("images/imgholder.jpg");
+            }
+
+            if (Userrole == "SysAdmin" || Userrole == "HR" || Userrole == "CadAdmin")
+            {
+                timer = new Timer();
+                timer.Interval = 3000;
+                timer.Elapsed += OnTimerElapsed!;
+                timer.Enabled = true;
+            }
+        }
+        catch (Exception ex)
         {
-            timer = new Timer();
-            timer.Interval = 3000;
-            timer.Elapsed += OnTimerElapsed!;
-            timer.Enabled = true;
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex);
         }
     }
 
@@ -531,27 +575,35 @@
     #region NOTIF ADMIN
     private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        // await OnRefreshPage();
-        await LeaveHistoryService.GetLeaveHistory();
-        badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
+        try
+        {
+            // await OnRefreshPage();
+            await LeaveHistoryService.GetLeaveHistory();
+            badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
 
-        PendingCount = await LeaveHistoryService.Getpendingcount();
-        newRequest = PendingCount.Count();
+            PendingCount = await LeaveHistoryService.Getpendingcount();
+            newRequest = PendingCount.Count();
 
-        countSnack = newRequest;
-        if (countSnack != 0)
-        {
-            OnVal(newRequest);
+            countSnack = newRequest;
+            if (countSnack != 0)
+            {
+                OnVal(newRequest);
+            }
+            else
+            {
+                countSnack = 0;
+                OnTuneOff();
+            }
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
-        else
+        catch (Exception ex)
         {
-            countSnack = 0;
-            OnTuneOff();
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex);
         }
-        await InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
     }
 
     [JSInvokable]

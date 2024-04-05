@@ -362,6 +362,7 @@
         public void CreateNewEmployee() => NavigationManager.NavigateTo("/employee/add");
 
         public void ShowEmployee(int id) => NavigationManager.NavigateTo($"/employee/edit/{id}");
+        public void ShowEmployeeToTechnical(int id) => NavigationManager.NavigateTo($"/technical/employee/edit/{id}");
 
         private void OpenUploadDialog()
         {

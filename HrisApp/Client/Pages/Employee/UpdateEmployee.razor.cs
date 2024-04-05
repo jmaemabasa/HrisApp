@@ -269,7 +269,7 @@ namespace HrisApp.Client.Pages.Employee
 
                     //UPDATE SUB POSITION FOR INACTIVE EMPLOYEE
                     _subposition.Status = "Vacant";
-                    _subposition.InActiveDate = employee.DateInactiveStatus;
+                    _subposition.VacantDate = employee.DateInactiveStatus;
                     await PositionService.UpdateSubPosition(_subposition);
 
                     await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);

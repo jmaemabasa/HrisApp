@@ -1,0 +1,87 @@
+﻿@page "/technical/employee/edit/{id:int}"
+
+@attribute [Authorize(Roles = "Technical")]
+<PageTitle>Employee Assets</PageTitle>
+
+<div class="@*tabdiv*@ pt-2">
+    <MudGrid Spacing="3">
+        <MudItem xs="12" lg="3">
+            <MudCard Class="empdleft" Elevation="0">
+                <MudCardContent>
+                    <div class="d-flex flex-column justify-content-center ">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                            <div class="d-flex align-items-center">
+                                <MudTooltip Text="Back">
+                                    <MudIconButton OnClick="Backbtn" Icon="@Icons.Material.Rounded.KeyboardArrowLeft" aria-label="back" Size="Size.Small"></MudIconButton>
+                                </MudTooltip>
+                                <span class="spantitle" style="font-family: 'Poppins', sans-serif !important">Employee Details</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <MudAvatar Style="width: 230px;height: 230px;" Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
+                                <MudImage Src="@ImageData"></MudImage>
+                            </MudAvatar>
+                        </div>
+                        <div>
+                            <MudText Align="Align.Center" Style="font-weight: bold; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@employee.FirstName @employee.LastName</MudText>
+                        </div>
+                        <div class="d-flex flex-grow-1 justify-content-center mt-1">
+                            <div class="@StatusChipColor(employee.Status?.Name)">
+                                <MudText Align="Align.Center" Style="font-size: 0.9em">@employee.Status?.Name</MudText>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Employment Status</MudText>
+                                <MudText Align="Align.Start" Class="@StatusTextColor(employee.EmploymentStatus?.Name)" Style="font-weight:bold;" Typo="Typo.body2">@employee.EmploymentStatus?.Name</MudText>
+                            </div>
+                            <div class="divsingledetails">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-grow-1">
+                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Email</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Email</MudText>
+                                    </div>
+                                    @*  <div>
+                                    <MudTooltip Text="Copy">
+                                    <MudIconButton OnClick="() => CopyToClipboard(employee.Email)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton>
+                                    </MudTooltip>
+                                    </div> *@
+                                </div>
+                            </div>
+                            <div class="divsingledetails">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-grow-1">
+                                        <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Phone</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">+63 @employee.MobileNumber</MudText>
+                                    </div>
+                                    @* <div><MudTooltip Text="Copy"><MudIconButton OnClick="() => CopyToClipboard(employee.MobileNumber)" Icon="@Icons.Material.Rounded.ContentCopy"></MudIconButton></MudTooltip></div> *@
+                                </div>
+                            </div>
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Position</MudText>
+                                @foreach (var item in SubPositionsL)
+                                {
+                                    if (item.Id == employee.PositionId)
+                                    {
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.Description</MudText>
+                                    }
+                                }
+                            </div>
+                            <div class="divsingledetails">
+                                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Department?.Name</MudText>
+                            </div>
+                        </div>
+                    </div>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem Class="empdmainbox" xs="12" lg="9" Style="margin-top: 1rem;">
+            <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="tabs" @bind-ActivePanelIndex="activeIndex">
+                <MudTabPanel TabContent="TabHeader(0)">
+                    <EmployeeAssetTab EmpId="@Id" />
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</div>

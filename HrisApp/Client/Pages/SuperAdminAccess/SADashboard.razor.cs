@@ -40,7 +40,7 @@ namespace HrisApp.Client.Pages.SuperAdminAccess
                 await DepartmentService.GetDepartment();
                 await DivisionService.GetDivision();
                 await PositionService.GetPosition();
-                await PositionService.GetDbTotalPlantilla();
+                //await PositionService.GetDbTotalPlantilla();
                 await PositionService.GetSubPosition();
                 await ForEvalService.GetForEval();
 

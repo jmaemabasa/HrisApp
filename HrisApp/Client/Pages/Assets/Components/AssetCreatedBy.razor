@@ -6,7 +6,7 @@
     </div>
     <div>
         <div class="flex-column">
-            <div style="font-weight: bold;color: #757A90;">@employee.FirstName  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @employee.LastName</div>
+            <div style="font-weight: bold;color: #757A90;">@fname  @mname  @lname</div>
             <div style="font-size: 13px !important;color: #757A90;">@subpos.Description</div>
         </div>
     </div>
@@ -15,30 +15,32 @@
 @code {
     #nullable disable
     [Parameter]
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     EmployeeT employee = new();
     SubPositionT subpos = new();
+
     private string ImageData;
 
+    string fname = "", lname = "", mname = "", pos = "";
 
     private void GoToEmployee() => NavigationManager.NavigateTo($"/employee/edit/{employee.Id}");
 
     protected override async Task OnParametersSetAsync()
     {
-        if (Id.HasValue)
+        if (Id != 0)
         {
-            employee = await EmployeeService.GetSingleEmployee((int)Id);
+            employee = await EmployeeService.GetSingleEmployee(Id);
             subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
 
-
-            var imagemodel = await ImageService.GetImageData(employee.Verify_Id);
-            if (imagemodel != null)
+            fname = employee.FirstName;
+            lname = employee.LastName;
+            mname = (employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "");
+            try
             {
-                var base642 = Convert.ToBase64String(imagemodel);
-                ImageData = string.Format("data:image/png;base64,{0}", base642);
+                await EmployeeImg(employee?.Verify_Id);//image
             }
-            else
+            catch (Exception)
             {
                 if (employee.GenderId == 1)
                 {
@@ -49,6 +51,16 @@
                     ImageData = string.Format("images/avatarfemaleholder.jpg");
                 }
             }
+        }
+    }
+
+    private async Task EmployeeImg(string verifyCode)
+    {
+        var imagemodel = await ImageService.GetImageData(verifyCode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
         }
     }
 }

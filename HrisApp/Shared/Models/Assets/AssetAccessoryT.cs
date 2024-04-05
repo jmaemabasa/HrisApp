@@ -50,6 +50,6 @@ namespace HrisApp.Shared.Models.Assets
 
         public DateTime? DateCreated { get; set; } = DateTime.Now;
         public EmployeeT? CreatedBy { get; set; }
-        public int? CreatedById { get; set; }
+        public int CreatedById { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240405010141_MG040520240900AM")]
+    partial class MG040520240900AM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -865,7 +867,7 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedById")
+                    b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateCreated")
@@ -1079,7 +1081,7 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedById")
+                    b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateCreated")
@@ -1319,7 +1321,7 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedById")
+                    b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateCreated")
@@ -1542,7 +1544,7 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedById")
+                    b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateCreated")
@@ -1682,7 +1684,7 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedById")
+                    b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateCreated")
@@ -4792,9 +4794,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "MainAsset")
                         .WithMany()
@@ -4875,9 +4875,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "Employee")
                         .WithMany()
@@ -4943,9 +4941,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "Employee")
                         .WithMany()
@@ -5031,9 +5027,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
                         .WithMany()
@@ -5105,9 +5099,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetMasterT", "MainAsset")
                         .WithMany()

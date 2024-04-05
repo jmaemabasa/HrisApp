@@ -1,4 +1,46 @@
-﻿::deep .txf1, ::deep .txtpass {
+﻿.divbodybg {
+    height: 100vh;
+    background: rgba(0, 170, 255, 0.1);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    border-radius: 30% 70% 100% 0% / 0% 78% 22% 100%;
+    width: 51%;
+}
+
+.divbodybottomright {
+    border-radius: 46% 54% 0% 100% / 40% 31% 69% 60%;
+    background: rgba(0, 170, 255, 0.1);
+    position: fixed;
+    height: 500px;
+    width: 500px;
+    right: -204px;
+    bottom: -136px;
+    z-index: 2;
+}
+
+.divbodybottomright1 {
+    border-radius: 46% 54% 0% 100% / 40% 31% 69% 60%;
+    background: rgba(0, 170, 255, 0.1);
+    position: fixed;
+    height: 523px;
+    width: 523px;
+    right: -204px;
+    bottom: -143px;
+    z-index: 1;
+}
+
+.divbodycircle {
+    border-radius: 42% 58% 39% 61% / 48% 48% 52% 52%;
+    position: fixed;
+    height: 200px;
+    width: 200px;
+    background: rgba(0, 170, 255, 0.04);
+    right: 469px;
+    top: 126px;
+}
+
+::deep .txf1, ::deep .txtpass {
     height: 50px;
     box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
     border-radius: 10px;
@@ -11,9 +53,9 @@
     width: 100%;
 }
 
-::deep .txtpass:focus-within {
-    border: 2px solid black;
-}
+    ::deep .txtpass:focus-within {
+        border: 2px solid black;
+    }
 
 ::deep .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
     margin-top: 0px;
@@ -26,6 +68,10 @@
     background-color: #e9ecef;
     padding: 0 15px 10px 25px;
     margin-top: 0px !important;
+}
+
+::deep .txtpass button {
+    color: #757A90;
 }
 
 ::deep .btnlogin {
@@ -42,3 +88,272 @@
         color: #fff;
     }
 
+::deep .validation-message {
+    color: #f44336;
+    font-size: 10px;
+    margin-top: 3px;
+}
+    .loginaccounttext {
+    color: #2d455a;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 18px;
+}
+
+::deep .labelunpw {
+    color: #757A90;
+}
+
+.logincard {
+    background: #e9ecef;
+    border: none;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+    border-radius: 20px;
+    width: 40%;
+    height: 452px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 99;
+    position: relative;
+}
+
+.btnloginbs {
+    background-image: linear-gradient(to right, #2c3e50 0%, #3498db 51%, #2c3e50 100%);
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    height: 42px;
+    font-size: 13px;
+}
+
+    .btnloginbs:hover {
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
+    }
+
+.contactdiv {
+    z-index: 9999 !important;
+    position: relative;
+}
+
+.bdgimage {
+    width: 345px;
+    position: relative;
+    top: 139px;
+    opacity: 0.4;
+}
+
+.btniconlink {
+    background-color: #fff;
+    color: #ef4c50;
+    border-radius: 50%;
+    transition: all .5s ease;
+}
+
+    .btniconlink:hover {
+        transform: scale(1.1);
+    }
+
+    .btniconlink img {
+        height: 15px;
+    }
+
+    .btniconlink ::deep .mud-svg-icon {
+        font-size: 15px;
+    }
+/*waves****************************/
+.testbox {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.boxcss {
+    position: relative;
+    top: 0;
+    transform: rotate(80deg);
+    left: 0;
+}
+
+.wave {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: .4;
+    position: absolute;
+    top: 3%;
+    left: 10%;
+    background: #0af;
+    width: 1500px;
+    height: 1300px;
+    /*margin-left: -150px;
+    margin-top: -250px;*/
+    margin-left: -245px;
+    margin-top: -6px;
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    animation: drift 7000ms infinite linear;
+}
+
+    .wave.-three {
+        animation: drift 7500ms infinite linear;
+        position: fixed;
+        background-color: #77daff;
+    }
+
+    .wave.-two {
+        animation: drift 3000ms infinite linear;
+        opacity: .1;
+        background: black;
+        position: fixed;
+    }
+
+.boxcss:after {
+    content: '';
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    transform: translate3d(0, 0, 0);
+}
+
+@keyframes drift {
+    from {
+        transform: rotate(0deg);
+    }
+
+    from {
+        transform: rotate(360deg);
+    }
+}
+
+/*LOADING SPACE*/
+
+.contain {
+    animation-delay: 4s;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: #25a7d7;
+    background: -webkit-linear-gradient(#25a7d7, #2962FF);
+    background: linear-gradient(#25a7d7, #25a7d7);
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 5px;
+}
+
+    /*Animation*/
+    .icon:nth-child(2) img {
+        -webkit-animation-delay: 0.2s;
+        animation-delay: 0.2s
+    }
+
+    .icon:nth-child(3) img {
+        -webkit-animation-delay: 0.3s;
+        animation-delay: 0.3s
+    }
+
+    .icon:nth-child(4) img {
+        -webkit-animation-delay: 0.4s;
+        animation-delay: 0.4s
+    }
+
+    .icon img {
+        -webkit-animation: anim 2s ease infinite;
+        animation: anim 2s ease infinite;
+        -webkit-transform: scale(0,0) rotateZ(180deg);
+        transform: scale(0,0) rotateZ(180deg);
+    }
+
+@-webkit-keyframes anim {
+    0% {
+        -webkit-transform: scale(0,0) rotateZ(-90deg);
+        transform: scale(0,0) rotateZ(-90deg);
+        opacity: 0
+    }
+
+    30% {
+        -webkit-transform: scale(1,1) rotateZ(0deg);
+        transform: scale(1,1) rotateZ(0deg);
+        opacity: 1
+    }
+
+    50% {
+        -webkit-transform: scale(1,1) rotateZ(0deg);
+        transform: scale(1,1) rotateZ(0deg);
+        opacity: 1
+    }
+
+    80% {
+        -webkit-transform: scale(0,0) rotateZ(90deg);
+        transform: scale(0,0) rotateZ(90deg);
+        opacity: 0
+    }
+}
+
+@keyframes anim {
+    0% {
+        -webkit-transform: scale(0,0) rotateZ(-90deg);
+        transform: scale(0,0) rotateZ(-90deg);
+        opacity: 0
+    }
+
+    30% {
+        -webkit-transform: scale(1,1) rotateZ(0deg);
+        transform: scale(1,1) rotateZ(0deg);
+        opacity: 1
+    }
+
+    50% {
+        -webkit-transform: scale(1,1) rotateZ(0deg);
+        transform: scale(1,1) rotateZ(0deg);
+        opacity: 1
+    }
+
+    80% {
+        -webkit-transform: scale(0,0) rotateZ(90deg);
+        transform: scale(0,0) rotateZ(90deg);
+        opacity: 0
+    }
+}
+
+@media (max-width: 640.98px) {
+    .logincard {
+        width: 90%;
+    }
+
+    .wave {
+        display: none;
+    }
+
+    .contactdiv {
+        display: none;
+    }
+
+    .bdgimage {
+        display:none;
+    }
+}

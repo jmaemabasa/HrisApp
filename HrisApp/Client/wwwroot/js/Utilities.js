@@ -22,7 +22,7 @@ function initializeInactivityTimer(dotnetHelper) {
 
     function resetTimer() {
         clearTimeout(timers);
-        timers = setTimeout(logout, 900000);
+        timers = setTimeout(logout, 300000);
     }
 
     function logout() {

@@ -199,7 +199,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </MudTd>
                     <MudTd DataLabel="EmployeeNo">@employeeee.EmployeeNo</MudTd>
                     <MudTd DataLabel="Position">
@@ -226,9 +225,13 @@
                                     <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
                                 </MudTooltip>
                             </Authorized>
-                            <NotAuthorized>
-                                <MudIconButton Disabled Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
-                            </NotAuthorized>
+                        </AuthorizeView>
+                        <AuthorizeView Roles="Technical">
+                            <Authorized>
+                                <MudTooltip Text="View Details">
+                                    <MudIconButton Class="btnShow" OnClick="(() => ShowEmployeeToTechnical(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
+                                </MudTooltip>
+                            </Authorized>
                         </AuthorizeView>
                     </MudTd>
                 </RowTemplate>
@@ -236,7 +239,6 @@
                     <MudTablePager PageSizeOptions="new int[] { 9, 25, 50 }" InfoFormat="@($"Right {@_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
                 </PagerContent>
             </MudTable>
-
         </div>
     }
 </div>

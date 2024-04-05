@@ -15,10 +15,13 @@ namespace HrisApp.Shared.Models.MasterData
         public string ReportingTo { get; set; } = string.Empty; //Sub POsition Code sa heads
         public string Status { get; set; } = string.Empty;
         public DateTime? ActiveDate { get; set; } //kanus a nagamit
-        public DateTime? InActiveDate { get; set; } //kanus a na inactive
+        public DateTime? VacantDate { get; set; } //kanus a na vacant
         public int DivisionId { get; set; }
         public int DepartmentId { get; set; }
         public int SectionId { get; set; }
         public int AreaId { get; set; }
+
+        public DateTime? DateInactive { get; set; } //kanus a na deactive
+        public DateTime? DateCreated { get; set; } = DateTime.Now; //when na create ang position
     }
 }

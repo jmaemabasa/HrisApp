@@ -45,6 +45,36 @@
             }
         }
 
+        [HttpGet("GetattachmentviewBuddy")]
+        public async Task<ActionResult<byte[]>> GetattachmentviewBuddy([FromQuery] int id)
+        {
+            try
+            {
+                var _masterlist = await _context.AssetAccessImageT.ToListAsync();
+                var model = _masterlist.Where(a => a.Id == id).FirstOrDefault();
+
+                if (model == null)
+                {
+                    //not found dapat ni
+                    return NoContent();
+                }
+
+                var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
+
+                var _memory = new MemoryStream();
+                using (var _stream = new FileStream(_path, FileMode.Open))
+                {
+                    await _stream.CopyToAsync(_memory);
+                }
+                _memory.Position = 0;
+                return _memory.ToArray();
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
+        }
+
         [HttpGet("GetattachmentviewAll")]
         public async Task<ActionResult<byte[]>> GetattachmentviewAll([FromQuery] string filename)
         {

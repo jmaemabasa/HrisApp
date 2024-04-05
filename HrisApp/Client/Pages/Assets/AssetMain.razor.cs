@@ -73,9 +73,17 @@ namespace HrisApp.Client.Pages.Assets
                 return true;
             if (obj.AssetStatus.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-
             if (obj.Serial.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+
+
+            if (obj.Employee != null)
+            {
+                if (obj.Employee.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (obj.Employee.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
             return false;
         }
 
