@@ -1,6 +1,6 @@
 ﻿@page "/asset-consumable"
 
-@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin")]
 
 <PageTitle>Consumables</PageTitle>
 
@@ -81,7 +81,7 @@
                     <MudTd DataLabel="">@obj.Category?.ACat_Name</MudTd>
                     <MudTd DataLabel="">@obj.Cons_Name</MudTd>
                     <MudTd>
-                        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
+                        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin">
                             <Authorized>
                                 <MudTooltip Text="Details">
                                     <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>

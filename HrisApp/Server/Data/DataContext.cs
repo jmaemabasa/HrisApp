@@ -236,6 +236,10 @@ namespace HrisApp.Server.Data
               .Property(e => e.Id)
               .UseIdentityColumn(1, 1);
 
+            modelBuilder.Entity<Emp_RateHistoryT>()
+              .Property(e => e.Id)
+              .UseIdentityColumn(1, 1);
+
         }
 
         //USERS
@@ -281,6 +285,7 @@ namespace HrisApp.Server.Data
         public DbSet<Emp_ProfBackgroundT> Emp_ProfBackgroundT { get; set; }
         public DbSet<Emp_PosHistoryT> Emp_PosHistoryT { get; set; }
         public DbSet<Emp_EvaluationT> Emp_EvaluationT { get; set; }
+        public DbSet<Emp_RateHistoryT> Emp_RateHistoryT { get; set; }
 
         //EDUCATIONS
         public DbSet<Emp_CollegeT> Emp_CollegeT { get; set; }

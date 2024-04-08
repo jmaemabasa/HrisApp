@@ -1,6 +1,6 @@
 ﻿@page "/technical/employee/edit/{id:int}"
 
-@attribute [Authorize(Roles = "Technical")]
+@attribute [Authorize(Roles = "Technical, CshrAdmin")]
 <PageTitle>Employee Assets</PageTitle>
 
 <div class="@*tabdiv*@ pt-2">

@@ -5,7 +5,7 @@
     public class EmpHistoryService : IEmpHistoryService
     {
         public HttpClient _httpClient;
-        private MainsService _mainService = new MainsService();
+        private MainsService _mainService = new();
 
         public EmpHistoryService()
         {

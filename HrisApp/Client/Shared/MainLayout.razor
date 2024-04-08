@@ -252,29 +252,32 @@
         <MudDrawer @bind-Open="@_drawerOpen" Fixed="true" Elevation="0" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true" Class="sidebarmenu">
             @if (_drawerOpen == true)
             {
-                if (GlobalConfigService.Role.Equals("Technical"))
+                if (!string.IsNullOrEmpty(GlobalConfigService.Role))
                 {
-                    <a href="/asset-dashboard">
-                        <MudDrawerHeader>
-                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
-                        </MudDrawerHeader>
-                    </a>
-                }
-                else if (GlobalConfigService.Role.Equals("User"))
-                {
-                    <a href="/user-dashboard">
-                        <MudDrawerHeader>
-                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
-                        </MudDrawerHeader>
-                    </a>
-                }
-                else
-                {
-                    <a href="/dashboard">
-                        <MudDrawerHeader>
-                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
-                        </MudDrawerHeader>
-                    </a>
+                    if (GlobalConfigService.Role.Equals("Technical"))
+                    {
+                        <a href="/asset-dashboard">
+                            <MudDrawerHeader>
+                                <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                            </MudDrawerHeader>
+                        </a>
+                    }
+                    else if (GlobalConfigService.Role.Equals("User"))
+                    {
+                        <a href="/user-dashboard">
+                            <MudDrawerHeader>
+                                <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                            </MudDrawerHeader>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/dashboard">
+                            <MudDrawerHeader>
+                                <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                            </MudDrawerHeader>
+                        </a>
+                    }
                 }
             }
             else
@@ -304,14 +307,14 @@
                     </a>
                 }
             }
-            @if (!string.IsNullOrEmpty(GlobalConfigService.Role))
-            {
+            @* @if (!string.IsNullOrEmpty(GlobalConfigService.Role))
+            { *@
                 <NavMenu />
-            }
+            @* }
             else
             {
                 <HrisApp.Client.Shared.NavMenus.SANavMenu />
-            }
+            } *@
         </MudDrawer>
     </MudHidden>
     <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
@@ -575,35 +578,27 @@
     #region NOTIF ADMIN
     private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        try
-        {
-            // await OnRefreshPage();
-            await LeaveHistoryService.GetLeaveHistory();
-            badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
+        // await OnRefreshPage();
+        await LeaveHistoryService.GetLeaveHistory();
+        badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
 
-            PendingCount = await LeaveHistoryService.Getpendingcount();
-            newRequest = PendingCount.Count();
+        PendingCount = await LeaveHistoryService.Getpendingcount();
+        newRequest = PendingCount.Count();
 
-            countSnack = newRequest;
-            if (countSnack != 0)
-            {
-                OnVal(newRequest);
-            }
-            else
-            {
-                countSnack = 0;
-                OnTuneOff();
-            }
-            await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
-        }
-        catch (Exception ex)
+        countSnack = newRequest;
+        if (countSnack != 0)
         {
-            Console.WriteLine(ex.Message);
-            Console.WriteLine(ex);
+            OnVal(newRequest);
         }
+        else
+        {
+            countSnack = 0;
+            OnTuneOff();
+        }
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
     }
 
     [JSInvokable]

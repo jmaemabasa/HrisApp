@@ -82,7 +82,7 @@
                         int totalPlantilla = PositionService.SubPositionTs.Where(e => e.Status != "Inactive").Count();
                         await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
-                        if (result.UserRole == "Technical")
+                        if (result.UserRole == "Technical" || result.UserRole == "CshrAdmin")
                         {
                             NavigationManager.NavigateTo("/asset-dashboard");
                         }

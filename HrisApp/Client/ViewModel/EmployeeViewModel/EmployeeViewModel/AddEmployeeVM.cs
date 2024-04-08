@@ -2,9 +2,9 @@
 
 namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
+#nullable disable
     public class AddEmployeeVM : BaseViewModel
     {
-#nullable disable
         private IEmployeeService EmployeeService = new EmployeeService();
         private IEducationService EducationService = new EducationService();
         private ILicenseTrainingService LicenseTrainingService = new LicenseTrainingService();
@@ -24,6 +24,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         private IForEvalService ForEvalService = new ForEvalService();
         private ILeaveCredService LeaveCredService = new LeaveCredService();
         private IAuthService AuthService = new AuthService();
+        private IEmpRateHistoryService EmpRateHistoryService = new EmpRateHistoryService();
 
         public SweetAlertService Swal { get; set; }
 
@@ -176,6 +177,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public DateTime? RegularDate = DateTime.Today;
         public DateTime? ResignationDate = DateTime.Today;
 
+        public DateTime? RATEEFFECTIVITYDATE = DateTime.Today;
         #endregion DATE VARIBALE
 
         #region IMAGE VARIABLE
@@ -289,15 +291,18 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     payroll.Verify_Id = verifyId;
                     var savepayroll = await PayrollService.CreatePayroll(payroll);
 
+                    var EMPLOYEELIST = await EmployeeService.GetEmployeeList();
+
                     //CREATE EMPLOYEE HISTORY
                     empHistory.Verify_Id = verifyId;
-                    empHistory.EmployeeId = employee.Id;
+                    empHistory.EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id;
                     empHistory.DateStarted = employee.DateHired;
                     empHistory.NewAreaId = employee.AreaId;
                     empHistory.NewDivisionId = employee.DivisionId;
                     empHistory.NewDepartmentId = employee.DepartmentId;
                     empHistory.NewSectionId = employee.SectionId;
                     empHistory.NewPositionId = employee.PositionId;
+                    empHistory.EmploymentStatusId = employee.EmploymentStatusId;
                     foreach (var item in SubPositionsL)
                     {
                         if (item.Id == employee.PositionId)
@@ -306,6 +311,27 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                         }
                     }
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
+
+
+
+                    //UPDATE SUBPOSITION
+                    subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
+                    subPosition.Emp_VerifyId = verifyCode;
+                    subPosition.Status = "Active";
+                    subPosition.ActiveDate = employee.DateHired;
+                    await PositionService.UpdateSubPosition(subPosition);
+
+                    //CREATE RATE HISTORY
+                    Emp_RateHistoryT ratehistory = new()
+                    {
+                        Rate = payroll.Rate,
+                        DateStarted = DateTime.Now,
+                        EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id,
+                        EffectivityDate = RATEEFFECTIVITYDATE,
+                        PositionId = employee.PositionId
+                    };
+
+                    await EmpRateHistoryService.CreateHistory(ratehistory);
 
                     //CREATE EMP EVAL
                     var generateEval = await ForEvalService.GenerateStatus(verifyCode, employee.DateHired, "Pending");
@@ -330,12 +356,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     await CreateTrainings(verifyCode);
                     await CreateProfBg(verifyCode);
 
-                    //UPDATE SUBPOSITION
-                    subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
-                    subPosition.Emp_VerifyId = verifyCode;
-                    subPosition.Status = "Active";
-                    subPosition.ActiveDate = employee.DateHired;
-                    await PositionService.UpdateSubPosition(subPosition);
 
                     //CREATE LEAVE CREDITS
                     await LeaveCredService.CreateLeaveCred(verifyId, 0, 0, 0, 0, 0, 0);
@@ -351,8 +371,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                         await GenerateUsername();
                     }
 
-                    var employees = await EmployeeService.GetEmployeeList();
-                    userObj.EmployeeId = employees.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id;
+                    userObj.EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id;
                     userObj.Emp_VerifyId = verifyCode;
                     userObj.Password = "p@ssw0rd";
                     userObj.LoginStatus = "Inactive";

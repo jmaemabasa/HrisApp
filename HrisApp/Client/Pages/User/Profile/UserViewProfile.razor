@@ -19,7 +19,7 @@
                             </MudTooltip>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <MudAvatar Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
+                            <MudAvatar Style="width: 230px;height: 230px;" Class="@StatusAvatarColor(employee.EmploymentStatus?.Name)">
                                 <MudImage Src="@ImageData"></MudImage>
                             </MudAvatar>
                         </div>
@@ -343,6 +343,9 @@
                             <EmployeeTraining VerifyCode="@VERIFY" />
                         </MudCardContent>
                     </MudCard>
+                </MudTabPanel>
+                <MudTabPanel TabContent="TabHeader(3)">
+                    <EmployeeAssetTab EmpId="@Id" />
                 </MudTabPanel>
             </MudTabs>
         </MudItem>

@@ -30,67 +30,67 @@
 }
 else
 {
-    <MudTable Class="stable" Items="empHistoryList" Context="history" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
-        <ToolBarContent>
-            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
-                <div>
-                    <span class="spantitle mb-3">Employee Position History</span>
-                </div>
-                <div>
-                    <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
-                        <Authorized>
-                            <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <div>
+            <span class="spantitle mb-3">Position History</span>
+        </div>
+        <div>
+            <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+                <Authorized>
+                    <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "personalandjobOpen"))">
 
-                                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
 
-                                <div class="text">Add</div>
-                            </button>
-                        </Authorized>
-                    </AuthorizeView>
-                </div>
-            </div>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Position</MudTh>
-            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Employment</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Started</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Ended</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Area</MudTh>
-            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #424242;">Department</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="">
-                @foreach (var item in PositionsL)
-                {
-                    if (item.PosCode == history.newPositionCode)
+                        <div class="text">Add</div>
+                    </button>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+    </div>
+    <div style="max-height: 240px;overflow: auto;margin-top: 5px;">
+        <MudTable Class="stable" Items="empHistoryList" Context="history" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+            <HeaderContent>
+                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Position</MudTh>
+                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Employment</MudTh>
+                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Started</MudTh>
+                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Ended</MudTh>
+                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Area</MudTh>
+                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Department</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
+                    @foreach (var item in PositionsL)
                     {
-                        @item.Name
+                        if (item.PosCode == history.newPositionCode)
+                        {
+                            @item.Name
+                        }
                     }
-                }
-            </MudTd>
-            <MudTd DataLabel="">@history.EmploymentStatus?.Name</MudTd>
-            <MudTd DataLabel="">@history.DateStarted?.ToString("MM/dd/yyyy")</MudTd>
-            <MudTd DataLabel="">@history.DateEnded?.ToString("MM/dd/yyyy")</MudTd>
-            <MudTd DataLabel="">
-                @foreach (var item in AreasL)
-                {
-                    if (item.Id == history.NewAreaId)
+                </MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">@history.EmploymentStatus?.Name</MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">@history.DateStarted?.ToString("MM/dd/yyyy")</MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">@history.DateEnded?.ToString("MM/dd/yyyy")</MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
+                    @foreach (var item in AreasL)
                     {
-                        @item.Name
+                        if (item.Id == history.NewAreaId)
+                        {
+                            @item.Name
+                        }
                     }
-                }
-            </MudTd>
-            <MudTd DataLabel="">
-                @foreach (var item in DepartmentsL)
-                {
-                    if (item.Id == history.NewDepartmentId)
+                </MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
+                    @foreach (var item in DepartmentsL)
                     {
-                        @item.Name
+                        if (item.Id == history.NewDepartmentId)
+                        {
+                            @item.Name
+                        }
                     }
-                }
-            </MudTd>
-        </RowTemplate>
-    </MudTable>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </div>
 }
 
 <MudDrawer Class="drawerdetails" @bind-Open="@AddOpenDrawer" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">

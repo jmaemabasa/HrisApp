@@ -499,6 +499,17 @@
                     builder.AddContent(6, "Professional Background");
                     builder.CloseComponent();
                 }
+                else if (tabId == 3)
+                {
+                    builder.OpenComponent<MudChip>(0);
+                    builder.AddAttribute(1, "Class", @GetTabChipClass(3));
+                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.CloseComponent();
+                    builder.OpenElement(4, "span");
+                    builder.AddAttribute(5, "class", @GetTabTextClass(3));
+                    builder.AddContent(6, "Assets");
+                    builder.CloseComponent();
+                }
             };
         }
 

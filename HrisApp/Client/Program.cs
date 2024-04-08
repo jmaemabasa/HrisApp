@@ -112,6 +112,7 @@ global using HrisApp.Client.Services.Assets.Remarks.LicenseRemarksService;
 global using HrisApp.Client.Services.Assets.Licenses.AssLicenseHistoryService;
 global using HrisApp.Client.Services.Assets.Licenses.AssLicenseImageService;
 global using HrisApp.Client.Services.Assets.MainAssetLicenseService;
+global using HrisApp.Client.Services.EmpDetails.EmpRateHistoryService;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -152,6 +153,7 @@ builder.Services.AddScoped<IPayrollService, PayrollService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IEmploymentDateService, EmploymentDateService>();
+builder.Services.AddScoped<IEmpRateHistoryService, EmpRateHistoryService>();
 builder.Services.AddScoped<IEmpHistoryService, EmpHistoryService>();
 builder.Services.AddScoped<IAuditlogService, AuditlogService>();
 builder.Services.AddScoped<IStaticService, StaticService>();

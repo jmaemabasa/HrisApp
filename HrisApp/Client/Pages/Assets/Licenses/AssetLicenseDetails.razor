@@ -1,5 +1,5 @@
 ﻿@page "/asset-license/details/{id:int}"
-@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin")]
 <PageTitle>Asset Details</PageTitle>
 
 
@@ -109,7 +109,7 @@
                     <div class="mainasssec">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Accessory</span>
-                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin,Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin,Technical, CshrAdmin">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "leftPanelOpen"))">
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
@@ -209,7 +209,7 @@
                     <div class="mainasssec" style="margin-top: 25px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="spantitle">Additional Details</span>
-                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin,Technical">
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin,Technical, CshrAdmin">
                                 <Authorized>
                                     <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "detailsPanelOpen"))">
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>

@@ -9,7 +9,7 @@
 
     <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" @ref="@_addEmployeeVM.tabs" @bind-ActivePanelIndex="@_addEmployeeVM.activeIndex" Centered=true>
 
-        @* ====================================================================================  JOB  ==================================================================================== *@
+        @* ====================================================================================  PERSONAL  ==================================================================================== *@
         <MudTabPanel TabContent="@_addEmployeeVM.tabHeader(0)">
             <MudGrid Spacing="5">
                 <MudItem xs="12" sm="2">
@@ -286,7 +286,7 @@
             </MudGrid>
         </MudTabPanel>
 
-        @* ====================================================================================  PERSONAL  ==================================================================================== *@
+        @* ====================================================================================  WORK  ==================================================================================== *@
         <MudTabPanel TabContent="@_addEmployeeVM.tabHeader(1)">
             <MudGrid>
                 <EditForm Model="@_addEmployeeVM.payroll" OnValidSubmit="@(()=> Activate(2))" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
@@ -540,6 +540,10 @@
                                         <ValidationMessage For="@(() => _addEmployeeVM.payroll.Rate)" class="mb-2 valmessage" />
                                     </div>
                                     <div class="col-md-4">
+                                        <MudText Typo="Typo.body2">Rate Effectivity Date</MudText>
+                                        <MudDatePicker Class="txf" DisableUnderLine @bind-Date="@_addEmployeeVM.RATEEFFECTIVITYDATE" DateFormat="MM/dd/yyyy" Margin="Margin.Dense" />
+                                    </div>
+                                    <div class="col-md-4">
                                         <MudText Typo="Typo.body2">Rate Type</MudText>
                                         <MudSelect Class="@slectClasssRT" DisableUnderLine @bind-Value="_addEmployeeVM.payroll.RateTypeId" Margin="Margin.Dense">
                                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
@@ -549,6 +553,8 @@
                                             }
                                         </MudSelect>
                                     </div>
+                                </div>
+                                <div class="row mb-3">
                                     <div class="col-md-4">
                                         <MudText Typo="Typo.body2">Cash-Bond</MudText>
                                         <MudSelect Class="@slectClasssCB" DisableUnderLine @bind-Value="_addEmployeeVM.payroll.CashbondId" Margin="Margin.Dense">
@@ -559,14 +565,12 @@
                                             }
                                         </MudSelect>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <MudText Typo="Typo.body2">Meal Allowance</MudText>
                                         <InputText Class="txf1 w-100 mt-1" @bind-Value="_addEmployeeVM.payroll.MealAllowance" />
                                         <ValidationMessage For="@(() => _addEmployeeVM.payroll.MealAllowance)" class="mb-2 valmessage" />
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <MudText Typo="Typo.body2">Bank Account</MudText>
                                         <InputText Class="txf1 w-100 mt-1" MaxLength="17" @bind-Value="_addEmployeeVM.payroll.BankAcc" />
                                         <ValidationMessage For="@(() => _addEmployeeVM.payroll.BankAcc)" class="mb-2 valmessage" />

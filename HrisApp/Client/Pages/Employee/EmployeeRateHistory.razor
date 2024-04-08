@@ -1,0 +1,206 @@
+﻿@if (RATEHISTORY == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No Rate History.</span>
+    </div>
+}
+else
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <div>
+            <span class="spantitle mb-3">Employee Rate</span>
+        </div>
+        <div>
+            <div class="d-flex gap-2">
+                <button class="BtnPrev" onclick="@(() => OpenDrawer(Anchor.End, "addOldRateOpen"))">
+
+                    <div class="signPrev"><MudIcon Icon="@Icons.Material.Rounded.Add"></MudIcon></div>
+
+                    <div class="textPrev">Add Previous</div>
+                </button>
+
+                <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "rateOpen"))">
+
+                    <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Edit"></MudIcon></div>
+
+                    <div class="text">Update Current</div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div style="max-height: 240px;overflow: auto;margin-top: 5px;">
+        <MudTable Class="stable" Items="RATEHISTORY" Context="history" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
+            <HeaderContent>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Rate</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Position</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Effective On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Ended On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 15px;color: #26446e;">Action</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
+                    @if (ROLE.Equals("CadAdmin"))
+                    {
+                        <div>@history.Rate</div>
+                    }
+                    else
+                    {
+                        <div>●●●●●●●●●</div>
+                    }
+                </MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
+                    @{
+                        var pos = PositionService.SubPositionTs.Where(e => e.Id == history.PositionId).FirstOrDefault();
+                    }
+                    @pos?.Description
+                </MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
+                    @history.EffectivityDate?.ToString("MMM dd yyyy")
+                </MudTd>
+                <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
+                    @history.DateEnded?.ToString("MMM dd yyyy")
+                </MudTd>
+                <MudTd>
+                    <MudTooltip Text="View Details">
+                        <MudIconButton Class="btnShow" Style="color: #f44336;" OnClick="(() => RemoveRateHistory(history.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
+                    </MudTooltip>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+
+    </div>
+}
+
+<MudDrawer Class="drawerdetails" @bind-Open="@AddOldRateOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <div class="container-fluid">
+        <div class="row" style="margin-bottom: 10px;margin-top: 15px;">
+            <div class="col-12">
+                <span class="spantitle mb-3">Add Previous Rate History</span>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                @if (_showAlert)
+                {
+                    <MudAlert Severity="Severity.Error" Class="mb-1 mt-1">Fill out all fields</MudAlert>
+                }
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">Rate</MudText>
+                <MudTextField @bind-Value="NewPreviousObj.Rate" Class="@clsPRate" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">Effective On</MudText>
+                <MudDatePicker Editable="true" @bind-Date="NewPreviousObj.EffectivityDate" Class="@clsPEffOn" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">End Date</MudText>
+                <MudDatePicker @bind-Date="NewPreviousObj.EffEndDate" Class="@clsPEndDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">Position</MudText>
+                <MudAutocomplete T="SubPositionT" Class="@clsPPosition" Placeholder="Type to search..." @bind-Value="NewPreviousPositionObj"
+                                 SearchFunc="@SearchPosition"
+                                 ResetValueOnEmptyText="true"
+                                 CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"
+                                 ToStringFunc="@(e => e==null?null : $"{e.SubPosCode} / {e.Description}")" ShowProgressIndicator="true" Clearable="true">
+                    <NoItemsTemplate>
+                        <MudText Align="Align.Center" Class="px-4 py-1">
+                            No items found
+                        </MudText>
+                    </NoItemsTemplate>
+                </MudAutocomplete>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-save" @onclick="SaveOldHistory">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</MudDrawer>
+
+<MudDrawer Class="drawerdetails" @bind-Open="@AddOpenDrawer" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <div class="container-fluid">
+        <div class="row" style="margin-bottom: 10px;margin-top: 15px;">
+            <div class="col-12">
+                <span class="spantitle mb-3">Current Rate</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                @if (_showAlert)
+                {
+                    <MudAlert Severity="Severity.Error" Class="mb-1 mt-1">Fill out all fields</MudAlert>
+                }
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">Current Rate</MudText>
+                <MudTextField @bind-Value="LastHistoryObj.Rate" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">Effective On</MudText>
+                <MudDatePicker Editable="true" @bind-Date="LastHistoryObj.EffectivityDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">End Date</MudText>
+                <MudDatePicker @bind-Date="LastHistoryObj.EffEndDate" Class="@clsEffEndDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+        </div>
+
+        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <span class="spantitle mb-3">New Rate</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">New Rate</MudText>
+                <MudTextField @bind-Value="newRate" Class="@clsNewRate" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-12">
+                <MudText Typo="Typo.body2">Effectivity Date</MudText>
+                <MudDatePicker @bind-Date="newEffDate" Class="@clsNewEffDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 35px;">
+            <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-save" @onclick="SaveUpdate">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</MudDrawer>

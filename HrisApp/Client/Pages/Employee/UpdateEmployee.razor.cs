@@ -181,7 +181,8 @@ namespace HrisApp.Client.Pages.Employee
 
             if (GlobalConfigService.Role == "CadAdmin")
             {
-                _pHealthHolder = _payroll.PhilHealthNum; _pagIbigHolder = _payroll.HDMFNum; _sssHolder = _payroll.SSSNum; _tinHolder = _payroll.TINNum; _rateholder = _payroll.Rate;
+                var lastrate = await EmpRateHistoryService.GetLastHistoryWithoutDateEnded(employee.Id);
+                _pHealthHolder = _payroll.PhilHealthNum; _pagIbigHolder = _payroll.HDMFNum; _sssHolder = _payroll.SSSNum; _tinHolder = _payroll.TINNum; _rateholder = lastrate.Rate;
             }
             else
             {
@@ -257,6 +258,7 @@ namespace HrisApp.Client.Pages.Employee
                         empHistory.NewDepartmentId = employee.DepartmentId;
                         empHistory.NewSectionId = employee.SectionId;
                         empHistory.NewPositionId = employee.PositionId;
+                        empHistory.EmploymentStatusId = employee.EmploymentStatusId;
                         foreach (var item in SubPositionsL)
                         {
                             if (item.Id == employee.PositionId)
@@ -266,6 +268,30 @@ namespace HrisApp.Client.Pages.Employee
                         }
                         var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
                     }
+
+                    //UPDATE THE LAST RATE HISTORY AND MODIFIED DATE
+                    //var toupdateratehistory = await EmpRateHistoryService.GetLastHistory(employee.Id);
+                    //if (!toupdateratehistory.Rate.Equals(_payroll.Rate))
+                    //{
+                    //    toupdateratehistory.DateEnded = DateTime.Now;
+                    //    toupdateratehistory.DateModified = DateTime.Now;
+                    //    toupdateratehistory.Rate = _payroll.Rate;
+
+                    //    var listrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
+                    //    toupdateratehistory.TotalModifiedCountTimes = listrate.Where(e => e.DateEnded != null).Count() + 1;
+
+                    //    await EmpRateHistoryService.UpdateHistory(toupdateratehistory);
+
+                    //    Emp_RateHistoryT newRatehistory = new()
+                    //    {
+                    //        Rate = toupdateratehistory.Rate,
+                    //        DateStarted = DateTime.Now,
+                    //        EmployeeId = employee.Id
+                    //    };
+
+                    //    await EmpRateHistoryService.CreateHistory(newRatehistory);
+                    //}
+
 
                     //UPDATE SUB POSITION FOR INACTIVE EMPLOYEE
                     _subposition.Status = "Vacant";
@@ -282,6 +308,9 @@ namespace HrisApp.Client.Pages.Employee
                     _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                     //_empPicture = await ImageService.GetSingleImage((int)id);
                     _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
+
+                    var refreshrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
+                    StateService.SetState("RateHistoryList", refreshrate);
 
                     personalandjobOpen = false;
                     workInfoOpen = false;
@@ -332,6 +361,7 @@ namespace HrisApp.Client.Pages.Employee
                     empHistory.NewDepartmentId = employee.DepartmentId;
                     empHistory.NewSectionId = employee.SectionId;
                     empHistory.NewPositionId = employee.PositionId;
+                    empHistory.EmploymentStatusId = employee.EmploymentStatusId;
                     foreach (var item in SubPositionsL)
                     {
                         if (item.Id == employee.PositionId)
@@ -344,6 +374,30 @@ namespace HrisApp.Client.Pages.Employee
                     var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
                     StateService.SetState("HistoryPosList", newList);
                 }
+
+
+                //UPDATE THE LAST RATE HISTORY AND MODIFIED DATE
+                //var toupdateratehistory = await EmpRateHistoryService.GetLastHistory(employee.Id);
+                //if (!toupdateratehistory.Rate.Equals(_payroll.Rate))
+                //{
+                //    toupdateratehistory.DateEnded = DateTime.Now;
+                //    toupdateratehistory.DateModified = DateTime.Now;
+                //    toupdateratehistory.Rate = _payroll.Rate;
+
+                //    var listrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
+                //    toupdateratehistory.TotalModifiedCountTimes = listrate.Where(e => e.DateEnded != null).Count() + 1;
+
+                //    await EmpRateHistoryService.UpdateHistory(toupdateratehistory);
+
+                //    Emp_RateHistoryT newRatehistory = new()
+                //    {
+                //        Rate = toupdateratehistory.Rate,
+                //        DateStarted = DateTime.Now,
+                //        EmployeeId = employee.Id
+                //    };
+
+                //    await EmpRateHistoryService.CreateHistory(newRatehistory);
+                //}
 
                 //UPDATE SUB POSITION
                 if (employee.PositionId == _subposition.Id)
@@ -376,6 +430,9 @@ namespace HrisApp.Client.Pages.Employee
                 _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
                 //_empPicture = await ImageService.GetSingleImage((int)id);
                 _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
+
+                var refreshrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
+                StateService.SetState("RateHistoryList", refreshrate);
 
                 personalandjobOpen = false;
                 workInfoOpen = false;
@@ -688,6 +745,21 @@ namespace HrisApp.Client.Pages.Employee
             StateHasChanged();
         }
 
+        private async void RefreshRate()
+        {
+            var lastrate = await EmpRateHistoryService.GetLastHistoryWithoutDateEnded(employee.Id);
+
+            if (GlobalConfigService.Role.Equals("CadAdmin"))
+            {
+                _pHealthHolder = _payroll.PhilHealthNum; _pagIbigHolder = _payroll.HDMFNum; _sssHolder = _payroll.SSSNum; _tinHolder = _payroll.TINNum; _rateholder = lastrate.Rate;
+            }
+            else
+            {
+                _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
+            }
+            StateHasChanged();
+        }
+
         private async Task CopyToClipboard(string text) => await jsRuntime.InvokeVoidAsync("copyToClipboard", text);
 
         private static string FUpper(string input)
@@ -823,7 +895,9 @@ namespace HrisApp.Client.Pages.Employee
                     _pagIbigHolder = _payroll.HDMFNum;
                     _sssHolder = _payroll.SSSNum;
                     _tinHolder = _payroll.TINNum;
-                    _rateholder = _payroll.Rate;
+
+                    var lastrate = await EmpRateHistoryService.GetLastHistoryWithoutDateEnded(employee.Id);
+                    _rateholder = lastrate.Rate;
                     isOpenEnterPass = false;
                     _toastService.ShowSuccess("Data showed.");
                 }

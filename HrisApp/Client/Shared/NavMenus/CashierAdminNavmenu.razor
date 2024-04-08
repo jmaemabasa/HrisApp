@@ -1,4 +1,4 @@
-﻿<AuthorizeView Roles="Technical">
+﻿<AuthorizeView Roles="CshrAdmin">
     <Authorized>
         <MudDivider Class="my-1" />
         <MudNavLink Class="navlinktitle" Href="/asset-dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Dashboard</MudNavLink>
@@ -15,15 +15,15 @@
             <MudNavLink Class="navlinktitle" Href="/asset-main" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Devices" IconColor="Color.Inherit">Main Asset</MudNavLink>
             <MudNavLink Class="navlinktitle" Href="/asset-accessories" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.KeyboardAlt" IconColor="Color.Inherit">Accessory</MudNavLink>
             <MudNavLink Class="navlinktitle" Href="/asset-licenses" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.Layers" IconColor="Color.Inherit">Licenses</MudNavLink>
+            @* <MudNavLink Class="navlinktitle" Href="/asset-vehicles" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.DirectionsCar" IconColor="Color.Inherit">Vehicles</MudNavLink> *@
         </MudNavGroup>
 
 
         <MudNavGroup Class="navlinktitle" Title="Consumable Assets" Expanded="false" Icon="@Icons.Material.Rounded.ShoppingBag" IconColor="Color.Inherit">
             <MudNavLink Class="navlinktitle" Href="/asset-consumable" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Rounded.ShoppingBag" IconColor="Color.Inherit">Consumables</MudNavLink>
         </MudNavGroup>
-
         @* <MudNavGroup Class="navlinktitle" Title="Vehicale Monitoring" Expanded="false" Icon="@Icons.Material.Rounded.DirectionsCar" IconColor="Color.Inherit">
-            <MudNavLink Class="navlinktitle" Href="/asset-vehicle" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.DirectionsCar" IconColor="Color.Inherit">Vehicles</MudNavLink>
+        <MudNavLink Class="navlinktitle" Href="/asset-vehicle" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.DirectionsCar" IconColor="Color.Inherit">Vehicles</MudNavLink>
         </MudNavGroup> *@
     </Authorized>
 </AuthorizeView>
