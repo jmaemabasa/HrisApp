@@ -58,7 +58,7 @@ else
                     @history.EffectivityDate?.ToString("MMM dd yyyy")
                 </MudTd>
                 <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
-                    @history.DateEnded?.ToString("MMM dd yyyy")
+                    @history.EffEndDate?.ToString("MMM dd yyyy")
                 </MudTd>
                 <MudTd>
                     <MudTooltip Text="View Details">
@@ -82,7 +82,7 @@ else
             <div class="col-12">
                 @if (_showAlert)
                 {
-                    <MudAlert Severity="Severity.Error" Class="mb-1 mt-1">Fill out all fields</MudAlert>
+                    <MudAlert Severity="Severity.Error" Class="mb-1 mt-1">@_message</MudAlert>
                 }
             </div>
         </div>
@@ -103,7 +103,7 @@ else
         <div class="row" style="margin-bottom: 5px;">
             <div class="col-12">
                 <MudText Typo="Typo.body2">End Date</MudText>
-                <MudDatePicker @bind-Date="NewPreviousObj.EffEndDate" Class="@clsPEndDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                <MudDatePicker Editable="true" @bind-Date="NewPreviousObj.EffEndDate" Class="@clsPEndDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
             </div>
         </div>
 
@@ -147,7 +147,7 @@ else
             <div class="col-12">
                 @if (_showAlert)
                 {
-                    <MudAlert Severity="Severity.Error" Class="mb-1 mt-1">Fill out all fields</MudAlert>
+                    <MudAlert Severity="Severity.Error" Class="mb-1 mt-1">@_message</MudAlert>
                 }
             </div>
         </div>
@@ -162,7 +162,7 @@ else
         <div class="row" style="margin-bottom: 5px;">
             <div class="col-12">
                 <MudText Typo="Typo.body2">Effective On</MudText>
-                <MudDatePicker Editable="true" @bind-Date="LastHistoryObj.EffectivityDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly />
+                <MudDatePicker @bind-Date="LastHistoryObj.EffectivityDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly />
             </div>
         </div>
 
@@ -184,14 +184,14 @@ else
         <div class="row" style="margin-bottom: 5px;">
             <div class="col-12">
                 <MudText Typo="Typo.body2">New Rate</MudText>
-                <MudTextField @bind-Value="newRate" Class="@clsNewRate" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                <MudTextField @bind-Value="NewRate" Class="@clsNewRate" Variant="Variant.Outlined" Margin="Margin.Dense" />
             </div>
         </div>
 
         <div class="row" style="margin-bottom: 5px;">
             <div class="col-12">
                 <MudText Typo="Typo.body2">Effectivity Date</MudText>
-                <MudDatePicker @bind-Date="newEffDate" Class="@clsNewEffDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                <MudDatePicker @bind-Date="NewEffDate" Class="@clsNewEffDate" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
             </div>
         </div>
 

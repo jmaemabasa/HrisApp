@@ -12,16 +12,16 @@
         Emp_RateHistoryT NewPreviousObj = new();
 
         List<Emp_RateHistoryT> RATEHISTORY = new();
-        List<SubPositionT> SUBPOSITIONS = new();
 
         int empPositionId;
-        private string newRate { get; set; }
-        private DateTime? newEffDate = DateTime.Now;
+        private string NewRate { get; set; }
+        private DateTime? NewEffDate = DateTime.Now;
 
         private SubPositionT NewPreviousPositionObj;
 
         private string clsEffEndDate = "", clsNewRate = "", clsNewEffDate = "";
         private bool _showAlert = false;
+        private string _message = "";
 
         private string clsPRate = "", clsPEffOn = "", clsPEndDate = "", clsPPosition = "";
         protected override async Task OnParametersSetAsync()
@@ -57,36 +57,72 @@
 
         private async Task SaveUpdate()
         {
-            if (string.IsNullOrEmpty(newRate) || LastHistoryObj.EffEndDate == null || newEffDate == null)
+            if (string.IsNullOrEmpty(NewRate) || LastHistoryObj.EffEndDate == null || NewEffDate == null)
             {
                 _showAlert = true;
-                clsEffEndDate = LastHistoryObj.EffEndDate == null ? "mud-input-error" : ""; 
-                clsNewRate = string.IsNullOrEmpty(newRate) ? "mud-input-error" :  ""; 
-                clsNewEffDate = newEffDate == null ? "mud-input-error" : "";
+                _message = "Fill out all fields";
+                clsEffEndDate = LastHistoryObj.EffEndDate == null ? "mud-input-error" : "";
+                clsNewRate = string.IsNullOrEmpty(NewRate) ? "mud-input-error" : "";
+                clsNewEffDate = NewEffDate == null ? "mud-input-error" : "";
+            }
+            else if (LastHistoryObj.EffEndDate?.Date < LastHistoryObj.EffectivityDate?.Date)
+            {
+                _showAlert = true;
+                _message = "End date should not be less than effectivity date";
+                clsNewRate = string.IsNullOrEmpty(NewRate) ? "mud-input-error" : "";
+                clsEffEndDate = LastHistoryObj.EffEndDate?.Date < LastHistoryObj.EffectivityDate?.Date ? "mud-input-error" : "";
             }
             else
             {
                 _showAlert = false;
                 clsEffEndDate = ""; clsNewRate = ""; clsNewEffDate = "";
-                LastHistoryObj.DateEnded = DateTime.Now;
-                await EmpRateHistoryService.UpdateHistory(LastHistoryObj);
 
-                Emp_RateHistoryT newupdaterate = new()
+                if ((NewEffDate?.Date >= LastHistoryObj.EffectivityDate?.Date && NewEffDate?.Date <= LastHistoryObj.EffEndDate?.Date) || // NewEffDate falls within the range
+                NewEffDate?.Date == LastHistoryObj.EffectivityDate?.Date || // NewEffDate is the same as an existing effectivity date
+                                NewEffDate?.Date == LastHistoryObj.EffEndDate?.Date) // NewEffDate is the same as an existing end date 
                 {
-                    EmployeeId = EmployeeId,
-                    Rate = newRate,
-                    DateStarted = DateTime.Now,
-                    EffectivityDate = newEffDate,
-                    PositionId = empPositionId
-                };
+                    _showAlert = true;
+                    _message = "Effectivity date should not overlap to the current one";
+                    clsNewEffDate = "mud-input-error";
+                }
+                else
+                {
+                    foreach (var item in RATEHISTORY)
+                    {
+                        if ((NewEffDate?.Date >= item.EffectivityDate?.Date && NewEffDate?.Date <= item.EffEndDate?.Date) || // NewEffDate falls within the range
+                                NewEffDate?.Date == item.EffectivityDate?.Date || // NewEffDate is the same as an existing effectivity date
+                                NewEffDate?.Date == item.EffEndDate?.Date) // NewEffDate is the same as an existing end date
+                        {
+                            _showAlert = true;
+                            _message = "Effectivity date should not overlap to the existing one";
+                            clsNewEffDate = "mud-input-error";
+                            return;
+                        }
+                    }
 
-                await EmpRateHistoryService.CreateHistory(newupdaterate);
+                    LastHistoryObj.DateEnded = DateTime.Now;
+                    await EmpRateHistoryService.UpdateHistory(LastHistoryObj);
 
-                AddOpenDrawer = false; AddOldRateOpen = false;
-                _toastService.ShowSuccess("Successfully updated.");
-                RATEHISTORY = await EmpRateHistoryService.GetHistoryList(EmployeeId);
-                StateService.SetState("RateHistoryList", RATEHISTORY);
-                await OnSuccessUpdate.InvokeAsync();
+                    Emp_RateHistoryT newupdaterate = new()
+                    {
+                        EmployeeId = EmployeeId,
+                        Rate = NewRate,
+                        DateStarted = DateTime.Now,
+                        EffectivityDate = NewEffDate,
+                        PositionId = empPositionId,
+                        DateModified = DateTime.Now
+                    };
+
+                    await EmpRateHistoryService.CreateHistory(newupdaterate);
+                    NewEffDate = DateTime.Now;
+                    NewRate = "";
+                    AddOpenDrawer = false; AddOldRateOpen = false;
+                    _toastService.ShowSuccess("Successfully updated.");
+                    RATEHISTORY = await EmpRateHistoryService.GetHistoryList(EmployeeId);
+                    StateService.SetState("RateHistoryList", RATEHISTORY);
+                    await OnSuccessUpdate.InvokeAsync();
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+                }
             }
         }
 
@@ -95,26 +131,54 @@
             if (string.IsNullOrEmpty(NewPreviousObj.Rate) || NewPreviousObj.EffectivityDate == null || NewPreviousObj.EffEndDate == null || NewPreviousPositionObj == null)
             {
                 _showAlert = true;
+                _message = "Fill out all fields";
                 clsPRate = string.IsNullOrEmpty(NewPreviousObj.Rate) ? "mud-input-error" : "";
                 clsPEffOn = NewPreviousObj.EffectivityDate == null ? "mud-input-error" : "";
                 clsPEndDate = NewPreviousObj.EffEndDate == null ? "mud-input-error" : "";
                 clsPPosition = NewPreviousPositionObj == null ? "mud-input-error" : "";
             }
+            else if (NewPreviousObj.EffEndDate?.Date < NewPreviousObj.EffectivityDate?.Date)
+            {
+                _showAlert = true;
+                _message = "End date should not be less than effectivity date";
+                clsPRate = string.IsNullOrEmpty(NewPreviousObj.Rate) ? "mud-input-error" : "";
+                clsPEffOn = NewPreviousObj.EffectivityDate == null ? "mud-input-error" : "";
+                clsPPosition = NewPreviousPositionObj == null ? "mud-input-error" : "";
+                clsPEndDate = NewPreviousObj.EffEndDate?.Date < NewPreviousObj.EffectivityDate?.Date ? "mud-input-error" : "";
+            }
             else
             {
+                _showAlert = false;
+                clsPRate = ""; clsPEffOn = ""; clsPEndDate = ""; clsPPosition = "";
+
+                foreach (var item in RATEHISTORY)
+                {
+                    if ((NewPreviousObj.EffectivityDate?.Date >= item.EffectivityDate?.Date && NewPreviousObj.EffectivityDate?.Date <= item.EffEndDate?.Date) ||
+                            (NewPreviousObj.EffEndDate?.Date >= item.EffectivityDate?.Date && NewPreviousObj.EffEndDate?.Date <= item.EffEndDate?.Date) ||
+                            (NewPreviousObj.EffectivityDate?.Date <= item.EffectivityDate?.Date && NewPreviousObj.EffEndDate?.Date >= item.EffEndDate?.Date))
+                    {
+                        Console.WriteLine(1);
+                        _showAlert = true;
+                        _message = "New object should not overlap to the existing one";
+                        clsPEndDate = clsPEffOn = "mud-input-error";
+                        return;
+                    }
+                }
+
+                Console.WriteLine(2);
+
                 NewPreviousObj.PositionId = NewPreviousPositionObj.Id;
                 NewPreviousObj.DateStarted = DateTime.Now;
                 NewPreviousObj.EmployeeId = EmployeeId;
                 NewPreviousObj.DateEnded = NewPreviousObj.EffEndDate;
 
                 await EmpRateHistoryService.CreateHistory(NewPreviousObj);
-                _showAlert = false;
-                clsPRate = ""; clsPEffOn = ""; clsPEndDate = ""; clsPPosition = "";
                 await OnSuccessUpdate.InvokeAsync();
                 AddOpenDrawer = false; AddOldRateOpen = false;
                 _toastService.ShowSuccess("Successfully added.");
                 RATEHISTORY = await EmpRateHistoryService.GetHistoryList(EmployeeId);
                 StateService.SetState("RateHistoryList", RATEHISTORY);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
             }
         }
 
