@@ -1332,7 +1332,7 @@
     public string txtClassCID = "txf1 mt-1";
     public string txtClassRate = "txf1 mt-1";
 
-    public async Task Activate(int index)
+    public void Activate(int index)
     {
         if (index == 0)
         {
@@ -1376,6 +1376,7 @@
                 _addEmployeeVM.tabs.ActivatePanel(index);
             }
         }
+
     }
 
     public async void ActivateAddressField()
