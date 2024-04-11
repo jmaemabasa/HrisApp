@@ -269,30 +269,6 @@ namespace HrisApp.Client.Pages.Employee
                         var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
                     }
 
-                    //UPDATE THE LAST RATE HISTORY AND MODIFIED DATE
-                    //var toupdateratehistory = await EmpRateHistoryService.GetLastHistory(employee.Id);
-                    //if (!toupdateratehistory.Rate.Equals(_payroll.Rate))
-                    //{
-                    //    toupdateratehistory.DateEnded = DateTime.Now;
-                    //    toupdateratehistory.DateModified = DateTime.Now;
-                    //    toupdateratehistory.Rate = _payroll.Rate;
-
-                    //    var listrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
-                    //    toupdateratehistory.TotalModifiedCountTimes = listrate.Where(e => e.DateEnded != null).Count() + 1;
-
-                    //    await EmpRateHistoryService.UpdateHistory(toupdateratehistory);
-
-                    //    Emp_RateHistoryT newRatehistory = new()
-                    //    {
-                    //        Rate = toupdateratehistory.Rate,
-                    //        DateStarted = DateTime.Now,
-                    //        EmployeeId = employee.Id
-                    //    };
-
-                    //    await EmpRateHistoryService.CreateHistory(newRatehistory);
-                    //}
-
-
                     //UPDATE SUB POSITION FOR INACTIVE EMPLOYEE
                     _subposition.Status = "Vacant";
                     _subposition.VacantDate = employee.DateInactiveStatus;
@@ -374,30 +350,6 @@ namespace HrisApp.Client.Pages.Employee
                     var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
                     StateService.SetState("HistoryPosList", newList);
                 }
-
-
-                //UPDATE THE LAST RATE HISTORY AND MODIFIED DATE
-                //var toupdateratehistory = await EmpRateHistoryService.GetLastHistory(employee.Id);
-                //if (!toupdateratehistory.Rate.Equals(_payroll.Rate))
-                //{
-                //    toupdateratehistory.DateEnded = DateTime.Now;
-                //    toupdateratehistory.DateModified = DateTime.Now;
-                //    toupdateratehistory.Rate = _payroll.Rate;
-
-                //    var listrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
-                //    toupdateratehistory.TotalModifiedCountTimes = listrate.Where(e => e.DateEnded != null).Count() + 1;
-
-                //    await EmpRateHistoryService.UpdateHistory(toupdateratehistory);
-
-                //    Emp_RateHistoryT newRatehistory = new()
-                //    {
-                //        Rate = toupdateratehistory.Rate,
-                //        DateStarted = DateTime.Now,
-                //        EmployeeId = employee.Id
-                //    };
-
-                //    await EmpRateHistoryService.CreateHistory(newRatehistory);
-                //}
 
                 //UPDATE SUB POSITION
                 if (employee.PositionId == _subposition.Id)

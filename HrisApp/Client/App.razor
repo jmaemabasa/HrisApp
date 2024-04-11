@@ -27,7 +27,7 @@
 </CascadingAuthenticationState>
 
 @code {
-    #nullable disable
+#nullable disable
     private AuthenticationState _authenticationState;
     protected override async Task OnInitializedAsync()
     {
@@ -39,7 +39,9 @@
         {
             var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
             var uristring = uri.ToString();
-            if (uristring != "http://sonicsales.net:1113/" && uristring != "http://192.168.1.19:1113/" && uristring != "https://localhost:44397/")
+            if (uristring != "http://sonicsales.net:1113/" && uristring != "http://192.168.1.19:1113/" &&
+                uristring != "https://localhost:44397/" &&
+                uristring != "http://sonicsales.net:1113/" && uristring != "http://192.168.1.19:1112/")
             {
                 OpenLogin();
             }
@@ -47,7 +49,7 @@
     }
     private void OpenLogin()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true, DisableBackdropClick = true };
         DialogService.Show<LoginDialog>("", options);
     }
 }

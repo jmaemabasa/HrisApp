@@ -312,8 +312,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     }
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
-
-
                     //UPDATE SUBPOSITION
                     subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
                     subPosition.Emp_VerifyId = verifyCode;

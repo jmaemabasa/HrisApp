@@ -293,7 +293,8 @@
                     _pagIbigHolder = _payroll.HDMFNum;
                     _sssHolder = _payroll.SSSNum;
                     _tinHolder = _payroll.TINNum;
-                    _rateholder = _payroll.Rate;
+                    var lastrate = await EmpRateHistoryService.GetLastHistoryWithoutDateEnded(employee.Id);
+                    _rateholder = lastrate.Rate;
                     isOpenEnterPass = false;
                     _toastService.ShowSuccess("Data showed.");
                 }
