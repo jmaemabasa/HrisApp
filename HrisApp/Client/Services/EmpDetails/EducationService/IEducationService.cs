@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Services.EmpDetails.EducationService
+﻿using HrisApp.Shared.Models.Employee.Emp_Education;
+
+namespace HrisApp.Client.Services.EmpDetails.EducationService
 {
     public interface IEducationService
     {
@@ -37,6 +39,12 @@
         Task<string> CreateCollege(Emp_CollegeT _colleges);
         Task UpdateCollege(Emp_CollegeT _colleges);
         Task DeleteCollege(int id);
+
+        List<Emp_UndergraduateT> _undergraduate { get; set; }
+        Task<List<Emp_UndergraduateT>> GetUGlist(string verCode);
+        Task<string> CreateUG(Emp_UndergraduateT _colleges);
+        Task UpdateUG(Emp_UndergraduateT _colleges);
+        Task DeleteUG(int id);
 
 
         List<Emp_MasteralT> _masteral { get; set; }

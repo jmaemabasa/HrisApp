@@ -1,4 +1,5 @@
 ﻿using Blazored.Toast.Services;
+using HrisApp.Shared.Models.Employee.Emp_Education;
 
 namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
@@ -97,6 +98,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             AddNewSecondary(employee.Verify_Id);
             AddNewShs(employee.Verify_Id);
             AddNewCollege(employee.Verify_Id);
+            AddNewUG(employee.Verify_Id);
             AddNewMasteral(employee.Verify_Id);
             AddNewDoctorate(employee.Verify_Id);
             AddNewOthers(employee.Verify_Id);
@@ -138,6 +140,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         //EDUCATION
         public List<Emp_CollegeT> listOfCollege = new();
+        public List<Emp_UndergraduateT> listOfUG = new();
 
         public List<Emp_OtherEducT> listOfOthers = new();
         public List<Emp_SecondaryT> listOfSecondary = new();
@@ -152,6 +155,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public bool IsListaddshs;
         public bool IsListaddcoll;
+        public bool IsListaddUG;
         public bool IsListaddmas;
         public bool IsListaddothers;
         public bool IsListadddoc;
@@ -346,6 +350,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     await CreateSecondaryRecords(verifyCode);
                     await CreateSeniorHSRecords(verifyCode);
                     await CreateCollegeRecords(verifyCode);
+                    await CreateUGRecords(verifyCode);
                     await CreateMasteralRecords(verifyCode);
                     await CreateDoctorateRecords(verifyCode);
                     await CreateOtherEducRecords(verifyCode);
@@ -846,6 +851,28 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             listOfCollege.Clear();
             AddNewCollege(employeeVerifyId);
         }
+        public async Task CreateUGRecords(string employeeVerifyId)
+        {
+            //college
+            var validCollege = listOfUG
+               .Where
+               (coll => !string.IsNullOrEmpty(coll.UGSchoolName) || !string.IsNullOrEmpty(coll.UGSchoolLoc)
+                    || !string.IsNullOrEmpty(coll.UGAward) || !string.IsNullOrEmpty(coll.UGSchoolYear)
+                    || !string.IsNullOrEmpty(coll.UGCourse))
+               .ToList();
+            if (validCollege.Count == 0)
+            {
+                return;
+            }
+            foreach (var coll in validCollege)
+            {
+                coll.Verify_Id = employeeVerifyId;
+                await EducationService.CreateUG(coll);
+            }
+
+            listOfUG.Clear();
+            AddNewUG(employeeVerifyId);
+        }
 
         public async Task CreateMasteralRecords(string employeeVerifyId)
         {
@@ -1048,6 +1075,23 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             else
             {
                 listOfCollege.RemoveAt(listOfCollege.Count - 1);
+            }
+        }
+
+        public void AddNewUG(string employeeVerifyId)
+        {
+            if (listOfUG.Count <= 2)
+            {
+                listOfUG.Add(new Emp_UndergraduateT { Verify_Id = employee.Verify_Id });
+            }
+        }
+
+        public void RemoveUG()
+        {
+            if (listOfUG.Count <= 1) { }
+            else
+            {
+                listOfUG.RemoveAt(listOfUG.Count - 1);
             }
         }
 

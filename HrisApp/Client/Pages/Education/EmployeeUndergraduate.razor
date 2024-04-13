@@ -1,0 +1,150 @@
+﻿<style>
+    .stable {
+        background: #e9ecef;
+        border-radius: 20px;
+    }
+
+    .txf1 {
+        height: 45px;
+        box-shadow: inset -5px -5px 10px #ffffff, inset 5px 5px 10px #bebebe;
+        border-radius: 10px;
+        border: 0;
+        padding: 0 0 10px 15px;
+        margin-top: 0;
+        background: #e9ecef;
+        padding-top: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+    .spantitle {
+        font-weight: bold;
+        color: #26446e;
+        font-size: 16px;
+    }
+
+    .btnnext {
+        border: none;
+        box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+        border-radius: 10px;
+        background-color: #F1BC3A;
+        color: #424242;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+        width: 200px;
+    }
+
+        .btnnext:hover {
+            background-color: #E38D0F;
+            color: #fff;
+        }
+
+    .btnadd {
+        border-radius: 15px;
+        background-color: #26446e;
+        color: #FAFAF5;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+        .btnadd:hover {
+            background-color: #E38D0F;
+            transform: scale(1.1);
+        }
+</style>
+@if (objList.Count == 0 || objList == null)
+{
+    <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+        <span class="spantitle mb-3">No Undergraduate Information.</span>
+
+        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+            <Authorized>
+                <MudTooltip Text="Add">
+                    <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "CollegeOpen"))" Size="Size.Small">Add Information</MudButton>
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+}
+else
+{
+    <MudTable Class="stable" Items="objList" Context="college" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center">
+                <span class="spantitle mb-3">Undergraduate Education</span>
+
+                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+                    <Authorized>
+                        <MudTooltip Text="Add">
+                            <MudButton Class="btnadd" OnClick="@(() => OpenDrawer(Anchor.End, "CollegeOpen"))" Size="Size.Small">Add Information</MudButton>
+                        </MudTooltip>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold;">School Name</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Location</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Course</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Honors Received / Earned Units</MudTh>
+            <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold;">Inclusive Years</MudTh>
+            <MudTh Style="background: #e9ecef; font-weight: bold;">Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="">@college.UGSchoolName</MudTd>
+            <MudTd DataLabel="">@college.UGSchoolLoc</MudTd>
+            <MudTd DataLabel="">@college.UGCourse</MudTd>
+            <MudTd DataLabel="">@college.UGAward</MudTd>
+            <MudTd DataLabel="">@college.UGSchoolYear</MudTd>
+            <MudTd>
+                <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+                    <Authorized>
+                        <MudTooltip Text="Remove">
+                            <MudIconButton Class="btnedit" OnClick="@(() => DeleteObj(college.Id))" Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                        </MudTooltip>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudIconButton Class="btnedit" Disabled Icon="@Icons.Material.Rounded.Delete" Size="Size.Small" aria-label="Delete" Style="color: #BB6464;"></MudIconButton>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+<MudDrawer Class="drawerdetails" @bind-Open="@CollegeOpen" Width="@_width" Height="@_height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
+    <span class="spantitle mb-3">Undergraduate Education</span>
+    <MudItem xs="12">
+        <EditForm Model="newObj" OnValidSubmit="SaveObj" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Name of School</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="newObj.UGSchoolName" />
+                <ValidationMessage For="@(() => newObj.UGSchoolName)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>School Location</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="newObj.UGSchoolLoc" />
+                <ValidationMessage For="@(() => newObj.UGSchoolLoc)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Course</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="newObj.UGCourse" />
+                <ValidationMessage For="@(() => newObj.UGCourse)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Honors Received / Earned Units</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="newObj.UGAward" />
+                <ValidationMessage For="@(() => newObj.UGAward)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="mb-2">
+                <MudInputLabel>Inclusive Years</MudInputLabel>
+                <InputText Class="txf1" @bind-Value="newObj.UGSchoolYear" />
+                <ValidationMessage For="@(() => newObj.UGSchoolYear)" class="mb-2 valmessage" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-content-center mt-5">
+                <MudButton EndIcon="@Icons.Material.Rounded.Save" Class="btnnext" ButtonType="ButtonType.Submit">SAVE</MudButton>
+            </MudItem>
+        </EditForm>
+    </MudItem>
+</MudDrawer>

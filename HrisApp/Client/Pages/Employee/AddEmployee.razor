@@ -845,6 +845,77 @@
                         </MudCard>
                     </MudItem>
                 }
+
+                <MudItem xs="12" Style="padding-bottom: 0px;">
+                    <div class="d-flex flex-grow-1 align-items-center">
+                        <MudCheckBox @bind-Checked="_addEmployeeVM.IsListaddUG" Color="Color.Primary"></MudCheckBox><span class="spantitle">Undergraduate</span>
+                    </div>
+                </MudItem>
+                @if (_addEmployeeVM.IsListaddUG)
+                {
+                    <MudItem xs="12" Style="padding-top: 0px;">
+                        <MudCard Class="mdcard1" Elevation="0" Style="padding-top: 0px;">
+                            <MudCardContent Style="padding-top: 0px;">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-grow-1 justify-content-end align-items-center mb-2">
+                                        <div>
+                                            <MudTooltip Text="Click to remove Undergraduate">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="_addEmployeeVM.RemoveUG" Icon="@Icons.Material.Rounded.RemoveCircle" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Click to add more Undergraduate">
+                                                <MudIconButton Class="p-0 addminbtn" OnClick="() => _addEmployeeVM.AddNewUG(_addEmployeeVM.employee.Verify_Id)" Icon="@Icons.Material.Rounded.AddCircle" />
+                                            </MudTooltip>
+                                        </div>
+                                    </div>
+
+                                    @if (_addEmployeeVM.listOfUG.Any())
+                                    {
+                                        @foreach (var ugraduate in _addEmployeeVM.listOfUG)
+                                        {
+                                            <div class="mb-3 divSchool">
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2 mb-1">
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Name of School</MudText>
+                                                        <MudTextField @bind-Value="ugraduate.UGSchoolName" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Location</MudText>
+                                                        <MudTextField @bind-Value="ugraduate.UGSchoolLoc" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-lg-4 gap-sm-2">
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Award</MudText>
+                                                        <MudTextField @bind-Value="ugraduate.UGAward" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">Course</MudText>
+                                                        <MudTextField @bind-Value="ugraduate.UGCourse" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <MudText Typo="Typo.body2">School Year</MudText>
+                                                        <MudTextField @bind-Value="ugraduate.UGSchoolYear" Class="txf" DisableUnderLine Margin="Margin.Dense" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                                            <MudCard>
+                                                <MudCardContent>
+                                                    <p>No Undergraduate information available.</p>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudContainer>
+                                    }
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+
                 <MudItem xs="12" Style="padding-bottom: 0px;">
                     <div class="d-flex flex-grow-1 align-items-center">
                         <MudCheckBox @bind-Checked="_addEmployeeVM.IsListaddmas" Color="Color.Primary"></MudCheckBox><span class="spantitle">Masteral</span>

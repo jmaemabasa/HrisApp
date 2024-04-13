@@ -3,7 +3,7 @@
 #nullable disable
     public class AnnouncementService : IAnnouncementService
     {
-        MainsService _mainService = new MainsService();
+        MainsService _mainService = new();
         private readonly HttpClient _httpClient;
         public AnnouncementService()
         {

@@ -4,6 +4,7 @@ using HrisApp.Shared.Models.Assets.Licenses;
 using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
+using HrisApp.Shared.Models.Employee.Emp_Education;
 
 namespace HrisApp.Server.Data
 {
@@ -296,6 +297,7 @@ namespace HrisApp.Server.Data
         public DbSet<Emp_PrimaryT> Emp_PrimaryT { get; set; }
         public DbSet<Emp_SecondaryT> Emp_SecondaryT { get; set; }
         public DbSet<Emp_SeniorHST> Emp_SeniorHST { get; set; }
+        public DbSet<Emp_UndergraduateT> Emp_UndergraduateT { get; set; }
 
         //LICENSE AND TRAINING
         public DbSet<Emp_LicenseT> Emp_LicenseT { get; set; }

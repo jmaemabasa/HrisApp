@@ -1,9 +1,11 @@
-﻿namespace HrisApp.Client.Services.EmpDetails.EducationService
+﻿using HrisApp.Shared.Models.Employee.Emp_Education;
+
+namespace HrisApp.Client.Services.EmpDetails.EducationService
 {
     public class EducationService : IEducationService
     {
 #nullable disable
-        private MainsService _mainService = new MainsService();
+        private MainsService _mainService = new();
         private readonly HttpClient _httpClient;
 
         public EducationService()
@@ -172,6 +174,35 @@
             var result = await _httpClient.DeleteAsync($"api/College/{id}");
             //await SetPrimary(result);
         }
+
+
+        public List<Emp_UndergraduateT> _undergraduate { get; set; }
+
+        public async Task<List<Emp_UndergraduateT>> GetUGlist(string verCode)
+        {
+            var result = await _httpClient.GetFromJsonAsync<List<Emp_UndergraduateT>>($"api/Undergraduate/GetObjlist?verCode={verCode}");
+            return result;
+        }
+
+        public async Task<string> CreateUG(Emp_UndergraduateT _colleges)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/Undergraduate", _colleges);
+            var response = await result.Content.ReadFromJsonAsync<Emp_UndergraduateT>();
+            return response?.Verify_Id;
+        }
+
+        public async Task UpdateUG(Emp_UndergraduateT _colleges)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/Undergraduate/UpdateObj/{_colleges.Id}", _colleges);
+            var response = result.StatusCode.ToString();
+        }
+
+        public async Task DeleteUG(int id)
+        {
+            var result = await _httpClient.DeleteAsync($"api/Undergraduate/{id}");
+            //await SetPrimary(result);
+        }
+
 
         public List<Emp_MasteralT> _masteral { get; set; }
 
