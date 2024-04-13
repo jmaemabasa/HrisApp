@@ -54,6 +54,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddScoped<HttpClient>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 //=================///////////////===========================
 builder.Services.AddCors(options =>
@@ -62,7 +64,7 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyOrigin();
+                .AllowAnyOrigin(); //
     });
 });
 var app = builder.Build();

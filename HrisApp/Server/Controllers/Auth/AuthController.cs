@@ -54,10 +54,10 @@ namespace HrisApp.Server.Controllers.Auth
             return Ok(response);
         }
 
-        [HttpPut("UpdatePassword/{id}")]
-        public async Task<ActionResult<ServiceResponse>> UpdatePassword(int id, [FromBody] string newpass)
+        [HttpPut("UpdatePassword/{id}/{currentpass}")]
+        public async Task<ActionResult<ServiceResponse>> UpdatePassword(int id, string currentpass, [FromBody] string newpass)
         {
-            var response = await _userService.Putpassword(id, newpass);
+            var response = await _userService.Putpassword(id, newpass, currentpass);
 
             if (!response.Success)
             {
@@ -154,6 +154,33 @@ namespace HrisApp.Server.Controllers.Auth
             var response = await _userService.IsPassMatched(id, inputpass);
 
             return response;
+        }
+
+        [HttpPut("UpdateUsername")]
+        public async Task<ActionResult> UpdateUsername(UpdateUsernameDTO model)
+        {
+            var dbarea = await _context.UserMasterT.FirstOrDefaultAsync(d => d.EmployeeId == model.EmployeeId);
+
+            dbarea!.Username = model.Username;
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+        [HttpGet("GetSingleObjByEmpId")]
+        public async Task<ActionResult<UserMasterT>> GetSingleObjByEmpId([FromQuery]int empid)
+        {
+            var obj = await _context.UserMasterT
+                .Include(e => e.Employee)
+                .Include(e => e.Employee!.Department)
+                .FirstOrDefaultAsync(h => h.EmployeeId == empid);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
         }
     }
 }

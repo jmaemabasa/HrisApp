@@ -61,9 +61,9 @@ namespace HrisApp.Client.Services.AuthService
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
 
-        public async Task<ServiceResponse<int>> UpdatePassword(int id, string newpass)
+        public async Task<ServiceResponse<int>> UpdatePassword(int id, string newpass, string currentpass)
         {
-            var result = await _httpClient.PutAsJsonAsync($"api/Auth/UpdatePassword/{id}", newpass);
+            var result = await _httpClient.PutAsJsonAsync($"api/Auth/UpdatePassword/{id}/{currentpass}", newpass);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
 
@@ -97,9 +97,24 @@ namespace HrisApp.Client.Services.AuthService
             throw new Exception("user not found");
         }
 
+        public async Task<UpdateUsernameDTO> GetSingleObjByEmpId(int empid)
+        {
+            var result = await _httpClient.GetFromJsonAsync<UpdateUsernameDTO>($"api/Auth/GetSingleObjByEmpId?empid={empid}");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("user not found");
+        }
+
         public async Task UpdateObj(UserMasterT model)
         {
             await _httpClient.PutAsJsonAsync("api/Auth/UpdateObj", model);
+        }
+
+        public async Task UpdateUsername(UpdateUsernameDTO model)
+        {
+            await _httpClient.PutAsJsonAsync("api/Auth/UpdateUsername", model);
         }
     }
 }

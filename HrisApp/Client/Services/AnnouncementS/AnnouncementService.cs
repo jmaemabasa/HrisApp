@@ -14,7 +14,7 @@
 
         public async Task CreateAnnouncement(AnnouncementT obj)
         {
-            var res = await _httpClient.PostAsJsonAsync("api/Announcement/CreateAnnouncement", obj);
+            await _httpClient.PostAsJsonAsync("api/Announcement/CreateAnnouncement", obj);
         }
 
         public async Task GetAnnouncement()

@@ -113,6 +113,7 @@ global using HrisApp.Client.Services.Assets.Licenses.AssLicenseHistoryService;
 global using HrisApp.Client.Services.Assets.Licenses.AssLicenseImageService;
 global using HrisApp.Client.Services.Assets.MainAssetLicenseService;
 global using HrisApp.Client.Services.EmpDetails.EmpRateHistoryService;
+global using HrisApp.Client.Services.DailyVerseService;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -192,6 +193,9 @@ builder.Services.AddScoped<IAssLicenseImageService, AssLicenseImageService>();
 builder.Services.AddScoped<IMainAssetLicenseService, MainAssetLicenseService>();
 builder.Services.AddScoped<IUOMService, UOMService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
+
+
+builder.Services.AddScoped<IDailyVerseService, DailyVerseService>();
 
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();

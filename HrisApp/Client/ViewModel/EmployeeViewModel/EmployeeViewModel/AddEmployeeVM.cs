@@ -13,7 +13,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         private IEmploymentDateService EmploymentDateService = new EmploymentDateService();
         private IImageService ImageService = new ImageService();
         private IAuditlogService AuditlogService = new AuditlogService();
-        private IToastService _toastService = new ToastService();
         private IAreaService AreaService = new AreaService();
         private IDivisionService DivisionService = new DivisionService();
         private IDepartmentService DepartmentService = new DepartmentService();
@@ -40,9 +39,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         }
 
         [CascadingParameter]
-        public Task<AuthenticationState> authState { get; set; }
-
-        private string _sectionnull = string.Empty;
+        public Task<AuthenticationState> AuthState { get; set; }
 
         [Parameter]
         public int? Id { get; set; }
@@ -163,7 +160,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         #region DATE VARIBALE
 
-        public DateTime? bday { get; set; }
+        public DateTime? Bday { get; set; }
         public DateTime? Date = DateTime.Today;
         public DateTime? ProbStart = DateTime.Today;
         public DateTime? ProbEnd = DateTime.Today;
@@ -227,12 +224,12 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             await Task.Delay(1000);
             payroll.ScheduleTypeId = 1;
             payroll.RestDayId = 1;
-            if (bday.HasValue)
+            if (Bday.HasValue)
             {
                 DateTime currentDate = DateTime.Today;
-                int age = currentDate.Year - bday.Value.Year;
+                int age = currentDate.Year - Bday.Value.Year;
 
-                if (bday.Value > currentDate.AddYears(-age))
+                if (Bday.Value > currentDate.AddYears(-age))
                     age--;
 
                 employee.Age = age;
@@ -255,7 +252,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
                     //CREATE EMPLOYEE
                     employee.Verify_Id = verifyCode;
-                    employee.Birthdate = Convert.ToDateTime(bday);
+                    employee.Birthdate = Convert.ToDateTime(Bday);
                     employee.DateHired = Convert.ToDateTime(DateHired);
                     //employee.InactiveStatusId = 1;
                     license.Date = Convert.ToDateTime(Date);
@@ -621,8 +618,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public void Activate(int index)
         {
-            clsBday = (bday.ToString() == "") ? "mud-input-error txf" : "txf";
-            mesBday = (bday.ToString() == "") ? "Birthdate is required" : string.Empty;
+            clsBday = (Bday.ToString() == "") ? "mud-input-error txf" : "txf";
+            mesBday = (Bday.ToString() == "") ? "Birthdate is required" : string.Empty;
             _slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
             _slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
             _slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";

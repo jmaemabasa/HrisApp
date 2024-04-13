@@ -1,55 +1,56 @@
 ﻿@using Blazored.Toast.Configuration;
 @using System.Timers;
+@using HrisApp.Client.Pages.User.Settings
 @inherits LayoutComponentBase
 
 <style>
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--open {
-                            background: #e9ecef;
-                            border: none;
-                            box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-                            border-radius: 20px;
-                            height: 95vh;
-                            left: 15px;
-                            top: 15px;
-                        }*/
+                                background: #e9ecef;
+                                border: none;
+                                box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                                border-radius: 20px;
+                                height: 95vh;
+                                left: 15px;
+                                top: 15px;
+                            }*/
 
     /*.mud-drawer.mud-drawer-mini.mud-drawer-pos-left.mud-drawer--closed {
-                            background: #e9ecef;
-                            border: none;
-                            box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
-                            border-radius: 20px;
-                            height: 95vh;
-                            left: 15px;
-                            top: 15px;
-                            width: 4rem;
-                        }*/
+                                background: #e9ecef;
+                                border: none;
+                                box-shadow: -5px -5px 10px #ffffff, 5px 13px 20px #cacdcf;
+                                border-radius: 20px;
+                                height: 95vh;
+                                left: 15px;
+                                top: 15px;
+                                width: 4rem;
+                            }*/
 
     /* .mud-container.mud-container-maxwidth-xxl {
-                            padding-left: 60px;
-                            padding-right: 35px;
-                            margin-top: 15px;
-                        }
+                                padding-left: 60px;
+                                padding-right: 35px;
+                                margin-top: 15px;
+                            }
 
-                        .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
-                            left: 15px;
-                            margin-bottom: 25px;
-                        }
+                            .mud-appbar.mud-appbar-fixed-top.mud-elevation-0 {
+                                left: 15px;
+                                margin-bottom: 25px;
+                            }
 
-                        .mud-appbar .mud-toolbar-appbar {
-                            padding: 0px !important;
-                            align-items: center;
-                            width: calc(100% - 80px) !important;
-                            padding-left: 26px !important;
-                            padding-top: 15px !important;
-                        }
+                            .mud-appbar .mud-toolbar-appbar {
+                                padding: 0px !important;
+                                align-items: center;
+                                width: calc(100% - 80px) !important;
+                                padding-left: 26px !important;
+                                padding-top: 15px !important;
+                            }
 
-                        .btnburger {
-                            border: none;
-                            box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
-                            border-radius: 50%;
-                            transition: all .5s ease;
-                            height: 40px;
-                        } */
+                            .btnburger {
+                                border: none;
+                                box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px #cacdcf;
+                                border-radius: 50%;
+                                transition: all .5s ease;
+                                height: 40px;
+                            } */
 </style>
 
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
@@ -171,24 +172,57 @@
                     </div>
                 </ChildContent>
             </MudMenu>
-            @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
-            {
-                <MudMenu Class="btnburger" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-                    <ActivatorContent>
-                        <MudTooltip Text="Account">
-                            <MudAvatar>
-                                <MudImage Src="@ImageData"></MudImage>
-                            </MudAvatar>
-                        </MudTooltip>
-                    </ActivatorContent>
-                    <ChildContent>
-                        <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                        <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
-                    </ChildContent>
-                </MudMenu>
-            }
-            else
-            {
+            <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                <ActivatorContent>
+                    <MudTooltip Text="Account">
+                        <MudAvatar>
+                            <MudImage Src="@ImageData"></MudImage>
+                        </MudAvatar>
+                    </MudTooltip>
+                </ActivatorContent>
+                <ChildContent>
+                    <MudMenuItem OnTouch="ViewProfile" OnClick="ViewProfile">
+                        <div class="d-flex align-items-center">
+                            <div style="margin-right: 8px;">
+                                <MudAvatar Style="width: 35px; height:35px">
+                                    <MudImage Src="@ImageData"></MudImage>
+                                </MudAvatar>
+                            </div>
+                            <div style="font-size: 15px;font-weight: 500;">@Emp_Firstname @Emp_Lastname</div>
+                        </div>
+                    </MudMenuItem>
+                    <MudDivider DividerType="DividerType.Middle" Class="my-2" />
+                    <MudMenuItem OnTouch="OpenUserSettings" OnClick="OpenUserSettings">
+                        <div class="d-flex align-items-center">
+                            <div style="margin-right: 8px;">
+                                <MudAvatar Style="width: 30px;height: 30px; color: #424242;background: #f2f5f7;">
+                                    <MudIcon Icon="@Icons.Material.Rounded.Settings" Title="Settings" />
+                                </MudAvatar>
+
+                            </div>
+                            <div style="font-size: 15px;font-weight: 500;">Settings</div>
+                        </div>
+                    </MudMenuItem>
+                    <MudMenuItem OnTouch="Logout" OnClick="Logout">
+                        <div class="d-flex align-items-center">
+                            <div style="margin-right: 8px;">
+                                <MudAvatar Style="width: 30px;height: 30px; color: #424242;background: #f2f5f7;">
+                                    <MudIcon Icon="@Icons.Material.Filled.Logout" Title="Logout" />
+                                </MudAvatar>
+                            </div>
+                            <div style="font-size: 15px;font-weight: 500;">Logout</div>
+                        </div>
+                    </MudMenuItem>
+                </ChildContent>
+            </MudMenu>
+        </MudAppBar>
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
+        <MudAppBar Elevation="0" Style="left: 0; width: auto;">
+            <div class="d-flex flex-grow-1 justify-content-between">
+                <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                @html
+
                 <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                     <ActivatorContent>
                         <MudTooltip Text="Account">
@@ -198,51 +232,40 @@
                         </MudTooltip>
                     </ActivatorContent>
                     <ChildContent>
-                        <MudMenuItem OnTouch="ViewProfile" OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
+                        <MudMenuItem OnTouch="ViewProfile" OnClick="ViewProfile">
+                            <div class="d-flex align-items-center">
+                                <div style="margin-right: 8px;">
+                                    <MudAvatar Style="width: 35px; height:35px">
+                                        <MudImage Src="@ImageData"></MudImage>
+                                    </MudAvatar>
+                                </div>
+                                <div style="font-size: 15px;font-weight: 500;">@Emp_Firstname @Emp_Lastname</div>
+                            </div>
+                        </MudMenuItem>
                         <MudDivider DividerType="DividerType.Middle" Class="my-2" />
-                        <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                        <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
+                        <MudMenuItem OnTouch="OpenUserSettings" OnClick="OpenUserSettings">
+                            <div class="d-flex align-items-center">
+                                <div style="margin-right: 8px;">
+                                    <MudAvatar Style="width: 30px;height: 30px; color: #424242;background: #f2f5f7;">
+                                        <MudIcon Icon="@Icons.Material.Rounded.Settings" Title="Settings" />
+                                    </MudAvatar>
+
+                                </div>
+                                <div style="font-size: 15px;font-weight: 500;">Settings</div>
+                            </div>
+                        </MudMenuItem>
+                        <MudMenuItem OnTouch="Logout" OnClick="Logout">
+                            <div class="d-flex align-items-center">
+                                <div style="margin-right: 8px;">
+                                    <MudAvatar Style="width: 30px;height: 30px; color: #424242;background: #f2f5f7;">
+                                        <MudIcon Icon="@Icons.Material.Filled.Logout" Title="Logout" />
+                                    </MudAvatar>
+                                </div>
+                                <div style="font-size: 15px;font-weight: 500;">Logout</div>
+                            </div>
+                        </MudMenuItem>
                     </ChildContent>
                 </MudMenu>
-            }
-        </MudAppBar>
-    </MudHidden>
-    <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
-        <MudAppBar Elevation="0" Style="left: 0; width: auto;">
-            <div class="d-flex flex-grow-1 justify-content-between">
-                <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-                @html
-
-                @if (GlobalConfigService.Role == "HR" || GlobalConfigService.Role == "System Administrator")
-                {
-                    <MudMenu Class="btnburger" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-                        <ActivatorContent>
-                            <MudAvatar>
-                                <MudImage Src="@ImageData"></MudImage>
-                            </MudAvatar>
-                        </ActivatorContent>
-                        <ChildContent>
-                            <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                            <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
-                        </ChildContent>
-                    </MudMenu>
-                }
-                else
-                {
-                    <MudMenu Class="btnburger" Icon="@Icons.Material.Filled.ManageAccounts" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-                        <ActivatorContent>
-                            <MudAvatar>
-                                <MudImage Src="@ImageData"></MudImage>
-                            </MudAvatar>
-                        </ActivatorContent>
-                        <ChildContent>
-                            <MudMenuItem OnTouch="ViewProfile" OnClick="ViewProfile" Icon="@Icons.Material.Rounded.Person" IconSize="Size.Small">Profile</MudMenuItem>
-                            <MudDivider DividerType="DividerType.Middle" Class="my-2" />
-                            <MudMenuItem OnTouch="OpenChangePass" OnClick="OpenChangePass" Icon="@Icons.Material.Filled.Password" IconSize="Size.Small">Change Password</MudMenuItem>
-                            <MudMenuItem OnTouch="Logout" OnClick="Logout" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error" IconSize="Size.Small" Style="color:#E97777">Sign Out</MudMenuItem>
-                        </ChildContent>
-                    </MudMenu>
-                }
             </div>
         </MudAppBar>
     </MudHidden>
@@ -309,11 +332,11 @@
             }
             @* @if (!string.IsNullOrEmpty(GlobalConfigService.Role))
             { *@
-                <NavMenu />
+            <NavMenu />
             @* }
             else
             {
-                <HrisApp.Client.Shared.NavMenus.SANavMenu />
+            <HrisApp.Client.Shared.NavMenus.SANavMenu />
             } *@
         </MudDrawer>
     </MudHidden>
@@ -380,9 +403,13 @@
     private int badgeCount = 0;
     private int countSnack = 0;
 
+    EmployeeT CurrentEmployee = new();
+
     [CascadingParameter]
     public Task<AuthenticationState> authstate { get; set; }
 
+    string Emp_Firstname { get; set; }
+    string Emp_Lastname { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -396,6 +423,9 @@
             await EmployeeService.GetEmployee();
             EmployeeList = EmployeeService.EmployeeTs;
 
+            CurrentEmployee = EmployeeService.EmployeeTs.Where(e => e.Verify_Id.Equals(VERIFY)).FirstOrDefault();
+            Emp_Firstname = CurrentEmployee.FirstName;
+            Emp_Lastname = CurrentEmployee.LastName;
 
             Userrole = GlobalConfigService.Role;
             try
@@ -489,6 +519,10 @@
             await AuthStateProvider.GetAuthenticationStateAsync();
             NavigationManager.NavigateTo("/", true);
         }
+        else
+        {
+            NavigationManager.NavigateTo("/", true);
+        }
     }
 
     // public async Task Logout()
@@ -519,6 +553,11 @@
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true, NoHeader = true };
         DialogService.Show<ChangePassDialog>("", options);
+    }
+    private void OpenUserSettings()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true, NoHeader = true, DisableBackdropClick = true };
+        DialogService.Show<UserSetting>("", options);
     }
 
     private void ViewProfile() => NavigationManager.NavigateTo($"/profile/{USERNAME}");

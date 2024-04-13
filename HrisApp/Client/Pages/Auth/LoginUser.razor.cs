@@ -75,27 +75,37 @@
 
                         //var iduser = GlobalConfigService.Fullname;
                         var iduser = Convert.ToInt32(result.Message);
-                        await AuditlogService.CreateLog(iduser, "LOGGED IN", "Site", DateTime.Now);
 
-                        //int totalPlantilla = await PositionService.GetTotalPlantilla();
-                        await PositionService.GetSubPosition();
-                        int totalPlantilla = PositionService.SubPositionTs.Where(e => e.Status != "Inactive").Count();
-                        await PositionService.CreateTotalPlantilla(totalPlantilla, DateTime.Now);
 
-                        if (result.UserRole == "Technical" || result.UserRole == "CshrAdmin")
+                        var employee = await EmployeeService.GetSingleEmployee(iduser);
+
+                        if (employee.StatusId != 1) //IF EMPLOYEE IS NOT ACTIVE
                         {
-                            NavigationManager.NavigateTo("/asset-dashboard");
-                        }
-                        else if (result.UserRole == "User")
-                        {
-                            NavigationManager.NavigateTo("/user-dashboard");
+                            _processing = false;
+                            _showAlert = true;
+                            _severity = Severity.Error;
+                            _message = "You don’t have permission to access this site.";
                         }
                         else
                         {
-                            NavigationManager.NavigateTo("/dashboard");
-                        }
+                            await AuditlogService.CreateLog(iduser, "LOGGED IN", "Site", DateTime.Now);
 
-                        _toastService.ShowSuccess("Successfully Login.");
+
+                            if (result.UserRole == "Technical" || result.UserRole == "CshrAdmin")
+                            {
+                                NavigationManager.NavigateTo("/asset-dashboard");
+                            }
+                            else if (result.UserRole == "User")
+                            {
+                                NavigationManager.NavigateTo("/user-dashboard");
+                            }
+                            else
+                            {
+                                NavigationManager.NavigateTo("/dashboard");
+                            }
+
+                            _toastService.ShowSuccess("Successfully Login.");
+                        }
                     }
                     else
                     {

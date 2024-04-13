@@ -107,8 +107,37 @@
         background-color: rgba(234, 188, 187, 1);
     }
 
-@media (max-width: 640.98px) {
+.clsMainCurrent, .clsMainUpcoming, .clsMainPast {
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .5s ease;
+}
 
+    .clsMainCurrent:hover, .clsMainUpcoming:hover, .clsMainPast:hover {
+        transform: scale(1.1);
+    }
+
+.clsCurrent, .clsUpcoming, .clsPast {
+    text-decoration: line-through;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+    .clsCurrent:hover, .clsUpcoming:hover, .clsPast:hover {
+        transform: scale(1.1);
+    }
+
+.dotCurrClick, .dotDoneClick, .dotSoonClick {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #c9ccd1;
+}
+
+
+@media (max-width: 640.98px) {
     .divannounceShow, .divannouncePending, .divannounceNotShow {
         display: flex;
         flex-direction: column;

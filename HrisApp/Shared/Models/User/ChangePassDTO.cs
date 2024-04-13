@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HrisApp.Shared.Models.User
 {
     public class ChangePassDTO
     {
-        [Required]
+        [Required(ErrorMessage = "This field is required.")]
+        public string CurrentPassword { get; set; } = string.Empty;
+        [Required(ErrorMessage = "This field is required.")]
         public string Password { get; set; } = string.Empty;
-        [Required]
+        [Required(ErrorMessage = "This field is required.")]
         [Compare("Password", ErrorMessage = "The passwords do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
     }

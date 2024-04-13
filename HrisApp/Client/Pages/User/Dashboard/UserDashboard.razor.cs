@@ -1,4 +1,5 @@
 ﻿using HrisApp.Client.Pages.Dialog.Announcement;
+using HrisApp.Shared.Models.DailyVerse;
 
 namespace HrisApp.Client.Pages.User.Dashboard
 {
@@ -19,6 +20,8 @@ namespace HrisApp.Client.Pages.User.Dashboard
         private Emp_LeaveCreditT empLeaveCred = new();
         private List<AnnouncementT> announceL = new();
 
+        private DailyVerse dailyvserse = new();
+
         protected override async Task OnInitializedAsync()
         {
             await Task.Delay(1);
@@ -30,7 +33,6 @@ namespace HrisApp.Client.Pages.User.Dashboard
             await SetValues();
 
             announceL = await AnnouncementService.GetFilteredAnnouncementList();
-
         }
 
         private async Task SetValues()

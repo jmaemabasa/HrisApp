@@ -8,7 +8,7 @@
 
         Task<ServiceResponse<int>> UpdateLoginStatus(int id);
 
-        Task<ServiceResponse<int>> UpdatePassword(int id, string newpass);
+        Task<ServiceResponse<int>> UpdatePassword(int id, string newpass, string currentpass);
 
         Task<ServiceResponse<string>> Login(UserMasterT request);
 
@@ -23,8 +23,10 @@
         Task<List<string>> GetAllEmployeeID();
 
         Task<UserMasterT> GetSingleObj(int id);
+        Task<UpdateUsernameDTO> GetSingleObjByEmpId(int empid);
 
         Task UpdateObj(UserMasterT model);
+        Task UpdateUsername(UpdateUsernameDTO model);
 
         Task<bool> IsPassMatched(int id, string inputpass);
     }

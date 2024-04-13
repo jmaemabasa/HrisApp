@@ -6,7 +6,7 @@
 
         Task<ServiceResponse<int>> Putaccount(int id);
 
-        Task<ServiceResponse<int>> Putpassword(int id, string newpass);
+        Task<ServiceResponse<int>> Putpassword(int id, string newpass, string currentpass);
 
         Task<bool> UserExists(string username);
 

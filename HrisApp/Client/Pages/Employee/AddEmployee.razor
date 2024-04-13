@@ -69,12 +69,12 @@
                                         </MudItem>
                                         <MudItem xs="12" sm="4">
                                             <MudText Typo="Typo.body2">Birthdate (mm/dd/yyyy)</MudText>
-                                            <MudDatePicker Class="@_addEmployeeVM.clsBday" DisableUnderLine @bind-Date="@_addEmployeeVM.bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
+                                            <MudDatePicker Class="@_addEmployeeVM.clsBday" DisableUnderLine @bind-Date="@_addEmployeeVM.Bday" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Editable="true" Margin="Margin.Dense" />
                                             <span class="mud-input-helper-text mud-input-error">@_addEmployeeVM.mesBday</span>
                                         </MudItem>
                                         <MudItem xs="12" sm="4">
                                             <MudText Typo="Typo.body2">Age</MudText>
-                                            <MudTextField Class="txf" DisableUnderLine Value="@_addEmployeeVM.CalculateAge(_addEmployeeVM.bday)" ReadOnly="true" Margin="Margin.Dense" />
+                                            <MudTextField Class="txf" DisableUnderLine Value="@_addEmployeeVM.CalculateAge(_addEmployeeVM.Bday)" ReadOnly="true" Margin="Margin.Dense" />
                                         </MudItem>
                                         <MudItem xs="12" sm="4">
                                             <MudText Typo="Typo.body2">Gender</MudText>
@@ -1381,14 +1381,14 @@
 
     public async void ActivateAddressField()
     {
-        _addEmployeeVM.clsBday = (_addEmployeeVM.bday.ToString() == "") ? "mud-input-error txf" : "txf";
-        _addEmployeeVM.mesBday = (_addEmployeeVM.bday.ToString() == "") ? "Birthdate is required" : string.Empty;
+        _addEmployeeVM.clsBday = (_addEmployeeVM.Bday.ToString() == "") ? "mud-input-error txf" : "txf";
+        _addEmployeeVM.mesBday = (_addEmployeeVM.Bday.ToString() == "") ? "Birthdate is required" : string.Empty;
         _addEmployeeVM._slectClasssGender = (_addEmployeeVM.employee.GenderId == 0) ? "frmselecterror" : "frmselect";
         _addEmployeeVM._slectClasssCV = (_addEmployeeVM.employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
         _addEmployeeVM._slectClasssReli = (_addEmployeeVM.employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
 
 
-        if (_addEmployeeVM.employee.GenderId == 0 || _addEmployeeVM.employee.CivilStatusId == 0 || _addEmployeeVM.employee.ReligionId == 0 || String.IsNullOrWhiteSpace(_addEmployeeVM.bday.ToString()))
+        if (_addEmployeeVM.employee.GenderId == 0 || _addEmployeeVM.employee.CivilStatusId == 0 || _addEmployeeVM.employee.ReligionId == 0 || String.IsNullOrWhiteSpace(_addEmployeeVM.Bday.ToString()))
         {
             _toastService.ShowError("Fill out all fields.");
         }

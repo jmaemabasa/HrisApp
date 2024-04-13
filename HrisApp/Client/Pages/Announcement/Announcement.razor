@@ -17,9 +17,9 @@
 
 <div class="box w-auto">
     <div class="d-flex gap-4 align-items-center mb-2">
-        <div class="d-flex gap-2 align-items-center"><span class="dotCurr"></span> Current</div>
-        <div class="d-flex gap-2 align-items-center"><span class="dotSoon"></span> Upcoming</div>
-        <div class="d-flex gap-2 align-items-center"><span class="dotDone"></span> Past</div>
+        <div class="d-flex gap-2 align-items-center @clsCurrent" @onclick="@(() => FilterAnnouncement(1))" ><span class="@dotCurr"></span> Current</div>
+        <div class="d-flex gap-2 align-items-center @clsUpcoming" @onclick="@(() => FilterAnnouncement(2))" ><span class="@dotSoon"></span> Upcoming</div>
+        <div class="d-flex gap-2 align-items-center @clsPast" @onclick="@(() => FilterAnnouncement(3))" ><span class="@dotDone"></span> Past</div>
     </div>
     @if (_announceList == null || _announceList.Count == 0)
     {
@@ -45,7 +45,7 @@
     }
     else
     {
-        <MudTable Class="stable" Height="665px" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="false" Bordered="false" @bind-SelectedItem="selectedItem1">
+        <MudTable Class="stable" Height="650px" Items="_announceList" Context="obj" SortLabel="Sort By" Elevation="0" HorizontalScrollbar="true" Hover="false" Bordered="false" @bind-SelectedItem="selectedItem1" Style="margin-top: 16px;">
             <RowTemplate>
                 @if ((obj.DateStart!.Value.Date == DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date) || (obj.DateStart.Value.Date <= DateTime.Now.Date && obj.DateEnd!.Value.Date >= DateTime.Now.Date))
                 {
@@ -196,65 +196,3 @@
         </MudTable>
     }
 </div>
-
-@code {
-    #nullable disable
-    public List<AnnouncementT> _announceList = new();
-    private AnnouncementT selectedItem1 = null;
-    private string infoFormat = "{first_item}-{last_item} of {all_items}";
-
-
-    //LOADING
-    public bool _isVisible;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(300);
-        StateService.OnChange += OnStateChanged;
-        await LoadList();
-
-        if (_announceList == null || _announceList.Count == 0)
-        {
-            _isVisible = true;
-        }
-    }
-    private async Task LoadList()
-    {
-        await AnnouncementService.GetAnnouncement();
-        _announceList = AnnouncementService.AnnouncementTs.OrderBy(a => a.DateStart).ToList();
-
-        // Then, reorder announcements based on their date ranges
-        var currentTime = DateTime.Now;
-
-        var currentAnnouncements = _announceList.Where(a => a.DateStart <= currentTime && a.DateEnd >= currentTime).ToList();
-        var upcomingAnnouncements = _announceList.Where(a => a.DateStart > currentTime).ToList();
-        var pastAnnouncements = _announceList.Where(a => a.DateEnd < currentTime).ToList();
-
-        // Concatenate the sorted announcement lists
-        _announceList = currentAnnouncements.Concat(upcomingAnnouncements).Concat(pastAnnouncements).ToList();
-        StateService.SetState("AnnouncementList", _announceList);
-    }
-
-    private void OnStateChanged()
-    {
-        // Handle state changes, e.g., update the areaList
-        _announceList = StateService.GetState<List<AnnouncementT>>("AnnouncementList");
-        StateHasChanged();
-    }
-
-    private void OpenAddDialog()
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
-        DialogService.Show<AddAnnounceDialog>("New Announcement", options);
-    }
-
-    private void OpenViewAnnoun(int id)
-    {
-        var parameters = new DialogParameters<UpdateAnnounceDialog>();
-        parameters.Add(x => x.Id, id);
-        parameters.Add(x => x.FromPage, "Announcement");
-
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, NoHeader = true };
-        DialogService.Show<UpdateAnnounceDialog>("", parameters, options);
-    }
-}

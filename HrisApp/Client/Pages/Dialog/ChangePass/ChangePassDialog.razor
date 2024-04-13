@@ -46,7 +46,7 @@
         try
         {
             var id = Convert.ToInt32(GlobalConfigService.User_Id);
-            await AuthService.UpdatePassword(id, cpass.Password);
+            // await AuthService.UpdatePassword(id, cpass.Password);
             MudDialog?.Close();
             _toastService.ShowSuccess("Successfully change your password.");
             await AuditlogService.CreateLog(id, "UPDATE", "Password", DateTime.Now);

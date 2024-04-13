@@ -180,7 +180,7 @@ namespace HrisApp.Server.Services.UserService
             return new ServiceResponse<int> { Data = db.Id, Message = "Successful!" };
         }
 
-        public async Task<ServiceResponse<int>> Putpassword(int id, string newpass)
+        public async Task<ServiceResponse<int>> Putpassword(int id, string newpass, string currentpass)
         {
             var db = await _context.UserMasterT.Where(s => s.EmployeeId == id).FirstOrDefaultAsync();
             if (db == null)
@@ -192,14 +192,23 @@ namespace HrisApp.Server.Services.UserService
                 };
             }
 
-            CreatePasswordHash(newpass, out byte[] passwordHash, out byte[] passwordSalt);
+            var ismatch = await IsPassMatched(id, currentpass);
 
-            db.PasswordHash = passwordHash;
-            db.PasswordSalt = passwordSalt;
+            if (ismatch)
+            {
+                CreatePasswordHash(newpass, out byte[] passwordHash, out byte[] passwordSalt);
 
-            await _context.SaveChangesAsync();
+                db.PasswordHash = passwordHash;
+                db.PasswordSalt = passwordSalt;
 
-            return new ServiceResponse<int> { Data = db.Id, Message = "Successful!" };
+                await _context.SaveChangesAsync();
+
+                return new ServiceResponse<int> { Data = db.Id, Message = "Successful" };
+            }
+            else
+            {
+                return new ServiceResponse<int> { Data = db.Id, Message = "incorrect currentpass" };
+            }
         }
 
         public async Task<bool> IsPassMatched(int id, string inputpass)
