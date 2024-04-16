@@ -449,6 +449,7 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
         {
             string departmentName = "";
             string sectionName = "";
+            string posCode = "";
 
             foreach (var item in Department)
             {
@@ -472,14 +473,32 @@ namespace HrisApp.Client.Pages.Dialog.MasterData
             if (departmentName.Split(' ').Length == 1)
             {
                 departmentCode = departmentName;
+                posCode = $"{departmentCode}{sectionCode}{01:D2}".ToUpper();
             }
             else
             {
                 departmentCode = string.Concat(departmentName.Split(' ').Select(word => word[0]));
+
+                if (char.IsDigit(departmentName[^1]))
+                {
+                    departmentCode += "A";
+                }
+
+                posCode = $"{departmentCode}{sectionCode}{01:D2}".ToUpper();
+
+
+                bool departmentCodeExists = PositionService.PositionTs.Any(item => item.PosCode.Equals(posCode));
+                // If the department code already exists, keep appending 'A' until it becomes unique
+                while (departmentCodeExists)
+                {
+                    departmentCode += 'A';
+                    posCode = $"{departmentCode}{sectionCode}{01:D2}".ToUpper();
+                    departmentCodeExists = PositionService.PositionTs.Any(item => item.PosCode.Equals(posCode));
+                }
             }
 
             // Generate the new PosCode with a two-digit number
-            string posCode = $"{departmentCode}{sectionCode}{01:D2}".ToUpper();
+            //string posCode = $"{departmentCode}{sectionCode}{01:D2}".ToUpper();
 
             return posCode;
         }

@@ -27,13 +27,11 @@ namespace HrisApp.Client.Pages.Dashboard
         private int[] EmployeeCountPerDivision;
         private int[] EmployeeCountActual;
         private int[] EmployeeCountPlantilla;
+        private int[] InactiveEmployeeCount;
 
         private int _totalVacancy = 0;
         private int _totalPlantilla = 0;
         private string cmbBdyTitle = "This Month";
-
-        //private int totalLeave = 12;
-        //private int availableLeave = 8;
 
         protected override async Task OnInitializedAsync()
         {
@@ -95,9 +93,8 @@ namespace HrisApp.Client.Pages.Dashboard
 
                 FilterLineEmployeeActual();
                 FilterLineEmployeePlantilla();
+                FilterLineEmployeeInactives();
                 ConfigureLineConfig();
-
-                //availableLeavetext = ((Convert.ToDouble(availableLeave) / Convert.ToDouble(totalLeave)) * 100).ToString() + "%";
             }
             catch (Exception ex)
             {
@@ -299,8 +296,17 @@ namespace HrisApp.Client.Pages.Dashboard
                 Fill = FillingMode.Disabled
             };
 
+            LineDataset<int> dataset3 = new(InactiveEmployeeCount)
+            {
+                Label = "Inactive Employees",
+                BackgroundColor = "#ff3d3d",
+                BorderColor = "#F49696",
+                Fill = FillingMode.Disabled
+            };
+
             _lineconfig.Data.Datasets.Add(dataset);
             _lineconfig.Data.Datasets.Add(dataset2);
+            _lineconfig.Data.Datasets.Add(dataset3);
         }
 
         //employee count daily vs plantilla
@@ -374,6 +380,20 @@ namespace HrisApp.Client.Pages.Dashboard
             EmployeeCountPlantilla = empCountPlantilla.ToArray();
         }
 
+        private void FilterLineEmployeeInactives()
+        {
+            List<int> empCountInactives = new();
+
+            foreach (var item in dataforline)
+            {
+                string format = "yyyy-MM-dd";
+                DateTime dateTime = DateTime.ParseExact(item, format, CultureInfo.InvariantCulture);
+
+                var countEmployee = EmployeeService.EmployeeTs.Where(e => e.DateInactiveStatus != null && e.DateInactiveStatus?.Month == dateTime.Month && e.DateInactiveStatus?.Year == dateTime.Year).Count();
+                empCountInactives.Add(countEmployee);
+            }
+            InactiveEmployeeCount = empCountInactives.ToArray();
+        }
 
 
         private List<string> dataforline = new();

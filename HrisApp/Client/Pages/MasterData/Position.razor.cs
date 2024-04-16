@@ -48,7 +48,7 @@
 
         private void OpenAddPosition()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, DisableBackdropClick=true };
             DialogService.Show<AddPositionDialog>("New Job Position", options);
         }
 
@@ -70,7 +70,7 @@
                 { x => x.Id, id }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, DisableBackdropClick = true };
             DialogService.Show<UpdatePositionDialog>("Update Position", parameters, options);
         }
 

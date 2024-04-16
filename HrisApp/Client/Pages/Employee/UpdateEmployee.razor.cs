@@ -269,6 +269,15 @@ namespace HrisApp.Client.Pages.Employee
                         var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
                     }
 
+                    //UPDATE EMPLOYEE HISTORY IF NAG RESIGN/DEPART SI EMPLOYEE
+                    if (employee.StatusId != 1)
+                    {
+                        _updateposHistory.DateModified = DateTime.Now;
+                        _updateposHistory.DateEnded = DateTime.Now;
+                        _updateposHistory.EmploymentStatusId = employee.EmploymentStatusId;
+                        await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
+                    }
+
                     //UPDATE SUB POSITION FOR INACTIVE EMPLOYEE
                     _subposition.Status = "Vacant";
                     _subposition.VacantDate = employee.DateInactiveStatus;
@@ -349,6 +358,15 @@ namespace HrisApp.Client.Pages.Employee
 
                     var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
                     StateService.SetState("HistoryPosList", newList);
+                }
+
+                //UPDATE EMPLOYEE HISTORY IF NAG RESIGN/DEPART SI EMPLOYEE
+                if (employee.StatusId != 1)
+                {
+                    _updateposHistory.DateModified = DateTime.Now;
+                    _updateposHistory.DateEnded = DateTime.Now;
+                    _updateposHistory.EmploymentStatusId = employee.EmploymentStatusId;
+                    await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
                 }
 
                 //UPDATE SUB POSITION

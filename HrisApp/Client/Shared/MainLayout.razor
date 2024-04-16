@@ -308,24 +308,24 @@
                 if (GlobalConfigService.Role.Equals("Technical"))
                 {
                     <a href="/asset-dashboard">
-                        <MudDrawerHeader>
-                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        <MudDrawerHeader Style="padding: 15px 0px 10px 12px">
+                            <MudImage Src="./images/logo.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
                         </MudDrawerHeader>
                     </a>
                 }
                 else if (GlobalConfigService.Role.Equals("User"))
                 {
                     <a href="/user-dashboard">
-                        <MudDrawerHeader>
-                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        <MudDrawerHeader Style="padding: 15px 0px 10px 12px">
+                            <MudImage Src="./images/logo.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
                         </MudDrawerHeader>
                     </a>
                 }
                 else
                 {
                     <a href="/dashboard">
-                        <MudDrawerHeader>
-                            <MudImage Src="./images/SonicSales.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
+                        <MudDrawerHeader Style="padding: 15px 0px 10px 12px">
+                            <MudImage Src="./images/logo.png" Fluid=true Style="width: 80%;" Class="mb-3 mt-1" />
                         </MudDrawerHeader>
                     </a>
                 }
@@ -515,9 +515,9 @@
         {
             var id = Convert.ToInt32(GlobalConfigService.User_Id);
             await AuthService.UpdateLoginStatus(id);
+                        NavigationManager.NavigateTo("/", true);
             await LocalStorage.RemoveItemAsync("token");
             await AuthStateProvider.GetAuthenticationStateAsync();
-            NavigationManager.NavigateTo("/", true);
         }
         else
         {
