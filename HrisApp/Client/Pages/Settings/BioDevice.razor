@@ -1,0 +1,175 @@
+﻿@page "/biometric-device"
+
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
+
+<PageTitle>Biometric Device</PageTitle>
+
+<style>
+    /*UPLOAD FILE*/
+    .btnUplaod {
+        background-color: #f0f0f0 !important;
+        padding: 12px 12px;
+        color: slategrey;
+        border-left: 2px solid #ebe8e8;
+    }
+
+        .btnUplaod:hover {
+            background-color: slategrey !important;
+            padding: 12px 12px;
+            color: #f0f0f0;
+            /*transform: scale(1.1);*/
+            border: none;
+        }
+
+    .btnDiaSave {
+        color: #fafaf5;
+        background-color: #427D9D !important;
+        transition: all .5s ease;
+    }
+
+        .btnDiaSave:hover {
+            transform: scale(1.1);
+            color: #fafaf5;
+            background-color: #245e7d !important;
+        }
+
+    .btnDiaCancel {
+        padding-left: 15px;
+        padding-right: 13px;
+        color: #BE1313;
+        background-color: #EABCBB !important;
+        transition: all .5s ease;
+    }
+
+        .btnDiaCancel:hover {
+            transform: scale(1.1);
+            background-color: #BE1313 !important;
+            color: #fafaf5;
+        }
+    /*END UPLOAD FILE*/
+</style>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Biometric Device</span>
+        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
+            <Authorized>
+                <div class="d-flex gap-3">
+                    <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Device</MudButton>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+        </div>
+    </div>
+    @if (_bioDevList == null || _bioDevList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <MudTable Class="stable" Height="611px" Items="_bioDevList" Context="obj" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<BioIPModel,bool>(FilterFunc1)">
+            <HeaderContent>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Location</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">IP Address</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Port</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Device Info</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Machine</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date Registered</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@obj.Location</MudTd>
+                <MudTd>@obj.IP_Address</MudTd>
+                <MudTd>@obj.Port</MudTd>
+                <MudTd>@obj.Device_Info</MudTd>
+                <MudTd>@obj.Machine</MudTd>
+                <MudTd>@obj.Machine_Reg.ToString("MMM dd yyyy")</MudTd>
+                <MudTd>@obj.Status</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 15, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    }
+</div>
+
+@code {
+    public List<BioIPModel> _bioDevList = new();
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        if (_bioDevList == null || _bioDevList.Count == 0)
+        {
+            _isVisible = true;
+        }
+    }
+    private async Task LoadList()
+    {
+        var biorecord = await BioService.GetAttendanceRecList();
+
+        StateService.SetState("BioIPList", await BioIPService.GetObjList());
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        _bioDevList = StateService.GetState<List<BioIPModel>>("BioIPList");
+        StateHasChanged();
+    }
+
+    //LOADING
+    public bool _isVisible;
+
+    private void OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
+        DialogService.Show<AddBioIPDialog>("New Device", options);
+    }
+
+    private string searchString1 = "";
+    private bool FilterFunc1(BioIPModel area) => FilterFunc(area, searchString1);
+
+    private bool FilterFunc(BioIPModel area, string searchString)
+    {
+
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (area.Location.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (area.IP_Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    }
+}

@@ -60,14 +60,4 @@
             ImageData = string.Format("data:image/png;base64,{0}", base642);
         }
     }
-
-    private string CapitalizeFirstLetter(string input)
-    {
-        if (string.IsNullOrEmpty(input))
-        {
-            return input;
-        }
-
-        return char.ToUpper(input[0]) + input[1..];
-    }
 }

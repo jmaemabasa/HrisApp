@@ -1,4 +1,5 @@
 ﻿@page "/attendancerecords"
+@using HrisApp.Shared.Models.DummyModel
 
 @attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
 
@@ -55,10 +56,10 @@
         <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
-                    <button class="Btn" @onclick="OpenUploadDialog">
-                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Upload"></MudIcon></div>
-                        <div class="text">Upload File</div>
-                    </button>
+                    @* <button class="Btn" @onclick="OpenUploadDialog">
+                    <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Upload"></MudIcon></div>
+                    <div class="text">Upload File</div>
+                    </button> *@
                     <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Record</MudButton>
                 </div>
             </Authorized>
@@ -67,6 +68,11 @@
 </div>
 
 <div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+        </div>
+    </div>
     @if (_attendanceList == null || _attendanceList.Count == 0)
     {
         <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
@@ -91,43 +97,47 @@
     }
     else
     {
-        <MudTable Class="stable" Height="665px" Items="_attendanceList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
+        <MudTable Class="stable" Height="611px" Items="_attendanceList" Context="obj" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<BioAttendanceDummy,bool>(FilterFunc1)">
             <HeaderContent>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">AC-No.</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Name</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Time</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">State</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">New State</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Exception</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Operation</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Employee</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Biometric ID</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Type</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">IP Address</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Remarks</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd>@obj.AC_No</MudTd>
                 <MudTd>
                     @{
-                        var verid = payList?.FirstOrDefault(d => d.BiometricID == obj.AC_No)?.Verify_Id;
-                        var emp = verid != null ? empList?.FirstOrDefault(d => d.Verify_Id == verid) : null;
+                        var verid = payList?.FirstOrDefault(d => d.BiometricID == Convert.ToString(obj.IndRegID))?.Verify_Id;
                     }
-                    @(verid == null || emp == null ? "" : $"{emp.FirstName} {emp.LastName}")
+                    @if (!string.IsNullOrEmpty(verid))
+                    {
+                        <EmployeeNamePosition verify="@verid" />
+                    }
                 </MudTd>
-                <MudTd>@obj.Time?.ToString("MM/dd/yyyy hh:mm tt")</MudTd>
-                <MudTd>@obj.State</MudTd>
-                <MudTd>@obj.NewState</MudTd>
-                <MudTd>@obj.Exception</MudTd>
-                <MudTd>@obj.Operation</MudTd>
+                <MudTd>@obj.IndRegID</MudTd>
+                <MudTd>
+                    <div class="d-flex flex-column">
+                        <div style="font-weight:600">@obj.TimeOnlyRecord.ToString("hh:mm tt")</div>
+                        <div style="font-size: 12px;">@obj.DateOnlyRecord.ToString("MMM dd yyyy")</div>
+                    </div>
+                </MudTd>
+                <MudTd>@obj.AttendanceType</MudTd>
+                <MudTd>@obj.IPAddress</MudTd>
+                <MudTd>@obj.Remarks</MudTd>
             </RowTemplate>
             <PagerContent>
-                <MudTablePager PageSizeOptions="new int[] { 20, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                <MudTablePager PageSizeOptions="new int[] { 15, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
             </PagerContent>
         </MudTable>
     }
 </div>
 
 @code {
-    public List<AttendanceRecordT> _attendanceList = new();
+    public List<BioAttendanceDummy> _attendanceList = new();
     private List<EmployeeT> empList = new();
     private List<Emp_PayrollT> payList = new();
-    private AttendanceRecordT selectedItem1 = null;
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
 
     protected override async Task OnInitializedAsync()
@@ -146,13 +156,62 @@
     }
     private async Task LoadList()
     {
-        StateService.SetState("AttendanceRecList", await AttRecSvc.GetAttendanceRecList());
+        var biorecord = await BioService.GetAttendanceRecList();
+        _attendanceList.Clear();
+        foreach (var item in biorecord)
+        {
+            EmployeeT? emp = new();
+            var pay = payList.Where(e => e.BiometricID.Equals(item.IndRegID.ToString())).FirstOrDefault();
+            BioAttendanceDummy dummymodel = new();
+            if (pay == null)
+            {
+                dummymodel = new()
+                    {
+                        Id = item.Id,
+                        Verify_Id = "",
+                        FirstName = "",
+                        LastName = "",
+                        MachineNumber = item.MachineNumber,
+                        IndRegID = item.IndRegID,
+                        DateTimeRecord = item.DateTimeRecord,
+                        DateOnlyRecord = item.DateOnlyRecord,
+                        TimeOnlyRecord = item.TimeOnlyRecord,
+                        AttendanceType = item.AttendanceType,
+                        IPAddress = item.IPAddress,
+                        Remarks = item.Remarks
+                    };
+            }
+            else
+            {
+                emp = empList.Where(e => e.Verify_Id.Equals(pay.Verify_Id)).FirstOrDefault();
+                dummymodel = new()
+                    {
+                        Id = item.Id,
+                        Verify_Id = emp!.Verify_Id,
+                        FirstName = emp!.FirstName,
+                        LastName = emp!.LastName,
+                        MachineNumber = item.MachineNumber,
+                        IndRegID = item.IndRegID,
+                        DateTimeRecord = item.DateTimeRecord,
+                        DateOnlyRecord = item.DateOnlyRecord,
+                        TimeOnlyRecord = item.TimeOnlyRecord,
+                        AttendanceType = item.AttendanceType,
+                        IPAddress = item.IPAddress,
+                        Remarks = item.Remarks
+                    };
+            }
+
+
+            _attendanceList.Add(dummymodel);
+        }
+
+        StateService.SetState("AttendanceRecList", _attendanceList.OrderByDescending(e=>e.TimeOnlyRecord).ToList());
     }
 
     private void OnStateChanged()
     {
         // Handle state changes, e.g., update the areaList
-        _attendanceList = StateService.GetState<List<AttendanceRecordT>>("AttendanceRecList");
+        _attendanceList = StateService.GetState<List<BioAttendanceDummy>>("AttendanceRecList");
         StateHasChanged();
     }
 
@@ -161,13 +220,42 @@
 
     private void OpenUploadDialog()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, DisableBackdropClick=true };
         DialogService.Show<AttendanceUploadFileDialog>("", options);
     }
 
     private void OpenAddDialog()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
         DialogService.Show<AddAttendanceRec>("New Record", options);
+    }
+
+    private string searchString1 = "";
+    private bool FilterFunc1(BioAttendanceDummy area) => FilterFunc(area, searchString1);
+
+    private bool FilterFunc(BioAttendanceDummy area, string searchString)
+    {
+
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (area.IndRegID.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (area.DateOnlyRecord.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (area.DateOnlyRecord.ToString("MMM dd yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (area.TimeOnlyRecord.ToString("HH:mm tt").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (area.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (area.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (area.IPAddress.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (area.AttendanceType.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
     }
 }

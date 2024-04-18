@@ -26,5 +26,7 @@ namespace HrisApp.Shared.Models.User
         public byte[]? PasswordSalt { get; set; }
         public string LoginStatus { get; set; } = string.Empty;
         public string ReferralCode { get; set; } = string.Empty;
+
+        public int IsUsernameUpdated { get; set; }
     }
 }

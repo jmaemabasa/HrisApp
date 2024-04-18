@@ -8,5 +8,7 @@ namespace HrisApp.Shared.Models.User
 
         [Required(ErrorMessage = "This field is required.")]
         public string Username { get; set; } = string.Empty;
+
+        public int IsUsernameUpdated { get; set; }
     }
 }

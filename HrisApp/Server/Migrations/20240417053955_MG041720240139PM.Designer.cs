@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240417053955_MG041720240139PM")]
+    partial class MG041720240139PM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1961,18 +1963,10 @@ namespace HrisApp.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("AttendanceType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateOnlyRecord")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DateTimeRecord")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IPAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1981,10 +1975,6 @@ namespace HrisApp.Server.Migrations
 
                     b.Property<int>("MachineNumber")
                         .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TimeOnlyRecord")
                         .HasColumnType("datetime2");
@@ -4230,94 +4220,6 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("VendorT");
                 });
 
-            modelBuilder.Entity("HrisApp.Shared.Models.SettingsM.BioIPModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Device_Info")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IP_Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Is_AM")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Is_PM")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Machine")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Machine_Reg")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Port")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BioIPModel");
-                });
-
-            modelBuilder.Entity("HrisApp.Shared.Models.SettingsM.ExtractLogsModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date_Create")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date_Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date_Stop")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EmployeeUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Is_Start")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExtractLogsModel");
-                });
-
             modelBuilder.Entity("HrisApp.Shared.Models.StaticData.AssetStatusT", b =>
                 {
                     b.Property<int>("Id")
@@ -4815,9 +4717,6 @@ namespace HrisApp.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IsUsernameUpdated")
                         .HasColumnType("int");
 
                     b.Property<string>("LoginStatus")

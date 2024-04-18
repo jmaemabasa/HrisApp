@@ -1,0 +1,56 @@
+﻿<style>
+    .btnProceed {
+        background-color: #2196f3;
+        color: #ffffff;
+        padding: 8px 20px;
+        transition: all .5s ease;
+        margin: 8px 12px 12px 0px;
+    }
+
+    .btnProceed:hover {
+            background-color: #1a76c0;
+    }
+</style>
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Rounded.Info" Color="Color.Info" Class="mr-3" /> Success
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <span>@Mess</span>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Logout" Class="btnProceed">Proceed</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+#nullable disable
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [CascadingParameter] public Task<AuthenticationState> authstate { get; set; }
+
+    [Parameter]
+    public string Mess { get; set; }
+
+    void Cancel() => MudDialog.Cancel();
+
+
+    public async Task Logout()
+    {
+        var _auth = await authstate;
+        if (_auth.User.Identity!.IsAuthenticated)
+        {
+            var id = Convert.ToInt32(GlobalConfigService.User_Id);
+            await AuthService.UpdateLoginStatus(id);
+            NavigationManager.NavigateTo("/", true);
+            await LocalStorage.RemoveItemAsync("token");
+            await AuthStateProvider.GetAuthenticationStateAsync();
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/", true);
+        }
+    }
+}

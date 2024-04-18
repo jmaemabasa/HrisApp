@@ -11,27 +11,41 @@
                     </div>
                 }
                 <div class="col-12">
-                    <MudText Typo="Typo.body2">AC_No</MudText>
-                    <MudTextField @bind-Value="obj.AC_No" For="@(() => obj.AC_No)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    <MudText Typo="Typo.body2">Employee</MudText>
+                    <MudAutocomplete T="EmployeeT" Placeholder="Type to search..." @bind-Value="fieldObj" Style="margin-bottom: 5px;"
+                                     SearchFunc="@SearchEmp"
+                                     ResetValueOnEmptyText="true"
+                                     CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"
+                                     ToStringFunc="@(e => e==null?null : $"{e.FirstName} {e.MiddleName} {e.LastName}")" ShowProgressIndicator="true" Clearable="true">
+                        <NoItemsTemplate>
+                            <MudText Align="Align.Center" Class="px-4 py-1">
+                                No items found
+                            </MudText>
+                        </NoItemsTemplate>
+                    </MudAutocomplete>
                 </div>
-                @* <div class="col-12">
-                <MudText Typo="Typo.body2">Name</MudText>
-                <MudTextField @bind-Value="obj.Name" For="@(() => obj.Name)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
-                </div> *@
                 <div class="col-12 col-md-6">
                     <MudText Typo="Typo.body2">Date</MudText>
-                    <MudDatePicker @bind-Date="obj.Time" For="@(() => obj.Time)" Placeholder="Enter Date" Editable="true" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    <MudDatePicker @bind-Date="DateOnly" Placeholder="Enter Date" Editable="true" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
                 <div class="col-12 col-md-6">
                     <MudText Typo="Typo.body2">Time</MudText>
                     <MudTimePicker AmPm="true" @bind-Time="time" Editable="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
+                
                 <div class="col-12">
-                    <MudText Typo="Typo.body2">State</MudText>
-                    <MudSelect @bind-Value="obj.State" Placeholder="Please Select" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
-                        <MudSelectItem Value="@("C/In")">C/In</MudSelectItem>
-                        <MudSelectItem Value="@("C/Out")">C/Out</MudSelectItem>
+                    <MudText Typo="Typo.body2">Type</MudText>
+                    <MudSelect @bind-Value="obj.AttendanceType" Placeholder="Please Select" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                        <MudSelectItem Value="@("Manual Entry")">Manual Entry</MudSelectItem>
+                        <MudSelectItem Value="@("Biometric")">Biometric</MudSelectItem>
+                        <MudSelectItem Value="@("Mobile App")">Mobile App</MudSelectItem>
                     </MudSelect>
+                </div>
+
+
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Remarks</MudText>
+                    <MudTextField @bind-Value="obj.Remarks" For="@(() => obj.Remarks)" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center gap-2 mt-4">

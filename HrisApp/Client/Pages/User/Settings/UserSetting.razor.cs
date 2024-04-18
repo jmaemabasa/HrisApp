@@ -40,12 +40,15 @@
             }
             else
             {
+                obj.IsUsernameUpdated = 1;
                 await AuthService.UpdateUsername(obj);
-                _showAlert = true;
-                _message = "Successfully updated username.";
-                _severity = Severity.Success;
+                _showAlert = false;
 
-                obj = await AuthService.GetSingleObjByEmpId(Convert.ToInt32(GlobalConfigService.User_Id));
+                var id = Convert.ToInt32(GlobalConfigService.User_Id);
+                await AuditlogService.CreateLog(id, "UPDATE", "Username", DateTime.Now);
+
+
+                GlobalConfigService.OpenLoginAgainDialog("Please login again.");
             }
         }
 

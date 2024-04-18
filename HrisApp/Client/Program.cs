@@ -114,6 +114,10 @@ global using HrisApp.Client.Services.Assets.Licenses.AssLicenseImageService;
 global using HrisApp.Client.Services.Assets.MainAssetLicenseService;
 global using HrisApp.Client.Services.EmpDetails.EmpRateHistoryService;
 global using HrisApp.Client.Services.DailyVerseService;
+global using HrisApp.Client.Services.Attendance.BioAttendanceS;
+global using HrisApp.Client.Services.SettingsS.BioIPService;
+global using HrisApp.Client.Services.SettingsS.ExtractLogsService;
+global using HrisApp.Shared.Models.SettingsM;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -165,6 +169,7 @@ builder.Services.AddScoped<ILeaveCredService, LeaveCredService>();
 builder.Services.AddScoped<ILeaveHistoryService, LeaveHistoryService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddScoped<IAttendanceRecService, AttendanceRecService>();
+builder.Services.AddScoped<IBioAttendanceService, BioAttendanceService>();
 builder.Services.AddScoped<ITimetableService, TimetableService>();
 builder.Services.AddScoped<IAssetTypeService, AssetTypeService>();
 builder.Services.AddScoped<IAssetCategoryService, AssetCategoryService>();
@@ -196,6 +201,9 @@ builder.Services.AddScoped<IVendorService, VendorService>();
 
 
 builder.Services.AddScoped<IDailyVerseService, DailyVerseService>();
+
+builder.Services.AddScoped<IBioIPService, BioIPService>();
+builder.Services.AddScoped<IExtractLogsService, ExtractLogsService>();
 
 builder.Services.AddTransient<GlobalConfigService>();
 builder.Services.AddTransient<AuditlogGlobal>();

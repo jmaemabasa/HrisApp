@@ -298,7 +298,7 @@ namespace HrisApp.Client.Pages.Dashboard
 
             LineDataset<int> dataset3 = new(InactiveEmployeeCount)
             {
-                Label = "Inactive Employees",
+                Label = "Retired Employees",
                 BackgroundColor = "#ff3d3d",
                 BorderColor = "#F49696",
                 Fill = FillingMode.Disabled

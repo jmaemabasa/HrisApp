@@ -1,0 +1,91 @@
+﻿<MudDialog>
+    <DialogContent>
+        <EditForm Model="@obj" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="row">
+                @* ERROR/SUCCESS ALERT *@
+                @if (_showAlert)
+                {
+                    <div class="col-12 mb-2">
+                        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
+                    </div>
+                }
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">Location</MudText>
+                    <MudTextField @bind-Value="obj.Location" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">IP Address</MudText>
+                    <MudTextField @bind-Value="obj.IP_Address" Mask="@ipv4Mask" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">Port</MudText>
+                    <MudNumericField @bind-Value="obj.Port" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">Device Info</MudText>
+                    <MudTextField @bind-Value="obj.Device_Info" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">Machine</MudText>
+                    <MudNumericField @bind-Value="obj.Machine" Variant="Variant.Outlined" Margin="Margin.Dense" Min="1" />
+                </div>
+
+                <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
+                    <div class="dialogbtns" style="padding: 4px 0px 15px 10px;">
+                        <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+                        <button type="submit" class="save btn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    #nullable disable
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
+    private BioIPModel obj = new();
+
+    private void Cancel() => MudDialog.Cancel();
+    public IMask ipv4Mask = RegexMask.IPv4();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        obj.Machine = 1;
+        obj.Port = 4370;
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        obj.Is_AM = true;
+        obj.Is_PM = true;
+        obj.Machine_Reg = DateTime.Now;
+        obj.Status = "Active";
+        await BioIPService.CreateObj(obj);
+        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+        _toastService.ShowSuccess(TokenCons.CREATESUCCESS);
+
+        _showAlert = false;
+        MudDialog.Close();
+        StateService.SetState("BioIPList", await BioIPService.GetObjList());
+    }
+
+
+    #region ERROR TRAPPING
+
+    private string _message = string.Empty;
+    private Severity _severity;
+    private bool _showAlert = false;
+
+    public void CloseMe() => _showAlert = false;
+
+    #endregion ERROR TRAPPING
+}

@@ -5,6 +5,7 @@ using HrisApp.Shared.Models.Attendance;
 using HrisApp.Shared.Models.Audit;
 using HrisApp.Shared.Models.Dashboard;
 using HrisApp.Shared.Models.Employee.Emp_Education;
+using HrisApp.Shared.Models.SettingsM;
 
 namespace HrisApp.Server.Data
 {
@@ -357,6 +358,7 @@ namespace HrisApp.Server.Data
 
         //ATTENDANCE
         public DbSet<AttendanceRecordT> AttendanceRecordT { get; set; }
+        public DbSet<BioModelT> BioModelT { get; set; }
 
         public DbSet<ShiftTimetableT> ShiftTimetableT { get; set; }
 
@@ -389,6 +391,12 @@ namespace HrisApp.Server.Data
         public DbSet<AssetLicenseHistoryT> AssetLicenseHistoryT { get; set; }
         public DbSet<AssLicenseImageT> AssLicenseImageT { get; set; }
         public DbSet<MainAssetLicensesT> MainAssetLicensesT { get; set; }
+
+
+        //SETTINGS
+        public DbSet<BioIPModel> BioIPModel { get; set; }
+        public DbSet<ExtractLogsModel> ExtractLogsModel { get; set; }
+
 
     }
 }

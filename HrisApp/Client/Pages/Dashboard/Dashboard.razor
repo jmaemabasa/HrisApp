@@ -26,7 +26,7 @@
                 <TopCards title="Active Employees" value="@_countActiveEmployees" icon="@Icons.Material.TwoTone.Person4" iconColor="font-size: 4.5rem; color: #427D9D" OnIconClick="@(()=>NavIconBtns("employee"))" />
             </MudItem>
             <MudItem xs="12" sm="3">
-                <TopCards title="Inactive Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 4.5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
+                <TopCards title="Retired Employees" value="@_countInactiveEmployees" icon="@Icons.Material.TwoTone.PersonOff" iconColor="font-size: 4.5rem; color: #FF9800" OnIconClick=@(()=>NavIconBtns("inactiveEmployee")) />
             </MudItem>
             <MudItem xs="12" sm="3">
                 <TopCards title="Required Manpower" value="@_totalPlantilla.ToString()" icon="@Icons.Material.TwoTone.Group" iconColor="font-size: 4.5rem; color: #9A98E3" OnCardClick=@(()=>NavIconBtns("totalPlantilla")) OnIconClick=@(()=>NavIconBtns("totalPlantilla")) />

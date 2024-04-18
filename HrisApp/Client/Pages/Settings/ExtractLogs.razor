@@ -1,0 +1,198 @@
+﻿@page "/extract-logs"
+
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
+
+<PageTitle>Extract Logs</PageTitle>
+
+<style>
+    /*UPLOAD FILE*/
+    .btnUplaod {
+        background-color: #f0f0f0 !important;
+        padding: 12px 12px;
+        color: slategrey;
+        border-left: 2px solid #ebe8e8;
+    }
+
+        .btnUplaod:hover {
+            background-color: slategrey !important;
+            padding: 12px 12px;
+            color: #f0f0f0;
+            /*transform: scale(1.1);*/
+            border: none;
+        }
+
+    .btnDiaSave {
+        color: #fafaf5;
+        background-color: #427D9D !important;
+        transition: all .5s ease;
+    }
+
+        .btnDiaSave:hover {
+            transform: scale(1.1);
+            color: #fafaf5;
+            background-color: #245e7d !important;
+        }
+
+    .btnDiaCancel {
+        padding-left: 15px;
+        padding-right: 13px;
+        color: #BE1313;
+        background-color: #EABCBB !important;
+        transition: all .5s ease;
+    }
+
+        .btnDiaCancel:hover {
+            transform: scale(1.1);
+            background-color: #BE1313 !important;
+            color: #fafaf5;
+        }
+    /*END UPLOAD FILE*/
+</style>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Extract Logs</span>
+        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
+            <Authorized>
+                <div class="d-flex gap-3">
+                    <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Download" Class="btnadd"> Extract</MudButton>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+<div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+        </div>
+    </div>
+    @if (_extractLogsList == null || _extractLogsList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <MudTable Class="stable" Height="611px" Items="_extractLogsList" Context="obj" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<ExtractLogsModel,bool>(FilterFunc1)">
+            <HeaderContent>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Employee</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Type</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Description</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date Start</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date Stop</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date Create</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@obj.EmployeeUserId</MudTd>
+                <MudTd>@obj.Action</MudTd>
+                <MudTd>@obj.Type</MudTd>
+                <MudTd>@obj.Description</MudTd>
+                <MudTd>@obj.Date_Start.ToString("MMM dd yyyy")</MudTd>
+                <MudTd>@obj.Date_Stop.ToString("MMM dd yyyy")</MudTd>
+                <MudTd>@obj.Date_Create.ToString("MMM dd yyyy")</MudTd>
+                <MudTd>@obj.Status</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 15, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    }
+</div>
+
+@code {
+    public List<ExtractLogsModel> _extractLogsList = new();
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        if (_extractLogsList == null || _extractLogsList.Count == 0)
+        {
+            _isVisible = true;
+        }
+    }
+    private async Task LoadList()
+    {
+        var biorecord = await BioService.GetAttendanceRecList();
+
+        StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        _extractLogsList = StateService.GetState<List<ExtractLogsModel>>("ExtractLogsList");
+        StateHasChanged();
+    }
+
+    //LOADING
+    public bool _isVisible;
+
+    private async Task OpenAddDialog()
+    {
+        var userid = Convert.ToInt32(GlobalConfigService.User_Id);
+        ExtractLogsModel _model = new ExtractLogsModel()
+            {
+                EmployeeUserId = userid,
+                Action = "Extract",
+                Type = "Ongoing",
+                Description = "Extracting attendance record.",
+                Is_Start = true,
+                Date_Start = DateTime.Now,
+                Date_Stop = DateTime.MinValue,
+                Date_Create = DateTime.Now,
+                Status = "Processing"
+            };
+
+        var isExist = await ExtractLogsService.GetExistExtract(_model.Status);
+
+        if (isExist == 0)
+        {
+            await ExtractLogsService.CreateObj(_model);
+            StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+        }
+        else
+        {
+            _toastService.ShowError("You have ongoing extracting process.");
+        }
+    }
+
+    private string searchString1 = "";
+    private bool FilterFunc1(ExtractLogsModel area) => FilterFunc(area, searchString1);
+
+    private bool FilterFunc(ExtractLogsModel area, string searchString)
+    {
+
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (area.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    }
+}

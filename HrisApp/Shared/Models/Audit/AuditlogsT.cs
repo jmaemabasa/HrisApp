@@ -1,12 +1,6 @@
-﻿using HrisApp.Shared.Models.User;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using HrisApp.Shared.Models.Employee;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HrisApp.Shared.Models.Employee;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrisApp.Shared.Models.Audit
 {
@@ -16,8 +10,8 @@ namespace HrisApp.Shared.Models.Audit
         [Key]
         public int Id { get; set; }
         public EmployeeT? EmployeeUSer { get; set; } //FK
-        public int EmployeeUserId { get; set; } 
-        public string Action { get; set; } = string.Empty; 
+        public int EmployeeUserId { get; set; }
+        public string Action { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public DateTime? Date { get; set; }
     }

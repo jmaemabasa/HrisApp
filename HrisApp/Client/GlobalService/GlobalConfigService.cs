@@ -143,8 +143,10 @@ namespace HrisApp.Client.GlobalService
 
         public void OpenErrorDialog(string mess)
         {
-            var parameters = new DialogParameters<ErrorDialog>();
-            parameters.Add(x => x.Mess, mess);
+            var parameters = new DialogParameters<ErrorDialog>
+            {
+                { x => x.Mess, mess }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<ErrorDialog>("", parameters, options);
@@ -152,11 +154,24 @@ namespace HrisApp.Client.GlobalService
 
         public void OpenWarningDialog(string mess)
         {
-            var parameters = new DialogParameters<WarningDialog>();
-            parameters.Add(x => x.Mess, mess);
+            var parameters = new DialogParameters<WarningDialog>
+            {
+                { x => x.Mess, mess }
+            };
 
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
             DialogService.Show<WarningDialog>("", parameters, options);
+        }
+
+        public void OpenLoginAgainDialog(string mess)
+        {
+            var parameters = new DialogParameters<LoginAgainDialog>
+            {
+                { x => x.Mess, mess }
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
+            DialogService.Show<LoginAgainDialog>("", parameters, options);
         }
 
         public async void OpenInNewTab(string url)

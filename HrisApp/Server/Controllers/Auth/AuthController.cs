@@ -162,6 +162,7 @@ namespace HrisApp.Server.Controllers.Auth
             var dbarea = await _context.UserMasterT.FirstOrDefaultAsync(d => d.EmployeeId == model.EmployeeId);
 
             dbarea!.Username = model.Username;
+            dbarea!.IsUsernameUpdated = model.IsUsernameUpdated;
             await _context.SaveChangesAsync();
 
             return Ok();

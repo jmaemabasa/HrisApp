@@ -33,7 +33,7 @@
 @using HrisApp.Client.Pages.Dialog.Announcement
 @using HrisApp.Shared.Models.Attendance
 @using HrisApp.Client.Pages.Dialog.MasterData.UOM;
-
+@using HrisApp.Client.Pages.Settings.Dialogs
 
 @using ChartJs.Blazor;
 @using ChartJs.Blazor.Common
@@ -118,5 +118,9 @@
 @inject ILeaveCredService LeaveCredService
 @inject ILeaveHistoryService LeaveHistoryService
 @inject ITimetableService TimeTblService
+@inject IBioAttendanceService BioService
 
 @inject IImageService ImageService
+
+@inject IBioIPService BioIPService
+@inject IExtractLogsService ExtractLogsService
