@@ -21,6 +21,11 @@ namespace HrisApp.Client.Services.SettingsS.BioIPService
             return await _httpClient.GetFromJsonAsync<List<BioIPModel>>("api/BioIP");
         }
 
+        public async Task<List<BioIPModel>> GetAllActivesObj()
+        {
+            return await _httpClient.GetFromJsonAsync<List<BioIPModel>>("api/BioIP/GetAllActivesObj");
+        }
+
         public async Task<BioIPModel> GetSingleObj(int id)
         {
             var result = await _httpClient.GetFromJsonAsync<BioIPModel>($"api/BioIP/{id}");

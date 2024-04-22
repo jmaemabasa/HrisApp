@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240419012838_MG041920240927AM")]
+    partial class MG041920240927AM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4293,9 +4295,6 @@ namespace HrisApp.Server.Migrations
                     b.Property<DateTime>("Date_Create")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Date_Extract")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("Date_Start")
                         .HasColumnType("datetime2");
 
@@ -4308,9 +4307,6 @@ namespace HrisApp.Server.Migrations
 
                     b.Property<int>("EmployeeUserId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Is_Active")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("Is_Start")
                         .HasColumnType("bit");

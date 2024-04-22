@@ -18,6 +18,8 @@ namespace HrisApp.Shared.Models.SettingsM
         public DateTime Date_Create { get; set; }
         public string Status { get; set; } = string.Empty;
 
+        public DateTime Date_Extract { get; set; }
 
+        public bool Is_Active { get; set; }
     }
 }

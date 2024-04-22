@@ -18,6 +18,7 @@ namespace HrisApp.Shared.Models.SettingsM
         public bool Is_PM { get; set; }
         public string Status { get; set; } = string.Empty;
 
+        public string Res_Status { get; set; } = string.Empty; //Open, Close, Error
 
     }
 }

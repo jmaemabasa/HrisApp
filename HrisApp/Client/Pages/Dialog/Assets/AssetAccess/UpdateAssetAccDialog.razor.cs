@@ -33,7 +33,7 @@
             {
                 await LoadAccessImg(obj.JMCode);//image
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Console.WriteLine("aaaa " + ex);
                 //Console.WriteLine("aaaa " + ex.Message);

@@ -48,12 +48,32 @@ namespace HrisApp.Server.Controllers.Attendance
         }
 
         //CREATE
+        //[HttpPost("CreateAttendanceRecord")]
+        //public async Task<ActionResult<BioModelT>> CreateAttendanceRecord(BioModelT obj)
+        //{
+
+        //    _context.BioModelT.Add(obj);
+        //    await _context.SaveChangesAsync();
+        //    return Ok(await GetDBAttendanceRecord());
+        //}
+
         [HttpPost("CreateAttendanceRecord")]
         public async Task<ActionResult<BioModelT>> CreateAttendanceRecord(BioModelT obj)
         {
-            _context.BioModelT.Add(obj);
-            await _context.SaveChangesAsync();
-            return Ok(await GetDBAttendanceRecord());
+
+            var _getexistdata = await _context.BioModelT.Where(a => a.DateOnlyRecord.Date == obj.DateOnlyRecord.Date).ToListAsync();
+            var _getcountexist = _getexistdata.Where(b => b.TimeOnlyRecord.ToString("hh:mm tt") == obj.TimeOnlyRecord.ToString("hh:mm tt")).Count();
+            if (_getcountexist == 0)
+            {
+                _context.BioModelT.Add(obj);
+                await _context.SaveChangesAsync();
+                return Ok(await GetDBAttendanceRecord());
+            }
+            else
+            {
+                return null!;
+            }
+
         }
 
         [HttpGet("GetExistingObj")]
@@ -79,6 +99,15 @@ namespace HrisApp.Server.Controllers.Attendance
             var _todayDate = DateTime.Now.Date;
             var obj = await _context.BioModelT.ToListAsync();
             var _returnList = obj.Where(a => a.DateOnlyRecord.Date == _todayDate.Date).ToList();
+            return Ok(_returnList);
+        } 
+
+
+        [HttpGet("GetEmployeeAttendance")]
+        public async Task<ActionResult<List<BioModelT>>> GetEmployeeAttendance([FromQuery] int bioid)
+        {
+            var obj = await _context.BioModelT.ToListAsync();
+            var _returnList = obj.Where(a => a.IndRegID == bioid).ToList();
             return Ok(_returnList);
         } 
     }

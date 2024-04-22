@@ -55,7 +55,18 @@
         <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
-                    <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Download" Class="btnadd"> Extract</MudButton>
+                    <MudDatePicker @bind-Date="dateextract" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    @if (ISPROCESSING)
+                    {
+                        <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" Class="btnadd" Disabled>
+                            <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" Class="me-1" />
+                            Extracting
+                        </MudButton>
+                    }
+                    else
+                    {
+                        <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Download" Class="btnadd"> Extract</MudButton>
+                    }
                 </div>
             </Authorized>
         </AuthorizeView>
@@ -94,24 +105,106 @@
     {
         <MudTable Class="stable" Height="611px" Items="_extractLogsList" Context="obj" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<ExtractLogsModel,bool>(FilterFunc1)">
             <HeaderContent>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Employee</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Type</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Description</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date Start</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date Stop</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Date Create</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
+                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Extracted By</MudTh>
+                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;text-align:center">Type</MudTh>
+                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Description</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Started On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Stopped On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Extracted On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;text-align:center">Status</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd>@obj.EmployeeUserId</MudTd>
-                <MudTd>@obj.Action</MudTd>
-                <MudTd>@obj.Type</MudTd>
+                <MudTd>
+                    @if (obj.EmployeeUserId == 0)
+                    {
+                        <MudIcon Icon="@Icons.Custom.Brands.Discord" /> @* <span style="font-weight:600">Bot</span> *@
+                    }
+                    else
+                    {
+                        var emp = empList.Where(e => e.Id == obj.EmployeeUserId).FirstOrDefault();
+                        @if (emp != null)
+                        {
+                            <div class="d-flex flex-column">
+                                <div style="font-weight: 600;">@emp?.FirstName @emp?.LastName</div>
+                            </div>
+                        }
+                    }
+                </MudTd>
+                <MudTd Style="font-weight:600">
+                    @if (obj.Action.Equals("Extract"))
+                    {
+                        <span style="color: #0084ff">@obj.Action</span>
+                    }
+                    else
+                    {
+                        <span style="color: #be1313">@obj.Action</span>
+                    }
+                </MudTd>
+                <MudTd Style="text-align:center">
+                    @if (obj.Type.Equals("Ongoing"))
+                    {
+                        <span style="color: #7567b8">@obj.Type</span>
+                    }
+                    else if (obj.Type.Equals("Stop"))
+                    {
+                        <span style="color: #27374d">@obj.Type</span>
+                    }
+                    else if (obj.Type.Equals("Error"))
+                    {
+                        <span style="color: #be1313">@obj.Type</span>
+                    }
+                    else if (obj.Type.Equals("Start"))
+                    {
+                        <span style="color: #fb7a1b">@obj.Type</span>
+                    }
+                    else
+                    {
+                        <span style="color: #397763">@obj.Type</span>
+                    }
+                </MudTd>
                 <MudTd>@obj.Description</MudTd>
-                <MudTd>@obj.Date_Start.ToString("MMM dd yyyy")</MudTd>
-                <MudTd>@obj.Date_Stop.ToString("MMM dd yyyy")</MudTd>
-                <MudTd>@obj.Date_Create.ToString("MMM dd yyyy")</MudTd>
-                <MudTd>@obj.Status</MudTd>
+                <MudTd>
+                    <div class="d-flex flex-column">
+                        @if (obj.Date_Start.Date.ToString("MM-dd-yyyy") == "01-01-0001")
+                        {
+                            <span>--</span>
+                        }
+                        else
+                        {
+                            <div style="font-weight:600">@obj.Date_Start.ToString("hh:mm tt")</div>
+                            <div style="font-size: 12px;color: #757A90;">@obj.Date_Start.ToString("MMM dd yyyy")</div>
+                        }
+                    </div>
+                </MudTd>
+                <MudTd>
+                    <div class="d-flex flex-column">
+                        @if (obj.Date_Stop.Date.ToString("MM-dd-yyyy") == "12-31-9999" || obj.Date_Stop.Date.ToString("MM-dd-yyyy") == "01-01-0001")
+                        {
+                            <span>--</span>
+                        }
+                        else
+                        {
+                        <div style="font-weight:600">@obj.Date_Stop.ToString("hh:mm tt")</div>
+                        <div style="font-size: 12px;color: #757A90;">@obj.Date_Stop.ToString("MMM dd yyyy")</div>
+                        }
+                    </div>
+                </MudTd>
+                <MudTd>@obj.Date_Extract.ToString("MMM dd yyyy")</MudTd>
+                <MudTd Style="text-align:center">
+                    @if (obj.Status.Equals("Processing"))
+                    {
+                        <MudChip Variant="Variant.Text" Color="Color.Warning" Style="color: #ff8000;">@obj.Status</MudChip>
+                    }
+                    else if (obj.Status.Equals("Failed"))
+                    {
+                        <MudChip Variant="Variant.Text" Color="Color.Error" Style="color: #be1313;">@obj.Status</MudChip>
+                    }
+                    else
+                    {
+                        <MudChip Variant="Variant.Text" Color="Color.Success" Style="color: #397763;">@obj.Status</MudChip>
+                    }
+                </MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager PageSizeOptions="new int[] { 15, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
@@ -123,11 +216,16 @@
 @code {
     public List<ExtractLogsModel> _extractLogsList = new();
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    DateTime? dateextract = DateTime.Today;
+
+    private List<EmployeeT> empList = new();
+    private List<Emp_PayrollT> payList = new();
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(300);
-
+        empList = await EmployeeService.GetEmployeeList();
+        payList = await PayrollService.GetPayrollList();
         StateService.OnChange += OnStateChanged;
         await LoadList();
 
@@ -152,35 +250,236 @@
 
     //LOADING
     public bool _isVisible;
-
+    private bool ISPROCESSING = false;
     private async Task OpenAddDialog()
     {
-        var userid = Convert.ToInt32(GlobalConfigService.User_Id);
-        ExtractLogsModel _model = new ExtractLogsModel()
-            {
-                EmployeeUserId = userid,
-                Action = "Extract",
-                Type = "Ongoing",
-                Description = "Extracting attendance record.",
-                Is_Start = true,
-                Date_Start = DateTime.Now,
-                Date_Stop = DateTime.MinValue,
-                Date_Create = DateTime.Now,
-                Status = "Processing"
-            };
-
-        var isExist = await ExtractLogsService.GetExistExtract(_model.Status);
-
-        if (isExist == 0)
+        ExtractLogsModel checkcheckcheck = new();
+        checkcheckcheck = _extractLogsList.OrderByDescending(e => e.Id).FirstOrDefault()!;
+        if (checkcheckcheck == null)
         {
+            ISPROCESSING = true;
+            Console.WriteLine(Convert.ToDateTime(dateextract));
+            var userid = Convert.ToInt32(GlobalConfigService.User_Id);
+            ExtractLogsModel _model = new ExtractLogsModel()
+                {
+                    EmployeeUserId = userid,
+                    Action = "Extract",
+                    Type = "Ongoing",
+                    Description = "Extracting attendance record.",
+                    Is_Start = true,
+                    Date_Start = DateTime.Now,
+                    Date_Stop = DateTime.MaxValue,
+                    Date_Create = DateTime.Now,
+                    Status = "Checking",
+                    Date_Extract = Convert.ToDateTime(dateextract),
+                    Is_Active = false
+                };
+
             await ExtractLogsService.CreateObj(_model);
+
             StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+            await Task.Delay(10000);
+
+            ExtractLogsModel devicestatus = new();
+            devicestatus = await ExtractLogsService.GetExtractingCheckingModel();
+
+            if (devicestatus.Is_Active)
+            {
+                var isExist = await ExtractLogsService.GetExistExtract(_model.Status);
+
+                if (isExist == 0)
+                {
+                    var timesched = DateTime.Now;
+                    DateTime pwedena = DateTime.Today.AddHours(10).AddMinutes(25);
+                    DateTime pwedena2 = DateTime.Today.AddHours(10).AddMinutes(40);
+                    if (timesched >= pwedena && timesched <= pwedena2)
+                    {
+                        _toastService.ShowError("The system is auto extracting.");
+                    }
+                    else
+                    {
+                        devicestatus.Status = "Processing";
+                        await ExtractLogsService.CreateObj(devicestatus);
+                        StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+                    }
+
+                    ISPROCESSING = false;
+                }
+                else
+                {
+                    StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+                    _toastService.ShowError("You have ongoing extracting process.");
+                    ISPROCESSING = false;
+                }
+            }
+            else
+            {
+                ExtractLogsModel _model1 = new ExtractLogsModel()
+                    {
+                        EmployeeUserId = userid,
+                        Action = "Exception",
+                        Type = "Error",
+                        Description = "The system is offline.",
+                        Is_Start = true,
+                        Date_Start = DateTime.Now,
+                        Date_Stop = DateTime.MinValue,
+                        Date_Create = DateTime.Now,
+                        Status = "Failed",
+                        Date_Extract = Convert.ToDateTime(dateextract),
+                        Is_Active = true
+                    };
+
+                await ExtractLogsService.CreateObj(_model1);
+
+                devicestatus.Is_Active = true;
+                devicestatus.Is_Start = true;
+                devicestatus.Status = "Failed";
+                devicestatus.Type = "Stop";
+                await ExtractLogsService.UpdateObj(devicestatus);
+
+                ISPROCESSING = false;
+                _toastService.ShowError("The system is offline.");
+                StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+            }
         }
         else
         {
-            _toastService.ShowError("You have ongoing extracting process.");
+            if (checkcheckcheck.Status.Equals("Processing"))
+            {
+                StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+                _toastService.ShowError("You have ongoing extracting process.");
+                ISPROCESSING = false;
+            }
+            else
+            {
+                ISPROCESSING = true;
+                Console.WriteLine(Convert.ToDateTime(dateextract));
+                var userid = Convert.ToInt32(GlobalConfigService.User_Id);
+                ExtractLogsModel _model = new ExtractLogsModel()
+                    {
+                        EmployeeUserId = userid,
+                        Action = "Extract",
+                        Type = "Ongoing",
+                        Description = "Extracting attendance record.",
+                        Is_Start = true,
+                        Date_Start = DateTime.Now,
+                        Date_Stop = DateTime.MinValue,
+                        Date_Create = DateTime.Now,
+                        Status = "Checking",
+                        Date_Extract = Convert.ToDateTime(dateextract),
+                        Is_Active = false
+                    };
+
+                await ExtractLogsService.CreateObj(_model);
+
+                StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+                await Task.Delay(10000);
+
+                ExtractLogsModel devicestatus = new();
+                devicestatus = await ExtractLogsService.GetExtractingCheckingModel();
+
+                if (devicestatus.Is_Active)
+                {
+                    var isExist = await ExtractLogsService.GetExistExtract(_model.Status);
+
+                    if (isExist == 0)
+                    {
+                        var timesched = DateTime.Now;
+                        DateTime pwedena = DateTime.Today.AddHours(10).AddMinutes(25);
+                        DateTime pwedena2 = DateTime.Today.AddHours(10).AddMinutes(40);
+                        if (timesched >= pwedena && timesched <= pwedena2)
+                        {
+                            _toastService.ShowError("The system is auto extracting.");
+                        }
+                        else
+                        {
+                            devicestatus.Status = "Processing";
+                            await ExtractLogsService.CreateObj(devicestatus);
+                            StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+                        }
+
+                        ISPROCESSING = false;
+                    }
+                    else
+                    {
+                        StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+                        _toastService.ShowError("You have ongoing extracting process.");
+                        ISPROCESSING = false;
+                    }
+                }
+                else
+                {
+                    ExtractLogsModel _model1 = new ExtractLogsModel()
+                        {
+                            EmployeeUserId = userid,
+                            Action = "Exception",
+                            Type = "Error",
+                            Description = "The system is offline.",
+                            Is_Start = true,
+                            Date_Start = DateTime.Now,
+                            Date_Stop = DateTime.MinValue,
+                            Date_Create = DateTime.Now,
+                            Status = "Failed",
+                            Date_Extract = Convert.ToDateTime(dateextract),
+                            Is_Active = true
+                        };
+
+                    await ExtractLogsService.CreateObj(_model1);
+
+                    devicestatus.Is_Active = true;
+                    devicestatus.Is_Start = true;
+                    devicestatus.Status = "Failed";
+                    devicestatus.Type = "Stop";
+                    await ExtractLogsService.UpdateObj(devicestatus);
+
+                    ISPROCESSING = false;
+                    _toastService.ShowError("The system is offline.");
+                    StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+                }
+            }
         }
     }
+
+
+    private async Task OnUpdateIPStatus()
+    {
+        string _type = DateTime.Now.ToString("tt");
+        bool _isAM = false;
+        bool _isPM = false;
+        if (_type == "AM")
+        {
+            _isAM = true;
+            _isPM = false;
+        }
+        else if (_type == "PM")
+        {
+            _isAM = false;
+            _isPM = true;
+        }
+        var _masterList = await BioIPService.GetAllActivesObj();
+        foreach (var _itm in _masterList)
+        {
+
+            BioIPModel _model = new BioIPModel()
+                {
+                    Id = _itm.Id,
+                    Location = _itm.Location,
+                    IP_Address = _itm.IP_Address,
+                    Port = _itm.Port,
+                    Device_Info = _itm.Device_Info,
+                    Machine = _itm.Machine,
+                    Machine_Reg = _itm.Machine_Reg,
+                    Is_AM = _isAM,
+                    Is_PM = _isPM,
+                    Status = _itm.Status,
+                    Res_Status = "Open"
+                };
+
+            await BioIPService.UpdateObj(_model);
+        }
+    }
+
+
 
     private string searchString1 = "";
     private bool FilterFunc1(ExtractLogsModel area) => FilterFunc(area, searchString1);

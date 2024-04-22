@@ -1,9 +1,9 @@
 ﻿namespace HrisApp.Client.Pages.User.Profile
 {
-    public partial class UserViewProfile : ComponentBase
-    {
 #nullable disable
 
+    public partial class UserViewProfile : ComponentBase
+    {
         [Parameter]
         public string USERNAME { get; set; }
 
@@ -242,9 +242,9 @@
         }
 
         #region FUNCTIONS
+
         private bool _isShowData = false;
         private string _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
-
 
         private bool isOpenEnterPass;
         private DialogOptions passdialogOptions = new() { FullWidth = true };
@@ -326,6 +326,7 @@
                 _passwordInput = InputType.Text;
             }
         }
+
         private async Task EmployeeImg(string verifyCode)
         {
             var imagemodel = await ImageService.GetImageData(verifyCode);

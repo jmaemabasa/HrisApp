@@ -79,6 +79,7 @@ namespace HrisApp.Server.Controllers.SettingsC
             dbarea!.Is_AM = model.Is_AM;
             dbarea!.Is_PM = model.Is_PM;
             dbarea!.Status = model.Status;
+            dbarea!.Res_Status = model.Res_Status;
 
             await _context.SaveChangesAsync();
 

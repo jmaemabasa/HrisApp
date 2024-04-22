@@ -113,14 +113,19 @@
                     }
                     @if (!string.IsNullOrEmpty(verid))
                     {
-                        <EmployeeNamePosition verify="@verid" />
+                        var emp = empList.Where(e => e.Verify_Id.Equals(verid)).FirstOrDefault();
+                        var subpos = PositionService.SubPositionTs.Where(e=>e.Id == emp?.PositionId).FirstOrDefault();
+                        <div class="d-flex flex-column">
+                            <div style="font-weight: 600;">@emp?.FirstName @emp?.LastName</div>
+                            <div style="font-size: 13px;color: #757A90;">@subpos?.Description</div>
+                        </div>
                     }
                 </MudTd>
                 <MudTd>@obj.IndRegID</MudTd>
                 <MudTd>
                     <div class="d-flex flex-column">
                         <div style="font-weight:600">@obj.TimeOnlyRecord.ToString("hh:mm tt")</div>
-                        <div style="font-size: 12px;">@obj.DateOnlyRecord.ToString("MMM dd yyyy")</div>
+                        <div style="font-size: 12px;color: #757A90;">@obj.DateOnlyRecord.ToString("MMM dd yyyy")</div>
                     </div>
                 </MudTd>
                 <MudTd>@obj.AttendanceType</MudTd>
@@ -145,6 +150,7 @@
         await Task.Delay(300);
         empList = await EmployeeService.GetEmployeeList();
         payList = await PayrollService.GetPayrollList();
+        await PositionService.GetSubPosition();
 
         StateService.OnChange += OnStateChanged;
         await LoadList();

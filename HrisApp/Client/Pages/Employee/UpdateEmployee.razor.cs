@@ -839,46 +839,6 @@ namespace HrisApp.Client.Pages.Employee
 
         //private string _pHealthHolder = "●●●●●●●●●", _pagIbigHolder = "●●●●●●●●●", _sssHolder = "●●●●●●●●●", _tinHolder = "●●●●●●●●●";
         private string _pHealthHolder = "", _pagIbigHolder = "", _sssHolder = "", _tinHolder = "", _rateholder ="";
-        private bool _isShowData = false;
-        private string _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
-
-        private async Task DisplayConfData()
-        {
-            var id = Convert.ToInt32(GlobalConfigService.User_Id);
-
-            var ismatch = await AuthService.IsPassMatched(id, @inputPassword);
-
-            if (ismatch)
-            {
-                _isShowData = !_isShowData;
-                if (_isShowData != true)
-                {
-                    //_isShowData = false;
-                    _dataDisplayIcon = Icons.Material.Filled.VisibilityOff;
-                    _pHealthHolder = "●●●●●●●●●"; _pagIbigHolder = "●●●●●●●●●"; _sssHolder = "●●●●●●●●●"; _tinHolder = "●●●●●●●●●"; _rateholder = "●●●●●●●●●";
-                }
-                else
-                {
-                    //_isShowData = true;
-                    _dataDisplayIcon = Icons.Material.Filled.Visibility;
-                    _pHealthHolder = _payroll.PhilHealthNum;
-                    _pagIbigHolder = _payroll.HDMFNum;
-                    _sssHolder = _payroll.SSSNum;
-                    _tinHolder = _payroll.TINNum;
-
-                    var lastrate = await EmpRateHistoryService.GetLastHistoryWithoutDateEnded(employee.Id);
-                    _rateholder = lastrate.Rate;
-                    isOpenEnterPass = false;
-                    _toastService.ShowSuccess("Data showed.");
-                }
-            }
-            else
-            {
-                _showAlert = true;
-                _severity = Severity.Error;
-                _message = "Incorrect Password";
-            }
-        }
 
         private bool _isShowPass;
         private InputType _passwordInput = InputType.Password;

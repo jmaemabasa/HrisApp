@@ -17,14 +17,14 @@ namespace HrisApp.Server.Controllers.SettingsC
         [HttpGet]
         public async Task<ActionResult<List<ExtractLogsModel>>> GetObjList()
         {
-            var obj = await _context.ExtractLogsModel.ToListAsync();
+            var obj = await _context.ExtractLogsModel.OrderByDescending(e=>e.Date_Create).ToListAsync();
             return Ok(obj);
         }
 
         [HttpGet("GetObj")]
         public async Task<ActionResult<List<ExtractLogsModel>>> GetObj()
         {
-            var obj = await _context.ExtractLogsModel.ToListAsync();
+            var obj = await _context.ExtractLogsModel.OrderByDescending(e => e.Date_Create).ToListAsync();
             return Ok(obj);
         }
 
@@ -69,6 +69,8 @@ namespace HrisApp.Server.Controllers.SettingsC
             dbarea!.Date_Stop = model.Date_Stop;
             dbarea!.Date_Create = model.Date_Create;
             dbarea!.Status = model.Status;
+            dbarea!.Date_Extract = model.Date_Extract;
+            dbarea!.Is_Active = model.Is_Active;
 
             await _context.SaveChangesAsync();
 
@@ -89,10 +91,30 @@ namespace HrisApp.Server.Controllers.SettingsC
         public async Task<ActionResult<ExtractLogsModel>> GetExtractingModel()
         {
             var datetoday = DateTime.Now;
-            var count = await _context.ExtractLogsModel.Where(e => e.Is_Start == true && e.Date_Create.Date == datetoday.Date && e.Status.Equals("Processing"))
+            var returnmodel = await _context.ExtractLogsModel.Where(e => e.Is_Start == true && e.Date_Create.Date == datetoday.Date && e.Status.Equals("Processing"))
                 .FirstOrDefaultAsync();
 
-            return Ok(count);
+            if (returnmodel == null)
+            {
+                return null;
+            }
+
+            return Ok(returnmodel);
+        }
+
+        [HttpGet("GetExtractingCheckingModel")]
+        public async Task<ActionResult<ExtractLogsModel>> GetExtractingCheckingModel()
+        {
+            var datetoday = DateTime.Now;
+            var returnmodel = await _context.ExtractLogsModel.Where(e => e.Is_Start == true && e.Date_Create.Date == datetoday.Date && e.Status.Equals("Checking"))
+                .FirstOrDefaultAsync();
+
+            if (returnmodel == null)
+            {
+                return null;
+            }
+
+            return Ok(returnmodel);
         }
 
 

@@ -24,6 +24,10 @@ body::-webkit-scrollbar {
     --BackgroundGrey: var(--mud-palette-background-grey);
 }
 
+strong, b {
+    font-weight: 600;
+}
+
 .menutitle {
     margin: 0px 0px 0px 14px;
     color: rgb(66, 66, 66);

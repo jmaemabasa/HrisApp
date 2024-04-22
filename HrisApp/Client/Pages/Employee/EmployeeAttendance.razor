@@ -1,0 +1,170 @@
+﻿<MudCard Class="empdmain">
+    <MudCardContent>
+        <div style="margin-bottom: 16px;">
+            <div class="row">
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <div style="font-size: 19px;font-weight: bold;color: #264487;">
+                            Attendance
+                        </div>
+                        <div style="color: #8591a5;font-size: 13px;font-weight: 500;"><MudIcon Icon="@Icons.Material.Rounded.WbSunny" Style="font-size: 15px;" /> Today @currentMonth.ToString("ddd, MMM dd yyyy")</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-end">
+                        <div class="d-flex flex-column">
+                            <div style="color: #8591a5;font-size: 12px;font-weight: 600;">
+                                Total Attendance
+                            </div>
+                            <div style="font-size: 18px;font-weight: 500;">0 days</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    @foreach (var dayOfWeek in Enum.GetValues(typeof(DayOfWeek)))
+                    {
+                        <th>@dayOfWeek.ToString().Substring(0, 3)</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var week in daysInMonth.Chunk(7)) // Chunk is an extension method to split list into chunks
+                {
+                    <tr>
+                        @foreach (var day in week)
+                        {
+                            <td>
+                                @if (day != DateTime.MinValue)
+                                {
+                                    <div class="attendance-div">
+                                        @* HEADER *@
+                                        <div class="d-flex justify-content-between align-items-center header-title">
+                                            <div>
+                                                @if (day != DateTime.MinValue)
+                                                {
+                                                    @day.Day
+                                                }
+                                            </div>
+                                            <div class="status-div">
+                                                <span class="badge-status"></span>
+                                                <spn>On time</spn>
+                                            </div>
+                                        </div>
+                                        <MudDivider DividerType="DividerType.Middle" Style="margin: 6px 0px !important" />
+                                        @* DATA *@
+                                        <div class="row">
+                                            <div class="d-flex flex-column col-6">
+                                                <div class="type-title">Check In</div>
+                                                <div class="type-value">@GetCheckIn(day)</div>
+                                            </div>
+                                            <div class="d-flex flex-column col-6">
+                                                <div class="type-title">Check Out</div>
+                                                <div class="type-value">@GetCheckOut(day)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    #nullable disable
+    [Parameter] public int BIOMETRICID { get; set; }
+
+    private List<BioModelT> ALLLIST = new();
+    private DateTime currentMonth;
+    private List<DateTime> daysInMonth;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Initialize the current month to the current date
+        currentMonth = DateTime.Today;
+
+        // Calculate the days in the current month
+        CalculateDaysInMonth();
+
+        ALLLIST = await BioService.GetAttendanceRecList();
+    }
+
+    private string GetCheckIn(DateTime day)
+    {
+        BioModelT today = new();
+        string _returnValue = string.Empty;
+        var _emphistory = ALLLIST.Where(e => e.IndRegID == BIOMETRICID).ToList();
+        today = _emphistory.Where(a => a.DateOnlyRecord.Date == day.Date).FirstOrDefault();
+        if (today != null)
+        {
+            if (today.TimeOnlyRecord.ToString("tt") == "AM")
+            {
+                _returnValue = today.TimeOnlyRecord.ToString("hh:mm tt");
+            }
+        }
+        else
+        {
+            _returnValue = "-";
+        }
+
+        return _returnValue;
+    }
+
+    private string GetCheckOut(DateTime day)
+    {
+        BioModelT today = new();
+        string _returnValue = string.Empty;
+        var _emphistory = ALLLIST.Where(e => e.IndRegID == BIOMETRICID).ToList();
+        today = _emphistory.Where(a => a.DateOnlyRecord.Date == day.Date).FirstOrDefault();
+        if (today != null)
+        {
+            if (today.TimeOnlyRecord.ToString("tt") == "PM")
+            {
+                _returnValue = today.TimeOnlyRecord.ToString("hh:mm tt");
+            }
+        }
+        else
+        {
+            _returnValue = "-";
+        }
+
+        return _returnValue;
+    }
+
+    private void CalculateDaysInMonth()
+    {
+        // Calculate the first day of the month
+        var firstDayOfMonth = new DateTime(currentMonth.Year, currentMonth.Month, 1);
+
+        // Find the first day of the week for the first day of the month
+        var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek;
+
+        // Calculate the number of days in the month
+        var daysInMonth = DateTime.DaysInMonth(currentMonth.Year, currentMonth.Month);
+
+        // Create a list to hold the days in the month
+        var days = new List<DateTime>();
+
+        // Add leading empty cells
+        for (int i = 0; i < firstDayOfWeek; i++)
+        {
+            days.Add(DateTime.MinValue);
+        }
+
+        // Add the days of the month
+        for (int i = 1; i <= daysInMonth; i++)
+        {
+            days.Add(new DateTime(currentMonth.Year, currentMonth.Month, i));
+        }
+
+        // Set the days in month
+        this.daysInMonth = days;
+    }
+}

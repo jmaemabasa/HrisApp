@@ -31,6 +31,26 @@ namespace HrisApp.Client.Services.SettingsS.ExtractLogsService
             throw new Exception("employee not found");
         }
 
+        public async Task<ExtractLogsModel> GetExtractingModel()
+        {
+            var result = await _httpClient.GetFromJsonAsync<ExtractLogsModel>($"api/ExtractLogs/GetExtractingModel");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
+
+        public async Task<ExtractLogsModel> GetExtractingCheckingModel()
+        {
+            var result = await _httpClient.GetFromJsonAsync<ExtractLogsModel>($"api/ExtractLogs/GetExtractingCheckingModel");
+            if (result != null)
+            {
+                return result;
+            }
+            throw new Exception("employee not found");
+        }
+
         public async Task GetObj()
         {
             var result = await _httpClient.GetFromJsonAsync<List<ExtractLogsModel>>("api/ExtractLogs/GetObj");

@@ -84,7 +84,7 @@
 </div>
 
 @code {
-#nullable disable
+    #nullable disable
     public List<ShiftTimetableT> _shiftList = new();
     private ShiftTimetableT selectedItem1 = null;
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
@@ -125,6 +125,7 @@
 
     private async Task OpenUpdateTimetable(int id)
     {
+        await Task.Delay(0);
         var parameters = new DialogParameters<UpdateTimetableDialog>();
         parameters.Add(x => x.Id, id);
 
