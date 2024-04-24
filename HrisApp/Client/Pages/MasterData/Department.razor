@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </MudTh>
-                    <MudTh Class="col-4" Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                    <MudTh Class="col-4" Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<DepartmentT, object>(x=>x.Name)">
                             Department
                         </MudTableSortLabel>
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </MudTd>
-                    <MudTd DataLabel="Department" Style="font-weight: bold; background-color: rgb(197,207,210, 0.2);color: #264487;">@Departments.Name</MudTd>
+                    <MudTd DataLabel="Department" Style="font-weight: 600; background-color: rgb(197,207,210, 0.2);color: #264487;">@Departments.Name</MudTd>
 
                     <MudTd Style="text-align: center;">
                         <AuthorizeView Roles="CadAdmin, SysAdmin">

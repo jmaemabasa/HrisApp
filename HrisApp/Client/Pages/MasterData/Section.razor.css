@@ -8,7 +8,7 @@
 }
 
 .ttitle {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .dddiv {
@@ -28,7 +28,7 @@
     margin: 0;
     padding: 10px 10px 6px 15px;
     color: #27374D;
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 2px;
 }
 

@@ -45,17 +45,17 @@
     {
         <MudTable Class="stable" Height="665px" Items="_shiftList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
             <HeaderContent>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Timetable Name</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">On-duty Time</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Off-duty Time</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Beginning C/In</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Ending C/In</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Beginning C/Out</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Ending C/Out</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center">Workday Count</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Timetable Name</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center">On-duty Time</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center">Off-duty Time</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center">Beginning C/In</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center">Ending C/In</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center">Beginning C/Out</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center">Ending C/Out</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center">Workday Count</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="font-weight: bold;cursor: pointer;">@obj.Timetable_Name</MudTd>
+                <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="font-weight: 600;cursor: pointer;">@obj.Timetable_Name</MudTd>
                 <MudTd @onclick="(() => OpenUpdateTimetable(obj.Id))" Style="text-align: center; cursor: pointer;">
                     @(obj.OnDuty_Time?.Hours.ToString("00") + ":" + obj.OnDuty_Time?.Minutes.ToString("00"))
                 </MudTd>

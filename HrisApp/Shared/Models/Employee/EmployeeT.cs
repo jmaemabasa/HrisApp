@@ -31,8 +31,9 @@ namespace HrisApp.Shared.Models.Employee
         public int GenderId { get; set; } //FK
         public CivilStatusT? CivilStatus { get; set; }
         public int CivilStatusId { get; set; } //FK
-        public ReligionT? Religion { get; set; }
-        public int ReligionId { get; set; } //FK
+        //public ReligionT? Religion { get; set; }
+        //public int ReligionId { get; set; } //FK
+        public string Religion { get; set; } = string.Empty;
 
         //CONTACT INFO
         [Required]

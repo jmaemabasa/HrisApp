@@ -5,25 +5,25 @@
 <main>
     <section class="section-title">
         <header>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary justify-content-center">
-                    <div class="container">
-                        <div class="d-flex justify-content-between align-items-center flex-grow-1">
-                            <a class="navbar-brand" href="#"><img src="./images/logo.png" style="height: 40px;" /></a>
-                            <div>
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                    <div class="navbar-nav">
-                                        <a class="nav-link" aria-current="page" href="http://sonicsales.net:1113/">HRIS</a>
-                                        <a class="nav-link" aria-current="page" href="http://sonicsales.net:2004/">WMS</a>
-                                        <a class="nav-link" aria-current="page" href="http://sonicsales.net:2003/">SOMS</a>
-                                    </div>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary justify-content-center">
+                <div class="container">
+                    <div class="d-flex justify-content-between align-items-center flex-grow-1">
+                        <a class="navbar-brand" href="#"><img src="./images/logo.png" style="height: 40px;" /></a>
+                        <div>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div class="navbar-nav">
+                                    <a class="nav-link" aria-current="page" href="http://sonicsales.net:1113/">HRIS</a>
+                                    <a class="nav-link" aria-current="page" href="http://sonicsales.net:2004/">WMS</a>
+                                    <a class="nav-link" aria-current="page" href="http://sonicsales.net:2003/">SOMS</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </nav>
+                </div>
+            </nav>
         </header>
 
         <div class="area">
@@ -166,9 +166,52 @@
             </div>
         </div>
     </section>
+    <section class="footer" style="height: auto">
+        <div class="d-flex justify-content-center">
+            <div class="container">
+                <div class="d-flex" style="padding: 56px 0px 48px 0px;gap: 16px;">
+                    <div class="d-flex flex-column" style="flex:auto;">
+                        <img src="../../images/sonicsales2.png" style="width: 150px;margin-bottom: 4px;filter: drop-shadow(2px 2px 1px #222);" />
+                        <p class="ft-about-p">Sonic Sales & Distribution, Inc. is the distributor <br />of Unilever products here in South Mindanao.</p>
+                    </div>
+                    <div class="d-flex flex-column" style="flex:1;padding-top: 8px;">
+                        <span class="ft-about-title">Main Office</span>
+                        <p class="ft-about-p">888 Mintrade Bldg. R. Castillo <br /> Street Agao, Davao City</p>
+                    </div>
+                    <div class="d-flex flex-column" style="flex:1;padding-top: 8px;">
+                        <span class="ft-about-title">Satelite Offices</span>
+                        <p class="ft-about-p">Aurora Ext. Digos City</p>
+                        <p class="ft-about-p">Jose Dans St., Kidapawan <br />City</p>
+                        <p class="ft-about-p">Moreno Subd. Notre Dame</p>
+                        <p class="ft-about-p">Avenue, Cotabato City</p>
+                    </div>
+                    <div class="d-flex flex-column" style="flex:1;padding-top: 8px;">
+                        <span class="ft-about-title">Contact Us</span>
+                        <p class="ft-about-p"><MudIcon Icon="@Icons.Material.Rounded.Phone" /> 234-4677</p>
+                        <p class="ft-about-p"><MudIcon Icon="@Icons.Material.Rounded.Email" /> hr@sonicsales.net</p>
+                    </div>
+                    <div class="d-flex flex-column" style="flex:1;padding-top: 8px;">
+                        <span class="ft-about-title">Facebook Links</span>
+                        <a class="ft-about-p" href="https://www.facebook.com/ssdijobs/">Sonic Delivery Facebook Page</a>
+                        <a class="ft-about-p" href="https://www.facebook.com/ssdijobs/">Sonic Sales & Delivery, Inc.</a>
+                        <a class="ft-about-p" href="https://sonicdelivery.ph/">Sonic Delivery</a>
+                    </div>
+                </div>
+                <hr class="fotter-hr" />
+                <div class="d-flex justify-content-between" style="padding-top: 24px;">
+                    <div>
+                        © @DateTime.Now.Year Sonic Sales & Distribution, Inc. All Rights Reserved.
+                    </div>
+                    <div class="d-flex gap-2 footer-icons">
+                        <a class="ft-icon ft-fb" href="https://www.facebook.com/ssdijobs/"><MudIcon Icon="@Icons.Custom.Brands.Facebook" /></a>
+                        <a class="ft-icon ft-ig" href="https://www.instagram.com/ssdisales/"><MudIcon Icon="@Icons.Custom.Brands.Instagram" /></a>
+                        <a class="ft-icon ft-ld" href="https://www.linkedin.com/company/sonic-sales-and-distribution-inc"><MudIcon Icon="@Icons.Custom.Brands.LinkedIn" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
-<footer>
-</footer>
 
 <script>
     // selecting all sections with class of section
@@ -206,7 +249,7 @@
             // Toggle active class for sectionmaincontactive based on active state of section
             allsectionMainContActive.forEach((s) => {
                 s.classList.remove("active");
-            }); 
+            });
             allsectionmaincont.forEach((s) => {
                 s.classList.add("active");
             });

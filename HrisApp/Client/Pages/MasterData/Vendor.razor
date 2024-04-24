@@ -46,13 +46,13 @@
         <div style="height: calc(100% - 64px)">
             <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="ObjectList" Context="area" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<VendorT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
                 <HeaderContent>
-                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<VendorT, object>(x=>x.Code)">
                             Code
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Name</MudTh>
-                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Name</MudTh>
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="">@area.Code</MudTd>

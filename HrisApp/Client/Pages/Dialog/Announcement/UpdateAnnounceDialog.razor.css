@@ -5,7 +5,7 @@
 
 .obj {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .desc {
@@ -17,25 +17,25 @@
 .announceShow {
     color: #397763;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .announceNotShow {
     color: #BE1313;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .announcePending {
     color: #7567B8;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 
 .diatitle {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .btncancel {

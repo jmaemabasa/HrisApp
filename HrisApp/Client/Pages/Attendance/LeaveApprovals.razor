@@ -40,18 +40,18 @@
     {
         <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="leaveHistoryList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
             <HeaderContent>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Employee</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Leave Type</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Duration</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">No. of Days</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Employee</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Leave Type</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Duration</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">No. of Days</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Status</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd Style="font-family: 'Poppins', sans-serif; font-weight: bold; color: #264487;" DataLabel="">
+                <MudTd Style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #264487;" DataLabel="">
                     <EmployeeNameandAvatar verify="@obj.Verify_Id" />
                 </MudTd>
-                <MudTd Style="font-family: 'Poppins', sans-serif; font-weight: bold; color: #264487;" DataLabel="">@obj.LeaveType</MudTd>
+                <MudTd Style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #264487;" DataLabel="">@obj.LeaveType</MudTd>
                 <MudTd Style="font-family: 'Poppins', sans-serif; color: #6A707D;" DataLabel="">@obj.From?.ToString("MMM dd") - @obj.To?.ToString("MMM dd")</MudTd>
                 <MudTd Style="font-family: 'Poppins', sans-serif; color: #6A707D;" DataLabel="">@obj.NoOfDays Days</MudTd>
                 <MudTd DataLabel="">
@@ -101,25 +101,25 @@
 
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Leave Type</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.LeaveType</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.LeaveType</MudText>
             </div>
             <div class="d-flex gap-2 mb-2">
                 <div class="divsingledetails flex-grow-1">
                     <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">From</MudText>
-                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.From?.ToString("MMM dd, yyyy")</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.From?.ToString("MMM dd, yyyy")</MudText>
                 </div>
                 <div class="divsingledetails flex-grow-1">
                     <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">To</MudText>
-                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.To?.ToString("MMM dd, yyyy")</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.To?.ToString("MMM dd, yyyy")</MudText>
                 </div>
             </div>
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">No of Days</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.NoOfDays Days</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.NoOfDays Days</MudText>
             </div>
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Purpose</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.Purpose</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.Purpose</MudText>
             </div>
             <AuthorizeView Roles="System Administrator">
                 <Authorized>
@@ -151,15 +151,15 @@
                         }
                         else if (obj.Status == "Approved")
                         {
-                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                         else if (obj.Status == "Pending")
                         {
-                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                         else
                         {
-                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                     </div>
                 </Authorized>

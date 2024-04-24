@@ -62,7 +62,7 @@ namespace HrisApp.Server.Controllers.Attendance
         {
 
             var _getexistdata = await _context.BioModelT.Where(a => a.DateOnlyRecord.Date == obj.DateOnlyRecord.Date).ToListAsync();
-            var _getcountexist = _getexistdata.Where(b => b.TimeOnlyRecord.ToString("hh:mm tt") == obj.TimeOnlyRecord.ToString("hh:mm tt")).Count();
+            var _getcountexist = _getexistdata.Where(b => b.IndRegID == obj.IndRegID && b.TimeOnlyRecord.ToString("hh:mm tt") == obj.TimeOnlyRecord.ToString("hh:mm tt")).Count();
             if (_getcountexist == 0)
             {
                 _context.BioModelT.Add(obj);

@@ -1,5 +1,4 @@
 ﻿using HrisApp.Shared.Models.DummyModel;
-using NPOI.OpenXmlFormats.Wordprocessing;
 using OfficeOpenXml;
 using System.Net.Http;
 
@@ -205,7 +204,8 @@ namespace HrisApp.Client.ViewModel
                 worksheet.Cells[c, 13].Value = Convert.ToDecimal(payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().Rate);
                 worksheet.Cells[c, 13].Style.Numberformat.Format = "#.0000";
 
-                worksheet.Cells[c, 13].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().RateType.Name;
+                var lastrate = await httpClient.GetFromJsonAsync<Emp_RateHistoryT>($"api/EmpRateHistory/GetLastHistoryWithoutDateEnded?empid={r.Id}");
+                worksheet.Cells[c, 13].Value = lastrate.Rate;
 
                 worksheet.Cells[c, 16].Value = subpos.Where(d => d.Id == r.PositionId).FirstOrDefault().Description;
                 worksheet.Cells[c, 19].Value = r.DateHired.ToString("MM/dd/yyyy");
@@ -216,8 +216,6 @@ namespace HrisApp.Client.ViewModel
                 worksheet.Cells[c, 29].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().HDMFNum;
                 worksheet.Cells[c, 31].Value = payroll.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().TINNum;
                 worksheet.Cells[c, 40].Value = r.Department.Name;
-
-                
 
                 i++;
                 c++;
@@ -789,6 +787,26 @@ namespace HrisApp.Client.ViewModel
             #endregion
             #endregion
             return package.GetAsByteArray();
+        }
+
+        public async Task TESTYATI()
+        {
+            var emp = await httpClient.GetFromJsonAsync<List<EmployeeT>>("api/Employee");
+            var payroll = await httpClient.GetFromJsonAsync<List<Emp_PayrollT>>("api/Payroll/GetOPayrollList");
+            var employmentdate = await httpClient.GetFromJsonAsync<List<Emp_EmploymentDateT>>("api/EmploymentDate/GetEmploymentDate");
+
+            foreach (var item in emp)
+            {
+                var test = payroll.Where(d => d.Id == item.Id).FirstOrDefault();
+                test.Verify_Id = item.Verify_Id;
+                await httpClient.PutAsJsonAsync($"api/Payroll/{test.Id}", test);
+
+
+
+                var test1 = employmentdate.Where(d => d.Id == item.Id).FirstOrDefault();
+                test1.Verify_Id = item.Verify_Id;
+                await httpClient.PutAsJsonAsync($"api/EmploymentDate/{test1.Id}", test1);
+            }
         }
     }
 }

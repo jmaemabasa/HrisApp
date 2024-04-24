@@ -203,7 +203,7 @@ namespace HrisApp.Server.Controllers.ReportsC
                 myDataRow["Nationality"] = emp.Nationality;
                 myDataRow["Gender"] = emp.Gender?.Name;
                 myDataRow["CivilStatus"] = emp.CivilStatus?.Name;
-                myDataRow["Religion"] = emp.Religion?.Name;
+                myDataRow["Religion"] = emp.Religion;
                 myDataRow["EmerName"] = emp.EmerName;
                 myDataRow["EmerRelationship"] = emp.EmerRelationship?.Name;
                 myDataRow["EmerAddress"] = emp.EmerAddress;

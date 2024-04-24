@@ -161,7 +161,7 @@
 }
 
 .announceTitle {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 16px;
 }
 
@@ -191,7 +191,7 @@
 
 
 .coretitle {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 16px;
     margin-top: 20px;
     margin-bottom: 8px;

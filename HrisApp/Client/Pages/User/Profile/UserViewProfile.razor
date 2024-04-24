@@ -24,7 +24,7 @@
                             </MudAvatar>
                         </div>
                         <div>
-                            <MudText Align="Align.Center" Style="font-family: 'Poppins', sans-serif !important;font-weight: bold; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@FUpper(employee.FirstName) @FUpper(employee.LastName)</MudText>
+                            <MudText Align="Align.Center" Style="font-family: 'Poppins', sans-serif !important;font-weight: 600; font-size: 1.2em;letter-spacing: 1px;margin-top: 1rem;">@FUpper(employee.FirstName) @FUpper(employee.LastName)</MudText>
                         </div>
                         <div class="d-flex flex-grow-1 justify-content-center mt-1">
                             <div class="@StatusChipColor(employee.Status?.Name)">
@@ -34,21 +34,21 @@
                         <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
                             <div class="divsingledetails">
                                 <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Employment Status</MudText>
-                                <MudText Align="Align.Start" Class="@StatusTextColor(employee.EmploymentStatus?.Name)" Style="font-weight:bold;" Typo="Typo.body2">@employee.EmploymentStatus?.Name</MudText>
+                                <MudText Align="Align.Start" Class="@StatusTextColor(employee.EmploymentStatus?.Name)" Style="font-weight:600;" Typo="Typo.body2">@employee.EmploymentStatus?.Name</MudText>
                             </div>
                             <div class="divsingledetails">
                                 <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Company ID No.</MudText>
-                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.EmployeeNo</MudText>
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.EmployeeNo</MudText>
                             </div>
                             <div class="divsingledetails">
                                 <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Date Hired</MudText>
-                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.DateHired.ToString("MM/dd/yyyy")</MudText>
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.DateHired.ToString("MM/dd/yyyy")</MudText>
                             </div>
                             <div class="divsingledetails">
                                 <div class="d-flex flex-row">
                                     <div class="flex-grow-1">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Email</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Email</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Email</MudText>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                 <div class="d-flex flex-row">
                                     <div class="flex-grow-1">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Phone</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">+63 @employee.MobileNumber</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">+63 @employee.MobileNumber</MudText>
                                     </div>
                                 </div>
                             </div>
@@ -66,14 +66,14 @@
                                 {
                                     if (item.Id == employee.PositionId)
                                     {
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@item.Description</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@item.Description</MudText>
                                     }
                                 }
 
                             </div>
                             <div class="divsingledetails">
                                 <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Department</MudText>
-                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Department?.Name</MudText>
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Department?.Name</MudText>
                             </div>
                         </div>
                     </div>
@@ -101,12 +101,12 @@
                             <div class="d-flex flex-column gap-3">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Full Name</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@FUpper(employee.FirstName) @FUpper(employee.MiddleName) @FUpper(employee.LastName) @FUpper(employee.Extension)</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@FUpper(employee.FirstName) @FUpper(employee.MiddleName) @FUpper(employee.LastName) @FUpper(employee.Extension)</MudText>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Birthdate</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Birthdate.ToString("MM/dd/yyyy")</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Birthdate.ToString("MM/dd/yyyy")</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Age</MudText>
@@ -118,66 +118,66 @@
                                             if (Bday.Value > currentDate.AddYears(-age))
                                                 age--;
 
-                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@age</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@age</MudText>
                                         }
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Gender</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Gender?.Name</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Gender?.Name</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Nationality</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Nationality</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Nationality</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Civil Status</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.CivilStatus?.Name</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.CivilStatus?.Name</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Phone</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.MobileNumber</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.MobileNumber</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Email</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Email</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Email</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Religion</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Religion?.Name</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Religion</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Weight(kg)</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Weight</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Weight</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="4" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Height(cm)</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.Height</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.Height</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">PHIC No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_pHealthHolder</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_pHealthHolder</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">HDMF No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_pagIbigHolder</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_pagIbigHolder</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">SSS No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_sssHolder</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_sssHolder</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">TIN No.</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_tinHolder</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_tinHolder</MudText>
                                     </MudItem>
                                 </div>
                             </div>
@@ -203,24 +203,24 @@
                             <div class="d-flex flex-column gap-3 mb-3">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.CurrentAdd</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.CurrentAdd</MudText>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">City</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.CurrentCity</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.CurrentCity</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Province</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.CurrentProvince</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.CurrentProvince</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">ZipCode</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.CurrentZipCode</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.CurrentZipCode</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Country</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.CurrentCountry</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.CurrentCountry</MudText>
                                     </MudItem>
                                 </div>
                             </div>
@@ -228,24 +228,24 @@
                             <div class="d-flex flex-column gap-3">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">(Unit/House/Building/Street Number, Street Name, Barangay Name)</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.PermanentAdd</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.PermanentAdd</MudText>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">City</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.PermanentCity</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.PermanentCity</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Province</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.PermanentProvince</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.PermanentProvince</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">ZipCode</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.PermanentZipCode</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.PermanentZipCode</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="3" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Country</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@_address.PermanentCountry</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@_address.PermanentCountry</MudText>
                                     </MudItem>
                                 </div>
                             </div>
@@ -270,21 +270,21 @@
                             <div class="d-flex flex-column gap-3">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Name</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.EmerName</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.EmerName</MudText>
                                 </div>
                                 <div class="d-flex flex-row gap-4">
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Relationship</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.EmerRelationship?.Name</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.EmerRelationship?.Name</MudText>
                                     </MudItem>
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Phone</MudText>
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">+63 @employee.EmerMobNum</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">+63 @employee.EmerMobNum</MudText>
                                     </MudItem>
                                 </div>
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #A6AABA;" Typo="Typo.caption">Address</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@employee.EmerAddress</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.EmerAddress</MudText>
                                 </div>
                             </div>
                         </MudCardContent>

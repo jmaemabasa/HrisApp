@@ -7,7 +7,7 @@
 }
 
 .ttitle {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .form-select {
@@ -16,7 +16,7 @@
     border-radius: 10px;
     background-color: #adbbc9;
     color: #27374D;
-    font-weight: bold;
+    font-weight: 600;
     height: 45px;
     margin-bottom: 15px;
 }

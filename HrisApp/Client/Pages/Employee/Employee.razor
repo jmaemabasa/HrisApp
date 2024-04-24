@@ -161,30 +161,30 @@
         <div>
             <MudTable Class="stable" Items="@_employeeList" Height="620px" Context="employeeee" Virtualize="false" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1">
                 <HeaderContent>
-                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
                             Full Name
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
                             ID No
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Class="col-sm-12 col-md-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
-                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
-                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
-                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-sm-12 col-md-3" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Position</MudTh>
+                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Division</MudTh>
+                    <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Department</MudTh>
+                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
                             Date Hired
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">
+                    <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center;">
                         <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<EmployeeT, object>(x=>x.StatusId)">
                             Status
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Full Name">
@@ -194,7 +194,7 @@
                             </div>
                             <div>
                                 <div class="flex-column">
-                                    <div style="font-weight: bold;">@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
+                                    <div style="font-weight: 600;">@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
                                     <div style="font-size: 13px !important;">@employeeee.Email</div>
                                 </div>
                             </div>

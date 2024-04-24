@@ -32,7 +32,7 @@ namespace HrisApp.Client.ViewModel
                 row1["Birthdate"] = item.Birthdate;
                 row1["Gender"] = item.Gender?.Name;
                 row1["CivilStatus"] = item.CivilStatus?.Name;
-                row1["Religion"] = item.Religion?.Name;
+                row1["Religion"] = item.Religion;
                 dt.Rows.Add(row1);
             }
             return dt;

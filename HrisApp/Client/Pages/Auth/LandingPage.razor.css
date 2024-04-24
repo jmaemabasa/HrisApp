@@ -205,7 +205,7 @@ h1 {
 
 
 /*******************************************************************/
-
+/*section VIDEO*/
 .section-video {
 }
 
@@ -261,6 +261,59 @@ h1 {
     -webkit-box-shadow: inset 0px 0px 108px 28px rgba(0,0,0,1);
     -moz-box-shadow: inset 0px 0px 108px 28px rgba(0,0,0,1);
     box-shadow: inset 0px 0px 108px 28px rgba(0,0,0,1);
+}
+/*******************************************************************/
+/*section FOOTER*/
+.footer {
+    padding: 20px 0px;
+    background-color: #283646;
+    color: #fff;
+}
+
+.ft-about-title {
+    color: #3a86ff;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.ft-about-p {
+    font-size: 12px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+}
+    .ft-about-p ::deep .mud-icon-root.mud-svg-icon {
+        font-size: 16px;
+        color: #3a86ff;
+        margin-right: 8px;
+    }
+
+
+a.ft-about-p {
+    font-size: 12px;
+    color: #fff;
+    transition: all .5s ease;
+}
+    a.ft-about-p:hover {
+        color: #a7cee5;
+    }
+
+.ft-icon {
+    color: #3a86ff;
+    transition: all .5s ease;
+}
+    .ft-icon:hover {
+        transform: scale(1.1);
+    }
+
+.ft-fb:hover {
+    color: #129bf6;
+}
+.ft-ig:hover {
+    color: #c42560;
+}
+.ft-ld:hover {
+    color: #197db3;
 }
 /*******************************************************************/
 .area {

@@ -296,7 +296,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
                     //CREATE EMPLOYEE HISTORY
                     empHistory.Verify_Id = verifyId;
-                    empHistory.EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id;
+                    empHistory.EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyId).FirstOrDefault().Id;
                     empHistory.DateStarted = employee.DateHired;
                     empHistory.NewAreaId = employee.AreaId;
                     empHistory.NewDivisionId = employee.DivisionId;
@@ -317,7 +317,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
                     //UPDATE SUBPOSITION
                     subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
-                    subPosition.Emp_VerifyId = verifyCode;
+                    subPosition.Emp_VerifyId = verifyId;
                     subPosition.Status = "Active";
                     subPosition.ActiveDate = employee.DateHired;
                     await PositionService.UpdateSubPosition(subPosition);
@@ -327,7 +327,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     {
                         Rate = payroll.Rate,
                         DateStarted = DateTime.Now,
-                        EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id,
+                        EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyId).FirstOrDefault().Id,
                         EffectivityDate = RATEEFFECTIVITYDATE,
                         PositionId = employee.PositionId
                     };
@@ -335,7 +335,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     await EmpRateHistoryService.CreateHistory(ratehistory);
 
                     //CREATE EMP EVAL
-                    var generateEval = await ForEvalService.GenerateStatus(verifyCode, employee.DateHired, "Pending");
+                    var generateEval = await ForEvalService.GenerateStatus(verifyId, employee.DateHired, "Pending");
                     var saveeval = await ForEvalService.CreateForEval(generateEval);
 
                     //CREATE FILES AND IMAGE
@@ -346,17 +346,17 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     await OnPDFSaving(employee.EmployeeNo, divisionString, departmentString, employee.LastName, verifyId);
 
                     //CREATE EDUCATIONS
-                    await CreatePrimaryRecords(verifyCode);
-                    await CreateSecondaryRecords(verifyCode);
-                    await CreateSeniorHSRecords(verifyCode);
-                    await CreateCollegeRecords(verifyCode);
-                    await CreateUGRecords(verifyCode);
-                    await CreateMasteralRecords(verifyCode);
-                    await CreateDoctorateRecords(verifyCode);
-                    await CreateOtherEducRecords(verifyCode);
-                    await CreateLicenses(verifyCode);
-                    await CreateTrainings(verifyCode);
-                    await CreateProfBg(verifyCode);
+                    await CreatePrimaryRecords(verifyId);
+                    await CreateSecondaryRecords(verifyId);
+                    await CreateSeniorHSRecords(verifyId);
+                    await CreateCollegeRecords(verifyId);
+                    await CreateUGRecords(verifyId);
+                    await CreateMasteralRecords(verifyId);
+                    await CreateDoctorateRecords(verifyId);
+                    await CreateOtherEducRecords(verifyId);
+                    await CreateLicenses(verifyId);
+                    await CreateTrainings(verifyId);
+                    await CreateProfBg(verifyId);
 
 
                     //CREATE LEAVE CREDITS
@@ -373,8 +373,8 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                         await GenerateUsername();
                     }
 
-                    userObj.EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyCode).FirstOrDefault().Id;
-                    userObj.Emp_VerifyId = verifyCode;
+                    userObj.EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyId).FirstOrDefault().Id;
+                    userObj.Emp_VerifyId = verifyId;
                     userObj.Password = "p@ssw0rd";
                     userObj.LoginStatus = "Inactive";
                     userObj.Role = "User";
@@ -627,7 +627,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             mesBday = (Bday.ToString() == "") ? "Birthdate is required" : string.Empty;
             _slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
             _slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
-            _slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssReli = string.IsNullOrEmpty(employee.Religion) ? "mud-input-error txf" : "txf";
             _slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
         }
 
@@ -752,7 +752,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         public string _slectClasssGender = "frmselect";
         public string _slectClasssCV = "frmselect";
-        public string _slectClasssReli = "frmselect";
+        public string _slectClasssReli = "txf1";
         public string _slectClasssRela = "frmselect";
         public string _txfieldClasssNat = "txf1";
         public string _txfieldClasssMN = "txf";

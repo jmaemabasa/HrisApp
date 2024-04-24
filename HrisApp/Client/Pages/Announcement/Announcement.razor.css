@@ -5,7 +5,7 @@
 }
 
 .announceTitle {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 15px;
 }
 
@@ -37,19 +37,19 @@
 .announceShow {
     color: #397763;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .announceNotShow {
     color: #BE1313;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .announcePending {
     color: #7567B8;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .dotCurr, .dotSoon, .dotDone {

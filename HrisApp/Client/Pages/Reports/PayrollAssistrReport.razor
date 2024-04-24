@@ -81,32 +81,32 @@
     }
     else
     {
-        <MudTable Class="stable" Items="@_employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="605px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1" Virtualize="true">
+        <MudTable Class="stable" Items="@_employeeList" Context="employeeee" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="586px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<EmployeeT,bool>(FilterFunc1)" @bind-SelectedItem="@_selectedItem1" Virtualize="true">
             <HeaderContent>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.FirstName)">
                         Full Name
                     </MudTableSortLabel>
                 </MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.EmployeeNo)">
                         ID No.
                     </MudTableSortLabel>
                 </MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Position</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Division</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Department</MudTh>
+                <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                     <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
                         Date Hired
                     </MudTableSortLabel>
                 </MudTh>
-                <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px; text-align:center;">
+                <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center;">
                     <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<EmployeeT, object>(x=>x.StatusId)">
                         Status
                     </MudTableSortLabel>
                 </MudTh>
-                @* <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh> *@
+                @* <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh> *@
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Full Name">
@@ -116,7 +116,7 @@
                         </div>
                         <div>
                             <div class="flex-column">
-                                <div style="font-weight: bold;">@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
+                                <div style="font-weight: 600;">@CapitalizeFirstLetter(employeeee.FirstName)  @(employeeee.MiddleName != "" ? $"{employeeee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employeeee.LastName)</div>
                                 <div style="font-size: 13px !important;">@employeeee.Email</div>
                             </div>
                         </div>
@@ -139,18 +139,6 @@
                 <MudTd DataLabel="Status" Style="text-align: center;">
                     <MudChip Class="@StatusChipColor(employeeee.Status?.Name)">@employeeee.Status?.Name</MudChip>
                 </MudTd>
-                @*<MudTd>
-            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
-            <Authorized>
-            <MudTooltip Text="View Details">
-            <MudIconButton Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
-            </MudTooltip>
-            </Authorized>
-            <NotAuthorized>
-            <MudIconButton Disabled Class="btnShow" OnClick="(() => ShowEmployee(employeeee.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
-            </NotAuthorized>
-            </AuthorizeView>
-            </MudTd> *@
             </RowTemplate>
             <PagerContent>
                 <MudTablePager PageSizeOptions="new int[] { 10, 25, 50, int.MaxValue }" InfoFormat="@($"Right {_infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />

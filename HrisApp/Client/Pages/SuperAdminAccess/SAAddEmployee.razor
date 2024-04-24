@@ -103,13 +103,7 @@
                                         </MudItem>
                                         <MudItem xs="12" sm="4">
                                             <MudText Typo="Typo.body2">Religion</MudText>
-                                            <MudSelect @bind-Value="_saaddEmployeeVM.employee.ReligionId" Class="@_saaddEmployeeVM._slectClasssReli" DisableUnderLine Margin="Margin.Dense">
-                                                <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                                                @foreach (var rel in _saaddEmployeeVM.ReligionsL)
-                                                {
-                                                    <MudSelectItem Value="@rel.Id">@rel.Name</MudSelectItem>
-                                                }
-                                            </MudSelect>
+                                                                                        <InputText Class="txf1 w-100 mt-1" @bind-Value="_saaddEmployeeVM.employee.Religion" />
                                         </MudItem>
                                         <MudItem xs="12" sm="3">
                                             <MudText Typo="Typo.body2">Mobile No.</MudText>
@@ -1367,10 +1361,10 @@
         _saaddEmployeeVM.mesBday = (_saaddEmployeeVM.bday.ToString() == "") ? "Birthdate is required" : string.Empty;
         _saaddEmployeeVM._slectClasssGender = (_saaddEmployeeVM.employee.GenderId == 0) ? "frmselecterror" : "frmselect";
         _saaddEmployeeVM._slectClasssCV = (_saaddEmployeeVM.employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
-        _saaddEmployeeVM._slectClasssReli = (_saaddEmployeeVM.employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
+        _saaddEmployeeVM._slectClasssReli = (string.IsNullOrEmpty(_saaddEmployeeVM.employee.Religion)) ? "txf1error" : "txf1 mt-1";
 
 
-        if (_saaddEmployeeVM.employee.GenderId == 0 || _saaddEmployeeVM.employee.CivilStatusId == 0 || _saaddEmployeeVM.employee.ReligionId == 0 || String.IsNullOrWhiteSpace(_saaddEmployeeVM.bday.ToString()))
+        if (_saaddEmployeeVM.employee.GenderId == 0 || _saaddEmployeeVM.employee.CivilStatusId == 0 || string.IsNullOrEmpty(_saaddEmployeeVM.employee.Religion) || String.IsNullOrWhiteSpace(_saaddEmployeeVM.bday.ToString()))
         {
             _toastService.ShowError("Fill out all fields.");
         }

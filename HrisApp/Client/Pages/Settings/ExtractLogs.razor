@@ -1,6 +1,6 @@
 ﻿@page "/extract-logs"
 
-@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, HR")]
 
 <PageTitle>Extract Logs</PageTitle>
 
@@ -52,10 +52,12 @@
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Extract Logs</span>
-        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
+        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
-                    <MudDatePicker @bind-Date="dateextract" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    @* <MudDatePicker @bind-Date="dateextract" /> *@
+                    <MudDatePicker @bind-Date="dateextract"
+                                   IsDateDisabledFunc="@((DateTime dt) => dt.Date >= DateTime.Today.AddDays(1))" Variant="Variant.Outlined" Margin="Margin.Dense" />
                     @if (ISPROCESSING)
                     {
                         <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" Class="btnadd" Disabled>
@@ -105,14 +107,14 @@
     {
         <MudTable Class="stable" Height="611px" Items="_extractLogsList" Context="obj" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<ExtractLogsModel,bool>(FilterFunc1)">
             <HeaderContent>
-                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Extracted By</MudTh>
-                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
-                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: bold; font-size: 16px;text-align:center">Type</MudTh>
-                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Description</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Started On</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Stopped On</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Extracted On</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;text-align:center">Status</MudTh>
+                <MudTh Class="col-2" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Extracted By</MudTh>
+                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
+                <MudTh Class="col-1" Style="background: #e9ecef; font-weight: 600; font-size: 16px;text-align:center">Type</MudTh>
+                <MudTh Class="col-3" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Description</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Started On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Stopped On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Extracted On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;text-align:center">Status</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd>

@@ -16,13 +16,13 @@
 
 .cancel {
     margin-right: 10px;
-    font-weight: bold;
+    font-weight: 600;
     transition: all .5s ease;
 }
 
     .cancel:hover {
         color: #be1313;
-        font-weight: bold;
+        font-weight: 600;
         transform: scale(1.1);
     }
 
@@ -59,39 +59,39 @@
 
 ::deep .mud-tab.mud-tab-active {
     color: #27374D;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .mud-tabs-toolbar-content {
     background: #e9ecef;
     color: #78909C;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
     border-bottom: 2px solid #D8DADC;
     pointer-events: none;
 }
 
 ::deep .mud-tabs-defaultindex {
     color: #EEB12F;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .mud-tabs-afterindex {
     color: #EEB12F;
-    font-weight: bold;
+    font-weight: 600;
     border-bottom: 2px solid #79AC78;
     opacity: 0.5;
 }
 
 ::deep .mud-chip-active {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #27374D;
     margin-right: 15px;
 }
 
 ::deep .mud-chip-after {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -99,7 +99,7 @@
 }
 
 ::deep .mud-chip-after0 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -107,7 +107,7 @@
 }
 
 ::deep .mud-chip-after1 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -115,7 +115,7 @@
 }
 
 ::deep .mud-chip-after2 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -123,7 +123,7 @@
 }
 
 ::deep .mud-chip-after3 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -131,7 +131,7 @@
 }
 
 ::deep .mud-chip-default {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #C5CFD2;
     margin-right: 15px;
@@ -139,12 +139,12 @@
 
 ::deep .mud-text-after {
     color: #0A86C2;
-    font-weight: bold;
+    font-weight: 600;
     opacity: 0.2;
 }
 
 ::deep .mud-text-default {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .firsttabrow {
@@ -163,7 +163,7 @@
 
 .section-title {
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
     color: #27374D;
     margin-bottom: 10px;
 }

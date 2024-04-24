@@ -55,7 +55,7 @@
 }
 
 .spantitle {
-    font-weight: bold;
+    font-weight: 600;
     color: #26446e;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
@@ -106,7 +106,7 @@
     color: #424242;
     padding-bottom: 10px;
     padding-top: 10px;
-    font-weight: bold;
+    font-weight: 600;
     width: 200px;
     transition: all .5s ease;
 }
@@ -262,14 +262,14 @@
 
 ::deep .mud-tab.mud-tab-active {
     color: #EEB12F;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .mud-tabs-toolbar-content {
     background: #e9ecef;
     color: #78909C;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
     border: none;
     /*    border-bottom: 2px solid #D8DADC;
 */ /*pointer-events: none;*/
@@ -281,25 +281,25 @@
 
 ::deep .mud-tabs-defaultindex {
     color: #78909C;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .mud-tabs-afterindex {
     color: #79AC78;
-    font-weight: bold;
+    font-weight: 600;
     border-bottom: 2px solid #79AC78;
     opacity: 0.5;
 }
 
 ::deep .mud-chip-active {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #EEB12F;
     margin-right: 15px;
 }
 
 ::deep .mud-chip-after0 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -307,7 +307,7 @@
 }
 
 ::deep .mud-chip-after1 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -315,7 +315,7 @@
 }
 
 ::deep .mud-chip-after2 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -323,7 +323,7 @@
 }
 
 ::deep .mud-chip-after3 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -331,7 +331,7 @@
 }
 
 ::deep .mud-chip-after4 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -339,7 +339,7 @@
 }
 
 ::deep .mud-chip-after5 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -347,7 +347,7 @@
 }
 
 ::deep .mud-chip-after6 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -355,7 +355,7 @@
 }
 
 ::deep .mud-chip-after7 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -363,7 +363,7 @@
 }
 
 ::deep .mud-chip-after {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -371,7 +371,7 @@
 }
 
 ::deep .mud-chip-default {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #C5CFD2;
     margin-right: 15px;
@@ -379,12 +379,12 @@
 
 ::deep .mud-text-after {
     color: #0A86C2;
-    font-weight: bold;
+    font-weight: 600;
     opacity: 0.2;
 }
 
 ::deep .mud-text-default {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 /*EMPLOYMENT AVATAR CLASS*/

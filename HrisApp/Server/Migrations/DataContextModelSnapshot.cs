@@ -2986,8 +2986,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("PositionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReligionId")
-                        .HasColumnType("int");
+                    b.Property<string>("Religion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
@@ -3017,8 +3018,6 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("EmploymentStatusId");
 
                     b.HasIndex("GenderId");
-
-                    b.HasIndex("ReligionId");
 
                     b.HasIndex("StatusId");
 
@@ -5545,12 +5544,6 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.StaticData.ReligionT", "Religion")
-                        .WithMany()
-                        .HasForeignKey("ReligionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HrisApp.Shared.Models.StaticData.StatusT", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -5570,8 +5563,6 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("EmploymentStatus");
 
                     b.Navigation("Gender");
-
-                    b.Navigation("Religion");
 
                     b.Navigation("Status");
                 });

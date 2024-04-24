@@ -24,15 +24,15 @@ body::-webkit-scrollbar {
     --BackgroundGrey: var(--mud-palette-background-grey);
 }
 
-strong, b {
-    font-weight: 600;
+strong, b, 600 {
+    font-weight: 600 !important;
 }
 
 .menutitle {
     margin: 0px 0px 0px 14px;
     color: rgb(66, 66, 66);
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .mud-dialog {

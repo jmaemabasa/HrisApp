@@ -542,7 +542,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             mesBday = (bday.ToString() == "") ? "Birthdate is required" : string.Empty;
             _slectClasssGender = (employee.GenderId == 0) ? "frmselecterror" : "frmselect";
             _slectClasssCV = (employee.CivilStatusId == 0) ? "frmselecterror" : "frmselect";
-            _slectClasssReli = (employee.ReligionId == 0) ? "frmselecterror" : "frmselect";
+            _slectClasssReli = string.IsNullOrEmpty(employee.Religion) ? "frmselecterror" : "frmselect";
             _slectClasssRela = (employee.EmerRelationshipId == 0) ? "frmselecterror" : "frmselect";
         }
 

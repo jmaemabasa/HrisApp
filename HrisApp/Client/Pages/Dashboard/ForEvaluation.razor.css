@@ -8,7 +8,7 @@
 }
 
 .evaltitle {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 16px;
     font-style: italic;
     margin-left: 8px;
@@ -22,7 +22,7 @@ fieldset {
 }
 
 legend {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 20px;
     color: #E38D0F;
 }
@@ -30,11 +30,11 @@ legend {
 ::deep .chipPending {
     background-color: #D885A3;
     color: #fafaf5;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .chipDone {
     background-color: #7EAA92;
     color: #fafaf5;
-    font-weight: bold;
+    font-weight: 600;
 }

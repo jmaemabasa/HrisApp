@@ -17,25 +17,25 @@
             </div>
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Leave Type</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.LeaveType</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.LeaveType</MudText>
             </div>
             <div class="d-flex gap-2 mb-2">
                 <div class="divsingledetails flex-grow-1">
                     <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">From</MudText>
-                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.From?.ToString("MMM dd, yyyy")</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.From?.ToString("MMM dd, yyyy")</MudText>
                 </div>
                 <div class="divsingledetails flex-grow-1">
                     <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">To</MudText>
-                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.To?.ToString("MMM dd, yyyy")</MudText>
+                    <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.To?.ToString("MMM dd, yyyy")</MudText>
                 </div>
             </div>
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">No of Days</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.NoOfDays Days</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.NoOfDays Days</MudText>
             </div>
             <div class="divsingledetails mb-2">
                 <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Purpose</MudText>
-                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:bold;" Typo="Typo.body2">@obj.Purpose</MudText>
+                <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@obj.Purpose</MudText>
             </div>
             <AuthorizeView Roles="User">
                 <Authorized>
@@ -43,15 +43,15 @@
                         <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">Status</MudText>
                         @if (obj.Status == "Approved")
                         {
-                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                         else if (obj.Status == "Pending")
                         {
-                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                         else
                         {
-                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                     </div>
                 </Authorized>
@@ -84,15 +84,15 @@
                         }
                         else if (obj.Status == "Approved")
                         {
-                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #C1D4CD; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                         else if (obj.Status == "Pending")
                         {
-                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #D8D5E8; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                         else
                         {
-                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:bold;" Typo="Typo.body2">@obj.Status</MudText>
+                            <MudText Align="Align.Start" Style="color: #EABCBB; font-weight:600;" Typo="Typo.body2">@obj.Status</MudText>
                         }
                     </div>
                 </Authorized>

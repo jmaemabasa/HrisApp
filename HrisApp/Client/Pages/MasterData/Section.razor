@@ -90,12 +90,12 @@
                     </div>
                 </MudTh>
 
-                <MudTh Class="col-3" Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                <MudTh Class="col-3" Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
                     <MudTableSortLabel SortBy="new Func<SectionT, object>(x=>x.Name)">
                         Section
                     </MudTableSortLabel>
                 </MudTh>
-                <MudTh Class="col-3" Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center;">Action</MudTh>
+                <MudTh Class="col-3" Style="font-weight: 600; background: #e9ecef; font-size: 16px; text-align: center;">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
 
@@ -128,7 +128,7 @@
                         </MudTd>
                     }
                 }
-                <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);color: #264487;">@Sections.Name</MudTd>
+                <MudTd DataLabel="" Style="font-weight: 600;  background-color: rgb(197,207,210, 0.2);color: #264487;">@Sections.Name</MudTd>
                 <MudTd Style="text-align: center;">
                     <AuthorizeView Roles="CadAdmin, SysAdmin">
                         <Authorized>

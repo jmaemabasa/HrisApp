@@ -1,6 +1,6 @@
 ﻿@page "/biometric-device"
 
-@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, HR")]
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, HR")]
 
 <PageTitle>Biometric Device</PageTitle>
 
@@ -52,7 +52,7 @@
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Biometric Device</span>
-        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
+        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
                     <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Device</MudButton>
@@ -94,13 +94,13 @@
     {
         <MudTable Class="stable" Height="611px" Items="_bioDevList" Context="obj" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<BioIPModel,bool>(FilterFunc1)">
             <HeaderContent>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Location</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">IP Address</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Port</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Device Info</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Machine</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Registered On</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Status</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Location</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">IP Address</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Port</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Device Info</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Machine</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Registered On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Status</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd>@obj.Location</MudTd>

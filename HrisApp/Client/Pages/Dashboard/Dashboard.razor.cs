@@ -48,7 +48,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 announceL = await AnnouncementService.GetFilteredAnnouncementList();
 
                 allDivisions = DivisionService.DivisionTs;
-                employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month).OrderBy(d => d.Birthdate.Day).ToList();
+                employeeBdayL = EmployeeService.EmployeeTs.Where(x => x.Birthdate.Month == DateTime.Now.Month && x.StatusId == 1).OrderBy(d => d.Birthdate.Day).ToList();
 
                 #region Plantilla
 

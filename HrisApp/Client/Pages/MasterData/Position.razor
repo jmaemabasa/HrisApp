@@ -111,14 +111,14 @@
             </div>
             </div>
             </MudTh> *@
-                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">
+                <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
                     <MudTableSortLabel SortBy="new Func<PositionT, object>(x=>x.Name)">
                         Position
                     </MudTableSortLabel>
                 </MudTh>
-                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px;">Area</MudTh>
-                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Additional<br />Info</MudTh>
-                <MudTh Style="font-weight: bold; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
+                <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">Area</MudTh>
+                <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px; text-align: center">Additional<br />Info</MudTh>
+                <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
                 @foreach (var item in Divisions)
@@ -179,7 +179,7 @@
             } *@
 
 
-                <MudTd DataLabel="" Style="font-weight: bold;  background-color: rgb(197,207,210, 0.2);color: #264487;">@pos.Name</MudTd>
+                <MudTd DataLabel="" Style="font-weight: 600;  background-color: rgb(197,207,210, 0.2);color: #264487;">@pos.Name</MudTd>
                 <MudTd DataLabel="">
                     @foreach (var item in Areas)
                     {

@@ -216,7 +216,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                 var csid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetCivilStatusId/{civils}");
                                 var statusid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetStatusId/{status}");
                                 var empstatusid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetEmploymentStatusId/{employmentstatus}");
-                                var religionid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetReligionId/{religion}");
+                                //var religionid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetReligionId/{religion}");
                                 var erelid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetEmerRelationshipId/{emerrel}");
                                 var ratetypeid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetRateTypeId/{ratetype}");
                                 var cbid = await _httpClient.GetFromJsonAsync<int>($"api/Static/GetCashbondId/{cashbond}");
@@ -236,7 +236,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     GenderId = genderid,
                                     CivilStatusId = csid,
                                     Nationality = nationality,
-                                    ReligionId = religionid,
+                                    Religion = religion,
                                     MobileNumber = mobileno,
                                     Email = email,
                                     EmployeeNo = companyno,

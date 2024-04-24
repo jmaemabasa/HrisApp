@@ -5,11 +5,11 @@
         <div class="row" style="margin-top: 10px;">
             <MudTable Class="stable" Items="MAINASSETS" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true">
                 <HeaderContent>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Asset</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Name</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Model</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Category</MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;text-align: center">Assigned On</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Asset</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Name</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Model</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Category</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;text-align: center">Assigned On</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="" @onclick="@(() => NavToAssignedAsset(item.Id))" Style="cursor: pointer">

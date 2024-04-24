@@ -102,7 +102,7 @@
                 {
                     <MudTable Class="stable" Height="310px" Items="leaveHistoryList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem1">
                         <RowTemplate>
-                            <MudTd Style="font-family: 'Poppins', sans-serif; font-weight: bold; color: #264487;" DataLabel="">@obj.LeaveType</MudTd>
+                            <MudTd Style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #264487;" DataLabel="">@obj.LeaveType</MudTd>
                             <MudTd Style="font-family: 'Poppins', sans-serif; color: #6A707D;" DataLabel="">@obj.From?.ToString("MMM dd") - @obj.To?.ToString("MMM dd")</MudTd>
                             <MudTd Style="font-family: 'Poppins', sans-serif; color: #6A707D;" DataLabel="">@obj.NoOfDays Days</MudTd>
                             <MudTd DataLabel="">

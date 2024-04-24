@@ -89,7 +89,7 @@
                             <MudIconButton OnClick="MarkAllasRead" Icon="@Icons.Material.Filled.MarkAsUnread" Style="margin-right: 10px"></MudIconButton>
                         </div>
                         <div class="notifbox">
-                            <span style="font-size:17px;line-height:20.0005px;font-weight:bold;">New</span>
+                            <span style="font-size:17px;line-height:20.0005px;font-weight:600;">New</span>
                             @foreach (var item in PendingCount.OrderByDescending(d => d.InsertedTime).Take(limitDisplayNotif))
                             {
                                 @if (DateTime.Now - item.InsertedTime < TimeSpan.FromMinutes(60))
@@ -127,7 +127,7 @@
                         </div>
 
                         <div class="notifbox mb-0">
-                            <span style="font-size:17px;line-height:20.0005px;font-weight:bold;">Earlier</span>
+                            <span style="font-size:17px;line-height:20.0005px;font-weight:600;">Earlier</span>
                             @foreach (var item in PendingCount.OrderByDescending(d => d.InsertedTime).Take(limitDisplayNotif))
                             {
                                 @if (DateTime.Now - item.InsertedTime > TimeSpan.FromMinutes(60))

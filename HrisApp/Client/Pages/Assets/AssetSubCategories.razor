@@ -47,22 +47,22 @@
         <div style="height: calc(100% - 64px)">
             <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="AssetSubCatList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AssetSubCategoryT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
                 <HeaderContent>
-                    <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-3" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<AssetSubCategoryT, object>(x=>x.Id)">
                             Code
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<AssetSubCategoryT, object>(x=>x.ASubCat_Name)">
                             Sub Category
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<AssetSubCategoryT, object>(x=>x.Category!.ACat_Name)">
                             Category
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="">@obj.ASubCat_Code</MudTd>

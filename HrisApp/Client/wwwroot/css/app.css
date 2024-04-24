@@ -4,6 +4,11 @@ body, html {
     font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif
 }
 
+strong, b {
+    font-weight: 600 !important;
+}
+
+
 h1:focus {
     outline: 0
 }

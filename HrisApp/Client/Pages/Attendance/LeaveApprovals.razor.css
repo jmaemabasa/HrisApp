@@ -4,7 +4,7 @@
 
 .maintitlespan {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
     color: #264487;
     font-family: 'Poppins', sans-serif !important;
 }
@@ -13,7 +13,7 @@
 .credtitle {
     text-align: center;
     color: #6A707D;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 16px;
     margin-top: 10px;
     font-family: 'Poppins', sans-serif;

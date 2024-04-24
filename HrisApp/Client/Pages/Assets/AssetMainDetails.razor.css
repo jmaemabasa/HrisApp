@@ -22,7 +22,7 @@
 }
 
 .spantitle {
-    font-weight: bold;
+    font-weight: 600;
     color: #26446e;
     font-size: 16px;
 }
@@ -47,7 +47,7 @@
 
     .acc-cont .asset {
         color: #26446e;
-        font-weight: bold;
+        font-weight: 600;
     }
 
 ::deep .btnpritnQR {
@@ -77,7 +77,7 @@
 }
 
     .drawerdetails span {
-        font-weight: bold;
+        font-weight: 600;
         color: #26446e;
         font-size: 20px;
     }
@@ -96,7 +96,7 @@
         }
 
 .asset-code {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1.2em;
     letter-spacing: 1px;
     margin-top: .5rem;
@@ -168,7 +168,7 @@
     color: #27374D;
     font-size: 16px;
     padding: 16px 32px;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
 }
 
@@ -193,7 +193,7 @@
 .btn-returned {
     background-color: #27374D;
     color: #ffffff;
-    font-weight: bold;
+    font-weight: 600;
     border-radius: 20px;
     padding: 6px 15px;
     transition: all .5s ease;
@@ -210,14 +210,14 @@
 
 ::deep .mud-tab.mud-tab-active {
     color: #26446e;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .mud-tabs-toolbar-content {
     background: #e9ecef;
     color: #78909C;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
     border: none;
     /*    border-bottom: 2px solid #D8DADC;
 */ /*pointer-events: none;*/
@@ -229,18 +229,18 @@
 
 ::deep .mud-tabs-defaultindex {
     color: #78909C;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 ::deep .mud-tabs-afterindex {
     color: #79AC78;
-    font-weight: bold;
+    font-weight: 600;
     border-bottom: 2px solid #79AC78;
     opacity: 0.5;
 }
 
 ::deep .mud-chip-active {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #26446e;
     margin-right: 15px;
@@ -249,7 +249,7 @@
 }
 
 ::deep .mud-chip-after0 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -259,7 +259,7 @@
 }
 
 ::deep .mud-chip-after1 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -269,7 +269,7 @@
 }
 
 ::deep .mud-chip-after2 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -279,7 +279,7 @@
 }
 
 ::deep .mud-chip-after3 {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -289,7 +289,7 @@
 }
 
 ::deep .mud-chip-after {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #0A86C2;
     margin-right: 15px;
@@ -299,7 +299,7 @@
 }
 
 ::deep .mud-chip-default {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     background-color: #C5CFD2;
     margin-right: 15px;
@@ -309,12 +309,12 @@
 
 ::deep .mud-text-after {
     color: #0A86C2;
-    font-weight: bold;
+    font-weight: 600;
     opacity: 0.2;
 }
 
 ::deep .mud-text-default {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .Btn {
@@ -420,7 +420,7 @@
 }
 
 #date {
-    font-weight: bold;
+    font-weight: 600;
     padding: 0px;
 }
 
@@ -464,7 +464,7 @@
     right: 35px;
     color: #f1f1f1;
     font-size: 40px;
-    font-weight: bold;
+    font-weight: 600;
     transition: 0.3s;
 }
 

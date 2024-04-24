@@ -14,11 +14,11 @@
                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Type</MudText>
                         @if (obj.Transact_Type.Equals("Issue"))
                         {
-                            <MudText Align="Align.Start" Style="color: #be1313; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Type</MudText>
+                            <MudText Align="Align.Start" Style="color: #be1313; font-weight:600;" Typo="Typo.body2">@obj.Transact_Type</MudText>
                         }
                         else
                         {
-                            <MudText Align="Align.Start" Style="color: #397763; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Type</MudText>
+                            <MudText Align="Align.Start" Style="color: #397763; font-weight:600;" Typo="Typo.body2">@obj.Transact_Type</MudText>
                         }
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="col-12">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Department?.Name</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Department?.Name</MudText>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <div class="col-12">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Qty @obj.Consumable?.UOM?.Code</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Transact_Qty @obj.Consumable?.UOM?.Code</MudText>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="col-12">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Department?.Name</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Department?.Name</MudText>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <div class="col-12">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Transact_Qty @obj.Consumable?.UOM?.Code</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Transact_Qty @obj.Consumable?.UOM?.Code</MudText>
                         </div>
                     </div>
                 </div>
@@ -86,14 +86,14 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Price</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PricePerUOM</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.PricePerUOM</MudText>
                         </div>
                     </div>
 
                     <div class="col-sm-12 col-md-6">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Total Purchase Amount</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PurchaseAmount</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.PurchaseAmount</MudText>
                         </div>
                     </div>
                 </div>
@@ -102,13 +102,13 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.PurchasedDate?.ToString("MMM dd yyyy")</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.PurchasedDate?.ToString("MMM dd yyyy")</MudText>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Invoice No</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.InvoiceNo</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.InvoiceNo</MudText>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                     <div class="col-12">
                         <div class="box-details">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Vendor</MudText>
-                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:bold;" Typo="Typo.body2">@obj.Vendor?.Name</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Vendor?.Name</MudText>
                         </div>
                     </div>
                 </div>

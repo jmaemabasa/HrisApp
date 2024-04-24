@@ -79,7 +79,7 @@
 }
 
 .progress-count {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 18px;
 }
 
@@ -95,7 +95,7 @@
 
 .maintitlespan {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
     color: #264487;
     font-family: 'Poppins', sans-serif !important;
 }
@@ -103,7 +103,7 @@
 .credtitle {
     text-align: center;
     color: #6A707D;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 16px;
     margin-top: 10px;
     font-family: 'Poppins', sans-serif;
@@ -117,7 +117,7 @@
     color: #424242;
     padding-bottom: 10px;
     padding-top: 10px;
-    font-weight: bold;
+    font-weight: 600;
     width: 200px;
     transition: all .5s ease;
 }

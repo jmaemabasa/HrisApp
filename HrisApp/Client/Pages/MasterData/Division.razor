@@ -45,12 +45,12 @@
         <div style="height: calc(100% - 64px)">
             <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="divisionList" Context="divisions" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<DivisionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
                 <HeaderContent>
-                    <MudTh Class="col-6" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">
+                    <MudTh Class="col-6" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<DivisionT, object>(x=>x.Name)">
                             Division
                         </MudTableSortLabel>
                     </MudTh>
-                    <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Action</MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="">@divisions.Name</MudTd>

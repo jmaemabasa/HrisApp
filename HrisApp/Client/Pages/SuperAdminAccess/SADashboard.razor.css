@@ -30,7 +30,7 @@
 }
 
 .progress-count {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 18px;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .announceTitle {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 20px;
 }
 

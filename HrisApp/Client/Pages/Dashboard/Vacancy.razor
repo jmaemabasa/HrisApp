@@ -43,18 +43,18 @@
         <div class="table-responsive">
             <MudTable Class="stable" Items="tableListpos" Context="pos" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true">
                 <HeaderContent>
-                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Division</MudTh>
-                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Department</MudTh>
-                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Section</MudTh>
-                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;">Position</MudTh>
-                    <MudTh Class="" Style="background: #e9ecef; font-weight: bold; font-size: 16px;text-align: center;">Vacancy</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Division</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Department</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Section</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Position</MudTh>
+                    <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;text-align: center;">Vacancy</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="">@(allDivisions.Where(e => e.Id == pos.DivisionId).First().Name)</MudTd>
                     <MudTd DataLabel="">@(allDepartments.Where(e => e.Id == pos.DepartmentId).First().Name)</MudTd>
                     <MudTd DataLabel="">@(pos.SectionId == 0 ? "" : allSections.Where(e => e.Id == pos.SectionId).First().Name)</MudTd>
                     <MudTd DataLabel="">@pos.Description</MudTd>
-                    <MudTd DataLabel="" Style="text-align: center;font-weight: bold;">@(allSubPositions.Where(e => e.Status.Equals("Vacant") && e.PosCode.Equals(pos.PosCode)).Count())</MudTd>
+                    <MudTd DataLabel="" Style="text-align: center;font-weight: 600;">@(allSubPositions.Where(e => e.Status.Equals("Vacant") && e.PosCode.Equals(pos.PosCode)).Count())</MudTd>
                 </RowTemplate>
             </MudTable>
         </div>

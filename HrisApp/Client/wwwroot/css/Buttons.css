@@ -121,13 +121,13 @@
 
 .cancel {
     margin-right: 10px;
-    font-weight: bold;
+    font-weight: 600;
     transition: all .5s ease;
 }
 
     .cancel:hover {
         color: #be1313;
-        font-weight: bold;
+        font-weight: 600;
         transform: scale(1.1);
     }
 

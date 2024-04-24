@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NPOI.SS.Formula.Functions;
-
-namespace HrisApp.Server.Controllers.EmployeeDetails
+﻿namespace HrisApp.Server.Controllers.EmployeeDetails
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,7 +21,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.EmerRelationship)
                 .Include(em => em.Gender)
                 .Include(em => em.CivilStatus)
-                .Include(em => em.Religion)
+                //.Include(em => em.Religion)
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
@@ -43,7 +40,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.EmerRelationship)
                 .Include(em => em.Gender)
                 .Include(em => em.CivilStatus)
-                .Include(em => em.Religion)
+                //.Include(em => em.Religion)
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
@@ -62,7 +59,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.EmerRelationship)
                 .Include(em => em.Gender)
                 .Include(em => em.CivilStatus)
-                .Include(em => em.Religion)
+                //.Include(em => em.Religion)
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
@@ -77,7 +74,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
         }
 
         [HttpGet("GetSingleEmployeeByVerId")]
-        public async Task<ActionResult<EmployeeT>> GetSingleEmployeeByVerId([FromQuery]string verId)
+        public async Task<ActionResult<EmployeeT>> GetSingleEmployeeByVerId([FromQuery] string verId)
         {
             var user = await _context.EmployeeT
                 .Include(em => em.Status)
@@ -85,7 +82,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.EmerRelationship)
                 .Include(em => em.Gender)
                 .Include(em => em.CivilStatus)
-                .Include(em => em.Religion)
+                //.Include(em => em.Religion)
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
@@ -107,7 +104,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.EmerRelationship)
                 .Include(em => em.Gender)
                 .Include(em => em.CivilStatus)
-                .Include(em => em.Religion)
+                //.Include(em => em.Religion)
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
@@ -136,7 +133,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.EmerRelationship)
                 .Include(em => em.Gender)
                 .Include(em => em.CivilStatus)
-                .Include(em => em.Religion)
+                //.Include(em => em.Religion)
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
@@ -284,7 +281,8 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
 
                 dbEmployee.GenderId = employee.GenderId;
                 dbEmployee.CivilStatusId = employee.CivilStatusId;
-                dbEmployee.ReligionId = employee.ReligionId;
+                //dbEmployee.ReligionId = employee.ReligionId;
+                dbEmployee.Religion = employee.Religion;
                 dbEmployee.DivisionId = employee.DivisionId;
                 dbEmployee.DepartmentId = employee.DepartmentId;
                 dbEmployee.SectionId = employee.SectionId;
@@ -323,7 +321,7 @@ namespace HrisApp.Server.Controllers.EmployeeDetails
                 .Include(em => em.EmerRelationship)
                 .Include(em => em.Gender)
                 .Include(em => em.CivilStatus)
-                .Include(em => em.Religion)
+                //.Include(em => em.Religion)
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)

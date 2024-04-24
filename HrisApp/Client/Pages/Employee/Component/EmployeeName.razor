@@ -8,7 +8,7 @@
         <div>
             <div class="flex-column">
             <div>@CapitalizeFirstLetter(employee.FirstName)  @(employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "")  @CapitalizeFirstLetter(employee.LastName)</div>
-            <div style="font-weight: bold;">@employee.Email</div>
+            <div style="font-weight: 600;">@employee.Email</div>
         </div>
      </div>
 </div>
