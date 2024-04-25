@@ -396,6 +396,8 @@ namespace HrisApp.Server.Data
         //SETTINGS
         public DbSet<BioIPModel> BioIPModel { get; set; }
         public DbSet<ExtractLogsModel> ExtractLogsModel { get; set; }
+        public DbSet<MaintenanceT> MaintenanceT { get; set; }
+        
 
 
     }

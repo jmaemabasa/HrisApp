@@ -118,6 +118,7 @@ global using HrisApp.Client.Services.Attendance.BioAttendanceS;
 global using HrisApp.Client.Services.SettingsS.BioIPService;
 global using HrisApp.Client.Services.SettingsS.ExtractLogsService;
 global using HrisApp.Shared.Models.SettingsM;
+global using HrisApp.Client.Services.SettingsS.MaintenanceService;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -196,6 +197,7 @@ builder.Services.AddScoped<IAssLicenseService, AssLicenseService>();
 builder.Services.AddScoped<IAssLicenseHistoryService, AssLicenseHistoryService>();
 builder.Services.AddScoped<IAssLicenseImageService, AssLicenseImageService>();
 builder.Services.AddScoped<IMainAssetLicenseService, MainAssetLicenseService>();
+builder.Services.AddScoped<IMaintenanceService, MaintenanceService>();
 builder.Services.AddScoped<IUOMService, UOMService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
 

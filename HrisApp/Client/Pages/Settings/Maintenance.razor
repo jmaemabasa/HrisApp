@@ -1,0 +1,139 @@
+﻿@page "/maintenance"
+
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, HR")]
+
+<PageTitle>Maintenance</PageTitle>
+
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Maintenance</span>
+        <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
+            <Authorized>
+                <div class="d-flex gap-3">
+                    <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Maintenance</MudButton>
+                    <MudButton OnClick="BtnTest" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Test</MudButton>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+<div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+        </div>
+    </div>
+    @if (_maintenanceList == null || _maintenanceList.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <MudTable Class="stable" Height="611px" Items="_maintenanceList" Context="obj" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="false" Hover="true" Bordered="false" Striped="true" Filter="new Func<MaintenanceT,bool>(FilterFunc1)">
+            <HeaderContent>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Description</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Started On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Ended On</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@obj.Desc</MudTd>
+                <MudTd>@obj.DateStart?.ToString("MMM dd yyyy")</MudTd>
+                <MudTd>@obj.DateEnd?.ToString("MMM dd yyyy")</MudTd>
+                <MudTd>
+                    @if (obj.IsMaintain == true)
+                {
+                        <button type="button" class="Btn btn-primary" @onclick="(() => Update(obj))">Done</button>
+                    }
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] { 15, 35, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+            </PagerContent>
+        </MudTable>
+    }
+</div>
+@code {
+    public List<MaintenanceT> _maintenanceList = new();
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        if (_maintenanceList == null || _maintenanceList.Count == 0)
+        {
+            _isVisible = true;
+        }
+    }
+    private async Task LoadList()
+    {
+        StateService.SetState("MaintenanceList", await MaintenanceService.GetObjList());
+    }
+
+    private void OnStateChanged()
+    {
+        // Handle state changes, e.g., update the areaList
+        _maintenanceList = StateService.GetState<List<MaintenanceT>>("MaintenanceList");
+        StateHasChanged();
+    }
+
+    private async Task Update(MaintenanceT obj)
+    {
+        obj.IsMaintain = false;
+        await MaintenanceService.UpdateObj(obj);
+        StateService.SetState("MaintenanceList", await MaintenanceService.GetObjList());
+    }
+
+    //LOADING
+    public bool _isVisible;
+
+    private void OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
+        DialogService.Show<AddMaintenanceDialog>("Schedule Maintenance", options);
+    }
+    private async Task BtnTest()
+    {
+        var test = await MaintenanceService.GetIsMaintain();
+        _toastService.ShowError(test.ToString());
+    }
+
+    private string searchString1 = "";
+    private bool FilterFunc1(MaintenanceT area) => FilterFunc(area, searchString1);
+
+    private bool FilterFunc(MaintenanceT area, string searchString)
+    {
+
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        // if (area.Location.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (area.IP_Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+
+        return false;
+    }
+}

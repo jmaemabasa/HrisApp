@@ -2,6 +2,7 @@
 @page "/sonicsales"
 @using System.Net.NetworkInformation
 
+<PageTitle>Sonic Sales & Distribution, Inc.</PageTitle>
 <main>
     <section class="section-title">
         <header>
@@ -36,7 +37,7 @@
                                 We serve as the vital link between global/national companies and the Southern Mindanao retail industry. We link the brands/ products of our principal to the local retail trade of which we have vital knowledge of.
                             </div>
                             <div>
-                                <button class="button">
+                                <button class="button" @onclick="GetChuchu">
                                     Login
                                     <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
                                         <path clip-rule="evenodd"
@@ -269,26 +270,23 @@
 
 @code {
 
-    private async Task OnClickbtn()
+    private async Task GetChuchu()
     {
-        var _getres = await OnPingIp();
-        _toastService.ShowSuccess(_getres.ToString());
-    }
-
-    private async Task<bool> OnPingIp()
-    {
-        string myip = "192.168.1.120";
-        using (var _ping = new Ping())
+        await Task.Delay(100);
+        // _navManager.NavigateTo("http://sonicsales.net:1113/");
+        //Console.WriteLine("Page chuchu 1");
+        // var _httpClient = GetapiHttp();
+        // Console.WriteLine("Page chuchu 2");
+        // var json = await _httpClient.GetStringAsync("api/Maintenance/GetIsMaintain");
+        var isMaintain = await MaintenanceService.GetIsMaintain();
+        if (isMaintain == false)
         {
-            try
-            {
-                PingReply pingReply = await _ping.SendPingAsync(myip);
-                return pingReply.Status == IPStatus.Success;
-            }
-            catch
-            {
-                return false;
-            }
+            NavigationManager.NavigateTo("http://sonicsales.net:1113/");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("404ambot", true);
         }
     }
+
 }

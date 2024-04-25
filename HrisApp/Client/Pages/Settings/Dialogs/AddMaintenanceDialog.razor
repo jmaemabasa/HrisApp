@@ -1,0 +1,75 @@
+﻿<MudDialog>
+    <DialogContent>
+        <EditForm Model="@obj" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="row">
+                @* ERROR/SUCCESS ALERT *@
+                @if (_showAlert)
+                {
+                    <div class="col-12 mb-2">
+                        <MudAlert Severity="@_severity" ShowCloseIcon="true" CloseIconClicked="CloseMe" Class="mb-2">@_message</MudAlert>
+                    </div>
+                }
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">Description</MudText>
+                    <MudTextField @bind-Value="obj.Desc" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">Date Start</MudText>
+                    <MudDatePicker @bind-Date="obj.DateStart" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+
+                <div class="col-12" style="margin-bottom: 5px;">
+                    <MudText Typo="Typo.body2">Date End</MudText>
+                    <MudDatePicker @bind-Date="obj.DateEnd" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </div>
+
+                <div class="d-flex justify-content-end align-items-center gap-2 mt-4">
+                    <div class="dialogbtns" style="padding: 4px 0px 15px 10px;">
+                        <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+                        <button type="submit" class="save btn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    #nullable disable
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
+    private MaintenanceT obj = new();
+
+    private void Cancel() => MudDialog.Cancel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        obj.IsMaintain = true;
+        await MaintenanceService.CreateObj(obj);
+        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+        _toastService.ShowSuccess(TokenCons.CREATESUCCESS);
+
+        _showAlert = false;
+        MudDialog.Close();
+        StateService.SetState("MaintenanceList", await MaintenanceService.GetObjList());
+    }
+
+
+    #region ERROR TRAPPING
+
+    private string _message = string.Empty;
+    private Severity _severity;
+    private bool _showAlert = false;
+
+    public void CloseMe() => _showAlert = false;
+
+    #endregion ERROR TRAPPING
+}
