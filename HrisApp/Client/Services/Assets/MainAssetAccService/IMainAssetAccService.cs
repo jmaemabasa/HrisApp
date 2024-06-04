@@ -5,6 +5,7 @@
         List<MainAssetAccessoriesT> MainAssetAccessoriesTs { get; set; }
 
         Task<List<MainAssetAccessoriesT>> GetObjList();
+        Task<List<MainAssetAccessoriesT>> GetObjListByMain(int assetid);
 
         Task<MainAssetAccessoriesT> GetSingleObj(int id);
 

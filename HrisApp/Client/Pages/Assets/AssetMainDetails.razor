@@ -665,6 +665,95 @@
 
                     </div>
                 </MudTabPanel>
+                <MudTabPanel TabContent="TabHeader(5)">
+                    <div class="mainasssec">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="spantitle">Report</span>
+                            <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin">
+                                <Authorized>
+                                    <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "mtsChkPanelOpen"))">
+
+                                        <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Download"></MudIcon></div>
+
+                                        <div class="text">Export</div>
+                                    </button>
+                                </Authorized>
+                            </AuthorizeView>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between" style="margin-top: 16px;">
+                            <div class=""></div>
+                            <div class="" style="font-size: 16px;font-weight: 600;color: #264487;">Total Amount: <span style="color: #3b6ad4;">@TOTALAMOUNT.ToString("N2")</span></div>
+                        </div>
+                        <div style="margin-top: 16px;">
+                            <div style="font-weight: 600;color: #27374d;">Accessories (Current&Old)</div>
+                            <div style="margin: 8px 0px 0px 16px;">
+                                <div class="d-flex flex-column">
+                                    @foreach (var item in OBJACCESSORIES)
+                                    {
+                                        <div class="d-flex acc-cont">
+                                            <MudGrid Spacing="2" Style="align-items: center">
+                                                <MudItem xs="12" sm="4">
+                                                    <div class="d-flex flex-column">
+                                                        <div style="color: #757A90;font-weight: 600;">@item.AssetAccessory?.Name</div>
+                                                        <div style="color: #6A707D;font-size:12px">@item.AssetAccessory?.JMCode</div>
+                                                    </div>
+                                                </MudItem>
+                                                <MudItem xs="12" sm="4"><span></span>
+                                                    <div class="d-flex flex-column">
+                                                        <div style="color: #6A707D;font-size:8px">Purchased On</div>
+                                                        <div style="color: #757A90;">@item.AssetAccessory?.PurchaseDate?.ToString("MMM dd yyyy")</div>
+                                                    </div>
+                                                </MudItem>
+                                                <MudItem xs="12" sm="4"><span>@ConvertToDouble(item.AssetAccessory?.PurchaseAmount).ToString("N2")</span></MudItem>
+                                            </MudGrid>
+                                        </div>
+                                    }
+                                    <div class="d-flex acc-cont">
+                                        <MudGrid Spacing="2" Style="align-items: center">
+                                            <MudItem xs="12" sm="4"></MudItem>
+                                            <MudItem xs="12" sm="4"></MudItem>
+                                            <MudItem xs="12" sm="4"><span>Total: <span style="color: #757A90;font-weight: 600;">@TOTALACCESSORIESAMOUNT.ToString("N2")</span> </span></MudItem>
+                                        </MudGrid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px;">
+                            <div style="font-weight: 600;color: #27374d;">Licenses (Current&Old)</div>
+                            <div style="margin: 8px 0px 0px 16px;">
+                                <div class="d-flex flex-column">
+                                    @foreach (var item in OBJLICENSES)
+                                    {
+                                        <div class="d-flex acc-cont">
+                                            <MudGrid Spacing="2" Style="align-items: center">
+                                                <MudItem xs="12" sm="4">
+                                                    <div class="d-flex flex-column">
+                                                        <div style="color: #757A90;font-weight: 600;">@item.AssetLicense?.Name</div>
+                                                        <div style="color: #6A707D;font-size:12px">@item.AssetLicense?.JMCode</div>
+                                                    </div>
+                                                </MudItem>
+                                                <MudItem xs="12" sm="4">
+                                                    <div class="d-flex flex-column">
+                                                        <div style="color: #6A707D;font-size:8px">Purchased On</div>
+                                                        <div style="color: #757A90;">@item.AssetLicense?.PurchaseDate?.ToString("MMM dd yyyy")</div>
+                                                    </div>
+                                                </MudItem>
+                                                <MudItem xs="12" sm="4"><span>@ConvertToDouble(item.AssetLicense?.PurchaseAmount).ToString("N2")</span></MudItem>
+                                            </MudGrid>
+                                        </div>
+                                    }
+                                    <div class="d-flex acc-cont">
+                                        <MudGrid Spacing="2" Style="align-items: center">
+                                            <MudItem xs="12" sm="4"></MudItem>
+                                            <MudItem xs="12" sm="4"></MudItem>
+                                            <MudItem xs="12" sm="4"><span>Total: <span style="color: #757A90;font-weight: 600;">@TOTALLICENSESAMOUNT.ToString("N2")</span> </span></MudItem>
+                                        </MudGrid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </MudTabPanel>
             </MudTabs>
         </div>
     </MudItem>

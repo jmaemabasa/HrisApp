@@ -5,6 +5,7 @@
         List<MainAssetLicensesT> MainAssetLicensesTs { get; set; }
 
         Task<List<MainAssetLicensesT>> GetObjList();
+        Task<List<MainAssetLicensesT>> GetObjListByMain(int assetid);
 
         Task<MainAssetLicensesT> GetSingleObj(int id);
 

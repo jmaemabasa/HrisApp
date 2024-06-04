@@ -14,6 +14,20 @@ namespace HrisApp.Server.Controllers.APiSC
             _http = http;
         }
 
+        //public HttpClient GetapiHttp()
+        //{
+        //    //string _baseURL = "http://192.168.1.27:1335/";
+        //    string _baseURL = "http://sonicsales.net:1335/";
+        //    HttpClient _client = new()
+        //    {
+        //        BaseAddress = new Uri(_baseURL)
+        //    };
+        //    _client.DefaultRequestHeaders.Accept.Clear();
+        //    _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        //    return _client;
+        //}
+
+
         [HttpGet("GetDailyVerse")]
         public async Task<ActionResult<DailyVerse>> GetDailyVerse()
         {
@@ -31,5 +45,27 @@ namespace HrisApp.Server.Controllers.APiSC
                 return BadRequest(new { Error = $"Failed to fetch verse. {ex.Message}" });
             }
         }
+
+        //[HttpGet("GetFroi")]
+        //public async Task<ActionResult<List<AG_GHeader>>> GetFroi()
+        //{
+        //    try
+        //    {
+        //        var _client = GetapiHttp();
+        //        //var json = await _client.GetStringAsync($"api/AG_GReturn/GetReturnForCRR/{_gpCode}/{_userCode}/{_dateProcess}");
+        //        //var json = await _client.GetStringAsync($"api/AG_GReturn/");
+        //        //var _returnList = JsonConvert.DeserializeObject<List<AG_ReturnModel>>(json);
+
+        //        var json = await _client.GetStringAsync("api/AG_GPheader");
+        //        var _returnList = JsonConvert.DeserializeObject<List<AG_GHeader>>(json);
+
+        //        return Ok(_returnList);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex);
+        //        return BadRequest(new { Error = $"Failed to fetch verse. {ex.Message}" });
+        //    }
+        //}
     }
 }

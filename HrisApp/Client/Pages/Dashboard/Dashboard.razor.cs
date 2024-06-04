@@ -369,7 +369,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 //var monthlyTotal = PositionService.SubPositionTs
                 //    .Where(s => s.DateCreated?.Year == year && s.DateCreated?.Month == month && (s.DateInactive == null || s.DateInactive > dateTime))
                 //    .Count();
-                
+
                 var monthlyTotal = PositionService.SubPositionTs
                     .Where(s => s.DateCreated?.Date <= dateTime.Date && (s.DateInactive == null || s.DateInactive?.Date > dateTime.Date))
                     .Count();
@@ -571,5 +571,6 @@ namespace HrisApp.Client.Pages.Dashboard
         }
 
         #endregion FUNCTIONS
+
     }
 }

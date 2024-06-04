@@ -18,6 +18,10 @@
         {
             return await _httpClient.GetFromJsonAsync<List<MainAssetLicensesT>>("api/MainAssetLicense");
         }
+        public async Task<List<MainAssetLicensesT>> GetObjListByMain(int assetid)
+        {
+            return await _httpClient.GetFromJsonAsync<List<MainAssetLicensesT>>($"api/MainAssetLicense/GetObjListByMain?assetid={assetid}");
+        }
 
         public async Task<MainAssetLicensesT> GetSingleObj(int id)
         {

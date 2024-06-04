@@ -28,6 +28,8 @@ namespace HrisApp.Client.Pages.Assets
         private List<AreaT> AREA = new();
         private List<AssetMasterHistoryT> MAINHISTORY = new();
         private List<AssetLastCheckT> LASTCHK = new();
+        private List<MainAssetAccessoriesT> OBJACCESSORIES = new();
+        private List<MainAssetLicensesT> OBJLICENSES = new();
 
         private List<MainRemarksT> REMARKS = new();
 
@@ -70,6 +72,9 @@ namespace HrisApp.Client.Pages.Assets
         private Anchor anchor;
 
         private bool isLoadingPrintQR = false;
+        private double TOTALACCESSORIESAMOUNT = 0;
+        private double TOTALLICENSESAMOUNT = 0;
+        private double TOTALAMOUNT = 0;
 
         protected override async Task OnInitializedAsync()
         {
@@ -86,6 +91,7 @@ namespace HrisApp.Client.Pages.Assets
             AREA = await AreaService.GetAreaList();
             MAINHISTORY = await AssetMasHistorySvc.GetObjList();
             LASTCHK = await AssetLastChkSvc.GetObjList();
+
         }
 
         protected override async Task OnParametersSetAsync()
@@ -95,6 +101,28 @@ namespace HrisApp.Client.Pages.Assets
                 obj = await AssetMasterService.GetSingleObj(Id);
                 REMARKS = await MainRemarksService.GetObjList(obj.AssetCode);
 
+                OBJACCESSORIES = await MainAssetAccService.GetObjListByMain(obj.Id);
+
+                //Create a HashSet for fast lookup of OBJACCESSORIES IDs
+                /*
+               var objAccessoryIds = new HashSet<int>(OBJACCESSORIES.Select(x => x.Id));
+                //Sum the purchase amounts of the accessories whose IDs are in OBJACCESSORIES
+               TOTALACCESSORIESAMOUNT = ACCESSORIES
+                   .Where(x => objAccessoryIds.Contains(x.Id))
+                   .Select(x => ConvertToDouble(x.PurchaseAmount))
+                   .Sum();
+                */
+                TOTALACCESSORIESAMOUNT = OBJACCESSORIES
+                    .Select(x => ConvertToDouble(x.AssetAccessory.PurchaseAmount))
+                    .Sum();
+                OBJLICENSES = await MainAssLicSvc.GetObjListByMain(obj.Id);
+
+                // Sum the purchase amounts of the licenses whose IDs are in OBJLICENSES
+                TOTALLICENSESAMOUNT = OBJLICENSES
+                    .Select(x => ConvertToDouble(x.AssetLicense.PurchaseAmount))
+                    .Sum();
+
+                TOTALAMOUNT = TOTALACCESSORIESAMOUNT + TOTALLICENSESAMOUNT;
                 try
                 {
                     await AssetImg(obj.JMCode);//image
@@ -324,6 +352,26 @@ namespace HrisApp.Client.Pages.Assets
 
         #region FUNCTIONS
 
+
+        // Helper method to convert varchar purchase amount to double
+        private double ConvertToDouble(string purchaseAmount)
+        {
+            if (string.IsNullOrEmpty(purchaseAmount))
+            {
+                // Return 0 if the purchase amount is null or empty
+                return 0;
+            }
+
+            // Remove commas and parse the string to double
+            if (double.TryParse(purchaseAmount.Replace(",", ""), out double result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         private async Task GenerateQR(int id)
         {
             await Task.Delay(0);
@@ -779,13 +827,14 @@ namespace HrisApp.Client.Pages.Assets
                 }
                 else if (tabId == 5)
                 {
-                    builder.OpenComponent<MudChip>(0);
+                    builder.OpenComponent<MudIconButton>(0);
                     builder.AddAttribute(1, "Class", @GetTabChipClass(5));
-                    builder.AddAttribute(3, "Text", $"{tabId + 1}");
+                    builder.AddAttribute(2, "Icon", @Icons.Material.Rounded.BarChart);
+                    builder.AddAttribute(3, "Size", Size.Small);
                     builder.CloseComponent();
                     builder.OpenElement(4, "span");
                     builder.AddAttribute(5, "class", @GetTabTextClass(5));
-                    builder.AddContent(6, "Attendance");
+                    builder.AddContent(6, "Report");
                     builder.CloseComponent();
                 }
             };

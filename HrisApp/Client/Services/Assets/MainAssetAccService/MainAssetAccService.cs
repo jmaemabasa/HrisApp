@@ -19,6 +19,10 @@
         {
             return await _httpClient.GetFromJsonAsync<List<MainAssetAccessoriesT>>("api/MainAssetAcc");
         }
+        public async Task<List<MainAssetAccessoriesT>> GetObjListByMain(int assetid)
+        {
+            return await _httpClient.GetFromJsonAsync<List<MainAssetAccessoriesT>>($"api/MainAssetAcc/GetObjListByMain?assetid={assetid}");
+        }
 
         public async Task<MainAssetAccessoriesT> GetSingleObj(int id)
         {

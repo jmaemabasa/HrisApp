@@ -90,10 +90,8 @@ namespace HrisApp.Client.Pages.Assets
         //END FOR TABLES
 
         //OPEN DIALOGS
-        private void OpenUpdateDialog(int id)
-        {
-            NavigationManager.NavigateTo($"/main-asset/details/{id}");
-        }
+        private void OpenUpdateDialog(int id)=> NavigationManager.NavigateTo($"/main-asset/details/{id}");
+        
 
         private void OpenAddDialog()
         {

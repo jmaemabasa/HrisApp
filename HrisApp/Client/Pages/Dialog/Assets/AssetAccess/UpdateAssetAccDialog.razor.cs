@@ -72,9 +72,16 @@
         {
             if (obj.PurchaseDate.HasValue)
             {
-                DateTime purchaseDate = obj.PurchaseDate.Value;
-                DateTime endOfUsefulLife = purchaseDate.AddMonths(Convert.ToInt32(obj.EUF));
-                return DateTime.Today > endOfUsefulLife;
+                if (string.IsNullOrEmpty(obj.EUF))
+                {
+                    return false;
+                }
+                else
+                {
+                    DateTime purchaseDate = obj.PurchaseDate.Value;
+                    DateTime endOfUsefulLife = purchaseDate.AddMonths(Convert.ToInt32(obj.EUF));
+                    return DateTime.Today > endOfUsefulLife;
+                }
             }
             return false;
         }

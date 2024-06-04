@@ -21,6 +21,16 @@
                 .ToListAsync();
             return Ok(obj);
         }
+        [HttpGet("GetObjListByMain")]
+        public async Task<ActionResult<List<MainAssetLicensesT>>> GetObjListByMain([FromQuery]int assetid)
+        {
+            var obj = await _context.MainAssetLicensesT
+                .Include(e => e.AssetMaster)
+                .Include(e => e.AssetLicense)
+                .Where(e => e.AssetMasterId == assetid)
+                .ToListAsync();
+            return Ok(obj);
+        }
 
         [HttpGet("GetObj")]
         public async Task<ActionResult<List<MainAssetLicensesT>>> GetObj()
