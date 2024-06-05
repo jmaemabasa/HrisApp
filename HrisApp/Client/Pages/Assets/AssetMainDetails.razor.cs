@@ -122,7 +122,7 @@ namespace HrisApp.Client.Pages.Assets
                     .Select(x => ConvertToDouble(x.AssetLicense.PurchaseAmount))
                     .Sum();
 
-                TOTALAMOUNT = TOTALACCESSORIESAMOUNT + TOTALLICENSESAMOUNT;
+                TOTALAMOUNT = TOTALACCESSORIESAMOUNT + TOTALLICENSESAMOUNT + ConvertToDouble(obj.PurchaseAmount);
                 try
                 {
                     await AssetImg(obj.JMCode);//image
@@ -351,7 +351,19 @@ namespace HrisApp.Client.Pages.Assets
         #endregion REMARKS
 
         #region FUNCTIONS
-
+        private async Task ExportReport()
+        {
+            try
+            {
+                string url = await AssetMasterService.GenrateReport(obj.Id);
+                await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //NavigateError();
+            }
+        }
 
         // Helper method to convert varchar purchase amount to double
         private double ConvertToDouble(string purchaseAmount)

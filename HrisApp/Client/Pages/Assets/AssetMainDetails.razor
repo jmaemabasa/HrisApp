@@ -671,7 +671,7 @@
                             <span class="spantitle">Report</span>
                             <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin">
                                 <Authorized>
-                                    <button class="Btn" onclick="@(() => OpenDrawer(Anchor.End, "mtsChkPanelOpen"))">
+                                    <button class="Btn" onclick="@ExportReport">
 
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Download"></MudIcon></div>
 

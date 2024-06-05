@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\AssetMaster\dsAss_AccessoryT.Designer.cs" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AccessoryT.xsc" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AccessoryT.xsd" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AccessoryT.xss" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AssetMasterT.cs" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AssetMasterT.Designer.cs" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AssetMasterT.xsc" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AssetMasterT.xsd" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_AssetMasterT.xss" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_LicenseT.Designer.cs" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_LicenseT.xsc" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_LicenseT.xsd" />
+    <Content Remove="wwwroot\AssetMaster\dsAss_LicenseT.xss" />
     <Content Remove="wwwroot\EmpDetails\dsAddressT.Designer.cs" />
     <Content Remove="wwwroot\EmpDetails\dsAddressT.xsc" />
     <Content Remove="wwwroot\EmpDetails\dsAddressT.xsd" />
@@ -64,6 +77,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="wwwroot\AssetMaster\dsAss_AccessoryT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsAss_AccessoryT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\AssetMaster\dsAss_AssetMasterT.cs" />
+    <Compile Include="wwwroot\AssetMaster\dsAss_AssetMasterT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsAss_AssetMasterT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\AssetMaster\dsAss_LicenseT.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsAss_LicenseT.xsd</DependentUpon>
+    </Compile>
     <Compile Include="wwwroot\EmpDetails\dsAddressT.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -163,6 +192,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\AssetMaster\dsAss_AccessoryT.xsc" />
+    <None Include="wwwroot\AssetMaster\dsAss_AccessoryT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsAss_AccessoryT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\AssetMaster\dsAss_AccessoryT.xss" />
+    <None Include="wwwroot\AssetMaster\dsAss_AssetMasterT.xsc" />
+    <None Include="wwwroot\AssetMaster\dsAss_AssetMasterT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsAss_AssetMasterT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\AssetMaster\dsAss_AssetMasterT.xss" />
+    <None Include="wwwroot\AssetMaster\dsAss_LicenseT.xsc" />
+    <None Include="wwwroot\AssetMaster\dsAss_LicenseT.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsAss_LicenseT.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Include="wwwroot\AssetMaster\dsAss_LicenseT.xss" />
     <None Include="wwwroot\EmpDetails\dsAddressT.xsc" />
     <None Include="wwwroot\EmpDetails\dsAddressT.xsd">
       <SubType>Designer</SubType>

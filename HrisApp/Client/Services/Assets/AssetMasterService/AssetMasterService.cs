@@ -92,5 +92,36 @@
                 return null;
             }
         }
+
+
+
+        public async Task<HttpResponseMessage> ReportDetailsPrint(int id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/MainAssetReport/GetReport?assetid={id}");
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HttpResponse : {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<string> GenrateReport(int id)
+        {
+            try
+            {
+                var result = await ReportDetailsPrint(id);
+                var url = result.RequestMessage.RequestUri.ToString();
+                return url;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"String Response : {ex.Message}");
+                return null;
+            }
+        }
     }
 }

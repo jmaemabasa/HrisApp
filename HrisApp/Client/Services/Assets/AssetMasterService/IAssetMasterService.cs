@@ -20,5 +20,7 @@
         Task<HttpResponseMessage> QRPrint(string AssetCode);
 
         Task<string> QRGenerate(string AssetCode);
+
+        Task<string> GenrateReport(int id);
     }
 }

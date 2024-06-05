@@ -51,6 +51,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAddressT.xsd</DependentUpon>
     </Compile>
+    <Compile Include="dsAss_AccessoryT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAss_AccessoryT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsAss_AssetMasterT.cs">
+      <DependentUpon>dsAss_AssetMasterT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsAss_AssetMasterT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAss_AssetMasterT.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsAss_LicenseT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAss_LicenseT.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dsEmployeeT.cs">
       <DependentUpon>dsEmployeeT.xsd</DependentUpon>
     </Compile>
@@ -126,6 +144,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="EmpDetails1.rdlc" />
+    <EmbeddedResource Include="MainAssetReport.rdlc" />
     <EmbeddedResource Include="PrintAssetQR.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -146,6 +165,39 @@
     </None>
     <None Include="dsAddressT.xss">
       <DependentUpon>dsAddressT.xsd</DependentUpon>
+    </None>
+    <None Include="dsAss_AccessoryT.xsc">
+      <DependentUpon>dsAss_AccessoryT.xsd</DependentUpon>
+    </None>
+    <None Include="dsAss_AccessoryT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAss_AccessoryT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsAss_AccessoryT.xss">
+      <DependentUpon>dsAss_AccessoryT.xsd</DependentUpon>
+    </None>
+    <None Include="dsAss_AssetMasterT.xsc">
+      <DependentUpon>dsAss_AssetMasterT.xsd</DependentUpon>
+    </None>
+    <None Include="dsAss_AssetMasterT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAss_AssetMasterT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsAss_AssetMasterT.xss">
+      <DependentUpon>dsAss_AssetMasterT.xsd</DependentUpon>
+    </None>
+    <None Include="dsAss_LicenseT.xsc">
+      <DependentUpon>dsAss_LicenseT.xsd</DependentUpon>
+    </None>
+    <None Include="dsAss_LicenseT.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAss_LicenseT.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsAss_LicenseT.xss">
+      <DependentUpon>dsAss_LicenseT.xsd</DependentUpon>
     </None>
     <None Include="dsEmployeeT.xsc">
       <DependentUpon>dsEmployeeT.xsd</DependentUpon>
