@@ -91,14 +91,18 @@ namespace HrisApp.Client.Pages.Assets
             AREA = await AreaService.GetAreaList();
             MAINHISTORY = await AssetMasHistorySvc.GetObjList();
             LASTCHK = await AssetLastChkSvc.GetObjList();
-
         }
 
         protected override async Task OnParametersSetAsync()
         {
+            await LoadAssetDetails(Id);
+        }
+
+        private async Task LoadAssetDetails(int assetId)
+        {
             try
             {
-                obj = await AssetMasterService.GetSingleObj(Id);
+                obj = await AssetMasterService.GetSingleObj(assetId);
                 REMARKS = await MainRemarksService.GetObjList(obj.AssetCode);
 
                 OBJACCESSORIES = await MainAssetAccService.GetObjListByMain(obj.Id);
@@ -151,10 +155,10 @@ namespace HrisApp.Client.Pages.Assets
                     empid = (int)obj.EmployeeId;
                 }
             }
-            catch (Exception ex)
+            catch (Exception /*ex*/)
             {
-                Console.WriteLine(ex);
-                Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex);
+                //Console.WriteLine(ex.Message);
                 MainAssetImageData = string.Format("images/asset-holder.jpg");
                 ImageEmployee = string.Format("images/imgholder.jpg");
             }
@@ -265,6 +269,34 @@ namespace HrisApp.Client.Pages.Assets
             StateHasChanged();
         }
 
+        private async Task NEXTOBJ()
+        {
+            var nextId = await AssetMasterService.GetNextObjId(obj.Id);
+            if (nextId != 0)
+            {
+                await LoadAssetDetails(nextId);
+            }
+            else
+            {
+                _toastService.ShowInfo("This is the last item.");
+            }
+            StateHasChanged();
+        }
+
+        private async Task PREVIOUSOBJ()
+        {
+            var prevId = await AssetMasterService.GetPreviousObjId(obj.Id);
+            if (prevId != 0)
+            {
+                await LoadAssetDetails(prevId);
+            }
+            else
+            {
+                _toastService.ShowInfo("This is the last item.");
+            }
+            StateHasChanged();
+        }
+
         #region REMARKS
 
         private string newRemark = "";
@@ -351,6 +383,7 @@ namespace HrisApp.Client.Pages.Assets
         #endregion REMARKS
 
         #region FUNCTIONS
+
         private async Task ExportReport()
         {
             try
@@ -384,6 +417,7 @@ namespace HrisApp.Client.Pages.Assets
                 return 0;
             }
         }
+
         private async Task GenerateQR(int id)
         {
             await Task.Delay(0);
@@ -451,7 +485,7 @@ namespace HrisApp.Client.Pages.Assets
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("animal");
+                    //Console.WriteLine("animal");
                 }
             }
         }

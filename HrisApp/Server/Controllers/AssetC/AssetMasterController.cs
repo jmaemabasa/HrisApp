@@ -193,5 +193,31 @@
 
             return Ok(0);
         }
+
+
+        [HttpGet("GetNextObjId")]
+        public async Task<ActionResult<int>> GetNextObjId([FromQuery]int currentId)
+        {
+            var allIds = await _context.AssetMasterT.OrderByDescending(e=>e.Id).Select(e=>e.Id).ToListAsync();
+
+            var currentIndex = allIds.IndexOf(currentId);
+            if (currentIndex >= 0 && currentIndex < allIds.Count - 1)
+            {
+                return allIds[currentIndex + 1];
+            }
+            return 0;
+        }
+        [HttpGet("GetPreviousObjId")]
+        public async Task<ActionResult<int>> GetPreviousObjId([FromQuery]int currentId)
+        {
+            var allIds = await _context.AssetMasterT.OrderByDescending(e=>e.Id).Select(e=>e.Id).ToListAsync();
+
+            var currentIndex = allIds.IndexOf(currentId);
+            if (currentIndex > 0)
+            {
+                return allIds[currentIndex - 1];
+            }
+            return 0;
+        }
     }
 }

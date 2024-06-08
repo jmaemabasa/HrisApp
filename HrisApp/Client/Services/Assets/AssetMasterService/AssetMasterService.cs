@@ -29,7 +29,7 @@
             }
             throw new Exception("employee not found");
         }
-        
+
         public async Task<AssetMasterT> GetSingleObjByCode(string code)
         {
             var result = await _httpClient.GetFromJsonAsync<AssetMasterT>($"api/AssetMaster/GetSingleObjByCode?code={code}");
@@ -93,8 +93,6 @@
             }
         }
 
-
-
         public async Task<HttpResponseMessage> ReportDetailsPrint(int id)
         {
             try
@@ -122,6 +120,17 @@
                 Console.WriteLine($"String Response : {ex.Message}");
                 return null;
             }
+        }
+
+        public async Task<int> GetNextObjId(int currentId)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/AssetMaster/GetNextObjId?currentId={currentId}");
+            return result;
+        }
+        public async Task<int> GetPreviousObjId(int currentId)
+        {
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/AssetMaster/GetPreviousObjId?currentId={currentId}");
+            return result;
         }
     }
 }
