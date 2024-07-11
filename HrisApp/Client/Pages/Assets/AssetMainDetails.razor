@@ -783,7 +783,7 @@
         </div>
         <div class="flex-grow-1">
             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Type</MudText>
-            <MudSelect @bind-Value="obj.TypeId" Variant="Variant.Outlined" Margin="Margin.Dense">
+            <MudSelect Disabled @bind-Value="obj.TypeId" Variant="Variant.Outlined" Margin="Margin.Dense">
                 <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
                 @foreach (var sec in TYPES)
                 {

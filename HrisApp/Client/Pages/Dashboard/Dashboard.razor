@@ -62,7 +62,7 @@
                                     {
                                         // Birthday is today
                                         <div class="bdaytoday d-flex justify-content-between">
-                                            <EmployeeBdyComponent verify="@item.Verify_Id" />
+                                            <EmployeeBdyComponent VERIFYID="@item.Verify_Id" FRSTNAME="@item.FirstName" GENDERID="item.GenderId" LSTNAME="@item.LastName" POSID="@item.PositionId" />
                                             <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
                                         </div>
                                     }
@@ -70,7 +70,7 @@
                                     {
                                         // Birthday is upcoming
                                         <div class="bdayupcoming d-flex justify-content-between">
-                                            <EmployeeBdyComponent verify="@item.Verify_Id" />
+                                            <EmployeeBdyComponent VERIFYID="@item.Verify_Id" FRSTNAME="@item.FirstName" GENDERID="item.GenderId" LSTNAME="@item.LastName" POSID="@item.PositionId" />
                                             <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
                                         </div>
                                     }
@@ -78,7 +78,7 @@
                                     {
                                         // Birthday has already passed
                                         <div class="bdaypassed d-flex justify-content-between">
-                                            <EmployeeBdyComponent verify="@item.Verify_Id" />
+                                            <EmployeeBdyComponent VERIFYID="@item.Verify_Id" FRSTNAME="@item.FirstName" GENDERID="item.GenderId" LSTNAME="@item.LastName" POSID="@item.PositionId" />
                                             <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
                                         </div>
                                     }

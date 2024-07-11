@@ -71,6 +71,7 @@ namespace HrisApp.Server.Controllers.SettingsC
             dbarea!.Status = model.Status;
             dbarea!.Date_Extract = model.Date_Extract;
             dbarea!.Is_Active = model.Is_Active;
+            dbarea!.BioId = model.BioId;
 
             await _context.SaveChangesAsync();
 
@@ -111,7 +112,7 @@ namespace HrisApp.Server.Controllers.SettingsC
 
             if (returnmodel == null)
             {
-                return null;
+                return null!;
             }
 
             return Ok(returnmodel);

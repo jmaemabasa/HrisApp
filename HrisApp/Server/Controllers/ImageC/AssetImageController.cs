@@ -25,8 +25,17 @@
 
                 if (model == null)
                 {
-                    //not found dapat ni
-                    return NoContent();
+                    var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                    var _nullfilename = "avatarorimage.jpg";
+                    var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
+
+                    var _nullmemory = new MemoryStream();
+                    using (var _stream = new FileStream(_nullpath, FileMode.Open))
+                    {
+                        await _stream.CopyToAsync(_nullmemory);
+                    }
+                    _nullmemory.Position = 0;
+                    return _nullmemory.ToArray();
                 }
 
                 var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);

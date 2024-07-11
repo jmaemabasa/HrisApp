@@ -166,6 +166,12 @@ namespace HrisApp.Client.Pages.Assets
 
         private async Task SaveUpdate()
         {
+            if (obj.AssetStatusId != 1 && obj.AssetStatusId != 2)
+            {
+                var tes = STATUS.Where(e => e.Id == obj.AssetStatusId).FirstOrDefault();
+                _toastService.ShowError(tes?.Name + " DATE IS REQUIRED.");
+                return;
+            }
             await AssetMasterService.UpdateObj(obj);
             await SaveRemarksTODB(obj.AssetCode);
             await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);

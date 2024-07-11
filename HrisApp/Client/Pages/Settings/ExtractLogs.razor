@@ -58,16 +58,25 @@
                     @* <MudDatePicker @bind-Date="dateextract" /> *@
                     <MudDatePicker @bind-Date="dateextract"
                                    IsDateDisabledFunc="@((DateTime dt) => dt.Date >= DateTime.Today.AddDays(1))" Variant="Variant.Outlined" Margin="Margin.Dense" />
+
+                    <MudSelect @bind-Value="SelectedLoc" Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem Value="0">Select Location</MudSelectItem>
+                        @foreach (var div in bioipList)
+                        {
+                            <MudSelectItem Value="@div.Id">@div.Location</MudSelectItem>
+                        }
+                    </MudSelect>
+
                     @if (ISPROCESSING)
                     {
-                        <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" Class="btnadd" Disabled>
+                        <MudButton OnClick="ExtractBtn" Variant="Variant.Filled" Size="Size.Medium" Class="btnadd" Disabled>
                             <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" Class="me-1" />
                             Extracting
                         </MudButton>
                     }
                     else
                     {
-                        <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Download" Class="btnadd"> Extract</MudButton>
+                        <MudButton OnClick="ExtractBtn" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Download" Class="btnadd"> Extract</MudButton>
                     }
                 </div>
             </Authorized>
@@ -222,12 +231,16 @@
 
     private List<EmployeeT> empList = new();
     private List<Emp_PayrollT> payList = new();
+    private List<BioIPModel> bioipList = new();
+
+    private int SelectedLoc;
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(300);
         empList = await EmployeeService.GetEmployeeList();
         payList = await PayrollService.GetPayrollList();
+        bioipList = await BioIPService.GetObjList();
         StateService.OnChange += OnStateChanged;
         await LoadList();
 
@@ -253,13 +266,20 @@
     //LOADING
     public bool _isVisible;
     private bool ISPROCESSING = false;
-    private async Task OpenAddDialog()
+    private async Task ExtractBtn()
     {
-        ExtractLogsModel checkcheckcheck = new();
+        if (SelectedLoc == 0)
+        {
+            _toastService.ShowError("Select a location first.");
+            return;
+        }
+        await OnUpdateIPStatus("Open");
+        ExtractLogsModel checkcheckcheck = new();        
         checkcheckcheck = _extractLogsList.OrderByDescending(e => e.Id).FirstOrDefault()!;
         if (checkcheckcheck == null)
         {
             ISPROCESSING = true;
+
             var userid = Convert.ToInt32(GlobalConfigService.User_Id);
             ExtractLogsModel _model = new ExtractLogsModel()
                 {
@@ -279,70 +299,72 @@
             await ExtractLogsService.CreateObj(_model);
 
             StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
-            await Task.Delay(10000);
+            //await Task.Delay(10000);
 
             ExtractLogsModel devicestatus = new();
-            devicestatus = await ExtractLogsService.GetExtractingCheckingModel();
+            // devicestatus = await ExtractLogsService.GetExtractingCheckingModel();
 
-            if (devicestatus.Is_Active)
-            {
-                var isExist = await ExtractLogsService.GetExistExtract(_model.Status);
+            // if (devicestatus.Is_Active)
+            // {
+            //     var isExist = await ExtractLogsService.GetExistExtract(_model.Status);
 
-                if (isExist == 0)
-                {
-                    var timesched = DateTime.Now;
-                    DateTime pwedena = DateTime.Today.AddHours(10).AddMinutes(25);
-                    DateTime pwedena2 = DateTime.Today.AddHours(10).AddMinutes(40);
-                    if (timesched >= pwedena && timesched <= pwedena2)
-                    {
-                        _toastService.ShowError("The system is auto extracting.");
-                    }
-                    else
-                    {
-                        devicestatus.Status = "Processing";
-                        await ExtractLogsService.CreateObj(devicestatus);
-                        StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
-                    }
+            //     if (isExist == 0)
+            //     {
+            //         var timesched = DateTime.Now;
+            //         DateTime pwedena = DateTime.Today.AddHours(10).AddMinutes(25);
+            //         DateTime pwedena2 = DateTime.Today.AddHours(10).AddMinutes(40);
+            //         if (timesched >= pwedena && timesched <= pwedena2)
+            //         {
+            //             _toastService.ShowError("The system is auto extracting.");
+            //         }
+            //         else
+            //         {
+            //             devicestatus.Status = "Processing";
+            //             await ExtractLogsService.CreateObj(devicestatus);
+            //             StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+            //         }
 
-                    ISPROCESSING = false;
-                }
-                else
-                {
-                    StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
-                    _toastService.ShowError("You have ongoing extracting process.");
-                    ISPROCESSING = false;
-                }
-            }
-            else
-            {
-                ExtractLogsModel _model1 = new ExtractLogsModel()
-                    {
-                        EmployeeUserId = userid,
-                        Action = "Exception",
-                        Type = "Error",
-                        Description = "The system is offline.",
-                        Is_Start = true,
-                        Date_Start = DateTime.Now,
-                        Date_Stop = DateTime.MinValue,
-                        Date_Create = DateTime.Now,
-                        Status = "Failed",
-                        Date_Extract = Convert.ToDateTime(dateextract),
-                        Is_Active = true
-                    };
+            //         ISPROCESSING = false;
+            //     }
+            //     else
+            //     {
+            //         StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+            //         _toastService.ShowError("You have ongoing extracting process.");
+            //         ISPROCESSING = false;
+            //     }
+            // }
+            // else
+            // {
+            //     ExtractLogsModel _model1 = new ExtractLogsModel()
+            //         {
+            //             EmployeeUserId = userid,
+            //             Action = "Exception",
+            //             Type = "Error",
+            //             Description = "The system is offline.",
+            //             Is_Start = true,
+            //             Date_Start = DateTime.Now,
+            //             Date_Stop = DateTime.MinValue,
+            //             Date_Create = DateTime.Now,
+            //             Status = "Failed",
+            //             Date_Extract = Convert.ToDateTime(dateextract),
+            //             Is_Active = true
+            //         };
 
-                await ExtractLogsService.CreateObj(_model1);
+            //     await ExtractLogsService.CreateObj(_model1);
 
-                devicestatus.Is_Active = true;
-                devicestatus.Is_Start = true;
-                devicestatus.Status = "Failed";
-                devicestatus.Type = "Stop";
-                await ExtractLogsService.UpdateObj(devicestatus);
+            //     devicestatus.Is_Active = true;
+            //     devicestatus.Is_Start = true;
+            //     devicestatus.Status = "Failed";
+            //     devicestatus.Type = "Stop";
+            //     await ExtractLogsService.UpdateObj(devicestatus);
 
-                ISPROCESSING = false;
-                _toastService.ShowError("The system is offline.");
-                StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
-            }
+            //     ISPROCESSING = false;
+            //     _toastService.ShowError("The system is offline.");
+            //     StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
+            // }
+            ISPROCESSING = false;
         }
+
         else
         {
             if (checkcheckcheck.Status.Equals("Processing"))
@@ -354,7 +376,8 @@
             else
             {
                 ISPROCESSING = true;
-                Console.WriteLine(Convert.ToDateTime(dateextract));
+
+
                 var userid = Convert.ToInt32(GlobalConfigService.User_Id);
                 ExtractLogsModel _model = new ExtractLogsModel()
                     {
@@ -372,7 +395,7 @@
                     };
 
                 await ExtractLogsService.CreateObj(_model);
-
+                //await OnUpdateIPStatus();
                 StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
                 await Task.Delay(10000);
 
@@ -431,18 +454,19 @@
                     devicestatus.Is_Start = true;
                     devicestatus.Status = "Failed";
                     devicestatus.Type = "Stop";
-                    await ExtractLogsService.UpdateObj(devicestatus);
-
+                    //await ExtractLogsService.UpdateObj(devicestatus);
+                    await OnUpdateIPStatus("Close");
                     ISPROCESSING = false;
                     _toastService.ShowError("The system is offline.");
                     StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
                 }
             }
         }
+        StateHasChanged();
     }
 
 
-    private async Task OnUpdateIPStatus()
+    private async Task OnUpdateIPStatus(string _status)
     {
         string _type = DateTime.Now.ToString("tt");
         bool _isAM = false;
@@ -457,27 +481,30 @@
             _isAM = false;
             _isPM = true;
         }
-        var _masterList = await BioIPService.GetAllActivesObj();
-        foreach (var _itm in _masterList)
+
+        if(_status == "Close")
         {
-
-            BioIPModel _model = new BioIPModel()
-                {
-                    Id = _itm.Id,
-                    Location = _itm.Location,
-                    IP_Address = _itm.IP_Address,
-                    Port = _itm.Port,
-                    Device_Info = _itm.Device_Info,
-                    Machine = _itm.Machine,
-                    Machine_Reg = _itm.Machine_Reg,
-                    Is_AM = _isAM,
-                    Is_PM = _isPM,
-                    Status = _itm.Status,
-                    Res_Status = "Open"
-                };
-
-            await BioIPService.UpdateObj(_model);
+            _isAM = false;
+            _isPM = false;
         }
+
+        var _bioObj = await BioIPService.GetSingleObj(SelectedLoc);        
+        BioIPModel _model = new BioIPModel()
+            {
+                Id = _bioObj.Id,
+                Location = _bioObj.Location,
+                IP_Address = _bioObj.IP_Address,
+                Port = _bioObj.Port,
+                Device_Info = _bioObj.Device_Info,
+                Machine = _bioObj.Machine,
+                Machine_Reg = _bioObj.Machine_Reg,
+                Is_AM = _isAM,
+                Is_PM = _isPM,
+                Status = _bioObj.Status,
+                Res_Status = _status
+            };
+
+        await BioIPService.UpdateObj(_model);
     }
 
 

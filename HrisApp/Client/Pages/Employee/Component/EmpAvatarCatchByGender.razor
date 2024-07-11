@@ -1,0 +1,55 @@
+﻿<style>
+    /*EMPLOYMENT AVATAR CLASS*/
+    .statusRegular {
+        border: 2px solid #9BB67C;
+    }
+
+    .statusProbationary {
+        border: 2px solid #ebc878;
+    }
+
+    .statusCasual {
+        border: 2px solid #6096B4;
+    }
+
+    .statusFixedTerm {
+        border: 2px solid #7F669D;
+    }
+
+    .statusProjectBased {
+        border: 2px solid #6B240C;
+    }
+</style>
+<MudAvatar Class="@AVATARCLASS">
+    <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
+</MudAvatar>
+
+@code {
+    [Parameter] public string VERIFYID { get; set; } = "";
+    [Parameter] public string AVATARCLASS { get; set; } = "";
+    [Parameter] public int GENDERID { get; set; }
+
+    private string ImageData = "images/avatarorimage.jpg";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            await EmployeeImg(VERIFYID, GENDERID);
+        }
+        catch (Exception)
+        {
+            ImageData = "images/avatarorimage.jpg";
+        }
+    }
+
+    private async Task EmployeeImg(string verifyCode, int id)
+    {
+        var imagemodel = await ImageService.GetImageDataCatchByGender(verifyCode, id);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
+        }
+    }
+}

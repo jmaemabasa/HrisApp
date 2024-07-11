@@ -4237,6 +4237,9 @@ namespace HrisApp.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AreaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Device_Info")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -4288,6 +4291,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<string>("Action")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BioId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date_Create")
                         .HasColumnType("datetime2");

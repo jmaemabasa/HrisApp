@@ -7,6 +7,7 @@ namespace HrisApp.Client.Services.ImageService
         List<EmpPictureT> EmpPictureTs { get; }
         Task AttachFile(MultipartFormDataContent formdata, string EmployeeId, int division, int department, string lastname, string verify);
         Task<byte[]> GetImageData(string verifyCode);
+        Task<byte[]> GetImageDataCatchByGender(string verifyCode, int genderid);
         Task<List<DocumentT>> GetDocuImagelist(string verCode);
         Task<List<byte[]>> GetPDFData(string verifyCode, string EmployeeNo);
         Task UpdateDBImage(EmpPictureT img);

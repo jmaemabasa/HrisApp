@@ -119,6 +119,7 @@ global using HrisApp.Client.Services.SettingsS.BioIPService;
 global using HrisApp.Client.Services.SettingsS.ExtractLogsService;
 global using HrisApp.Shared.Models.SettingsM;
 global using HrisApp.Client.Services.SettingsS.MaintenanceService;
+global using HrisApp.Client.Services.APiS.MasterDataApiS;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -203,6 +204,7 @@ builder.Services.AddScoped<IVendorService, VendorService>();
 
 
 builder.Services.AddScoped<IDailyVerseService, DailyVerseService>();
+builder.Services.AddScoped<IMasterDataApiService, MasterDataApiService>();
 
 builder.Services.AddScoped<IBioIPService, BioIPService>();
 builder.Services.AddScoped<IExtractLogsService, ExtractLogsService>();

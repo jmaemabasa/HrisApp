@@ -42,13 +42,13 @@
             {
                 Name = areaName
             };
-            var result = await _httpClient.PostAsJsonAsync("api/Area/CreateArea", areaT);
+            await _httpClient.PostAsJsonAsync("api/Area/CreateArea", areaT);
 
         }
 
         public async Task UpdateArea(AreaT area)
         {
-            var result = await _httpClient.PutAsJsonAsync("api/Area/UpdateArea", area);
+            await _httpClient.PutAsJsonAsync("api/Area/UpdateArea", area);
         }
     }
 }

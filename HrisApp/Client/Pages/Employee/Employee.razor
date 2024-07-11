@@ -176,7 +176,7 @@
                     <MudTh Class="col-sm-12 col-md-2" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Department</MudTh>
                     <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
                         <MudTableSortLabel SortBy="new Func<EmployeeT, object>(x=>x.DateHired)">
-                            Date Hired
+                            Hired On
                         </MudTableSortLabel>
                     </MudTh>
                     <MudTh Class="col-sm-12 col-md-1" Style="background: #e9ecef; font-weight: 600; font-size: 16px; text-align:center;">
@@ -190,7 +190,8 @@
                     <MudTd DataLabel="Full Name">
                         <div class="d-flex flex-row align-items-center gap-3">
                             <div class="d-flex align-items-center">
-                                <EmployeeNameEmailsaListEmployee verify="@employeeee.Verify_Id" />
+                                @* <EmployeeNameEmailsaListEmployee verify="@employeeee.Verify_Id" /> *@
+                                <EmpAvatarCatchByGender VERIFYID="@employeeee.Verify_Id" AVATARCLASS="@StatusAvatarColor(employeeee.EmploymentStatus?.Name)" GENDERID="@employeeee.GenderId" />
                             </div>
                             <div>
                                 <div class="flex-column">
@@ -201,14 +202,12 @@
                         </div>
                     </MudTd>
                     <MudTd DataLabel="EmployeeNo">@employeeee.EmployeeNo</MudTd>
+
+                    @{
+                        var pos = SubPositionsL.FirstOrDefault(_ => _.Id == employeeee.PositionId);
+                    }
                     <MudTd DataLabel="Position">
-                        @foreach (var item in SubPositionsL)
-                        {
-                            if (item.Id == employeeee.PositionId)
-                            {
-                                @item.Description
-                            }
-                        }
+                        @pos?.Description
                     </MudTd>
                     <MudTd DataLabel="Division">
                         @employeeee.Division?.Name
@@ -244,7 +243,7 @@
 </div>
 
 @code {
-#nullable disable
+    #nullable disable
     private bool _processing = false;
 
 
@@ -289,5 +288,18 @@
             Console.WriteLine(ex.Message);
             //NavigateError();
         }
+    }
+
+    private static string StatusAvatarColor(string status)
+    {
+        return status switch
+        {
+            "Regular" => "statusRegular",
+            "Probationary" => "statusProbationary",
+            "Casual" => "statusCasual",
+            "Fixed Term" => "statusFixedTerm",
+            "Project Based" => "statusProjectBased",
+            _ => "",
+        };
     }
 }

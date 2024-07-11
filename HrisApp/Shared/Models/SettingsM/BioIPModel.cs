@@ -19,6 +19,7 @@ namespace HrisApp.Shared.Models.SettingsM
         public string Status { get; set; } = string.Empty;
 
         public string Res_Status { get; set; } = string.Empty; //Open, Close, Error
+        public int AreaId { get; set; }
 
     }
 }

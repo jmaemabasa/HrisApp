@@ -204,9 +204,22 @@ namespace HrisApp.Client.Pages.Employee
             }
 
             if (employee.StatusId == 1)
+            {
+                await MasterDataApiSvc.UpdateFSSStatus(Id, 1); //UPDATE FSS MASTER DATA TO ACTIVE
+                await MasterDataApiSvc.UpdateSalesmanStatus(Id, 1); //UPDATE FSS MASTER DATA TO ACTIVE
+                await MasterDataApiSvc.UpdateWmsUserStatus(Id, 1); //UPDATE FSS MASTER DATA TO ACTIVE
+            }
+            else
+            {
+                await MasterDataApiSvc.UpdateFSSStatus(Id, 2); //UPDATE FSS MASTER DATA TO INACTIVE
+                await MasterDataApiSvc.UpdateSalesmanStatus(Id, 2); //UPDATE FSS MASTER DATA TO INACTIVE
+                await MasterDataApiSvc.UpdateWmsUserStatus(Id, 2); //UPDATE FSS MASTER DATA TO INACTIVE
+            }
+
+            if (employee.StatusId == 1)
                 employee.DateInactiveStatus = null;
 
-            if (employee.StatusId != 1)
+            if (employee.StatusId != 1) // IF DLI SYA ACTIVE
             {
                 if (employee.DateInactiveStatus == null)
                 {
@@ -227,6 +240,7 @@ namespace HrisApp.Client.Pages.Employee
                     await EmployeeService.UpdateEmployee(employee);
                     await AddressService.UpdateAddress(_address);
                     await PayrollService.UpdatePayroll(_payroll);
+
 
                     //UPDATE EMPLOYMENT DATE
                     _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
@@ -478,7 +492,6 @@ namespace HrisApp.Client.Pages.Employee
 
         #endregion Image Update
 
-
         public async Task OnExporttoPDF()
         {
             try
@@ -492,6 +505,7 @@ namespace HrisApp.Client.Pages.Employee
                 //NavigateError();
             }
         }
+
         public async Task DeleteEmployee(int id)
         {
             var result = await Swal.FireAsync(new SweetAlertOptions
@@ -838,7 +852,7 @@ namespace HrisApp.Client.Pages.Employee
         private bool _showAlert = false;
 
         //private string _pHealthHolder = "●●●●●●●●●", _pagIbigHolder = "●●●●●●●●●", _sssHolder = "●●●●●●●●●", _tinHolder = "●●●●●●●●●";
-        private string _pHealthHolder = "", _pagIbigHolder = "", _sssHolder = "", _tinHolder = "", _rateholder ="";
+        private string _pHealthHolder = "", _pagIbigHolder = "", _sssHolder = "", _tinHolder = "", _rateholder = "";
 
         private bool _isShowPass;
         private InputType _passwordInput = InputType.Password;

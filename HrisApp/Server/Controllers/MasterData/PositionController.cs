@@ -214,8 +214,8 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(pos);
         }
 
-
         #region POSITION SKILLS
+
         //SKILLS
         [HttpGet("GetTechSkill")]
         public async Task<ActionResult<List<PositionTechSkillT>>> GetTechSkill([FromQuery] string posCode)
@@ -535,7 +535,9 @@ namespace HrisApp.Server.Controllers.MasterData
             await _context.SaveChangesAsync();
             return Ok();
         }
-        #endregion
+
+        #endregion POSITION SKILLS
+
         //[HttpGet("GeneratePosCode")]
         //public async Task<ActionResult<int>> GetExistingEduc([FromQuery] string verifyCode)
         //{
@@ -671,5 +673,23 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(_returnId.Id);
         }
+
+
+        #region FOR MASTERDATA
+        [HttpGet("GetJobPositionByEmpId")]
+        public async Task<ActionResult<PositionT>> GetJobPositionByEmpId([FromQuery]int empid)
+        {
+            var emp = await _context.EmployeeT.FindAsync(empid);
+            var subpos = await _context.SubPositionT.FindAsync(emp.PositionId);
+            var pos = await _context.PositionT.FirstOrDefaultAsync(emp=> emp.PosCode.Equals(subpos.PosCode));
+
+            if (pos == null)
+            {
+                return NotFound();
+            }
+
+            return pos;
+        }
+        #endregion
     }
 }

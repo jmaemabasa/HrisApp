@@ -1,13 +1,12 @@
 ﻿<div class="d-flex flex-row align-items-center gap-3">
     <div class="d-flex align-items-center">
         <MudAvatar Rounded="true">
-            @* <MudImage Src="@ImageData"></MudImage> *@
             <img class="imgavatar" src="@ImageData" style="width: inherit;height: inherit;border-radius: inherit;" />
         </MudAvatar>
     </div>
     <div>
         <div class="flex-column">
-            <div><b>@CapitalizeFirstLetter(employee.FirstName) @CapitalizeFirstLetter(employee.LastName)</b></div>
+            <div><b>@CapitalizeFirstLetter(FRSTNAME) @CapitalizeFirstLetter(LSTNAME)</b></div>
             <div style="font-size: 13px !important;">@subpos.Description</div>
         </div>
     </div>
@@ -15,30 +14,24 @@
 
 @code {
     #nullable disable
-    [Parameter]
-    public string verify { get; set; }
+    [Parameter] public string VERIFYID { get; set; }
+    [Parameter] public int GENDERID { get; set; }
+    [Parameter] public string FRSTNAME { get; set; }
+    [Parameter] public string LSTNAME { get; set; }
+    [Parameter] public int POSID { get; set; }
 
-    EmployeeT employee = new();
-    SubPositionT subpos = new();
+    private SubPositionT subpos = new();
 
     protected override async Task OnParametersSetAsync()
     {
         try
         {
-            employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
-            subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
-            await EmployeeImg(verify);//image
+            subpos = await PositionService.GetSingleSubPosition(POSID);
+            await EmployeeImg(VERIFYID, GENDERID);//image
         }
         catch (Exception)
         {
-            if (employee.GenderId == 1)
-            {
-                ImageData = string.Format("images/avatarmaleholder.jpg");
-            }
-            else
-            {
-                ImageData = string.Format("images/avatarfemaleholder.jpg");
-            }
+            ImageData = "images/avatarorimage.jpg";
         }
     }
 
@@ -52,16 +45,15 @@
         return char.ToUpper(input[0]) + input[1..];
     }
 
-    private string ImageData;
+    private string ImageData = "images/avatarorimage.jpg";
 
-    private async Task EmployeeImg(string verifyCode)
+    private async Task EmployeeImg(string verifyCode, int id)
     {
-        var imagemodel = await ImageService.GetImageData(verifyCode);
+        var imagemodel = await ImageService.GetImageDataCatchByGender(verifyCode, id);
         if (imagemodel != null)
         {
             var base642 = Convert.ToBase64String(imagemodel);
             ImageData = string.Format("data:image/png;base64,{0}", base642);
-            // Console.WriteLine($"2nd Test: {verifyCode}");
         }
     }
 }

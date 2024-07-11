@@ -19,12 +19,9 @@
     EmployeeT employee = new();
     SubPositionT subpos = new();
 
-    string fname = "", lname = "", mname = "", pos ="";
+    string fname = "", lname = "", mname = "";
 
-    private string ImageData;
-
-
-    private void GoToEmployee() => NavigationManager.NavigateTo($"/employee/edit/{employee.Id}");
+    private string ImageData = "images/avatarorimage.jpg";
 
     protected override async Task OnParametersSetAsync()
     {
@@ -36,28 +33,23 @@
         mname = (employee.MiddleName != "" ? $"{employee.MiddleName[0].ToString().ToUpper()}." : "");
         try
         {
-            await EmployeeImg(verify);//image
+            await EmployeeImg();//image
         }
         catch (Exception)
         {
-            if (employee.GenderId == 1)
-            {
-                ImageData = string.Format("images/avatarmaleholder.jpg");
-            }
-            else
-            {
-                ImageData = string.Format("images/avatarfemaleholder.jpg");
-            }
+            ImageData = "images/avatarorimage.jpg";
         }
     }
 
-    private async Task EmployeeImg(string verifyCode)
+    private async Task EmployeeImg()
     {
-        var imagemodel = await ImageService.GetImageData(verifyCode);
+        var imagemodel = await ImageService.GetImageDataCatchByGender(verify, employee.GenderId);
         if (imagemodel != null)
         {
             var base642 = Convert.ToBase64String(imagemodel);
             ImageData = string.Format("data:image/png;base64,{0}", base642);
         }
     }
+
+    private void GoToEmployee() => NavigationManager.NavigateTo($"/employee/edit/{employee.Id}");
 }

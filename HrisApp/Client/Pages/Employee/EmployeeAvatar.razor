@@ -5,40 +5,31 @@
 </MudAvatar>
 
 @code {
-    #nullable disable
-    [Parameter]
-    public string verify { get; set; }
-    EmployeeT employee = new();
+    [Parameter] public string verify { get; set; } = "";
+    [Parameter] public int GENDERID { get; set; }
 
-    private string ImageData;
+    private string ImageData = "images/avatarorimage.jpg";
 
-    private async Task EmployeeImg(string verifyCode)
-    {
-        employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
-        var imagemodel = await ImageService.GetImageData(verifyCode);
-        if (imagemodel != null)
-        {
-            var base642 = Convert.ToBase64String(imagemodel);
-            ImageData = string.Format("data:image/png;base64,{0}", base642);
-        }
-    }
 
     protected override async Task OnParametersSetAsync()
     {
         try
         {
-            await EmployeeImg(verify);//image
+            await EmployeeImg();//image
         }
         catch (Exception)
         {
-            if (employee.GenderId == 1)
-            {
-                ImageData = string.Format("images/avatarmaleholder.jpg");
-            }
-            else
-            {
-                ImageData = string.Format("images/avatarfemaleholder.jpg");
-            }
+            ImageData = "images/avatarorimage.jpg";
+        }
+    }
+
+    private async Task EmployeeImg()
+    {
+        var imagemodel = await ImageService.GetImageDataCatchByGender(verify, GENDERID);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            ImageData = string.Format("data:image/png;base64,{0}", base642);
         }
     }
 }

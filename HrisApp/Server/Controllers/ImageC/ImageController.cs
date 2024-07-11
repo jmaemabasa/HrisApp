@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Server.Controllers.ImageC
+﻿using System.Text;
+
+namespace HrisApp.Server.Controllers.ImageC
 {
 #nullable disable
 
@@ -27,8 +29,17 @@
 
                 if (model == null)
                 {
-                    //not found dapat ni
-                    return NoContent();
+                    var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                    var _nullfilename = "avatarorimage.jpg";
+                    var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
+
+                    var _nullmemory = new MemoryStream();
+                    using (var _stream = new FileStream(_nullpath, FileMode.Open))
+                    {
+                        await _stream.CopyToAsync(_nullmemory);
+                    }
+                    _nullmemory.Position = 0;
+                    return _nullmemory.ToArray();
                 }
 
                 var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
@@ -43,8 +54,40 @@
             }
             catch (Exception)
             {
-                return NoContent();
+                return Encoding.ASCII.GetBytes("images/avatarmaleholder.jpg");
             }
+        }
+
+        [HttpGet("GetImageDataCatchByGender")]
+        public async Task<ActionResult<byte[]>> GetImageDataCatchByGender([FromQuery] string verifyCode, [FromQuery] int genderid)
+        {
+            var model = await _context.EmpPictureT.FirstOrDefaultAsync((a => a.Verify_Id == verifyCode));
+
+                if (model == null)
+                {
+                    var _nullfilename = genderid == 1 ? "avatarmaleholder.jpg" : "avatarfemaleholder.jpg";
+
+                    var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                    var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
+
+                    var _nullmemory = new MemoryStream();
+                    using (var _stream = new FileStream(_nullpath, FileMode.Open))
+                    {
+                        await _stream.CopyToAsync(_nullmemory);
+                    }
+                    _nullmemory.Position = 0;
+                    return _nullmemory.ToArray();
+                }
+
+                var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
+
+                var _memory = new MemoryStream();
+                using (var _stream = new FileStream(_path, FileMode.Open))
+                {
+                    await _stream.CopyToAsync(_memory);
+                }
+                _memory.Position = 0;
+                return _memory.ToArray();
         }
 
         //NEW DAGDAG 4.1.23

@@ -69,6 +69,11 @@ namespace HrisApp.Client.Services.ImageService
             throw new Exception("No Signature Found");
         }
 
+        public async Task<byte[]> GetImageDataCatchByGender(string verifyCode, int genderid)
+        {
+            return await _httpClient.GetFromJsonAsync<byte[]>($"api/Image/GetImageDataCatchByGender?verifyCode={verifyCode}&genderid={genderid}");
+        }
+
         public async Task<List<byte[]>> GetPDFData(string verifyCode, string EmployeeNo)
         {
             try

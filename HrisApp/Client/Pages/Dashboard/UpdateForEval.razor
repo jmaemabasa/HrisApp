@@ -53,7 +53,7 @@
     }
     else
     {
-        <MudTable Class="stable" Items="@EvalList" Context="employe1" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="680px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="true">
+        <MudTable Class="stable" Items="@EvalList" Context="employe1" SortLabel="Sort By" FixedHeader="true" Elevation="0" Height="680px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Virtualize="false">
             <HeaderContent>
                 <MudTh Class="col-3" Style="background: #e9ecef; font-weight: bold; font-size: 14px;">Full Name</MudTh>
                 <MudTh Style="background: #e9ecef; font-weight: bold; font-size: 14px;">
@@ -73,61 +73,38 @@
                 </MudTd>
                 <MudTd DataLabel="">@employe1.DateHired.ToString("MM/dd/yyyy")</MudTd>
                 <MudTd DataLabel="" Class="" Style="text-align: center;">
-                    @if (employe1.Eval1Status != "Done")
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.AccessTimeFilled" Class="chipPending">@employe1.Eval1Status</MudChip>
-                    }
-                    else
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.CheckCircle" Class="chipDone">@employe1.Eval1Status</MudChip>
-                    }
+                    <MudChip Icon="@(employe1.Eval1Status != "Done" ? Icons.Material.Rounded.AccessTimeFilled : Icons.Material.Rounded.CheckCircle)"
+                             Class="@(employe1.Eval1Status != "Done" ? "chipPending" : "chipDone")">
+                        @employe1.Eval1Status
+                    </MudChip>
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
-                    @if (employe1.Eval2Status != "Done")
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.AccessTimeFilled" Class="chipPending">@employe1.Eval2Status</MudChip>
-                    }
-                    else
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.CheckCircle" Class="chipDone">@employe1.Eval2Status</MudChip>
-                    }
+                    <MudChip Icon="@(employe1.Eval2Status != "Done" ? Icons.Material.Rounded.AccessTimeFilled : Icons.Material.Rounded.CheckCircle)"
+                             Class="@(employe1.Eval2Status != "Done" ? "chipPending" : "chipDone")">
+                        @employe1.Eval2Status
+                    </MudChip>
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
-                    @if (employe1.Eval3Status != "Done")
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.AccessTimeFilled" Class="chipPending">@employe1.Eval3Status</MudChip>
-                    }
-                    else
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.CheckCircle" Class="chipDone">@employe1.Eval3Status</MudChip>
-                    }
+                    <MudChip Icon="@(employe1.Eval3Status != "Done" ? Icons.Material.Rounded.AccessTimeFilled : Icons.Material.Rounded.CheckCircle)"
+                             Class="@(employe1.Eval3Status != "Done" ? "chipPending" : "chipDone")">
+                        @employe1.Eval3Status
+                    </MudChip>
                 </MudTd>
                 <MudTd DataLabel="" Style="text-align: center;">
-                    @if (employe1.Eval5Status != "Done")
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.AccessTimeFilled" Class="chipPending">@employe1.Eval5Status</MudChip>
-                    }
-                    else
-                    {
-                        <MudChip Icon="@Icons.Material.Rounded.CheckCircle" Class="chipDone">@employe1.Eval5Status</MudChip>
-                    }
+                    <MudChip Icon="@(employe1.Eval5Status != "Done" ? Icons.Material.Rounded.AccessTimeFilled : Icons.Material.Rounded.CheckCircle)"
+                             Class="@(employe1.Eval5Status != "Done" ? "chipPending" : "chipDone")">
+                        @employe1.Eval5Status
+                    </MudChip>
                 </MudTd>
-                @if (employe1.EvalStatus != "Done")
-                {
-                    <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
-                        <Authorized>
-                            <MudTd DataLabel="" Style="text-align: center;">
-                                <MudTooltip Text="Update" Color="Color.Tertiary">
-                                    <MudIconButton Icon="@Icons.Material.Rounded.DownloadDone" OnClick="@(() => UpdateTable(employe1))"></MudIconButton>
-                                </MudTooltip>
-                            </MudTd>
-                        </Authorized>
-                    </AuthorizeView>
-                }
-                else
-                {
-                    <MudChip Icon="@Icons.Material.Outlined.CheckCircle" Style="background-color: #AAC8A7; color: #fafaf5;">@employe1.Eval1Status</MudChip>
-                }
+                <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, HR">
+                    <Authorized>
+                        <MudTd DataLabel="" Style="text-align: center;">
+                            <MudTooltip Text="Update" Color="Color.Tertiary">
+                                <MudIconButton Icon="@Icons.Material.Rounded.DownloadDone" OnClick="@(() => UpdateTable(employe1))"></MudIconButton>
+                            </MudTooltip>
+                        </MudTd>
+                    </Authorized>
+                </AuthorizeView>
             </RowTemplate>
         </MudTable>
     }

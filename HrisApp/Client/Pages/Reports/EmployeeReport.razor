@@ -138,7 +138,7 @@
                 <MudTd DataLabel="Full Name">
                     <div class="d-flex flex-row align-items-center gap-3">
                         <div class="d-flex align-items-center">
-                            <EmployeeAvatar verify="@employeeee.Verify_Id" />
+                            <EmployeeAvatar verify="@employeeee.Verify_Id" GENDERID="@employeeee.GenderId" />
                         </div>
                         <div>
                             <div class="flex-column">
@@ -151,13 +151,10 @@
                 </MudTd>
                 <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
                 <MudTd DataLabel="Position">
-                    @foreach (var item in SubPositionsL)
-                    {
-                        if (item.Id == employeeee.PositionId)
-                        {
-                            @item.Description
-                        }
+                    @{
+                        var pos = SubPositionsL.FirstOrDefault(_ => _.Id == employeeee.PositionId);
                     }
+                    @pos?.Description
                 </MudTd>
                 <MudTd DataLabel="Division">@employeeee.Division?.Name</MudTd>
                 <MudTd DataLabel="Department">@employeeee.Department?.Name</MudTd>

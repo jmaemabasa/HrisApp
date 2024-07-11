@@ -76,6 +76,10 @@ img, .imgavatar {
     height: 40px;
 }
 
+.blazored-toast-container {
+    z-index: 999999 !important;
+}
+
 @media (max-width: 640.98px) {
     .mud-appbar .mud-toolbar-appbar {
         width: calc(100% - 16px) !important;

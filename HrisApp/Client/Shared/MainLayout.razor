@@ -420,17 +420,14 @@
             VERIFY = GlobalConfigService.VerifyId;
             USERNAME = GlobalConfigService.Username;
 
-            await EmployeeService.GetEmployee();
-            EmployeeList = EmployeeService.EmployeeTs;
-
-            CurrentEmployee = EmployeeService.EmployeeTs.Where(e => e.Verify_Id.Equals(VERIFY)).FirstOrDefault();
+            CurrentEmployee = await EmployeeService.GetSingleEmployeeByVerId(VERIFY);
             Emp_Firstname = CurrentEmployee.FirstName;
             Emp_Lastname = CurrentEmployee.LastName;
 
             Userrole = GlobalConfigService.Role;
             try
             {
-                await EmployeeImg(VERIFY);//image
+                await EmployeeImg(VERIFY, CurrentEmployee.GenderId);//image
             }
             catch (Exception)
             {
@@ -564,9 +561,9 @@
 
     private string ImageData { get; set; } = string.Format("images/imgholder.jpg");
 
-    private async Task EmployeeImg(string verifyCode)
+    private async Task EmployeeImg(string verifyCode, int id)
     {
-        var imagemodel = await ImageService.GetImageData(verifyCode);
+        var imagemodel = await ImageService.GetImageDataCatchByGender(verifyCode, id);
         if (imagemodel != null)
         {
             var base642 = Convert.ToBase64String(imagemodel);
