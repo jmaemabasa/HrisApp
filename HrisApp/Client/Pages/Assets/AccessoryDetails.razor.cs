@@ -10,11 +10,13 @@ namespace HrisApp.Client.Pages.Assets
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private List<AssetSubCategory2T> SUBCAT2 = new();
         private List<AssetStatusT> STATUS = new();
         private List<AssetAccessHistoryT> ACCHISTORY = new();
         private List<EmployeeT> EMPLOYEE = new();
 
         private List<AssetAccessImageT> assetImgList = new();
+        private List<AccessImgLogT> ImgLogList = new();
         private List<AccessoryRemarksT> REMARKS = new();
 
         private string MainAssetImage { get; set; } = string.Format("images/asset-holder.jpg");
@@ -31,6 +33,7 @@ namespace HrisApp.Client.Pages.Assets
             TYPES = await AssetTypeService.GetObjList();
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
+            SUBCAT2 = await AssetSubCatService2.GetObjList();
             ACCHISTORY = await AssetAccHistorySvc.GetObjList();
             await StaticService.GetAssetStatus();
             STATUS = StaticService.AssetStatusTs;
@@ -57,6 +60,7 @@ namespace HrisApp.Client.Pages.Assets
 
                 await AssAccImgSvc.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssAccImgSvc.AssetAccessImageTs;
+                ImgLogList = await AccessImgLogSvc.GetAllImagesPerAss(obj.JMCode);
 
                 if (obj.MainAssetId != null)
                 {
@@ -76,9 +80,12 @@ namespace HrisApp.Client.Pages.Assets
         {
             if (obj.AssetStatusId != 1 && obj.AssetStatusId != 2)
             {
-                var tes = STATUS.Where(e => e.Id == obj.AssetStatusId).FirstOrDefault();
-                _toastService.ShowError(tes?.Name + " DATE IS REQUIRED.");
-                return;
+                if (obj.StatusDate == null)
+                {
+                    var tes = STATUS.Where(e => e.Id == obj.AssetStatusId).FirstOrDefault();
+                    _toastService.ShowError(tes?.Name + " DATE IS REQUIRED.");
+                    return;
+                }
             }
 
             if (obj.AssetStatusId == 2 || obj.AssetStatusId == 1)
@@ -160,7 +167,7 @@ namespace HrisApp.Client.Pages.Assets
             var confirmResult = await Swal.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmation",
-                Text = "Are you sure you remove this? You can't undo your action.",
+                Text = "Are you sure you want to remove this? You can't undo your action.",
                 Icon = SweetAlertIcon.Question,
                 ShowCancelButton = true,
                 ConfirmButtonText = "Yes",
@@ -188,6 +195,8 @@ namespace HrisApp.Client.Pages.Assets
             {
                 await AssAccImgSvc.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssAccImgSvc.AssetAccessImageTs;
+                ImgLogList = await AccessImgLogSvc.GetAllImagesPerAss(obj.JMCode);
+
 
                 await LoadAccessImg(obj.JMCode);//image
                 StateHasChanged();
@@ -217,6 +226,28 @@ namespace HrisApp.Client.Pages.Assets
 
                 await AssAccImgSvc.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssAccImgSvc.AssetAccessImageTs;
+
+                StateHasChanged();
+            }
+        }
+        private async Task DeleteAssetImgLog(string filename, string assetcode)
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Pernamently delete the image? \n You can't undo this.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (confirmResult.IsConfirmed)
+            {
+                await AccessImgLogSvc.DeleteAssetImg(filename, assetcode);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+
+                ImgLogList = await AccessImgLogSvc.GetAllImagesPerAss(obj.JMCode);
 
                 StateHasChanged();
             }

@@ -55,7 +55,19 @@
         <AuthorizeView Roles="CadAdmin, SysAdmin, HR">
             <Authorized>
                 <div class="d-flex gap-3">
-                    @* <MudDatePicker @bind-Date="dateextract" /> *@
+                    <button class="Btn" @onclick="OnCleanLogs">
+                        @if (!_processingClean)
+                        {
+                            <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.CleaningServices"></MudIcon></div>
+                            <div class="text">Clean Logs</div>
+                        }
+                        else
+                        {
+                            <div class="sign"> <MudProgressCircular Color="Color.Warning" Class="ms-n1" Size="Size.Small" Indeterminate="true" /></div>
+                            <div class="text">Cleaning</div>
+                        }
+
+                    </button>
                     <MudDatePicker @bind-Date="dateextract"
                                    IsDateDisabledFunc="@((DateTime dt) => dt.Date >= DateTime.Today.AddDays(1))" Variant="Variant.Outlined" Margin="Margin.Dense" />
 
@@ -266,6 +278,7 @@
     //LOADING
     public bool _isVisible;
     private bool ISPROCESSING = false;
+    private bool _processingClean = false;
     private async Task ExtractBtn()
     {
         if (SelectedLoc == 0)
@@ -302,7 +315,7 @@
             //await Task.Delay(10000);
 
             ExtractLogsModel devicestatus = new();
-            // devicestatus = await ExtractLogsService.GetExtractingCheckingModel();
+            /*// devicestatus = await ExtractLogsService.GetExtractingCheckingModel();
 
             // if (devicestatus.Is_Active)
             // {
@@ -361,7 +374,7 @@
             //     ISPROCESSING = false;
             //     _toastService.ShowError("The system is offline.");
             //     StateService.SetState("ExtractLogsList", await ExtractLogsService.GetObjList());
-            // }
+            // }*/
             ISPROCESSING = false;
         }
 
@@ -507,6 +520,27 @@
         await BioIPService.UpdateObj(_model);
     }
 
+    private async Task OnCleanLogs()
+    {
+        _processingClean = true;
+        _toastService.ShowInfo("Archiving. Please wait...");
+
+        var res = await ExtractLogsService.CleanLogs();
+        if (res == "Success" || res == "NoLogs")
+        {
+            _processingClean = false;
+            _toastService.ShowSuccess("Archiving succeeded.");
+            await LoadList();
+            return;
+        }
+        else
+        {
+            _processingClean = false;
+            _toastService.ShowError("Archiving failed.");
+            await LoadList();
+            return;
+        }
+    }
 
 
     private string searchString1 = "";

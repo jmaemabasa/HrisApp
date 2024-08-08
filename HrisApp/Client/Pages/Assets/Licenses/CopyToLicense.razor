@@ -1,0 +1,435 @@
+﻿<MudDialog Style="background-color: #e9ecef">
+    <DialogContent>
+        <div class="dialog-title">
+            <span>Copy Asset License</span>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div style="width: 45%;">
+                @if (imgBase64 == "./images/addIconImage.png")
+                {
+                    <MudFileUpload T="IBrowserFile" OnFilesChanged="@UploadImage" Accept="image/*" capture>
+                        <ButtonTemplate>
+                            <MudButton Class="@imguploadclass" DisableElevation HtmlTag="label" Variant="Variant.Outlined" for="@context">
+                                <div style="height: 165px; display: flex; justify-content: center; align-items: center; ">
+                                    <MudImage Src="@imgBase64" Style="height: 100px; width: 100px; " />
+                                </div>
+                            </MudButton>
+                        </ButtonTemplate>
+                    </MudFileUpload>
+                }
+                else
+                {
+                    <MudFileUpload T="IBrowserFile" OnFilesChanged="@UploadImage" Accept="image/*" capture>
+                        <ButtonTemplate>
+                            <MudButton Class="w-100 btnimagewithimage" DisableElevation HtmlTag="label" for="@context">
+                                <div style="height: 165px; display: flex; justify-content: center; align-items: center;  border-radius: 20px; padding:0px">
+                                    <MudImage Src="@imgBase64" Style="height: 95%; width: auto; max-width:100%; border-radius: 14px; border: none; " />
+                                </div>
+                            </MudButton>
+                        </ButtonTemplate>
+                    </MudFileUpload>
+                }
+            </div>
+            <MudText Typo="Typo.body2" Style="margin-top: 10px;">Select Image</MudText>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Type</MudText>
+                    <select @bind="Obj.TypeId" class="form-select" style="background:#e9ecef;margin-bottom: 5px;">
+                        @foreach (var item in TYPES)
+                        {
+                            <option value="@item.Id">@item.AType_Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Category</MudText>
+                    <select @bind="Obj.CategoryId" class="form-select" style="background:#e9ecef;margin-bottom: 5px;">
+                        @foreach (var item in CAT)
+                        {
+                            <option value="@item.Id">@item.ACat_Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Sub Category</MudText>
+                    <select @bind="Obj.SubCategoryId" class="form-select" style="background:#e9ecef;margin-bottom: 5px;">
+                        @foreach (var item in SUBCAT.Where(e => e.CategoryId == Obj.CategoryId))
+                        {
+                            <option value="@item.Id">@item.ASubCat_Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Sub Category 2</MudText>
+                    <select @bind="Obj.SubCategory2Id" class="form-select" style="background: #e9ecef;">
+                        <option value="null">Others</option>
+                        @foreach (var sec in SUBCAT2.Where(e => e.CategoryId == Obj.CategoryId && e.SubCategoryId == Obj.SubCategoryId))
+                        {
+                            <option value="@sec.Id">@sec.ASubCat2_Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <MudText Typo="Typo.body2">Asset Code</MudText>
+                    <MudTextField @bind-Value="Obj.AssetCode" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px; font-weight: 600;" />
+                </div>
+            </div>
+            @if (Obj.AssetCode != "")
+            {
+
+                <div class="row">
+                    <div class="col-12">
+                        <MudText Typo="Typo.body2">Name</MudText>
+                        <MudTextField @bind-Value="Obj.Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <MudText Typo="Typo.body2">Description</MudText>
+                        <MudTextField @bind-Value="Obj.Description" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Brand</MudText>
+                        <MudTextField @bind-Value="Obj.Brand" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Model</MudText>
+                        <MudTextField @bind-Value="Obj.Model" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Serial</MudText>
+                        <MudTextField @bind-Value="Obj.Serial" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Quantity</MudText>
+                        <MudTextField @bind-Value="Obj.Quantity" Mask="@(new PatternMask("00000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Purchase Date</MudText>
+                        <MudDatePicker Editable="true" @bind-Date="Obj.PurchaseDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <MudText Typo="Typo.body2">Purchase Amount</MudText>
+                        <MudTextField @bind-Value="Obj.PurchaseAmount" Mask="@currMask" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <MudText Typo="Typo.body2">End of Useful Life (Months)</MudText>
+                        <MudTextField @bind-Value="Obj.EUF" Mask="@(new PatternMask("00000"))" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                    </div>
+                </div>
+                <div class="d-flex flex-column">
+                    <div class="flex-grow-1">
+                        <MudText Typo="Typo.body2">Remarks</MudText>
+                        <div class="d-flex">
+                            <MudTextField @bind-Value="newRemark" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+                            <MudButton Class="btnsmallsapos" Variant="Variant.Filled" OnClick="@(() => AddNewRemark(Obj.AssetCode, newRemark))">Add</MudButton>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap flex-grow-1">
+                        <MudChipSet AllClosable="true" OnClose="CloseRemark">
+                            @foreach (var item in listOfNewRemarks)
+                            {
+                                <MudChip Style="color: #fafaf5; background-color: #424242;" Text="@item.Remark"></MudChip>
+                            }
+                        </MudChipSet>
+                    </div>
+                </div>
+            }
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            @if (isSavingAdd)
+            {
+                <button type="button" disabled class="save btn">
+                    <div class="d-flex align-items-center">
+                        <div><MudProgressCircular Class="ms-n1" Color="Color.Info" Size="Size.Small" Indeterminate="true" /></div>
+                        <div class="ms-2">Saving...</div>
+                    </div>
+                </button>
+            }
+            else
+            {
+                <button type="button" class="save btn" @onclick="ConfirmCreate">Save</button>
+            }
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter] public AssetLicenseT Obj { get; set; } = new();
+    [CascadingParameter] private MudDialogInstance? MudDialog { get; set; }
+
+    private List<AssetTypesT> TYPES = new();
+    private List<AssetCategoryT> CAT = new();
+    private List<AssetSubCategoryT> SUBCAT = new();
+    private List<AssetSubCategory2T> SUBCAT2 = new();
+    private bool isSavingAdd = false;
+    string newcode = "";
+
+    public string imgBase64 { get; set; } = string.Empty;
+    public string ImageUrl { get; set; } = string.Empty;
+    public string ImgFileName { get; set; } = string.Empty;
+    public string ImgContentType { get; set; } = string.Empty;
+
+    private MultipartFormDataContent AssetImage = new();
+    public string imguploadclass = "btnimage";
+
+    public IMask currMask = new RegexMask(@"^\$?[0-9,\.]*$");
+
+    private void Cancel() => MudDialog?.Cancel();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        TYPES = await AssetTypeService.GetObjList();
+        CAT = await AssetCatService.GetObjList();
+        SUBCAT = await AssetSubCatService.GetObjList();
+        SUBCAT2 = await AssetSubCatService2.GetObjList();
+        await StaticService.GetAssetStatus();
+        try
+        {
+            await AssetImg(Obj.JMCode);//image
+        }
+        catch (Exception)
+        {
+            imgBase64 = string.Format("./images/addIconImage.png");
+        }
+    }
+
+    private async Task ConfirmCreate()
+    {
+        isSavingAdd = true;
+        try
+        {
+            await OnGenerateCode();
+
+            var _model = new AssetLicenseT()
+                {
+                    AssetCode = newcode,
+                    JMCode = newcode,
+                    Name = Obj.Name,
+                    Brand = Obj.Brand,
+                    Model = Obj.Model,
+                    Description = Obj.Description,
+                    TypeId = Obj.TypeId,
+                    CategoryId = Obj.CategoryId,
+                    SubCategoryId = Obj.SubCategoryId,
+                    SubCategory2Id = Obj.SubCategory2Id,
+                    AssetStatusId = 2,
+                    Quantity = Obj.Quantity,
+                    Barcode = Obj.Barcode,
+                    Serial = Obj.Serial,
+                    PurchaseDate = Obj.PurchaseDate,
+                    PurchaseAmount = Obj.PurchaseAmount,
+                    Remarks = Obj.Remarks,
+                    LastCheckDate = DateTime.Now,
+                    EUF = Obj.EUF,
+                    DateCreated = DateTime.Now,
+                    CreatedById = Convert.ToInt32(GlobalConfigService.User_Id)
+                };
+
+
+            await AssLicenseSvc.CreateObj(_model);
+            await SaveAlLRemarks(_model.AssetCode);
+
+            await OnsavingImg(_model.CategoryId, _model.SubCategoryId, _model.JMCode);
+
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+            MudDialog?.Close();
+
+
+            // Update the List using the StateService
+            StateService.SetState("AssetLicenseList", await AssLicenseSvc.GetObjList());
+            _toastService.ShowSuccess("Created Successfully!");
+
+            isSavingAdd = false;
+        }
+        catch (Exception ex)
+        {
+            isSavingAdd = false;
+            Console.WriteLine(ex);
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    #region REMARKS
+    private string newRemark = "";
+    public List<AssetLicenseRemarksT> listOfNewRemarks = new();
+
+    public void AddNewRemark(string code, string remark)
+    {
+        var verifyCode = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+        if (!string.IsNullOrEmpty(newRemark))
+            listOfNewRemarks.Add(new AssetLicenseRemarksT { LicenseAssetCode = code, Remark = remark, VerifyId = verifyCode });
+        newRemark = "";
+    }
+
+    public void CloseRemark(MudChip chip)
+    {
+        var remarkToRemove = listOfNewRemarks.FirstOrDefault(item => item.Remark == chip.Text);
+
+        if (remarkToRemove != null)
+        {
+            listOfNewRemarks.Remove(remarkToRemove);
+        }
+    }
+
+    public async Task SaveAlLRemarks(string code)
+    {
+        var validtechSkill = listOfNewRemarks
+           .Where(Obj => !string.IsNullOrEmpty(Obj.Remark)).ToList();
+
+        if (validtechSkill.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var item in validtechSkill)
+        {
+            item.LicenseAssetCode = code;
+
+            int isExistTech = await LicenseRemarksSvc.GetExistObj(item.VerifyId);
+            if (isExistTech == 0)
+            {
+                await LicenseRemarksSvc.CreateObj(item);
+            }
+            else
+            {
+                await LicenseRemarksSvc.UpdateObj(item);
+            }
+        }
+
+        listOfNewRemarks.Clear();
+    }
+    #endregion
+
+    #region FUNCTIONS
+    private async Task AssetImg(string jmcode)
+    {
+        var imagemodel = await AssLicenseImgSvc.GetImageData(jmcode);
+        if (imagemodel != null)
+        {
+            var base642 = Convert.ToBase64String(imagemodel);
+            imgBase64 = string.Format("data:image/png;base64,{0}", base642);
+        }
+    }
+    public async Task UploadImage(InputFileChangeEventArgs e)
+    {
+        long lngImage = long.MaxValue;
+        var brwModel = e.File;
+        var imgFilename = e.File.Name;
+        var imgContent = e.File.ContentType;
+        var imgBuffer = new byte[e.File.Size];
+        var imgURL = $"data:{imgContent};base64,{Convert.ToBase64String(imgBuffer)}";
+
+        using (var _stream = brwModel.OpenReadStream(lngImage))
+        {
+            await _stream.ReadAsync(imgBuffer);
+        }
+
+        if (e.File.Name is null)
+        {
+            await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Error",
+                    Text = "No image uploaded!",
+                    Icon = SweetAlertIcon.Error
+                });
+            return;
+        }
+        else
+        {
+            using var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(brwModel.OpenReadStream(lngImage));
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(imgContent);
+
+            ImageUrl = imgURL;
+            ImgContentType = imgContent;
+            ImgFileName = imgFilename;
+            AssetImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
+
+            var base642 = Convert.ToBase64String(imgBuffer);
+            imgBase64 = string.Format("data:image/*;base64,{0}", base642);
+        }
+    }
+
+    public async Task OnsavingImg(int cat, int subcat, string jmcode)
+    {
+        List<AssLicenseImageT> oldassimages = await AssLicenseImgSvc.GetObjListByCode(Obj.JMCode);
+
+        using var _contentImg = new MultipartFormDataContent();
+        foreach (var item in oldassimages)
+        {
+            try
+            {
+                var imgbyte = await AssLicenseImgSvc.GetImageDataById(item.Id);
+
+                using var stream = new MemoryStream(imgbyte);
+                var fileContent = new StreamContent(stream);
+
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(item.Img_Contenttype);
+
+                var content = new MultipartFormDataContent();
+                content.Add(fileContent, "file", item.Img_Filename);
+
+                await AssLicenseImgSvc.AttachFileCopyTo(content, cat, subcat, jmcode, item.Remarks);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+    }
+
+    private async Task OnGenerateCode()
+    {
+        int lastCount = await AssLicenseSvc.GetLastCode(Obj.CategoryId, Obj.SubCategoryId) + 1;
+
+        var catcode = CAT.Where(e => e.Id == Obj.CategoryId).FirstOrDefault()!.ACat_Code;
+        var subcode = SUBCAT.Where(e => e.Id == Obj.SubCategoryId).FirstOrDefault()!.ASubCat_Code;
+        string rolesCode = lastCount.ToString().PadLeft(4, '0');
+        newcode = $"{catcode}-{subcode}-{rolesCode}";
+    }
+
+    private bool disabledsubcat = true;
+    private bool disabledcat = true;
+
+    private void OnChangeType(int id)
+    {
+        Obj.TypeId = id;
+        disabledcat = false;
+    }
+
+    private void OnChangeCat(int id)
+    {
+        Obj.CategoryId = id;
+        disabledsubcat = false;
+    }
+
+    private async Task OnChangeSCat(int id)
+    {
+        Obj.SubCategoryId = id;
+        await OnGenerateCode();
+    }
+
+    #endregion
+}

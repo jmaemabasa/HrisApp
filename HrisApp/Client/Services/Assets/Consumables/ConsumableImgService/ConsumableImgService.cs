@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Linq;
+using System.Text.Json;
 
 namespace HrisApp.Client.Services.Assets.Consumables.ConsumableImgService
 {
@@ -85,6 +86,35 @@ namespace HrisApp.Client.Services.Assets.Consumables.ConsumableImgService
             }
         }
 
+        public async Task AttachFileCopyTo(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"/api/ConsumeImage/PostUploadImageCopyTo?category={category}&subcat={subcat}&jmcode={jmcode}&remarks={remarks}", formdata);
+
+                Console.WriteLine($"Service: {response}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var newResult = JsonSerializer.Deserialize<List<ConsumableImageT>>(content, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+
+                        if (newResult is not null)
+                        {
+                            ConsumableImageTs = ConsumableImageTs.Concat(newResult).ToList();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Services Error: {ex.Message}");
+            }
+        }
         public async Task<byte[]> GetImageData(string jmcode)
         {
             var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/ConsumeImage/Getattachmentview?jmcode={jmcode}");
@@ -101,9 +131,20 @@ namespace HrisApp.Client.Services.Assets.Consumables.ConsumableImgService
             throw new Exception("No Signature Found");
         }
 
+        public async Task<byte[]> GetImageDataById(int id)
+        {
+            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/ConsumeImage/GetImageDataById?id={id}");
+            if (_imgs != null)
+                return _imgs;
+            throw new Exception("No Signature Found");
+        }
         public async Task<List<ConsumableImageT>> GetObjList()
         {
             return await _httpClient.GetFromJsonAsync<List<ConsumableImageT>>("api/ConsumeImage");
+        }
+        public async Task<List<ConsumableImageT>> GetObjListByCode(string code)
+        {
+            return await _httpClient.GetFromJsonAsync<List<ConsumableImageT>>($"api/ConsumeImage/GetObjListByCode?code={code}");
         }
 
         public async Task GetAllImagesPerAss(string jmcode)

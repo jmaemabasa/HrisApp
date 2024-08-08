@@ -21,6 +21,7 @@ namespace HrisApp.Client.Pages.Assets
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private List<AssetSubCategory2T> SUBCAT2 = new();
         private List<DivisionT> DIVISION = new();
         private List<DepartmentT> DEPARTMENT = new();
         private List<EmployeeT> EMPLOYEE = new();
@@ -34,6 +35,7 @@ namespace HrisApp.Client.Pages.Assets
         private List<MainRemarksT> REMARKS = new();
 
         private List<AssetImageT> assetImgList = new();
+        private List<MainAssetImgLogT> ImgLogsList = new();
 
         private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
 
@@ -81,6 +83,7 @@ namespace HrisApp.Client.Pages.Assets
             TYPES = await AssetTypeService.GetObjList();
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
+            SUBCAT2 = await AssetSubCatService2.GetObjList();
             ACCESSORIES = await AssetAccService.GetObjList();
             LICENSES = await AssLicenseSvc.GetObjList();
             DIVISION = await DivisionService.GetDivisionList();
@@ -139,6 +142,8 @@ namespace HrisApp.Client.Pages.Assets
                 await AssetImageService.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssetImageService.AssetImageTs;
 
+                ImgLogsList = await MainAssImgLogSvc.GetAllImagesPerAss(obj.JMCode);
+
                 await GenerateQR(obj.Id);
 
                 await ImgByAssetData();
@@ -168,9 +173,12 @@ namespace HrisApp.Client.Pages.Assets
         {
             if (obj.AssetStatusId != 1 && obj.AssetStatusId != 2)
             {
-                var tes = STATUS.Where(e => e.Id == obj.AssetStatusId).FirstOrDefault();
-                _toastService.ShowError(tes?.Name + " DATE IS REQUIRED.");
-                return;
+                if (obj.StatusDate == null)
+                {
+                    var tes = STATUS.Where(e => e.Id == obj.AssetStatusId).FirstOrDefault();
+                    _toastService.ShowError(tes?.Name + " DATE IS REQUIRED.");
+                    return;
+                }
             }
             await AssetMasterService.UpdateObj(obj);
             await SaveRemarksTODB(obj.AssetCode);
@@ -427,7 +435,7 @@ namespace HrisApp.Client.Pages.Assets
         private async Task GenerateQR(int id)
         {
             await Task.Delay(0);
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeGenerator qrGenerator = new();
 
             Url generator = new($"https://localhost:44397/main-asset/details/{id}");
             string payload = generator.ToString();
@@ -482,7 +490,7 @@ namespace HrisApp.Client.Pages.Assets
             {
                 try
                 {
-                    var imagemodel = await AssetImageService.GetImageDataAll(item.Img_Filename);
+                    var imagemodel = await AssetImageService.GetImageDataByFileName(item.Img_Filename);
                     if (imagemodel != null)
                     {
                         var base642 = Convert.ToBase64String(imagemodel);
@@ -532,6 +540,33 @@ namespace HrisApp.Client.Pages.Assets
             }
         }
 
+        private async Task DeleteAssetImgLog(string filename, string assetcode)
+        {
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmation",
+                Text = "Pernamently delete the image? \n You can't undo this.",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (confirmResult.IsConfirmed)
+            {
+                await MainAssImgLogSvc.DeleteAssetImg(filename, assetcode);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
+
+                await AssetImageService.GetAllImagesPerAss(obj.JMCode);
+                assetImgList = AssetImageService.AssetImageTs;
+
+                ImgLogsList.Clear();
+                ImgLogsList = await MainAssImgLogSvc.GetAllImagesPerAss(obj.JMCode);
+
+                StateHasChanged();
+            }
+        }
+
         private async void RefreshPdfFileList()
         {
             try
@@ -539,6 +574,9 @@ namespace HrisApp.Client.Pages.Assets
                 ImgByAssetList.Clear();
                 await AssetImageService.GetAllImagesPerAss(obj.JMCode);
                 assetImgList = AssetImageService.AssetImageTs;
+
+                ImgLogsList.Clear();
+                ImgLogsList = await MainAssImgLogSvc.GetAllImagesPerAss(obj.JMCode);
 
                 await ImgByAssetData();
                 await AssetImg(obj.JMCode);//image
@@ -810,7 +848,7 @@ namespace HrisApp.Client.Pages.Assets
 
         #region MUD TABS / TAB PANEL
 
-        private MudTabs? Tabs;
+        private MudTabs Tabs;
         private int activeIndex;
 
         private RenderFragment TabHeader(int tabId)

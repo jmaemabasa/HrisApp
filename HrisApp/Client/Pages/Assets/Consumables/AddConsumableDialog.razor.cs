@@ -8,6 +8,7 @@
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private List<AssetSubCategory2T> SUBCAT2 = new();
         private List<AreaT> AREA = new();
         private List<UOMT> UOM = new();
         public IMask currMask = new RegexMask(@"^\$?[0-9,\.]*$");
@@ -19,6 +20,7 @@
             TYPES = await AssetTypeService.GetObjList();
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
+            SUBCAT2 = await AssetSubCatService2.GetObjList();
             AREA = await AreaService.GetAreaList();
             UOM = await UOMService.GetObjList();
             await StaticService.GetAssetStatus();

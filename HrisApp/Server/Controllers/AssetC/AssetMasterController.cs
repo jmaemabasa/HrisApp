@@ -19,6 +19,7 @@
                 .Include(e => e.AssetStatus)
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
                 .Include(e => e.Employee!.Division)
@@ -37,6 +38,7 @@
                 .Include(e => e.AssetStatus)
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
                 .Include(e => e.Employee!.Division)
@@ -55,6 +57,7 @@
                  .Include(e => e.AssetStatus)
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
                 .Include(e => e.Area)
@@ -77,6 +80,7 @@
                  .Include(e => e.AssetStatus)
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
                 .Include(e => e.Area)
@@ -98,6 +102,7 @@
                 .Include(e => e.AssetStatus)
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Employee)
                 .Include(e => e.Employee!.Division)
@@ -141,6 +146,7 @@
             dbarea.ClientIP = model.ClientIP;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
+            dbarea.SubCategory2Id = model.SubCategory2Id;
             dbarea.TypeId = model.TypeId;
             dbarea.AreaId = model.AreaId;
             dbarea.PurchaseDate = model.PurchaseDate;

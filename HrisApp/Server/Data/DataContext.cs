@@ -249,6 +249,7 @@ namespace HrisApp.Server.Data
 
         public DbSet<UserRoleT> UserRoleT { get; set; }
         public DbSet<AuditlogsT> AuditlogsT { get; set; }
+        public DbSet<AuditLogsArchiveT> AuditLogsArchiveT { get; set; }
 
         //Master Data
         public DbSet<DivisionT> DivisionT { get; set; }
@@ -359,6 +360,7 @@ namespace HrisApp.Server.Data
         //ATTENDANCE
         public DbSet<AttendanceRecordT> AttendanceRecordT { get; set; }
         public DbSet<BioModelT> BioModelT { get; set; }
+        public DbSet<BioModelArchiveT> BioModelArchiveT { get; set; }
 
         public DbSet<ShiftTimetableT> ShiftTimetableT { get; set; }
 
@@ -369,6 +371,7 @@ namespace HrisApp.Server.Data
 
         public DbSet<AssetCategoryT> AssetCategoryT { get; set; }
         public DbSet<AssetSubCategoryT> AssetSubCategoryT { get; set; }
+        public DbSet<AssetSubCategory2T> AssetSubCategory2T { get; set; }
         public DbSet<AssetAccessoryT> AssetAccessoryT { get; set; }
         public DbSet<AssetMasterT> AssetMasterT { get; set; }
         public DbSet<AssetMasterHistoryT> AssetMasterHistoryT { get; set; }
@@ -392,10 +395,14 @@ namespace HrisApp.Server.Data
         public DbSet<AssLicenseImageT> AssLicenseImageT { get; set; }
         public DbSet<MainAssetLicensesT> MainAssetLicensesT { get; set; }
 
+        public DbSet<MainAssetImgLogT> MainAssetImgLogT { get; set; }
+        public DbSet<AccessImgLogT> AccessImgLogT { get; set; }
+
 
         //SETTINGS
         public DbSet<BioIPModel> BioIPModel { get; set; }
         public DbSet<ExtractLogsModel> ExtractLogsModel { get; set; }
+        public DbSet<ExtractLogsModelArchive> ExtractLogsModelArchive { get; set; }
         public DbSet<MaintenanceT> MaintenanceT { get; set; }
         
 

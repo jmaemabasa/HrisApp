@@ -77,6 +77,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
+                                        <MudText Typo="Typo.body2">Sub Category 2</MudText>
+                                        <select @bind="obj.SubCategory2Id" class="form-select" style="background: #e9ecef;">
+                                            <option value="null">Others</option>
+                                            @foreach (var sec in SUBCAT2.Where(e => e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
+                                            {
+                                                <option value="@sec.Id">@sec.ASubCat2_Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
                                         <MudText Typo="Typo.body2">Asset Code</MudText>
                                         <MudTextField @bind-Value="obj.AssetCode" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight:600;" />
                                     </div>
@@ -112,7 +124,7 @@
                                             <MudTextField @bind-Value="obj.Cons_Desc" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    @* <div class="row">
                                         <div class="col-col-sm-12 col-md-6">
                                             <MudText Typo="Typo.body2">Quantity</MudText>
                                             <MudNumericField T="int" TextChanged="QuantityTotal" Immediate="true" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
@@ -127,8 +139,8 @@
                                                 }
                                             </MudSelect>
                                         </div>
-                                    </div>
-                                    <div class="row">
+                                    </div> *@
+                                    @* <div class="row">
                                         <div class="col-col-sm-12 col-md-4">
                                             <MudText Typo="Typo.body2">Purchase Date</MudText>
                                             <MudDatePicker Editable="true" @bind-Date="obj.PurchaseDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
@@ -143,7 +155,7 @@
                                             <MudText Typo="Typo.body2">Purchase Total Amount</MudText>
                                             <MudNumericField @bind-Value="obj.TotalPurchaseAmount" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
                                         </div>
-                                    </div>
+                                    </div> *@
                                     <div class="row">
                                         <div class="d-flex flex-column">
                                             <div class="flex-grow-1">

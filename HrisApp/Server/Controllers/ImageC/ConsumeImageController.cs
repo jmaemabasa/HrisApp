@@ -21,10 +21,42 @@ namespace HrisApp.Server.Controllers.ImageC
         [HttpGet("Getattachmentview")]
         public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string jmcode)
         {
+            var _masterlist = await _context.ConsumableImageT.ToListAsync();
+            var model = _masterlist.Where(a => a.JM_Code == jmcode).FirstOrDefault();
+
+            if (model == null)
+            {
+                var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                var _nullfilename = "asset-holder.jpg";
+                var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
+
+                var _nullmemory = new MemoryStream();
+                using (var _stream = new FileStream(_nullpath, FileMode.Open))
+                {
+                    await _stream.CopyToAsync(_nullmemory);
+                }
+                _nullmemory.Position = 0;
+                return _nullmemory.ToArray();
+            }
+
+            var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
+
+            var _memory = new MemoryStream();
+            using (var _stream = new FileStream(_path, FileMode.Open))
+            {
+                await _stream.CopyToAsync(_memory);
+            }
+            _memory.Position = 0;
+            return _memory.ToArray();
+        }
+
+        [HttpGet("GetattachmentviewAll")]
+        public async Task<ActionResult<byte[]>> GetattachmentviewAll([FromQuery] string filename)
+        {
             try
             {
                 var _masterlist = await _context.ConsumableImageT.ToListAsync();
-                var model = _masterlist.Where(a => a.JM_Code == jmcode).FirstOrDefault();
+                var model = _masterlist.Where(a => a.Img_Filename == filename).FirstOrDefault();
 
                 if (model == null)
                 {
@@ -48,13 +80,13 @@ namespace HrisApp.Server.Controllers.ImageC
             }
         }
 
-        [HttpGet("GetattachmentviewAll")]
-        public async Task<ActionResult<byte[]>> GetattachmentviewAll([FromQuery] string filename)
+        [HttpGet("GetImageDataById")]
+        public async Task<ActionResult<byte[]>> GetImageDataById([FromQuery] int id)
         {
             try
             {
                 var _masterlist = await _context.ConsumableImageT.ToListAsync();
-                var model = _masterlist.Where(a => a.Img_Filename == filename).FirstOrDefault();
+                var model = _masterlist.Where(a => a.Id == id).FirstOrDefault();
 
                 if (model == null)
                 {
@@ -198,6 +230,55 @@ namespace HrisApp.Server.Controllers.ImageC
             return BadRequest("Invalid saving Data");
         }
 
+        [HttpPost("PostUploadImageCopyTo")]
+        public async Task<IActionResult> PostUploadImageCopyTo([FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string remarks)
+        {
+            try
+            {
+                var httpRequest = HttpContext.Request;
+                if (httpRequest.Form.Files.Count > 0)
+                {
+                    foreach (var file in httpRequest.Form.Files)
+                    {
+                        var filePath = Path.Combine(_evs.ContentRootPath, "ConsumableImages", jmcode);
+                        if (!Directory.Exists(filePath))
+                            Directory.CreateDirectory(filePath);
+
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await file.CopyToAsync(memoryStream);
+                            System.IO.File.WriteAllBytes(Path.Combine(filePath, file.FileName), memoryStream.ToArray());
+                        }
+
+                        ConsumableImageT _Model = new()
+                        {
+                            AssetCode = jmcode,
+                            Img_Filename = file.FileName,
+                            Img_Contenttype = file.ContentType,
+                            Img_URL = filePath,
+                            Img_Data = null,
+                            Img_Date = DateTime.Now,
+                            CategoryId = category,
+                            SubCategoryId = subcat,
+                            JM_Code = jmcode,
+                            Remarks = remarks,
+                        };
+
+                        _context.ConsumableImageT.Add(_Model);
+                        await _context.SaveChangesAsync();
+                        return Ok();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error");
+                return new StatusCodeResult(500);
+            }
+
+            return BadRequest("Invalid saving Data");
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ConsumableImageT>> GetSingleImage(int id)
         {
@@ -229,6 +310,13 @@ namespace HrisApp.Server.Controllers.ImageC
         public async Task<ActionResult<List<ConsumableImageT>>> GetObjList()
         {
             var obj = await _context.ConsumableImageT.ToListAsync();
+            return Ok(obj);
+        }
+
+        [HttpGet("GetObjListByCode")]
+        public async Task<ActionResult<List<ConsumableImageT>>> GetObjListByCode([FromQuery] string code)
+        {
+            var obj = await _context.ConsumableImageT.Where(e => e.JM_Code == code).ToListAsync();
             return Ok(obj);
         }
 

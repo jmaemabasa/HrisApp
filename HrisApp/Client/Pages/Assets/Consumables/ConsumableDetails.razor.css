@@ -79,6 +79,20 @@
         color: red;
     }
 
+::deep .btnupdateimgasset {
+    position: absolute !important;
+    right: 21px !important;
+    color: #faf9f9 !important;
+    background: #27374d !important;
+}
+    ::deep .btnupdateimgasset:hover {
+        background: #0a58ca !important;
+        color: #faf9f9 !important;
+    }
+    ::deep .btnupdateimgasset .mud-icon-root {
+        font-size: 16px;
+    }
+
 .drawerdetails {
     padding: 18px;
 }

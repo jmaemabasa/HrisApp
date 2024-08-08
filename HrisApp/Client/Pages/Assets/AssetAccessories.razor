@@ -79,7 +79,7 @@
     else
     {
         <div>
-            <MudTable Class="stable" Height="626px" Items="AssetAccessList" Context="obj" SortLabel="Sort By" Virtualize="false" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AssetAccessoryT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+            <MudTable Class="stable" Height="626px" Items="AssetAccessList" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AssetAccessoryT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
                 <HeaderContent>
                     <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Asset Code</MudTh>
                     <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Name</MudTh>
@@ -105,6 +105,7 @@
                         { 4, "color: #9caac1; font-weight: 500;" },
                         { 5, "color: #e38d0f; font-weight: 500;" },
                         { 6, "color: #be1313; font-weight: 500;" },
+                        { 7, "color: #515268; font-weight: 500;" },
                         };
 
                         var defaultStyle = "color: #397763; font-weight: 500;";
@@ -117,9 +118,14 @@
                     <MudTd>
                         <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin">
                             <Authorized>
-                                <MudTooltip Text="Details">
-                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                <div class="d-flex align-items-center">
+                                    <MudTooltip Text="Details">
+                                        <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
+                                    </MudTooltip>
+                                    <MudTooltip Text="Copy To">
+                                        <MudIconButton Class="btnedit" OnClick="(() => OpenCopyTo(obj))" Icon="@Icons.Material.Rounded.ContentCopy" aria-label="Copy"></MudIconButton>
+                                    </MudTooltip>
+                                </div>
                             </Authorized>
                             <NotAuthorized>
                                 <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>

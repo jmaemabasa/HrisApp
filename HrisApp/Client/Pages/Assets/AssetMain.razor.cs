@@ -91,7 +91,18 @@ namespace HrisApp.Client.Pages.Assets
 
         //OPEN DIALOGS
         private void OpenUpdateDialog(int id)=> NavigationManager.NavigateTo($"/main-asset/details/{id}");
-        
+
+        private void OpenCopyTo(AssetMasterT item)
+        {
+
+            var parameters = new DialogParameters<CopyToMainAsset>
+                {
+                    { x => x.Obj, item }
+                };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true, NoHeader = true };
+            DialogService.Show<CopyToMainAsset>("Copy Main Asset", parameters, options);
+        }
 
         private void OpenAddDialog()
         {

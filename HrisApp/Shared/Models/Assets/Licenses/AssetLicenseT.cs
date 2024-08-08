@@ -27,6 +27,9 @@ namespace HrisApp.Shared.Models.Assets.Licenses
         public AssetSubCategoryT? SubCategory { get; set; }
         public int SubCategoryId { get; set; }
 
+        public AssetSubCategory2T? SubCategory2 { get; set; }
+        public int? SubCategory2Id { get; set; }
+
         public AssetStatusT? AssetStatus { get; set; }
         public int AssetStatusId { get; set; } = 2;
 

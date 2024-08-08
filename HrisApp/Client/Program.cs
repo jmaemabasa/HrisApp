@@ -120,6 +120,9 @@ global using HrisApp.Client.Services.SettingsS.ExtractLogsService;
 global using HrisApp.Shared.Models.SettingsM;
 global using HrisApp.Client.Services.SettingsS.MaintenanceService;
 global using HrisApp.Client.Services.APiS.MasterDataApiS;
+global using HrisApp.Client.Services.Assets.AssetSubCategory2Service;
+global using HrisApp.Client.Services.Assets.MainAssetImgLogService;
+global using HrisApp.Client.Services.Assets.AccessImgLogService;
 
 using HrisApp.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -201,6 +204,9 @@ builder.Services.AddScoped<IMainAssetLicenseService, MainAssetLicenseService>();
 builder.Services.AddScoped<IMaintenanceService, MaintenanceService>();
 builder.Services.AddScoped<IUOMService, UOMService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
+builder.Services.AddScoped<IAssetSubCategory2Service, AssetSubCategory2Service>();
+builder.Services.AddScoped<IMainAssetImgLogService, MainAssetImgLogService>();
+builder.Services.AddScoped<IAccessImgLogService, AccessImgLogService>();
 
 
 builder.Services.AddScoped<IDailyVerseService, DailyVerseService>();

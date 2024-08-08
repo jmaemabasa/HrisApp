@@ -8,6 +8,7 @@ namespace HrisApp.Shared.Models.DummyModel
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Verify_Id { get; set; } = string.Empty;
+        public string Area { get; set; } = string.Empty;
         public int MachineNumber { get; set; }
         public int IndRegID { get; set; } //biometric id
         public string DateTimeRecord { get; set; } = string.Empty;

@@ -21,31 +21,33 @@ namespace HrisApp.Server.Controllers.ImageC
         [HttpGet("Getattachmentview")]
         public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string jmcode)
         {
-            try
+            var _masterlist = await _context.AssetVehicleImageT.ToListAsync();
+            var model = _masterlist.Where(a => a.JM_Code == jmcode).FirstOrDefault();
+
+            if (model == null)
             {
-                var _masterlist = await _context.AssetVehicleImageT.ToListAsync();
-                var model = _masterlist.Where(a => a.JM_Code == jmcode).FirstOrDefault();
+                var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                var _nullfilename = "asset-holder.jpg";
+                var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
 
-                if (model == null)
+                var _nullmemory = new MemoryStream();
+                using (var _stream = new FileStream(_nullpath, FileMode.Open))
                 {
-                    //not found dapat ni
-                    return NoContent();
+                    await _stream.CopyToAsync(_nullmemory);
                 }
-
-                var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
-
-                var _memory = new MemoryStream();
-                using (var _stream = new FileStream(_path, FileMode.Open))
-                {
-                    await _stream.CopyToAsync(_memory);
-                }
-                _memory.Position = 0;
-                return _memory.ToArray();
+                _nullmemory.Position = 0;
+                return _nullmemory.ToArray();
             }
-            catch (Exception)
+
+            var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
+
+            var _memory = new MemoryStream();
+            using (var _stream = new FileStream(_path, FileMode.Open))
             {
-                return NoContent();
+                await _stream.CopyToAsync(_memory);
             }
+            _memory.Position = 0;
+            return _memory.ToArray();
         }
 
         [HttpGet("GetattachmentviewAll")]

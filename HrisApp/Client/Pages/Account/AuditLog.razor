@@ -11,6 +11,19 @@
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Audit Logs</span>
 
+        <button class="Btn" @onclick="OnCleanLogs">
+            @if (!_processingClean)
+            {
+                <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.CleaningServices"></MudIcon></div>
+                <div class="text">Clean Logs</div>
+            }
+            else
+            {
+                <div class="sign"> <MudProgressCircular Color="Color.Warning" Class="ms-n1" Size="Size.Small" Indeterminate="true" /></div>
+                <div class="text">Cleaning</div>
+            }
+
+        </button>
     </div>
 </div>
 

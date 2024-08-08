@@ -22,6 +22,9 @@ namespace HrisApp.Shared.Models.Assets.Consumables
         public AssetSubCategoryT? SubCategory { get; set; }
         public int SubCategoryId { get; set; }
 
+        public AssetSubCategory2T? SubCategory2 { get; set; }
+        public int? SubCategory2Id { get; set; }
+
         public AreaT? Area { get; set; }
         public int AreaId { get; set; }
 
@@ -29,7 +32,7 @@ namespace HrisApp.Shared.Models.Assets.Consumables
         public string Cons_Desc { get; set; } = string.Empty;
         public string ProductID { get; set; } = string.Empty;
 
-        public int Quantity { get; set; } = 1;
+        public int Quantity { get; set; } = 0;
         public UOMT? UOM { get; set; }
         public int? UOMId { get; set; }
 

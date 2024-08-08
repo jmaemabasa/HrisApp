@@ -19,8 +19,7 @@
     }
 
     .imgasset {
-        height: 150px;
-        width: 190px;
+        width: 102px;
         object-fit: fill;
         border-radius: 10px;
         transition: .5s ease;
@@ -79,7 +78,7 @@
 
     private async Task AssetImg(string filename)
     {
-        var imagemodel = await AssetImageService.GetImageDataAll(filename);
+        var imagemodel = await AssetImageService.GetImageDataByFileName(filename);
         if (imagemodel != null)
         {
             var base642 = Convert.ToBase64String(imagemodel);

@@ -11,6 +11,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private List<AssetSubCategory2T> SUBCAT2 = new();
         private List<AssetStatusT> ASSSTATUS = new();
         private List<AreaT> AREA = new();
 
@@ -43,6 +44,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
             TYPES = await AssetTypeService.GetObjList();
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
+            SUBCAT2 = await AssetSubCatService2.GetObjList();
             AREA = await AreaService.GetAreaList();
             await StaticService.GetAssetStatus();
             ASSSTATUS = StaticService.AssetStatusTs;
@@ -171,7 +173,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
             QRIMAGE = string.Format("data:image/*;base64,{0}", base642);
         }
 
-        private bool disabledsubcat = true;
+        private bool disabledsubcat = true, disabledsubcat2 = true;
         private bool disabledcat = true;
 
         private void OnChangeType(int id)
@@ -189,6 +191,7 @@ namespace HrisApp.Client.Pages.Dialog.Assets.MainAsset
         private async Task OnChangeSCat(int id)
         {
             obj.SubCategoryId = id;
+
             await OnGenerateCode();
         }
 

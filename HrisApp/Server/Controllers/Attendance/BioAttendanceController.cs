@@ -1,4 +1,5 @@
 ﻿using HrisApp.Shared.Models.Attendance;
+using HrisApp.Shared.Models.Audit;
 using NPOI.OpenXmlFormats.Wordprocessing;
 
 namespace HrisApp.Server.Controllers.Attendance
@@ -109,6 +110,57 @@ namespace HrisApp.Server.Controllers.Attendance
             var obj = await _context.BioModelT.ToListAsync();
             var _returnList = obj.Where(a => a.IndRegID == bioid).ToList();
             return Ok(_returnList);
-        } 
+        }
+
+        [HttpGet("CleanLogs")]
+        public async Task<ActionResult<string>> CleanLogs()
+        {
+            try
+            {
+                var threeMonthsAgo = DateTime.Now.AddMonths(-3);
+
+                // Retrieve logs older than three months
+                var oldLogs = await _context.BioModelT
+                                            .Where(log => log.DateOnlyRecord < threeMonthsAgo)
+                                            .ToListAsync();
+
+                if (oldLogs.Count == 0)
+                {
+                    return Ok("NoLogs");
+                }
+
+                foreach (var item in oldLogs)
+                {
+                    BioModelArchiveT archive = new()
+                    {
+                        Id = 0,
+                        MachineNumber = item.MachineNumber,
+                        IndRegID = item.IndRegID,
+                        DateTimeRecord = item.DateTimeRecord,
+                        DateOnlyRecord = item.DateOnlyRecord,
+                        TimeOnlyRecord = item.TimeOnlyRecord,
+                        AttendanceType = item.AttendanceType,
+                        IPAddress = item.IPAddress,
+                        Remarks = item.Remarks,
+                    };
+
+                    // Insert old logs into ExtractLogsModelArchive
+                    _context.BioModelArchiveT.Add(archive);
+
+                    // remove old logs from ExtractLogsModel
+                    _context.BioModelT.Remove(item);
+
+                    // Save changes to both contexts
+                    await _context.SaveChangesAsync();
+                }
+
+                return Ok("Success");
+            }
+            catch (Exception)
+            {
+                // Log the exception if needed
+                return Ok("Error");
+            }
+        }
     }
 }

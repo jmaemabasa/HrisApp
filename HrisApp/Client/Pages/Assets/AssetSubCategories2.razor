@@ -1,0 +1,172 @@
+﻿@page "/asset-subcategory2"
+@using HrisApp.Client.Pages.Dialog.Assets.AssetSubCat
+@using HrisApp.Client.Pages.Dialog.Assets.AssetSubCat2
+
+@attribute [Authorize(Roles = "CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin")]
+
+<PageTitle>Asset Sub Category 2 Management</PageTitle>
+
+<div class="mb-5">
+    <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
+        <span style="font-size: x-large;font-weight: 600;color: #424242;">Asset Sub Category 2 Management</span>
+        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
+            <Authorized>
+                <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Asset Sub Category</MudButton>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+<div class="box w-auto">
+    <div class="d-flex justify-content-end">
+        <div class="ssize">
+            <MudTextField DisableUnderLine @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="tsearch mb-5" Immediate=true Margin="Margin.Dense" />
+        </div>
+    </div>
+    @if (AssetSubCat2List == null || AssetSubCat2List.Count == 0)
+    {
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" hidden="@_isVisible" />
+
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="auto" hidden="@_isVisible" />
+        <MudCardContent hidden="@_isVisible">
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions hidden="@_isVisible">
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+        @if (_isVisible == true)
+        {
+            <div class="divnodata">
+                <MudImage Src="images/nodata.png" Alt="No Data" Width="332" Height="220" Class="rounded-lg" />
+                <span class="nodataspan">No Data Available</span>
+            </div>
+        }
+    }
+    else
+    {
+        <div style="height: calc(100% - 64px)">
+            <MudTable Class="stable d-flex justify-content-between align-content-between flex-column h-100" Items="AssetSubCat2List" Context="obj" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<AssetSubCategory2T,bool>(FilterFunc1)">
+                <HeaderContent>
+                    <MudTh Class="col-3" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
+                        <MudTableSortLabel SortBy="new Func<AssetSubCategory2T, object>(x=>x.Id)">
+                            Code
+                        </MudTableSortLabel>
+                    </MudTh>
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
+                        <MudTableSortLabel SortBy="new Func<AssetSubCategory2T, object>(x=>x.ASubCat2_Name)">
+                            Sub Category
+                        </MudTableSortLabel>
+                    </MudTh>
+                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">
+                        <MudTableSortLabel SortBy="new Func<AssetSubCategory2T, object>(x=>x.Category!.ACat_Name)">
+                            Category
+                        </MudTableSortLabel>
+                    </MudTh>
+                    <MudTh Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Action</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="">@obj.ASubCat2_Code</MudTd>
+                    <MudTd DataLabel="">@obj.ASubCat2_Name</MudTd>
+                    <MudTd DataLabel="">@obj.Category?.ACat_Name</MudTd>
+                    <MudTd>
+                        <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical">
+                            <Authorized>
+                                <MudTooltip Text="Update">
+                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                                </MudTooltip>
+                            </Authorized>
+                            <NotAuthorized>
+                                <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            </NotAuthorized>
+                        </AuthorizeView>
+                    </MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[] { 10, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                </PagerContent>
+            </MudTable>
+        </div>
+    }
+</div>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(300);
+        StateService.OnChange += OnStateChanged;
+        await LoadList();
+
+        if (AssetSubCat2List == null || AssetSubCat2List.Count == 0)
+        {
+            OpenOverlay();
+        }
+    }
+
+    private async Task LoadList()
+    {
+        await AssetSubCatService2.GetObj();
+        StateService.SetState("AssetSubCat2List", AssetSubCatService2.AssetSubCategoryTs);
+    }
+
+    private void OnStateChanged()
+    {
+        AssetSubCat2List = StateService.GetState<List<AssetSubCategory2T>>("AssetSubCat2List");
+        StateHasChanged();
+    }
+
+    public bool _isVisible;
+
+    public async void OpenOverlay()
+    {
+        _isVisible = false;
+        await Task.Delay(2000);
+        _isVisible = true;
+        StateHasChanged();
+    }
+
+    #region TABLES DATA
+
+    //TABLEEES
+    private readonly string infoFormat = "{first_item}-{last_item} of {all_items}";
+
+    private string searchString1 = "";
+    private List<AssetSubCategory2T> AssetSubCat2List = new();
+
+    private bool FilterFunc1(AssetSubCategory2T obj) => FilterFunc(obj, searchString1);
+
+    private bool FilterFunc(AssetSubCategory2T obj, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (obj.ASubCat2_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (obj.Category!.ACat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (obj.SubCategory!.ASubCat_Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    //END FOR TABLES
+
+    //OPEN DIALOGS
+    private void OpenUpdateDialog(int id)
+    {
+        var parameters = new DialogParameters<UpdateSubCategory2Dialog>();
+        parameters.Add(x => x.Id, id);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
+        DialogService.Show<UpdateSubCategory2Dialog>("Update Asset Sub Category 2", parameters, options);
+    }
+
+    private void OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick=true };
+        DialogService.Show<AddAssetSubCategory2Dialog>("New Asset Sub Category 2", options);
+    }
+
+    #endregion TABLES DATA
+}

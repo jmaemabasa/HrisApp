@@ -8,6 +8,7 @@
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private List<AssetSubCategory2T> SUBCAT2 = new();
         private bool isSavingAdd = false;
 
         public string imgBase64 { get; set; } = string.Empty;
@@ -27,6 +28,7 @@
             TYPES = await AssetTypeService.GetObjList();
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
+            SUBCAT2 = await AssetSubCatService2.GetObjList();
             await StaticService.GetAssetStatus();
             obj.AssetStatusId = 2;
             imgBase64 = "./images/addIconImage.png";
@@ -171,7 +173,7 @@
         }
 
         private bool disabledsubcat = true;
-        private bool disabledcat = true;
+        private bool disabledcat = true, disabledsubcat2 = true;
 
         private void OnChangeType(int id)
         {

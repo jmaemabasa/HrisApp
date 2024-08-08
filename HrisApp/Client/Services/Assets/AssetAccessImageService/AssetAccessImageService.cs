@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Linq;
+using System.Text.Json;
 
 namespace HrisApp.Client.Services.Assets.AssetAccessImageService
 {
@@ -58,6 +59,35 @@ namespace HrisApp.Client.Services.Assets.AssetAccessImageService
             }
         }
 
+        public async Task AttachFileCopyTo(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"/api/AssetAccessImage/PostUploadImageCopyTo?category={category}&subcat={subcat}&jmcode={jmcode}&remarks={remarks}", formdata);
+
+                Console.WriteLine($"Service: {response}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var newResult = JsonSerializer.Deserialize<List<AssetAccessImageT>>(content, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+
+                        if (newResult is not null)
+                        {
+                            AssetAccessImageTs = AssetAccessImageTs.Concat(newResult).ToList();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Services Error: {ex.Message}");
+            }
+        }
         public async Task AttachFilePanel(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
         {
             try
@@ -94,9 +124,16 @@ namespace HrisApp.Client.Services.Assets.AssetAccessImageService
             throw new Exception("No Signature Found");
         }
 
-        public async Task<byte[]> GetImageDataAll(string filename)
+        public async Task<byte[]> GetImageDataByFileName(string filename)
         {
             var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssetAccessImage/GetattachmentviewAll?filename={filename}");
+            if (_imgs != null)
+                return _imgs;
+            throw new Exception("No Signature Found");
+        }
+        public async Task<byte[]> GetImageDataById(int id)
+        {
+            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssetAccessImage/GetImageDataById?id={id}");
             if (_imgs != null)
                 return _imgs;
             throw new Exception("No Signature Found");
@@ -114,6 +151,10 @@ namespace HrisApp.Client.Services.Assets.AssetAccessImageService
             {
                 AssetAccessImageTs = result;
             }
+        }
+        public async Task<List<AssetAccessImageT>> GetObjListByCode(string code)
+        {
+            return await _httpClient.GetFromJsonAsync<List<AssetAccessImageT>>($"api/AssetAccessImage/GetObjListByCode?code={code}");
         }
 
         public async Task DeleteAssetImg(string filename, string jmcode)

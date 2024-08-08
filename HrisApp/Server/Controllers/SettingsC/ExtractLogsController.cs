@@ -1,4 +1,5 @@
 ﻿using HrisApp.Shared.Models.SettingsM;
+using System.Linq;
 
 namespace HrisApp.Server.Controllers.SettingsC
 {
@@ -131,6 +132,61 @@ namespace HrisApp.Server.Controllers.SettingsC
                 return Ok(false);
 
             return Ok(model!.Is_Start);
+        }
+
+        [HttpGet("CleanLogs")]
+        public async Task<ActionResult<string>> CleanLogs()
+        {
+            try
+            {
+                var threeMonthsAgo = DateTime.Now.AddMonths(-3);
+
+                // Retrieve logs older than three months
+                var oldLogs = await _context.ExtractLogsModel
+                                            .Where(log => log.Date_Create < threeMonthsAgo)
+                                            .ToListAsync();
+
+                if (oldLogs.Count == 0)
+                {
+                    return Ok("NoLogs");
+                }
+
+                foreach (var item in oldLogs)
+                {
+                    ExtractLogsModelArchive archive = new()
+                    {
+                        Id = 0,
+                        EmployeeUserId = item.EmployeeUserId,
+                        Action = item.Action,
+                        Type = item.Type,
+                        Description = item.Description,
+                        Is_Start = item.Is_Start,
+                        Date_Start = item.Date_Start,
+                        Date_Stop = item.Date_Stop,
+                        Date_Create = item.Date_Create,
+                        Status = item.Status,
+                        Date_Extract = item.Date_Extract,
+                        Is_Active = item.Is_Active,
+                        BioId = item.BioId,
+                    };
+                    
+                    // Insert old logs into ExtractLogsModelArchive
+                    _context.ExtractLogsModelArchive.Add(archive);
+
+                    // remove old logs from ExtractLogsModel
+                    _context.ExtractLogsModel.Remove(item);
+
+                    // Save changes to both contexts
+                    await _context.SaveChangesAsync();
+                }
+
+                return Ok("Success");
+            }
+            catch (Exception)
+            {
+                // Log the exception if needed
+                return Ok("Error");
+            }
         }
     }
 }

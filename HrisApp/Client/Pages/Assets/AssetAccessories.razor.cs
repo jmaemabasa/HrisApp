@@ -170,6 +170,18 @@ namespace HrisApp.Client.Pages.Assets
             NavigationManager.NavigateTo($"/asset-accessories/details/{id}");
         }
 
+        private void OpenCopyTo(AssetAccessoryT item)
+        {
+
+            var parameters = new DialogParameters<CopyToAccess>
+                {
+                    { x => x.Obj, item }
+                };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, DisableBackdropClick = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+            DialogService.Show<CopyToAccess>("Copy Asset Accessory", parameters, options);
+        }
+
         private void OpenAddDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, DisableBackdropClick = true, MaxWidth = MaxWidth.Small, NoHeader = true };

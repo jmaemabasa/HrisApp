@@ -1,4 +1,5 @@
 ﻿using HrisApp.Shared.Models.Audit;
+using HrisApp.Shared.Models.SettingsM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +55,53 @@ namespace HrisApp.Server.Controllers.AuditLog
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBLogs());
+        }
+
+        [HttpGet("CleanLogs")]
+        public async Task<ActionResult<string>> CleanLogs()
+        {
+            try
+            {
+                var threeMonthsAgo = DateTime.Now.AddMonths(-3);
+
+                // Retrieve logs older than three months
+                var oldLogs = await _context.AuditlogsT
+                                            .Where(log => log.Date < threeMonthsAgo)
+                                            .ToListAsync();
+
+                if (oldLogs.Count == 0)
+                {
+                    return Ok("NoLogs");
+                }
+
+                foreach (var item in oldLogs)
+                {
+                    AuditLogsArchiveT archive = new()
+                    {
+                        Id = 0,
+                        EmployeeUserId = item.EmployeeUserId,
+                        Action = item.Action,
+                        Type = item.Type,
+                        Date = item.Date,
+                    };
+
+                    // Insert old logs into ExtractLogsModelArchive
+                    _context.AuditLogsArchiveT.Add(archive);
+
+                    // remove old logs from ExtractLogsModel
+                    _context.AuditlogsT.Remove(item);
+
+                    // Save changes to both contexts
+                    await _context.SaveChangesAsync();
+                }
+
+                return Ok("Success");
+            }
+            catch (Exception)
+            {
+                // Log the exception if needed
+                return Ok("Error");
+            }
         }
     }
 }

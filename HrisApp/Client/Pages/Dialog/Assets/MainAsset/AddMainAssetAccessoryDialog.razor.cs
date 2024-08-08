@@ -34,7 +34,7 @@
         {
             if (fieldObj == null)
             {
-                GlobalConfigService.OpenErrorDialog("Select accessorry");
+                GlobalConfigService.OpenErrorDialog("Select accessorry.");
             }
             else
             {

@@ -1,6 +1,4 @@
-﻿using HrisApp.Shared.Models.SettingsM;
-
-namespace HrisApp.Client.Services.SettingsS.ExtractLogsService
+﻿namespace HrisApp.Client.Services.SettingsS.ExtractLogsService
 {
     public interface IExtractLogsService
     {
@@ -18,5 +16,6 @@ namespace HrisApp.Client.Services.SettingsS.ExtractLogsService
         Task CreateObj(ExtractLogsModel model);
 
         Task UpdateObj(ExtractLogsModel model);
+        Task<string> CleanLogs();
     }
 }

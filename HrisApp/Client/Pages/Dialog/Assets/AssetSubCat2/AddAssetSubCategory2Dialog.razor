@@ -1,0 +1,95 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Code</MudText>
+            <MudTextField ReadOnly @bind-Value="obj.ASubCat2_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: 600;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Category</MudText>
+            <MudSelect T="int" ValueChanged="OnChangeCat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                <MudSelectItem Disabled="true" Value="0">---Select---</MudSelectItem>
+                @foreach (var sec in CategoriesL)
+                {
+                    <MudSelectItem Value="@sec.Id">@sec.ACat_Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Sub Category</MudText>
+            <MudSelect T="int" ValueChanged="OnChangeSubCat" Disabled="@isEnableSubCat" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                <MudSelectItem Disabled="true" Value="0">---Select---</MudSelectItem>
+                @foreach (var sec in SubCategoriesL.Where(e => e.CategoryId == obj.CategoryId))
+                {
+                    <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Name</MudText>
+            <MudTextField @bind-Value="obj.ASubCat2_Name" Disabled="@isEnableName" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns" style="padding: 15px 15px 15px 10px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="ConfirmCreateArea">Save</button>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance? MudDialog { get; set; }
+
+    private AssetSubCategory2T obj = new();
+    private List<AssetCategoryT> CategoriesL = new();
+    private List<AssetSubCategoryT> SubCategoriesL = new();
+
+    private bool isEnableName = true, isEnableSubCat = true;
+
+    private void Cancel() => MudDialog?.Cancel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await OnGenerateCode();
+        CategoriesL = await AssetCatService.GetObjList();
+        SubCategoriesL = await AssetSubCatService.GetObjList();
+    }
+
+    private async Task ConfirmCreateArea()
+    {
+        if (string.IsNullOrWhiteSpace(obj.ASubCat2_Name))
+        {
+            GlobalConfigService.OpenWarningDialog("Please fill up the name.");
+        }
+        else
+        {
+            MudDialog?.Close();
+            await AssetSubCatService2.CreateObj(obj);
+
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "CREATE", "Model", DateTime.Now);
+
+            _toastService.ShowSuccess(obj.ASubCat2_Name + " Created Successfully!");
+
+            // Update the List using the StateService
+            StateService.SetState("AssetSubCat2List", await AssetSubCatService2.GetObjList());
+        }
+    }
+
+    private async Task OnGenerateCode()
+    {
+        int lastCount = await AssetSubCatService2.GetLastCode() + 1;
+        string rolesCode = lastCount.ToString().PadLeft(2, '0');
+        obj.ASubCat2_Code = "SSCAT" + rolesCode;
+    }
+
+    private void OnChangeCat(int id)
+    {
+        obj.CategoryId = id;
+        isEnableSubCat = false;
+    }
+    private void OnChangeSubCat(int id)
+    {
+        obj.SubCategoryId = id;
+        isEnableName = false;
+    }
+            }

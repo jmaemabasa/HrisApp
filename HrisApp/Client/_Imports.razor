@@ -1,5 +1,6 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using HrisApp.Client.Services.Assets.AssetSubCategory2Service
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
@@ -26,7 +27,6 @@
 @using HrisApp.Client.Pages.Dialog.Attendance;
 @using HrisApp.Client.Pages.Attendance.Component
 @using HrisApp.Client.Pages.Dialog.Employee;
-@using HrisApp.Client.Pages.Applicant.Education
 @using HrisApp.Client.Pages.Assets.Components
 @using HrisApp.Client.Pages.User.Dashboard
 @using HrisApp.Client.Pages.Dialog.AlertDialogs
@@ -53,6 +53,7 @@
 @inject IAssetTypeService AssetTypeService
 @inject IAssetCategoryService AssetCatService
 @inject IAssetSubCategoryService AssetSubCatService
+@inject IAssetSubCategory2Service AssetSubCatService2
 @inject IAssetAccessoryService AssetAccService
 @inject IMainAssetAccService MainAssetAccService
 @inject IAssetImageService AssetImageService
@@ -75,6 +76,8 @@
 @inject IAssLicenseHistoryService AssLicenseHisSvc
 @inject IAssLicenseImageService AssLicenseImgSvc
 @inject IMainAssetLicenseService MainAssLicSvc
+@inject IMainAssetImgLogService MainAssImgLogSvc
+@inject IAccessImgLogService AccessImgLogSvc
 
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService

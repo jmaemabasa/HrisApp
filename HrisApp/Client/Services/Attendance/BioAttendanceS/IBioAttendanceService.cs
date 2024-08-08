@@ -13,5 +13,7 @@ namespace HrisApp.Client.Services.Attendance.BioAttendanceS
         Task<int> GetExistingCount(string time, string no);
 
         Task GetAttendanceRec();
+
+        Task<string> CleanLogs();
     }
 }

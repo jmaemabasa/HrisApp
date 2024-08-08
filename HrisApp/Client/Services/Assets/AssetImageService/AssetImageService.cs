@@ -29,12 +29,48 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
                 return result;
             throw new Exception("employee not found");
         }
+        public async Task<AssetImageT> GetSingleImageByCode(string code)
+        {
+            var result = await _httpClient.GetFromJsonAsync<AssetImageT>($"api/AssetImage/GetSingleImageByCode?code={code}");
+            if (result != null)
+                return result;
+            throw new Exception("employee not found");
+        }
 
         public async Task AttachFile(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
         {
             try
             {
                 var response = await _httpClient.PostAsync($"/api/AssetImage/PostUploadImage?category={category}&subcat={subcat}&jmcode={jmcode}&remarks={remarks}", formdata);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var newResult = JsonSerializer.Deserialize<List<AssetImageT>>(content, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+
+                        if (newResult is not null)
+                        {
+                            AssetImageTs = AssetImageTs.Concat(newResult).ToList();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Services Error: {ex.Message}");
+            }
+        }
+        public async Task AttachFileCopyTo(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"/api/AssetImage/PostUploadImageCopyTo?category={category}&subcat={subcat}&jmcode={jmcode}&remarks={remarks}", formdata);
+
+                Console.WriteLine($"Service: {response}");
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -94,9 +130,16 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
             throw new Exception("No Signature Found");
         }
 
-        public async Task<byte[]> GetImageDataAll(string filename)
+        public async Task<byte[]> GetImageDataByFileName(string filename)
         {
             var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssetImage/GetattachmentviewAll?filename={filename}");
+            if (_imgs != null)
+                return _imgs;
+            throw new Exception("No Signature Found");
+        }
+        public async Task<byte[]> GetImageDataById(int id)
+        {
+            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssetImage/GetImageDataById?id={id}");
             if (_imgs != null)
                 return _imgs;
             throw new Exception("No Signature Found");
@@ -105,6 +148,10 @@ namespace HrisApp.Client.Services.Assets.AssetImageService
         public async Task<List<AssetImageT>> GetObjList()
         {
             return await _httpClient.GetFromJsonAsync<List<AssetImageT>>("api/AssetImage");
+        }
+        public async Task<List<AssetImageT>> GetObjListByCode(string code)
+        {
+            return await _httpClient.GetFromJsonAsync<List<AssetImageT>>($"api/AssetImage/GetObjListByCode?code={code}");
         }
 
         public async Task GetAllImagesPerAss(string jmcode)

@@ -79,7 +79,7 @@
 
     private async Task AssetImg(string filename)
     {
-        var imagemodel = await AssLicenseImgSvc.GetImageDataAll(filename);
+        var imagemodel = await AssLicenseImgSvc.GetImageDataByFileName(filename);
         if (imagemodel != null)
         {
             var base642 = Convert.ToBase64String(imagemodel);

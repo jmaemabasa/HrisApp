@@ -14,6 +14,11 @@
                     <div class="spantitle">Consumable Asset</div>
                 </div>
                 <div class="d-flex flex-column gap-2" style="margin-top: 1rem;">
+                    <MudFileUpload T="IBrowserFile" OnFilesChanged="uploadImage" Accept="image/*" capture>
+                        <ButtonTemplate>
+                            <MudIconButton Icon="@Icons.Material.Rounded.Edit" DisableElevation HtmlTag="label" for="@context" Class="btnupdateimgasset" />
+                        </ButtonTemplate>
+                    </MudFileUpload>
                     <div class="d-flex justify-content-center">
                         <div class="asset-img">
                             <img class="asset-img-img" alt="asset image" src="@ConsumableImageData" />
@@ -77,13 +82,13 @@
                             </AuthorizeView>
                         </div>
                         <MudGrid Spacing="2">
-                            <MudItem xs="12" sm="6">
+                            <MudItem xs="12" sm="4">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Asset</MudText>
                                     <MudText Align="Align.Start" Style="color: #27374D; font-weight:600;" Typo="Typo.body2">@obj.AssetCode</MudText>
                                 </div>
                             </MudItem>
-                            <MudItem xs="12" sm="6">
+                            <MudItem xs="12" sm="4">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Location</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Area?.Name</MudText>
@@ -106,6 +111,12 @@
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.SubCategory?.ASubCat_Name</MudText>
+                                </div>
+                            </MudItem>
+                            <MudItem xs="12" sm="4">
+                                <div class="divsingledetails">
+                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category 2</MudText>
+                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@(obj.SubCategory2Id == null ? "Others" : obj.SubCategory2?.ASubCat2_Name)</MudText>
                                 </div>
                             </MudItem>
 
@@ -135,18 +146,18 @@
                                 </div>
                             </MudItem>
 
-                            <MudItem xs="12" sm="6">
-                                <div class="divsingledetails">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.PurchaseDate?.ToString("MMM dd yyyy")</MudText>
-                                </div>
+                            @* <MudItem xs="12" sm="6">
+                            <div class="divsingledetails">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.PurchaseDate?.ToString("MMM dd yyyy")</MudText>
+                            </div>
                             </MudItem>
                             <MudItem xs="12" sm="6">
-                                <div class="divsingledetails">
-                                    <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Amount</MudText>
-                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.TotalPurchaseAmount</MudText>
-                                </div>
-                            </MudItem>
+                            <div class="divsingledetails">
+                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Amount</MudText>
+                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.TotalPurchaseAmount</MudText>
+                            </div>
+                            </MudItem> *@
                             <MudItem xs="12" sm="12">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Remarks</MudText>
@@ -239,26 +250,26 @@
                     </div>
                 </MudTabPanel>
                 @* <MudTabPanel TabContent="TabHeader(2)">
-                    <div class="mainasssec">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="spantitle">Reports</span>
-                        </div>
+                <div class="mainasssec">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="spantitle">Reports</span>
+                </div>
 
-                        <div class="container-fluid">
-                            <div>Top Issued Employees</div>
-                            @foreach (var item in TopTransEmployee)
-                            {
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6">
-                                        @item.FirstName @item.LastName
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        @TRANSACTIONS.Where(e => e.EmployeeId == item.Id).Sum(e=>e.Transact_Qty)
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
+                <div class="container-fluid">
+                <div>Top Issued Employees</div>
+                @foreach (var item in TopTransEmployee)
+                {
+                <div class="row">
+                <div class="col-sm-12 col-md-6">
+                @item.FirstName @item.LastName
+                </div>
+                <div class="col-sm-12 col-md-6">
+                @TRANSACTIONS.Where(e => e.EmployeeId == item.Id).Sum(e=>e.Transact_Qty)
+                </div>
+                </div>
+                }
+                </div>
+                </div>
                 </MudTabPanel> *@
             </MudTabs>
         </div>
@@ -310,6 +321,16 @@
                 </MudSelect>
             </div>
         </div>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category 2</MudText>
+            <select @bind="obj.SubCategory2Id" class="form-select" style="background: #e9ecef;">
+                <option value="null">Others</option>
+                @foreach (var sec in SUBCAT2.Where(e => e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
+                {
+                    <option value="@sec.Id">@sec.ASubCat2_Name</option>
+                }
+            </select>
+        </div>
         <div class="row">
             <div class="col-12">
                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Location</MudText>
@@ -339,11 +360,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Quantity</MudText>
-                <MudNumericField @bind-Value="obj.Quantity" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12">
                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Unit of Measurement (UOM)</MudText>
                 <MudSelect @bind-Value="uomHolder" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
                     <MudSelectItem Disabled="true" Value="0">Select</MudSelectItem>
@@ -352,16 +369,6 @@
                         <MudSelectItem Value="@sec.Id">@sec.Description</MudSelectItem>
                     }
                 </MudSelect>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
-                <MudDatePicker Editable="true" @bind-Date="obj.PurchaseDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
-            </div>
-            <div class="col-12 col-lg-6">
-                <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Amount</MudText>
-                <MudTextField @bind-Value="obj.TotalPurchaseAmount" Variant="Variant.Outlined" Margin="Margin.Dense" />
             </div>
         </div>
         <div class="row">

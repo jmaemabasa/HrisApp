@@ -56,7 +56,35 @@ namespace HrisApp.Client.Services.Assets.Licenses.AssLicenseImageService
                 Console.WriteLine($"Services Error: {ex.Message}");
             }
         }
+        public async Task AttachFileCopyTo(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"/api/AssLicenseImage/PostUploadImageCopyTo?category={category}&subcat={subcat}&jmcode={jmcode}&remarks={remarks}", formdata);
 
+                Console.WriteLine($"Service: {response}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var newResult = JsonSerializer.Deserialize<List<AssLicenseImageT>>(content, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+
+                        if (newResult is not null)
+                        {
+                            AssLicenseImageTs = AssLicenseImageTs.Concat(newResult).ToList();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Services Error: {ex.Message}");
+            }
+        }
         public async Task AttachFilePanel(MultipartFormDataContent formdata, int category, int subcat, string jmcode, string remarks)
         {
             try
@@ -93,7 +121,7 @@ namespace HrisApp.Client.Services.Assets.Licenses.AssLicenseImageService
             throw new Exception("No Signature Found");
         }
 
-        public async Task<byte[]> GetImageDataAll(string filename)
+        public async Task<byte[]> GetImageDataByFileName(string filename)
         {
             var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssLicenseImage/GetattachmentviewAll?filename={filename}");
             if (_imgs != null)
@@ -101,11 +129,22 @@ namespace HrisApp.Client.Services.Assets.Licenses.AssLicenseImageService
             throw new Exception("No Signature Found");
         }
 
+        public async Task<byte[]> GetImageDataById(int id)
+        {
+            var _imgs = await _httpClient.GetFromJsonAsync<byte[]>($"api/AssLicenseImage/GetImageDataById?id={id}");
+            if (_imgs != null)
+                return _imgs;
+            throw new Exception("No Signature Found");
+        }
         public async Task<List<AssLicenseImageT>> GetObjList()
         {
             return await _httpClient.GetFromJsonAsync<List<AssLicenseImageT>>("api/AssLicenseImage");
         }
 
+        public async Task<List<AssLicenseImageT>> GetObjListByCode(string code)
+        {
+            return await _httpClient.GetFromJsonAsync<List<AssLicenseImageT>>($"api/AssLicenseImage/GetObjListByCode?code={code}");
+        }
         public async Task GetAllImagesPerAss(string jmcode)
         {
             var result = await _httpClient.GetFromJsonAsync<List<AssLicenseImageT>>($"api/AssLicenseImage/GetFilteredImages?jmcode={jmcode}");

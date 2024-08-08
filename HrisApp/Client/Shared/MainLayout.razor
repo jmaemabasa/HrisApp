@@ -512,7 +512,7 @@
         {
             var id = Convert.ToInt32(GlobalConfigService.User_Id);
             await AuthService.UpdateLoginStatus(id);
-                        NavigationManager.NavigateTo("/", true);
+            NavigationManager.NavigateTo("/", true);
             await LocalStorage.RemoveItemAsync("token");
             await AuthStateProvider.GetAuthenticationStateAsync();
         }
@@ -614,27 +614,28 @@
     #region NOTIF ADMIN
     private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        // await OnRefreshPage();
-        await LeaveHistoryService.GetLeaveHistory();
-        badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
+        await Task.Delay(0);
+        // // await OnRefreshPage();
+        // await LeaveHistoryService.GetLeaveHistory();
+        // badgeCount = LeaveHistoryService.Emp_LeaveHistoryTs.Where(d => d.ReadStatus != "Read").Count();
 
-        PendingCount = await LeaveHistoryService.Getpendingcount();
-        newRequest = PendingCount.Count();
+        // PendingCount = await LeaveHistoryService.Getpendingcount();
+        // newRequest = PendingCount.Count();
 
-        countSnack = newRequest;
-        if (countSnack != 0)
-        {
-            OnVal(newRequest);
-        }
-        else
-        {
-            countSnack = 0;
-            OnTuneOff();
-        }
-        await InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
+        // countSnack = newRequest;
+        // if (countSnack != 0)
+        // {
+        //     OnVal(newRequest);
+        // }
+        // else
+        // {
+        //     countSnack = 0;
+        //     OnTuneOff();
+        // }
+        // await InvokeAsync(() =>
+        // {
+        //     StateHasChanged();
+        // });
     }
 
     [JSInvokable]

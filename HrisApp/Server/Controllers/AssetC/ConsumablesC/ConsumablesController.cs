@@ -20,6 +20,7 @@ namespace HrisApp.Server.Controllers.AssetC.ConsumablesC
             var obj = await _context.ConsumablesT
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Area)
                 .Include(e => e.UOM)
@@ -35,6 +36,7 @@ namespace HrisApp.Server.Controllers.AssetC.ConsumablesC
             var obj = await _context.ConsumablesT
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Area)
                 .Include(e => e.UOM)
@@ -50,6 +52,7 @@ namespace HrisApp.Server.Controllers.AssetC.ConsumablesC
             var obj = await _context.ConsumablesT
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Area)
                 .Include(e => e.UOM)
@@ -69,6 +72,7 @@ namespace HrisApp.Server.Controllers.AssetC.ConsumablesC
             var obj = await _context.ConsumablesT
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Area)
                 .Include(e => e.UOM)
@@ -87,6 +91,7 @@ namespace HrisApp.Server.Controllers.AssetC.ConsumablesC
             return await _context.ConsumablesT
                 .Include(e => e.Category)
                 .Include(e => e.SubCategory)
+                .Include(e => e.SubCategory2)
                 .Include(e => e.Type)
                 .Include(e => e.Area)
                 .Include(e => e.UOM)
@@ -115,6 +120,7 @@ namespace HrisApp.Server.Controllers.AssetC.ConsumablesC
             dbarea.Cons_Desc = model.Cons_Desc;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
+            dbarea.SubCategory2Id = model.SubCategory2Id;
             dbarea.TypeId = model.TypeId;
             dbarea.AreaId = model.AreaId;
             dbarea.PurchaseDate = model.PurchaseDate;

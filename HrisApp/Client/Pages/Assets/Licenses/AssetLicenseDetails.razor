@@ -44,6 +44,10 @@
                             {
                                 <MudChip Style="background: #EABCBB; color: #be1313; font-weight: 600;font-size: 11px;margin-bottom: 10px;">@obj.AssetStatus?.Name</MudChip>
                             }
+                            else if (obj.AssetStatusId == 7)
+                            {
+                                <MudChip Style="background: #515268; color: #faf9f9; font-weight: 600;font-size: 11px;margin-bottom: 10px;">@obj.AssetStatus?.Name</MudChip>
+                            }
                             else
                             {
                                 <MudChip Style="background: #C1D4CD; color: #397763; font-weight: 600;font-size: 11px;margin-bottom: 10px;">@obj.AssetStatus?.Name</MudChip>
@@ -134,16 +138,22 @@
                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Type?.AType_Name</MudText>
                                         </div>
                                     </MudItem>
-                                    <MudItem xs="12" sm="6">
+                                    <MudItem xs="12" sm="4">
                                         <div class="divsingledetails">
                                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Category</MudText>
                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Category?.ACat_Name</MudText>
                                         </div>
                                     </MudItem>
-                                    <MudItem xs="12" sm="6">
+                                    <MudItem xs="12" sm="4">
                                         <div class="divsingledetails">
                                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category</MudText>
                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.SubCategory?.ASubCat_Name</MudText>
+                                        </div>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                        <div class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category 2</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@(obj.SubCategory2Id == null ? "Others" : obj.SubCategory2?.ASubCat2_Name)</MudText>
                                         </div>
                                     </MudItem>
 
@@ -442,12 +452,22 @@
             </MudSelect>
         </div>
         <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category 2</MudText>
+            <select @bind="obj.SubCategory2Id" class="form-select" style="background: #e9ecef;">
+                <option value="null">Others</option>
+                @foreach (var sec in SUBCAT2.Where(e => e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
+                {
+                    <option value="@sec.Id">@sec.ASubCat2_Name</option>
+                }
+            </select>
+        </div>
+        <div class="flex-grow-1">
             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Date</MudText>
             <MudDatePicker Editable="true" @bind-Date="obj.PurchaseDate" Mask="@(new DateMask("MM/dd/yyyy"))" DateFormat="MM/dd/yyyy" Variant="Variant.Outlined" Margin="Margin.Dense" />
         </div>
         <div class="flex-grow-1">
             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Purchase Amount</MudText>
-            <MudTextField @bind-Value="obj.PurchaseAmount" Mask="@currMask" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+            <MudTextField @bind-Value="obj.PurchaseAmount" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
         </div>
         <div class="flex-grow-1">
             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">End of Useful Life (Months)</MudText>

@@ -50,6 +50,10 @@
                             {
                                 <MudChip Style="background: #EABCBB; color: #be1313; font-weight: 600;font-size: 11px;margin-bottom: 10px;">@obj.AssetStatus?.Name</MudChip>
                             }
+                            else if (obj.AssetStatusId == 7)
+                            {
+                                <MudChip Style="background: #515268; color: #faf9f9; font-weight: 600;font-size: 11px;margin-bottom: 10px;">@obj.AssetStatus?.Name</MudChip>
+                            }
                             else
                             {
                                 <MudChip Style="background: #C1D4CD; color: #397763; font-weight: 600;font-size: 11px;margin-bottom: 10px;">@obj.AssetStatus?.Name</MudChip>
@@ -137,16 +141,22 @@
                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Type?.AType_Name</MudText>
                                         </div>
                                     </MudItem>
-                                    <MudItem xs="12" sm="6">
+                                    <MudItem xs="12" sm="4">
                                         <div class="divsingledetails">
                                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Category</MudText>
                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Category?.ACat_Name</MudText>
                                         </div>
                                     </MudItem>
-                                    <MudItem xs="12" sm="6">
+                                    <MudItem xs="12" sm="4">
                                         <div class="divsingledetails">
                                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category</MudText>
                                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.SubCategory?.ASubCat_Name</MudText>
+                                        </div>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="4">
+                                        <div class="divsingledetails">
+                                            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category 2</MudText>
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@(obj.SubCategory2Id == null ? "Others" : obj.SubCategory2?.ASubCat2_Name)</MudText>
                                         </div>
                                     </MudItem>
 
@@ -350,19 +360,19 @@
                                 </div>
                             </MudItem>
 
-                            @* <MudItem xs="12" sm="4">
+                            <MudItem xs="12" sm="4">
                             <div class="divsingledetails">
                             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Serial</MudText>
                             <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.Serial</MudText>
                             </div>
-                            </MudItem> *@
-                            <MudItem xs="12" sm="6">
+                            </MudItem>
+                            <MudItem xs="12" sm="4">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Device ID</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.DeviceID</MudText>
                                 </div>
                             </MudItem>
-                            <MudItem xs="12" sm="6">
+                            <MudItem xs="12" sm="4">
                                 <div class="divsingledetails">
                                     <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Product ID</MudText>
                                     <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@obj.ProductID</MudText>
@@ -601,44 +611,10 @@
                     </div>
                 </MudTabPanel>
                 <MudTabPanel TabContent="TabHeader(4)">
-                    <div class="mainasssec" style="padding-bottom: 7px ">
+                    <div class="mainasssec" style="padding-bottom: 7px;margin-bottom: 15px; ">
                         <AssetMainMultiImage MainAssetId="@obj.Id" MainAssetCode="@obj.AssetCode" JMCode="@obj.JMCode" Catid="@obj.CategoryId" SubCatid="obj.SubCategoryId" OnFileAdded="@RefreshPdfFileList" />
                         <div class="" Style="margin-top: 1rem;">
-                            @*  @if (ImgByAssetList.Any())
-                            {
-                            <div class="d-flex gap-3 flex-wrap">
-
-                            @foreach (var item in ImgByAssetList)
-                            {
-                            var ssrcc = item.Split("xxJMGWAPAxx")[0];
-                            var ssrccalt = item.Split("xxJMGWAPAxx")[1];
-                            <div class="imgassetdiv">
-                            <img id="myImg" class="imgasset" src="@ssrcc" alt="@ssrccalt" />
-                            <div class="topright">
-                            <MudTooltip Text="Remove">
-                            <button type="button" class="btn assetdelteimg" onclick="@(() => DeleteAssetImg(ssrccalt, obj.AssetCode))">
-                            <MudIcon Icon="@Icons.Material.Rounded.Delete" />
-                            </button>
-                            </MudTooltip>
-                            </div>
-                            <div class="middle">
-                            <div class="textsss">
-                            <MudTooltip Text="View">
-                            <MudIcon Icon="@Icons.Material.Rounded.ZoomIn" Style="font-size: 4rem;" />
-                            </MudTooltip>
-                            </div>
-                            </div>
-                            </div>
-                            }
-                            </div>
-                            }
-                            else
-                            {
-                            <span style="font-style: italic;">No Images found!</span>
-                            } *@
-
-
-                            <MudTable Class="stable" Height="590px" Items="assetImgList" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
+                            <MudTable Class="stable" Height="408px" Items="assetImgList" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
                                 <HeaderContent>
                                     <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 15px;"></MudTh>
                                     <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 15px;">Remarks</MudTh>
@@ -646,7 +622,7 @@
                                     <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 15px;text-align: center">Remove</MudTh>
                                 </HeaderContent>
                                 <RowTemplate>
-                                    <MudTd Style="width: 190px">
+                                    <MudTd Style="width: 90px">
                                         <DisplayMainAssetImage filename="@item.Img_Filename" remarks="@item.Remarks" date="@item.Img_Date" />
                                     </MudTd>
                                     <MudTd style="color: #6A707D;font-size: 16px;">@item.Remarks</MudTd>
@@ -668,7 +644,41 @@
                                 </PagerContent>
                             </MudTable>
                         </div>
+                    </div>
 
+                    <div class="mainasssec" style="padding-bottom: 7px ">
+                        <MainAssetImgLogMultiImage MainAssetId="@obj.Id" MainAssetCode="@obj.AssetCode" JMCode="@obj.JMCode" Catid="@obj.CategoryId" SubCatid="obj.SubCategoryId" OnFileAdded="@RefreshPdfFileList" />
+                        <div class="" Style="margin-top: 1rem;">
+                            <MudTable Class="stable" Height="408px" Items="ImgLogsList" Context="item" SortLabel="Sort By" FixedHeader="true" Elevation="0" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true">
+                                <HeaderContent>
+                                    <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 15px;"></MudTh>
+                                    <MudTh Class="col-4" Style="background: #e9ecef; font-weight: 600; font-size: 15px;">Remarks</MudTh>
+                                    <MudTh Class="col-3" Style="background: #e9ecef; font-weight: 600; font-size: 15px;text-align: center">Date Uploaded</MudTh>
+                                    <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 15px;text-align: center">Remove</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd Style="width: 90px">
+                                        <DisplayMainAssetImgLog filename="@item.Img_Filename" remarks="@item.FolderTitle" date="@item.Img_Date" />
+                                    </MudTd>
+                                    <MudTd style="color: #6A707D;font-size: 16px;">@item.FolderTitle</MudTd>
+                                    <MudTd style="color: #6A707D;font-size: 16px;text-align: center">
+                                        <span>@item.Img_Date.ToString("MMM dd yyyy")</span> <br /> <span style="font-size: 13px;">@item.Img_Date.ToString("hh:mm tt")</span>
+                                    </MudTd>
+                                    <MudTd style="text-align: center">
+                                        @if (!item.FolderTitle.Equals("First image uploaded."))
+                                        {
+                                            <MudTooltip Text="Remove">
+                                                <MudIconButton Icon="@Icons.Material.Rounded.Remove" Class="btn assetdelteimg" OnClick="@(() => DeleteAssetImgLog(@item.Img_Filename, obj.AssetCode))">
+                                                </MudIconButton>
+                                            </MudTooltip>
+                                        }
+                                    </MudTd>
+                                </RowTemplate>
+                                <PagerContent>
+                                    <MudTablePager PageSizeOptions="new int[] { 5, 25, int.MaxValue }" InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" />
+                                </PagerContent>
+                            </MudTable>
+                        </div>
                     </div>
                 </MudTabPanel>
                 <MudTabPanel TabContent="TabHeader(5)">
@@ -677,7 +687,7 @@
                             <span class="spantitle">Report</span>
                             <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin">
                                 <Authorized>
-                                    <button class="Btn" onclick="@ExportReport">
+                                    <button class="Btn" @onclick="@ExportReport">
 
                                         <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Download"></MudIcon></div>
 
@@ -810,6 +820,16 @@
                     <MudSelectItem Value="@sec.Id">@sec.ASubCat_Name</MudSelectItem>
                 }
             </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Sub Category 2</MudText>
+            <select @bind="obj.SubCategory2Id" class="form-select" style="background: #e9ecef;">
+                <option value="null">Others</option>
+                @foreach (var sec in SUBCAT2.Where(e => e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
+                {
+                    <option value="@sec.Id">@sec.ASubCat2_Name</option>
+                }
+            </select>
         </div>
         <div class="flex-grow-1">
             <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Location</MudText>

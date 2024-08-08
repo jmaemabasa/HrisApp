@@ -57,6 +57,9 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<List<PositionT>>> GetPositionList()
         {
             var pos = await _context.PositionT
+                .Include(e=>e.Division)
+                .Include(e=>e.Department)
+                .Include(e=>e.Area)
                 .ToListAsync();
             return Ok(pos);
         }
@@ -66,6 +69,9 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<List<PositionT>>> GetPosition()
         {
             var pos = await _context.PositionT
+                .Include(e => e.Division)
+                .Include(e => e.Department)
+                .Include(e => e.Area)
                 .ToListAsync();
             return Ok(pos);
         }
@@ -73,7 +79,10 @@ namespace HrisApp.Server.Controllers.MasterData
         [HttpGet("{id}")]
         public async Task<ActionResult<PositionT>> GetSinglePosition(int id)
         {
-            var pos = await _context.PositionT.FindAsync(id);
+            var pos = await _context.PositionT
+                .Include(e => e.Division)
+                .Include(e => e.Department)
+                .Include(e => e.Area).FirstOrDefaultAsync(e=>e.Id == id);
 
             if (pos == null)
             {
@@ -86,7 +95,10 @@ namespace HrisApp.Server.Controllers.MasterData
         [HttpGet("ByCode/{code}")]
         public async Task<ActionResult<PositionT>> GetSinglePositionByCode(string code)
         {
-            var pos = await _context.PositionT.Where(d => d.PosCode == code).FirstOrDefaultAsync();
+            var pos = await _context.PositionT
+                .Include(e => e.Division)
+                .Include(e => e.Department)
+                .Include(e => e.Area).Where(d => d.PosCode == code).FirstOrDefaultAsync();
 
             if (pos == null)
             {
@@ -100,6 +112,9 @@ namespace HrisApp.Server.Controllers.MasterData
         private async Task<List<PositionT>> GetDBPosition()
         {
             return await _context.PositionT
+                .Include(e => e.Division)
+                .Include(e => e.Department)
+                .Include(e => e.Area)
                 .ToListAsync();
         }
 

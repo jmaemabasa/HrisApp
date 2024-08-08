@@ -12,6 +12,7 @@ namespace HrisApp.Client.Pages.Assets.Licenses
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private List<AssetSubCategory2T> SUBCAT2 = new();
         private List<AssetStatusT> STATUS = new();
         private List<AssetLicenseHistoryT> LICHISTORY = new();
         private List<EmployeeT> EMPLOYEE = new();
@@ -33,6 +34,7 @@ namespace HrisApp.Client.Pages.Assets.Licenses
             TYPES = await AssetTypeService.GetObjList();
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
+            SUBCAT2 = await AssetSubCatService2.GetObjList();
             LICHISTORY = await AssLicenseHisSvc.GetObjList();
             await StaticService.GetAssetStatus();
             STATUS = StaticService.AssetStatusTs;
@@ -76,9 +78,14 @@ namespace HrisApp.Client.Pages.Assets.Licenses
 
         private async Task SaveUpdate()
         {
-            if (obj.AssetStatusId == 2 || obj.AssetStatusId == 1)
+            if (obj.AssetStatusId != 1 && obj.AssetStatusId != 2)
             {
-                obj.StatusDate = null;
+                if (obj.StatusDate == null)
+                {
+                    var tes = STATUS.Where(e => e.Id == obj.AssetStatusId).FirstOrDefault();
+                    _toastService.ShowError(tes?.Name + " DATE IS REQUIRED.");
+                    return;
+                }
             }
             await AssLicenseSvc.UpdateObj(obj);
             await SaveRemarksTODB(obj.AssetCode);

@@ -924,6 +924,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<DateTime?>("StatusDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("SubCategory2Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
@@ -939,6 +942,8 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("MainAssetId");
+
+                    b.HasIndex("SubCategory2Id");
 
                     b.HasIndex("SubCategoryId");
 
@@ -1167,6 +1172,9 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SubCategory2Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
@@ -1189,11 +1197,44 @@ namespace HrisApp.Server.Migrations
 
                     b.HasIndex("EmployeeId");
 
+                    b.HasIndex("SubCategory2Id");
+
                     b.HasIndex("SubCategoryId");
 
                     b.HasIndex("TypeId");
 
                     b.ToTable("AssetMasterT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetSubCategory2T", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ASubCat2_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ASubCat2_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("AssetSubCategory2T");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetSubCategoryT", b =>
@@ -1565,6 +1606,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SubCategory2Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
@@ -1584,6 +1628,8 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("SubCategory2Id");
 
                     b.HasIndex("SubCategoryId");
 
@@ -1741,6 +1787,9 @@ namespace HrisApp.Server.Migrations
                     b.Property<DateTime?>("StatusDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("SubCategory2Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
@@ -1756,6 +1805,8 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("MainAssetId");
+
+                    b.HasIndex("SubCategory2Id");
 
                     b.HasIndex("SubCategoryId");
 
@@ -1953,6 +2004,47 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("AttendanceRecordT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Attendance.BioModelArchiveT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AttendanceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOnlyRecord")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateTimeRecord")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IPAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IndRegID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MachineNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeOnlyRecord")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BioModelArchiveT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Attendance.BioModelT", b =>
                 {
                     b.Property<int>("Id")
@@ -2051,6 +2143,35 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShiftTimetableT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Audit.AuditLogsArchiveT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeUserId");
+
+                    b.ToTable("AuditLogsArchiveT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Audit.AuditlogsT", b =>
@@ -3024,6 +3145,67 @@ namespace HrisApp.Server.Migrations
                     b.ToTable("EmployeeT");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.AccessImgLogT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FolderTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FolderTitleVerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgVerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_Contenttype")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Img_Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("Img_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Img_Filename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JM_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("AccessImgLogT");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Images.AssetAccessImageT", b =>
                 {
                     b.Property<int>("Id")
@@ -3393,6 +3575,67 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("DivisionId");
 
                     b.ToTable("EmpPictureT");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.MainAssetImgLogT", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FolderTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FolderTitleVerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgVerifyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_Contenttype")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Img_Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("Img_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Img_Filename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JM_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("MainAssetImgLogT");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.MasterData.AreaT", b =>
@@ -3868,6 +4111,12 @@ namespace HrisApp.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AreaId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DivisionId");
+
                     b.ToTable("PositionT");
                 });
 
@@ -4178,6 +4427,12 @@ namespace HrisApp.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AreaId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DivisionId");
+
                     b.ToTable("SubPositionT");
                 });
 
@@ -4331,6 +4586,59 @@ namespace HrisApp.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExtractLogsModel");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.SettingsM.ExtractLogsModelArchive", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BioId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date_Create")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date_Extract")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date_Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date_Stop")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployeeUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Is_Start")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExtractLogsModelArchive");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.StaticData.AssetStatusT", b =>
@@ -5055,6 +5363,10 @@ namespace HrisApp.Server.Migrations
                         .WithMany()
                         .HasForeignKey("MainAssetId");
 
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategory2T", "SubCategory2")
+                        .WithMany()
+                        .HasForeignKey("SubCategory2Id");
+
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
                         .WithMany()
                         .HasForeignKey("SubCategoryId")
@@ -5076,6 +5388,8 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("MainAsset");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("SubCategory2");
 
                     b.Navigation("Type");
                 });
@@ -5138,6 +5452,10 @@ namespace HrisApp.Server.Migrations
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategory2T", "SubCategory2")
+                        .WithMany()
+                        .HasForeignKey("SubCategory2Id");
+
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
                         .WithMany()
                         .HasForeignKey("SubCategoryId")
@@ -5162,7 +5480,28 @@ namespace HrisApp.Server.Migrations
 
                     b.Navigation("SubCategory");
 
+                    b.Navigation("SubCategory2");
+
                     b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetSubCategory2T", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Assets.AssetSubCategoryT", b =>
@@ -5288,6 +5627,10 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategory2T", "SubCategory2")
+                        .WithMany()
+                        .HasForeignKey("SubCategory2Id");
+
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
                         .WithMany()
                         .HasForeignKey("SubCategoryId")
@@ -5311,6 +5654,8 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("SubCategory2");
 
                     b.Navigation("Type");
 
@@ -5366,6 +5711,10 @@ namespace HrisApp.Server.Migrations
                         .WithMany()
                         .HasForeignKey("MainAssetId");
 
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategory2T", "SubCategory2")
+                        .WithMany()
+                        .HasForeignKey("SubCategory2Id");
+
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
                         .WithMany()
                         .HasForeignKey("SubCategoryId")
@@ -5387,6 +5736,8 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("MainAsset");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("SubCategory2");
 
                     b.Navigation("Type");
                 });
@@ -5459,6 +5810,17 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Audit.AuditLogsArchiveT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Employee.EmployeeT", "EmployeeUSer")
+                        .WithMany()
+                        .HasForeignKey("EmployeeUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmployeeUSer");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.Audit.AuditlogsT", b =>
@@ -5602,6 +5964,25 @@ namespace HrisApp.Server.Migrations
                     b.Navigation("Status");
                 });
 
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.AccessImgLogT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+                });
+
             modelBuilder.Entity("HrisApp.Shared.Models.Images.AssetAccessImageT", b =>
                 {
                     b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
@@ -5729,6 +6110,79 @@ namespace HrisApp.Server.Migrations
                         .HasForeignKey("DivisionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Division");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.Images.MainAssetImgLogT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetCategoryT", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.Assets.AssetSubCategoryT", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.PositionT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.AreaT", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DepartmentT", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DivisionT", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Area");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Division");
+                });
+
+            modelBuilder.Entity("HrisApp.Shared.Models.MasterData.SubPositionT", b =>
+                {
+                    b.HasOne("HrisApp.Shared.Models.MasterData.AreaT", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DepartmentT", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HrisApp.Shared.Models.MasterData.DivisionT", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Area");
 
                     b.Navigation("Department");
 

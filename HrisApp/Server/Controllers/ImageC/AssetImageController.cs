@@ -6,9 +6,9 @@
     {
         private readonly DataContext _context;
         private readonly IWebHostEnvironment _evs;
-        private readonly ILogger<ImageController> _logger;
+        private readonly ILogger<AssetImageController> _logger;
 
-        public AssetImageController(DataContext context, IWebHostEnvironment evs, ILogger<ImageController> logger)
+        public AssetImageController(DataContext context, IWebHostEnvironment evs, ILogger<AssetImageController> logger)
         {
             _context = context;
             _evs = evs;
@@ -18,24 +18,46 @@
         [HttpGet("Getattachmentview")]
         public async Task<ActionResult<byte[]>> Getattachmentview([FromQuery] string jmcode)
         {
+            var model = await _context.AssetImageT.FirstOrDefaultAsync(a => a.JM_Code == jmcode);
+
+            if (model == null)
+            {
+                var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                var _nullfilename = "asset-holder.jpg";
+                var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
+
+                var _nullmemory = new MemoryStream();
+                using (var _stream = new FileStream(_nullpath, FileMode.Open))
+                {
+                    await _stream.CopyToAsync(_nullmemory);
+                }
+                _nullmemory.Position = 0;
+                return _nullmemory.ToArray();
+            }
+
+            var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
+
+            var _memory = new MemoryStream();
+            using (var _stream = new FileStream(_path, FileMode.Open))
+            {
+                await _stream.CopyToAsync(_memory);
+            }
+            _memory.Position = 0;
+            return _memory.ToArray();
+        }
+
+        [HttpGet("GetattachmentviewAll")]
+        public async Task<ActionResult<byte[]>> GetattachmentviewAll([FromQuery] string filename)
+        {
             try
             {
                 var _masterlist = await _context.AssetImageT.ToListAsync();
-                var model = _masterlist.Where(a => a.JM_Code == jmcode).FirstOrDefault();
+                var model = _masterlist.Where(a => a.Img_Filename == filename).FirstOrDefault();
 
                 if (model == null)
                 {
-                    var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
-                    var _nullfilename = "avatarorimage.jpg";
-                    var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
-
-                    var _nullmemory = new MemoryStream();
-                    using (var _stream = new FileStream(_nullpath, FileMode.Open))
-                    {
-                        await _stream.CopyToAsync(_nullmemory);
-                    }
-                    _nullmemory.Position = 0;
-                    return _nullmemory.ToArray();
+                    //not found dapat ni
+                    return NoContent();
                 }
 
                 var _path = Path.Combine(_evs.ContentRootPath, model.Img_URL, model.Img_Filename);
@@ -54,13 +76,13 @@
             }
         }
 
-        [HttpGet("GetattachmentviewAll")]
-        public async Task<ActionResult<byte[]>> GetattachmentviewAll([FromQuery] string filename)
+        [HttpGet("GetImageDataById")]
+        public async Task<ActionResult<byte[]>> GetImageDataById([FromQuery] int id)
         {
             try
             {
                 var _masterlist = await _context.AssetImageT.ToListAsync();
-                var model = _masterlist.Where(a => a.Img_Filename == filename).FirstOrDefault();
+                var model = _masterlist.Where(a => a.Id == id).FirstOrDefault();
 
                 if (model == null)
                 {
@@ -140,6 +162,56 @@
                             await _context.SaveChangesAsync();
                             return Ok();
                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error");
+                return new StatusCodeResult(500);
+            }
+
+            return BadRequest("Invalid saving Data");
+        }
+
+
+        [HttpPost("PostUploadImageCopyTo")]
+        public async Task<IActionResult> PostUploadImageCopyTo([FromQuery] int category, [FromQuery] int subcat, [FromQuery] string jmcode, [FromQuery] string remarks)
+        {
+            try
+            {
+                var httpRequest = HttpContext.Request;
+                if (httpRequest.Form.Files.Count > 0)
+                {
+                    foreach (var file in httpRequest.Form.Files)
+                    {
+                        var filePath = Path.Combine(_evs.ContentRootPath, "AssetImages", jmcode);
+                        if (!Directory.Exists(filePath))
+                            Directory.CreateDirectory(filePath);
+
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await file.CopyToAsync(memoryStream);
+                            System.IO.File.WriteAllBytes(Path.Combine(filePath, file.FileName), memoryStream.ToArray());
+                        }
+
+                        AssetImageT _Model = new()
+                        {
+                            AssetCode = jmcode,
+                            Img_Filename = file.FileName,
+                            Img_Contenttype = file.ContentType,
+                            Img_URL = filePath,
+                            Img_Data = null,
+                            Img_Date = DateTime.Now,
+                            CategoryId = category,
+                            SubCategoryId = subcat,
+                            JM_Code = jmcode,
+                            Remarks = remarks,
+                        };
+
+                        _context.AssetImageT.Add(_Model);
+                        await _context.SaveChangesAsync();
+                        return Ok();
                     }
                 }
             }
@@ -235,6 +307,19 @@
         public async Task<ActionResult<List<AssetImageT>>> GetObjList()
         {
             var obj = await _context.AssetImageT.ToListAsync();
+            return Ok(obj);
+        }
+        [HttpGet("GetObjListByCode")]
+        public async Task<ActionResult<List<AssetImageT>>> GetObjListByCode([FromQuery]string code)
+        {
+            var obj = await _context.AssetImageT.Where(e=>e.JM_Code == code).ToListAsync();
+            return Ok(obj);
+        }
+        
+        [HttpGet("GetSingleImageByCode")]
+        public async Task<ActionResult<AssetImageT>> GetSingleImageByCode([FromQuery]string code)
+        {
+            var obj = await _context.AssetImageT.Where(e=>e.JM_Code == code).FirstOrDefaultAsync();
             return Ok(obj);
         }
 

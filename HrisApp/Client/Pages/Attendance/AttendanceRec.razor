@@ -60,6 +60,20 @@
                     <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.Upload"></MudIcon></div>
                     <div class="text">Upload File</div>
                     </button> *@
+
+                    <button class="Btn" @onclick="OnCleanLogs">
+                        @if (!_processingClean)
+                        {
+                            <div class="sign"><MudIcon Icon="@Icons.Material.Rounded.CleaningServices"></MudIcon></div>
+                            <div class="text">Clean Logs</div>
+                        }
+                        else
+                        {
+                            <div class="sign"> <MudProgressCircular Color="Color.Warning" Class="ms-n1" Size="Size.Small" Indeterminate="true" /></div>
+                            <div class="text">Cleaning</div>
+                        }
+
+                    </button>
                     <MudButton OnClick="OpenAddDialog" Variant="Variant.Filled" Size="Size.Medium" StartIcon="@Icons.Material.Rounded.Add" Class="btnadd"> Record</MudButton>
                 </div>
             </Authorized>
@@ -103,7 +117,7 @@
                 <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Biometric ID</MudTh>
                 <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Date</MudTh>
                 <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Type</MudTh>
-                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">IP Address</MudTh>
+                <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Area</MudTh>
                 <MudTh Class="" Style="background: #e9ecef; font-weight: 600; font-size: 16px;">Remarks</MudTh>
             </HeaderContent>
             <RowTemplate>
@@ -129,7 +143,7 @@
                     </div>
                 </MudTd>
                 <MudTd>@obj.AttendanceType</MudTd>
-                <MudTd>@obj.IPAddress</MudTd>
+                <MudTd>@obj.Area</MudTd>
                 <MudTd>@obj.Remarks</MudTd>
             </RowTemplate>
             <PagerContent>
@@ -144,6 +158,7 @@
     private List<EmployeeT> empList = new();
     private List<Emp_PayrollT> payList = new();
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
+    private bool _processingClean = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -184,7 +199,8 @@
                         TimeOnlyRecord = item.TimeOnlyRecord,
                         AttendanceType = item.AttendanceType,
                         IPAddress = item.IPAddress,
-                        Remarks = item.Remarks
+                        Remarks = item.Remarks,
+                        Area = ""
                     };
             }
             else
@@ -203,7 +219,8 @@
                         TimeOnlyRecord = item.TimeOnlyRecord,
                         AttendanceType = item.AttendanceType,
                         IPAddress = item.IPAddress,
-                        Remarks = item.Remarks
+                        Remarks = item.Remarks,
+                        Area = emp.Area!.Name
                     };
             }
 
@@ -212,6 +229,29 @@
         }
 
         StateService.SetState("AttendanceRecList", _attendanceList.OrderByDescending(e=>e.TimeOnlyRecord).ToList());
+    }
+
+
+    private async Task OnCleanLogs()
+    {
+        _processingClean = true;
+        _toastService.ShowInfo("Archiving. Please wait...");
+
+        var res = await BioService.CleanLogs();
+        if (res == "Success" || res == "NoLogs")
+        {
+            _processingClean = false;
+            _toastService.ShowSuccess("Archiving succeeded.");
+            await LoadList();
+            return;
+        }
+        else
+        {
+            _processingClean = false;
+            _toastService.ShowError("Archiving failed.");
+            await LoadList();
+            return;
+        }
     }
 
     private void OnStateChanged()

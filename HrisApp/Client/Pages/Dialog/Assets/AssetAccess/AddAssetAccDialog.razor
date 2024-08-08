@@ -71,6 +71,18 @@
             </div>
             <div class="row">
                 <div class="col-12">
+                    <MudText Typo="Typo.body2">Sub Category 2</MudText>
+                    <select @bind="obj.SubCategory2Id" class="form-select" style="background: #e9ecef;">
+                        <option value="null">Others</option>
+                        @foreach (var sec in SUBCAT2.Where(e => e.CategoryId == obj.CategoryId && e.SubCategoryId == obj.SubCategoryId))
+                        {
+                            <option value="@sec.Id">@sec.ASubCat2_Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
                     <MudText Typo="Typo.body2">Asset Code</MudText>
                     <MudTextField @bind-Value="obj.AssetCode" ReadOnly Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px; font-weight: 600;" />
                 </div>

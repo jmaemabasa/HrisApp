@@ -1,4 +1,6 @@
-﻿namespace HrisApp.Client.Pages.Assets.Consumables
+﻿using HrisApp.Shared.Models.Images;
+
+namespace HrisApp.Client.Pages.Assets.Consumables
 {
 #nullable disable
 
@@ -10,6 +12,7 @@
         private List<AssetTypesT> TYPES = new();
         private List<AssetCategoryT> CAT = new();
         private List<AssetSubCategoryT> SUBCAT = new();
+        private List<AssetSubCategory2T> SUBCAT2 = new();
         private List<AreaT> AREA = new();
         private List<UOMT> UOM = new();
         private List<ConsumableRemarksT> REMARKS = new();
@@ -26,18 +29,17 @@
             TYPES = await AssetTypeService.GetObjList();
             CAT = await AssetCatService.GetObjList();
             SUBCAT = await AssetSubCatService.GetObjList();
+            SUBCAT2 = await AssetSubCatService2.GetObjList();
             AREA = await AreaService.GetAreaList();
             UOM = await UOMService.GetObjList();
             await ConsTranSvc.GetObj();
             TRANSACTIONS = await ConsTranSvc.GetObjList();
-
         }
 
         protected override async Task OnParametersSetAsync()
         {
             obj = await ConsumablesService.GetSingleObj(Id);
             REMARKS = await ConsRemarksSvc.GetObjList(obj.AssetCode);
-
 
             TopTransEmployee = await ConsTranSvc.GetTopIssuedEmployees(obj.Id);
 
@@ -124,9 +126,11 @@
         {
             NavigationManager.NavigateTo("/asset-consumable");
         }
+
         #endregion FUNCTIONS
 
         #region REMARKS
+
         private string newRemark = "";
 
         public async Task SaveRemarksTODB(string posCode)
@@ -199,7 +203,6 @@
 
             if (confirmResult.IsConfirmed)
             {
-
                 var skillToRemove = REMARKS.FirstOrDefault(item => item.Remark == chip.Text);
 
                 if (skillToRemove != null)
@@ -208,7 +211,8 @@
                 }
             }
         }
-        #endregion
+
+        #endregion REMARKS
 
         #region MUD TABS / TAB PANEL
 
@@ -336,8 +340,8 @@
 
         #endregion MUD TABS / TAB PANEL
 
-
         #region FILTERS
+
         public string CmbStatusText = "All Types";
 
         public async Task SearchStatus(string type)
@@ -356,6 +360,51 @@
                 TRANSACTIONS = ConsTranSvc.Cons_TransactionTs.Where(e => e.Transact_Type.Equals(CmbStatusText)).ToList();
             }
         }
-        #endregion
+
+        #endregion FILTERS
+
+
+        public async Task uploadImage(InputFileChangeEventArgs e)
+        {
+            long lngImage = long.MaxValue;
+            var brwModel = e.File;
+            var imgFilename = e.File.Name;
+            var imgContent = e.File.ContentType;
+            var imgBuffer = new byte[e.File.Size];
+            var imgURL = $"data:{imgContent};base64,{Convert.ToBase64String(imgBuffer)}";
+
+            using (var _stream = brwModel.OpenReadStream(lngImage))
+            {
+                await _stream.ReadAsync(imgBuffer);
+            }
+
+            if (e.File.Name is null)
+            {
+                await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Error",
+                    Text = "No image uploaded!",
+                    Icon = SweetAlertIcon.Error
+                });
+                return;
+            }
+            else
+            {
+                MultipartFormDataContent ConsumableImage = new();
+                using var content = new MultipartFormDataContent();
+                var fileContent = new StreamContent(brwModel.OpenReadStream(lngImage));
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(imgContent);
+
+                ConsumableImage.Add(content: fileContent, name: imgFilename, fileName: imgFilename);
+
+                if (ConsumableImage.Any())
+                {
+                    await ConsImgService.AttachFile(ConsumableImage, obj.CategoryId, obj.SubCategoryId, obj.JMCode, "First image uploaded.");
+                }
+
+                var base642 = Convert.ToBase64String(imgBuffer);
+                ConsumableImageData = string.Format("data:image/*;base64,{0}", base642);
+            }
+        }
     }
 }

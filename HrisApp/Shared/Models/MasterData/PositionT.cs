@@ -11,9 +11,12 @@ namespace HrisApp.Shared.Models.MasterData
         public string PosCode { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string VerifyId { get; set; } = string.Empty;
+        public DivisionT? Division { get; set; }
         public int DivisionId { get; set; } //FK
+        public DepartmentT? Department { get; set; }
         public int DepartmentId { get; set; } //FK
         public int SectionId { get; set; } //FK
+        public AreaT? Area { get; set; }
         public int AreaId { get; set; } // FK
         public string JobSummary { get; set; } = string.Empty;
         public string PosEducation { get; set; } = string.Empty;

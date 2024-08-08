@@ -74,5 +74,14 @@ namespace HrisApp.Client.Services.SettingsS.ExtractLogsService
             var result = await _httpClient.GetFromJsonAsync<int>($"api/ExtractLogs/GetExistExtract?status={status}");
                 return result;
         }
+        public async Task<string> CleanLogs()
+        {
+            var response = await _httpClient.GetAsync("api/ExtractLogs/CleanLogs");
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
+
     }
 }

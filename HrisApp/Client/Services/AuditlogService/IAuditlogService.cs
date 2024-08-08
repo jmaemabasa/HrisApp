@@ -7,6 +7,8 @@
         Task<AuditlogsT> GetSingleLog(int id);
 
         Task CreateLog(int userid, string action, string type, DateTime date);
-        Task GetLogs();
+        Task GetLogs(); 
+        Task<string> CleanLogs();
+
     }
 }

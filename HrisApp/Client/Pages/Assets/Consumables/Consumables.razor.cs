@@ -57,7 +57,16 @@
         {
             NavigationManager.NavigateTo($"/asset-consumable/details/{id}");
         }
+        private void OpenCopyTo(ConsumablesT item)
+        {
+            var parameters = new DialogParameters<CopyToConsumable>
+                {
+                    { x => x.Obj, item }
+                };
 
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true, NoHeader = true };
+            DialogService.Show<CopyToConsumable>("Copy Consumable", parameters, options);
+        }
         private void OpenAddDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Large, DisableBackdropClick = true, NoHeader = true };

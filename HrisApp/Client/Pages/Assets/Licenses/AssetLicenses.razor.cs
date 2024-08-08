@@ -167,6 +167,18 @@
             NavigationManager.NavigateTo($"/asset-license/details/{id}");
         }
 
+        private void OpenCopyTo(AssetLicenseT item)
+        {
+
+            var parameters = new DialogParameters<CopyToLicense>
+                {
+                    { x => x.Obj, item }
+                };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, DisableBackdropClick = true, MaxWidth = MaxWidth.Small, NoHeader = true };
+            DialogService.Show<CopyToLicense>("Copy Asset Accessory", parameters, options);
+        }
+
         private void OpenAddDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, DisableBackdropClick = true, MaxWidth = MaxWidth.Small, NoHeader = true };

@@ -53,5 +53,13 @@
             return await _httpClient.GetFromJsonAsync<int>($"api/BioAttendance/GetExistingObj?time={time}&no={no}");
         }
 
+        public async Task<string> CleanLogs()
+        {
+            var response = await _httpClient.GetAsync("api/BioAttendance/CleanLogs");
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
     }
 }

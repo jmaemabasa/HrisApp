@@ -83,9 +83,14 @@
                     <MudTd>
                         <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin">
                             <Authorized>
-                                <MudTooltip Text="Details">
-                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                <div class="d-flex align-items-center">
+                                    <MudTooltip Text="Details">
+                                        <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
+                                    </MudTooltip>
+                                    <MudTooltip Text="Copy To">
+                                        <MudIconButton Class="btnedit" OnClick="(() => OpenCopyTo(obj))" Icon="@Icons.Material.Rounded.ContentCopy" aria-label="Copy"></MudIconButton>
+                                    </MudTooltip>
+                                </div>
                             </Authorized>
                             <NotAuthorized>
                                 <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>

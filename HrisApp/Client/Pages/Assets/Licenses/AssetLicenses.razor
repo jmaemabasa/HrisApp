@@ -97,36 +97,33 @@
                     <MudTd DataLabel="">@obj.Model</MudTd>
                     <MudTd DataLabel="">@obj.Category?.ACat_Name</MudTd>
                     <MudTd DataLabel="">@obj.Serial</MudTd>
-                    @if (obj.AssetStatusId == 2)
-                    {
-                        <MudTd Style="color: gray;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
+                    @{
+                        var statusStyles = new Dictionary<int, string>
+                {
+                { 2, "color: gray; font-weight: 500;" },
+                { 3, "color: #7567b8; font-weight: 500;" },
+                { 4, "color: #9caac1; font-weight: 500;" },
+                { 5, "color: #e38d0f; font-weight: 500;" },
+                { 6, "color: #be1313; font-weight: 500;" },
+                { 7, "color: #515268; font-weight: 500;" },
+                };
+
+                        var defaultStyle = "color: #397763; font-weight: 500;";
+                        var statusId = obj.AssetStatusId;
+                        var style = statusStyles.ContainsKey(statusId) ? statusStyles[statusId] : defaultStyle;
                     }
-                    else if (obj.AssetStatusId == 3)
-                    {
-                        <MudTd Style="color: #7567b8;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
-                    }
-                    else if (obj.AssetStatusId == 4)
-                    {
-                        <MudTd Style="color: #9caac1;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
-                    }
-                    else if (obj.AssetStatusId == 5)
-                    {
-                        <MudTd Style="color: #e38d0f;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
-                    }
-                    else if (obj.AssetStatusId == 6)
-                    {
-                        <MudTd Style="color: #be1313;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
-                    }
-                    else
-                    {
-                        <MudTd Style="color: #397763;font-weight: 500">@obj.AssetStatus?.Name</MudTd>
-                    }
+                    <MudTd Style="@style">@obj.AssetStatus?.Name</MudTd>
                     <MudTd>
                         <AuthorizeView Roles="CadAdmin, SysAdmin, GenAdmin, Technical, CshrAdmin">
                             <Authorized>
-                                <MudTooltip Text="Details">
-                                    <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
-                                </MudTooltip>
+                                <div class="d-flex align-items-center">
+                                    <MudTooltip Text="Details">
+                                        <MudIconButton Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>
+                                    </MudTooltip>
+                                    <MudTooltip Text="Copy To">
+                                        <MudIconButton Class="btnedit" OnClick="(() => OpenCopyTo(obj))" Icon="@Icons.Material.Rounded.ContentCopy" aria-label="Copy"></MudIconButton>
+                                    </MudTooltip>
+                                </div>
                             </Authorized>
                             <NotAuthorized>
                                 <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdateDialog(obj.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Edit"></MudIconButton>

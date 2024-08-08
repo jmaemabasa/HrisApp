@@ -15,6 +15,7 @@
             Start = DateTime.Now.AddDays(-15),
             End = DateTime.Now
         };
+        private bool _processingClean = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,6 +39,35 @@
             if (logsList == null || logsList.Count == 0)
             {
                 OpenOverlay();
+            }
+        }
+        private async Task OnCleanLogs()
+        {
+            _processingClean = true;
+            _toastService.ShowInfo("Archiving. Please wait...");
+
+            var res = await AuditlogService.CleanLogs();
+            if (res == "Success" || res == "NoLogs")
+            {
+                _processingClean = false;
+                _toastService.ShowSuccess("Archiving succeeded."); 
+                await AuditlogService.GetLogs();
+                logsList = AuditlogService.AuditlogsTs
+                    .Where(log => log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
+                    .OrderByDescending(log => log.Date)
+                    .ToList();
+                return;
+            }
+            else
+            {
+                _processingClean = false;
+                _toastService.ShowError("Archiving failed.");
+                await AuditlogService.GetLogs();
+                logsList = AuditlogService.AuditlogsTs
+                    .Where(log => log.Date >= _dateRange.Start && log.Date <= _dateRange.End)
+                    .OrderByDescending(log => log.Date)
+                    .ToList();
+                return;
             }
         }
 

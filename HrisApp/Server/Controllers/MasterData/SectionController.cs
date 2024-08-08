@@ -20,7 +20,6 @@ namespace HrisApp.Server.Controllers.MasterData
         {
             var section = await _context.SectionT
                 .Where(sect => sect.DepartmentId == departmentId)
-                .OrderBy(d => d.DivisionId)
                 .ToListAsync();
             return Ok(section);
         }
@@ -30,7 +29,6 @@ namespace HrisApp.Server.Controllers.MasterData
         {
             var section = await _context.SectionT
                 .Where(sect => sect.DivisionId == divisionId)
-                .OrderBy(d => d.DepartmentId)
                 .ToListAsync();
             return Ok(section);
         }

@@ -1,9 +1,9 @@
-﻿using Blazored.Toast.Services;
-using HrisApp.Shared.Models.Employee.Emp_Education;
+﻿using HrisApp.Shared.Models.Employee.Emp_Education;
 
 namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 {
 #nullable disable
+
     public class AddEmployeeVM : BaseViewModel
     {
         private IEmployeeService EmployeeService = new EmployeeService();
@@ -140,6 +140,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
 
         //EDUCATION
         public List<Emp_CollegeT> listOfCollege = new();
+
         public List<Emp_UndergraduateT> listOfUG = new();
 
         public List<Emp_OtherEducT> listOfOthers = new();
@@ -179,6 +180,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
         public DateTime? ResignationDate = DateTime.Today;
 
         public DateTime? RATEEFFECTIVITYDATE = DateTime.Today;
+
         #endregion DATE VARIBALE
 
         #region IMAGE VARIABLE
@@ -313,8 +315,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     }
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
-
-
                     //UPDATE SUBPOSITION
                     subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
                     subPosition.Emp_VerifyId = verifyId;
@@ -357,7 +357,6 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     await CreateLicenses(verifyId);
                     await CreateTrainings(verifyId);
                     await CreateProfBg(verifyId);
-
 
                     //CREATE LEAVE CREDITS
                     await LeaveCredService.CreateLeaveCred(verifyId, 0, 0, 0, 0, 0, 0);
@@ -851,6 +850,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
             listOfCollege.Clear();
             AddNewCollege(employeeVerifyId);
         }
+
         public async Task CreateUGRecords(string employeeVerifyId)
         {
             //college

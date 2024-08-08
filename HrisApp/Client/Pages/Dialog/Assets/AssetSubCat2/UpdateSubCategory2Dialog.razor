@@ -1,0 +1,95 @@
+﻿<MudDialog>
+    <DialogContent>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Code</MudText>
+            <MudTextField ReadOnly @bind-Value="obj.ASubCat2_Code" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;font-weight: 600;" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Category</MudText>
+            <MudSelect @bind-Value="obj.CategoryId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                @foreach (var obj in CategoriesL)
+                {
+                    <MudSelectItem Value="@obj.Id">@obj.ACat_Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Sub Category</MudText>
+            <MudSelect @bind-Value="obj.SubCategoryId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+                @foreach (var obj in SubCategoriesL)
+                {
+                    <MudSelectItem Value="@obj.Id">@obj.ASubCat_Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">Name</MudText>
+            <MudTextField @bind-Value="obj.ASubCat2_Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="dialogbtns" style="padding: 15px 15px 15px 10px;">
+            <button type="button" class="btn cancel" @onclick="Cancel">Cancel</button>
+            <button type="button" class="save btn" @onclick="UpdateSave">Save</button>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance? MudDialog { get; set; }
+    private List<AssetCategoryT> CategoriesL = new();
+    private List<AssetSubCategoryT> SubCategoriesL = new();
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private AssetSubCategory2T obj = new();
+
+    private void Cancel() => MudDialog?.Cancel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CategoriesL = await AssetCatService.GetObjList();
+        SubCategoriesL = await AssetSubCatService.GetObjList();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        obj = await AssetSubCatService2.GetSingleObj((int)Id);
+    }
+
+    private async Task UpdateSave()
+    {
+        if (obj == null)
+            return;
+
+        if (string.IsNullOrWhiteSpace(obj.ASubCat2_Name))
+        {
+            GlobalConfigService.OpenWarningDialog("Please fill up the name.");
+        }
+        else
+        {
+            MudDialog?.Close();
+            var confirmResult = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Confirmation",
+                    Text = "Are you sure you want to update the " + obj.ASubCat2_Name + "?",
+                    Icon = SweetAlertIcon.Question,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Yes",
+                    CancelButtonText = "No"
+                });
+
+            if (confirmResult.IsConfirmed)
+            {
+                await AssetSubCatService2.UpdateObj(obj);
+                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+
+                _toastService.ShowSuccess(obj.ASubCat2_Name + " Updated Successfully!");
+
+                // Update the List using the StateService
+                StateService.SetState("AssetSubCat2List", await AssetSubCatService2.GetObjList());
+            }
+        }
+    }
+}
