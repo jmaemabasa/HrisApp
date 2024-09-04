@@ -35,7 +35,7 @@
                 StateService.OnChange += OnStateChanged;
                 await LoadList();
                 ROLE = GlobalConfigService.Role;
-                empPositionId = EmployeeService.EmployeeTs.Where(e => e.Id == EmployeeId).FirstOrDefault().PositionId;
+                empPositionId = (int)EmployeeService.EmployeeTs.Where(e => e.Id == EmployeeId).FirstOrDefault().SubPositionId;
             }
             catch (Exception ex)
             {
@@ -197,7 +197,7 @@
             else
             {
                 var chk = list.Where(x => x.SubPosCode.Contains(value, StringComparison.InvariantCultureIgnoreCase) ||
-                                            x.Description.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+                                            x.Position.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
 
                 return chk;
             }

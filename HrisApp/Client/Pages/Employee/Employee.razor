@@ -203,11 +203,8 @@
                     </MudTd>
                     <MudTd DataLabel="EmployeeNo">@employeeee.EmployeeNo</MudTd>
 
-                    @{
-                        var pos = SubPositionsL.FirstOrDefault(_ => _.Id == employeeee.PositionId);
-                    }
                     <MudTd DataLabel="Position">
-                        @pos?.Description
+                        @employeeee.SubPosition?.Position?.Name
                     </MudTd>
                     <MudTd DataLabel="Division">
                         @employeeee.Division?.Name

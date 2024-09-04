@@ -83,27 +83,27 @@
 
                 <MudTd>@pos.Name</MudTd>
                 <MudTd Style="text-align: center;">
-                    @allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status != "Inactive").Count()
+                    @allSubPositions.Where(e => e.PositionId == pos.Id && e.Status != "Inactive").Count()
                 </MudTd>
                 <MudTd Style="text-align: center;">
-                    @if (allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count() == allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status != "Inactive").Count())
+                    @if (allSubPositions.Where(e => e.PositionId == pos.Id && e.Status == "Active").Count() == allSubPositions.Where(e => e.PositionId == pos.Id && e.Status != "Inactive").Count())
                     {
-                        <span style="color: green; font-weight: 600"> @allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count()</span>
+                        <span style="color: green; font-weight: 600"> @allSubPositions.Where(e => e.PositionId == pos.Id && e.Status == "Active").Count()</span>
                     }
                     else
                     {
-                        <span style="color: red; font-weight: 600">@allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Active").Count()</span>
+                        <span style="color: red; font-weight: 600">@allSubPositions.Where(e => e.PositionId == pos.Id && e.Status == "Active").Count()</span>
                     }
 
                 </MudTd>
                 <MudTd Style="text-align: center;">
-                    @if (allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Vacant").Count() != 0)
+                    @if (allSubPositions.Where(e => e.PositionId == pos.Id && e.Status == "Vacant").Count() != 0)
                     {
-                        <span style="color: #E38D0F; font-weight: 600">@allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Vacant").Count()</span>
+                        <span style="color: #E38D0F; font-weight: 600">@allSubPositions.Where(e => e.PositionId == pos.Id && e.Status == "Vacant").Count()</span>
                     }
                     else
                     {
-                        <span>@allSubPositions.Where(e => e.PosCode == pos.PosCode && e.Status == "Vacant").Count()</span>
+                        <span>@allSubPositions.Where(e => e.PositionId == pos.Id && e.Status == "Vacant").Count()</span>
                     }
                 </MudTd>
 

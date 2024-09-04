@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240904011038_MG0904202409103")]
+    partial class MG0904202409103
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4394,6 +4396,10 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DivisionId")
                         .HasColumnType("int");
 
@@ -4401,7 +4407,11 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PositionId")
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PositionId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReportingTo")
@@ -6191,9 +6201,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasOne("HrisApp.Shared.Models.MasterData.PositionT", "Position")
                         .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PositionId");
 
                     b.Navigation("Area");
 

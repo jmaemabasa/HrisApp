@@ -176,7 +176,7 @@ namespace HrisApp.Server.Controllers.StaticDataC
 
             var _returnId = Masterlist.Where(d => d.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
-            return Ok(_returnId.Id);
+            return Ok(_returnId?.Id);
         }
 
         [HttpGet("restday")]

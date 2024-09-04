@@ -36,7 +36,7 @@ namespace HrisApp.Server.Controllers.APiSC
                 var apiUrl = "https://dailyverses.net/api/dailyverse";
 
                 var response = await _http.GetStringAsync(apiUrl);
-                dynamic verseData = JsonConvert.DeserializeObject(response);
+                dynamic verseData = JsonConvert.DeserializeObject(response)!;
                 return Ok(verseData);
             }
             catch (Exception ex)

@@ -247,7 +247,7 @@ namespace HrisApp.Client.Services.EmpDetails.EmployeeService
                                     DivisionId = divisionid,
                                     DepartmentId = depid,
                                     SectionId = secid,
-                                    PositionId = positionid,
+                                    SubPositionId = positionid,
 
                                     EmerName = emername,
                                     EmerRelationshipId = erelid,

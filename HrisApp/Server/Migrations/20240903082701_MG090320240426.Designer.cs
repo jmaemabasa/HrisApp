@@ -4,6 +4,7 @@ using HrisApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrisApp.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240903082701_MG090320240426")]
+    partial class MG090320240426
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3104,6 +3106,9 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Religion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3114,7 +3119,7 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubPositionId")
+                    b.Property<int?>("SubPositionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Verify_Id")
@@ -4394,6 +4399,10 @@ namespace HrisApp.Server.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DivisionId")
                         .HasColumnType("int");
 
@@ -4401,8 +4410,9 @@ namespace HrisApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PositionId")
-                        .HasColumnType("int");
+                    b.Property<string>("PosCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReportingTo")
                         .IsRequired()
@@ -4429,8 +4439,6 @@ namespace HrisApp.Server.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("DivisionId");
-
-                    b.HasIndex("PositionId");
 
                     b.ToTable("SubPositionT");
                 });
@@ -5948,9 +5956,7 @@ namespace HrisApp.Server.Migrations
 
                     b.HasOne("HrisApp.Shared.Models.MasterData.SubPositionT", "SubPosition")
                         .WithMany()
-                        .HasForeignKey("SubPositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubPositionId");
 
                     b.Navigation("Area");
 
@@ -6189,19 +6195,11 @@ namespace HrisApp.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HrisApp.Shared.Models.MasterData.PositionT", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Area");
 
                     b.Navigation("Department");
 
                     b.Navigation("Division");
-
-                    b.Navigation("Position");
                 });
 
             modelBuilder.Entity("HrisApp.Shared.Models.User.UserMasterT", b =>

@@ -3,6 +3,16 @@
 
 <PageTitle>Sub Position Management</PageTitle>
 
+<style>
+    .btndelete {
+        color: #f74357;
+    }
+
+         .btnedit:hover, .btndelete:hover {
+            transform: scale(1.1);
+        }
+</style>
+
 <div class="mb-5">
     <div class="d-flex flex-row mt-5 justify-content-between align-items-center">
         <span style="font-size: x-large;font-weight: 600;color: #424242;">Job Position Management</span>
@@ -85,12 +95,12 @@
                     </MudTableSortLabel>
                 </MudTh>
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
-                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.PosCode)">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Position!.PosCode)">
                         Job Information Code
                     </MudTableSortLabel>
                 </MudTh>
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
-                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Description)">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Position!.Name)">
                         Description
                     </MudTableSortLabel>
                 </MudTh>
@@ -100,8 +110,8 @@
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="" Style="font-weight: 600;  background-color: rgb(197,207,210, 0.2);">@pos.SubPosCode</MudTd>
-                <MudTd DataLabel="">@pos.PosCode</MudTd>
-                <MudTd DataLabel="">@pos.Description</MudTd>
+                <MudTd DataLabel="">@pos.Position?.PosCode</MudTd>
+                <MudTd DataLabel="">@pos.Position?.Name</MudTd>
                 <MudTd DataLabel="">@pos.ReportingTo</MudTd>
                 <MudTd DataLabel="" Style="text-align: center">
                     @if (pos.Status.Equals("Active"))
@@ -127,6 +137,13 @@
                         <NotAuthorized>
                             <MudIconButton Disabled Color="Color.Error" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
                         </NotAuthorized>
+                    </AuthorizeView>
+                    <AuthorizeView Roles="CadAdmin, SysAdmin">
+                        <Authorized>
+                            <MudTooltip Text="Delete">
+                                <MudIconButton Class="btndelete" OnClick="(() => DeletePosition(pos.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
+                            </MudTooltip>
+                        </Authorized>
                     </AuthorizeView>
                 </MudTd>
 
@@ -204,27 +221,43 @@
 
     async Task DeletePosition(int id)
     {
-        var pos = PositionService.SubPositionTs.Where(x => x.Id == id);
-        foreach (var item in pos)
+        var result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Do you really want to delete the record?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+        if (result.IsConfirmed)
         {
-            if (item.Status == "Active")
+            var pos = PositionService.SubPositionTs.Where(x => x.Id == id);
+            foreach (var item in pos)
             {
-                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
-                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
-            }
-            else if (item.Status == "Inactive" && item.Emp_VerifyId != "")
-            {
-                // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
-                GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
-            }
-            else
-            {
-                await PositionService.DeleteSubPosition(id);
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "Model", DateTime.Now);
-                await PositionService.GetSubPosition();
-                var newList = PositionService.SubPositionTs;
-                StateService.SetState("SubPositionList", newList);
-                _toastService.ShowSuccess("Deleted Successfully!");
+                if (item.Status == "Active")
+                {
+                    // await ShowErrorMessageBox("The action can't be completed because it has an active reference!");
+                    GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
+                }
+                else if (item.Status == "Inactive" && item.Emp_VerifyId != "")
+                {
+                    GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");
+                }
+                else
+                {
+                    var issucc = await PositionService.DeleteSubPosition(id);
+                    if (issucc == 0)
+                    {
+                        _toastService.ShowInfo("This record cannot be deleted because it has an active reference.");
+                    }
+                    else
+                    {
+                        await LoadList();
+                        _toastService.ShowSuccess("Deleted Successfully.");
+                        await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "JOB POSITION", DateTime.Now);
+                    }
+                }
             }
         }
     }
@@ -238,11 +271,11 @@
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (obj.PosCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (obj.Position!.PosCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (obj.SubPosCode.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (obj.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (obj.Position!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (obj.ReportingTo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;

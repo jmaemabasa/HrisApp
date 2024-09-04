@@ -70,12 +70,15 @@ namespace HrisApp.Shared.Models.Employee
         public int SectionId { get; set; } //NOT FK
 
         //public PositionT? Position { get; set; }
-        public int PositionId { get; set; } //FK
+        //public int PositionId { get; set; } //FK
 
         public StatusT? Status { get; set; }
         public int StatusId { get; set; } //FK
 
         //public InactiveStatusT? InactiveStatus { get; set; }
         //public int InactiveStatusId { get; set; } //FK
+
+        public SubPositionT? SubPosition { get; set; }
+        public int SubPositionId { get; set; }
     }
 }

@@ -56,12 +56,12 @@
                     </MudTableSortLabel>
                 </MudTh>
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
-                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.PosCode)">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Position!.PosCode)">
                         Position Code
                     </MudTableSortLabel>
                 </MudTh>
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
-                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Description)">
+                    <MudTableSortLabel SortBy="new Func<SubPositionT, object>(x=>x.Position!.Name)">
                         Description
                     </MudTableSortLabel>
                 </MudTh>
@@ -70,8 +70,8 @@
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="" Style="font-weight: 600;  background-color: rgb(197,207,210, 0.2);">@pos.SubPosCode</MudTd>
-                <MudTd DataLabel="">@pos.PosCode</MudTd>
-                <MudTd DataLabel="">@pos.Description</MudTd>
+                <MudTd DataLabel="">@pos.Position?.PosCode</MudTd>
+                <MudTd DataLabel="">@pos.Position?.Name</MudTd>
                 <MudTd DataLabel="" Style="text-align: center">
                     @if (pos.Status == "Active")
                     {

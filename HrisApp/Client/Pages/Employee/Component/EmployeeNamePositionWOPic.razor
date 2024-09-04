@@ -1,14 +1,8 @@
 ﻿<div class="d-flex flex-column">
     <div>@EMPLOYEE?.FirstName @EMPLOYEE?.MiddleName @EMPLOYEE?.LastName</div>
-    <div>@subpos.Description</div>
+    <div>@EMPLOYEE?.SubPosition?.Position?.Name</div>
 </div>
 
 @code {
     [Parameter] public EmployeeT? EMPLOYEE { get; set; }
-    SubPositionT subpos = new();
-
-    protected override async Task OnParametersSetAsync()
-    {
-        subpos = await PositionService.GetSingleSubPosition(EMPLOYEE!.PositionId);
-    }
 }

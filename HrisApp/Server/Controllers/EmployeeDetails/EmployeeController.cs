@@ -25,7 +25,8 @@
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
+                .Include(em => em.SubPosition)
+                .Include(em => em.SubPosition!.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
@@ -44,7 +45,8 @@
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
+                .Include(em => em.SubPosition)
+                .Include(em => em.SubPosition!.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
             return Ok(emp);
@@ -63,7 +65,8 @@
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
+                .Include(em => em.SubPosition)
+                .Include(em => em.SubPosition!.Position)
                 //.Include(em => em.InactiveStatus)
                 .FirstOrDefaultAsync(h => h.Id == id);
             if (user == null)
@@ -86,7 +89,8 @@
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
+                .Include(em => em.SubPosition)
+                .Include(em => em.SubPosition!.Position)
                 //.Include(em => em.InactiveStatus)
                 .FirstOrDefaultAsync(h => h.Verify_Id == verId);
             if (user == null)
@@ -108,7 +112,8 @@
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
+                .Include(em => em.SubPosition)
+                .Include(em => em.SubPosition!.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
         }
@@ -137,9 +142,9 @@
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
+                .Include(em => em.SubPosition)
+                .Include(em => em.SubPosition!.Position)
                 //.Include(em => em.InactiveStatus)
-
                 .FirstOrDefaultAsync(e => e.Id == employee.Id);
 
             if (dbEmployee != null)
@@ -286,7 +291,7 @@
                 dbEmployee.DivisionId = employee.DivisionId;
                 dbEmployee.DepartmentId = employee.DepartmentId;
                 dbEmployee.SectionId = employee.SectionId;
-                dbEmployee.PositionId = employee.PositionId;
+                dbEmployee.SubPositionId = employee.SubPositionId;
                 dbEmployee.AreaId = employee.AreaId;
                 dbEmployee.StatusId = employee.StatusId;
                 dbEmployee.EmploymentStatusId = employee.EmploymentStatusId;
@@ -325,7 +330,8 @@
                 .Include(em => em.Division)
                 .Include(em => em.Department)
                 .Include(em => em.Area)
-                //.Include(em => em.Position)
+                .Include(em => em.SubPosition)
+                .Include(em => em.SubPosition!.Position)
                 //.Include(em => em.InactiveStatus)
                 .ToListAsync();
 

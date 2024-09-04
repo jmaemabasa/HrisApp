@@ -7,7 +7,7 @@
     <div>
         <div class="flex-column">
             <div style="font-weight: 600;">@fname  @mname  @lname</div>
-            <div style="font-size: 13px !important;">@subpos.Description</div>
+            <div style="font-size: 13px !important;">@employee.SubPosition?.Position?.Name</div>
         </div>
     </div>
 </div>
@@ -17,7 +17,6 @@
     [Parameter] public string verify { get; set; }
 
     EmployeeT employee = new();
-    SubPositionT subpos = new();
 
     string fname = "", lname = "", mname = "";
 
@@ -26,7 +25,6 @@
     protected override async Task OnParametersSetAsync()
     {
         employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
-        subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
 
         fname = employee.FirstName;
         lname = employee.LastName;

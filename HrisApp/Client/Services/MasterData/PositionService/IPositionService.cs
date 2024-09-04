@@ -19,17 +19,17 @@ namespace HrisApp.Client.Services.MasterData.PositionService
         Task CreatePositionPerDept(string posName, string posCode, int divId, int deptId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
         Task CreatePositionPerSection(string posName, string posCode, int divId, int deptId, int sectId, int areaId, string summary, string educ, string work, string tskill, string kof, string capp, string othercom, string restrict, string verifyCode, string posType, string tempDur, string manpower, int mpexternal, string supervisory);
         Task UpdatePosition(PositionT position);
+        Task<int> DeletePosition(int id);
 
 
         List<SubPositionT> SubPositionTs { get; set; }
         Task GetSubPosition();
         Task<int> GetExistingPos(int divid, int depid, int secid);
-        Task<int> GetExistingSubPos(string poscode);
-        Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid, string reportingTo);
+        Task<int> GetExistingSubPos(int posid);
+        Task CreateSubPosition(string subposcode, int posid, string status, int divid, int depid, int secid, int areaid, string reportingTo);
         Task UpdateSubPosition(SubPositionT position);
-        Task UpdateDescSubPosition(string poscode, string desc);
         Task<SubPositionT> GetSingleSubPosition(int id);
-        Task DeleteSubPosition(int id);
+        Task<int> DeleteSubPosition(int id);
 
         //PLANTILLA
         List<DailyTotalPlantillaT> DailyTotalPlantillaTs { get; set; }

@@ -29,7 +29,8 @@ namespace HrisApp.Server.Controllers.ImageC
 
                 if (model == null)
                 {
-                    var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                    //var _nullurl = "D:\\TestHRIS\\wwwroot\\images";
+                    var _nullurl = "D:\\Published\\LiveHrisApp\\wwwroot\\images";
                     var _nullfilename = "avatarorimage.jpg";
                     var _nullpath = Path.Combine(_evs.ContentRootPath, _nullurl, _nullfilename);
 

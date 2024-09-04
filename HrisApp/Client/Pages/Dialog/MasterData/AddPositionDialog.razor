@@ -44,10 +44,10 @@
 
                 @if (selectedDepartment != 0)
                 {
-                    var departmentHasSections = Sections.Any(s => s.DepartmentId == selectedDepartment);
+                    var departmentHasSections = Sections.Any(s => s.DivisionId == selectedDivision && s.DepartmentId == selectedDepartment);
                     if (departmentHasSections)
                     {
-                        var departmentSections = Sections.Where(s => s.DepartmentId == selectedDepartment).ToList();
+                        var departmentSections = Sections.Where(s => s.DivisionId == selectedDivision && s.DepartmentId == selectedDepartment).ToList();
                         @* Select Section *@
                         <div class="flex-grow-1">
                             <MudText Typo="Typo.body2">Section</MudText>

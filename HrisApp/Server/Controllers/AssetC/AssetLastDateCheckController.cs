@@ -70,7 +70,7 @@
         {
             var dbarea = await _context.AssetLastCheckT.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbarea.MainAssetId = model.MainAssetId;
+            dbarea!.MainAssetId = model.MainAssetId;
             dbarea.LastCheckDate = model.LastCheckDate;
             await _context.SaveChangesAsync();
 

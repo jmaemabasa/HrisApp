@@ -61,9 +61,9 @@
                                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Position</MudText>
                                 @foreach (var item in SubPositionsL)
                                 {
-                                    if (item.Id == employee.PositionId)
+                                    if (item.Id == employee.SubPositionId)
                                     {
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@item.Description</MudText>
+                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@item.Position?.Name</MudText>
                                     }
                                 }
                             </div>

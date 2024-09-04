@@ -57,7 +57,11 @@
     color: #27374D;
 }
 
-    ::deep .btnedit:hover {
+::deep .btndelete {
+    color: #f74357;
+}
+
+    ::deep .btnedit:hover, ::deep .btndelete:hover {
         transform: scale(1.1);
     }
 

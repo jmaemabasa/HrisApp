@@ -145,10 +145,10 @@
             employee = await EmployeeService.GetSingleEmployee(Id);
             _address = await AddressService.GetSingleAddress(Id);
             _payroll = await PayrollService.GetSinglePayroll(Id);
-            _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
+            _subposition = await PositionService.GetSingleSubPosition((int)employee.SubPositionId);
 
             //_position = await PositionService.GetSinglePosition(employee.PositionId);
-            _position = await PositionService.GetSinglePositionByCode(_subposition.PosCode);
+            _position = await PositionService.GetSinglePositionByCode(_subposition.Position?.PosCode);
 
             _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(Id);
 
@@ -201,6 +201,32 @@
                 employee.Age = age;
             }
 
+            employee.Birthdate = Convert.ToDateTime(Bday);
+
+            await EmployeeService.UpdateEmployee(employee);
+            await AddressService.UpdateAddress(_address);
+            await PayrollService.UpdatePayroll(_payroll);
+
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+            _toastService.ShowSuccess("Information updated successfully!");
+
+            //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
+            employee = await EmployeeService.GetSingleEmployee((int)Id);
+            _address = await AddressService.GetSingleAddress((int)Id);
+            _payroll = await PayrollService.GetSinglePayroll((int)Id);
+            //_empPicture = await ImageService.GetSingleImage((int)id);
+
+            var refreshrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
+            StateService.SetState("RateHistoryList", refreshrate);
+            
+            personalandjobOpen = false; workInfoOpen = false; emerOpen = false; addressOpen = false; documentsOpen = false; ScheduleOpen = false; StatutoryOpen = false;
+            StateHasChanged();
+        }
+
+        private async Task SaveWorkInfo()
+        {
+            #region MASTER DATA SITE
+
             if (employee.StatusId == 1)
             {
                 await MasterDataApiSvc.UpdateFSSStatus(Id, 1); //UPDATE FSS MASTER DATA TO ACTIVE
@@ -214,9 +240,9 @@
                 await MasterDataApiSvc.UpdateWmsUserStatus(Id, 2); //UPDATE FSS MASTER DATA TO INACTIVE
             }
 
-            if (employee.StatusId == 1)
-                employee.DateInactiveStatus = null;
+            #endregion MASTER DATA SITE
 
+            //CATCHER
             if (employee.StatusId != 1) // IF DLI SYA ACTIVE
             {
                 if (employee.DateInactiveStatus == null)
@@ -229,160 +255,81 @@
                         Icon = SweetAlertIcon.Warning
                     });
                     employee.StatusId = 1;
+                    return;
                 }
-                else
+            }
+
+            if (employee.StatusId == 1)
+                employee.DateInactiveStatus = null;
+
+            employee.DateHired = Convert.ToDateTime(DateHired);
+            await EmployeeService.UpdateEmployee(employee);
+
+
+            //UPDATE EMPLOYMENT DATE
+            _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
+            _employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
+            _employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
+            _employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
+            _employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
+            _employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
+            _employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
+            _employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
+            _employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
+            _employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
+            _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
+            await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
+
+            //UPDATE THE LAST EMPLOYEE HISTORY END and MODIFIED DATE
+            if (_updateposHistory.NewAreaId != employee.AreaId || _updateposHistory.NewDivisionId != employee.DivisionId || _updateposHistory.NewDepartmentId != employee.DepartmentId || _updateposHistory.NewSectionId != employee.SectionId || _updateposHistory.NewPositionId != employee.SubPositionId)
+            {
+                _updateposHistory.DateModified = DateTime.Now;
+                _updateposHistory.DateEnded = DateTime.Now;
+                await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
+
+                //CREATE EMPLOYEE HISTORY
+                empHistory.Verify_Id = VerifyCode;
+                empHistory.Id = 0;
+                empHistory.DateStarted = DateTime.Now;
+                empHistory.NewAreaId = employee.AreaId;
+                empHistory.NewDivisionId = employee.DivisionId;
+                empHistory.NewDepartmentId = employee.DepartmentId;
+                empHistory.NewSectionId = employee.SectionId;
+                empHistory.NewPositionId = (int)employee.SubPositionId;
+                empHistory.EmploymentStatusId = employee.EmploymentStatusId;
+                foreach (var item in SubPositionsL)
                 {
-                    employee.Birthdate = Convert.ToDateTime(Bday);
-                    employee.DateHired = Convert.ToDateTime(DateHired);
-
-                    await EmployeeService.UpdateEmployee(employee);
-                    await AddressService.UpdateAddress(_address);
-                    await PayrollService.UpdatePayroll(_payroll);
-
-
-                    //UPDATE EMPLOYMENT DATE
-                    _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
-                    _employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
-                    _employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
-                    _employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
-                    _employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
-                    _employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
-                    _employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
-                    _employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
-                    _employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
-                    _employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
-                    _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
-                    await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
-
-                    //UPDATE THE LAST EMPLOYEE HISTORY END and MODIFIED DATE
-                    if (_updateposHistory.NewAreaId != employee.AreaId || _updateposHistory.NewDivisionId != employee.DivisionId || _updateposHistory.NewDepartmentId != employee.DepartmentId || _updateposHistory.NewSectionId != employee.SectionId || _updateposHistory.NewPositionId != employee.PositionId)
+                    if (item.Id == employee.SubPositionId)
                     {
-                        _updateposHistory.DateModified = DateTime.Now;
-                        _updateposHistory.DateEnded = DateTime.Now;
-                        await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
-
-                        //CREATE EMPLOYEE HISTORY
-                        empHistory.Verify_Id = VerifyCode;
-                        empHistory.Id = 0;
-                        empHistory.DateStarted = DateTime.Now;
-                        empHistory.NewAreaId = employee.AreaId;
-                        empHistory.NewDivisionId = employee.DivisionId;
-                        empHistory.NewDepartmentId = employee.DepartmentId;
-                        empHistory.NewSectionId = employee.SectionId;
-                        empHistory.NewPositionId = employee.PositionId;
-                        empHistory.EmploymentStatusId = employee.EmploymentStatusId;
-                        foreach (var item in SubPositionsL)
-                        {
-                            if (item.Id == employee.PositionId)
-                            {
-                                empHistory.newPositionCode = item.PosCode;
-                            }
-                        }
-                        var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
+                        empHistory.newPositionCode = item.Position?.PosCode;
                     }
-
-                    //UPDATE EMPLOYEE HISTORY IF NAG RESIGN/DEPART SI EMPLOYEE
-                    if (employee.StatusId != 1)
-                    {
-                        _updateposHistory.DateModified = DateTime.Now;
-                        _updateposHistory.DateEnded = DateTime.Now;
-                        _updateposHistory.EmploymentStatusId = employee.EmploymentStatusId;
-                        await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
-                    }
-
-                    //UPDATE SUB POSITION FOR INACTIVE EMPLOYEE
-                    _subposition.Status = "Vacant";
-                    _subposition.VacantDate = employee.DateInactiveStatus;
-                    await PositionService.UpdateSubPosition(_subposition);
-
-                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-                    _toastService.ShowSuccess("Information updated successfully!");
-
-                    //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-                    employee = await EmployeeService.GetSingleEmployee((int)Id);
-                    _address = await AddressService.GetSingleAddress((int)Id);
-                    _payroll = await PayrollService.GetSinglePayroll((int)Id);
-                    _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
-                    //_empPicture = await ImageService.GetSingleImage((int)id);
-                    _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
-
-                    var refreshrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
-                    StateService.SetState("RateHistoryList", refreshrate);
-
-                    personalandjobOpen = false;
-                    workInfoOpen = false;
-                    emerOpen = false;
-                    addressOpen = false;
-                    documentsOpen = false;
-                    ScheduleOpen = false;
-                    StatutoryOpen = false;
-                    StateHasChanged();
                 }
+                var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
+
+                var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
+                StateService.SetState("HistoryPosList", newList);
+            }
+
+            //UPDATE EMPLOYEE HISTORY IF NAG RESIGN/DEPART SI EMPLOYEE
+            if (employee.StatusId != 1)
+            {
+                _updateposHistory.DateModified = DateTime.Now;
+                _updateposHistory.DateEnded = DateTime.Now;
+                _updateposHistory.EmploymentStatusId = employee.EmploymentStatusId;
+                await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
+            }
+
+            //UPDATE SUB POSITION FOR INACTIVE EMPLOYEE
+            if (employee.StatusId != 1)
+            {
+                _subposition.Status = "Vacant";
+                _subposition.VacantDate = employee.DateInactiveStatus;
+                await PositionService.UpdateSubPosition(_subposition);
             }
             else
             {
-                employee.Birthdate = Convert.ToDateTime(Bday);
-                employee.DateHired = Convert.ToDateTime(DateHired);
-
-                await EmployeeService.UpdateEmployee(employee);
-                await AddressService.UpdateAddress(_address);
-                await PayrollService.UpdatePayroll(_payroll);
-
-                //UPDATE EMPLOYMENT DATE
-                _employmentDate.EmpmentStatusId = employee.EmploymentStatusId;
-                _employmentDate.ProbationStartDate = Convert.ToDateTime(ProbStart);
-                _employmentDate.ProbationEndDate = Convert.ToDateTime(ProbEnd);
-                _employmentDate.CasualStartDate = Convert.ToDateTime(CasualStart);
-                _employmentDate.CasualEndDate = Convert.ToDateTime(CasualEnd);
-                _employmentDate.FixedStartDate = Convert.ToDateTime(FixedStart);
-                _employmentDate.FixedEndDate = Convert.ToDateTime(FixedEnd);
-                _employmentDate.ProjStartDate = Convert.ToDateTime(ProjStart);
-                _employmentDate.ProjEndDate = Convert.ToDateTime(ProjEnd);
-                _employmentDate.RegularizationDate = Convert.ToDateTime(RegularDate);
-                _employmentDate.ResignationDate = Convert.ToDateTime(ResignationDate);
-                await EmploymentDateService.UpdateEmploymentDate(_employmentDate);
-
-                //UPDATE THE LAST EMPLOYEE HISTORY END and MODIFIED DATE
-                if (_updateposHistory.NewAreaId != employee.AreaId || _updateposHistory.NewDivisionId != employee.DivisionId || _updateposHistory.NewDepartmentId != employee.DepartmentId || _updateposHistory.NewSectionId != employee.SectionId || _updateposHistory.NewPositionId != employee.PositionId)
-                {
-                    _updateposHistory.DateModified = DateTime.Now;
-                    _updateposHistory.DateEnded = DateTime.Now;
-                    await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
-
-                    //CREATE EMPLOYEE HISTORY
-                    empHistory.Verify_Id = VerifyCode;
-                    empHistory.Id = 0;
-                    empHistory.DateStarted = DateTime.Now;
-                    empHistory.NewAreaId = employee.AreaId;
-                    empHistory.NewDivisionId = employee.DivisionId;
-                    empHistory.NewDepartmentId = employee.DepartmentId;
-                    empHistory.NewSectionId = employee.SectionId;
-                    empHistory.NewPositionId = employee.PositionId;
-                    empHistory.EmploymentStatusId = employee.EmploymentStatusId;
-                    foreach (var item in SubPositionsL)
-                    {
-                        if (item.Id == employee.PositionId)
-                        {
-                            empHistory.newPositionCode = item.PosCode;
-                        }
-                    }
-                    var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
-
-                    var newList = await EmpHistoryService.GetEmpHistoryList(VerifyCode);
-                    StateService.SetState("HistoryPosList", newList);
-                }
-
-                //UPDATE EMPLOYEE HISTORY IF NAG RESIGN/DEPART SI EMPLOYEE
-                if (employee.StatusId != 1)
-                {
-                    _updateposHistory.DateModified = DateTime.Now;
-                    _updateposHistory.DateEnded = DateTime.Now;
-                    _updateposHistory.EmploymentStatusId = employee.EmploymentStatusId;
-                    await EmpHistoryService.UpdateEmpHistory(_updateposHistory);
-                }
-
-                //UPDATE SUB POSITION
-                if (employee.PositionId == _subposition.Id)
+                //UPDATE SUB POSITION IF NAG CHANGE SYAG POSITION WHILE ACTIVE
+                if (employee.SubPositionId == _subposition.Id)
                 {
                 }
                 else
@@ -392,39 +339,26 @@
                     _subposition.ActiveDate = null;
                     await PositionService.UpdateSubPosition(_subposition);
 
-                    _newsubposition = await PositionService.GetSingleSubPosition(employee.PositionId);
+                    _newsubposition = await PositionService.GetSingleSubPosition((int)employee.SubPositionId);
                     _newsubposition.Status = "Active";
                     _newsubposition.Emp_VerifyId = employee.Verify_Id;
                     _newsubposition.ActiveDate = DateTime.Now;
                     await PositionService.UpdateSubPosition(_newsubposition);
-                    _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
+                    _subposition = await PositionService.GetSingleSubPosition((int)employee.SubPositionId);
                     await PositionService.GetSubPosition();
                     SubPositionsL = PositionService.SubPositionTs;
                 }
-
-                await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
-                _toastService.ShowSuccess("Information updated successfully!");
-
-                //NavigationManager.NavigateTo($"employee/edit/{employee.Id}", true);
-                employee = await EmployeeService.GetSingleEmployee((int)Id);
-                _address = await AddressService.GetSingleAddress((int)Id);
-                _payroll = await PayrollService.GetSinglePayroll((int)Id);
-                _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
-                //_empPicture = await ImageService.GetSingleImage((int)id);
-                _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
-
-                var refreshrate = await EmpRateHistoryService.GetHistoryList(employee.Id);
-                StateService.SetState("RateHistoryList", refreshrate);
-
-                personalandjobOpen = false;
-                workInfoOpen = false;
-                emerOpen = false;
-                addressOpen = false;
-                documentsOpen = false;
-                ScheduleOpen = false;
-                StatutoryOpen = false;
-                StateHasChanged();
             }
+
+            await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "UPDATE", "Content", DateTime.Now);
+            _toastService.ShowSuccess("Information updated successfully!");
+
+            employee = await EmployeeService.GetSingleEmployee((int)Id);
+            _updateposHistory = await EmpHistoryService.GetEmpLastHistory(VerifyCode);
+            _employmentDate = await EmploymentDateService.GetSingleEmploymentDate((int)Id);
+
+            personalandjobOpen = false;workInfoOpen = false;emerOpen = false;addressOpen = false;documentsOpen = false;ScheduleOpen = false;StatutoryOpen = false;
+            StateHasChanged();
         }
 
         #region Image Update

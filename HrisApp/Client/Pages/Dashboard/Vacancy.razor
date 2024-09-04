@@ -53,8 +53,8 @@
                     <MudTd DataLabel="">@(allDivisions.Where(e => e.Id == pos.DivisionId).First().Name)</MudTd>
                     <MudTd DataLabel="">@(allDepartments.Where(e => e.Id == pos.DepartmentId).First().Name)</MudTd>
                     <MudTd DataLabel="">@(pos.SectionId == 0 ? "" : allSections.Where(e => e.Id == pos.SectionId).First().Name)</MudTd>
-                    <MudTd DataLabel="">@pos.Description</MudTd>
-                    <MudTd DataLabel="" Style="text-align: center;font-weight: 600;">@(allSubPositions.Where(e => e.Status.Equals("Vacant") && e.PosCode.Equals(pos.PosCode)).Count())</MudTd>
+                    <MudTd DataLabel="">@pos.Position?.Name</MudTd>
+                    <MudTd DataLabel="" Style="text-align: center;font-weight: 600;">@(allSubPositions.Where(e => e.Status.Equals("Vacant") && e.PositionId == pos.PositionId).Count())</MudTd>
                 </RowTemplate>
             </MudTable>
         </div>

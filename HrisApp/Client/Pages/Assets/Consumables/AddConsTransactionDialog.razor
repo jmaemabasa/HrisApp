@@ -114,7 +114,7 @@
 
 @code {
     #nullable disable
-    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Parameter] public int ConsumableId { get; set; }
     [Parameter] public EventCallback OnAddSuccess { get; set; }
 

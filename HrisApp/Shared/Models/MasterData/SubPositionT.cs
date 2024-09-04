@@ -8,9 +8,12 @@ namespace HrisApp.Shared.Models.MasterData
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
+
         public string SubPosCode { get; set; } = string.Empty;
-        public string PosCode { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+
+        //public string PosCode { get; set; } = string.Empty;
+        //public string Description { get; set; } = string.Empty;
+
         public string Emp_VerifyId { get; set; } = string.Empty; //employee
         public string ReportingTo { get; set; } = string.Empty; //Sub POsition Code sa heads
         public string Status { get; set; } = string.Empty;
@@ -26,5 +29,8 @@ namespace HrisApp.Shared.Models.MasterData
 
         public DateTime? DateInactive { get; set; } //kanus a na deactive
         public DateTime? DateCreated { get; set; } = DateTime.Now; //when na create ang position
+
+        public PositionT? Position { get; set; }
+        public int PositionId { get; set; }
     }
 }

@@ -58,7 +58,7 @@
         {
             var dbarea = await _context.AssetSubCategory2T.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbarea.ASubCat2_Name = model.ASubCat2_Name;
+            dbarea!.ASubCat2_Name = model.ASubCat2_Name;
             dbarea.CategoryId = model.CategoryId;
             dbarea.SubCategoryId = model.SubCategoryId;
             await _context.SaveChangesAsync();

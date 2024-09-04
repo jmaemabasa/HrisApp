@@ -132,8 +132,8 @@
                 employee = await EmployeeService.GetSingleEmployee(Id);
                 _address = await AddressService.GetSingleAddress(Id);
                 _payroll = await PayrollService.GetSinglePayroll(Id);
-                _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
-                _position = await PositionService.GetSinglePositionByCode(_subposition.PosCode);
+                _subposition = await PositionService.GetSingleSubPosition((int)employee.SubPositionId);
+                _position = await PositionService.GetSinglePositionByCode(_subposition.Position?.Name);
                 _employmentDate = await EmploymentDateService.GetSingleEmploymentDate(Id);
 
                 VERIFY = employee.Verify_Id;

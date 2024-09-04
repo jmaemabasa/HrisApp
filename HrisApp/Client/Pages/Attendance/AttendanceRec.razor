@@ -128,10 +128,10 @@
                     @if (!string.IsNullOrEmpty(verid))
                     {
                         var emp = empList.Where(e => e.Verify_Id.Equals(verid)).FirstOrDefault();
-                        var subpos = PositionService.SubPositionTs.Where(e=>e.Id == emp?.PositionId).FirstOrDefault();
+                        var subpos = PositionService.SubPositionTs.Where(e=>e.Id == emp?.SubPositionId).FirstOrDefault();
                         <div class="d-flex flex-column">
                             <div style="font-weight: 600;">@emp?.FirstName @emp?.LastName</div>
-                            <div style="font-size: 13px;color: #757A90;">@subpos?.Description</div>
+                            <div style="font-size: 13px;color: #757A90;">@subpos?.Position?.Name</div>
                         </div>
                     }
                 </MudTd>

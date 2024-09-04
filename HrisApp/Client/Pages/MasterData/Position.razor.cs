@@ -48,7 +48,7 @@
 
         private void OpenAddPosition()
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, DisableBackdropClick=true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, DisableBackdropClick = true };
             DialogService.Show<AddPositionDialog>("New Job Position", options);
         }
 
@@ -72,6 +72,32 @@
 
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, DisableBackdropClick = true };
             DialogService.Show<UpdatePositionDialog>("Update Position", parameters, options);
+        }
+
+        private async Task DeletePosition(int id)
+        {
+            var result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Do you really want to delete the record?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes",
+                CancelButtonText = "No"
+            });
+
+            if (result.IsConfirmed)
+            {
+                var issucc = await PositionService.DeletePosition(id);
+                if (issucc == 0)
+                {
+                    GlobalConfigService.OpenErrorDialog("The action can't be completed because it has an active reference!");                }
+                else
+                {
+                    await LoadList();
+                    _toastService.ShowSuccess("Deleted Successfully.");
+                    await AuditlogService.CreateLog(Int32.Parse(GlobalConfigService.User_Id), "DELETE", "JOB INFORMATION", DateTime.Now);
+                }
+            }
         }
 
         private bool isVisible;

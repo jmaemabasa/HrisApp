@@ -1,4 +1,5 @@
-﻿using HrisApp.Shared.Models.StaticData;
+﻿using HrisApp.Shared.Models.MasterData;
+using HrisApp.Shared.Models.StaticData;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,6 +25,9 @@ namespace HrisApp.Shared.Models.Employee
 
         public EmploymentStatusT? EmploymentStatus { get; set; }
         public int? EmploymentStatusId { get; set; }
+
+        //public SubPositionT? SubPosition { get; set; }
+        //public int? SubPositionId { get;set; }
 
 
 

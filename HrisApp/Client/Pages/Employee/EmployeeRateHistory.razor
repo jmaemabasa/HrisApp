@@ -52,7 +52,7 @@ else
                     @{
                         var pos = PositionService.SubPositionTs.Where(e => e.Id == history.PositionId).FirstOrDefault();
                     }
-                    @pos?.Description
+                    @pos?.Position?.Name
                 </MudTd>
                 <MudTd DataLabel="" Style="color: #757A90;font-weight: 500;">
                     @history.EffectivityDate?.ToString("MMM dd yyyy")
@@ -114,7 +114,7 @@ else
                                  SearchFunc="@SearchPosition"
                                  ResetValueOnEmptyText="true"
                                  CoerceText="true" CoerceValue="false" Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined"
-                                 ToStringFunc="@(e => e==null?null : $"{e.SubPosCode} / {e.Description}")" ShowProgressIndicator="true" Clearable="true">
+                                 ToStringFunc="@(e => e==null?null : $"{e.SubPosCode} / {e.Position?.Name}")" ShowProgressIndicator="true" Clearable="true">
                     <NoItemsTemplate>
                         <MudText Align="Align.Center" Class="px-4 py-1">
                             No items found

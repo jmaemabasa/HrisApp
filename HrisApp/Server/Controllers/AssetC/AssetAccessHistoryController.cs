@@ -99,7 +99,7 @@
             //dbObj.AssetAccessoryId = model.AssetAccessoryId;
             //dbObj.AssignedDateMainAss = model.AssignedDateMainAss;
             //dbObj.UnassignedDateMainAss = model.UnassignedDateMainAss;
-            dbObj.EmployeeId = model.EmployeeId;
+            dbObj!.EmployeeId = model.EmployeeId;
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBObj());

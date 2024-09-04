@@ -304,19 +304,19 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                     empHistory.NewDivisionId = employee.DivisionId;
                     empHistory.NewDepartmentId = employee.DepartmentId;
                     empHistory.NewSectionId = employee.SectionId;
-                    empHistory.NewPositionId = employee.PositionId;
+                    empHistory.NewPositionId = (int)employee.SubPositionId;
                     empHistory.EmploymentStatusId = employee.EmploymentStatusId;
                     foreach (var item in SubPositionsL)
                     {
-                        if (item.Id == employee.PositionId)
+                        if (item.Id == employee.SubPositionId)
                         {
-                            empHistory.newPositionCode = item.PosCode;
+                            empHistory.newPositionCode = item.Position?.PosCode;
                         }
                     }
                     var saveemphistory = await EmpHistoryService.CreateEmpHistory(empHistory);
 
                     //UPDATE SUBPOSITION
-                    subPosition = await PositionService.GetSingleSubPosition(employee.PositionId);
+                    subPosition = await PositionService.GetSingleSubPosition((int)employee.SubPositionId);
                     subPosition.Emp_VerifyId = verifyId;
                     subPosition.Status = "Active";
                     subPosition.ActiveDate = employee.DateHired;
@@ -329,7 +329,7 @@ namespace HrisApp.Client.ViewModel.EmployeeViewModel.EmployeeViewModel
                         DateStarted = DateTime.Now,
                         EmployeeId = EMPLOYEELIST.Where(e => e.Verify_Id == verifyId).FirstOrDefault().Id,
                         EffectivityDate = RATEEFFECTIVITYDATE,
-                        PositionId = employee.PositionId
+                        PositionId = (int)employee.SubPositionId
                     };
 
                     await EmpRateHistoryService.CreateHistory(ratehistory);

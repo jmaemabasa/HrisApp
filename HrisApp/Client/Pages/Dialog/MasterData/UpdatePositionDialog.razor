@@ -1,14 +1,67 @@
 ﻿<MudDialog>
     <DialogContent>
-        @foreach (var item in Areas)
-        {
-            @if (item.Id == position.AreaId)
-            {
-                <div style="margin-bottom: 15px;" class="d-flex justify-content-start">
-                    <span style="font-size: 16px;">Area: <b> @item.Name</b></span>
-                </div>
-            }
+        @{
+            var area = Areas.FirstOrDefault(e => e.Id == position.AreaId);
+            var division = Divisions.FirstOrDefault(e => e.Id == position.DivisionId);
+            var dept = Departments.FirstOrDefault(e => e.Id == position.DepartmentId);
+            var sect = Sections.FirstOrDefault(e => e.Id == position.SectionId);
         }
+        <div style="margin-bottom: 15px;" class="d-flex justify-content-start">
+            <span style="font-size: 16px;"> <b>Area: @area?.Name | Division: @division?.Name | Department: @dept?.Name @(sect == null ? "" : $"Section: {sect.Name}")</b></span>
+        </div>
+
+
+        @* <div class="flex-grow-1">
+        <MudText Typo="Typo.body2">Division</MudText>
+        <MudSelect @bind-Value="position.DivisionId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+        @foreach (var div in Divisions)
+        {
+        <MudSelectItem Value="@div.Id">@div.Name</MudSelectItem>
+        }
+        </MudSelect>
+        </div>
+        @if (position.DivisionId != 0)
+        {
+        var selectedCategoryObject = Divisions.FirstOrDefault(c => c.Id == position.DivisionId);
+        if (selectedCategoryObject != null)
+        {
+        var departments = Departments.Where(d => d.DivisionId == selectedCategoryObject.Id).ToList();
+        @* Select Department *@
+        @*
+        <div class="flex-grow-1">
+        <MudText Typo="Typo.body2">Department</MudText>
+        <MudSelect @bind-Value="position.DepartmentId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom:5px;">
+        @foreach (var department in departments)
+        {
+        <MudSelectItem Value="@department.Id">@department.Name</MudSelectItem>
+        }
+        </MudSelect>
+        </div>
+        }
+        }
+
+
+        @if (position.DepartmentId != 0)
+        {
+        var departmentHasSections = Sections.Any(s => s.DivisionId == position.DivisionId && s.DepartmentId == position.DepartmentId);
+        if (departmentHasSections)
+        {
+        var departmentSections = Sections.Where(s => s.DivisionId == position.DivisionId && s.DepartmentId == position.DepartmentId).ToList();
+        @* Select Section *@
+        @*
+        <div class="flex-grow-1">
+        <MudText Typo="Typo.body2">Section</MudText>
+        <MudSelect @bind-Value="position.SectionId" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;">
+        @foreach (var sec in departmentSections)
+        {
+        <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
+        }
+        </MudSelect>
+        </div>
+
+        }
+        } *@
+
         <div class="flex-grow-1">
             <MudText Typo="Typo.body2">Position</MudText>
             <MudTextField @bind-Value="position.Name" Variant="Variant.Outlined" Margin="Margin.Dense" Style="margin-bottom: 5px;" />

@@ -64,9 +64,9 @@ namespace HrisApp.Client.ViewModel
             {
                 foreach (var item in subpos)
                 {
-                    if (item.Id == r.PositionId)
+                    if (item.Id == r.SubPositionId)
                     {
-                        position = item.Description;
+                        position = item.Position?.Name;
                     }
                 }
                 worksheet.Cells[c, 1].Value = i;
@@ -207,7 +207,7 @@ namespace HrisApp.Client.ViewModel
                 var lastrate = await httpClient.GetFromJsonAsync<Emp_RateHistoryT>($"api/EmpRateHistory/GetLastHistoryWithoutDateEnded?empid={r.Id}");
                 worksheet.Cells[c, 13].Value = lastrate.Rate;
 
-                worksheet.Cells[c, 16].Value = subpos.Where(d => d.Id == r.PositionId).FirstOrDefault().Description;
+                worksheet.Cells[c, 16].Value = subpos.Where(d => d.Id == r.SubPositionId).FirstOrDefault().Position?.Name;
                 worksheet.Cells[c, 19].Value = r.DateHired.ToString("MM/dd/yyyy");
                 worksheet.Cells[c, 20].Value = employmentdate.Where(d => d.Verify_Id == r.Verify_Id).FirstOrDefault().RegularizationDate?.ToString("MM/dd/yyyy");
                 worksheet.Cells[c, 21].Value = r.DateInactiveStatus?.ToString("MM/dd/yyyy");

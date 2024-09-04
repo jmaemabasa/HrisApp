@@ -7,7 +7,7 @@
     <div>
         <div class="flex-column">
             <div style="font-weight: 600;color: #757A90;">@fname  @mname  @lname</div>
-            <div style="font-size: 13px !important;color: #757A90;">@subpos.Description</div>
+            <div style="font-size: 13px !important;color: #757A90;">@subpos.Position?.Name</div>
         </div>
     </div>
 </div>
@@ -31,7 +31,7 @@
         if (Id != 0)
         {
             employee = await EmployeeService.GetSingleEmployee(Id);
-            subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
+            subpos = await PositionService.GetSingleSubPosition(employee.SubPositionId);
 
             fname = employee.FirstName;
             lname = employee.LastName;

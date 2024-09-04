@@ -10,6 +10,9 @@
         public int Id { get; set; }
 
         private List<AreaT> Areas = new();
+        private List<DivisionT> Divisions = new();
+        private List<DepartmentT> Departments = new();
+        private List<SectionT> Sections = new();
         private List<PosMPExternalT> Externals = new();
         public List<PositionTechSkillT> listOfTechSkills = new();
         public List<PositionKnowledgeT> listOfKnowledge = new();
@@ -32,7 +35,13 @@
         protected override async Task OnInitializedAsync()
         {
             await AreaService.GetArea();
-            Areas = AreaService.AreaTs;
+            Areas = AreaService.AreaTs; 
+            await DivisionService.GetDivision();
+            Divisions = DivisionService.DivisionTs; 
+            await DepartmentService.GetDepartment();
+            Departments = DepartmentService.DepartmentTs; 
+            await SectionService.GetSection();
+            Sections = SectionService.SectionTs; 
 
             await ManpowerService.GetExternal();
             Externals = ManpowerService.PosMPExternalTs;
@@ -83,7 +92,6 @@
                     }
 
                     await PositionService.UpdatePosition(position);
-                    await PositionService.UpdateDescSubPosition(position.PosCode, position.Name);
                     await SaveNewTechSkills(position.PosCode);
                     await SaveNewKnowledge(position.PosCode);
                     await SaveNewComApp(position.PosCode);

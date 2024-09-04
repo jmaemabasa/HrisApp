@@ -45,7 +45,7 @@
                     <MudItem xs="12" lg="3">
                         <MudSelect class="dddiv" T="int" ValueChanged="Searchh2" Margin="Margin.Dense" DisableUnderLine>
                             <MudSelectItem Value=0>All Sections</MudSelectItem>
-                            @foreach (var sec in Sections.Where(s => s.DepartmentId == depdd))
+                            @foreach (var sec in Sections.Where(s => s.DivisionId == divdd && s.DepartmentId == depdd))
                             {
                                 <MudSelectItem Value="@sec.Id">@sec.Name</MudSelectItem>
                             }
@@ -85,110 +85,69 @@
     {
         <MudTable Class="stable" Items="positionList" Context="pos" FixedHeader="true" Elevation="0" Height="620px" HorizontalScrollbar="true" Dense="true" Hover="true" Bordered="false" Striped="true" Filter="new Func<PositionT,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
             <HeaderContent>
-                <MudTh Style="background: #e9ecef; font-size: 16px;">
+                <MudTh Style="background: #e9ecef; font-size: 16px;font-weight: 600">
                     <div class="d-flex justify-content-between">
-                        <div class="ttitle">Division</div>
+                        <div class="">Division</div>
                         <div class="">
                             <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight" Title="Favorite" />
                         </div>
                     </div>
                 </MudTh>
-                <MudTh Style="background: #e9ecef; font-size: 16px;">
+                <MudTh Style="background: #e9ecef; font-size: 16px;font-weight: 600">
                     <div class="d-flex justify-content-between">
-                        <div class="ttitle">Department</div>
+                        <div class="">Department</div>
                         <div class="">
-                            @*                          <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" />
-                        *@
+                            <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" />
                         </div>
                     </div>
                 </MudTh>
-                @*  <MudTh  Style="background: #e9ecef; font-size: 16px;">
-            <div class="d-flex justify-content-between">
-            <div class="ttitle">Section</div>
-            <div class="">
-            <MudIcon Icon="@Icons.Material.Rounded.ArrowRight" Title="Favorite" />
-
-            </div>
-            </div>
-            </MudTh> *@
+                <MudTh Style="background: #e9ecef; font-size: 16px;font-weight: 600">
+                    <div class="d-flex justify-content-between">
+                        <div class="">Section</div>
+                    </div>
+                </MudTh>
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">
                     <MudTableSortLabel SortBy="new Func<PositionT, object>(x=>x.Name)">
                         Position
                     </MudTableSortLabel>
                 </MudTh>
+                @* <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">Code</MudTh> *@
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px;">Area</MudTh>
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px; text-align: center">Additional<br />Info</MudTh>
                 <MudTh Style="font-weight: 600; background: #e9ecef; font-size: 16px; text-align: center">Action</MudTh>
             </HeaderContent>
             <RowTemplate>
-                @foreach (var item in Divisions)
-                {
-                    if (item.Id == pos.DivisionId)
-                    {
-                        <MudTd DataLabel="Division">
-                            <div class="d-flex justify-content-between">
-                                <div class="">@item.Name</div>
-                                <div class="">
-                                    <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
-                                </div>
-                            </div>
-                        </MudTd>
-                    }
-                }
-                @foreach (var item in Departments)
-                {
-                    if (item.Id == pos.DepartmentId)
-                    {
-                        <MudTd DataLabel="Department">
-                            <div class="d-flex justify-content-between">
-                                <div class="">@item.Name</div>
-                                <div class="">
-                                    @* <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" Style="color: #90A4AE;" /> *@
-                                </div>
-                            </div>
-                        </MudTd>
-                    }
-                }
-                @* @if (pos.SectionId == 0)
-            {
-            <MudTd DataLabel="Section">
-            <div class="d-flex justify-content-between">
-            <div class="">No Section</div>
-            <div class="">
-            <MudIcon Icon="@Icons.Material.Rounded.ArrowRight" Title="Favorite" Style="color: #90A4AE;" />
-            </div>
-            </div>
-            </MudTd>
-            }
-            else
-            {
-            @foreach (var item in Sections)
-            {
-            if (item.Id == pos.SectionId)
-            {
-            <MudTd DataLabel="Section">
-            <div class="d-flex justify-content-between">
-            <div class="">@item.Name</div>
-            <div class="">
-            <MudIcon Icon="@Icons.Material.Rounded.ArrowRight" Title="Favorite" Style="color: #90A4AE;" />
-            </div>
-            </div>
-            </MudTd>
-            }
-            }
-            } *@
 
+                <MudTd DataLabel="Division">
+                    <div class="d-flex justify-content-between">
+                        <div class="">@Divisions.FirstOrDefault(e => e.Id == pos.DivisionId)?.Name</div>
+                        <div class="">
+                            <MudIcon Icon="@Icons.Material.Rounded.KeyboardArrowRight" Title="Favorite" Style="margin-left: 20px; color: #90A4AE;" />
+                        </div>
+                    </div>
+                </MudTd>
+
+                <MudTd DataLabel="Department">
+                    <div class="d-flex justify-content-between">
+                        <div class="">@Departments.FirstOrDefault(e => e.Id == pos.DepartmentId)?.Name</div>
+                        <div class="">
+                            <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" Style="color: #90A4AE;" />
+                        </div>
+                    </div>
+                </MudTd>
+
+                <MudTd DataLabel="Section">
+                    <div class="d-flex justify-content-between">
+                        <div class="">@(Sections.FirstOrDefault(e => e.Id == pos.SectionId) == null ? "-" : Sections.FirstOrDefault(e => e.Id == pos.SectionId)?.Name)</div>
+                        <div class="">
+                            @* <MudIcon Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight" Title="Favorite" Style="color: #90A4AE;" /> *@
+                        </div>
+                    </div>
+                </MudTd>
 
                 <MudTd DataLabel="" Style="font-weight: 600;  background-color: rgb(197,207,210, 0.2);color: #264487;">@pos.Name</MudTd>
-                <MudTd DataLabel="">
-                    @foreach (var item in Areas)
-                    {
-                        if (item.Id == pos.AreaId)
-                        {
-                            @item.Name
-                        }
-                    }
-                </MudTd>
+                @* <MudTd DataLabel="">@pos.PosCode</MudTd> *@
+                <MudTd DataLabel="">@Areas.FirstOrDefault(e => e.Id == pos.AreaId)?.Name</MudTd>
                 <MudTd DataLabel="" Style="text-align: center">
                     <MudIconButton Class="btnedit" OnClick="(() => OpenViewPosition(pos.Id))" Icon="@Icons.Material.Rounded.Info" aria-label="Show"></MudIconButton>
                 </MudTd>
@@ -200,8 +159,15 @@
                             </MudTooltip>
                         </Authorized>
                         <NotAuthorized>
-                            <MudIconButton Disabled Class="btnedit" OnClick="(() => OpenUpdatePosition(pos.Id))" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
+                            <MudIconButton Disabled Class="btnedit" Icon="@Icons.Material.Rounded.Edit" aria-label="Edit"></MudIconButton>
                         </NotAuthorized>
+                    </AuthorizeView>
+                    <AuthorizeView Roles="CadAdmin, SysAdmin">
+                        <Authorized>
+                            <MudTooltip Text="Delete">
+                                <MudIconButton Class="btndelete" OnClick="(() => DeletePosition(pos.Id))" Icon="@Icons.Material.Rounded.Delete" aria-label="Delete"></MudIconButton>
+                            </MudTooltip>
+                        </Authorized>
                     </AuthorizeView>
                 </MudTd>
 
@@ -212,3 +178,6 @@
         </MudTable>
     }
 </div>
+
+@{
+}

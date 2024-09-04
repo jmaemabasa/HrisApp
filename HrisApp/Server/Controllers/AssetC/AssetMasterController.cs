@@ -179,7 +179,7 @@
 
             var _returnId = Masterlist.Where(d => d.JMCode.Contains(code, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
-            return Ok(_returnId.Id);
+            return Ok(_returnId?.Id);
         }
 
         [HttpGet("GetLastCode")]

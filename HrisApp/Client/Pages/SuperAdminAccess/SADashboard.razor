@@ -59,7 +59,7 @@
                                 @foreach (var item in employeeBdayL)
                                 {
                                     <div class="d-flex justify-content-between" style="margin-bottom:15px;">
-                                        <EmployeeBdyComponent VERIFYID="@item.Verify_Id" FRSTNAME="@item.FirstName" GENDERID="item.GenderId" LSTNAME="@item.LastName" POSID="@item.PositionId" />
+                                        <EmployeeBdyComponent VERIFYID="@item.Verify_Id" FRSTNAME="@item.FirstName" GENDERID="item.GenderId" LSTNAME="@item.LastName" POSID="@((int)item.SubPositionId!)" />
                                         <span style="color: #757A90">@item.Birthdate.ToString("MM/dd")</span>
                                     </div>
                                 }

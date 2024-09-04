@@ -99,7 +99,7 @@
                         {
                             <div class="divsingledetails d-flex gap-2">
                                 <div class="col-3 border border-info border-start-0 border-top-0 border-bottom-0">
-                                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">@item.Description</MudText>
+                                    <MudText Align="Align.Start" Style="color: #FAFAF5;" Typo="Typo.caption">@item.Position?.Name</MudText>
                                     <MudText Align="Align.Start" Style="color: #FAFAF5; font-weight:600;" Typo="Typo.body2">@item.SubPosCode</MudText>
                                 </div>
                                 <div class="col-2 border border-info border-start-0 border-top-0 border-bottom-0">
@@ -321,7 +321,7 @@
         WorkExpL = await PositionService.GetWorkExp(position.PosCode);
         EducL = await PositionService.GetEduc(position.PosCode);
 
-        SubPositionsL = PositionService.SubPositionTs.Where(x => x.PosCode == position.PosCode).ToList();
+        SubPositionsL = PositionService.SubPositionTs.Where(x => x.PositionId == position.Id).ToList();
 
         POSITIONHISTORY = EmpHistoryService.Emp_PosHistoryTs.Where(e => e.newPositionCode == position.PosCode && e.DateEnded != null).ToList();
 

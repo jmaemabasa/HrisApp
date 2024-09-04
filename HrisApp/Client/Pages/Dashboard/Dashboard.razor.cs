@@ -57,7 +57,7 @@ namespace HrisApp.Client.Pages.Dashboard
                 {
                     int positionId = position.Id;
                     string positionCode = position.PosCode;
-                    int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.PosCode == positionCode);
+                    int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.PositionId == positionId);
                     positionCounts[positionId] = count;
                 }
                 _totalVacancy = PositionService.SubPositionTs.Where(e => e.Status.Equals("Vacant")).Count();

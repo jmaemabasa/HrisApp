@@ -143,13 +143,7 @@
                     </MudTd>
                     <MudTd DataLabel="Position">@employeeee.EmployeeNo</MudTd>
                     <MudTd DataLabel="Position">
-                        @foreach (var item in SubPositionsL)
-                        {
-                            if (item.Id == employeeee.PositionId)
-                            {
-                                @item.Description
-                            }
-                        }
+                        @employeeee.SubPosition?.Position?.Name
                     </MudTd>
                     <MudTd DataLabel="Division">
                         @employeeee.Division?.Name

@@ -29,8 +29,8 @@
         protected override async Task OnParametersSetAsync()
         {
             employee = await EmployeeService.GetSingleEmployee(Id);
-            _subposition = await PositionService.GetSingleSubPosition(employee.PositionId);
-            _position = await PositionService.GetSinglePositionByCode(_subposition.PosCode);
+            _subposition = await PositionService.GetSingleSubPosition((int)employee.SubPositionId);
+            _position = await PositionService.GetSinglePositionByCode(_subposition.Position?.Name);
 
             await ImageService.GetNewPDF(employee.Verify_Id, employee.EmployeeNo);
 

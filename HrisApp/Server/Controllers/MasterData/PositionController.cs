@@ -16,6 +16,8 @@ namespace HrisApp.Server.Controllers.MasterData
             _context = context;
         }
 
+        #region POSITION
+
         //GEEEEEEETT
         //Get Position by Section
         [HttpGet("PosBySection/{sectionId}")]
@@ -57,9 +59,9 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<List<PositionT>>> GetPositionList()
         {
             var pos = await _context.PositionT
-                .Include(e=>e.Division)
-                .Include(e=>e.Department)
-                .Include(e=>e.Area)
+                .Include(e => e.Division)
+                .Include(e => e.Department)
+                .Include(e => e.Area)
                 .ToListAsync();
             return Ok(pos);
         }
@@ -82,7 +84,7 @@ namespace HrisApp.Server.Controllers.MasterData
             var pos = await _context.PositionT
                 .Include(e => e.Division)
                 .Include(e => e.Department)
-                .Include(e => e.Area).FirstOrDefaultAsync(e=>e.Id == id);
+                .Include(e => e.Area).FirstOrDefaultAsync(e => e.Id == id);
 
             if (pos == null)
             {
@@ -143,10 +145,26 @@ namespace HrisApp.Server.Controllers.MasterData
             dbpos.PosMPExternalId = pos.PosMPExternalId;
             dbpos.Manpower = pos.Manpower;
             dbpos.Supervisory = pos.Supervisory;
+            dbpos.SectionId = pos.SectionId;
 
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBPosition());
+        }
+
+        [HttpDelete("DeletePosition")]
+        public async Task<ActionResult<List<PositionT>>> DeletePosition([FromQuery] int id)
+        {
+            var obj = await _context.PositionT
+                .FirstOrDefaultAsync(h => h.Id == id);
+            if (obj == null)
+                return NotFound("Sorry, but no senior");
+
+            _context.PositionT.Remove(obj);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(obj);
         }
 
         //PLANTILLA
@@ -228,6 +246,26 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return Ok(pos);
         }
+
+        [HttpGet("GetExistingPos/{divid}/{depid}/{secid}")]
+        public async Task<ActionResult<int>> GetExistingPos(int divid, int depid, int secid)
+        {
+            var obj = await _context.PositionT.ToListAsync();
+            var divList = obj.Where(h => h.DivisionId == divid).ToList();
+            var depList = obj.Where(h => h.DepartmentId == depid).ToList();
+
+            if (secid == 0)
+            {
+                return depList.Count;
+            }
+            else
+            {
+                var secList = obj.Where(h => h.SectionId == secid).ToList();
+                return secList.Count;
+            }
+        }
+
+        #endregion POSITION
 
         #region POSITION SKILLS
 
@@ -569,37 +607,25 @@ namespace HrisApp.Server.Controllers.MasterData
         //    return count;
         //}
 
-        [HttpGet("GetExistingPos/{divid}/{depid}/{secid}")]
-        public async Task<ActionResult<int>> GetExistingPos(int divid, int depid, int secid)
-        {
-            var obj = await _context.PositionT.ToListAsync();
-            var divList = obj.Where(h => h.DivisionId == divid).ToList();
-            var depList = obj.Where(h => h.DepartmentId == depid).ToList();
-
-            if (secid == 0)
-            {
-                return depList.Count();
-            }
-            else
-            {
-                var secList = obj.Where(h => h.SectionId == secid).ToList();
-                return secList.Count();
-            }
-        }
+        #region SUBPOSITION
 
         [HttpGet("GetSubPosition")]
         public async Task<ActionResult<List<SubPositionT>>> GetSubPosition()
         {
             var pos = await _context.SubPositionT
+                .Include(e => e.Department)
+                .Include(e => e.Division)
+                .Include(e => e.Area)
+                .Include(e => e.Position)
                 .ToListAsync();
             return Ok(pos);
         }
 
-        [HttpGet("GetExistingSubPos/{poscode}")]
-        public async Task<ActionResult<int>> GetExistingSubPos(string poscode)
+        [HttpGet("GetExistingSubPos")]
+        public async Task<ActionResult<int>> GetExistingSubPos([FromQuery] int posid)
         {
             var obj = await _context.SubPositionT.ToListAsync();
-            var poslist = obj.Where(h => h.PosCode == poscode).ToList();
+            var poslist = obj.Where(h => h.PositionId == posid).ToList();
 
             return poslist.Count();
         }
@@ -616,6 +642,10 @@ namespace HrisApp.Server.Controllers.MasterData
         private async Task<List<SubPositionT>> GetDBSubPosition()
         {
             return await _context.SubPositionT
+                .Include(e => e.Department)
+                .Include(e => e.Division)
+                .Include(e => e.Area)
+                .Include(e => e.Position)
                 .ToListAsync();
         }
 
@@ -631,29 +661,22 @@ namespace HrisApp.Server.Controllers.MasterData
             dbpos.DateInactive = pos.DateInactive;
             dbpos.DateCreated = pos.DateCreated;
             dbpos.ReportingTo = pos.ReportingTo;
+            dbpos.SectionId = pos.SectionId;
 
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBSubPosition());
         }
 
-        [HttpPut("UpdateDescSubPosition/{poscode}/{desc}")]
-        public async Task<ActionResult> UpdateDescSubPosition(string poscode, string desc)
-        {
-            var masterlist = await _context.SubPositionT.Where(d => d.PosCode == poscode).ToListAsync();
-
-            foreach (var item in masterlist)
-            {
-                item.Description = desc;
-                await _context.SaveChangesAsync();
-            }
-            return Ok(await GetDBSubPosition());
-        }
-
         [HttpGet("GetSingleSubPosition/{id}")]
         public async Task<ActionResult<SubPositionT>> GetSingleSubPosition(int id)
         {
-            var pos = await _context.SubPositionT.FindAsync(id);
+            var pos = await _context.SubPositionT
+                .Include(e => e.Department)
+                .Include(e => e.Division)
+                .Include(e => e.Area)
+                .Include(e => e.Position)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (pos == null)
             {
@@ -663,8 +686,8 @@ namespace HrisApp.Server.Controllers.MasterData
             return pos;
         }
 
-        [HttpDelete("DeleteSubPosition/{id}")]
-        public async Task<ActionResult<List<SubPositionT>>> DeleteSubPosition(int id)
+        [HttpDelete("DeleteSubPosition")]
+        public async Task<ActionResult<List<SubPositionT>>> DeleteSubPosition([FromQuery]int id)
         {
             var obj = await _context.SubPositionT
                 .FirstOrDefaultAsync(h => h.Id == id);
@@ -682,6 +705,10 @@ namespace HrisApp.Server.Controllers.MasterData
         public async Task<ActionResult<int>> GetSubPositionId(string name)
         {
             var Masterlist = await _context.SubPositionT
+                .Include(e => e.Department)
+                .Include(e => e.Division)
+                .Include(e => e.Area)
+                .Include(e => e.Position)
                 .ToListAsync();
 
             var _returnId = Masterlist.Where(d => d.SubPosCode.Contains(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
@@ -689,14 +716,16 @@ namespace HrisApp.Server.Controllers.MasterData
             return Ok(_returnId.Id);
         }
 
+        #endregion SUBPOSITION
 
         #region FOR MASTERDATA
+
         [HttpGet("GetJobPositionByEmpId")]
-        public async Task<ActionResult<PositionT>> GetJobPositionByEmpId([FromQuery]int empid)
+        public async Task<ActionResult<PositionT>> GetJobPositionByEmpId([FromQuery] int empid)
         {
             var emp = await _context.EmployeeT.FindAsync(empid);
-            var subpos = await _context.SubPositionT.FindAsync(emp.PositionId);
-            var pos = await _context.PositionT.FirstOrDefaultAsync(emp=> emp.PosCode.Equals(subpos.PosCode));
+            var subpos = await _context.SubPositionT.FindAsync(emp.SubPositionId);
+            var pos = await _context.PositionT.FirstOrDefaultAsync(emp => emp.Id == subpos.PositionId);
 
             if (pos == null)
             {
@@ -705,6 +734,7 @@ namespace HrisApp.Server.Controllers.MasterData
 
             return pos;
         }
-        #endregion
+
+        #endregion FOR MASTERDATA
     }
 }

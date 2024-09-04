@@ -1,6 +1,4 @@
 ﻿using HrisApp.Shared.Models.Announcement;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HrisApp.Server.Controllers.Announcement
 {
@@ -30,8 +28,8 @@ namespace HrisApp.Server.Controllers.Announcement
         {
             var obj = await _context.AnnouncementT
                 .OrderByDescending(t => t.DateStart)
-                .Where(d => (d.DateStart.Value.Date == DateTime.Now.Date && d.DateEnd.Value.Date >= DateTime.Now.Date)
-                         || (d.DateStart.Value.Date <= DateTime.Now.Date && d.DateEnd.Value.Date >= DateTime.Now.Date))
+                .Where(d => (d.DateStart!.Value.Date == DateTime.Now.Date && d.DateEnd!.Value.Date >= DateTime.Now.Date)
+                         || (d.DateStart.Value.Date <= DateTime.Now.Date && d.DateEnd!.Value.Date >= DateTime.Now.Date))
                 .ToListAsync();
             return Ok(obj);
         }

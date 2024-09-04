@@ -464,12 +464,12 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <MudText Typo="Typo.body2">Position</MudText>
-                                                    <MudSelect Class="@slectClasssPS" DisableUnderLine @bind-Value="_saaddEmployeeVM.employee.PositionId" Margin="Margin.Dense">
+                                                    <MudSelect Class="@slectClasssPS" DisableUnderLine @bind-Value="_saaddEmployeeVM.employee.SubPositionId" Margin="Margin.Dense">
                                                         <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
 
                                                         @foreach (var pos in _saaddEmployeeVM.SubPositionsL.Where(d => d.DivisionId == _saaddEmployeeVM.employee.DivisionId && d.DepartmentId == _saaddEmployeeVM.employee.DepartmentId && d.SectionId == _saaddEmployeeVM.employee.SectionId && d.Status == "Inactive"))
                                                         {
-                                                            <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
+                                                            <MudSelectItem Value="@pos.Id">@($"{@pos.Position?.Name} - {@pos.SubPosCode}")</MudSelectItem>
                                                         }
                                                     </MudSelect>
                                                 </div>
@@ -499,11 +499,11 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <MudText Typo="Typo.body2">Position</MudText>
-                                                <MudSelect @bind-Value="_saaddEmployeeVM.employee.PositionId" Class="@slectClasssPS" DisableUnderLine Margin="Margin.Dense">
+                                                <MudSelect @bind-Value="_saaddEmployeeVM.employee.SubPositionId" Class="@slectClasssPS" DisableUnderLine Margin="Margin.Dense">
                                                     <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                                     @foreach (var pos in _saaddEmployeeVM.SubPositionsL.Where(d => d.DepartmentId == _saaddEmployeeVM.employee.DepartmentId && d.Status == "Inactive"))
                                                     {
-                                                        <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
+                                                        <MudSelectItem Value="@pos.Id">@($"{@pos.Position?.Name} - {@pos.SubPosCode}")</MudSelectItem>
                                                     }
                                                 </MudSelect>
                                             </div>
@@ -1340,10 +1340,10 @@
             slectClasssES = (_saaddEmployeeVM.employee.EmploymentStatusId == 0) ? "frmselecterror" : "frmselect";
             slectClasssD = (_saaddEmployeeVM.employee.DivisionId == 0) ? "frmselecterror" : "frmselect";
             slectClasssDT = (_saaddEmployeeVM.employee.DepartmentId == 0) ? "frmselecterror" : "frmselect";
-            slectClasssPS = (_saaddEmployeeVM.employee.PositionId == 0) ? "frmselecterror" : "frmselect";
+            slectClasssPS = (_saaddEmployeeVM.employee.SubPositionId == 0) ? "frmselecterror" : "frmselect";
             slectClasssRT = (_saaddEmployeeVM.payroll.RateTypeId == 0) ? "frmselecterror" : "frmselect";
             slectClasssCB = (_saaddEmployeeVM.payroll.CashbondId == 0) ? "frmselecterror" : "frmselect";
-            if (_saaddEmployeeVM.payroll.Rate == "" || _saaddEmployeeVM.employee.EmployeeNo == "" || _saaddEmployeeVM.employee.AreaId == 0 || _saaddEmployeeVM.employee.StatusId == 0 || _saaddEmployeeVM.employee.EmploymentStatusId == 0 || _saaddEmployeeVM.employee.DivisionId == 0 || _saaddEmployeeVM.employee.DepartmentId == 0 || _saaddEmployeeVM.employee.PositionId == 0 || _saaddEmployeeVM.payroll.RateTypeId == 0 || _saaddEmployeeVM.payroll.CashbondId == 0)
+            if (_saaddEmployeeVM.payroll.Rate == "" || _saaddEmployeeVM.employee.EmployeeNo == "" || _saaddEmployeeVM.employee.AreaId == 0 || _saaddEmployeeVM.employee.StatusId == 0 || _saaddEmployeeVM.employee.EmploymentStatusId == 0 || _saaddEmployeeVM.employee.DivisionId == 0 || _saaddEmployeeVM.employee.DepartmentId == 0 || _saaddEmployeeVM.employee.SubPositionId == 0 || _saaddEmployeeVM.payroll.RateTypeId == 0 || _saaddEmployeeVM.payroll.CashbondId == 0)
             {
                 _toastService.ShowError("Fill out all fields.");
             }

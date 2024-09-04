@@ -91,10 +91,10 @@
             var dbObj = await _context.AssetMasterHistoryT.Where(
                 d => d.EmployeeId == empid
                      && d.MainAssetId == mainassetid
-                     && d.AssignedDateReleased.Value.Date == released.Value.Date)
+                     && d.AssignedDateReleased!.Value.Date == released!.Value.Date)
                 .FirstOrDefaultAsync();
 
-            dbObj.EndDate = model.EndDate;
+            dbObj!.EndDate = model.EndDate;
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBObj());

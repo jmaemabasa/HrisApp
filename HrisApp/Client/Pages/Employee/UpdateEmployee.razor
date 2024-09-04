@@ -99,13 +99,7 @@
                             </div>
                             <div class="divsingledetails">
                                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Position</MudText>
-                                @foreach (var item in SubPositionsL)
-                                {
-                                    if (item.Id == employee.PositionId)
-                                    {
-                                        <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@item.Description</MudText>
-                                    }
-                                }
+                                <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.SubPosition?.Position?.Name</MudText>
                             </div>
                             <div class="divsingledetails">
                                 <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Department</MudText>
@@ -514,13 +508,7 @@
                                     <MudItem xs="12" sm="6" Class="divsingledetails">
                                         <MudText Align="Align.Start" Style="color: #6A707D;" Typo="Typo.caption">Position</MudText>
                                         <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">
-                                            @foreach (var item in SubPositionsL)
-                                            {
-                                                if (item.Id == employee.PositionId)
-                                                {
-                                                    <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@item.Description - @item.SubPosCode </MudText>
-                                                }
-                                            }
+                                            <MudText Align="Align.Start" Style="color: #757A90; font-weight:600;" Typo="Typo.body2">@employee.SubPosition?.Position?.Name - @employee.SubPosition?.SubPosCode</MudText>
                                         </MudText>
                                     </MudItem>
                                 </div>
@@ -827,7 +815,7 @@
     <MudDrawer Class="drawerdetails" @bind-Open="@workInfoOpen" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary" Style=" margin: 10px;">
         <span class="spantitle mb-3">Work Information</span>
         <MudItem xs="12">
-            <EditForm Model="employee" OnValidSubmit="SaveUpdateEmployee" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
+            <EditForm Model="employee" OnValidSubmit="SaveWorkInfo" class="d-flex flex-column flex-grow-1" style="margin-top: 13px;">
                 <DataAnnotationsValidator />
                 <MudItem xs="12" Class="mb-2">
                     <MudText Typo="Typo.body2">Company ID No.</MudText>
@@ -968,7 +956,7 @@
                     }
                 </div>
                 @{
-                    var departmentHasSection = employee.DepartmentId != 0 && SectionService.SectionTs.Any(s => s.DepartmentId == employee.DepartmentId);
+                    var departmentHasSection = employee.DepartmentId != 0 && SectionService.SectionTs.Any(s => s.DivisionId == employee.DivisionId && s.DepartmentId == employee.DepartmentId);
                 }
                 @if (departmentHasSection)
                 {
@@ -994,7 +982,7 @@
                     </MudItem>
                     @if (departmentHasSection)
                     {
-                        var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
+                        var sections = employee.DepartmentId != 0 ? SectionService.SectionTs.Where(s => s.DivisionId == employee.DivisionId && s.DepartmentId == employee.DepartmentId) : Enumerable.Empty<SectionT>();
                         <MudItem xs="12" Class="mb-2">
                             <MudText Typo="Typo.body2">Section</MudText>
                             <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SectionId" Immediate=true Margin="Margin.Dense">
@@ -1014,11 +1002,11 @@
                         </MudItem>
                         <MudItem xs="12" Class="mb-2">
                             <MudText Typo="Typo.body2">Position</MudText>
-                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.PositionId" Immediate=true Margin="Margin.Dense">
+                            <MudSelect Class="@slectClasss" DisableUnderLine @bind-Value="employee.SubPositionId" Immediate=true Margin="Margin.Dense">
                                 <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
                                 @foreach (var pos in SubPositionsL.Where(d => d.DivisionId == employee.DivisionId && d.DepartmentId == employee.DepartmentId && d.SectionId == employee.SectionId && d.Status == "Vacant" || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active")))
                                 {
-                                    <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
+                                    <MudSelectItem Value="@pos.Id">@($"{@pos.Position?.Name} - {@pos.SubPosCode}")</MudSelectItem>
                                 }
                             </MudSelect>
                         </MudItem>
@@ -1048,11 +1036,11 @@
                     </MudItem>
                     <MudItem xs="12" Class="mb-2">
                         <MudText Typo="Typo.body2">Position</MudText>
-                        <MudSelect @bind-Value="employee.PositionId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
+                        <MudSelect @bind-Value="employee.SubPositionId" Class="@slectClasss" DisableUnderLine Immediate=true Margin="Margin.Dense">
                             <MudSelectItem Value=0 Disabled>---Select---</MudSelectItem>
-                            @foreach (var pos in SubPositionsL.Where(d => d.DepartmentId == employee.DepartmentId && d.Status == "Vacant" && d.PosCode != _subposition.PosCode || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active" && d.PosCode == _subposition.PosCode)))
+                            @foreach (var pos in SubPositionsL.Where(d => d.DepartmentId == employee.DepartmentId && d.Status == "Vacant" && d.PositionId != _subposition.PositionId || (d.Emp_VerifyId == employee.Verify_Id && d.Status == "Active" && d.PositionId == _subposition.PositionId)))
                             {
-                                <MudSelectItem Value="@pos.Id">@($"{@pos.Description} - {@pos.SubPosCode}")</MudSelectItem>
+                                <MudSelectItem Value="@pos.Id">@($"{@pos.Position?.Name} - {@pos.SubPosCode}")</MudSelectItem>
                             }
                         </MudSelect>
                     </MudItem>

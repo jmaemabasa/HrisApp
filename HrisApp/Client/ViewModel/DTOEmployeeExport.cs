@@ -58,9 +58,9 @@ namespace HrisApp.Client.ViewModel
             {
                 foreach (var item in subpos)
                 {
-                    if (item.Id == r.PositionId)
+                    if (item.Id == r.SubPositionId)
                     {
-                        pos = item.Description;
+                        pos = item.Position?.Name;
                     }
                 }
                 worksheet.Cells[c, 1].Value = i;
@@ -396,7 +396,7 @@ namespace HrisApp.Client.ViewModel
 
                 foreach (var item in subPositionTs)
                 {
-                    worksheetMD.Cells[iPos, 13].Value = item.Description + " - " + item.SubPosCode;
+                    worksheetMD.Cells[iPos, 13].Value = item.Position?.Name + " - " + item.SubPosCode;
                     iPos++;
                 }
                 var posColumn = worksheet.DataValidations.AddListValidation("AB2:AB500");

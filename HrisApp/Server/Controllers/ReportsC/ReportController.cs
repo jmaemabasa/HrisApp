@@ -56,7 +56,7 @@ namespace HrisApp.Server.Controllers.ReportsC
 
             foreach (var item in sortedList)
             {
-                string? subposcode = await _context.SubPositionT.Where(x => x.Id == item.PositionId).Select(x => x.PosCode).FirstOrDefaultAsync();
+                string? subposcode = await _context.SubPositionT.Where(x => x.Id == item.SubPositionId).Select(x => x.Position!.PosCode).FirstOrDefaultAsync();
 
                 int? posMPExternalId = await _context.PositionT
                    .Where(x => x.PosCode == subposcode)
@@ -184,9 +184,9 @@ namespace HrisApp.Server.Controllers.ReportsC
                 }
                 foreach (var item in pos)
                 {
-                    if (item.Id == emp.PositionId)
+                    if (item.Id == emp.SubPositionId)
                     {
-                        position = item.Description;
+                        position = item.Position!.Name;
                     }
                 }
 
@@ -602,7 +602,7 @@ namespace HrisApp.Server.Controllers.ReportsC
                 {
                     if (item.Id == emp.NewPositionId)
                     {
-                        emsubpos = item.Description;
+                        emsubpos = item.Position!.Name;
                     }
                 }
 

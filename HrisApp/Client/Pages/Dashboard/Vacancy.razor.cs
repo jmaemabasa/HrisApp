@@ -27,7 +27,7 @@
             allSubPositions = PositionService.SubPositionTs;
             tableListpos = PositionService.SubPositionTs
                     .Where(e => e.Status.Equals("Vacant"))
-                    .GroupBy(e => e.PosCode) // Group by position code
+                    .GroupBy(e => e.PositionId) // Group by position code
                     .Select(g => g.First()) // Select the first item of each group
                     .ToList();
 
@@ -48,12 +48,12 @@
             tableListpos = div == 0 ?
                 PositionService.SubPositionTs
                     .Where(e => e.Status.Equals("Vacant"))
-                    .GroupBy(e => e.PosCode) // Group by position code
+                    .GroupBy(e => e.PositionId) // Group by position code
                     .Select(g => g.First()) // Select the first item of each group
                     .ToList()
                 : PositionService.SubPositionTs
                     .Where(e => e.Status.Equals("Vacant") && e.DivisionId == div) //filter div
-                    .GroupBy(e => e.PosCode)
+                    .GroupBy(e => e.PositionId)
                     .Select(g => g.First())
                     .ToList();
         }

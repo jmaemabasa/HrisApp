@@ -56,7 +56,7 @@ namespace HrisApp.Client.Pages.SuperAdminAccess
                 {
                     int positionId = position.Id;
                     string positionCode = position.PosCode;
-                    int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.PosCode == positionCode);
+                    int count = PositionService.SubPositionTs.Count(e => e.Status == "Active" && e.Position?.PosCode == positionCode);
                     positionCounts[positionId] = count;
                 }
                 //_totalVacancy = allPositions.Sum(position => position.Plantilla - positionCounts[position.Id]);

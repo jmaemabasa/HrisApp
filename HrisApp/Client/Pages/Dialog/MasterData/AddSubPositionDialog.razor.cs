@@ -61,7 +61,7 @@
                 MudDialog.Close();
                 if (selecteReportTo == "Null")
                     selecteReportTo = "";
-                await PositionService.CreateSubPosition(Roles_Code, PosCode, Roles_Desc, "Vacant", selectedDivision, selectedDepartment, selectedSection, selectedArea, selecteReportTo);
+                await PositionService.CreateSubPosition(Roles_Code, selectedPos, "Vacant", selectedDivision, selectedDepartment, selectedSection, selectedArea, selecteReportTo);
 
                 _toastService.ShowSuccess(Roles_Code + " Created Successfully!");
                 if (!string.IsNullOrEmpty(GlobalConfigService.Role))
@@ -82,7 +82,7 @@
         {
             string _rolesCode = string.Empty;
             var selectedposcode = Positions.Where(x => x.Id == selectedPos).Select(x => x.PosCode).FirstOrDefault();
-            int _existCount = await PositionService.GetExistingSubPos(selectedposcode);
+            int _existCount = await PositionService.GetExistingSubPos(selectedPos);
             var _rolesubcode = selectedposcode = Positions.Where(x => x.Id == selectedPos).Select(x => x.PosCode).FirstOrDefault();
             Roles_Code = Convert.ToString(_existCount);
             Roles_Desc = Positions.Where(x => x.Id == selectedPos).Select(x => x.Name).FirstOrDefault();

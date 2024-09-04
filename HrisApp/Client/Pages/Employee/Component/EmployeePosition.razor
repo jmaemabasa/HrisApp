@@ -1,21 +1,19 @@
 ﻿@inject IEmployeeService EmployeeService
 @inject IPositionService PositionService
 
-<div>@subpos.Description</div>
+<div>@employee.SubPosition?.Position?.Name</div>
 
 @code {
     [Parameter]
-    public string verify { get; set; }
+    public string verify { get; set; } = "";
 
     EmployeeT employee = new();
-    SubPositionT subpos = new();
 
     protected override async Task OnParametersSetAsync()
     {
         try
         {
             employee = await EmployeeService.GetSingleEmployeeByVerId(verify);
-            subpos = await PositionService.GetSingleSubPosition(employee.PositionId);
         }
         catch (Exception)
         {

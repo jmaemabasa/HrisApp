@@ -58,7 +58,7 @@
         {
             var dbarea = await _context.AssetTypesT.FirstOrDefaultAsync(d => d.Id == model.Id);
 
-            dbarea.AType_Name = model.AType_Name;
+            dbarea!.AType_Name = model.AType_Name;
             await _context.SaveChangesAsync();
 
             return Ok(await GetDBObj());

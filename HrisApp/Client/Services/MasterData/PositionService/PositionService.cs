@@ -163,6 +163,26 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             }
         }
 
+        public async Task<int> DeletePosition(int id)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Position/DeletePosition?id={id}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
         //PLANTILLA
         public List<DailyTotalPlantillaT> DailyTotalPlantillaTs { get; set; }
 
@@ -403,25 +423,24 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             return result;
         }
 
-        public async Task<int> GetExistingSubPos(string poscode)
+        public async Task<int> GetExistingSubPos(int posid)
         {
-            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingSubPos/{poscode}");
+            var result = await _httpClient.GetFromJsonAsync<int>($"api/Position/GetExistingSubPos?posid={posid}");
             return result;
         }
 
-        public async Task CreateSubPosition(string subposcode, string poscode, string desc, string status, int divid, int depid, int secid, int areaid, string reportingTo)
+        public async Task CreateSubPosition(string subposcode, int posid, string status, int divid, int depid, int secid, int areaid, string reportingTo)
         {
             SubPositionT newPosition = new()
             {
                 SubPosCode = subposcode,
-                PosCode = poscode,
-                Description = desc,
                 Status = status,
                 DivisionId = divid,
                 DepartmentId = depid,
                 SectionId = secid,
                 AreaId = areaid,
-                ReportingTo = reportingTo
+                ReportingTo = reportingTo,
+                PositionId = posid
             };
 
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Position/CreateSubPosition", newPosition);
@@ -450,25 +469,6 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             }
         }
 
-        public async Task UpdateDescSubPosition(string poscode, string desc)
-        {
-            try
-            {
-                SubPositionT subPositionT = new SubPositionT()
-                {
-                    PosCode = poscode,
-                    Description = desc
-                };
-
-                var result = await _httpClient.PutAsJsonAsync($"api/Position/UpdateDescSubPosition/{poscode}/{desc}", subPositionT);
-                await SetSubPosition(result);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + "daot ang services");
-            }
-        }
-
         public async Task<SubPositionT> GetSingleSubPosition(int id)
         {
             var result = await _httpClient.GetFromJsonAsync<SubPositionT>($"api/Position/GetSingleSubPosition/{id}");
@@ -485,9 +485,24 @@ namespace HrisApp.Client.Services.MasterData.PositionService
             SubPositionTs = response;
         }
 
-        public async Task DeleteSubPosition(int id)
+        public async Task<int> DeleteSubPosition(int id)
         {
-            var result = await _httpClient.DeleteAsync($"api/Position/DeleteSubPosition/{id}");
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Position/DeleteSubPosition?id={id}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
     }
 }
